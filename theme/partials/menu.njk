@@ -1,0 +1,11 @@
+<nav class="main-navigation">
+    <div class="container">
+        <ul class="nav-menu">
+        {% for item in nav %}
+            <li class="nav-item {{ item.type }}{% if item.path == page.path %} active{% endif %}">
+                <a href="{{ item.path }}">{{ item.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</nav>

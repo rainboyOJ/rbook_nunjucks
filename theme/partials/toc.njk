@@ -1,0 +1,21 @@
+<aside class="table-of-contents">
+    <h3>目录</h3>
+    <nav class="toc-nav">
+        <ul class="toc-list">
+        {% for item in nav %}
+            <li class="toc-item {{ item.type }}">
+                <a href="{{ item.path }}">{{ item.title }}</a>
+                {% if item.type == 'chapter' and item.sections %}
+                    <ul class="toc-sublist">
+                    {% for section in item.sections %}
+                        <li class="toc-subitem">
+                            <a href="{{ section.path }}">{{ section.title }}</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </nav>
+</aside>

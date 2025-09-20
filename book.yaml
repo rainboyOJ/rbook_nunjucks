@@ -1,0 +1,14 @@
+title: 我的书
+author: 张三
+description: 这是一本关于算法的书
+
+chapters:
+  - title: 第一章
+    path: chapter1
+  - title: 第二章
+    path: chapter2
+    sections:
+      - title: 第一节
+        path: chapter2-1
+      - title: 第二节  
+        path: chapter2-2

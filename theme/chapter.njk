@@ -1,0 +1,15 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<article class="chapter">
+    <header class="chapter-header">
+        <h1>{{ page.title }}</h1>
+    </header>
+    
+    <div class="chapter-content">
+        {{ page.content | safe }}
+    </div>
+    
+    {% include "partials/toc.njk" %}
+</article>
+{% endblock %}

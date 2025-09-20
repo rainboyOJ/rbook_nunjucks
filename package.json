@@ -1,0 +1,24 @@
+{
+  "name": "rbook",
+  "version": "1.0.0",
+  "description": "A simple static book site generator",
+  "main": "bin/rbook.js",
+  "bin": {
+    "rbook": "./bin/rbook.js"
+  },
+  "scripts": {
+    "build": "node bin/rbook.js build",
+    "serve": "node bin/rbook.js serve"
+  },
+  "dependencies": {
+    "markdown-it": "^13.0.1",
+    "nunjucks": "^3.2.4",
+    "js-yaml": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": ["markdown", "static-site-generator", "book", "nunjucks"],
+  "author": "",
+  "license": "MIT"
+}
