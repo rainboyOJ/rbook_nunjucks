@@ -42,7 +42,8 @@ export const nunjucksRender = function (theme_dir, layout_name, data) {
         };
         
         // 渲染模板
-        return env.render(templatePath, context);
+        // console.log('渲染模板:', templatePath, '数据:', data);
+        return env.render(templatePath, data);
     } catch (error) {
         throw new Error(`渲染模板失败: ${error.message}`);
     }

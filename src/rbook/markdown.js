@@ -1,12 +1,20 @@
 import * as matter from 'gray-matter';
 import markdownit from './markdownit.js';
+import fs from 'fs';
 
 class Markdown {
-    constructor() {
+    constructor(md_path = '') {
         this.name = 'rbook';
         this.front_matter = {};
         this.md_content = '';
         this.html_content = '';
+        if( md_path && md_path.length > 0 ) {
+            let raw_md = fs.readFileSync(md_path, 'utf8');
+            let result = this.matter(raw_md);
+            this.front_matter = result.data;
+            this.md_content = result.content;
+            this.html_content = this.toHTML(result.content);
+        }
     }
 
     /**
@@ -36,6 +44,14 @@ class Markdown {
      */
     toHTML(md_content) {
         return markdownit.render(md_content);
+    }
+
+    toJSON() {
+        return {
+            front_matter: this.front_matter,
+            md_content: this.md_content,
+            html_content: this.html_content
+        };
     }
 }
 
