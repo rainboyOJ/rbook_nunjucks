@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const { build } = require('../src/builder');
-const { serve } = require('../src/server');
+import fs from 'fs';
+import path from 'path';
+import { build } from '../src/builder.js';
+import { serve } from '../src/server.js';
 
 // 获取命令行参数
 const args = process.argv.slice(2);

@@ -1,6 +1,6 @@
-const fs = require('fs');
-const yaml = require('js-yaml');
-const MarkdownIt = require('markdown-it');
+import fs from 'fs';
+import yaml from 'js-yaml';
+import MarkdownIt from 'markdown-it';
 
 // 创建markdown-it实例
 const md = new MarkdownIt({
@@ -58,7 +58,7 @@ function parseMarkdownFile(filePath) {
   return { data, body, html };
 }
 
-module.exports = {
+export { 
   parseFrontMatter,
   markdownToHtml,
   parseMarkdownFile

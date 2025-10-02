@@ -1,7 +1,7 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const { loadConfig, processFile } = require('./builder');
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import { loadConfig, processFile } from './builder.js';
 
 // 内存缓存
 const cache = {
@@ -234,6 +234,6 @@ function serve(port = 3000) {
   setupFileWatchers();
 }
 
-module.exports = {
+export { 
   serve
 };

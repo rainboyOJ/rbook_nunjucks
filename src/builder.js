@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const nunjucks = require('nunjucks');
-const { parseMarkdownFile } = require('./parser');
+import fs from 'fs';
+import path from 'path';
+import yaml from 'js-yaml';
+import nunjucks from 'nunjucks';
+import { parseMarkdownFile } from './parser.js';
 
 /**
  * 加载配置文件
@@ -108,7 +108,7 @@ function processFile(filePath, templateType = null, config) {
 /**
  * 构建所有文件
  */
-function build() {
+function _build() {
   // 确保dist目录存在
   if (!fs.existsSync('dist')) {
     fs.mkdirSync('dist', { recursive: true });
@@ -205,13 +205,13 @@ function build() {
   }
 }
 
-// module.exports = {
-//   loadConfig,
-//   renderTemplate,
-//   buildNavigation,
-//   processFile,
-//   build
-// };
+export { 
+  loadConfig,
+  renderTemplate,
+  buildNavigation,
+  processFile
+};
+
 export const build = function () {  
-  console.log('build');
+  console.log('build log ...');
 }
