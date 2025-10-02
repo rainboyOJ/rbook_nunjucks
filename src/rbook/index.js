@@ -159,7 +159,11 @@ class rbook {
                 this.buildMarkdownFile(file, outputPath);
             }
 
+            // 构建首页
             this.renderIndex();
+
+            // 处理assets
+            this.deal_assets();
 
             console.log('构建完成！');
         } catch (error) {
@@ -174,6 +178,16 @@ class rbook {
         }
         if (this.buildMarkdownFile('index.md', 'dist/index.html', 'index', data)) {
             console.log('✓ 首页构建完成');
+        }
+    }
+
+    // 处理assets 
+    deal_assets() {
+        //复制 public 目录到 dist
+        const publicDir = path.join(__workdir, 'public');
+        const distDir = path.join(__workdir, 'dist');
+        if (fs.existsSync(publicDir)) {
+            fs.cpSync(publicDir, distDir, { recursive: true });
         }
     }
 
