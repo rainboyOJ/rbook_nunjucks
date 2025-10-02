@@ -33,7 +33,15 @@ class rbook {
         }
     }
 
-    buildMarkdownFile (filePath, outputPath, defaultTemplateType = null) {
+    /**
+     * 
+     * @param {*} filePath 
+     * @param {*} outputPath 
+     * @param {*} defaultTemplateType 
+     * @param {*} data 渲染文件所需要的数据
+     * @returns 
+     */
+    buildMarkdownFile (filePath, outputPath, defaultTemplateType = null,data = {}) {
         const fullPath = path.join(__bookdir, filePath);
         if (fs.existsSync(fullPath)) {
             // 确保输出目录存在
@@ -49,7 +57,7 @@ class rbook {
             const templateType = md.front_matter.layout || defaultTemplateType || 'page';
             
             // 使用Nunjucks渲染模板
-            const htmlContent = nunjucksRender(__themedir, templateType, {...md.toJSON(), site: this.config});
+            const htmlContent = nunjucksRender(__themedir, templateType, {...md.toJSON(), site: this.config, ...data});
             
             // 写入HTML文件
             fs.writeFileSync(fullOutputPath, htmlContent);
@@ -151,14 +159,21 @@ class rbook {
                 this.buildMarkdownFile(file, outputPath);
             }
 
-            // 构建首页
-            if (this.buildMarkdownFile('index.md', 'dist/index.html', 'index')) {
-                console.log('✓ 首页构建完成');
-            }
-            
+            this.renderIndex();
+
             console.log('构建完成！');
         } catch (error) {
             throw new Error(`构建失败: ${error.message}`);
+        }
+    }
+
+    renderIndex() {
+        // 构建首页
+        let data = {
+            chapters: this.config.chapters
+        }
+        if (this.buildMarkdownFile('index.md', 'dist/index.html', 'index', data)) {
+            console.log('✓ 首页构建完成');
         }
     }
 
