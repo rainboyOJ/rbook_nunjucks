@@ -12,3 +12,20 @@ chapters:
         path: chapter2-1
       - title: 第二节  
         path: chapter2-2
+  - title: 第三章 动态规划
+    path: chapter3
+    sections:
+      - title: 背包
+        path: knapsack
+        sections:
+          - title: 01背包
+            path: 01-knapsack
+          - title: 多重背包
+            path: multiple-knapsack
+      - title: 线性
+        path: linear
+        sections:
+          - title: lcs
+            path: lcs
+          - title: lis
+            path: lis

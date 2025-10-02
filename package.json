@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple static book site generator",
   "main": "bin/rbook.js",
+  "type": "module",
   "bin": {
     "rbook": "./bin/rbook.js"
   },

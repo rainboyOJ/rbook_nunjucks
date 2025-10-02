@@ -76,8 +76,11 @@ function buildNavigation(config) {
  * @param {Object} config - 配置对象
  * @returns {string} - 渲染后的HTML
  */
-function processFile(filePath, templateType = 'chapter', config) {
+function processFile(filePath, templateType = null, config) {
   const { data, html } = parseMarkdownFile(filePath);
+  
+  // 优先使用 FrontMatter 中的 layout 属性，否则使用传入的 templateType
+  const finalTemplateType = data.layout || templateType || 'chapter';
   
   // 根据页面类型选择模板
   const templateMap = {
@@ -90,12 +93,12 @@ function processFile(filePath, templateType = 'chapter', config) {
   const nav = buildNavigation(config);
   
   // 渲染最终页面
-  return renderTemplate(templateMap[templateType], {
+  return renderTemplate(templateMap[finalTemplateType], {
     site: config,
     page: {
       title: data.title || '无标题',
       content: html,
-      type: templateType,
+      type: finalTemplateType,
       path: filePath
     },
     nav: nav
@@ -114,17 +117,30 @@ function build() {
   // 加载配置
   const config = loadConfig();
   
+  // 构建所有Markdown文件
+  const buildMarkdownFile = (filePath, outputPath, defaultTemplateType = null) => {
+    if (fs.existsSync(filePath)) {
+      const html = processFile(filePath, defaultTemplateType, config);
+      
+      // 确保输出目录存在
+      const outputDir = path.dirname(outputPath);
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+      
+      fs.writeFileSync(outputPath, html);
+      return true;
+    }
+    return false;
+  };
+
   // 构建首页
-  if (fs.existsSync('book/index.md')) {
-    const indexHtml = processFile('book/index.md', 'index', config);
-    fs.writeFileSync('dist/index.html', indexHtml);
+  if (buildMarkdownFile('book/index.md', 'dist/index.html', 'index')) {
     console.log('✓ 首页构建完成');
   }
   
   // 构建关于页面（如果存在）
-  if (fs.existsSync('book/about.md')) {
-    const aboutHtml = processFile('book/about.md', 'page', config);
-    fs.writeFileSync('dist/about.html', aboutHtml);
+  if (buildMarkdownFile('book/about.md', 'dist/about.html', 'page')) {
     console.log('✓ 关于页面构建完成');
   }
   
@@ -132,15 +148,9 @@ function build() {
   if (config.chapters) {
     config.chapters.forEach(chapter => {
       const chapterPath = `book/${chapter.path}/index.md`;
-      if (fs.existsSync(chapterPath)) {
-        // 确保章节目录存在
-        const distChapterPath = `dist/${chapter.path}`;
-        if (!fs.existsSync(distChapterPath)) {
-          fs.mkdirSync(distChapterPath, { recursive: true });
-        }
-        
-        const html = processFile(chapterPath, 'chapter', config);
-        fs.writeFileSync(`${distChapterPath}/index.html`, html);
+      const outputPath = `dist/${chapter.path}/index.html`;
+      
+      if (buildMarkdownFile(chapterPath, outputPath, 'chapter')) {
         console.log(`✓ 章节构建完成: ${chapter.title}`);
       } else {
         console.warn(`⚠ 章节文件不存在: ${chapterPath}`);
@@ -195,10 +205,13 @@ function build() {
   }
 }
 
-module.exports = {
-  loadConfig,
-  renderTemplate,
-  buildNavigation,
-  processFile,
-  build
-};
+// module.exports = {
+//   loadConfig,
+//   renderTemplate,
+//   buildNavigation,
+//   processFile,
+//   build
+// };
+export const build = function () {  
+  console.log('build');
+}

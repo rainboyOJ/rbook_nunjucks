@@ -89,16 +89,15 @@ function getMarkdownFileFromUrl(url) {
 /**
  * 渲染页面到内存
  * @param {string} filePath - Markdown文件路径
- * @param {string} templateType - 模板类型
  * @returns {string} - 渲染后的HTML
  */
-function renderPageToMemory(filePath, templateType) {
+function renderPageToMemory(filePath) {
   try {
     if (!fs.existsSync(filePath)) {
       throw new Error(`文件不存在: ${filePath}`);
     }
 
-    const html = processFile(filePath, templateType, cache.config);
+    const html = processFile(filePath, null, cache.config);
     cache.pages[filePath] = {
       html,
       timestamp: Date.now()
@@ -146,7 +145,7 @@ function handleRequest(req, res) {
 
   try {
     // 懒渲染：只在请求时渲染
-    const html = renderPageToMemory(pageInfo.filePath, pageInfo.templateType);
+    const html = renderPageToMemory(pageInfo.filePath);
     
     res.writeHead(200, { 
       'Content-Type': 'text/html',

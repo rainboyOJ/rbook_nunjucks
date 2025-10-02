@@ -1,5 +1,6 @@
 ---
 title: 欢迎阅读
+layout: index
 ---
 
 # 欢迎来到《我的书》
