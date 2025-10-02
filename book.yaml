@@ -1,6 +1,6 @@
-title: 我的书 (热加载测试)
-author: 张三
-description: 这是一本关于算法的书 (热加载测试)
+title: 我的算法书 
+author: rainboy
+description: 这是一本关于算法的书 
 
 chapters:
   - title: 第一章
