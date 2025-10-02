@@ -1,11 +1,46 @@
-<nav class="main-navigation">
-    <div class="container">
-        <ul class="nav-menu">
-        {% for item in nav %}
-            <li class="nav-item {{ item.type }}{% if item.path == page.path %} active{% endif %}">
-                <a href="{{ item.path }}">{{ item.title }}</a>
-            </li>
-        {% endfor %}
-        </ul>
-    </div>
-</nav>
+{% macro render_list(items, parent_path='') %}
+  {% if items %}
+  <ul>
+    {% for item in items %}
+      {% set current_path = parent_path + item.path %}
+      <li>
+        <a href="{{ current_path }}/">{{ item.title }}</a>
+        {% if item.sections %}
+          {{ render_list(item.sections, current_path + '/') }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% endmacro %}
+
+{{ render_list(chapters) }}
+
+{#
+它是如何工作的？
+定义宏：
+{% macro render_list(items, parent_path='') %}
+我们定义了一个名为 render_list 的宏，它接受两个参数：
+
+items: 你要渲染的列表，比如最顶层的 chapters 数组，或者内部的 sections 数组。
+
+parent_path: 父级的路径，默认值是空字符串。这个参数非常关键，它用于在每次递归调用时构建正确的完整路径。
+
+构建路径：
+{% set current_path = parent_path + item.path %}
+在每次循环中，我们都将当前的 item.path 与父级的 parent_path 拼接起来，得到当前项的完整路径。例如，对于 chapter3 下的 knapsack，parent_path 是 chapter3/，item.path 是 knapsack，拼接后 current_path 就变成了 chapter3/knapsack。
+
+递归调用：
+{{ render_list(item.sections, current_path + '/') }}
+这是整个解决方案的核心。当一个 item 包含 sections 属性时，我们递归地调用宏自身。
+
+第一个参数是 item.sections，也就是下一级的列表。
+
+第二个参数是 current_path + '/'，我们将当前项的完整路径传递给下一级，并加上一个斜杠，以便下一级能继续正确拼接。
+
+初始调用：
+{{ render_list(chapters) }}
+最后，我们在模板的根部调用这个宏，将最顶层的 chapters 数组作为参数传入，整个渲染过程就开始了。
+
+使用这个递归宏，无论你的 chapters 数据结构有多少层嵌套，Nunjucks 都可以动态地生成相应的 <ul> 和 <li> 列表，完美解决了你的问题。
+#}
