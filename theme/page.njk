@@ -6,7 +6,9 @@
         <h1>{{ front_matter.title }}</h1>
     </header>
     
-    {% include "partials/markdown-body.njk" %} 
+    <div class="container">
+        {% include "partials/markdown-body.njk" %} 
+    </div>
 
 </article>
 {% endblock %}

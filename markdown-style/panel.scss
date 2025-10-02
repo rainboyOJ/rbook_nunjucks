@@ -1,0 +1,40 @@
+.panel {
+    position: fixed;
+    z-index: 2;
+    right: 14px;
+    top: 14px;
+
+    li {
+        list-style-type: none;
+    }
+    input {
+        display: none;
+    }
+
+    .panel-list {
+        display: flex;
+        font-size: 1.2rem;
+
+        label {
+            display: block;
+            cursor: pointer;
+            padding-inline-start: 8px;
+            padding-inline-end: 8px;
+            font-size: 18px;
+            border:1px solid ;
+            border-color: #565856e0;
+        }
+
+        input:checked + label {
+            background-color: #ccc;
+        }
+
+        li:first-child label {
+            border-radius: 8px 0 0 8px;
+        }
+
+        li:last-child label {
+            border-radius: 0 8px 8px 0;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+- [ ] menu 样式
+    - menu 样式
+    - menu rbook/index.js 获得menu json,不能使用原来的chapter,因为我们不知道哪些是有文章，哪些是没文章的
+    - 参考tmp/book menu 下面的 menu 样式
+    - fluent-mdl2:page-list, fluent-mdl2:page
+- [ ] 使用heti 作为我的markdown 主要排版 https://github.com/sivan/heti
+  - [ ] 去除markdown.css
+  - [ ] 引入heiti
+  - [ ] 定义自己的markdown.css 弥补heiti的不足
