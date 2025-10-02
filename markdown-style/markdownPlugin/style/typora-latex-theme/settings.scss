@@ -1,4 +1,4 @@
-@use "font.scss";
+@use "font.scss" as font;
 
 :root {
 
@@ -7,11 +7,11 @@
     // $chapter-Chinese-font: "方正公文黑体" !global;
     // $sub-chapter-Chinese-font: "方正公文楷体" !global;
     // $sub-sub-chapter-Chinese-font: "方正公文仿宋" !global;
-    $ui-font: font.$font_hei;
-    $heading-Chinese-font: font.$font_hei;
-    $chapter-Chinese-font: font.$font_hei;
-    $sub-chapter-Chinese-font: font.$font_hei;
-    $sub-sub-chapter-Chinese-font: font.$font_hei;
+    $ui-font: font.$font_lxgw;
+    $heading-Chinese-font: font.$font_lxgw;
+    $chapter-Chinese-font: font.$font_lxgw;
+    $sub-chapter-Chinese-font: font.$font_lxgw;
+    $sub-sub-chapter-Chinese-font: font.$font_lxgw;
 
   /* == 字体设置 == */
 
@@ -19,7 +19,7 @@
   /* 备选：Times, "Times New Roman" */
   --base-Latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times;
   // --base-Chinese-font: "家族宋", "宋体-简", "华文宋体", "Noto Serif CJK SC";
-  --base-Chinese-font: $__font_hei;
+  --base-Chinese-font: #{font.$font_lxgw};
   --base-font-size: 16px;
 
   /* 引言字体 */
