@@ -341,3 +341,8 @@ main {
         font-size: 1.5rem;
     }
 }
+
+/* 热加载测试样式 */
+.hot-reload-test {
+    color: red;
+}

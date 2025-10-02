@@ -9,13 +9,15 @@
   },
   "scripts": {
     "build": "node bin/rbook.js build",
-    "serve": "node bin/rbook.js serve"
+    "serve": "node bin/rbook.js serve",
+    "dev": "node src/server.js"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
-    "nunjucks": "^3.2.4"
+    "nunjucks": "^3.2.4",
+    "ws": "^8.18.3"
   },
   "engines": {
     "node": ">=14.0.0"
