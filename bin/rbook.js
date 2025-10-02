@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { build } from '../src/builder.js';
-import { serve } from '../src/server.js';
+// import { serve } from '../server.js.bak/index.js';
 
 // 获取命令行参数
 const args = process.argv.slice(2);
@@ -22,16 +22,16 @@ switch (command) {
     }
     break;
     
-  case 'serve':
-    const port = args[1] || 3000;
-    console.log(`启动开发服务器，端口: ${port}`);
-    try {
-      serve(port);
-    } catch (error) {
-      console.error('服务器启动失败:', error.message);
-      process.exit(1);
-    }
-    break;
+  // case 'serve':
+  //   const port = args[1] || 3000;
+  //   console.log(`启动开发服务器，端口: ${port}`);
+  //   try {
+  //     serve(port);
+  //   } catch (error) {
+  //     console.error('服务器启动失败:', error.message);
+  //     process.exit(1);
+  //   }
+  //   break;
     
   default:
     console.log('用法:');

@@ -12,14 +12,20 @@
     "serve": "node bin/rbook.js serve"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
-    "nunjucks": "^3.2.4",
-    "js-yaml": "^4.1.0"
+    "nunjucks": "^3.2.4"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "keywords": ["markdown", "static-site-generator", "book", "nunjucks"],
+  "keywords": [
+    "markdown",
+    "static-site-generator",
+    "book",
+    "nunjucks"
+  ],
   "author": "",
   "license": "MIT"
 }
