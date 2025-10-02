@@ -183,13 +183,22 @@ class rbook {
 
     // 处理assets 
     deal_assets() {
-        //复制 public 目录到 dist
-        const publicDir = path.join(__workdir, 'public');
-        const distDir = path.join(__workdir, 'dist');
-        if (fs.existsSync(publicDir)) {
-            fs.cpSync(publicDir, distDir, { recursive: true });
-        }
+        this.copy_dir('public', 'dist');
+        this.copy_dir('theme/assets', 'dist/assets');
     }
+
+    copy_dir(src, dest) {
+        const fullSrc = path.join(__workdir, src);
+        const fullDest = path.join(__workdir, dest);
+        if (!fs.existsSync(fullSrc)) {
+            throw new Error(`源目录不存在: ${src}`);
+        }
+        if (!fs.existsSync(fullDest)) {
+            fs.mkdirSync(fullDest, { recursive: true });
+        }
+        fs.cpSync(src, dest, { recursive: true });
+    }
+
 
 }
 
