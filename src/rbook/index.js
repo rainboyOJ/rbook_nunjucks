@@ -3,12 +3,14 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { nunjucksRender } from './renderEngine.js';
 
 // 获取当前文件的目录路径
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const __workdir = path.join(__dirname, '../../');
 const __bookdir = path.join(__workdir, 'book');
+const __themedir = path.join(__workdir, 'theme');
 
 class rbook {
     constructor() {
@@ -30,6 +32,30 @@ class rbook {
         }
     }
 
+    /**
+     * 解析FrontMatter和Markdown内容
+     * @param {string} content - 文件内容
+     * @returns {Object} - {data: FrontMatter数据, body: Markdown内容}
+     */
+    parseFrontMatter(content) {
+        const frontMatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+        const match = content.match(frontMatterRegex);
+        
+        if (match) {
+            const frontMatter = match[1];
+            const body = match[2];
+            try {
+                const data = yaml.load(frontMatter);
+                return { data, body };
+            } catch (error) {
+                throw new Error(`解析FrontMatter失败: ${error.message}`);
+            }
+        }
+        
+        // 如果没有FrontMatter，返回空数据和完整内容
+        return { data: {}, body: content };
+    }
+
     buildMarkdownFile (filePath, outputPath, defaultTemplateType = null) {
         const fullPath = path.join(__bookdir, filePath);
         if (fs.existsSync(fullPath)) {
@@ -43,19 +69,21 @@ class rbook {
             // 读取Markdown文件内容
             const content = fs.readFileSync(fullPath, 'utf8');
             
-            // 这里需要实现完整的Markdown处理逻辑
-            // 为了简化，我们先创建一个基本的HTML文件
-            const htmlContent = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${path.basename(filePath)}</title>
-</head>
-<body>
-    <h1>${path.basename(filePath)}</h1>
-    <pre>${content}</pre>
-</body>
-</html>`;
+            // 解析FrontMatter
+            const frontMatter = this.parseFrontMatter(content);
+            
+            // 确定模板类型
+            const templateType = frontMatter.data.layout || defaultTemplateType || 'page';
+            
+            // 准备渲染数据
+            const renderData = {
+                content: frontMatter.body, // Markdown正文内容
+                front_matter: frontMatter.data, // FrontMatter数据
+                config: this.config // 站点配置
+            };
+            
+            // 使用Nunjucks渲染模板
+            const htmlContent = nunjucksRender(__themedir, templateType, renderData);
             
             // 写入HTML文件
             fs.writeFileSync(fullOutputPath, htmlContent);
@@ -149,7 +177,7 @@ class rbook {
             
             // 获取所有Markdown文件
             const markdownFiles = this.AllMarkdownFiles;
-            console.log('找到的Markdown文件:', markdownFiles);
+            // console.log('找到的Markdown文件:', markdownFiles);
             
             // 构建所有Markdown文件
             for (const file of markdownFiles) {
