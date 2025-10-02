@@ -10,13 +10,15 @@
   "scripts": {
     "build": "node bin/rbook.js build",
     "serve": "node bin/rbook.js serve",
-    "dev": "node src/server.js"
+    "dev": "node src/server.js",
+    "postbuild": "bin/postbuild.sh"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
     "nunjucks": "^3.2.4",
+    "sass": "^1.93.2",
     "ws": "^8.18.3"
   },
   "engines": {

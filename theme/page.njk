@@ -6,8 +6,7 @@
         <h1>{{ front_matter.title }}</h1>
     </header>
     
-    <div class="page-content">
-        {{ html_content | safe }}
-    </div>
+    {% include "partials/markdown-body.njk" %} 
+
 </article>
 {% endblock %}

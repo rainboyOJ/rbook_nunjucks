@@ -1,0 +1,1 @@
+npx sass markdown-style/markdown.scss dist/markdown.css

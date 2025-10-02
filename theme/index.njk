@@ -8,9 +8,7 @@
         <p class="author">作者：{{ site.author }}</p>
     </header>
     
-    <div class="home-content">
-        {{ html_content | safe }}
-    </div>
+    {% include "partials/markdown-body.njk" %} 
     
     <section class="chapters-preview">
         <h2>目录</h2>
