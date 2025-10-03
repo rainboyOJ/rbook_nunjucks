@@ -1,6 +1,6 @@
 @use "sass:meta";
 @use "settings.scss";
-@use "container.css";
+@use "container.scss";
 @use "panel.scss";
 
 // @import "./dark.scss";
@@ -12,7 +12,27 @@
 html,body {
     font-size:62.5%;
     font-family: var(--base-Chinese-font);
-    background-color: hsl(0deg, 0%, 24%);
+    // background-color: hsl(0deg, 0%, 24%);
+}
+
+body {
+    color : var(--font-color-light);
+    background-color: var(--body-background-color-light);
+}
+
+@mixin dark-body-mode-styles {
+    color: var(--font-color-dark);
+    background-color: var(--body-background-color-dark);
+}
+
+[data-darkmode="dark"] body {
+    @include dark-body-mode-styles;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode=auto]  body {
+    @include dark-body-mode-styles;
+  }
 }
 
 .markdown-body {

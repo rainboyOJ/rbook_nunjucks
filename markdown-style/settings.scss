@@ -24,9 +24,6 @@
   /* "Consolas" 从 Windows Vista 起成为 Windows 官方提供的字体 */
   --code-font: "Latin Modern Mono", "Latin Modern Mono 10", "Consolas", "Courier New";
 
-  /* source mode 字体 */
-  /* 默认调用 code-font 和 ui-font */
-  --sourceMode-font: "SF Mono", #{$ui-font};
 
   /* 目录字体 */
   /* 默认调用 base-font */
@@ -43,6 +40,16 @@
   --link-color-light: #2E67D3;
   --link-color-dark: #8bb1f9;
 
+  --font-color-light: black;
+  --font-color-dark: #ccc;
 
+  // --body-background-color-light: white;
+  // --body-background-color-dark: #1e1e1e;
 
+  --body-background-color-light: #f5f5f5;
+  --body-background-color-dark: hsl(0deg, 0%, 24%);
+
+  --container-background-color-light: #ccc;
+  --container-background-color-dark: #1e1e1e;
+  
 }

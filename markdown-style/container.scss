@@ -4,7 +4,22 @@
   padding-block-end: 72px;
   padding-inline-start: 12px;
   padding-inline-end: 12px;
-  background-color: hsl(0deg, 0%, 16%);
+  /* background-color: hsl(0deg, 0%, 16%); */
+  background-color: var(--container-background-color-light);
+}
+
+@mixin dark-container-mode-styles {
+    background-color: var(--container-background-color-dark);
+}
+
+[data-darkmode="dark"] .container {
+    @include dark-container-mode-styles;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode=auto]  .container {
+    @include dark-container-mode-styles;
+  }
 }
 
 @media screen and (min-width: 640px) {

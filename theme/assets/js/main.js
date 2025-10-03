@@ -1,136 +1,55 @@
-// 主JavaScript文件
+/**
+ * 暗黑模式切换功能
+ */
+
+// 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('rbook 网站已加载');
+  // 获取所有暗黑模式切换按钮
+  const darkModeButtons = document.querySelectorAll('.J_darkMode');
+  
+  // 从localStorage获取保存的主题设置，如果没有则使用默认值
+  const savedTheme = localStorage.getItem('theme') || 'auto';
+  
+  // 设置当前主题
+  setTheme(savedTheme);
+  
+  // 为每个按钮添加事件监听器
+  darkModeButtons.forEach(button => {
+    // 如果按钮的值与保存的主题匹配，则选中它
+    if (button.value === savedTheme) {
+      button.checked = true;
+    }
     
-    // 添加平滑滚动效果
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+    // 添加change事件监听器
+    button.addEventListener('change', function() {
+      if (this.checked) {
+        setTheme(this.value);
+        // 保存选择到localStorage
+        localStorage.setItem('theme', this.value);
+      }
     });
-    
-    // 高亮当前页面在导航中的位置
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-item a');
-    navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
-        if (linkPath === currentPath || 
-            (currentPath === '/' && linkPath === '/') ||
-            (currentPath !== '/' && linkPath !== '/' && currentPath.startsWith(linkPath))) {
-            link.parentElement.classList.add('active');
+  });
+  
+  // 应用主题
+  function setTheme(theme) {
+    // 更新html元素的data-darkmode属性
+    document.documentElement.setAttribute('data-darkmode', theme);
+  }
+  
+  // 监听系统主题变化
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', function(e) {
+      // 只有在选择auto模式时才响应系统主题变化
+      if (document.documentElement.getAttribute('data-darkmode') === 'auto') {
+        if (e.matches) {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
         }
+      }
     });
-    
-    // 添加代码块复制功能
-    const codeBlocks = document.querySelectorAll('pre code');
-    codeBlocks.forEach(codeBlock => {
-        const pre = codeBlock.parentElement;
-        const button = document.createElement('button');
-        button.className = 'copy-button';
-        button.textContent = '复制';
-        button.addEventListener('click', function() {
-            const text = codeBlock.textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                button.textContent = '已复制!';
-                setTimeout(() => {
-                    button.textContent = '复制';
-                }, 2000);
-            }).catch(err => {
-                console.error('复制失败:', err);
-                button.textContent = '复制失败';
-                setTimeout(() => {
-                    button.textContent = '复制';
-                }, 2000);
-            });
-        });
-        pre.style.position = 'relative';
-        pre.appendChild(button);
-    });
-    
-    // 添加目录折叠功能
-    const tocToggle = document.querySelector('.toc-toggle');
-    const tocNav = document.querySelector('.toc-nav');
-    
-    if (tocToggle && tocNav) {
-        tocToggle.addEventListener('click', function() {
-            tocNav.classList.toggle('collapsed');
-            this.classList.toggle('collapsed');
-        });
-    }
-    
-    // 响应式菜单切换
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('show');
-            this.classList.toggle('active');
-        });
-    }
-    
-    // 打印功能
-    const printButton = document.querySelector('.print-button');
-    if (printButton) {
-        printButton.addEventListener('click', function() {
-            window.print();
-        });
-    }
-    
-    // 搜索功能（如果有搜索框）
-    const searchInput = document.querySelector('.search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const contentElements = document.querySelectorAll('.page-content, .chapter-content');
-            
-            contentElements.forEach(element => {
-                const text = element.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    element.style.display = 'block';
-                } else {
-                    element.style.display = 'none';
-                }
-            });
-        });
-    }
-});
-
-// 工具函数
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-}
-
-// 页面加载性能监控
-window.addEventListener('load', function() {
-    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-    console.log(`页面加载时间: ${loadTime}ms`);
-});
-
-// 错误处理
-window.addEventListener('error', function(e) {
-    console.error('JavaScript错误:', e.error);
-});
-
-window.addEventListener('unhandledrejection', function(e) {
-    console.error('未处理的Promise拒绝:', e.reason);
+  }
 });
