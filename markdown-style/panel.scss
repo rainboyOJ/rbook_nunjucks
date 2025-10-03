@@ -1,5 +1,7 @@
 .panel {
     position: fixed;
+    display: flex;
+    gap: 10px;
     z-index: 2;
     right: 14px;
     top: 14px;
@@ -15,25 +17,30 @@
         display: flex;
         font-size: 1.2rem;
 
-        label {
+        label,a {
             display: block;
             cursor: pointer;
             padding-inline-start: 8px;
             padding-inline-end: 8px;
             font-size: 18px;
             border:1px solid ;
+            border-right:none;
             border-color: #565856e0;
+            text-decoration: none;
         }
 
         input:checked + label {
             background-color: #ccc;
         }
 
-        li:first-child label {
+        li:first-child label,li:first-child a {
+            // border-left:1px solid ;
             border-radius: 8px 0 0 8px;
         }
 
-        li:last-child label {
+        li:last-child label,li:last-child a {
+            border-right: 1px solid;
+            border-color: #565856e0;
             border-radius: 0 8px 8px 0;
         }
     }
