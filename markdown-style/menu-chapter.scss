@@ -1,0 +1,238 @@
+.chapters-preview {
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    background-color: var(--body-background-color-light);
+}
+
+[data-darkmode="dark"] .chapters-preview {
+    border: 1px solid #444;
+    background-color: var(--body-background-color-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapters-preview {
+        border: 1px solid #444;
+        background-color: var(--body-background-color-dark);
+    }
+}
+
+.chapter-list {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    font-size: 1.08rem;
+    color: #222;
+}
+
+[data-darkmode="dark"] .chapter-list {
+    color: #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list {
+        color: #ddd;
+    }
+}
+
+.chapter-list > li {
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+    font-size: 1.15rem;
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+[data-darkmode="dark"] .chapter-list > li {
+    color: #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list > li {
+        color: #ddd;
+    }
+}
+
+.chapter-list > li > a {
+    color: #222;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+[data-darkmode="dark"] .chapter-list > li > a {
+    color: #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list > li > a {
+        color: #ddd;
+    }
+}
+
+.chapter-list > li > a:hover {
+    text-decoration: underline;
+    color: #555;
+}
+
+[data-darkmode="dark"] .chapter-list > li > a:hover {
+    color: #aaa;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list > li > a:hover {
+        color: #aaa;
+    }
+}
+
+.chapter-list ul {
+    list-style: none;
+    margin-left: 10px;
+    padding-left: 20px;
+    border-left: 1px dashed #ddd;
+}
+
+[data-darkmode="dark"] .chapter-list ul {
+    border-left: 1px dashed #555;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list ul {
+        border-left: 1px dashed #555;
+    }
+}
+
+.chapter-list ul li {
+    font-weight: normal;
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+    color: #444;
+    position: relative;
+    padding-left: 0.2rem;
+}
+
+[data-darkmode="dark"] .chapter-list ul li {
+    color: #bbb;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list ul li {
+        color: #bbb;
+    }
+}
+
+.chapter-list ul li a {
+    color: #444;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font-weight: normal;
+}
+
+[data-darkmode="dark"] .chapter-list ul li a {
+    color: #bbb;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list ul li a {
+        color: #bbb;
+    }
+}
+
+.chapter-list ul li a:hover {
+    text-decoration: underline;
+    color: #888;
+}
+
+[data-darkmode="dark"] .chapter-list ul li a:hover {
+    color: #999;
+}
+
+/*目录标题 */
+.chapters-preview h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 1.2rem;
+    letter-spacing: 1px;
+}
+
+[data-darkmode="dark"] .chapters-preview h2 {
+    color: #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapters-preview h2 {
+        color: #ddd;
+    }
+}
+
+/* 文件夹样式 */
+.chapter-list > li.folder,
+.chapter-list > li.folder > a {
+    color: #777;
+    font-weight: bold;
+}
+
+[data-darkmode="dark"] .chapter-list > li.folder,
+[data-darkmode="dark"] .chapter-list > li.folder > a {
+    color: #999;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list > li.folder,
+    [data-darkmode="auto"] .chapter-list > li.folder > a {
+        color: #999;
+    }
+}
+
+/* 图标样式 */
+.chapter-list li:before {
+    margin-right: 10px;
+    content: "";
+    height: 20px;
+    vertical-align: middle;
+    width: 20px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    /* 文件图标 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightgrey' d='M85.714,42.857V87.5c0,1.487-0.521,2.752-1.562,3.794c-1.042,1.041-2.308,1.562-3.795,1.562H19.643 c-1.488,0-2.307-0.521-3.794-1.562c-1.042-1.042-1.562-2.307-1.562-3.794v-75c0-1.487,0.521-2.752,1.562-3.794 c1.041-1.041,2.306-1.562,3.794-1.562H50V37.5c0,1.488,0.521,2.753,1.562,3.795s2.307,1.562,3.795,1.562H85.714z M85.546,35.714 H57.143V7.311c3.05,0.558,5.505,1.767,7.366,3.627l17.41,17.411C83.78,30.209,84.989,32.665,85.546,35.714z' /></svg>");
+    background-position: center 2px;
+    background-size: 60% auto;
+}
+
+[data-darkmode="dark"] .chapter-list li:before {
+    /* 文件图标 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23999' d='M85.714,42.857V87.5c0,1.487-0.521,2.752-1.562,3.794c-1.042,1.041-2.308,1.562-3.795,1.562H19.643 c-1.488,0-2.307-0.521-3.794-1.562c-1.042-1.042-1.562-2.307-1.562-3.794v-75c0-1.487,0.521-2.752,1.562-3.794 c1.041-1.041,2.306-1.562,3.794-1.562H50V37.5c0,1.488,0.521,2.753,1.562,3.795s2.307,1.562,3.795,1.562H85.714z M85.546,35.714 H57.143V7.311c3.05,0.558,5.505,1.767,7.366,3.627l17.41,17.411C83.78,30.209,84.989,32.665,85.546,35.714z' /></svg>");
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list li:before {
+        /* 文件图标 */
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23999' d='M85.714,42.857V87.5c0,1.487-0.521,2.752-1.562,3.794c-1.042,1.041-2.308,1.562-3.795,1.562H19.643 c-1.488,0-2.307-0.521-3.794-1.562c-1.042-1.042-1.562-2.307-1.562-3.794v-75c0-1.487,0.521-2.752,1.562-3.794 c1.041-1.041,2.306-1.562,3.794-1.562H50V37.5c0,1.488,0.521,2.753,1.562,3.795s2.307,1.562,3.795,1.562H85.714z M85.546,35.714 H57.143V7.311c3.05,0.558,5.505,1.767,7.366,3.627l17.41,17.411C83.78,30.209,84.989,32.665,85.546,35.714z' /></svg>");
+    }
+}
+
+.chapter-list li.folder:before {
+    /* 文件夹图标 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightblue' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
+    background-position: center top;
+    background-size: 75% auto;
+}
+
+[data-darkmode="dark"] .chapter-list li.folder:before {
+    /* 文件夹图标 */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23666' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .chapter-list li.folder:before {
+        /* 文件夹图标 */
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23666' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
+    }
+}

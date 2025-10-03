@@ -11,11 +11,11 @@
     
     <div class="container">
         {% include "partials/markdown-body.njk" %} 
+        <section class="chapters-preview">
+            <h2>目录</h2>
+            {% include "partials/menu.njk" %}
+        </section>
     </div>
     
-    <section class="chapters-preview">
-        <h2>目录</h2>
-        {% include "partials/menu.njk" %}
-    </section>
 </article>
 {% endblock %}
