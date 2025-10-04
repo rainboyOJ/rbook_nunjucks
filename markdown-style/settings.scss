@@ -7,6 +7,10 @@
   /* 备选：Times, "Times New Roman" */
   --base-Latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times;
   --base-Chinese-font: #{font.$font_lxgw};
+  --base-Header-font: #{font.$font_hei};
+  --base-font: var(--base-Latin-font), var(--base-Chinese-font);
+
+  /* 基准字体大小 */
   --base-font-size: 16px;
 
   /* 引言字体 */

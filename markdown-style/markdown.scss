@@ -15,8 +15,6 @@
 
 html,body {
     font-size:62.5%;
-    font-family: var(--base-Chinese-font);
-    // background-color: hsl(0deg, 0%, 24%);
 }
 
 body {
@@ -42,4 +40,12 @@ body {
 .markdown-body {
     max-width:800px;
     margin: 0 auto;
+}
+
+
+.markdown-body { 
+    h1,h2,h3,h4,h5,h6 {
+        font-weight: 800;
+        font-family: var(--base-Header-font);
+    }
 }
