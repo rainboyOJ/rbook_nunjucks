@@ -1,0 +1,79 @@
+// modal-menu 弹窗样式
+.modal-menu {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-menu-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(44, 62, 80, 0.35);
+  backdrop-filter: blur(2px);
+}
+
+.modal-menu-content {
+  position: relative;
+  min-width: 320px;
+  max-width:  800px;
+  margin: 0 auto;
+  max-height: 80vh;
+  background: var(--container-background-color-light);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px hsla(0,0%,0%,0.18);
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modal-menu-content h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+  color: #222;
+}
+
+.modal-menu-close {
+  position: absolute;
+  right: 1.2rem;
+  top: 1.2rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-menu-close:hover {
+  color: #3498db;
+}
+
+[data-darkmode="dark"] .modal-menu-content {
+  background: var(--container-background-color-dark);
+  color: #e3e8ee;
+}
+[data-darkmode="dark"] .modal-menu-content h2 {
+  color: #e3e8ee;
+}
+[data-darkmode="dark"] .modal-menu-mask {
+  background: rgba(44, 62, 80, 0.65);
+}
+
+@media (max-width: 600px) {
+  .modal-menu-content {
+    min-width: 0;
+    width: 96vw;
+    padding: 1rem 0.5rem;
+  }
+}
