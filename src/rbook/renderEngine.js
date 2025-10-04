@@ -10,6 +10,7 @@ import path from 'path';
  * @return {string} html - 渲染后的HTML
  */
 export const nunjucksRender = function (theme_dir, layout_name, data) {
+
     // 检查主题目录是否存在
     if (!fs.existsSync(theme_dir)) {
         throw new Error(`主题目录不存在: ${theme_dir}`);
@@ -20,6 +21,7 @@ export const nunjucksRender = function (theme_dir, layout_name, data) {
         autoescape: true,
         noCache: true
     });
+
     
     // 构建模板路径
     const templatePath = `${layout_name}.njk`;
@@ -32,14 +34,14 @@ export const nunjucksRender = function (theme_dir, layout_name, data) {
     
     try {
         // 准备渲染上下文
-        const context = {
-            site: data.config || {},
-            page: {
-                ...(data.front_matter || {}),
-                content: data.content || ''  // 将content添加到page对象中
-            },
-            assets: data.assets || {}
-        };
+        // const context = {
+        //     site: data.config || {},
+        //     page: {
+        //         ...(data.front_matter || {}),
+        //         content: data.content || ''  // 将content添加到page对象中
+        //     },
+        //     assets: data.assets || {}
+        // };
         
         // 渲染模板
         // console.log('渲染模板:', templatePath, '数据:', data);

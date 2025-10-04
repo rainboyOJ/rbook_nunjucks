@@ -148,6 +148,9 @@ class rbook {
             
             // 加载配置
             const config = this.config;
+
+            // 渲染菜单
+            this.config.menuHtml = this.renderMenu();
             
             // 获取所有Markdown文件
             const markdownFiles = this.AllMarkdownFiles;
@@ -158,6 +161,7 @@ class rbook {
                 const outputPath = path.join('dist', file).replace(/\.md$/, '.html');
                 this.buildMarkdownFile(file, outputPath);
             }
+
 
             // 构建首页
             this.renderIndex();
@@ -171,12 +175,17 @@ class rbook {
         }
     }
 
+    /**
+     * @return {string} 返回渲染后的菜单HTML
+     */
+    renderMenu() {
+        const htmlContent = nunjucksRender(__themedir, 'partials/menu', this.config);
+        return htmlContent
+    }
+
     renderIndex() {
         // 构建首页
-        let data = {
-            chapters: this.config.chapters
-        }
-        if (this.buildMarkdownFile('index.md', 'dist/index.html', 'index', data)) {
+        if (this.buildMarkdownFile('index.md', 'dist/index.html', 'index', {site : this.config})) {
             console.log('✓ 首页构建完成');
         }
     }

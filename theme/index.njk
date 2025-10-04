@@ -13,7 +13,7 @@
         {% include "partials/markdown-body.njk" %} 
         <section class="chapters-preview">
             <h2>目录</h2>
-            {% include "partials/menu.njk" %}
+            {{ site.menuHtml | safe }}
         </section>
     </div>
     
