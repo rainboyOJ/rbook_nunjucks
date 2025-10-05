@@ -1,0 +1,187 @@
+{
+	"rbook Front Matter": {
+		"scope": "markdown",
+		"prefix": "rbook-front",
+		"body": [
+			"---",
+			"title: \"${1:${TM_FILENAME_BASE}}\"",
+			"date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE",
+			"toc: true",
+			"tags: [\"$4\"]",
+			"categories: [\"${4}\"]",
+			"---",
+			"",
+			"$5"
+		],
+		"description": "rbook文章前置元数据 - title默认使用文件名"
+	},
+	"rbook Include Shortcode": {
+		"scope": "markdown",
+		"prefix": "rbook-include",
+		"body": [
+			"{{< include \"${1:src/demo/file.ts}\" \"${2:ts}\" >}}"
+		],
+		"description": "rbook include代码片段shortcode"
+	},
+	"rbook Details Shortcode": {
+		"scope": "markdown",
+		"prefix": "rbook-details",
+		"body": [
+			"{{% details title=\"${1:Title}\" ${2|open=true,open=false|} %}}",
+			"${3:## Markdown content",
+			"Lorem markdownum insigne...}",
+			"{{% /details %}}"
+		],
+		"description": "rbook details折叠内容shortcode"
+	},
+	"rbook Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-admonition",
+		"body": [
+			"> [!${1|IDEA,TIP,WARNING,SUCCESS,ERROR,INFO,QUESTION,TODO,EXAMPLE,DANGER,ABSTRACT,CONCLUSION,NOTE,IMPORTANT,CAUTION,QUOTE,CODE,EXPERIMENT,MEMO,TASK,GOAL,NOTIFY|}] ${2|摘要,重要,注意,警告,提示,想法,问题,示例,错误,成功,信息,抽象,结论,危险,告诫,重要,引用,代码,实验,备忘录,任务,目标,通知|}",
+			"> ${3:内容这里}"
+		],
+		"description": "rbook Admonition提示框 - 支持所有类型，title提供中文选择"
+	},
+	"rbook Info Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-info",
+		"body": [
+			"> [!INFO] ${1|信息,重要,注意,提示|}",
+			"> ${2:信息内容 here}"
+		],
+		"description": "rbook Info提示框 - 常用信息提示"
+	},
+	"rbook Question Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-question",
+		"body": [
+			"> [!QUESTION] ${1|问题,疑问,疑惑|}",
+			"> ${2:问题内容 here}"
+		],
+		"description": "rbook Question提示框 - 常用问题提示"
+	},
+	"rbook Warning Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-warning",
+		"body": [
+			"> [!WARNING] ${1|警告,注意,重要|}",
+			"> ${2:警告内容 here}"
+		],
+		"description": "rbook Warning提示框 - 常用警告提示"
+	},
+	"rbook Tip Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-tip",
+		"body": [
+			"> [!TIP] ${1|提示,技巧,建议|}",
+			"> ${2:提示内容 here}"
+		],
+		"description": "rbook Tip提示框 - 常用提示技巧"
+	},
+	"rbook Success Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-success",
+		"body": [
+			"> [!SUCCESS] ${1|成功,完成,通过|}",
+			"> ${2:成功内容 here}"
+		],
+		"description": "rbook Success提示框 - 常用成功提示"
+	},
+	"rbook Error Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-error",
+		"body": [
+			"> [!ERROR] ${1|错误,失败,问题|}",
+			"> ${2:错误内容 here}"
+		],
+		"description": "rbook Error提示框 - 常用错误提示"
+	},
+	"rbook Important Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-important",
+		"body": [
+			"> [!IMPORTANT] ${1|重要,注意,关键|}",
+			"> ${2:重要内容 here}"
+		],
+		"description": "rbook Important提示框 - 常用重要提示"
+	},
+	"rbook Admonition with Expand": {
+		"scope": "markdown",
+		"prefix": "rbook-admonition-expand",
+		"body": [
+			"> [!${1|IDEA,TIP,WARNING,SUCCESS,ERROR,INFO,QUESTION,TODO,EXAMPLE,DANGER,ABSTRACT,CONCLUSION,NOTE,IMPORTANT,CAUTION,QUOTE,CODE,EXPERIMENT,MEMO,TASK,GOAL,NOTIFY|}]${2|+,-|} ${3|摘要,重要,注意,警告,提示,想法,问题,示例,错误,成功,信息,抽象,结论,危险,告诫,重要,引用,代码,实验,备忘录,任务,目标,通知|}",
+			"> ${4:点击这里查看内容}"
+		],
+		"description": "rbook Admonition可展开提示框 - +展开/-折叠，title提供中文选择"
+	},
+	"rbook Nested Admonition": {
+		"scope": "markdown",
+		"prefix": "rbook-admonition-nested",
+		"body": [
+			"> [!${1|IDEA,TIP,WARNING,SUCCESS,ERROR,INFO,QUESTION,TODO,EXAMPLE|}] ${2:Outer Title}",
+			"> > [!${3|IDEA,TIP,WARNING,SUCCESS,ERROR,INFO,QUESTION,TODO,EXAMPLE|}] ${4:Inner Title}",
+			"> > ${5:Nested content here}",
+			"> ${6:Outer content here}"
+		],
+		"description": "rbook嵌套Admonition提示框"
+	},
+	"KaTeX Math": {
+		"scope": "markdown",
+		"prefix": "katex",
+		"body": [
+			"${1|$,$$|}${2:math expression}${1|$,$$|}"
+		],
+		"description": "KaTeX数学公式 - 自动选择行内或块级"
+	},
+	"KaTeX Block Math Multi-line": {
+		"scope": "markdown",
+		"prefix": "katex-block-multi",
+		"body": [
+			"$$",
+			"${1:multi-line}",
+			"${2:math expression}",
+			"${3:here}",
+			"$$"
+		],
+		"description": "KaTeX多行块级数学公式"
+	},
+	"rbook Code Block": {
+		"scope": "markdown",
+		"prefix": "rbook-code",
+		"body": [
+			"```${1:language}${2|,{linenos=table,hl_lines=[]},|}",
+			"${3:// code here}",
+			"```"
+		],
+		"description": "rbook代码块 - 可选行号和高亮"
+	},
+	"rbook Link or Image": {
+		"scope": "markdown",
+		"prefix": "rbook-media",
+		"body": [
+			"${1|![,|[}${2:alt text}](${3:/images/filename.png|https://example.com|})"
+		],
+		"description": "Markdown链接或图片 - 自动选择类型"
+	},
+	"rbook Table": {
+		"scope": "markdown",
+		"prefix": "rbook-table",
+		"body": [
+			"| ${1:Header 1} | ${2:Header 2} | ${3:Header 3} |",
+			"|${4:-${5:-}|${6:-}${7:-}|${8:-}${9:-}|",
+			"| ${10:Cell 1}  | ${11:Cell 2}  | ${12:Cell 3}  |",
+			"| ${13:Cell 4}  | ${14:Cell 5}  | ${15:Cell 6}  |"
+		],
+		"description": "Markdown表格 - 灵活列数"
+	},
+	"rbook Quick Actions": {
+		"scope": "markdown",
+		"prefix": "rbook-quick",
+		"body": [
+			"${1|include,details,admonition,code,math|}",
+			"${2:content}"
+		],
+		"description": "rbook快速操作 - 选择常用功能"
+	}
+}
