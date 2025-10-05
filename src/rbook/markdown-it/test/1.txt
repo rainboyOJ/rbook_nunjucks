@@ -1,3 +1,12 @@
+test lineNumber
+
+```js
+line 1
+line 2
+line 3
+```
+
+
 ```js [g1:JavaScript]
 console.log("hello");
 ```

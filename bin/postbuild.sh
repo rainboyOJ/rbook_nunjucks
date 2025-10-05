@@ -1,1 +1,1 @@
-npx sass markdown-style/markdown.scss dist/markdown.css
+npx sass --load-path=src/rbook/markdown-it/assets markdown-style/markdown.scss dist/markdown.css

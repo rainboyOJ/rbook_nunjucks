@@ -33,8 +33,7 @@ const lineNumbers = (rawCode,lang,rawlang) => {
 
 }
 
-
-export default md => {
+const lineNumber =  md => {
     const fence = md.renderer.rules.fence
     md.renderer.rules.fence =  (...args)=>{
         const [tokens, idx] = args
@@ -52,22 +51,24 @@ export default md => {
         }
 
         let lang = info.toLowerCase()
-        if (lang === 'vue' || lang === 'html') {
+        if( lang === 'js')
+            lang = 'javascript'
+        else if (lang === 'vue' || lang === 'html') {
             lang = 'markup'
         }
-        if (lang === 'md') {
+        else if (lang === 'md') {
             lang = 'markdown'
         }
-        if (lang === 'ts') {
+        else if (lang === 'ts') {
             lang = 'typescript'
         }
-        if (lang === 'py') {
+        else if (lang === 'py') {
             lang = 'python'
         }
-        if( lang === 'c++' ||  lang === 'c' || lang==="cpp"){
+        else if( lang === 'c++' ||  lang === 'c' || lang==="cpp"){
             lang = 'clike'
         }
-        const support_lang = ['python','clike','markup','markdown','bash','sh','haskell']
+        const support_lang = ['python','clike','markup','markdown','bash','sh','haskell','javascript']
         // console.log('lang--->',lang)
         if( support_lang.indexOf(lang) != -1) {
             // console.log('support_lang')
@@ -76,3 +77,5 @@ export default md => {
         return fence(...args)
     }
 }
+
+export default lineNumber

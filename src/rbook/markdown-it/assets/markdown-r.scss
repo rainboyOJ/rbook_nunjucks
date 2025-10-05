@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:math";
+@use "./plugin/clipcopy.scss";
+
 $MARGIN: 30px;
 
 //根元素的字体大小，影响其它rem
@@ -59,11 +63,11 @@ html {
             padding: 0.3em 0.6em;
             width: auto;
             font-weight: bold;
-            text-shadow: 1px 1px 0 lighten(midnightblue,65%);
+            text-shadow: 1px 1px 0 color.adjust(midnightblue, $lightness: 65%);
             cursor: pointer;
-            // background: lighten(midnightblue,55%) linear-gradient(to bottom, lighten(midnightblue,60%)  48%, lighten(midnightblue,55%)  52%);
+            // background: color.adjust(midnightblue, $lightness: 55%) linear-gradient(to bottom, color.adjust(midnightblue, $lightness: 60%)  48%, color.adjust(midnightblue, $lightness: 55%)  52%);
             // background-color: rgb(233, 236, 239);
-            // border: solid 1px lighten(midnightblue,40%);
+            // border: solid 1px color.adjust(midnightblue, $lightness: 40%);
             border-radius: 0.3em;
             // color: midnightblue;
             user-select: none;
@@ -96,16 +100,16 @@ html {
         }
         article {
             //padding: 0 1em;
-            border: solid 1px lighten(midnightblue,40%);
-            border-top-color: hsl(0,0,90%);
+            border: solid 1px color.adjust(midnightblue, $lightness: 40%);
+            border-top-color: hsl(0, 0%, 90%);
             //background: white;
         }
 
         &[open] {
             summary {
-                color: darken(midnightblue,10%);
+                color: color.adjust(midnightblue, $lightness: -10%);
                 text-shadow: none;
-                background: lighten(midnightblue,45%);
+                background: color.adjust(midnightblue, $lightness: 45%);
                 border-radius: 0.3em 0.3em 0 0 ;
                 &:before { 
                     transform: rotate(90deg);
@@ -191,8 +195,8 @@ html {
         background: #ccc;
         border-left: 5px solid red;
         min-height: 50px;
-        margin-top: $MARGIN/2;
-        margin-bottom: $MARGIN/2;
+        margin-top: math.div($MARGIN, 2);
+        margin-bottom: math.div($MARGIN, 2);
         padding: 12px 24px 12px 30px;
         .title-icon {
             position: absolute;
@@ -209,7 +213,7 @@ html {
         border-color: #ff9800;
         .title-icon {
             img {
-                background: darken($color: #ff9800, $amount: 10%);
+                background: color.adjust(#ff9800, $lightness: -10%);
             }
         }
     }
@@ -218,7 +222,7 @@ html {
         border-color: #00529B;
         .title-icon {
             img {
-                background: lighten($color: #00529B, $amount: 30%);
+                background: color.adjust(#00529B, $lightness: 30%);
             }
         }
     }
@@ -226,7 +230,7 @@ html {
     .error{
         .title-icon {
             img {
-                background: lighten($color: red, $amount: 20%);
+                background: color.adjust(red, $lightness: 20%);
             }
         }
     }
@@ -392,4 +396,3 @@ iframe.bilibili_iframe {
     }
 }
 
-@import "./plugin/clipcopy.scss"
