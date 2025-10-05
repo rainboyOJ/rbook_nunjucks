@@ -1,5 +1,6 @@
 import * as matter from 'gray-matter';
-import markdownit from './markdownit.js';
+// import markdownit from './markdownit.js';
+import markdownit from './markdown-it/index.js';
 import fs from 'fs';
 
 class Markdown {
