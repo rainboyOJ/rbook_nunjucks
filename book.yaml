@@ -2,6 +2,8 @@ title: 我的算法书
 author: rainboy
 description: 这是一本关于算法的书 
 
+github_repository: https://github.com/rainboyOJ/rbook_nunjucks
+
 chapters:
   - title: 第一章
     path: chapter1

@@ -1,0 +1,16 @@
+.powered-by {
+    /* 居中整个P标签的内容 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    a {
+      font-size: 18px;
+    }
+}
+
+.powered-by img {
+    /* 将图片垂直对齐到文字的中间 */
+    vertical-align: middle;
+    width: 18px;
+}
