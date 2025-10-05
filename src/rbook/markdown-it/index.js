@@ -10,6 +10,8 @@ import mdItContainer from 'markdown-it-container';
 import tocAndAnchor from 'markdown-it-toc-and-anchor';
 const markdownItTocAndAnchor = tocAndAnchor.default;
 import uslug from 'uslug';
+import admonition  from 'markdown-it-admonition'
+
 
 import MarkdownIt from 'markdown-it';
 
@@ -39,7 +41,7 @@ md.use(markdownItTocAndAnchor, {
     permalinkBefore: true,
     permalinkSymbol: '§',
     slugify: uslug
-})
+}).use(admonition)
 
 // 不能使用
 // md.use(LinkAttributes, {
