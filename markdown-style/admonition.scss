@@ -51,7 +51,7 @@
 }
 
 .admonition .admonition-title:before {
-  font-family: "Font Awesome", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "FontAwesome";
   margin-right: 0.5rem;
   font-weight: normal;
   font-style: normal;
@@ -79,6 +79,9 @@
 }
 
 .admonition.note .admonition-title:before {
+  content: "\f05a";
+}
+.admonition.info .admonition-title:before {
   content: "\f05a";
 }
 
@@ -139,7 +142,7 @@
 }
 
 .admonition.question .admonition-title:before {
-  content: "\f059";
+  content: "\f128";
 }
 
 .admonition.warning {
@@ -199,7 +202,7 @@
 }
 
 .admonition.example .admonition-title:before {
-  content: "\f08d";
+  content: "\f0c3";
 }
 
 .admonition.quote {
