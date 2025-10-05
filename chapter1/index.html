@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - </title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/">🏡</a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()">📜</a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto">🌗</label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light">🌞</label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark">🌙</label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+
+<div class="chapter-list">
+  
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter1">第一章</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter2">第二章</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter2/chapter2-1">第一节</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter2/chapter2-2">第二节</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3">第三章 动态规划</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack">背包</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack/01-knapsack">01背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack/multiple-knapsack">多重背包</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear">线性</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear/lcs">lcs</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear/lis">lis</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);">第四章 数据结构</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="data-structure/binary-indexed-tree">树状数组</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/segment-tree">线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack">栈</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack/表达式">表达式求值</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack/monotonic-stack">单调栈</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="appendix">附录</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="appendix/vscode">vscode</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="appendix/vscode/如何调试.html">如何调试</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+</div>
+
+
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="page-header">
+        <h1>第一章 - 算法基础概念</h1>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <h1 id="第一章算法基础概念"><a class="markdownIt-Anchor" href="#第一章算法基础概念">#</a> 第一章：算法基础概念</h1>
+<nav class="table-of-contents"><ol><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AE%97%E6%B3%95%EF%BC%9F"> 什么是算法？</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81%EF%BC%9A"> 算法的基本特征：</a></li></ol></li><li><a href="#1.2-%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"> 1.2 算法的复杂度分析</a><ol><li><a href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"> 时间复杂度</a></li><li><a href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"> 空间复杂度</a></li></ol></li><li><a href="#1.3-%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"> 1.3 常见数据结构</a><ol><li><a href="#%E6%95%B0%E7%BB%84%EF%BC%88array%EF%BC%89"> 数组（Array）</a></li><li><a href="#%E9%93%BE%E8%A1%A8%EF%BC%88linked-list%EF%BC%89"> 链表（Linked List）</a></li><li><a href="#%E6%A0%88%EF%BC%88stack%EF%BC%89"> 栈（Stack）</a></li><li><a href="#%E9%98%9F%E5%88%97%EF%BC%88queue%EF%BC%89"> 队列（Queue）</a></li></ol></li><li><a href="#1.4-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3"> 1.4 基本算法思想</a><ol><li><a href="#%E9%80%92%E5%BD%92%EF%BC%88recursion%EF%BC%89"> 递归（Recursion）</a></li><li><a href="#%E5%88%86%E6%B2%BB%E6%B3%95%EF%BC%88divide-and-conquer%EF%BC%89"> 分治法（Divide and Conquer）</a></li></ol></li><li><a href="#1.5-%E5%B0%8F%E7%BB%93"> 1.5 小结</a><ol><li><a href="#%E5%85%B3%E9%94%AE%E7%82%B9%E5%9B%9E%E9%A1%BE%EF%BC%9A"> 关键点回顾：</a></li></ol></li></ol></nav><h2 id="%E4%BB%80%E4%B9%88%E6%98%AF%E7%AE%97%E6%B3%95%EF%BC%9F" tabindex="-1" id="什么是算法"><a class="markdownIt-Anchor" href="#什么是算法">#</a> <a class="header-anchor" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AE%97%E6%B3%95%EF%BC%9F">§</a> 什么是算法？</h2>
+<p>算法是解决特定问题的一系列明确指令。在计算机科学中，算法是程序的核心，它定义了如何从输入数据得到输出结果。</p>
+<h3 id="%E7%AE%97%E6%B3%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81%EF%BC%9A" tabindex="-1" id="算法的基本特征"><a class="markdownIt-Anchor" href="#算法的基本特征">#</a> <a class="header-anchor" href="#%E7%AE%97%E6%B3%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81%EF%BC%9A">§</a> 算法的基本特征：</h3>
+<ul>
+<li><strong>输入</strong>：算法有零个或多个输入</li>
+<li><strong>输出</strong>：算法至少有一个输出</li>
+<li><strong>明确性</strong>：每个步骤都必须清晰明确</li>
+<li><strong>有限性</strong>：算法必须在有限的步骤内完成</li>
+<li><strong>有效性</strong>：每个操作都必须足够基本，能够精确执行</li>
+</ul>
+<h2 id="1.2-%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90" tabindex="-1" id="12-算法的复杂度分析"><a class="markdownIt-Anchor" href="#12-算法的复杂度分析">#</a> <a class="header-anchor" href="#1.2-%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">§</a> 1.2 算法的复杂度分析</h2>
+<h3 id="%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6" tabindex="-1" id="时间复杂度"><a class="markdownIt-Anchor" href="#时间复杂度">#</a> <a class="header-anchor" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">§</a> 时间复杂度</h3>
+<p>时间复杂度描述了算法执行时间随输入规模增长的变化趋势。我们通常使用大O符号来表示：</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div>
+        <code><span class="token comment">// O(1) - 常数时间</span>
+<span class="token keyword">function</span> <span class="token function">getFirstElement</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">return</span> arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// O(n) - 线性时间</span>
+<span class="token keyword">function</span> <span class="token function">findElement</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> target</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span><span class="token property-access">length</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> target<span class="token punctuation">)</span> <span class="token keyword control-flow">return</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword control-flow">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// O(n²) - 平方时间</span>
+<span class="token keyword">function</span> <span class="token function">bubbleSort</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span><span class="token property-access">length</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token punctuation">[</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span>arr<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword control-flow">return</span> arr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6" tabindex="-1" id="空间复杂度"><a class="markdownIt-Anchor" href="#空间复杂度">#</a> <a class="header-anchor" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">§</a> 空间复杂度</h3>
+<p>空间复杂度描述了算法在执行过程中所需的额外存储空间随输入规模增长的变化趋势。</p>
+<h2 id="1.3-%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" tabindex="-1" id="13-常见数据结构"><a class="markdownIt-Anchor" href="#13-常见数据结构">#</a> <a class="header-anchor" href="#1.3-%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">§</a> 1.3 常见数据结构</h2>
+<h3 id="%E6%95%B0%E7%BB%84%EF%BC%88array%EF%BC%89" tabindex="-1" id="数组array"><a class="markdownIt-Anchor" href="#数组array">#</a> <a class="header-anchor" href="#%E6%95%B0%E7%BB%84%EF%BC%88array%EF%BC%89">§</a> 数组（Array）</h3>
+<p>数组是最基本的数据结构，它是一组相同类型元素的集合。</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div>
+        <code><span class="token comment">// 数组的基本操作</span>
+<span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 访问元素 - O(1)</span>
+<span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3</span>
+
+<span class="token comment">// 插入元素 - O(n)</span>
+arr<span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在末尾插入</span>
+arr<span class="token punctuation">.</span><span class="token method function property-access">unshift</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在开头插入</span>
+
+<span class="token comment">// 删除元素 - O(n)</span>
+arr<span class="token punctuation">.</span><span class="token method function property-access">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 删除末尾元素</span>
+arr<span class="token punctuation">.</span><span class="token method function property-access">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 删除开头元素</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E9%93%BE%E8%A1%A8%EF%BC%88linked-list%EF%BC%89" tabindex="-1" id="链表linked-list"><a class="markdownIt-Anchor" href="#链表linked-list">#</a> <a class="header-anchor" href="#%E9%93%BE%E8%A1%A8%EF%BC%88linked-list%EF%BC%89">§</a> 链表（Linked List）</h3>
+<p>链表是一种线性数据结构，其中的元素在内存中不是连续存储的。</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div>
+        <code><span class="token comment">// 链表节点定义</span>
+<span class="token keyword">class</span> <span class="token class-name">ListNode</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">val</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">next</span> <span class="token operator">=</span> <span class="token keyword null nil">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 创建链表</span>
+<span class="token keyword">let</span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+head<span class="token punctuation">.</span><span class="token property-access">next</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+head<span class="token punctuation">.</span><span class="token property-access">next</span><span class="token punctuation">.</span><span class="token property-access">next</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E6%A0%88%EF%BC%88stack%EF%BC%89" tabindex="-1" id="栈stack"><a class="markdownIt-Anchor" href="#栈stack">#</a> <a class="header-anchor" href="#%E6%A0%88%EF%BC%88stack%EF%BC%89">§</a> 栈（Stack）</h3>
+<p>栈是一种后进先出（LIFO）的数据结构。</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div>
+        <code><span class="token keyword">class</span> <span class="token class-name">Stack</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">push</span><span class="token punctuation">(</span><span class="token parameter">element</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token method function property-access">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">[</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E9%98%9F%E5%88%97%EF%BC%88queue%EF%BC%89" tabindex="-1" id="队列queue"><a class="markdownIt-Anchor" href="#队列queue">#</a> <a class="header-anchor" href="#%E9%98%9F%E5%88%97%EF%BC%88queue%EF%BC%89">§</a> 队列（Queue）</h3>
+<p>队列是一种先进先出（FIFO）的数据结构。</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div>
+        <code><span class="token keyword">class</span> <span class="token class-name">Queue</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">enqueue</span><span class="token punctuation">(</span><span class="token parameter">element</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token method function property-access">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h2 id="1.4-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3" tabindex="-1" id="14-基本算法思想"><a class="markdownIt-Anchor" href="#14-基本算法思想">#</a> <a class="header-anchor" href="#1.4-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3">§</a> 1.4 基本算法思想</h2>
+<h3 id="%E9%80%92%E5%BD%92%EF%BC%88recursion%EF%BC%89" tabindex="-1" id="递归recursion"><a class="markdownIt-Anchor" href="#递归recursion">#</a> <a class="header-anchor" href="#%E9%80%92%E5%BD%92%EF%BC%88recursion%EF%BC%89">§</a> 递归（Recursion）</h3>
+<p>递归是一种通过调用自身来解决问题的方法。</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div>
+        <code><span class="token comment">// 计算阶乘</span>
+<span class="token keyword">function</span> <span class="token function">factorial</span><span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword control-flow">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword control-flow">return</span> n <span class="token operator">*</span> <span class="token function">factorial</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 斐波那契数列</span>
+<span class="token keyword">function</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span><span class="token parameter">n</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword control-flow">return</span> n<span class="token punctuation">;</span>
+    <span class="token keyword control-flow">return</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E5%88%86%E6%B2%BB%E6%B3%95%EF%BC%88divide-and-conquer%EF%BC%89" tabindex="-1" id="分治法divide-and-conquer"><a class="markdownIt-Anchor" href="#分治法divide-and-conquer">#</a> <a class="header-anchor" href="#%E5%88%86%E6%B2%BB%E6%B3%95%EF%BC%88divide-and-conquer%EF%BC%89">§</a> 分治法（Divide and Conquer）</h3>
+<p>分治法是将一个大问题分解成若干个小问题，分别解决后再合并结果。</p>
+<div class="language-javascript line-numbers-mode">
+    <div class="code-info-header">
+        <span>javascript</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-javascript">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div>
+        <code><span class="token comment">// 归并排序</span>
+<span class="token keyword">function</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>arr<span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword control-flow">return</span> arr<span class="token punctuation">;</span>
+    
+    <span class="token keyword">const</span> mid <span class="token operator">=</span> <span class="token known-class-name class-name">Math</span><span class="token punctuation">.</span><span class="token method function property-access">floor</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> left <span class="token operator">=</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span><span class="token method function property-access">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> right <span class="token operator">=</span> <span class="token function">mergeSort</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span><span class="token method function property-access">slice</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword control-flow">return</span> <span class="token function">merge</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token parameter">left<span class="token punctuation">,</span> right</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword control-flow">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> left<span class="token punctuation">.</span><span class="token property-access">length</span> <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> right<span class="token punctuation">.</span><span class="token property-access">length</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>left<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> right<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span>left<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword control-flow">else</span> <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token method function property-access">push</span><span class="token punctuation">(</span>right<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword control-flow">return</span> result<span class="token punctuation">.</span><span class="token method function property-access">concat</span><span class="token punctuation">(</span>left<span class="token punctuation">.</span><span class="token method function property-access">slice</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">concat</span><span class="token punctuation">(</span>right<span class="token punctuation">.</span><span class="token method function property-access">slice</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h2 id="1.5-%E5%B0%8F%E7%BB%93" tabindex="-1" id="15-小结"><a class="markdownIt-Anchor" href="#15-小结">#</a> <a class="header-anchor" href="#1.5-%E5%B0%8F%E7%BB%93">§</a> 1.5 小结</h2>
+<p>本章介绍了算法的基本概念、复杂度分析、常见数据结构和基本算法思想。这些基础知识是后续学习更复杂算法的基石。</p>
+<h3 id="%E5%85%B3%E9%94%AE%E7%82%B9%E5%9B%9E%E9%A1%BE%EF%BC%9A" tabindex="-1" id="关键点回顾"><a class="markdownIt-Anchor" href="#关键点回顾">#</a> <a class="header-anchor" href="#%E5%85%B3%E9%94%AE%E7%82%B9%E5%9B%9E%E9%A1%BE%EF%BC%9A">§</a> 关键点回顾：</h3>
+<ol>
+<li>算法必须具有明确性、有限性和有效性</li>
+<li>时间复杂度和空间复杂度是衡量算法效率的重要指标</li>
+<li>选择合适的数据结构对算法性能至关重要</li>
+<li>递归和分治法是解决复杂问题的有力工具</li>
+</ol>
+<p>在下一章中，我们将深入探讨更高级的算法主题，包括动态规划和贪心算法等。</p>
+<hr>
+<blockquote>
+<p><strong>练习建议</strong>：</p>
+<ul>
+<li>实现一个链表类，包含插入、删除和查找操作</li>
+<li>使用递归实现二分查找算法</li>
+<li>比较不同排序算法的时间复杂度</li>
+</ul>
+</blockquote>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2025 rainboy. All rights reserved.</p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const heti = new Heti('.heti');
+        heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

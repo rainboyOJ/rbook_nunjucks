@@ -1,0 +1,271 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 全局样式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 头部样式 */
+.site-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.site-title a {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.site-description {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+/* 导航菜单 */
+.main-navigation {
+    background-color: #34495e;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-item a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-item a:hover {
+    background-color: #2c3e50;
+}
+
+.nav-item.active a {
+    background-color: #3498db;
+}
+
+/* 主要内容区域 */
+main {
+    min-height: calc(100vh - 300px);
+    margin-bottom: 2rem;
+}
+
+/* 首页样式 */
+.home {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.home-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.description {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.author {
+    color: #95a5a6;
+}
+
+.home-content {
+    margin-bottom: 3rem;
+}
+
+
+/* 页面和章节样式 */
+.page, .chapter {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-header, .chapter-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.page-header h1, .chapter-header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+}
+
+.page-content, .chapter-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Markdown内容样式 */
+.page-content h1, .page-content h2, .page-content h3,
+.page-content h4, .page-content h5, .page-content h6,
+.chapter-content h1, .chapter-content h2, .chapter-content h3,
+.chapter-content h4, .chapter-content h5, .chapter-content h6 {
+    margin: 2rem 0 1rem 0;
+    color: #2c3e50;
+}
+
+.page-content p, .chapter-content p {
+    margin-bottom: 1.5rem;
+}
+
+.page-content ul, .page-content ol,
+.chapter-content ul, .chapter-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.page-content li, .chapter-content li {
+    margin-bottom: 0.5rem;
+}
+
+.page-content code, .chapter-content code {
+    background-color: #f4f4f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+.page-content pre, .chapter-content pre {
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.page-content blockquote, .chapter-content blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: #666;
+    font-style: italic;
+}
+
+/* 目录样式 */
+.table-of-contents {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+}
+
+.table-of-contents h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.toc-list {
+    list-style: none;
+}
+
+.toc-item {
+    margin-bottom: 0.5rem;
+}
+
+.toc-item a {
+    color: #3498db;
+    text-decoration: none;
+    padding: 0.3rem 0;
+    display: block;
+}
+
+.toc-item a:hover {
+    text-decoration: underline;
+}
+
+.toc-sublist {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.toc-subitem {
+    margin-bottom: 0.3rem;
+}
+
+/* 页脚样式 */
+.site-footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-content p {
+    margin-bottom: 0.5rem;
+}
+
+.powered-by a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.powered-by a:hover {
+    text-decoration: underline;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .home-header h1 {
+        font-size: 2rem;
+    }
+
+    .page-header h1, .chapter-header h1 {
+        font-size: 2rem;
+    }
+
+    .site-title a {
+        font-size: 1.5rem;
+    }
+}
+
+/* 热加载测试样式 */
+.hot-reload-test {
+    color: red;
+}

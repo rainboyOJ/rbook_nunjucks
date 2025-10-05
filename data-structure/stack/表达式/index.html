@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - </title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/">🏡</a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()">📜</a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto">🌗</label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light">🌞</label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark">🌙</label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+
+<div class="chapter-list">
+  
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter1">第一章</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter2">第二章</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter2/chapter2-1">第一节</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter2/chapter2-2">第二节</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3">第三章 动态规划</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack">背包</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack/01-knapsack">01背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack/multiple-knapsack">多重背包</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear">线性</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear/lcs">lcs</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear/lis">lis</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);">第四章 数据结构</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="data-structure/binary-indexed-tree">树状数组</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/segment-tree">线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack">栈</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack/表达式">表达式求值</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack/monotonic-stack">单调栈</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="appendix">附录</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="appendix/vscode">vscode</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="appendix/vscode/如何调试.html">如何调试</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+</div>
+
+
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="page-header">
+        <h1>表达式求值</h1>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <h2 id="%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC" tabindex="-1" id="后缀表达式求值"><a class="markdownIt-Anchor" href="#后缀表达式求值">#</a> <a class="header-anchor" href="#%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC">§</a> 后缀表达式求值</h2>
+<h2 id="%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80" tabindex="-1" id="中缀表达式转后缀"><a class="markdownIt-Anchor" href="#中缀表达式转后缀">#</a> <a class="header-anchor" href="#%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80">§</a> 中缀表达式转后缀</h2>
+<p>减法可以转成加法,除法可以转成乘法,所以只需要考虑: 加法,乘法,括号</p>
+<p>思维方式: 特殊到一般</p>
+<p>大脑🧠转换原则: 从左到右把数字写出,根据运算符号运算的先后顺序在合适的位置写入符合</p>
+<ol>
+<li><code>1+2+3+4+5</code> -&gt; <code>1 2 + 3 + 4 + 5 +</code></li>
+</ol>
+<ul>
+<li><code>1 2 3 4 5</code></li>
+<li><code>1 2 + 3 4 5</code></li>
+<li><code>1 2 + 3 + 4 5</code></li>
+<li><code>1 2 + 3 + 4 + 5</code></li>
+<li><code>1 2 + 3 + 4 + 5 +</code></li>
+</ul>
+<ol>
+<li><code>1 + 2 x 3</code> -&gt; <code>1 2 3 x +</code></li>
+</ol>
+<ul>
+<li><code>1 2 3</code></li>
+<li><code>1 2 3 x </code></li>
+<li><code>1 2 3 x +</code></li>
+</ul>
+<ol>
+<li><code>1+2+3+4x5</code> -&gt; <code>1 2 + 3 + 4 5 x +</code></li>
+</ol>
+<ul>
+<li><code>1 2 3 4 5</code></li>
+<li><code>1 2 +  3 4 5</code></li>
+<li><code>1 2 + 3 +  4 5</code></li>
+<li><code>1 2 + 3 + 4 5 x </code></li>
+<li><code>1 2 + 3 + 4 5 x +</code></li>
+</ul>
+<ol>
+<li><code>1+2+3x4+5</code> -&gt; <code>1 2 + 3 4 x + 5 +</code></li>
+</ol>
+<ul>
+<li><code>1 2 3 4 5</code></li>
+<li><code>1 2 + 3 4 5</code></li>
+<li><code>1 2 + 3 4 x 5</code></li>
+<li><code>1 2 + 3 4 x 5</code></li>
+<li><code>1 2 + 3 4 x + 5</code></li>
+<li><code>1 2 + 3 4 x + 5 +</code></li>
+</ul>
+<p>容易想到: <code>1 + 2 x 3</code>  因为 x 比 + 优先级别高,那么 x 在后缀里面应该先出现</p>
+<p>递归的想: <code>......?i-1. ?i .......</code> ,当你遇到一个运算符<code>?</code>的时候,你要决定前一个符号<code>?i-1</code>那个先出现
+<code>?i-1 &gt;= ?i</code> 那么<code>?i-1</code> 应该先出现</p>
+<p>增加括号</p>
+<p><code>)</code> 表示<code>()</code> 是一个独立的式子,现在栈内应更全部输出</p>
+<p>于是得到最终的运算规则</p>
+<pre><code>1.
+2.
+3.
+</code></pre>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2025 rainboy. All rights reserved.</p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const heti = new Heti('.heti');
+        heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>
