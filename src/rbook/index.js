@@ -84,6 +84,8 @@ class rbook {
             if (fs.existsSync(indexPath)) {
                 return path.join(basePath, relativePath, 'index.md');
             }
+        } else if ( fullPath.endsWith('.md') && fs.existsSync(fullPath) ) {
+            return path.join(basePath, relativePath);
         } else {
             // 如果不是目录，检查同名的.md文件
             const mdPath = fullPath + '.md';
