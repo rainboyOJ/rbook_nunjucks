@@ -9,6 +9,7 @@ import twemoji from 'twemoji';
 import mdItContainer from 'markdown-it-container';
 import tocAndAnchor from 'markdown-it-toc-and-anchor';
 const markdownItTocAndAnchor = tocAndAnchor.default;
+import uslug from 'uslug';
 
 import MarkdownIt from 'markdown-it';
 
@@ -37,7 +38,7 @@ md.use(markdownItTocAndAnchor, {
     permalink: true,
     permalinkBefore: true,
     permalinkSymbol: '§',
-    // slugify: legacySlugify
+    slugify: uslug
 })
 
 // 不能使用

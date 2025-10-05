@@ -57,3 +57,20 @@
     margin: 2rem auto;
   }
 }
+
+//active
+.table-of-contents a.active {
+  font-weight: bold;
+  color: #d35400;
+  background: rgba(44,62,80,0.08);
+  border-radius: 4px;
+  font-size: 1.28rem;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, font-size 0.3s;
+  box-shadow: 0 2px 12px 0 rgba(44,62,80,0.08);
+}
+
+[data-darkmode="dark"] .table-of-contents a.active {
+  color: #f39c12;
+  background: rgba(227,232,238,0.08);
+  box-shadow: 0 2px 12px 0 rgba(227,232,238,0.12);
+}

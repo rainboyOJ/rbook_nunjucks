@@ -117,3 +117,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+
+
+function updateTocActive() {
+  const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+  const tocLinks = Array.from(document.querySelectorAll('.table-of-contents a'));
+  let activeId = '';
+  const scrollY = window.scrollY || window.pageYOffset;
+  for (let i = 0; i < headings.length; i++) {
+    const h = headings[i];
+    if (h.offsetTop - 80 <= scrollY) {
+      activeId = h.id;
+    }
+  }
+  activeId = decodeURIComponent(activeId);
+  console.log('activeId', activeId);
+  tocLinks.forEach(link => {
+    let linkTo = decodeURIComponent(link.getAttribute('href').replace(/^#/, ''));
+    console.log('-->', linkTo, activeId);
+    if (linkTo === activeId) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+
+window.addEventListener('scroll', updateTocActive);
+document.addEventListener('DOMContentLoaded', updateTocActive);
