@@ -17,6 +17,7 @@ class rbook {
     constructor() {
         this.name = 'rbook';
         this.config = this.load_config();
+        this.config.currentYear = new Date().getFullYear();
     }
 
     load_config(configPath = 'book.yaml') {
