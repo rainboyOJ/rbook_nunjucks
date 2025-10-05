@@ -29,3 +29,26 @@ chapters:
             path: lcs
           - title: lis
             path: lis
+  - title: 第四章 数据结构
+    nolink: true
+    path: data-structure
+    sections:
+      - title: 树状数组
+        path: binary-indexed-tree
+      - title: 线段树
+        path: segment-tree
+      - title: 栈 
+        path: stack
+        sections:
+          - title: 表达式求值
+            path: 表达式
+          - title: 单调栈
+            path: monotonic-stack
+  - title: 附录
+    path: appendix
+    sections:
+      - title: vscode
+        path: vscode
+        sections:
+          - title: 如何调试
+            path: 如何调试.md
