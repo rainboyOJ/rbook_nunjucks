@@ -33,5 +33,5 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./dist
           commit_message: auto deploy
-      # - name: Update Blog Server via Webhook
-      #   run: curl -k ${{ secrets.WEBHOOK_URL }}
+      - name: Update rbook Server via Webhook
+        run: curl -k ${{ secrets.WEBHOOK_URL }}
