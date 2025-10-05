@@ -22,6 +22,15 @@ export const nunjucksRender = function (theme_dir, layout_name, data) {
         noCache: true
     });
 
+    //  添加自定义过滤器
+
+    // 为菜单链接添加过滤器
+    env.addFilter('menu_link', function (str) {
+        if (str.endsWith('.md'))  return str.replace('.md', '.html');
+        if( str.endsWith('/') ) return str + 'index.html';
+        return str;
+    });
+
     
     // 构建模板路径
     const templatePath = `${layout_name}.njk`;

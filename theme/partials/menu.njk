@@ -4,7 +4,7 @@
     {% for item in items %}
       {% set current_path = parent_path + item.path %}
       <li>
-        <a href="{{ current_path }}/">{{ item.title }}</a>
+        <a href="{{ current_path | menu_link   }}">{{ item.title }}</a>
         {% if item.sections %}
           {{ render_list(item.sections, current_path + '/') }}
         {% endif %}
