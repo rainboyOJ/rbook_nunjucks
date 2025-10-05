@@ -49,7 +49,7 @@ jspm_packages/
 .env.production.local
 
 # IDE and editor files
-.vscode/
+vscode/
 .idea/
 *.swp
 *.swo
