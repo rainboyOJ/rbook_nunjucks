@@ -14,21 +14,30 @@ import MarkdownIt from 'markdown-it';
 
 
 var md = MarkdownIt({
-    html:true,
-    linkify:true,
-    typographer:true,
+    html: true,
+    linkify: true,
+    typographer: true,
     // highlight:highlight
 })
 
 md.use(TexMath, {
     engine: Katex,
-    delimiters: ['dollars','beg_end','julia'],
+    delimiters: ['dollars', 'beg_end', 'julia'],
     // katexOptions: { macros: { '\\R': '\\mathbb{R}' },strict:'error',throwOnError:true}
-    katexOptions: { macros: { '\\R': '\\mathbb{R}' },strict:function (errorCode,errMsg,token) {
-        console.error('--->',errorCode,errMsg)
-        console.log(token)
-        return errMsg
-    }}
+    katexOptions: {
+        macros: { '\\R': '\\mathbb{R}' }, strict: function (errorCode, errMsg, token) {
+            console.error('--->', errorCode, errMsg)
+            console.log(token)
+            return errMsg
+        }
+    }
+})
+
+md.use(markdownItTocAndAnchor, {
+    permalink: true,
+    permalinkBefore: true,
+    permalinkSymbol: '§',
+    // slugify: legacySlugify
 })
 
 // 不能使用
@@ -87,22 +96,22 @@ md.use(lineNumber)
     .use(sub)
     .use(mark)
     .use(abbr)
-    .use(anchor, {level:[2,3],permalink: true, permalinkBefore: true, permalinkSymbol: '§' } )
-    .use(tocDoneRight,{level:2})
-    .use(implicitFigures,{figcaption:true})
+    .use(anchor, { level: [2, 3], permalink: true, permalinkBefore: true, permalinkSymbol: '§' })
+    .use(tocDoneRight, { level: 2 })
+    .use(implicitFigures, { figcaption: true })
     .use(tocAnchorExtent)
     .use(codetabs)
 
-md.renderer.rules.emoji = function(token,idx){
+md.renderer.rules.emoji = function (token, idx) {
     return twemoji.parse(token[idx].content)
 }
 
 // 参数
 // config
 // mdit.env md渲染的env值
-function render(md_raw,config = {}) {
+function render(md_raw, config = {}) {
     // config.mdit 渲染的配置,具体参考 markdown-it 文档
-    return md.render(md_raw,config.mdit || {})
+    return md.render(md_raw, config.mdit || {})
 }
 
 
