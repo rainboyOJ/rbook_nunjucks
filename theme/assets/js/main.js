@@ -56,6 +56,10 @@ function fallbackCopyText(text, clipContainer) {
 
   // 触发点击
   tempBtn.click();
+  setTimeout(() => {
+    // remove tempBtn
+    document.body.removeChild(tempBtn);
+  }, 5* 1000);
 }
 
 /**
