@@ -39,6 +39,8 @@
   --body-background-color-dark: hsl(0deg, 0%, 24%);
   --container-background-color-light: #ccc;
   --container-background-color-dark: #1e1e1e;
+  --fence-backgroud-color-light: #f8f8f8;
+  --fence-backgroud-color-dark: #2d2d2d;
 }
 
 .container {
@@ -2005,6 +2007,21 @@
   }
   [data-darkmode=auto] .admonition.quote .admonition-title {
     background-color: rgba(224, 224, 224, 0.1);
+  }
+}
+.markdown-body code {
+  background-color: var(--fence-backgroud-color-light);
+  padding: 0 0.4em;
+  border-radius: 0.2em;
+}
+
+[data-darkmode=dark] .markdown-body code {
+  background-color: var(--fence-backgroud-color-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode=auto] .markdown-body code {
+    background-color: var(--fence-backgroud-color-dark);
   }
 }
 div[class^=language-] {
