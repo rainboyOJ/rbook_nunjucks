@@ -1,0 +1,19 @@
+.markdown-body {
+  code {
+    background-color: var( --fence-backgroud-color-light);
+    padding: 0 0.4em;
+    border-radius: 0.2em;
+  }
+}
+
+[data-darkmode="dark"] .markdown-body {
+  code {
+    background-color: var( --fence-backgroud-color-dark);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode=auto]  .markdown-body code {
+    background-color: var(--fence-backgroud-color-dark);
+  }
+}
