@@ -18,7 +18,8 @@ class rbook {
         this.name = 'rbook';
         this.config = this.load_config();
         this.config.currentYear = new Date().getFullYear();
-        this.config.last_build_time = new Date().toLocaleString();
+        // this.config.last_build_time = new Date().toLocaleString();
+        this.config.last_build_time = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
     }
 
     load_config(configPath = 'book.yaml') {
