@@ -1,12 +1,18 @@
 {
-    // 添加这一行来禁用自动检测
-    "editor.detectIndentation": false,
-    "editor.tabSize": 2,
-    "files.exclude": {
-        "node_modules": true,
-        "dist":true
-    },
-    "[cpp]": {
-        "editor.tabSize": 4
-    }
+  // 添加这一行来禁用自动检测
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "node_modules": true,
+    "dist": true
+  },
+  "[cpp]": {
+    "editor.tabSize": 4
+  },
+  "html.autoClosingTags": false,
+  "[markdown]": {
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoClosingTags": false
+  }
 }
