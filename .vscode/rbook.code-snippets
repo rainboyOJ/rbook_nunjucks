@@ -11,6 +11,8 @@
 			"categories: [\"${4}\"]",
 			"---",
 			"",
+			"[[TOC]]",
+			"",
 			"$5"
 		],
 		"description": "rbook文章前置元数据 - title默认使用文件名"
