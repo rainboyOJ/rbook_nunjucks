@@ -46,6 +46,12 @@ chapters:
             path: 表达式
           - title: 单调栈
             path: monotonic-stack
+  - title: 第五章 图论
+    path: graph
+    nolink: true
+    sections:
+      - title: 基环树
+        path: pseudotree
   - title: 附录
     path: appendix
     sections:
