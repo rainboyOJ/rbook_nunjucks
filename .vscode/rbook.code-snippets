@@ -1,4 +1,9 @@
 {
+  "Auto-complete Dollar Signs": {
+    "prefix": "$",
+    "body": "$$1$",
+    "description": "Auto-completes $ to $$"
+  },
 	"rbook Front Matter": {
 		"scope": "markdown",
 		"prefix": "rbook-front",
