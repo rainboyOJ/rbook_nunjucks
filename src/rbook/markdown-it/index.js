@@ -11,6 +11,7 @@ import tocAndAnchor from 'markdown-it-toc-and-anchor';
 const markdownItTocAndAnchor = tocAndAnchor.default;
 import uslug from 'uslug';
 import admonition  from 'markdown-it-admonition'
+import includeCode from './lib/include-code.js'; // 引入 include-code 插件
 
 
 import MarkdownIt from 'markdown-it';
@@ -22,6 +23,8 @@ var md = MarkdownIt({
     typographer: true,
     // highlight:highlight
 })
+
+md.use(includeCode) // 使用 include-code 插件
 
 md.use(TexMath, {
     engine: Katex,
@@ -114,7 +117,11 @@ md.renderer.rules.emoji = function (token, idx) {
 // mdit.env md渲染的env值
 function render(md_raw, config = {}) {
     // config.mdit 渲染的配置,具体参考 markdown-it 文档
-    return md.render(md_raw, config.mdit || {})
+    const env = config.mdit || {};
+    if (config.filePath) {
+        env.filePath = config.filePath;
+    }
+    return md.render(md_raw, env)
 }
 
 

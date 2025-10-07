@@ -10,6 +10,7 @@ class Markdown {
         this.md_content = '';
         this.html_content = '';
         if( md_path && md_path.length > 0 ) {
+            this.md_path = md_path; // 保存文件路径
             let raw_md = fs.readFileSync(md_path, 'utf8');
             let result = this.matter(raw_md);
             this.front_matter = result.data;
@@ -28,7 +29,7 @@ class Markdown {
             const result = matter.default(md_content);
             this.front_matter = result.data;
             this.md_content = result.content;
-            this.html_content = markdownit.render(result.content);
+            this.html_content = this.toHTML(result.content);
             return {
                 content: this.md_content,
                 data: this.front_matter
@@ -44,7 +45,7 @@ class Markdown {
      * @returns {string} - HTML内容
      */
     toHTML(md_content) {
-        return markdownit.render(md_content);
+        return markdownit.render(md_content, { filePath: this.md_path });
     }
 
     toJSON() {
