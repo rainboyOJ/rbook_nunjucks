@@ -186,3 +186,15 @@ dfs
 思路
 
 代码
+
+
+## 基环树直径
+
+## 基环树两点直接的距离
+
+## 基环树DP
+
+## 参考
+
+- https://www.luogu.com.cn/article/0i6swvk6
+- https://entiesci.github.io/oi-beats/site/%E5%9B%BE%E8%AE%BA/%E5%9F%BA%E7%8E%AF%E6%A0%91/
