@@ -50,8 +50,15 @@ chapters:
     path: graph
     nolink: true
     sections:
+      - title: 树的直径
+        path: max-len-of-tree
       - title: 基环树
         path: pseudotree
+  - title: 数学
+    path: math
+    sections:
+      - title: 集合
+        path: 集合.md
   - title: 附录
     path: appendix
     sections:
