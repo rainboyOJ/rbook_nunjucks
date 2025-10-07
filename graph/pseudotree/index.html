@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - </title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/">🏡</a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()">📜</a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto">🌗</label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light">🌞</label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark">🌙</label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+
+<div class="chapter-list">
+  
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter1">第一章</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter2">第二章</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter2/chapter2-1">第一节</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter2/chapter2-2">第二节</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3">第三章 动态规划</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack">背包</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack/01-knapsack">01背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/knapsack/multiple-knapsack">多重背包</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear">线性</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear/lcs">lcs</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="chapter3/linear/lis">lis</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);">第四章 数据结构</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="data-structure/binary-indexed-tree">树状数组</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/segment-tree">线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack">栈</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack/表达式">表达式求值</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="data-structure/stack/monotonic-stack">单调栈</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);">第五章 图论</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="graph/pseudotree">基环树</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="appendix">附录</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="appendix/vscode">vscode</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="appendix/vscode/如何调试.html">如何调试</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+</div>
+
+
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="page-header">
+        <h1>基环树入门</h1>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E5%AE%9A%E4%B9%89"> 定义</a><ol><li><a href="#%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91"> 无向基环树</a></li><li><a href="#%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91"> 有向基环树</a><ol><li><a href="#%E5%86%85%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(in-tree)">内向基环树 (In-tree)</a></li><li><a href="#%E5%A4%96%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(out-tree)">外向基环树 (Out-tree)</a></li></ol></li></ol></li><li><a href="#%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"> 通用处理思路</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF"> 如何找环</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"> 算法思路</a></li></ol></li><li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"> 相关问题</a></li><li><a href="#topsrt%E6%89%BE%E7%8E%AF"> topsrt找环</a></li><li><a href="#dfs%E6%89%BE%E7%8E%AF"> dfs找环</a><ol><li><a href="#1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"> 1. 基础概念</a></li><li><a href="#2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F"> 2. 核心问题：为什么要有 if (dfn[v] &lt; dfn[u]) continue;？</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B7%B1%E8%8A%82%E7%82%B9-d-%E9%81%87%E5%88%B0%E6%B5%85%E8%8A%82%E7%82%B9-a)">第一次相遇 (深节点 D 遇到浅节点 A)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B5%85%E8%8A%82%E7%82%B9-a-%E9%81%87%E5%88%B0%E6%B7%B1%E8%8A%82%E7%82%B9-d)">第二次相遇 (浅节点 A 遇到深节点 D)</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93"> 总结</a></li></ol></li></ol></nav><h2 id="%E5%AE%9A%E4%B9%89" tabindex="-1" id="定义"><a class="markdownIt-Anchor" href="#定义">#</a> <a class="header-anchor" href="#%E5%AE%9A%E4%B9%89">§</a> 定义</h2>
+<p><strong>基环树</strong>（Pseudo-tree），有时也被称为环套树，是图论中的一个概念。严格来说，它并不是一棵树，而是一个包含 <strong>n 个节点</strong>和 <strong>n 条边</strong>的<strong>连通图</strong>。</p>
+<p>从结构上看，一棵 n 个节点的树有 n-1 条边，如果在树上任意两个节点之间添加一条边，就会形成一个且仅有一个环。因此，基环树可以被理解为<strong>一棵树加上一条额外的边</strong>所构成的图。</p>
+<p>如果图不保证连通，那么一个含有 n 个节点和 n 条边的图可能是一个<strong>基环树森林</strong>（Pseudo-forest），即由若干个基环树组成。</p>
+<h3 id="%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91" tabindex="-1" id="无向基环树"><a class="markdownIt-Anchor" href="#无向基环树">#</a> <a class="header-anchor" href="#%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91">§</a> 无向基环树</h3>
+<p>在无向图中，基环树的结构就是一个简单的环，环上的每个节点都可能连接着一棵或多棵子树。</p>
+<figure><img src="https://img.imgdb.cn/item/6082c314d1a9ae528fd74600.png" alt="无向基环树"></figure>
+<h3 id="%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91" tabindex="-1" id="有向基环树"><a class="markdownIt-Anchor" href="#有向基环树">#</a> <a class="header-anchor" href="#%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91">§</a> 有向基环树</h3>
+<p>在有向图中，根据边的方向，基环树可以分为两种主要类型：</p>
+<h4 id="内向基环树-in-tree"><a class="markdownIt-Anchor" href="#内向基环树-in-tree">#</a> 内向基环树 (In-tree)</h4>
+<p>每个节点都恰好有一条出边（出度为 1）。其形态表现为，所有节点最终都通过有向边汇聚到一个环上。环外的节点构成了若干棵树，树边全部指向环的方向。</p>
+<figure><img src="https://img.imgdb.cn/item/6082c4d0d1a9ae528febcff3.png" alt="内向基环树"></figure>
+<h4 id="外向基环树-out-tree"><a class="markdownIt-Anchor" href="#外向基环树-out-tree">#</a> 外向基环树 (Out-tree)</h4>
+<p>每个节点都恰好有一条入边（入度为 1）。其形态与内向树相反，所有边都从环开始，向外发散。环外的节点也构成若干棵树，树边全部背离环的方向。</p>
+<figure><img src="https://img.imgdb.cn/item/6082c448d1a9ae528fe536d9.png" alt="外向基环树"></figure>
+<h2 id="%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF" tabindex="-1" id="通用处理思路"><a class="markdownIt-Anchor" href="#通用处理思路">#</a> <a class="header-anchor" href="#%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF">§</a> 通用处理思路</h2>
+<p>处理基环树相关的问题，通常有一个经典的分析框架：</p>
+<ol>
+<li><strong>找到环</strong>：首先，通过算法定位图中唯一的环。</li>
+<li><strong>处理子树</strong>：将环上的每个节点视为根，其向外连接的部分就构成了一棵棵独立的子树。我们可以利用树形算法（如树形 DP）对这些子树进行预处理。</li>
+<li><strong>环上计算</strong>：将子树的处理结果整合到环上，再利用适用于序列或环的算法（如线性 DP、单调队列优化等）来解决整个问题。</li>
+</ol>
+<h2 id="%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF" tabindex="-1" id="如何找环"><a class="markdownIt-Anchor" href="#如何找环">#</a> <a class="header-anchor" href="#%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF">§</a> 如何找环</h2>
+<p>在基环树中找到环是解决问题的第一步。最常用的方法是<strong>深度优先搜索 (DFS)</strong>。</p>
+<h3 id="%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF" tabindex="-1" id="算法思路"><a class="markdownIt-Anchor" href="#算法思路">#</a> <a class="header-anchor" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF">§</a> 算法思路</h3>
+<ol>
+<li>从任意一个未访问过的节点开始进行深度优先搜索。</li>
+<li>在搜索过程中，我们需要记录每个节点的父节点（即从哪个节点访问到当前节点的），同时用一个 <code>visited</code> 数组记录节点是否被访问过。</li>
+<li>当从节点 <code>u</code> 访问邻接节点 <code>v</code> 时：
+<ul>
+<li>如果 <code>v</code> 未被访问，则继续向 <code>v</code> 深入搜索，并记 <code>parent[v] = u</code>。</li>
+<li>如果 <code>v</code> <strong>已被访问</strong>过，并且 <code>v</code> <strong>不是 <code>u</code> 的父节点</strong>，那么就意味着我们找到了一个环。节点 <code>v</code> 是环的入口，而 <code>(u, v)</code> 是一条“返祖边”。</li>
+</ul>
+</li>
+<li>找到环后，我们可以从 <code>u</code> 开始，通过 <code>parent</code> 指针不断回溯，直到再次遇到 <code>v</code>。这条回溯路径上的所有节点，再加上 <code>v</code>，就构成了基环树中的环。</li>
+</ol>
+<p>这个过程可以通过在 DFS 中维护一个递归栈来实现，当遇到一个已在当前递归栈中的节点时，就找到了环。</p>
+<h2 id="%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98" tabindex="-1" id="相关问题"><a class="markdownIt-Anchor" href="#相关问题">#</a> <a class="header-anchor" href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98">§</a> 相关问题</h2>
+<p>基环树模型在算法竞赛中很常见，典型的例题包括：</p>
+<ul>
+<li>求基环树的直径</li>
+<li>基环树上的动态规划问题</li>
+<li>寻找图中距离某点最远的点</li>
+</ul>
+<h2 id="topsrt%E6%89%BE%E7%8E%AF" tabindex="-1" id="topsrt找环"><a class="markdownIt-Anchor" href="#topsrt找环">#</a> <a class="header-anchor" href="#topsrt%E6%89%BE%E7%8E%AF">§</a> topsrt找环</h2>
+<p>topsort</p>
+<p>思路 : 不停的删除度为1 的点,最会剩余的点就在环上.</p>
+<h2 id="dfs%E6%89%BE%E7%8E%AF" tabindex="-1" id="dfs找环"><a class="markdownIt-Anchor" href="#dfs找环">#</a> <a class="header-anchor" href="#dfs%E6%89%BE%E7%8E%AF">§</a> dfs找环</h2>
+<p>思路:</p>
+<p>容易想到</p>
+<ol>
+<li>记录每个的点的dfs序<code>dfn[u]</code></li>
+<li>在树上dfs时,不可能遇到<code>返组边</code>,<code>已经访问过的更大dfn值的点</code></li>
+<li>在基环树上 <code>返祖边</code>,<code>已经访问过的更大dfn值的点</code> 各一次,且是同一条边</li>
+</ol>
+<p>于是我们可以写出下面的代码</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div>
+        <code><span class="token comment">// loop: 存储环路上的节点,loop_cnt: 环路上的节点数量</span>
+int loop<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>loop_cnt<span class="token punctuation">;</span>
+<span class="token comment">// dfn: 节点在DFS过程中的访问时间戳 (discovery time)</span>
+<span class="token comment">// dfn_idx: 时间戳计数器</span>
+int dfn<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>dfn_idx<span class="token punctuation">;</span>
+int fa<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// fa: 在DFS树中，节点的父节点</span>
+
+<span class="token comment">/**
+ * @brief 通过DFS寻找图中的环.
+ * 该函数适用于有向图，它寻找由前向边构成的环.
+ * @param u 当前访问的节点
+ * @param father u在DFS树中的父节点
+ */</span>
+void <span class="token function">get_ring</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int father<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 为当前节点u分配一个访问时间戳</span>
+    dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">++</span>dfn_idx<span class="token punctuation">;</span>
+    <span class="token comment">// 记录u的父节点</span>
+    fa<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> father<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> e<span class="token punctuation">.</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        int v <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">;</span> <span class="token comment">// 邻接点</span>
+        
+        <span class="token comment">// 如果v已经被访问过</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// 如果v是u的祖先节点(返祖边),则跳过</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&lt;</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment">// 返祖边略过</span>
+
+            <span class="token comment">// 找到一个环: u -> v, 并且v是u的后代(前向边)</span>
+            <span class="token comment">// v的时间戳比u大，说明v在u的DFS子树中</span>
+            
+            <span class="token comment">// 从v开始，通过父节点指针回溯到u，记录路径上的所有节点</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span> v <span class="token operator">!=</span> u <span class="token punctuation">;</span> v <span class="token operator">=</span> fa<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span> loop<span class="token punctuation">[</span><span class="token operator">++</span>loop_cnt<span class="token punctuation">]</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+            loop<span class="token punctuation">[</span><span class="token operator">++</span>loop_cnt<span class="token punctuation">]</span> <span class="token operator">=</span> u<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token function">get_ring</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<details><summary> 点击 </summary>
+<article><p>好的，我们来详细拆解和理解这行代码 <code>if (dfn[v] &lt; dfn[u]) continue;</code> 的作用。</p>
+<p>这行代码是利用深度优先搜索（DFS）在基环树中找环的关键部分。为了理解它，我们需要先明白<code>dfn</code>数组和整个DFS过程的含义。</p>
+<h3 id="1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5" tabindex="-1" id="1-基础概念"><a class="markdownIt-Anchor" href="#1-基础概念">#</a> <a class="header-anchor" href="#1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5">§</a> 1. 基础概念</h3>
+<ul>
+<li><strong>基环树 (Unicyclic Graph):</strong> 一个有 N 个点、N 条边的连通图。它的结构可以看作是一棵树，上面额外多了一条边，从而形成了一个唯一的环。</li>
+<li><strong>DFS (深度优先搜索):</strong> 代码中的 <code>get_loop</code> 函数本质上是一个DFS。</li>
+<li><strong><code>dfn[u]</code> (Discovery Time / Timestamp):</strong> <code>dfn</code> 是 “depth-first number” 的缩写。<code>dfn[u] = ++idx;</code> 这行代码给每个节点 <code>u</code> 在DFS中被访问到的顺序打上了一个时间戳。先被访问到的节点 <code>dfn</code> 值小，后被访问到的 <code>dfn</code> 值大。</li>
+<li><strong><code>fa[u]</code> (Parent):</strong> 记录在DFS树中，节点 <code>u</code> 是由哪个节点访问过来的。<code>fa[u]</code> 是 <code>u</code> 的父节点。</li>
+<li><strong>找环的原理:</strong> 在DFS过程中，如果从当前节点 <code>u</code> 访问到一个邻居节点 <code>v</code>，而 <code>v</code> 之前已经被访问过了（即 <code>dfn[v]</code> 不为0），并且 <code>v</code> 不是 <code>u</code> 的父节点（<code>v != fa[u]</code>），那么我们就找到了一条“返祖边”，说明发现了一个环。</li>
+</ul>
+<h3 id="2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F" tabindex="-1" id="2-核心问题为什么要有-if-dfnv-dfnu-continue"><a class="markdownIt-Anchor" href="#2-核心问题为什么要有-if-dfnv-dfnu-continue">#</a> <a class="header-anchor" href="#2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F">§</a> 2. 核心问题：为什么要有 <code>if (dfn[v] &lt; dfn[u]) continue;</code>？</h3>
+<p>在基环树的DFS中，当找到环时，实际上会有<strong>两次</strong>机会检测到这个环。</p>
+<p>让我们用一个例子来说明。假设环是 <code>A - B - C - D - A</code>。我们的DFS从环外的一个点开始，通过 <code>E</code> 进入了环，访问顺序是 <code>E -&gt; A -&gt; B -&gt; C -&gt; D</code>。</p>
+<p>此时的<code>dfn</code>和<code>fa</code>状态如下：</p>
+<ul>
+<li><code>dfn[E] &lt; dfn[A] &lt; dfn[B] &lt; dfn[C] &lt; dfn[D]</code></li>
+<li><code>fa[A] = E</code>, <code>fa[B] = A</code>, <code>fa[C] = B</code>, <code>fa[D] = C</code></li>
+</ul>
+<p>现在，DFS到达了节点 <code>D</code>。</p>
+<h4 id="第一次相遇-深节点-d-遇到浅节点-a"><a class="markdownIt-Anchor" href="#第一次相遇-深节点-d-遇到浅节点-a">#</a> 第一次相遇 (深节点 <code>D</code> 遇到浅节点 <code>A</code>)</h4>
+<ol>
+<li><strong>当前节点:</strong> <code>u = D</code>。</li>
+<li><strong>遍历邻居:</strong> <code>D</code> 的邻居有 <code>C</code> 和 <code>A</code>。
+<ul>
+<li>当邻居是 <code>C</code> 时，<code>C == fa[D]</code>，所以 <code>continue</code>，这是为了防止DFS走回头路。</li>
+<li>当邻居是 <code>A</code> 时，<code>v = A</code>。</li>
+</ul>
+</li>
+<li><strong>判断:</strong>
+<ul>
+<li><code>v != fa[u]</code> ( <code>A != C</code> ) -&gt; True</li>
+<li><code>dfn[v]</code> ( <code>dfn[A]</code> ) &gt; 0 -&gt; True，说明 <code>A</code> 被访问过，我们找到了环！</li>
+</ul>
+</li>
+<li><strong>进入关键代码:</strong> <code>if (dfn[v] &lt; dfn[u])</code>
+<ul>
+<li><code>dfn[A] &lt; dfn[D]</code> 是成立的，因为 <code>A</code> 比 <code>D</code> 先被访问。</li>
+<li>所以 <code>continue</code> 被执行。</li>
+<li><strong>这次相遇被忽略了！</strong></li>
+</ul>
+</li>
+</ol>
+<p>为什么忽略？因为在这个时刻，<code>A</code> 是 <code>D</code> 在DFS树中的祖先。如果我们在这里处理环，逻辑会比较复杂。而这段代码的设计者选择了一种更简洁的处理方式。</p>
+<h4 id="第二次相遇-浅节点-a-遇到深节点-d"><a class="markdownIt-Anchor" href="#第二次相遇-浅节点-a-遇到深节点-d">#</a> 第二次相遇 (浅节点 <code>A</code> 遇到深节点 <code>D</code>)</h4>
+<ol>
+<li>DFS从 <code>D</code> 返回，然后从 <code>C</code> 返回，从 <code>B</code> 返回，最终回到 <code>A</code>。</li>
+<li><strong>当前节点:</strong> <code>u = A</code>。<code>A</code> 已经完成了对邻居 <code>B</code> 的所有深度搜索。</li>
+<li><strong>遍历邻居:</strong> <code>A</code> 的邻居有 <code>E</code>, <code>B</code>, <code>D</code>。
+<ul>
+<li>当邻居是 <code>E</code> 时，<code>E == fa[A]</code>，<code>continue</code>。</li>
+<li>当邻居是 <code>B</code> 时，对 <code>B</code> 的DFS已经完成，<code>B</code> 是 <code>A</code> 的子节点。</li>
+<li>当邻居是 <code>D</code> 时，<code>v = D</code>。</li>
+</ul>
+</li>
+<li><strong>判断:</strong>
+<ul>
+<li><code>v != fa[u]</code> ( <code>D != E</code> ) -&gt; True</li>
+<li><code>dfn[v]</code> ( <code>dfn[D]</code> ) &gt; 0 -&gt; True，<code>D</code> 被访问过，我们又找到了环！</li>
+</ul>
+</li>
+<li><strong>进入关键代码:</strong> <code>if (dfn[v] &lt; dfn[u])</code>
+<ul>
+<li><code>dfn[D] &lt; dfn[A]</code> 不成立，因为 <code>dfn[D] &gt; dfn[A]</code>。</li>
+<li>所以 <code>continue</code> 不被执行。</li>
+</ul>
+</li>
+<li><strong>执行找环逻辑:</strong>
+<ul>
+<li><code>loop[++cnt] = v;</code> // <code>D</code> 被加入环</li>
+<li><code>for (; v != u; v = fa[v])</code> // 从 <code>D</code> 开始，通过 <code>fa</code> 指针往回走
+<ul>
+<li><code>v=D</code>, <code>fa[D]=C</code>。<code>C</code> 被加入环。</li>
+<li><code>v=C</code>, <code>fa[C]=B</code>。<code>B</code> 被加入环。</li>
+<li><code>v=B</code>, <code>fa[B]=A</code>。<code>A</code> 被加入环。</li>
+<li><code>v</code> 变成 <code>A</code>，循环条件 <code>v != u</code> ( <code>A != A</code> ) 为假，循环结束。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>此时，环上的所有节点 (<code>D</code>, <code>C</code>, <code>B</code>, <code>A</code>) 都被正确地找到了。</p>
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1" id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> <a class="header-anchor" href="#%E6%80%BB%E7%BB%93">§</a> 总结</h3>
+<p>这行代码 <code>if (dfn[v] &lt; dfn[u]) continue;</code> 是一个巧妙的<strong>过滤器</strong>。</p>
+<p>它的核心思想是：<strong>只在环上<code>dfn</code>值最小的那个节点（也就是DFS最先进入环的那个节点）去处理和记录整个环。</strong></p>
+<ul>
+<li><strong><code>dfn[v] &lt; dfn[u]</code> 的情况:</strong>
+<ul>
+<li>这表示当前节点 <code>u</code> 找到了一个它的祖先 <code>v</code>，形成了一个环。</li>
+<li>我们选择<strong>忽略</strong>这次发现，让DFS继续回溯。</li>
+</ul>
+</li>
+<li><strong><code>dfn[v] &gt; dfn[u]</code> 的情况:</strong>
+<ul>
+<li>这表示当前节点 <code>u</code> (一个祖先) 找到了一个它的后代 <code>v</code>，而这个后代 <code>v</code> 之前已经被访问过了（说明 <code>u</code> 和 <code>v</code> 在同一个环上，并且 <code>v</code> 是通过另一条路径被访问的）。</li>
+<li><code>u</code> 就是这个环上<code>dfn</code>值最小的节点。</li>
+<li>这时，我们才开始执行找环的逻辑。因为从 <code>v</code> 到 <code>u</code> 的路径已经通过 <code>fa</code> 数组完整地记录下来了，可以方便地回溯并记录所有环上的节点。</li>
+</ul>
+</li>
+</ul>
+<p>通过这种方式，可以保证环只被发现和处理<strong>一次</strong>，并且是在一个最方便处理的位置（环的“顶部”），使得代码逻辑变得非常清晰和简单。</p>
+</article></details>
+<p>代码</p>
+<p>dfs</p>
+<p>思路</p>
+<p>代码</p>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/7 11:22:45</p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const heti = new Heti('.heti');
+        heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>
