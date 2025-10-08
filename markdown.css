@@ -2028,6 +2028,9 @@
   [data-darkmode=auto] .markdown-body code {
     background-color: var(--fence-backgroud-color-dark);
   }
+  [data-darkmode=auto] .markdown-body pre code {
+    background-color: transparent;
+  }
 }
 div[class^=language-] {
   position: relative;
