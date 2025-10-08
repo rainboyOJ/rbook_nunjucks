@@ -53,7 +53,7 @@ $$
 P(i) = \max\{ D(x_i)+ e(i,x_i) +  D(y_i)  + e(i,y_i) \} , x_i < y_i
 $$
 
-- 设$Dt(i,x_i) = D(x_i) + e(i,x_i)
+- 设$Dt(i,x_i) = D(x_i) + e(i,x_i)$
 
 那么这个问题就变成的[集合最大二值和问题](../../math/集合.md)
 
@@ -61,6 +61,29 @@ $$
 
 
 于是我们得到代码如下: 
+
+
+```cpp
+int ans;
+
+template<typename T>
+void upd(T& v,T t) { if( v < t) v = t; } 
+
+void dfs_dp(int u,int fa) {
+    
+    int pathlca = 0;
+    for(int i = e.h[u];i != -1; i = e[i].next)
+    {
+        int v = e[i].v;
+        if( v == fa) continue;
+        dfs_dp(v, u);
+        int dt = d[v] + e[i].w; //得到 u到达 v 子树上的最远点
+        upd(pathlca,d[u] + dt); // 得到 分类 dt 的结尾的最值,更新 pathlca
+        upd(d[u],dt); // 更新d[u]
+    }
+    upd(ans,pathlca);
+}
+```
 
 
 ## 参考
