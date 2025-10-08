@@ -400,7 +400,7 @@ function hideMenuModal() {
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%AE%9A%E4%B9%89"> 树的直径定义</a></li><li><a href="#dp%E6%B1%82%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84"> DP求树的直径</a></li></ol></nav><h2 id="%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%AE%9A%E4%B9%89" tabindex="-1" id="树的直径定义"><a class="markdownIt-Anchor" href="#树的直径定义">#</a> <a class="header-anchor" href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%AE%9A%E4%B9%89">§</a> 树的直径定义</h2>
+    <nav class="table-of-contents"><ol><li><a href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%AE%9A%E4%B9%89"> 树的直径定义</a></li><li><a href="#dp%E6%B1%82%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84"> DP求树的直径</a></li><li><a href="#%E5%8F%82%E8%80%83"> 参考</a></li></ol></nav><h2 id="%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%AE%9A%E4%B9%89" tabindex="-1" id="树的直径定义"><a class="markdownIt-Anchor" href="#树的直径定义">#</a> <a class="header-anchor" href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%AE%9A%E4%B9%89">§</a> 树的直径定义</h2>
 <p>给定一棵带权(边)树</p>
 <ul>
 <li><strong>距离</strong>: 两个点路径上的边权和</li>
@@ -436,6 +436,11 @@ P(i) = \max\{ D(x_i)+ e(i,x_i) +  D(y_i)  + e(i,y_i) \} , x_i &lt; y_i
 </ul>
 <p>那么这个问题就变成的<a href="/math/%E9%9B%86%E5%90%88.html">集合最大二值和问题</a></p>
 <figure><img src="./images/dx.excalidraw.svg" alt=""></figure>
+<p>于是我们得到代码如下:</p>
+<h2 id="%E5%8F%82%E8%80%83" tabindex="-1" id="参考"><a class="markdownIt-Anchor" href="#参考">#</a> <a class="header-anchor" href="#%E5%8F%82%E8%80%83">§</a> 参考</h2>
+<ul>
+<li>树的直径 题目单 <a href="https://www.luogu.com.cn/training/505787#problems">https://www.luogu.com.cn/training/505787#problems</a></li>
+</ul>
 
 </div> 
     </div>
@@ -446,7 +451,7 @@ P(i) = \max\{ D(x_i)+ e(i,x_i) +  D(y_i)  + e(i,y_i) \} , x_i &lt; y_i
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/8 11:21:54</p>
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/8 23:22:25</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>
