@@ -2020,6 +2020,9 @@
 [data-darkmode=dark] .markdown-body code {
   background-color: var(--fence-backgroud-color-dark);
 }
+[data-darkmode=dark] .markdown-body pre code {
+  background-color: transparent;
+}
 
 @media (prefers-color-scheme: dark) {
   [data-darkmode=auto] .markdown-body code {
