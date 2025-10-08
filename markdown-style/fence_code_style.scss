@@ -16,7 +16,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  [data-darkmode=auto]  .markdown-body code {
-    background-color: var(--fence-backgroud-color-dark);
+  [data-darkmode=auto] .markdown-body {
+    code {
+      background-color: var(--fence-backgroud-color-dark);
+    }
+    pre code {
+      background-color: transparent;
+    }
   }
 }
