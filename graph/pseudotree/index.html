@@ -13,6 +13,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" href="/favicon.ico">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -275,7 +276,45 @@
       
       <li>
         
+          <a href="graph/max-len-of-tree">树的直径</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
           <a href="graph/pseudotree">基环树</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="math">数学</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="math/集合.html">集合</a>
         
 
         
@@ -361,7 +400,7 @@ function hideMenuModal() {
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E5%AE%9A%E4%B9%89"> 定义</a><ol><li><a href="#%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91"> 无向基环树</a></li><li><a href="#%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91"> 有向基环树</a><ol><li><a href="#%E5%86%85%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(in-tree)">内向基环树 (In-tree)</a></li><li><a href="#%E5%A4%96%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(out-tree)">外向基环树 (Out-tree)</a></li></ol></li></ol></li><li><a href="#%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"> 通用处理思路</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF"> 如何找环</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"> 算法思路</a></li></ol></li><li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"> 相关问题</a></li><li><a href="#topsrt%E6%89%BE%E7%8E%AF"> topsrt找环</a></li><li><a href="#dfs%E6%89%BE%E7%8E%AF"> dfs找环</a><ol><li><a href="#1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"> 1. 基础概念</a></li><li><a href="#2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F"> 2. 核心问题：为什么要有 if (dfn[v] &lt; dfn[u]) continue;？</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B7%B1%E8%8A%82%E7%82%B9-d-%E9%81%87%E5%88%B0%E6%B5%85%E8%8A%82%E7%82%B9-a)">第一次相遇 (深节点 D 遇到浅节点 A)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B5%85%E8%8A%82%E7%82%B9-a-%E9%81%87%E5%88%B0%E6%B7%B1%E8%8A%82%E7%82%B9-d)">第二次相遇 (浅节点 A 遇到深节点 D)</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93"> 总结</a></li></ol></li></ol></nav><h2 id="%E5%AE%9A%E4%B9%89" tabindex="-1" id="定义"><a class="markdownIt-Anchor" href="#定义">#</a> <a class="header-anchor" href="#%E5%AE%9A%E4%B9%89">§</a> 定义</h2>
+    <nav class="table-of-contents"><ol><li><a href="#%E5%AE%9A%E4%B9%89"> 定义</a><ol><li><a href="#%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91"> 无向基环树</a></li><li><a href="#%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91"> 有向基环树</a><ol><li><a href="#%E5%86%85%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(in-tree)">内向基环树 (In-tree)</a></li><li><a href="#%E5%A4%96%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(out-tree)">外向基环树 (Out-tree)</a></li></ol></li></ol></li><li><a href="#%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"> 通用处理思路</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF"> 如何找环</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"> 算法思路</a></li></ol></li><li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"> 相关问题</a></li><li><a href="#topsrt%E6%89%BE%E7%8E%AF"> topsrt找环</a></li><li><a href="#dfs%E6%89%BE%E7%8E%AF"> dfs找环</a><ol><li><a href="#1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"> 1. 基础概念</a></li><li><a href="#2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F"> 2. 核心问题：为什么要有 if (dfn[v] &lt; dfn[u]) continue;？</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B7%B1%E8%8A%82%E7%82%B9-d-%E9%81%87%E5%88%B0%E6%B5%85%E8%8A%82%E7%82%B9-a)">第一次相遇 (深节点 D 遇到浅节点 A)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B5%85%E8%8A%82%E7%82%B9-a-%E9%81%87%E5%88%B0%E6%B7%B1%E8%8A%82%E7%82%B9-d)">第二次相遇 (浅节点 A 遇到深节点 D)</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93"> 总结</a></li></ol></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9B%B4%E5%BE%84"> 基环树直径</a></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E4%B8%A4%E7%82%B9%E7%9B%B4%E6%8E%A5%E7%9A%84%E8%B7%9D%E7%A6%BB"> 基环树两点直接的距离</a></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91dp"> 基环树DP</a></li><li><a href="#%E5%8F%82%E8%80%83"> 参考</a></li></ol></nav><h2 id="%E5%AE%9A%E4%B9%89" tabindex="-1" id="定义"><a class="markdownIt-Anchor" href="#定义">#</a> <a class="header-anchor" href="#%E5%AE%9A%E4%B9%89">§</a> 定义</h2>
 <p><strong>基环树</strong>（Pseudo-tree），有时也被称为环套树，是图论中的一个概念。严格来说，它并不是一棵树，而是一个包含 <strong>n 个节点</strong>和 <strong>n 条边</strong>的<strong>连通图</strong>。</p>
 <p>从结构上看，一棵 n 个节点的树有 n-1 条边，如果在树上任意两个节点之间添加一条边，就会形成一个且仅有一个环。因此，基环树可以被理解为<strong>一棵树加上一条额外的边</strong>所构成的图。</p>
 <p>如果图不保证连通，那么一个含有 n 个节点和 n 条边的图可能是一个<strong>基环树森林</strong>（Pseudo-forest），即由若干个基环树组成。</p>
@@ -583,6 +622,14 @@ void <span class="token function">get_ring</span><span class="token punctuation"
 <p>dfs</p>
 <p>思路</p>
 <p>代码</p>
+<h2 id="%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9B%B4%E5%BE%84" tabindex="-1" id="基环树直径"><a class="markdownIt-Anchor" href="#基环树直径">#</a> <a class="header-anchor" href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9B%B4%E5%BE%84">§</a> 基环树直径</h2>
+<h2 id="%E5%9F%BA%E7%8E%AF%E6%A0%91%E4%B8%A4%E7%82%B9%E7%9B%B4%E6%8E%A5%E7%9A%84%E8%B7%9D%E7%A6%BB" tabindex="-1" id="基环树两点直接的距离"><a class="markdownIt-Anchor" href="#基环树两点直接的距离">#</a> <a class="header-anchor" href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E4%B8%A4%E7%82%B9%E7%9B%B4%E6%8E%A5%E7%9A%84%E8%B7%9D%E7%A6%BB">§</a> 基环树两点直接的距离</h2>
+<h2 id="%E5%9F%BA%E7%8E%AF%E6%A0%91dp" tabindex="-1" id="基环树dp"><a class="markdownIt-Anchor" href="#基环树dp">#</a> <a class="header-anchor" href="#%E5%9F%BA%E7%8E%AF%E6%A0%91dp">§</a> 基环树DP</h2>
+<h2 id="%E5%8F%82%E8%80%83" tabindex="-1" id="参考"><a class="markdownIt-Anchor" href="#参考">#</a> <a class="header-anchor" href="#%E5%8F%82%E8%80%83">§</a> 参考</h2>
+<ul>
+<li><a href="https://www.luogu.com.cn/article/0i6swvk6">https://www.luogu.com.cn/article/0i6swvk6</a></li>
+<li><a href="https://entiesci.github.io/oi-beats/site/%E5%9B%BE%E8%AE%BA/%E5%9F%BA%E7%8E%AF%E6%A0%91/">https://entiesci.github.io/oi-beats/site/图论/基环树/</a></li>
+</ul>
 
 </div> 
     </div>
@@ -593,7 +640,7 @@ void <span class="token function">get_ring</span><span class="token punctuation"
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/7 11:22:45</p>
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/8 11:06:33</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>
@@ -605,8 +652,9 @@ void <span class="token function">get_ring</span><span class="token punctuation"
     <script src="/assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        const heti = new Heti('.heti');
-        heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
     </script>
 </body>
 </html>
