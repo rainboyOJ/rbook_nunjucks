@@ -58,3 +58,11 @@ $$
 那么这个问题就变成的[集合最大二值和问题](../../math/集合.md)
 
 ![](./images/dx.excalidraw.svg)
+
+
+于是我们得到代码如下: 
+
+
+## 参考
+
+- 树的直径 题目单 https://www.luogu.com.cn/training/505787#problems
