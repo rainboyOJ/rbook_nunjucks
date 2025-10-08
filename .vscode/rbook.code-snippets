@@ -1,4 +1,12 @@
 {
+  "include code" :{
+    "prefix": "include-code",
+    "body": [
+      "@include-code(${1:./code/1.cpp}, cpp)",
+      ""
+    ],
+    "description": "include code"
+  },
   "Auto-complete Dollar Signs": {
     "prefix": "$",
     "body": "$$1$",
