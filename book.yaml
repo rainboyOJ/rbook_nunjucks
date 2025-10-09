@@ -51,12 +51,16 @@ chapters:
     nolink: true
     sections:
       - title: 树的直径
-        path: max-len-of-tree
+        path: diameter_of_tree
+      - title: 树的中心
+        path: center_of_tree
       - title: 基环树
         path: pseudotree
   - title: 数学
     path: math
     sections:
+      - title: 向上取整
+        path: 向上取整.md
       - title: 集合
         path: 集合.md
   - title: 附录
