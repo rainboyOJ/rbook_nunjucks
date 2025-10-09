@@ -39,7 +39,6 @@
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-checkbox": "^1.0.6",
     "markdown-it-texmath": "^1.0.0",
-    "markdown-it-toc-and-anchor": "^4.2.0",
     "markdown-it-toc-done-right": "^4.2.0",
     "nunjucks": "^3.2.4",
     "pangu": "^4.0.7",

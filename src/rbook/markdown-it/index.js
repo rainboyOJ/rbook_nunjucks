@@ -7,8 +7,6 @@ import LinkAttributes from 'markdown-it-link-attributes'; // 给链接添加属�
 import highlight from './lib/highlight.js';
 import twemoji from 'twemoji';
 import mdItContainer from 'markdown-it-container';
-import tocAndAnchor from 'markdown-it-toc-and-anchor';
-const markdownItTocAndAnchor = tocAndAnchor.default;
 import uslug from 'uslug';
 import admonition  from 'markdown-it-admonition'
 import includeCode from './lib/include-code.js'; // 引入 include-code 插件
@@ -52,13 +50,6 @@ md.use(TexMath, {
         }
     }
 })
-
-md.use(markdownItTocAndAnchor, {
-    permalink: true,
-    permalinkBefore: true,
-    permalinkSymbol: '§',
-    slugify: uslug
-}).use(admonition)
 
 // 不能使用
 // md.use(LinkAttributes, {
@@ -116,7 +107,7 @@ md.use(lineNumber)
     .use(sub)
     .use(mark)
     .use(abbr)
-    .use(anchor, { level: [2, 3], permalink: true, permalinkBefore: true, permalinkSymbol: '§' })
+    .use(anchor, { level: [2, 3], permalink: false, permalinkBefore: true, permalinkSymbol: '§' })
     .use(tocDoneRight, { level: 2 })
     .use(implicitFigures, { figcaption: true })
     .use(tocAnchorExtent)
