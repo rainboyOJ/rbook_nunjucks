@@ -420,7 +420,7 @@ function hideMenuModal() {
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E5%90%91%E4%B8%8A%E5%8F%96%E6%95%B4%E5%85%AC%E5%BC%8F">向上取整公式</a></li><li><a href="#%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3">原理详解</a><ol><li><a href="#1.-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3">1. 直观理解</a></li><li><a href="#2.-%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E">2. 数学证明</a></li></ol></li><li><a href="#c%2B%2B-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B">C++ 代码示例</a></li><li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li></ol></nav><p>在编程中，我们经常需要对除法结果进行向上取整。虽然可以使用 <code>ceil()</code> 函数，但在处理整数时，直接使用整数运算不仅效率更高，还能避免浮点数带来的精度问题。</p>
+    <nav class="table-of-contents"><ol><li><a href="#%E5%90%91%E4%B8%8A%E5%8F%96%E6%95%B4%E5%85%AC%E5%BC%8F">向上取整公式</a></li><li><a href="#%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3">原理详解</a><ol><li><a href="#1.-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3">1. 直观理解</a></li><li><a href="#2.-%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E">2. 数学证明</a></li></ol></li><li><a href="#c%2B%2B-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B">C++ 代码示例</a></li><li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li><li><a href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E4%BB%A3%E7%A0%81">模板的代码</a></li></ol></nav><p>在编程中，我们经常需要对除法结果进行向上取整。虽然可以使用 <code>ceil()</code> 函数，但在处理整数时，直接使用整数运算不仅效率更高，还能避免浮点数带来的精度问题。</p>
 <h2 id="%E5%90%91%E4%B8%8A%E5%8F%96%E6%95%B4%E5%85%AC%E5%BC%8F" tabindex="-1">向上取整公式</h2>
 <p>对于两个正整数 <code>a</code> 和 <code>b</code>，向上取整 <code>ceil(a/b)</code> 可以用以下整数运算实现：</p>
 <section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">
@@ -517,6 +517,32 @@ ceil(10 / 5) = 2
 <li><strong>适用范围</strong>：此方法仅适用于<strong>正整数</strong>。如果 <code>a</code> 或 <code>b</code> 可能为负数，需要根据具体场景的取整定义进行调整。</li>
 <li><strong>溢出风险</strong>：当 <code>a</code> 和 <code>b</code> 的值很大时，<code>a + b - 1</code> 有可能导致整数溢出。在这种情况下，应使用范围更大的数据类型，如 <code>long long</code>。</li>
 </ol>
+<h2 id="%E6%A8%A1%E6%9D%BF%E7%9A%84%E4%BB%A3%E7%A0%81" tabindex="-1">模板的代码</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div>
+        <code><span class="token comment">// 向上取整</span>
+
+unsigned long long  <span class="token function">myceil</span><span class="token punctuation">(</span>unsigned long long  a <span class="token punctuation">,</span>unsigned long long b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>a<span class="token operator">+</span>b<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">/</span>b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
 
 </div> 
     </div>
@@ -527,7 +553,7 @@ ceil(10 / 5) = 2
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/10 00:14:30</p>
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/10/10 15:01:38</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>
