@@ -13,13 +13,14 @@ import includeCode from './lib/include-code.js'; // 引入 include-code 插件
 import mdLink2Url from './lib/md-link2url.js'; // 引入 md-link2url 插件
 
 import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
+import path, { dirname, resolve } from 'path';
 
 // 获取当前模块的目录路径
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 // 计算项目根目录 (当前文件向上三级)
-const project_root = resolve(__dirname, '../../../book');
+const project_root = resolve(__dirname, '../../../');
+const project_book_root = resolve(__dirname, '../../../book');
 
 import MarkdownIt from 'markdown-it';
 
@@ -31,10 +32,10 @@ var md = MarkdownIt({
     // highlight:highlight
 })
 
-md.use(includeCode) // 使用 include-code 插件
+md.use(includeCode,{baseDir: project_root}) // 使用 include-code 插件
 
 md.use(mdLink2Url, {
-    baseDir: project_root,
+    baseDir: project_book_root,
     baseUrl: '/'
 })
 

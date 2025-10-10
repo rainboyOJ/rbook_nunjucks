@@ -9,3 +9,15 @@
   - [x] 定义自己的markdown.css 弥补heiti的不足
 
 - [ ] h2 h3 ,都要有样式 h2 的样式是一个带背景的条状, h3 下划线 ,目标是尽可能的让读者可以很清晰的分辨文章的部分
+
+- fence 增加一个fold 标记 ,这样就可以让 fence code 可以折叠
+
+```js fold
+```
+
+增加高亮标记,高亮对应的行
+
+```js [1-2]
+```
+
+@include-code 函数拓充,可以有fold,hightline参数

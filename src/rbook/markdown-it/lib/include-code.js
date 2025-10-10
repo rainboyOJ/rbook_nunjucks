@@ -3,10 +3,12 @@ import path from 'path';
 
 /**
  * A markdown-it plugin to include code from files.
- *
+ *  options {
+ *    baseDir: string, // base directory for the files to be included
+ * }
  * Syntax: @include-code(path/to/file.ext, language)
  */
-function includeCodePlugin(md) {
+function includeCodePlugin(md,options = {}) {
 
   function includeCodeRule(state, startLine, endLine, silent) {
     const pos = state.bMarks[startLine] + state.tShift[startLine];
@@ -27,12 +29,23 @@ function includeCodePlugin(md) {
 
     const [fullMatch, rawFilePath, lang] = match;
     const filePath = rawFilePath.trim();
-    const language = (lang || '').trim();
-
-    // Resolve the absolute path of the file to be included.
-    // It's relative to the markdown file being processed.
-    const currentDir = path.dirname(state.env.filePath || '.');
-    const absolutePath = path.resolve(currentDir, filePath);
+    let language = (lang || '').trim();
+    
+    // If no language is specified, use the file extension as default language
+    if (!language) {
+      const ext = path.extname(filePath).toLowerCase();
+      language = ext.substring(1); // Remove the dot from extension
+    }
+    let absolutePath;
+    if( filePath.startsWith('/') ) {
+      absolutePath = path.join(options.baseDir, filePath);
+    }
+    else {
+      // Resolve the absolute path of the file to be included.
+      // It's relative to the markdown file being processed.
+      let currentDir = path.dirname(state.env.filePath || '.');
+      absolutePath = path.resolve(currentDir, filePath);
+    }
 
     let content;
     try {
