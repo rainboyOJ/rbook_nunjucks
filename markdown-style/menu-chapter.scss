@@ -234,3 +234,61 @@
         background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%23666' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
     }
 }
+
+.chapter-list ul li {
+
+  a.menu-info {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    font-weight: normal;
+    color: #666;
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    cursor: default;
+    width: 80%;
+    line-height: 1.2;
+    span {
+      position: relative; // 确保 span z-index 生效
+      z-index: 2;
+      background-color: var(--body-background-color-light);
+    }
+  }
+
+  a.menu-info:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 0;
+    height: 1px;
+    border-top: 1px dashed rgba(221, 221, 221, 0.5);
+    z-index: 1;
+  }
+}
+
+[data-darkmode="dark"] .chapter-list ul li a.menu-info {
+  color: #999;
+
+  span {
+    background-color: var(--body-background-color-dark);
+  }
+}
+
+[data-darkmode="dark"] .chapter-list ul li a.menu-info:before {
+  border-top-color: rgba(85, 85, 85, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode="auto"] .chapter-list ul li a.menu-info {
+    color: #999;
+    background-color: var(--body-background-color-dark);
+  }
+
+  [data-darkmode="auto"] .chapter-list ul li a.menu-info:before {
+    border-top-color: rgba(85, 85, 85, 0.5);
+  }
+}

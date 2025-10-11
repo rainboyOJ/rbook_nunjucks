@@ -4,7 +4,10 @@
     {% for item in items %}
       {% set current_path = parent_path + item.path %}
       <li>
-        {% if item.nolink %}
+        
+        {% if item.type and item.type == "info" %}
+          <a href="javascript:void(0);" class="menu-info"><span>{{ item.title }}</span></a>
+        {% elif item.nolink %}
           <a href="javascript:void(0);">{{ item.title }}</a>
         {% else %}
           <a href="{{ current_path | menu_link   }}">{{ item.title }}</a>

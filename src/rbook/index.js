@@ -114,6 +114,9 @@ class rbook {
         }
         
         for (const chapter of chapters) {
+            // 没有path的章节不处理
+            if( !chapter.path ) continue;
+            //if( chapter.type === 'info' ) continue; // info 是一个分割符,在目录中显示为 ---- ,起提示作用
             // 如果有sections，说明不是叶节点，递归处理子章节
             if (chapter.sections && Array.isArray(chapter.sections)) {
                 // 递归处理子章节
