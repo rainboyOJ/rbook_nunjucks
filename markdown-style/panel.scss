@@ -33,6 +33,7 @@
             background-color: #ccc;
         }
 
+
         li:first-child label,li:first-child a {
             // border-left:1px solid ;
             border-radius: 8px 0 0 8px;
@@ -44,4 +45,15 @@
             border-radius: 0 8px 8px 0;
         }
     }
+}
+
+/* Dark mode styles for checked radio */
+[data-darkmode="dark"]  .panel .panel-list  input:checked+label {
+  background-color: #555;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode="auto"] .panel .panel-list  input:checked+label {
+    background-color: #555;
+  }
 }
