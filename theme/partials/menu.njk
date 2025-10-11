@@ -5,7 +5,14 @@
       {% set current_path = parent_path + item.path %}
       <li>
         {% if item.type and item.type == "info" %}
-          <a href="javascript:void(0);" class="menu-info"><span>{{ item.title }}</span></a>
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              {% if item.icon %}
+                <span class="svg-icon"> {{item.icon | safe}} </span>
+              {% endif %}
+             {{ item.title }} 
+            </span>
+          </a>
         {% elif item.nolink %}
           <i class="fa fa-folder-open-o"></i>
           <a href="javascript:void(0);" class="menu-no-link">{{ item.title }}</a>

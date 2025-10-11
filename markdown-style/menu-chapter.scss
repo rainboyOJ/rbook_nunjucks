@@ -244,7 +244,10 @@
     font-size: 0.95rem;
     font-weight: normal;
     color: #666;
-    text-align: center;
+
+    display: flex; // 为了让内部的 span 水平居中
+    justify-content: center;
+
     letter-spacing: 1px;
     text-transform: uppercase;
     position: relative;
@@ -252,6 +255,9 @@
     width: 80%;
     line-height: 1.2;
     span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: relative; // 确保 span z-index 生效
       z-index: 2;
       background-color: var(--body-background-color-light);
@@ -297,4 +303,20 @@
   font-weight: bold;
   cursor: default;
   text-decoration: none;
+}
+
+/* SVG 图标样式 */
+.menu-info .svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1em;
+  width: auto;
+  margin-right: 0.3em;
+}
+
+.menu-info .svg-icon svg {
+  height: 100%;
+  width: 100%;
+  fill: currentColor;
+  vertical-align: middle;
 }
