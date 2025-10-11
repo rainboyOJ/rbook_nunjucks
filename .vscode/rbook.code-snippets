@@ -99,6 +99,96 @@
 		],
 		"description": "rbook Tip提示框 - 符合markdown-it-admonition语法"
 	},
+  "rbook math Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-math-admonition",
+    "body": [
+      "!!! ${1|definition,theorem,corollary,lemma,proof,exercise,problem|} ${2:Mathematics Title}",
+      "${3:Mathematics content here}",
+      "!!!"
+    ],
+    "description": "rbook数学Admonition提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Definition Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-definition",
+    "body": [
+      "!!! definition ${1:定义标题}",
+      "${2:定义内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Definition定义提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Theorem Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-theorem",
+    "body": [
+      "!!! theorem ${1:定理标题}",
+      "${2:定理内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Theorem定理提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Corollary Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-corollary",
+    "body": [
+      "!!! corollary ${1:推论标题}",
+      "${2:推论内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Corollary推论提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Lemma Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-lemma",
+    "body": [
+      "!!! lemma ${1:引理标题}",
+      "${2:引理内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Lemma引理提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Proof Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-proof",
+    "body": [
+      "!!! proof ${1:证明标题}",
+      "${2:证明内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Proof证明提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Exercise Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-exercise",
+    "body": [
+      "!!! exercise ${1:练习标题}",
+      "${2:练习内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Exercise练习提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook Problem Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-problem",
+    "body": [
+      "!!! problem ${1:问题标题}",
+      "${2:问题内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Problem问题提示框 - 符合markdown-it-admonition语法"
+  },
+  "rbook abstract Admonition": {
+    "scope": "markdown",
+    "prefix": "rbook-abstract",
+    "body": [
+      "!!! abstract ${1:摘要标题}",
+      "${2:摘要内容 here}",
+      "!!!"
+    ],
+    "description": "rbook Abstract摘要提示框 - 符合markdown-it-admonition语法"
+  },
 	"rbook Success Admonition": {
 		"scope": "markdown",
 		"prefix": "rbook-success",
