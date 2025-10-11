@@ -291,7 +291,9 @@
 @media (prefers-color-scheme: dark) {
   [data-darkmode="auto"] .chapter-list ul li a.menu-info {
     color: #999;
-    background-color: var(--body-background-color-dark);
+    span {
+      background-color: var(--body-background-color-dark);
+    }
   }
 
   [data-darkmode="auto"] .chapter-list ul li a.menu-info:before {
