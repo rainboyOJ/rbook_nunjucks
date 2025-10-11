@@ -1811,14 +1811,9 @@
   text-decoration: inherit;
 }
 
-.admonition > *:last-child {
-  margin-bottom: 0.75rem;
-}
-
 .admonition > *:not(.admonition-title) {
-  padding: 0 1rem;
-  margin-top: 0.75rem;
-  margin-bottom: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* Light theme styles */
