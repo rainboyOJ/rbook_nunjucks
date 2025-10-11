@@ -18,19 +18,17 @@ chapters:
     path: chapter3
     sections:
       - title: 背包
-        path: knapsack
-        sections:
-          - title: 01背包
-            path: 01-knapsack
-          - title: 多重背包
-            path: multiple-knapsack
-      - title: 线性
-        path: linear
-        sections:
-          - title: lcs
-            path: lcs
-          - title: lis
-            path: lis
+        type: info # info 是一个分割符,在目录中显示为 ---- ,起提示作用
+      - title: 01背包
+        path: knapsack/01-knapsack
+      - title: 多重背包
+        path: knapsack/multiple-knapsack
+      - title: 线性动态规划
+        type: info
+      - title: lcs
+        path: linear/lcs
+      - title: lis
+        path: linear/lis
   - title: 第四章 数据结构
     nolink: true
     path: data-structure
