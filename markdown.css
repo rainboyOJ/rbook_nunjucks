@@ -1687,6 +1687,14 @@
   --admonition-bug-light: #e91e63;
   --admonition-example-light: #9c27b0;
   --admonition-quote-light: #9e9e9e;
+  /* Math admonition colors (light theme) */
+  --admonition-definition-light: #2196f3;
+  --admonition-theorem-light: #673ab7;
+  --admonition-corollary-light: #9c27b0;
+  --admonition-lemma-light: #3f51b5;
+  --admonition-proof-light: #607d8b;
+  --admonition-exercise-light: #ff5722;
+  --admonition-problem-light: #795548;
   /* Dark theme colors */
   --admonition-note-dark: #8bb1f9;
   --admonition-abstract-dark: #a9b7c6;
@@ -1700,6 +1708,14 @@
   --admonition-bug-dark: #ff4081;
   --admonition-example-dark: #e040fb;
   --admonition-quote-dark: #e0e0e0;
+  /* Math admonition colors (dark theme) */
+  --admonition-definition-dark: #64b5f6;
+  --admonition-theorem-dark: #9575cd;
+  --admonition-corollary-dark: #ba68c8;
+  --admonition-lemma-dark: #7986cb;
+  --admonition-proof-dark: #90a4ae;
+  --admonition-exercise-dark: #ff8a65;
+  --admonition-problem-dark: #a1887f;
 }
 
 /* Base admonition styles */
@@ -1889,6 +1905,91 @@
   content: "\f10d";
 }
 
+/* Math admonition styles (light theme) */
+.admonition.definition {
+  border-left-color: var(--admonition-definition-light);
+}
+
+.admonition.definition .admonition-title {
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+.admonition.definition .admonition-title:before {
+  content: "\f02d";
+}
+
+.admonition.theorem {
+  border-left-color: var(--admonition-theorem-light);
+}
+
+.admonition.theorem .admonition-title {
+  background-color: rgba(103, 58, 183, 0.1);
+}
+
+.admonition.theorem .admonition-title:before {
+  content: "\f0b2";
+}
+
+.admonition.corollary {
+  border-left-color: var(--admonition-corollary-light);
+}
+
+.admonition.corollary .admonition-title {
+  background-color: rgba(156, 39, 176, 0.1);
+}
+
+.admonition.corollary .admonition-title:before {
+  content: "\f06e";
+}
+
+.admonition.lemma {
+  border-left-color: var(--admonition-lemma-light);
+}
+
+.admonition.lemma .admonition-title {
+  background-color: rgba(63, 81, 181, 0.1);
+}
+
+.admonition.lemma .admonition-title:before {
+  content: "\f24e";
+}
+
+.admonition.proof {
+  border-left-color: var(--admonition-proof-light);
+}
+
+.admonition.proof .admonition-title {
+  background-color: rgba(96, 125, 139, 0.1);
+}
+
+.admonition.proof .admonition-title:before {
+  content: "\f0c6";
+}
+
+.admonition.exercise {
+  border-left-color: var(--admonition-exercise-light);
+}
+
+.admonition.exercise .admonition-title {
+  background-color: rgba(255, 87, 34, 0.1);
+}
+
+.admonition.exercise .admonition-title:before {
+  content: "\f044";
+}
+
+.admonition.problem {
+  border-left-color: var(--admonition-problem-light);
+}
+
+.admonition.problem .admonition-title {
+  background-color: rgba(121, 85, 72, 0.1);
+}
+
+.admonition.problem .admonition-title:before {
+  content: "\f0eb";
+}
+
 /* Dark theme styles */
 [data-darkmode=dark] .admonition {
   background-color: var(--container-background-color-dark);
@@ -2006,6 +2107,63 @@
   background-color: rgba(224, 224, 224, 0.1);
 }
 
+/* Math admonition styles (dark theme) */
+[data-darkmode=dark] .admonition.definition {
+  border-left-color: var(--admonition-definition-dark);
+}
+
+[data-darkmode=dark] .admonition.definition .admonition-title {
+  background-color: rgba(100, 181, 246, 0.1);
+}
+
+[data-darkmode=dark] .admonition.theorem {
+  border-left-color: var(--admonition-theorem-dark);
+}
+
+[data-darkmode=dark] .admonition.theorem .admonition-title {
+  background-color: rgba(149, 117, 205, 0.1);
+}
+
+[data-darkmode=dark] .admonition.corollary {
+  border-left-color: var(--admonition-corollary-dark);
+}
+
+[data-darkmode=dark] .admonition.corollary .admonition-title {
+  background-color: rgba(186, 104, 200, 0.1);
+}
+
+[data-darkmode=dark] .admonition.lemma {
+  border-left-color: var(--admonition-lemma-dark);
+}
+
+[data-darkmode=dark] .admonition.lemma .admonition-title {
+  background-color: rgba(121, 134, 203, 0.1);
+}
+
+[data-darkmode=dark] .admonition.proof {
+  border-left-color: var(--admonition-proof-dark);
+}
+
+[data-darkmode=dark] .admonition.proof .admonition-title {
+  background-color: rgba(144, 164, 174, 0.1);
+}
+
+[data-darkmode=dark] .admonition.exercise {
+  border-left-color: var(--admonition-exercise-dark);
+}
+
+[data-darkmode=dark] .admonition.exercise .admonition-title {
+  background-color: rgba(255, 138, 101, 0.1);
+}
+
+[data-darkmode=dark] .admonition.problem {
+  border-left-color: var(--admonition-problem-dark);
+}
+
+[data-darkmode=dark] .admonition.problem .admonition-title {
+  background-color: rgba(161, 136, 127, 0.1);
+}
+
 @media (prefers-color-scheme: dark) {
   [data-darkmode=auto] .admonition.note {
     border-left-color: var(--admonition-note-dark);
@@ -2078,6 +2236,49 @@
   }
   [data-darkmode=auto] .admonition.quote .admonition-title {
     background-color: rgba(224, 224, 224, 0.1);
+  }
+  /* Math admonition styles (auto dark theme) */
+  [data-darkmode=auto] .admonition.definition {
+    border-left-color: var(--admonition-definition-dark);
+  }
+  [data-darkmode=auto] .admonition.definition .admonition-title {
+    background-color: rgba(100, 181, 246, 0.1);
+  }
+  [data-darkmode=auto] .admonition.theorem {
+    border-left-color: var(--admonition-theorem-dark);
+  }
+  [data-darkmode=auto] .admonition.theorem .admonition-title {
+    background-color: rgba(149, 117, 205, 0.1);
+  }
+  [data-darkmode=auto] .admonition.corollary {
+    border-left-color: var(--admonition-corollary-dark);
+  }
+  [data-darkmode=auto] .admonition.corollary .admonition-title {
+    background-color: rgba(186, 104, 200, 0.1);
+  }
+  [data-darkmode=auto] .admonition.lemma {
+    border-left-color: var(--admonition-lemma-dark);
+  }
+  [data-darkmode=auto] .admonition.lemma .admonition-title {
+    background-color: rgba(121, 134, 203, 0.1);
+  }
+  [data-darkmode=auto] .admonition.proof {
+    border-left-color: var(--admonition-proof-dark);
+  }
+  [data-darkmode=auto] .admonition.proof .admonition-title {
+    background-color: rgba(144, 164, 174, 0.1);
+  }
+  [data-darkmode=auto] .admonition.exercise {
+    border-left-color: var(--admonition-exercise-dark);
+  }
+  [data-darkmode=auto] .admonition.exercise .admonition-title {
+    background-color: rgba(255, 138, 101, 0.1);
+  }
+  [data-darkmode=auto] .admonition.problem {
+    border-left-color: var(--admonition-problem-dark);
+  }
+  [data-darkmode=auto] .admonition.problem .admonition-title {
+    background-color: rgba(161, 136, 127, 0.1);
   }
 }
 .markdown-body code {
