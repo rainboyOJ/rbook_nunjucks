@@ -52,7 +52,8 @@
 /* Base admonition styles */
 .admonition {
   margin: 1.5rem 0;
-  padding: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
   border-radius: 4px;
   border-left: 0.3rem solid;
   background-color: var(--container-background-color-light);
@@ -63,7 +64,7 @@
 .admonition .admonition-title {
   font-weight: 600;
   padding: 0.75rem 1rem;
-  margin: 0;
+  margin: 0 -1.5rem 1rem -1.5rem; // 抵消 .admonition padding-left
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(0, 0, 0, 0.03);
 }
@@ -79,14 +80,6 @@
 
 .admonition > *:last-child {
   // margin-bottom: 0.75rem;
-}
-
-.admonition > *:not(.admonition-title) {
-    padding-left: 1rem;
-    padding-right: 1rem;
-//   padding: 0 1rem;
-//   margin-top: 0.75rem;
-//   margin-bottom: 0;
 }
 
 /* Light theme styles */
