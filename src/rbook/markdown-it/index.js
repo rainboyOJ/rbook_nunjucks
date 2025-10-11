@@ -8,7 +8,7 @@ import highlight from './lib/highlight.js';
 import twemoji from 'twemoji';
 import mdItContainer from 'markdown-it-container';
 import uslug from 'uslug';
-import admonition  from 'markdown-it-admonition'
+import admonition  from './lib/markdown-it-admonition.js';
 import includeCode from './lib/include-code.js'; // 引入 include-code 插件
 import mdLink2Url from './lib/md-link2url.js'; // 引入 md-link2url 插件
 
@@ -33,6 +33,8 @@ var md = MarkdownIt({
 })
 
 md.use(includeCode,{baseDir: project_root}) // 使用 include-code 插件
+
+md.use(admonition)
 
 md.use(mdLink2Url, {
     baseDir: project_book_root,
