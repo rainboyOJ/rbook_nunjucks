@@ -34,7 +34,12 @@ var md = MarkdownIt({
 
 md.use(includeCode,{baseDir: project_root}) // 使用 include-code 插件
 
-md.use(admonition)
+
+const math_admonition = ["definition", "theorem", "corollary", "lemma", "proof", "exercise", "problem"]
+const default_admonition = ["note", "abstract", "info", "tip", "success", "question", "warning", "failure", "danger", "bug", "example", "quote"]
+md.use(admonition,{
+  types: [...default_admonition,...math_admonition]
+})
 
 md.use(mdLink2Url, {
     baseDir: project_book_root,
