@@ -292,3 +292,9 @@
     border-top-color: rgba(85, 85, 85, 0.5);
   }
 }
+
+.chapter-list ul li a.menu-no-link {
+  font-weight: bold;
+  cursor: default;
+  text-decoration: none;
+}
