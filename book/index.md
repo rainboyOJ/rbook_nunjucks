@@ -13,4 +13,8 @@ layout: index
 This is the admonition body
 !!!
 
+!!! proof This is the proof title
+This is the admonition body
+!!!
+
 ## 目录
