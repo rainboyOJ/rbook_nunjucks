@@ -1786,7 +1786,8 @@
 /* Base admonition styles */
 .admonition {
   margin: 1.5rem 0;
-  padding: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
   border-radius: 4px;
   border-left: 0.3rem solid;
   background-color: var(--container-background-color-light);
@@ -1797,7 +1798,7 @@
 .admonition .admonition-title {
   font-weight: 600;
   padding: 0.75rem 1rem;
-  margin: 0;
+  margin: 0 -1.5rem 1rem -1.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(0, 0, 0, 0.03);
 }
@@ -1809,11 +1810,6 @@
   font-style: normal;
   display: inline-block;
   text-decoration: inherit;
-}
-
-.admonition > *:not(.admonition-title) {
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 /* Light theme styles */
