@@ -41,6 +41,9 @@ import tocDoneRight from 'markdown-it-toc-done-right';
 import tocAnchorExtent from './lib/tocAnchorExtent.js';
 import codetabs from 'markdown-it-codetabs';
 
+// .excalidraw.svg
+import imageExtensionPlugin from './lib/markdown-it-excalidraw-svg/index.js';
+
 // Node.js modules
 import { fileURLToPath } from 'url';
 import path, { dirname, resolve } from 'path';
@@ -198,6 +201,14 @@ md.use(codetabs);
 md.renderer.rules.emoji = function(token, idx) {
     return twemoji.parse(token[idx].content);
 };
+
+
+// .excalidraw.svg
+md.use(imageExtensionPlugin, { 
+  excalidraw_server_addrs: "https://excalidraw.roj.ac.cn/",
+  blog_url : "https://rbook2.roj.ac.cn/" ,
+  base_path:  project_book_root
+});
 
 /**
  * Render markdown content
