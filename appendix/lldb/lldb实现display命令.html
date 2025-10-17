@@ -514,13 +514,100 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>最长公共子序列(LCS)</h1>
+        <h1>在LLDB中实现GDB的display功能</h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <h1>最长公共子序列(LCS)</h1>
-<p>最长公共子序列问题是经典的线性动态规划问题。</p>
+    <nav class="table-of-contents"><ol><li><a href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD">核心功能</a></li><li><a href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%3A-target-stop-hook">核心命令: target stop-hook</a></li><li><a href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95">实现方法</a><ol><li><a href="#1.-%E8%87%AA%E5%8A%A8%E6%98%BE%E7%A4%BA%E5%8F%98%E9%87%8F">1. 自动显示变量</a></li><li><a href="#2.-%E6%9D%A1%E4%BB%B6%E6%98%BE%E7%A4%BA">2. 条件显示</a></li></ol></li><li><a href="#%E9%92%A9%E5%AD%90%E7%AE%A1%E7%90%86">钩子管理</a></li><li><a href="#gdb-vs-lldb-%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">GDB vs LLDB 命令速查</a></li></ol></nav><h2 id="%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD" tabindex="-1">核心功能</h2>
+<p>GDB 的 <code>display</code> 命令可以在程序每次停止时自动打印表达式的值，便于跟踪变量变化。在 LLDB 中，此功能通过 <code>target stop-hook</code> 命令实现。在较新版本的 LLDB 中，<code>display</code> 也被设为 <code>target stop-hook</code> 的一个便捷别名。</p>
+<h2 id="%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%3A-target-stop-hook" tabindex="-1">核心命令: <code>target stop-hook</code></h2>
+<p>该命令用于注册一个“停止钩子”，它会在程序每次因断点、单步执行等原因暂停时，自动执行预设的 LLDB 命令。</p>
+<p><strong>基本语法:</strong></p>
+<pre><code class="language-lldb">target stop-hook add --one-liner &quot;&lt;要执行的命令&gt;&quot;
+</code></pre>
+<ul>
+<li>别名: <code>ta st a -o &quot;...&quot;</code></li>
+</ul>
+<h2 id="%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95" tabindex="-1">实现方法</h2>
+<h3 id="1.-%E8%87%AA%E5%8A%A8%E6%98%BE%E7%A4%BA%E5%8F%98%E9%87%8F" tabindex="-1">1. 自动显示变量</h3>
+<p>在程序每次停止时，自动打印一个或多个变量的值。</p>
+<pre><code class="language-lldb">(lldb) target stop-hook add -o &quot;frame variable &lt;var1&gt; &lt;var2&gt;&quot;
+
+# 如果你的 LLDB 版本支持，也可以直接使用 display 别名
+(lldb) display &lt;var1&gt;
+</code></pre>
+<p><strong>示例：</strong></p>
+<pre><code class="language-lldb"># 每次停止时显示变量 my_variable 的值
+(lldb) target stop-hook add -o &quot;frame variable my_variable&quot;
+
+# 同时显示 argc 和 argv
+(lldb) target stop-hook add -o &quot;frame variable argc argv&quot;
+</code></pre>
+<h3 id="2.-%E6%9D%A1%E4%BB%B6%E6%98%BE%E7%A4%BA" tabindex="-1">2. 条件显示</h3>
+<p><code>target stop-hook</code> 支持在满足特定条件时才触发，功能比 GDB 的 <code>display</code> 更灵活。</p>
+<ul>
+<li>
+<p><strong>仅在特定函数中显示:</strong>
+使用 <code>--name</code> (别名 <code>-n</code>) 选项指定函数。</p>
+<pre><code class="language-lldb"># 仅在 main 函数中停止时，显示 argc 和 argv
+(lldb) target stop-hook add -n main -o &quot;frame variable argc argv&quot;
+</code></pre>
+</li>
+<li>
+<p><strong>仅在特定类的成员函数中显示:</strong>
+使用 <code>--classname</code> (别名 <code>-c</code>) 选项指定类名。</p>
+<pre><code class="language-lldb"># 仅在 MyClass 的方法中停止时，显示 *this
+(lldb) target stop-hook add -c MyClass -o &quot;frame variable *this&quot;
+</code></pre>
+</li>
+</ul>
+<h2 id="%E9%92%A9%E5%AD%90%E7%AE%A1%E7%90%86" tabindex="-1">钩子管理</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>target stop-hook list</code></td>
+<td style="text-align:left">列出所有已设置的停止钩子及其编号</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>target stop-hook delete &lt;编号&gt;</code></td>
+<td style="text-align:left">删除指定编号的停止钩子</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gdb-vs-lldb-%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5" tabindex="-1">GDB vs LLDB 命令速查</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">GDB 命令</th>
+<th style="text-align:left">LLDB 等效命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>display my_var</code></td>
+<td style="text-align:left"><code>target stop-hook add -o &quot;frame variable my_var&quot;</code> 或 <code>display my_var</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>display/i $pc</code></td>
+<td style="text-align:left"><code>target stop-hook add -o &quot;disassemble -p&quot;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>undisplay &lt;num&gt;</code></td>
+<td style="text-align:left"><code>target stop-hook delete &lt;num&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>info display</code></td>
+<td style="text-align:left"><code>target stop-hook list</code></td>
+</tr>
+</tbody>
+</table>
 
 </div> 
     </div>

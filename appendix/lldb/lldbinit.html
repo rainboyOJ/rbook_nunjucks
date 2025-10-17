@@ -514,13 +514,165 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>最长公共子序列(LCS)</h1>
+        <h1>LLDB 个性化配置：.lldbinit 文件编写指南</h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <h1>最长公共子序列(LCS)</h1>
-<p>最长公共子序列问题是经典的线性动态规划问题。</p>
+    <nav class="table-of-contents"><ol><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-.lldbinit-%E6%96%87%E4%BB%B6%EF%BC%9F">什么是 .lldbinit 文件？</a></li><li><a href="#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B">常用配置示例</a><ol><li><a href="#1.-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D">1. 创建命令别名</a></li><li><a href="#2.-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-(stop-hooks)">2. 设置自动执行命令 (Stop Hooks)</a></li><li><a href="#3.-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B0%83%E8%AF%95%E5%99%A8%E8%A1%8C%E4%B8%BA">3. 自定义调试器行为</a></li><li><a href="#4.-%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%AE%9A%E4%B9%89-python-%E8%84%9A%E6%9C%AC">4. 加载自定义 Python 脚本</a></li></ol></li><li><a href="#%E5%AE%8C%E6%95%B4%E7%9A%84-.lldbinit-%E6%A8%A1%E6%9D%BF">完整的 .lldbinit 模板</a></li></ol></nav><h2 id="%E4%BB%80%E4%B9%88%E6%98%AF-.lldbinit-%E6%96%87%E4%BB%B6%EF%BC%9F" tabindex="-1">什么是 <code>.lldbinit</code> 文件？</h2>
+<p><code>.lldbinit</code> 是 LLDB 的初始化配置文件。每次启动 LLDB 会话时，它都会自动执行该文件中的命令。通过配置 <code>.lldbinit</code>，您可以实现命令别名、自动化调试流程、自定义输出格式等，从而极大地提升调试效率。</p>
+<p>LLDB 会在以下位置按顺序查找 <code>.lldbinit</code> 文件：</p>
+<ol>
+<li><strong>项目级</strong>：当前工作目录。</li>
+<li><strong>用户级</strong>：用户的主目录 (<code>~/.lldbinit</code>)。</li>
+</ol>
+<p>通常，建议将通用配置放在用户主目录的 <code>.lldbinit</code> 文件中。</p>
+<h2 id="%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B" tabindex="-1">常用配置示例</h2>
+<h3 id="1.-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4%E5%88%AB%E5%90%8D" tabindex="-1">1. 创建命令别名</h3>
+<p>为冗长的命令创建简短的别名是 <code>.lldbinit</code> 最常见的用途。使用 <code>command alias</code> 命令可以实现。</p>
+<p><strong>示例：</strong></p>
+<pre><code># .lldbinit
+
+# ===================================
+#  命令别名 (Command Aliases)
+# ===================================
+
+# 程序执行
+command alias c continue
+command alias n next
+command alias s step
+command alias f finish
+command alias tu thread until
+
+# 断点管理
+command alias b breakpoint
+command alias bl breakpoint list
+command alias bd breakpoint delete
+
+# 堆栈信息
+command alias bt thread backtrace
+
+# 打印变量
+command alias p expression
+command alias po expression -O --
+</code></pre>
+<p>配置完成后，您就可以在 LLDB 中使用 <code>c</code> 代替 <code>continue</code>，<code>p my_var</code> 代替 <code>expression my_var</code>。</p>
+<h3 id="2.-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-(stop-hooks)" tabindex="-1">2. 设置自动执行命令 (Stop Hooks)</h3>
+<p>如果您希望在程序每次暂停时都自动显示某些信息（类似 GDB 的 <code>display</code> 功能），可以使用 <code>target stop-hook</code>。</p>
+<p><strong>示例：</strong></p>
+<pre><code># .lldbinit
+
+# ===================================
+#  自动显示 (Stop Hooks)
+# ===================================
+
+# 每次暂停时，自动显示当前行的汇编指令、CPU 寄存器和当前栈帧信息
+# target stop-hook add -o &quot;disassemble -p&quot;
+# target stop-hook add -o &quot;register read&quot;
+# target stop-hook add -o &quot;frame info&quot;
+
+# 如果需要模拟 GDB 的 `display/i $pc`，只显示当前指令
+target stop-hook add -o &quot;disassemble --start-address \$pc --count 1&quot;
+</code></pre>
+<h3 id="3.-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B0%83%E8%AF%95%E5%99%A8%E8%A1%8C%E4%B8%BA" tabindex="-1">3. 自定义调试器行为</h3>
+<p>通过 <code>settings set</code> 命令，您可以调整 LLDB 的默认行为，使其更符合个人习惯。</p>
+<p><strong>示例：</strong></p>
+<pre><code># .lldbinit
+
+# ===================================
+#  自定义设置 (Settings)
+# ===================================
+
+# 设置在进入 main 函数前停止
+settings set target.run-args --stop-at-entry true
+
+# 美化输出，特别是针对 C++ STL 容器
+settings set target.prefer-dynamic-value no-dynamic-values
+settings set type-summary.cpp.string.show-size true
+
+# 设置反汇编风格为 Intel（默认为 AT&amp;T）
+settings set target.x86-disassembly-flavor intel
+
+# 调整源码显示的行数
+settings set source.lines-before-cursor 5
+settings set source.lines-after-cursor 5
+</code></pre>
+<h3 id="4.-%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%AE%9A%E4%B9%89-python-%E8%84%9A%E6%9C%AC" tabindex="-1">4. 加载自定义 Python 脚本</h3>
+<p>LLDB 提供了强大的 Python API，允许您编写复杂的自定义命令和功能。通过 <code>command script import</code>，您可以在 LLDB 启动时加载这些脚本。</p>
+<p><strong>示例：</strong></p>
+<p>假设您有一个名为 <code>my_lldb_utils.py</code> 的脚本，存放于 <code>~/.lldb/</code> 目录下。</p>
+<pre><code># .lldbinit
+
+# ===================================
+#  加载 Python 脚本
+# ===================================
+
+command script import ~/.lldb/my_lldb_utils.py
+</code></pre>
+<h2 id="%E5%AE%8C%E6%95%B4%E7%9A%84-.lldbinit-%E6%A8%A1%E6%9D%BF" tabindex="-1">完整的 <code>.lldbinit</code> 模板</h2>
+<p>这是一个可以直接使用的 <code>.lldbinit</code> 文件模板，整合了上述所有功能。您可以根据自己的需求进行修改。</p>
+<pre><code># ~/.lldbinit
+# LLDB 初始化配置文件模板
+
+# ===================================
+#  命令别名 (Command Aliases)
+# ===================================
+
+# 程序执行
+command alias c continue
+command alias n next
+command alias s step
+command alias f finish
+command alias tu thread until
+
+# 断点管理
+command alias b breakpoint
+command alias bl breakpoint list
+command alias bd breakpoint delete
+command alias be breakpoint enable
+command alias bdi breakpoint disable
+
+# 堆栈信息
+command alias bt thread backtrace
+
+# 打印变量
+command alias p expression
+command alias po expression -O --
+
+# ===================================
+#  自定义设置 (Settings)
+# ===================================
+
+# 在进入 main 函数前自动暂停
+# settings set target.run-args --stop-at-entry true
+
+# 设置反汇编风格为 Intel
+settings set target.x86-disassembly-flavor intel
+
+# 调整源码显示的上下文行数
+settings set source.lines-before-cursor 5
+settings set source.lines-after-cursor 5
+
+# ===================================
+#  自动执行命令 (Stop Hooks)
+# ===================================
+
+# 每次暂停时，自动显示当前位置的源码和反汇编指令
+# target stop-hook add -o &quot;frame info&quot;
+# target stop-hook add -o &quot;disassemble --start-address \$pc --count 1&quot;
+
+# ===================================
+#  加载 Python 脚本
+# ===================================
+
+# 如果有自定义脚本，取消以下注释并修改路径
+# command script import ~/.lldb/my_utils.py
+
+# 启动时打印一条欢迎信息
+!echo &quot;LLDB is ready.&quot;
+
+</code></pre>
+<p>将此文件保存为 <code>~/.lldbinit</code>，下次启动 LLDB 时，这些配置将自动生效，为您提供一个更高效、更顺手的调试环境。</p>
 
 </div> 
     </div>
