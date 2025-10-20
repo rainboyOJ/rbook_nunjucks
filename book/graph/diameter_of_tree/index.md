@@ -2,6 +2,7 @@
 title: "树的直径"
 date: 2025-10-07 14:14
 toc: true
+draft: true
 tags: [""]
 categories: [""]
 ---
@@ -429,3 +430,8 @@ double solve_restaurant() {
 - 树的直径 题目单 https://www.luogu.com.cn/training/505787#problems
 
 NOI2013有个叫快餐店
+
+
+最终模板代码:
+
+@include-code(/code/tree/diameter_with_dijkstra.cpp)
