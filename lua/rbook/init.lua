@@ -62,7 +62,7 @@ local function code_snip_format(item, picker)
     ret[#ret + 1] = { "  ", "Normal" }
   end
   
-  ret[#ret + 1] = {item.name, is_selected and "Special" or "Normal" }
+  ret[#ret + 1] = {item.text or 'Unknown' , is_selected and "Special" or "Normal" }
   -- ret[#ret + 1] = {item.path }
   -- -- print(vim.inspect(item))
   
@@ -96,10 +96,13 @@ function InsertCodeSnippet()
   local snippets = RbookCode
   
   local items = {}
+  local idx = 0
   for _, snippet in ipairs(snippets) do
+    idx = idx + 1
     local full_path = rbook_root .. snippet.path
     table.insert(items, {
-      name = snippet.name,
+      id = idx,
+      text = snippet.name,
       file = full_path,
       info = snippet,
       preview = get_file_preview(full_path),
