@@ -15,11 +15,6 @@ M.builtinCodePath = rbook_root .. 'code/'
 
 -- 获取 snippets 列表 - 已删除，只使用 code 目录
 
--- 读取 snippet 内容
-local function read_snippet_content(path)
-  local lines = vim.fn.readfile(path)
-  return lines
-end
 
 -- 获取文件预览
 local function get_file_preview(file_path)
@@ -74,7 +69,7 @@ end
 
 -- 插入代码片段（从code目录）
 local function insert_code_snippet_from_code(snippet_info)
-  local lines = RbookCode.read_snippet_content(snippet_info.full_path)
+  local lines =  vim.fn.readfile(rbook_root .. snippet_info.path)
   local filename = snippet_info.name
 
   -- 添加折叠标记
@@ -107,7 +102,8 @@ function InsertCodeSnippet()
       info = snippet,
       preview = get_file_preview(full_path),
       display = string.format("%s (%s) - %s", 
-        snippet.name, snippet.category, snippet.description)
+        snippet.name, snippet.category, snippet.description),
+      snippet = snippet  -- 保存整个snippet信息
     })
   end
   
@@ -119,7 +115,7 @@ function InsertCodeSnippet()
       picker:norm(function()
         if item then
           picker:close()
-          insert_code_snippet_from_code(item.info)
+          insert_code_snippet_from_code(item.snippet)
         end
       end)
     end
