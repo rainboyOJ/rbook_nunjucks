@@ -107,7 +107,8 @@ function InsertCodeSnippet()
     local full_path = rbook_root .. snippet.path
     table.insert(items, {
       id = idx,
-      --xt = snformat_snip_name(snippet),     file = full_path,
+      text = format_snip_name(snippet),
+      file = full_path,
       info = snippet,
       display = string.format("%s (%s) - %s",
         snippet.name, snippet.category, snippet.description),
@@ -239,6 +240,9 @@ local myexplorer_config = {
         ["l"] = "confirm",
         ["h"] = "explorer_close", -- close directory
         -- ["a"] = "explorer_add",
+        ["o"] = "explorer_open",
+        ["c"] = "explorer_close",
+        ["p"] = "toggle_preview",
         ["a"] = "myedit",
       },
     },
@@ -250,8 +254,6 @@ local myexplorer_config = {
 local function mypick()
   -- 得到当前的窗口
   win = vim.api.nvim_get_current_win()
-  buf = vim.api.nvim_win_get_buf(win)
-  row, col = unpack(vim.api.nvim_win_get_cursor(win))
   Snacks.picker.explorer(myexplorer_config)
 end
 
