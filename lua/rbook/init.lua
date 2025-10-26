@@ -205,15 +205,16 @@ end
 
 local myexplorer_config = {
   finder = "explorer",
+  cwd =  M.builtinCodePath,
   sort = { fields = { "sort" } },
   supports_live = true,
   tree = true,
-  watch = true,
-  diagnostics = true,
+  watch = false,
+  diagnostics = false,
   diagnostics_open = false,
-  git_status = true,
+  git_status = false,
   git_status_open = false,
-  git_untracked = true,
+  git_untracked = false,
   follow_file = true,
   focus = "list",
   auto_close = false,
@@ -226,10 +227,6 @@ local myexplorer_config = {
     file = { filename_only = true },
     severity = { pos = "right" },
   },
-  matcher = { sort_empty = false, fuzzy = false },
-  config = function(opts)
-    return require("snacks.picker.source.explorer").setup(opts)
-  end,
   actions = {
     myedit = function (picker,item)
       vim.schedule(function() insert_file_content(item.file) end)
@@ -275,9 +272,7 @@ function M.setup(opts)
   end, { desc = "Insert code snippet from code directory" })
 
   vim.api.nvim_create_user_command("OICodeSnipPick", function()
-    win = vim.api.nvim_get_current_win()
-    buf = vim.api.nvim_win_get_buf(win)
-    local row, col = unpack(vim.api.nvim_win_get_cursor(win))
+    win = vim.api.nvim_get_current_win() -- 保存当前窗口
     Snacks.picker.explorer(myexplorer_config)
   end, { desc = "Insert code snippet from code directory" })
 end
