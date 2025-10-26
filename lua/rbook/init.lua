@@ -84,12 +84,22 @@ local function insert_code_snippet_from_code(snippet_info)
   vim.api.nvim_buf_set_lines(bufnr, cur_pos[1] - 1, cur_pos[1], false, lines)
 end
 
+local function format_snip_name(snip)
+  local tags = ""
+  -- format tags as `[tag1][tag1][...]
+  for _,tag in ipairs(snip.tags) do
+    tags = tags .. "[" .. tag .. "]"
+  end
+  return tags .. snip.name
+end
+
+
 -- 从oiSnippets选择插入 - 已删除，只使用 code 目录
 
 -- 从code目录选择插入
 function InsertCodeSnippet()
   local snippets = RbookCode
-  
+
   local items = {}
   local idx = 0
   for _, snippet in ipairs(snippets) do
@@ -97,16 +107,14 @@ function InsertCodeSnippet()
     local full_path = rbook_root .. snippet.path
     table.insert(items, {
       id = idx,
-      text = snippet.name,
-      file = full_path,
+      --xt = snformat_snip_name(snippet),     file = full_path,
       info = snippet,
-      preview = get_file_preview(full_path),
-      display = string.format("%s (%s) - %s", 
+      display = string.format("%s (%s) - %s",
         snippet.name, snippet.category, snippet.description),
-      snippet = snippet  -- 保存整个snippet信息
+      snippet = snippet -- 保存整个snippet信息
     })
   end
-  
+
   Snacks.picker.pick({
     items = items,
     format = code_snip_format,
@@ -122,107 +130,132 @@ function InsertCodeSnippet()
   })
 end
 
--- 搜索代码片段
-function SearchCodeSnippets()
-  vim.ui.input({ prompt = "Search code snippets: " }, function(query)
-    if not query or query == "" then return end
-    
-    local results = RbookCode.search_snippets(query)
-    
-    local items = {}
-    for _, snippet in ipairs(results) do
-      table.insert(items, {
-        name = snippet.name,
-        file = snippet.full_path,
-        info = snippet,
-        preview = RbookCode.get_snippet_preview(snippet.full_path),
-        display = string.format("%s (%s) - %s", 
-          snippet.name, snippet.category, snippet.description)
-      })
-    end
-    
-    if #items == 0 then
-      vim.notify("No snippets found for: " .. query, vim.log.levels.INFO)
-      return
-    end
-    
-    Snacks.picker.pick({
-      items = items,
-      format = "file",
-      prompt = "Search Results:",
-      confirm = function(picker, item)
-        picker:norm(function()
-          if item then
-            picker:close()
-            insert_code_snippet_from_code(item.info)
-          end
-        end)
-      end
-    })
-  end)
+-- 插入文件内容的辅助函数
+local function insert_file_content(picker, file_path)
+  -- 检查文件是否存在
+  if vim.fn.filereadable(file_path) == 0 then
+    Snacks.notify.warn("File is not readable: " .. file_path)
+    return
+  end
+
+  -- 读取文件内容
+  local lines = {}
+  local file = io.open(file_path, "r")
+  if not file then
+    Snacks.notify.error("Failed to read file: " .. file_path)
+    return
+  end
+
+  -- 读取所有行
+  for line in file:lines() do
+    table.insert(lines, line)
+  end
+  file:close()
+
+  -- 获取当前光标位置
+  local win = vim.api.nvim_get_current_win()
+  local buf = vim.api.nvim_win_get_buf(win)
+  local row, col = unpack(vim.api.nvim_win_get_cursor(win))
+
+  -- 插入内容到当前 buffer
+  vim.api.nvim_buf_set_lines(buf, row - 1, row - 1, false, lines)
+
+  -- 可选：移动光标到插入内容的开始位置
+  -- vim.api.nvim_win_set_cursor(win, { row, col })
+
+  -- 关闭 picker
+  picker:close()
+
+  Snacks.notify.info("Inserted content from: " .. vim.fn.fnamemodify(file_path, ":t"))
 end
 
--- 按分类浏览代码片段
-function BrowseCodeSnippetsByCategory()
-  local categories = {}
-  local snippets = RbookCode.get_all_snippets()
-  
-  -- 收集所有分类
-  for _, snippet in ipairs(snippets) do
-    if not categories[snippet.category] then
-      categories[snippet.category] = {}
-    end
-    table.insert(categories[snippet.category], snippet)
+local win -- 保存当前窗口和光标位置
+
+local insert_file_content = function (file_path)
+  -- 检查文件是否存在
+  if vim.fn.filereadable(file_path) == 0 then
+    Snacks.notify.warn("File is not readable: " .. file_path)
+    return
   end
-  
-  local category_items = {}
-  for category, _ in pairs(categories) do
-    table.insert(category_items, {
-      name = category,
-      display = category .. " (" .. #categories[category] .. " snippets)",
-      category = category
-    })
+
+  -- 读取文件内容
+  local lines = vim.fn.readfile(file_path)
+  if not lines then
+    Snacks.notify.error("Failed to read file: " .. file_path)
+    return
   end
+
+  -- 确保 win, buf, row 变量是有效的
+  if not win then
+    Snacks.notify.error("Target window details not found. Cannot insert content.")
+    return
+  end
+
+  -- 插入内容到 win 对应的 buffer 的光标处
+  local row ,col = unpack(vim.api.nvim_win_get_cursor(win))
+  local buf = vim.api.nvim_win_get_buf(win)
+  vim.api.nvim_buf_set_lines(buf, row - 1, row - 1, false, lines)
   
-  Snacks.picker.pick({
-    items = category_items,
-    prompt = "Select Category:",
-    confirm = function(picker, item)
-      picker:norm(function()
-        if item then
-          picker:close()
-          
-          -- 显示该分类下的所有代码片段
-          local snippets_in_category = RbookCode.get_snippets_by_category(item.category)
-          local items = {}
-          
-          for _, snippet in ipairs(snippets_in_category) do
-            table.insert(items, {
-              name = snippet.name,
-              file = snippet.full_path,
-              info = snippet,
-              preview = RbookCode.get_snippet_preview(snippet.full_path),
-              display = snippet.name .. " - " .. snippet.description
-            })
-          end
-          
-          Snacks.picker.pick({
-            items = items,
-            format = "file",
-            prompt = item.category .. " Snippets:",
-            confirm = function(picker2, item2)
-              picker2:norm(function()
-                if item2 then
-                  picker2:close()
-                  insert_code_snippet_from_code(item2.info)
-                end
-              end)
-            end
-          })
-        end
-      end)
+  Snacks.notify.info("Inserted content from: " .. vim.fn.fnamemodify(file_path, ":t"))
+end
+
+local function my_action_for_explorer_insert_code(picker,item)
+  vim.schedule(function() insert_file_content(item.file) end)
+end
+
+local myexplorer_config = {
+  finder = "explorer",
+  sort = { fields = { "sort" } },
+  supports_live = true,
+  tree = true,
+  watch = true,
+  diagnostics = true,
+  diagnostics_open = false,
+  git_status = true,
+  git_status_open = false,
+  git_untracked = true,
+  follow_file = true,
+  focus = "list",
+  auto_close = false,
+  jump = { close = false },
+  -- layout = { preset = "sidebar", preview = true},
+  -- to show the explorer to the right, add the below to
+  -- your config under `opts.picker.sources.explorer`
+  layout = { layout = { position = "right" } },
+  formatters = {
+    file = { filename_only = true },
+    severity = { pos = "right" },
+  },
+  matcher = { sort_empty = false, fuzzy = false },
+  config = function(opts)
+    return require("snacks.picker.source.explorer").setup(opts)
+  end,
+  actions = {
+    myedit = function (picker,item)
+      vim.schedule(function() insert_file_content(item.file) end)
     end
-  })
+  },
+  win = {
+    list = {
+      keys = {
+        ["<BS>"] = "explorer_up",
+        ["l"] = "confirm",
+        ["h"] = "explorer_close", -- close directory
+        -- ["a"] = "explorer_add",
+        ["a"] = "myedit",
+      },
+    },
+  },
+}
+
+
+
+local function mypick()
+  -- 得到当前的窗口
+  win = vim.api.nvim_get_current_win()
+  buf = vim.api.nvim_win_get_buf(win)
+  row, col = unpack(vim.api.nvim_win_get_cursor(win))
+  Snacks.picker.explorer(myexplorer_config)
 end
 
 function M.setup(opts)
@@ -240,7 +273,13 @@ function M.setup(opts)
   vim.api.nvim_create_user_command("OICodeSnip", function()
     InsertCodeSnippet()
   end, { desc = "Insert code snippet from code directory" })
-  
+
+  vim.api.nvim_create_user_command("OICodeSnipPick", function()
+    win = vim.api.nvim_get_current_win()
+    buf = vim.api.nvim_win_get_buf(win)
+    local row, col = unpack(vim.api.nvim_win_get_cursor(win))
+    Snacks.picker.explorer(myexplorer_config)
+  end, { desc = "Insert code snippet from code directory" })
 end
 
 return M
