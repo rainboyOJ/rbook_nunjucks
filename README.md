@@ -165,6 +165,12 @@ npm run build
 # 将 dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
 ```
 
+## 作为neovim的插件: 代码片段
+
+```lua
+
+```
+
 ## 技术栈
 
 - **markdownit**: Markdown 解析
