@@ -67,14 +67,13 @@ int n,m;
 int a[maxn];
 
 void init() {
-// #define FRE
-#ifdef FRE
-    freopen("in", "r",stdin);
-#endif
 
 }
 
-int main () {
+signed main () {
+#ifdef FREOPEN
+    freopen("in", "r",stdin);
+#endif
     std::ios::sync_with_stdio(false); cin.tie(0); cout.tie(0); // 关闭io同步
 
 
