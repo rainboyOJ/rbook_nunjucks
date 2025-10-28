@@ -29,6 +29,8 @@ import classContainer from './lib/container/class.js';
 import blackboardContainer from './lib/container/blackboard.js';
 import iframe from 'markdown-it-iframe';
 import vizGallery from './lib/viz-gallery.js';
+// ![test](test.jpg =100x) 设置宽度,高度自动适应
+// ![test](test.jpg =100x200) 设置宽度和高度
 import imsize from 'markdown-it-imsize';
 import insDel from 'markdown-it-ins-del';
 import inlineComments from 'markdown-it-inline-comments';

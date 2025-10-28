@@ -14,6 +14,7 @@ switch (command) {
   case 'build':
     try {
       app.build();
+      app.build_glob();
     } catch (error) {
       console.error('构建失败:', error.message);
       process.exit(1);

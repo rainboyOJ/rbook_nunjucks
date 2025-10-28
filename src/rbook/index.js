@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import { glob, globSync, globStream, globStreamSync, Glob } from 'glob'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { nunjucksRender } from './renderEngine.js';
@@ -66,6 +67,9 @@ class rbook {
             fs.writeFileSync(fullOutputPath, htmlContent);
             console.log(`✓ 构建完成: ${filePath}`);
             return true;
+        }
+        else {
+            console.error(`✗ 文件不存在: ${filePath}`);
         }
         return false;
     };
@@ -180,6 +184,22 @@ class rbook {
             console.log('构建完成！');
         } catch (error) {
             throw new Error(`构建失败: ${error.message}`);
+        }
+    }
+
+    build_glob() {
+        if( !this.config.glob ) return;
+        let AllMarkdownFiles_in_chapters = this.AllMarkdownFiles;
+        console.log("===== render glob md file =====");
+        // console.log(AllMarkdownFiles_in_chapters)
+        for( const glob of this.config.glob ) {
+            const mdfiles = globSync('book/' + glob, { ignore: 'node_modules/**' })
+            for( let file of mdfiles ) {
+                let mdfile = file.replace('book/','');
+                if( AllMarkdownFiles_in_chapters.includes( file.replace('book/','') ) ) continue;
+                let outputPath = file.replace(/^book\//, 'dist/').replace(/\.md$/, '.html');
+                this.buildMarkdownFile(mdfile, outputPath);
+            }
         }
     }
 

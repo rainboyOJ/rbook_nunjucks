@@ -4,6 +4,10 @@ description: 这是一本关于算法的书
 
 github_repository: https://github.com/rainboyOJ/rbook_nunjucks
 
+# 那些不想显示的文件,但是又想被渲染到的文件,可以放在这里
+glob:
+  - math/combinatorics/112_combinatorial_problems/*.md
+
 chapters:
   - title: 第一章
     path: chapter1
@@ -66,6 +70,11 @@ chapters:
         path: 向上取整.md
       - title: 集合
         path: 集合.md
+      - title: 组合数学
+        type: info
+        icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0"/><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z"/></g></svg>
+      - title: 112个组合问题
+        path: combinatorics/112_combinatorial_problems/index.md
   - title: 附录
     path: appendix
     nolink: true
