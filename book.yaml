@@ -38,6 +38,9 @@ chapters:
       - title: 区间动态规划
         type: info
         icon: <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><path fill="#000" d="M16 120h480V16H16Zm32-72h416v40H48Zm192 96H16v96h224Zm-32 64H48v-32h160Zm64 32h224v-96H272Zm32-64h160v32H304Zm-152 96H16v88h136Zm-32 56H48v-24h72Zm72 32h128v-88H192Zm32-56h64v24h-64Zm136 56h136v-88H360Zm32-56h72v24h-72ZM121.442 443.278A52.721 52.721 0 1 0 68.722 496a52.78 52.78 0 0 0 52.72-52.722m-73.442 0A20.721 20.721 0 1 1 68.722 464A20.745 20.745 0 0 1 48 443.278m92.853 0a52.721 52.721 0 1 0 52.721-52.72a52.78 52.78 0 0 0-52.721 52.72m73.442 0a20.721 20.721 0 1 1-20.721-20.72a20.745 20.745 0 0 1 20.726 20.72Zm51.41 0a52.721 52.721 0 1 0 52.721-52.72a52.78 52.78 0 0 0-52.721 52.72m73.442 0a20.721 20.721 0 1 1-20.721-20.72a20.745 20.745 0 0 1 20.721 20.72m104.131-52.72A52.721 52.721 0 1 0 496 443.278a52.78 52.78 0 0 0-52.722-52.72m0 73.442A20.721 20.721 0 1 1 464 443.278A20.745 20.745 0 0 1 443.278 464"/></svg>
+      - title: 动态规划优化
+        type: info
+        icon: <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><path fill="currentColor" d="M7 8H5V7H4V6H3V4h6v2H8v1H7m-4 5H1v-2h2m9 2H9v-2h3m9 2h-3v-2h3M7 13H5v-1H4v-2h1V9h2v1h1v2H7m9 1h-2v-1h-1v-2h1V9h2v1h1v2h-1m2 6h-6v-2h1v-1h1v-1h2v1h1v1h1Z"/></svg>
   - title: 第四章 数据结构
     nolink: true
     path: data-structure
@@ -63,6 +66,8 @@ chapters:
         path: center_of_tree
       - title: 基环树
         path: pseudotree
+      - title: floyed算法
+        path: floyed
   - title: 数学
     path: math
     sections:
@@ -103,3 +108,6 @@ chapters:
         path: lldb/lldbinit.md
       - title: lldbpython脚本入门
         path: gdb/lldbpython脚本入门.md
+
+      - title: 常用软件
+        path: software/常用软件.md
