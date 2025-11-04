@@ -5,6 +5,33 @@ sudo apt install -y python3 fzf graphviz clangd curl
 
 # 配置
 
+## 添加到zshrc,bashrc
+
+```bash
+export PATH=$PATH:<path-to-rbook_nunjucks>/dotfiles/scripts
+```
+
+脚本列表
+
+
+```
+dotfiles/scripts
+├── b          快速编译
+├── dot2png.py graphviz dot 转 png 
+├── duipai.py 对拍脚本
+├── input2dot.py  `cat in | tail -n +2 | input2dot.py` in.txt 转dot图 
+├── lldb.sh 调用lldb调试
+├── luogu.py 下载luogu样例数据
+├── mylib  
+├── nvimsizer.sh
+├── one-duipai.py 展示输入文件INPUT 的内容 并输出 程序1 说程序2 的运行结果
+├── r-list-all-scripts.py  列出所有的脚本
+├── randint.py  随机数生成
+├── test-data.py 测试数据 `data/` 目录下
+├── template.py 根据 template 创建 cpp
+└── transfer.sh 在线剪切板
+```
+
 ## tmux
 
 使用了 [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)

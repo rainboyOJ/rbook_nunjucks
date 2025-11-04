@@ -1,5 +1,5 @@
-//Author by [Rainboy](https://github.com/rainboylvx)
-//date: 2025-10-02 10:34:43
+//Author by {{author}} blog: {{blog}} github : {{github}}
+//date: {{date}}
 
 //oisnip_begin 头文件
 #include <algorithm>
@@ -66,7 +66,12 @@ const int maxn = 1e6+5;
 int n,m;
 int a[maxn];
 
+{{include "code/utils/quick_io.cpp"}}
+
 void init() {
+    read(n);
+    CURRENT_LINE
+
 
 }
 
@@ -74,7 +79,7 @@ signed main () {
 #ifdef FREOPEN
     freopen("in", "r",stdin);
 #endif
-    std::ios::sync_with_stdio(false); cin.tie(0); cout.tie(0); // 关闭io同步
+    // std::ios::sync_with_stdio(false); cin.tie(0); cout.tie(0); // 关闭io同步
 
 
     return 0;
