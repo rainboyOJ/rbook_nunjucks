@@ -5,6 +5,9 @@ local M = {}
 local plugin_root = debug.getinfo(1, "S").source:sub(2):match("(.*/)")
 local rbook_root = plugin_root .. '../../'
 
+-- 设置全局变量 rbook_root
+_G.RbookRoot = rbook_root
+
 -- local RbookCode = load_rbook_code()
 
 local RbookCode = require("rbook.rbook_code")
@@ -277,6 +280,17 @@ function M.setup(opts)
     win = vim.api.nvim_get_current_win() -- 保存当前窗口
     Snacks.picker.explorer(myexplorer_config)
   end, { desc = "Insert code snippet from code directory" })
+
+
+  local TemplateEngine = require("rbook.template_engine")
+  TemplateEngine.create_commands()
+
+  -- 应用C++模板命令
+  vim.api.nvim_create_user_command('ApplyTempCpp', function()
+    local template_path = rbook_root .. 'code/template/template.cpp'
+    -- TemplateEngine.apply_template_to_buffer(template_path)
+    vim.api.nvim_cmd({ cmd = 'TemplateApply', args = { template_path } }, {})
+  end, { desc = "应用C++模板" })
 end
 
 return M
