@@ -62,12 +62,69 @@ function fallbackCopyText(text, clipContainer) {
   }, 5* 1000);
 }
 
+
+// code tab switch
+function init_code_tab_switch() {
+  // 找到页面上所有的 .code-tabs 容器
+  // 这样即使页面上有多个 tab 组，脚本也能全部处理
+  const allCodeTabs = document.querySelectorAll('.code-tabs');
+
+  allCodeTabs.forEach(container => {
+
+    // 定义一个函数来更新所有相关 code-block 的显示状态
+    const updateTabs = (groupName) => {
+      if (!groupName) return;
+
+      // 找到这个容器内所有同名的 radio 按钮
+      const radiosInGroup = container.querySelectorAll(`input[type="radio"][name="${groupName}"]`);
+
+      radiosInGroup.forEach(radio => {
+        // 找到 radio 按钮紧邻的下一个兄弟元素
+        const nextEl = radio.nextElementSibling;
+
+        // 关键检查：
+        // 1. nextEl 必须存在
+        // 2. nextEl 必须是一个 DIV 元素 (这会忽略 <ul> 里的 radio，因为它们的兄弟是 <label>)
+        if (nextEl && nextEl.tagName === 'DIV') {
+          if (radio.checked) {
+            // 如果 radio 被选中，显示这个 DIV (移除 display: none)
+            nextEl.style.display = ''; // 或者 'block'
+          } else {
+            // 如果 radio 未被选中，隐藏这个 DIV
+            nextEl.style.display = 'none';
+          }
+        }
+      });
+    };
+
+    // 使用事件委托，监听整个容器的 'change' 事件
+    container.addEventListener('change', (event) => {
+      // 确保事件是由我们关心的 radio 按钮触发的
+      if (event.target.type === 'radio' && event.target.name) {
+        // 得到 radio 按钮的 id 
+        let id = event.target.id;
+        console.log('change', event.target.name, 'id: ',id);
+        updateTabs(event.target.name);
+      }
+    });
+
+    // 初始化：页面加载时，立即运行一次更新
+    // 这会隐藏所有未被 'checked' 的 code-block
+    const initialRadios = container.querySelectorAll('input[type="radio"]:checked');
+    initialRadios.forEach(radio => {
+      updateTabs(radio.name);
+    });
+  });
+}
+
+
 /**
  * 暗黑模式切换功能
  */
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
   init_copy();
+  init_code_tab_switch();
   // 获取所有暗黑模式切换按钮
   const darkModeButtons = document.querySelectorAll('.J_darkMode');
   
