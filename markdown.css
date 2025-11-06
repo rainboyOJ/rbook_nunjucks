@@ -541,7 +541,7 @@
 }
 .table-of-contents {
   position: fixed;
-  top: 20%;
+  top: 18em;
   right: 2.5vw;
   transform: translateY(-50%);
   z-index: 100;
@@ -2718,6 +2718,53 @@ iframe.bilibili_iframe {
     height: 220px;
   }
 }
+.code-tabs {
+  border: 1px solid rgb(240, 240, 240);
+  border-radius: 3px;
+}
+.code-tabs pre, .code-tabs input {
+  display: none;
+}
+.code-tabs input:checked + pre {
+  display: block;
+}
+.code-tabs label {
+  color: rgb(191, 191, 191);
+}
+.code-tabs input:checked + label {
+  color: rgb(38, 38, 38);
+}
+.code-tabs ul {
+  font-size: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: auto;
+  user-select: none;
+  border-bottom: 1px solid rgb(240, 240, 240);
+}
+.code-tabs li {
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+.code-tabs label {
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  padding: 2px 5px;
+  margin: 5px;
+  font-size: 14px;
+}
+.code-tabs li ~ li::before {
+  content: "";
+  height: 12px;
+  width: 1px;
+  background: rgb(191, 191, 191);
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 html, body {
   font-size: 62.5%;
 }
