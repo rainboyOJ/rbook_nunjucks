@@ -43,6 +43,8 @@ import tocDoneRight from 'markdown-it-toc-done-right';
 import tocAnchorExtent from './lib/tocAnchorExtent.js';
 import codetabs from 'markdown-it-codetabs';
 
+import MDItPseudo from './lib/markdown-it-pseudocodejs/index.js';
+
 // .excalidraw.svg
 import imageExtensionPlugin from './lib/markdown-it-excalidraw-svg/index.js';
 
@@ -211,6 +213,9 @@ md.use(imageExtensionPlugin, {
   blog_url : "https://rbook2.roj.ac.cn/" ,
   base_path:  project_book_root
 });
+
+// Pseudocode support
+md.use(MDItPseudo,{lineNumber:true});
 
 /**
  * Render markdown content
