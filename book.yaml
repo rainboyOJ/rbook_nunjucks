@@ -49,6 +49,8 @@ chapters:
         path: binary-indexed-tree
       - title: 线段树
         path: segment-tree
+      - title: 二叉搜索树
+        path: BST
       - title: 栈 
         path: stack
         sections:
@@ -68,6 +70,13 @@ chapters:
         path: pseudotree
       - title: floyed算法
         path: floyed
+  - title: 思维方式
+    path: thinkMind
+    sections:
+      - title: 约束松弛
+        path: 约束松弛.md
+      - title: 特例化-归纳
+        path: 特例化-归纳.md
   - title: 数学
     path: math
     sections:
@@ -91,8 +100,12 @@ chapters:
         path: tricks/quickIO.md
       - title: assert断言的使用
         path: tricks/assert的使用.md
-      - title: assert断言的使用
-        path: tricks/assert的使用.md
+      - title: macos下使用万能头文件
+        path: tricks/macos.md
+      - title: 常用命令
+        path: tricks/常用命令.md
+      - title: 常用变量名
+        path: tricks/常用变量名.md
 
       - title: vscode
         type: info
