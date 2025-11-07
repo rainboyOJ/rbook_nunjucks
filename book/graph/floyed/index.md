@@ -4,6 +4,7 @@ date: 2025-11-03 07:22
 toc: true
 tags: [""]
 categories: [""]
+draft: true
 ---
 
 [[TOC]]
@@ -20,11 +21,14 @@ categories: [""]
 - $B_{k,i,j}$ 与 $B_{k-1,i,j}$ 之间的关系?
   - $B_{k,i,j} = B_{k-1,i,j} \cup A_{k,i,j}$
   - $min(B_{k,i,j}) = min( min(B_{k-1,i,j}) ,A_{k,i,j})$
+- 如何求$A_{k,i,j}$?
+  - **根据最优问题的子问题是最优的**这个性质
+  - $A_{k,i,j} = min(B_{k-1,i,k}) + min(B_{k-1,k,j})$
 
 转移方程
 
 
-f(k,i,j) 中间经过的最大点不超过k的最短路
+$f(k,i,j)$ 中间经过的最大点不超过k的最短路
 $$
 f(k,i,j) = min\{f(k-1,i,j) , f(k-1,i,k)  + f(k-1,k,j) \}
 $$

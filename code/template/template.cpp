@@ -1,43 +1,11 @@
-//Author by {{author}} blog: {{blog}} github : {{github}}
-//date: {{date}}
-
-//oisnip_begin 头文件
-#include <algorithm>
-#include <climits>
-#include <cstdio>
-#include <cstring>
-#include <bitset>
-#include <complex>
-#include <deque>
-#include <exception>
-#include <fstream>
-#include <functional>
-#include <iomanip>
-#include <ios>
-#include <iosfwd>
-#include <iostream>
-#include <istream>
-#include <iterator>
-#include <limits>
-#include <list>
-#include <locale>
-#include <map>
-#include <memory>
-#include <new>
-#include <numeric>
-#include <ostream>
-#include <queue>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <stdexcept>
-#include <streambuf>
-#include <string>
-#include <typeinfo>
-#include <utility>
-#include <valarray>
-#include <vector>
-//oisnip_end 
+/**
+ * Author by {{author}} blog: {{blog}} github : {{github}}
+ * date: {{date}}
+ * oj: {{oj}}
+ * title: {{title}}
+ * description: {{description}}
+ */
+#include <bits/stdc++.h>
 using namespace std;
 
 typedef long long ll;
