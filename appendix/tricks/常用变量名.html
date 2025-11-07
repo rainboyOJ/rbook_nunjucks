@@ -705,16 +705,283 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>112个组合问题</h1>
+        <h1>常用变量名</h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E7%AB%A0%E8%8A%82">章节</a></li></ol></nav><figure><img src="./images/cover.png" alt="" width="300"></figure>
-<h2 id="%E7%AB%A0%E8%8A%82" tabindex="-1">章节</h2>
-<ol>
-<li><a href="/math/combinatorics/112_combinatorial_problems/1-3-chapter.html">1-3章节</a></li>
-</ol>
+    <nav class="table-of-contents"><ol><li><a href="#%E5%B8%B8%E7%94%A8%E5%8F%98%E9%87%8F%E5%90%8D%E9%80%9F%E6%9F%A5%E8%A1%A8">常用变量名速查表</a></li><li><a href="#%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE">使用建议</a></li></ol></nav><h2 id="%E5%B8%B8%E7%94%A8%E5%8F%98%E9%87%8F%E5%90%8D%E9%80%9F%E6%9F%A5%E8%A1%A8" tabindex="-1">常用变量名速查表</h2>
+<p>在算法竞赛（尤其是 Codeforces）中，为了节省时间，我们通常会使用一些约定俗成的简短变量名。这张表格整理了这些常用变量及其典型用途，帮助你快速理解和编写代码。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">变量名</th>
+<th style="text-align:left">典型用途</th>
+<th style="text-align:left">中文解释</th>
+<th style="text-align:left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>n</code>, <code>m</code></td>
+<td style="text-align:left">数组大小、节点数、边数</td>
+<td style="text-align:left">数量/大小</td>
+<td style="text-align:left"><code>int n, m; cin &gt;&gt; n &gt;&gt; m;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>i</code>, <code>j</code>, <code>k</code></td>
+<td style="text-align:left">循环变量</td>
+<td style="text-align:left">循环计数</td>
+<td style="text-align:left"><code>for (int i = 0; i &lt; n; i++)</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>t</code> or <code>T</code></td>
+<td style="text-align:left">测试用例数量</td>
+<td style="text-align:left">测试组数</td>
+<td style="text-align:left"><code>int t; cin &gt;&gt; t; while(t--)</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>q</code> or <code>Q</code></td>
+<td style="text-align:left">查询数量</td>
+<td style="text-align:left">查询次数</td>
+<td style="text-align:left"><code>int q; cin &gt;&gt; q;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>a</code>, <code>b</code>, <code>c</code></td>
+<td style="text-align:left">临时变量、数组名</td>
+<td style="text-align:left">数组/临时值</td>
+<td style="text-align:left"><code>int a[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>x</code>, <code>y</code>, <code>z</code></td>
+<td style="text-align:left">坐标、通用变量</td>
+<td style="text-align:left">坐标/通用值</td>
+<td style="text-align:left"><code>cin &gt;&gt; x &gt;&gt; y;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>cnt</code></td>
+<td style="text-align:left">计数器 (Counter)</td>
+<td style="text-align:left">数量统计</td>
+<td style="text-align:left"><code>int cnt = 0;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>ans</code></td>
+<td style="text-align:left">答案 (Answer)</td>
+<td style="text-align:left">最终结果</td>
+<td style="text-align:left"><code>long long ans = 0;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>res</code></td>
+<td style="text-align:left">结果 (Result)</td>
+<td style="text-align:left">中间或最终结果</td>
+<td style="text-align:left"><code>int res = solve();</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>sum</code></td>
+<td style="text-align:left">总和 (Summation)</td>
+<td style="text-align:left">累加和</td>
+<td style="text-align:left"><code>long long sum = 0;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>dp</code></td>
+<td style="text-align:left">动态规划 (Dynamic Programming)</td>
+<td style="text-align:left">DP数组</td>
+<td style="text-align:left"><code>int dp[1005][1005];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>mod</code></td>
+<td style="text-align:left">模数 (Modulo)</td>
+<td style="text-align:left">取模运算的常量</td>
+<td style="text-align:left"><code>const int mod = 1e9 + 7;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>inf</code></td>
+<td style="text-align:left">无穷大 (Infinity)</td>
+<td style="text-align:left">表示极大值</td>
+<td style="text-align:left"><code>const int inf = 0x3f3f3f3f;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>knapsack</code></td>
+<td style="text-align:left">背包问题</td>
+<td style="text-align:left">背包算法相关</td>
+<td style="text-align:left"><code>knapsack_01();</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>l</code>, <code>r</code></td>
+<td style="text-align:left">区间左右端点 (Left, Right)</td>
+<td style="text-align:left">区间/双指针</td>
+<td style="text-align:left"><code>int l = 0, r = n - 1;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>mid</code></td>
+<td style="text-align:left">中间值 (Middle)</td>
+<td style="text-align:left">二分查找</td>
+<td style="text-align:left"><code>int mid = l + (r - l) / 2;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>prev</code>, <code>next</code></td>
+<td style="text-align:left">前驱、后继</td>
+<td style="text-align:left">链表、DP状态</td>
+<td style="text-align:left"><code>int next[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>g</code></td>
+<td style="text-align:left">图 (Graph)</td>
+<td style="text-align:left">邻接表</td>
+<td style="text-align:left"><code>vector&lt;int&gt; g[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>vis</code></td>
+<td style="text-align:left">访问标记 (Visited)</td>
+<td style="text-align:left">图/树的遍历</td>
+<td style="text-align:left"><code>bool vis[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>dist</code></td>
+<td style="text-align:left">距离 (Distance)</td>
+<td style="text-align:left">最短路算法</td>
+<td style="text-align:left"><code>int dist[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>par</code></td>
+<td style="text-align:left">父节点 (Parent)</td>
+<td style="text-align:left">树、并查集</td>
+<td style="text-align:left"><code>int par[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>sz</code></td>
+<td style="text-align:left">大小 (Size)</td>
+<td style="text-align:left">子树大小/集合大小</td>
+<td style="text-align:left"><code>int sz[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>s</code>, <code>str</code></td>
+<td style="text-align:left">字符串 (String)</td>
+<td style="text-align:left">字符串处理</td>
+<td style="text-align:left"><code>string s; cin &gt;&gt; s;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>tmp</code></td>
+<td style="text-align:left">临时变量 (Temporary)</td>
+<td style="text-align:left">临时存储</td>
+<td style="text-align:left"><code>int tmp = a; a = b; b = tmp;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>h</code></td>
+<td style="text-align:left">头节点 (Head)</td>
+<td style="text-align:left">邻接表头数组</td>
+<td style="text-align:left"><code>int h[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>e</code>, <code>ne</code></td>
+<td style="text-align:left">边、下一条边 (Edge, Next)</td>
+<td style="text-align:left">邻接表存图</td>
+<td style="text-align:left"><code>int e[maxm], ne[maxm];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>w</code></td>
+<td style="text-align:left">权重 (Weight)</td>
+<td style="text-align:left">带权图的边权</td>
+<td style="text-align:left"><code>int w[maxm];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>st</code></td>
+<td style="text-align:left">状态/访问标记 (State)</td>
+<td style="text-align:left">状态压缩、访问标记</td>
+<td style="text-align:left"><code>bool st[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>p</code></td>
+<td style="text-align:left">素数/父节点 (Prime/Parent)</td>
+<td style="text-align:left">素数表、并查集</td>
+<td style="text-align:left"><code>int p[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>que</code></td>
+<td style="text-align:left">队列 (Queue)</td>
+<td style="text-align:left">BFS 使用的队列</td>
+<td style="text-align:left"><code>int que[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>stk</code></td>
+<td style="text-align:left">栈 (Stack)</td>
+<td style="text-align:left">存储元素的栈</td>
+<td style="text-align:left"><code>int stk[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>fact</code></td>
+<td style="text-align:left">阶乘 (Factorial)</td>
+<td style="text-align:left">预处理阶乘</td>
+<td style="text-align:left"><code>long long fact[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>inv</code></td>
+<td style="text-align:left">逆元 (Inverse)</td>
+<td style="text-align:left">模逆元</td>
+<td style="text-align:left"><code>long long inv[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>low</code>, <code>dfn</code></td>
+<td style="text-align:left">Low-link, Discovery Time</td>
+<td style="text-align:left">Tarjan 算法</td>
+<td style="text-align:left"><code>int low[maxn], dfn[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>scc_cnt</code></td>
+<td style="text-align:left">强连通分量计数</td>
+<td style="text-align:left">Tarjan 算法</td>
+<td style="text-align:left"><code>int scc_cnt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left">标识符 (Identifier)</td>
+<td style="text-align:left">节点所属的连通块/SCC</td>
+<td style="text-align:left"><code>int id[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>root</code>, <code>rt</code></td>
+<td style="text-align:left">根节点 (Root)</td>
+<td style="text-align:left">树的根</td>
+<td style="text-align:left"><code>int root;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>ch</code></td>
+<td style="text-align:left">孩子/字符 (Child/Character)</td>
+<td style="text-align:left">树的孩子、Trie</td>
+<td style="text-align:left"><code>int ch[maxn][26];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>len</code></td>
+<td style="text-align:left">长度 (Length)</td>
+<td style="text-align:left">字符串/数组长度</td>
+<td style="text-align:left"><code>int len = s.length();</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>op</code></td>
+<td style="text-align:left">操作 (Operation)</td>
+<td style="text-align:left">操作类型/次数</td>
+<td style="text-align:left"><code>int op, x; cin &gt;&gt; op &gt;&gt; x;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>val</code></td>
+<td style="text-align:left">值 (Value)</td>
+<td style="text-align:left">节点/元素的值</td>
+<td style="text-align:left"><code>int val[maxn];</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>contrib</code></td>
+<td style="text-align:left">贡献 (Contribution)</td>
+<td style="text-align:left">贡献值计算</td>
+<td style="text-align:left"><code>long long contrib[maxn];</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE" tabindex="-1">使用建议</h2>
+<ul>
+<li><strong>保持一致</strong>：在一个项目中尽量保持变量命名风格的一致性。</li>
+<li><strong>避免滥用</strong>：对于核心或复杂的逻辑，建议使用更有描述性的变量名。</li>
+<li><strong>快速上手</strong>：熟悉这些常用名有助于更快地读懂他人的竞赛代码。</li>
+</ul>
 
 </div> 
     </div>

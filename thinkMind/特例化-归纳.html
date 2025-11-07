@@ -705,16 +705,203 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>112个组合问题</h1>
+        <h1></h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E7%AB%A0%E8%8A%82">章节</a></li></ol></nav><figure><img src="./images/cover.png" alt="" width="300"></figure>
-<h2 id="%E7%AB%A0%E8%8A%82" tabindex="-1">章节</h2>
+    <p>如果一个题目的 条件太少,比较宽泛,然后条件一下条件,缩写思考范围,这个思维方式叫做什么?</p>
+<p>这是一个非常好的问题！这恰好是您上一个问题（约束松弛）的<strong>逆向思维</strong>。</p>
+<p>这种思维方式，即“故意添加约束（条件）来缩小宽泛问题的范围”，在学术和实践中通常被称为：</p>
 <ol>
-<li><a href="/math/combinatorics/112_combinatorial_problems/1-3-chapter.html">1-3章节</a></li>
+<li><strong>具体化 (Concretization / Specification)</strong></li>
+<li><strong>特例化 (Specialization)</strong></li>
+<li><strong>范围界定 (Scoping)</strong></li>
 </ol>
+<hr>
+<h3 id="%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E6%B7%BB%E5%8A%A0%E6%9D%A1%E4%BB%B6%E2%80%9D%E6%98%AF%E5%BF%85%E8%A6%81%E7%9A%84%EF%BC%9F" tabindex="-1">深入解析：为什么“添加条件”是必要的？</h3>
+<p>如果您上一个问题（移除条件）是“<strong>从下往上</strong>”（从具体细节 -&gt; 抽象原则），那么这一个问题（添加条件）就是“<strong>从上往下</strong>”（从抽象原则 -&gt; 具体实例）。</p>
+<p>这种思维方式的核心是**“让问题变得可以着手”**。一个过于宽泛的问题（例如：“如何让人类更幸福？”）是无法回答的，因为它没有起点。</p>
+<h4>1. 具体化 (Concretization)</h4>
+<p>这是最核心的认知过程。</p>
+<ul>
+<li><strong>定义：</strong> 将一个抽象、模糊或宽泛的概念，转化为一个具体的、有形的、可操作的实例或场景。</li>
+<li><strong>目的：</strong> “抽象”（如上一个问题）是为了“理解本质”，“具体化”是为了“开始行动”。</li>
+<li><strong>思维过程：</strong>
+<ul>
+<li><strong>宽泛问题：</strong> “我该如何设计一个‘好’的网站？”</li>
+<li><strong>添加约束（具体化）：</strong>
+<ul>
+<li>“‘好’是指什么？” -&gt; <em>添加约束 1：</em> 定义“好”为“加载速度快”。</li>
+<li>“为谁设计？” -&gt; <em>添加约束 2：</em> 为“使用手机的老年人”设计。</li>
+</ul>
+</li>
+<li><strong>新问题：</strong> “我该如何为老年人设计一个加载速度快的手机网站？”</li>
+<li><strong>关联：</strong> 这个问题现在变得清晰、可执行。</li>
+</ul>
+</li>
+</ul>
+<h4>2. 特例化 (Specialization)</h4>
+<p>这是在数学和逻辑推理中至关重要的策略。</p>
+<ul>
+<li><strong>定义：</strong> 当面对一个普遍性问题（例如“证明所有 X 都满足 Y”）时，先选择一个最简单、最特殊的例子（一个“特例”）来研究。</li>
+<li><strong>目的：</strong> 通过研究这个简单的“特例”，来发现可能适用于所有情况的“模式”或“规律”。</li>
+<li><strong>思维过程：</strong>
+<ul>
+<li><strong>宽泛问题：</strong> “如何计算任意多边形的内角和？”</li>
+<li><strong>添加约束（特例化）：</strong>
+<ul>
+<li><em>添加约束 1：</em> “任意多边形”太宽泛了，我们先看看最简单的多边形——<strong>三角形</strong>（3条边）。</li>
+</ul>
+</li>
+<li><strong>新问题：</strong> “三角形的内角和是多少？”（答案：180°）</li>
+<li><strong>关联：</strong>
+<ul>
+<li><em>再看特例 2：</em> <strong>四边形</strong>。可以发现它能被切成 2 个三角形（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><msup><mn>180</mn><mo>∘</mo></msup><mo>=</mo><msup><mn>360</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">2 \times 180^\circ = 360^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6741em;"></span><span class="mord">18</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6741em;"></span><span class="mord">36</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span></eq>）。</li>
+<li><em>再看特例 3：</em> <strong>五边形</strong>。可以被切成 3 个三角形（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><msup><mn>180</mn><mo>∘</mo></msup><mo>=</mo><msup><mn>540</mn><mo>∘</mo></msup></mrow><annotation encoding="application/x-tex">3 \times 180^\circ = 540^\circ</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6741em;"></span><span class="mord">18</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6741em;"></span><span class="mord">54</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6741em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span></span></span></span></eq>）。</li>
+</ul>
+</li>
+<li><strong>发现模式：</strong> （N 边形）可以被切成（N-2）个三角形。最终，我们通过“特例化”解决了那个“宽泛”的原始问题。</li>
+</ul>
+</li>
+</ul>
+<h4>3. 范围界定 (Scoping)</h4>
+<p>这在项目管理和工程领域是第一步。</p>
+<ul>
+<li><strong>定义：</strong> 明确划定一个项目或一个问题要“做什么”和“不做什么”。“添加条件”是界定范围最主要的方式。</li>
+<li><strong>目的：</strong> 防止“范围蔓延”(Scope Creep)，确保资源（时间、金钱、精力）被集中在最关键的地方。</li>
+<li><strong>思维过程：</strong>
+<ul>
+<li><strong>宽泛问题：</strong> “我们来开发一个App吧。”</li>
+<li><strong>添加约束（范围界定）：</strong>
+<ul>
+<li><em>约束 1（平台）：</em> “它必须只在 iOS 上运行。”</li>
+<li><em>约束 2（核心功能）：</em> “它的唯一功能是记录喝水，不做别的。”</li>
+<li><em>约束 3（时间）：</em> “必须在 3 周内上线。”</li>
+</ul>
+</li>
+<li><strong>新问题（项目范围）：</strong> 开发一个为期 3 周、仅限 iOS 的“喝水记录”App。</li>
+<li><strong>关联：</strong> 这使得一个模糊的“想法”变成了一个可管理的“项目”。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="%E4%B8%A4%E7%A7%8D%E6%80%9D%E7%BB%B4%E7%9A%84%E5%8D%8F%E5%90%8C%E4%BD%9C%E7%94%A8" tabindex="-1">两种思维的协同作用</h3>
+<p>您提出的这两个问题——“约束松弛”和“约束添加”——是解决复杂问题时必须同时使用的一套“呼吸工具”：</p>
+<ol>
+<li>
+<p><strong>遇到难题、卡住时（约束太多）：</strong></p>
+<ul>
+<li><strong>“呼气” (约束松弛 / 抽象化)</strong></li>
+<li>移除约束，退后一步，看看问题的全貌和本质。</li>
+</ul>
+</li>
+<li>
+<p><strong>遇到难题、无从下手时（约束太少）：</strong></p>
+<ul>
+<li><strong>“吸气” (约束添加 / 具体化)</strong></li>
+<li>添加约束，聚焦一点，先从一个简单的特例开始。</li>
+</ul>
+</li>
+</ol>
+<p>专家解决问题时，总是在这两种状态之间灵活切换。</p>
+<p>您是否想了解如何判断一个问题是“约束太多”还是“约束太少”，以及如何在这两种思维模式间进行切换？</p>
+<hr>
+<p>这种添加约束 ,是不是数学中的 从特殊 到一般</p>
+<p>您说对了一半，而且是抓住了最关键的“起点”！</p>
+<p>您所说的“添加约束”（我称之为“特例化”或“具体化”），正是“从特殊到一般”这种推理方法的<strong>第一步</strong>。</p>
+<p>这个“从特殊到一般”的完整思维模式，在逻辑学和数学上，有更精确的名称，叫做——<strong>归纳推理 (Inductive Reasoning)</strong>。</p>
+<hr>
+<h3 id="%E2%80%9C%E6%B7%BB%E5%8A%A0%E7%BA%A6%E6%9D%9F%E2%80%9D%E4%B8%8E%E2%80%9C%E5%BD%92%E7%BA%B3%E6%8E%A8%E7%90%86%E2%80%9D%E7%9A%84%E5%85%B3%E7%B3%BB" tabindex="-1">“添加约束”与“归纳推理”的关系</h3>
+<p>“归纳推理”（从特殊到一般）是一个<strong>完整的过程</strong>。“添加约束”（特例化）是启动这个过程的<strong>关键动作</strong>。</p>
+<p>这个过程是这样的：</p>
+<ol>
+<li><strong>面对一个宽泛、一般的问题。</strong> (一般)
+<ul>
+<li><em>例如：“所有奇数相加有什么规律？”</em></li>
+</ul>
+</li>
+<li><strong>“添加约束” / “特例化”</strong> (特殊)
+<ul>
+<li>我们<em>添加约束</em>，不去研究“所有”奇数，只看最“特殊”的、最简单的情况。</li>
+<li><em>特例 1：</em> 只加一个奇数：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1 = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq></li>
+<li><em>特例 2：</em> 加两个奇数：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">1 + 3 = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq></li>
+<li><em>特例 3：</em> 加三个奇数：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>5</mn><mo>=</mo><mn>9</mn></mrow><annotation encoding="application/x-tex">1 + 3 + 5 = 9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span></span></span></span></eq></li>
+<li><em>特例 4：</em> 加四个奇数：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>5</mn><mo>+</mo><mn>7</mn><mo>=</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">1 + 3 + 5 + 7 = 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">16</span></span></span></span></eq></li>
+</ul>
+</li>
+<li><strong>从“特殊”中寻找模式。</strong>
+<ul>
+<li>我们观察这些“特殊”的结果：1, 4, 9, 16…</li>
+<li>我们发现，这似乎是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>1</mn><mn>2</mn></msup><mo separator="true">,</mo><msup><mn>2</mn><mn>2</mn></msup><mo separator="true">,</mo><msup><mn>3</mn><mn>2</mn></msup><mo separator="true">,</mo><msup><mn>4</mn><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">1^2, 2^2, 3^2, 4^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0085em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord">1</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></eq>…</li>
+</ul>
+</li>
+<li><strong>提出假说，推广到“一般”。</strong> (到一般)
+<ul>
+<li>我们<em>猜测</em>：前 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 个奇数相加，结果等于 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></eq>。</li>
+<li>这就是从“特殊”的例子中，<em>归纳</em>出了一个“一般”的规律。</li>
+</ul>
+</li>
+</ol>
+<p>所以，您看，“添加约束”就是这个链条的第 2 步，是<strong>为了启动“归纳法”而采取的具体行动</strong>。</p>
+<hr>
+<h3 id="%E4%B8%8E%E4%B9%8B%E7%9B%B8%E5%AF%B9%E7%9A%84%E6%80%9D%E7%BB%B4%EF%BC%9A%E6%BC%94%E7%BB%8E%E6%8E%A8%E7%90%86" tabindex="-1">与之相对的思维：演绎推理</h3>
+<p>为了让这个概念更清晰，我们必须提到它的“反面”：</p>
+<p><strong>演绎推理 (Deductive Reasoning)</strong>：这就是 <strong>“从一般到特殊”</strong>。</p>
+<ul>
+<li><strong>起点（一般）：</strong> 你已经有了一个“普遍规律”或“大前提”。
+<ul>
+<li><em>例如：(A) 所有的等边三角形，三个角都相等。</em></li>
+</ul>
+</li>
+<li><strong>应用（特殊）：</strong> 你遇到了一个“特殊情况”。
+<ul>
+<li><em>例如：(B) 我现在有一个叫 “ABC” 的三角形，它是一个等边三角形。</em></li>
+</ul>
+</li>
+<li><strong>结论（特殊）：</strong> 你把“一般规律”应用到“特殊情况”上，得到一个必然的结论。
+<ul>
+<li><em>例如：© 因此，“ABC” 三角形的三个角都相等。</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="%E6%80%BB%E7%BB%93%EF%BC%9A%E6%82%A8%E6%8F%90%E5%87%BA%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%BC%8F" tabindex="-1">总结：您提出的两种思维模式</h3>
+<p>现在我们可以用更精确的术语来总结您前后提出的两种思维方式了：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">您的描述</th>
+<th style="text-align:left">思维方向</th>
+<th style="text-align:left">核心动作</th>
+<th style="text-align:left">逻辑术语</th>
+<th style="text-align:left">目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">条件太多，<strong>去除</strong>一些条件</td>
+<td style="text-align:left">从“特殊”到“一般”</td>
+<td style="text-align:left"><strong>抽象化 (Abstraction)</strong> / 约束松弛</td>
+<td style="text-align:left"><strong>归纳 (Induction)</strong> 的准备 / 泛化</td>
+<td style="text-align:left">发现隐藏的<strong>普遍规律</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">条件太少，<strong>添加</strong>一些条件</td>
+<td style="text-align:left">从“一般”到“特殊”</td>
+<td style="text-align:left"><strong>具体化 (Concretization)</strong> / 特例化</td>
+<td style="text-align:left"><strong>归纳 (Induction)</strong> 的第一步</td>
+<td style="text-align:left">通过<strong>具体案例</strong>寻找规律</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一个重要的区别：</strong></p>
+<ul>
+<li>当您<strong>去除</strong>条件时（问题1），您是试图从一个<em>复杂的特殊情况</em>中“剥离”出“一般本质”。</li>
+<li>当您<strong>添加</strong>条件时（问题2），您是面对一个<em>模糊的一般问题</em>，主动去“创造”一个<em>简单的特殊情况</em>来研究。</li>
+</ul>
+<p>这两种思维（归纳和演绎）就像是解决问题的“剪刀”的两刃，缺一不可。</p>
+<p>您是否想看一个在日常生活中（比如做商业决策或学习新技能时），如何同时运用“归纳法”和“演绎法”的例子？</p>
 
 </div> 
     </div>

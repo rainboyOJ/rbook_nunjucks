@@ -705,15 +705,56 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>112个组合问题</h1>
+        <h1>常用命令</h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E7%AB%A0%E8%8A%82">章节</a></li></ol></nav><figure><img src="./images/cover.png" alt="" width="300"></figure>
-<h2 id="%E7%AB%A0%E8%8A%82" tabindex="-1">章节</h2>
+    <nav class="table-of-contents"><ol><li><a href="#%E5%BF%AB%E9%80%9F%E6%B5%8B%E8%AF%95">快速测试</a></li></ol></nav><h2 id="%E5%BF%AB%E9%80%9F%E6%B5%8B%E8%AF%95" tabindex="-1">快速测试</h2>
+<p>使用 <code>test.sh</code> 脚本可以自动化测试流程。一个更推荐的脚本如下，它更具可读性，并且在出错时能提供更多信息：</p>
+<div class="language-bash line-numbers-mode">
+    <div class="code-info-header">
+        <span>bash</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-bash">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div>
+        <code><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># --- 可配置区域 ---</span>
+<span class="token assign-left variable">PROG</span><span class="token operator">=</span><span class="token string">"./1.out"</span>
+<span class="token assign-left variable">INPUT</span><span class="token operator">=</span><span class="token string">"./data/road3.in"</span>
+<span class="token assign-left variable">ANSWER</span><span class="token operator">=</span><span class="token string">"./data/road3.ans"</span>
+<span class="token assign-left variable">OUTPUT</span><span class="token operator">=</span><span class="token string">"out"</span>
+<span class="token comment"># --------------------</span>
+
+<span class="token variable">$PROG</span> <span class="token operator">&lt;</span> <span class="token string">"<span class="token variable">$INPUT</span>"</span> <span class="token operator">></span> <span class="token string">"<span class="token variable">$OUTPUT</span>"</span>
+
+<span class="token comment"># 使用 diff -b 比较文件，该选项会忽略多余的空格</span>
+<span class="token keyword">if</span> <span class="token function">diff</span> <span class="token parameter variable">-b</span> <span class="token string">"<span class="token variable">$OUTPUT</span>"</span> <span class="token string">"<span class="token variable">$ANSWER</span>"</span> <span class="token operator">></span>/dev/null<span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"✅ Accepted"</span>
+<span class="token keyword">else</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"❌ Wrong Answer"</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"--- 差异对比 ---"</span>
+    <span class="token function">diff</span> <span class="token parameter variable">-w</span> <span class="token parameter variable">-b</span> <span class="token string">"<span class="token variable">$OUTPUT</span>"</span> <span class="token string">"<span class="token variable">$ANSWER</span>"</span>
+<span class="token keyword">fi</span>
+</code>
+    </pre>
+</div>
+<p><strong>使用步骤:</strong></p>
 <ol>
-<li><a href="/math/combinatorics/112_combinatorial_problems/1-3-chapter.html">1-3章节</a></li>
+<li><strong>授予执行权限:</strong> <code>chmod +x test.sh</code></li>
+<li><strong>运行测试:</strong> <code>./test.sh</code></li>
 </ol>
 
 </div> 
