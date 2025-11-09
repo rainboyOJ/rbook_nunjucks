@@ -49,8 +49,6 @@ chapters:
         path: binary-indexed-tree
       - title: 线段树
         path: segment-tree
-      - title: 二叉搜索树
-        path: BST
       - title: 栈 
         path: stack
         sections:
@@ -58,6 +56,12 @@ chapters:
             path: 表达式
           - title: 单调栈
             path: monotonic-stack
+      - title: 二叉搜索树
+        path: BST
+      - title: 红黑树
+        path: RBTree
+      - title: AVL
+        path: AVL
   - title: 第五章 图论
     path: graph
     nolink: true
@@ -68,6 +72,8 @@ chapters:
         path: center_of_tree
       - title: 基环树
         path: pseudotree
+      - title: Kruskal
+        path: kruskal
       - title: floyed算法
         path: floyed
   - title: 思维方式

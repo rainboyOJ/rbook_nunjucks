@@ -467,6 +467,122 @@ prev x tree = go tree Nothing
                 _     -> findMax l -- 有左子树, 前驱是左子树的最大值
 ```
 
+## `rank` 排名与 `atRank` 选择
+
+### 1. `rank(x)` - 查找元素排名
+
+`rank(x)` 返回元素 `x` 在有序序列中的排名（第几小的元素，从1开始）。
+
+#### C++ (带 `parent` 指针)
+
+```cpp
+// 辅助函数：计算子树的大小
+int subtreeSize(Node* t) {
+    if (t == nullptr) return 0;
+    return 1 + subtreeSize(t->left) + subtreeSize(t->right);
+}
+
+// 查找元素 x 的排名
+int rank(Node* root, int x) {
+    return rankHelper(root, x);
+}
+
+int rankHelper(Node* t, int x) {
+    if (t == nullptr) return 1;  // 空树，任何元素排名都是1
+    
+    if (x < t->key) {
+        // x 在左子树中
+        return rankHelper(t->left, x);
+    } else if (x > t->key) {
+        // x 在右子树中，排名 = 左子树大小 + 当前节点 + 右子树中的排名
+        int leftSize = subtreeSize(t->left);
+        return leftSize + 1 + rankHelper(t->right, x);
+    } else {
+        // 找到 x，排名 = 左子树大小 + 1
+        return subtreeSize(t->left) + 1;
+    }
+}
+```
+
+#### Haskell (纯函数式)
+
+```haskell
+-- | 计算 x 在树中的排名 (第几小的元素，从1开始)
+rank :: (Ord a) => a -> Tree a -> Int
+rank x Empty = 1  -- 在空树中，任何元素的排名都是1
+rank x (Node l k c r)
+    | x < k     = rank x l                    -- x 在左子树中
+    | x > k     = size l + c + rank x r       -- x 在右子树中，跳过左子树和当前节点的所有重复值
+    | otherwise = size l + 1                  -- x 等于当前键，排名是左子树大小 + 1（第一个出现的位置）
+
+-- | 计算树中元素的总个数 (包括重复值)
+size :: Tree a -> Int
+size Empty = 0
+size (Node l k c r) = size l + c + size r
+```
+
+### 2. `atRank(k)` - 查找第k小的元素
+
+`atRank(k)` 返回第 `k` 小的元素，其中 `k` 从1开始。
+
+#### C++ (带 `parent` 指针)
+
+```cpp
+// 查找第 k 小的元素
+Node* atRank(Node* root, int k) {
+    return atRankHelper(root, k);
+}
+
+Node* atRankHelper(Node* t, int k) {
+    if (t == nullptr || k <= 0) return nullptr;
+    
+    int leftSize = subtreeSize(t->left);
+    
+    if (k <= leftSize) {
+        // 第 k 小的元素在左子树中
+        return atRankHelper(t->left, k);
+    } else if (k == leftSize + 1) {
+        // 第 k 小的元素是当前节点
+        return t;
+    } else {
+        // 第 k 小的元素在右子树中
+        return atRankHelper(t->right, k - leftSize - 1);
+    }
+}
+```
+
+#### Haskell (纯函数式)
+
+```haskell
+-- | 返回第 k 小的元素 (k 从1开始)
+-- | 如果 k 超出范围，返回 Nothing
+atRank :: Int -> Tree a -> Maybe a
+atRank k Empty = Nothing
+atRank k (Node l k' c r)
+    | k <= 0    = Nothing                     -- k 无效
+    | leftSize >= k = atRank k l              -- 在左子树中
+    | leftSize + c >= k = Just k'             -- 在当前节点中
+    | otherwise = atRank (k - leftSize - c) r -- 在右子树中
+  where
+    leftSize = size l
+```
+
+### 3. 复杂度分析
+
+两个操作的时间复杂度都为 **O(h)**，其中 `h` 是树的高度：
+
+- **最优情况**（完全平衡树）：$O(\log n)$
+- **最坏情况**（链状树）：$O(n)$
+
+空间复杂度为 **O(h)**（递归栈空间）。
+
+### 4. 应用场景
+
+- **顺序统计树**：快速查找第 k 小的元素
+- **中位数查找**：`atRank (n/2)` 找到中位数
+- **排名查询**：`rank x` 找到元素的相对位置
+- **范围查询**：结合 `rank` 和 `atRank` 实现范围统计
+
 #### 4. `deleteMin()` - 删除最小值
 
 **数学原理:**
@@ -723,6 +839,173 @@ deleteMin (Node l k r) =
 -- | (此处省略 succ 的实现)
 -- |
 -- | ---------------------------------------------------------------------------
+
+-- | ---------------------------------------------------------------------------
+-- | 排名操作 (Rank Operations)
+-- | ---------------------------------------------------------------------------
+
+## rank - 查找元素的排名
+
+`rank x` 返回元素 `x` 在有序序列中的排名（第几小的元素，从1开始）。如果 `x` 不在树中，则返回 `x` 应该插入的位置的排名。
+
+### 🧮 算法原理
+
+基于 BST 的有序性质，我们可以通过递归计算排名：
+
+1. **基本情况**：空树中任何元素的排名都是 1
+2. **递归情况**：
+   - 如果 `x < k`（当前节点键值），则在左子树中查找
+   - 如果 `x > k`，则排名 = 左子树大小 + 当前节点计数 + 右子树中的排名
+   - 如果 `x = k`，则排名 = 左子树大小 + 1（第一个出现的位置）
+
+### 📐 数学证明
+
+**定理**：`rank x t` 返回元素 `x` 在树 `t` 中的正确排名。
+
+**证明**：对树的结构进行归纳法证明。
+
+**基本情况**：`t = Empty`
+- `rank x Empty = 1`
+- 在空树中，任何元素插入后都是第1个元素，命题成立 ✓
+
+**归纳假设**：假设对于所有高度小于 `h` 的树，`rank` 函数都返回正确排名。
+
+**归纳步骤**：考虑高度为 `h` 的树 `t = Node l k c r`
+
+**情况1**：`x < k`
+- 由 BST 性质，`x` 只可能在左子树 `l` 中
+- `rank x t = rank x l`
+- 由归纳假设，`rank x l` 是 `x` 在左子树中的正确排名
+- 由于左子树中所有元素都小于 `k`，这个排名也是在整个树中的正确排名 ✓
+
+**情况2**：`x > k`
+- 由 BST 性质，`x` 只可能在右子树 `r` 中
+- `rank x t = size l + c + rank x r`
+- `size l + c` 是左子树和当前节点的元素总数
+- 由归纳假设，`rank x r` 是 `x` 在右子树中的正确排名
+- 因此总和是 `x` 在整个树中的正确排名 ✓
+
+**情况3**：`x = k`
+- `rank x t = size l + 1`
+- `size l` 是左子树中元素的数量
+- 所有这些元素都小于 `k`，所以 `k` 的排名 = 左子树大小 + 1 ✓
+
+由归纳法，对于所有树 `t`，`rank` 函数都返回正确排名。∎
+
+### 💻 函数实现
+
+```haskell
+-- | 计算 x 在树中的排名 (第几小的元素，从1开始)
+-- | 如果 x 不在树中，返回 x 应该插入的位置的排名
+rank :: (Ord a) => a -> Tree a -> Int
+rank x Empty = 1  -- 在空树中，任何元素的排名都是1
+rank x (Node l k c r)
+    | x < k     = rank x l                    -- x 在左子树中
+    | x > k     = size l + c + rank x r       -- x 在右子树中，跳过左子树和当前节点的所有重复值
+    | otherwise = size l + 1                  -- x 等于当前键，排名是左子树大小 + 1（第一个出现的位置）
+
+-- | 计算树中元素的总个数 (包括重复值)
+size :: Tree a -> Int
+size Empty = 0
+size (Node l k c r) = size l + c + size r
+```
+
+## atRank - 查找第k小的元素
+
+`atRank k` 返回第 `k` 小的元素，其中 `k` 从1开始。如果 `k` 超出范围，返回 `Nothing`。
+
+### 🧮 算法原理
+
+递归地在树中查找第 `k` 个元素：
+
+1. **基本情况**：空树中没有元素，返回 `Nothing`
+2. **递归情况**：
+   - 计算左子树大小 `leftSize = size l`
+   - 如果 `k ≤ leftSize`，则在左子树中查找
+   - 如果 `leftSize < k ≤ leftSize + c`，则当前节点就是答案
+   - 如果 `k > leftSize + c`，则在右子树中查找第 `k - leftSize - c` 个元素
+
+### 📐 数学证明
+
+**定理**：`atRank k t` 返回树 `t` 中第 `k` 小的元素（如果存在）。
+
+**证明**：对树的结构进行归纳法证明。
+
+**基本情况**：`t = Empty`
+- `atRank k Empty = Nothing`
+- 空树中没有元素，任何 `k` 都应返回 `Nothing` ✓
+
+**归纳假设**：假设对于所有高度小于 `h` 的树，`atRank` 函数都正确。
+
+**归纳步骤**：考虑高度为 `h` 的树 `t = Node l k c r`，令 `leftSize = size l`
+
+**情况1**：`k ≤ leftSize`
+- 第 `k` 小的元素在左子树中
+- `atRank k t = atRank k l`
+- 由归纳假设，这是左子树中第 `k` 小的元素
+- 由于左子树中所有元素都小于当前节点，这也是整个树中第 `k` 小的元素 ✓
+
+**情况2**：`leftSize < k ≤ leftSize + c`
+- 第 `k` 小的元素是当前节点（考虑重复值）
+- `atRank k t = Just k`
+- 左子树有 `leftSize` 个元素，当前节点从第 `leftSize + 1` 到 `leftSize + c` 个位置
+- 因此第 `k` 个元素确实是当前节点 ✓
+
+**情况3**：`k > leftSize + c`
+- 第 `k` 小的元素在右子树中
+- `atRank k t = atRank (k - leftSize - c) r`
+- 需要跳过左子树和当前节点的所有元素
+- 由归纳假设，这是右子树中第 `k - leftSize - c` 小的元素
+- 这对应于整个树中第 `k` 小的元素 ✓
+
+由归纳法，对于所有树 `t`，`atRank` 函数都返回正确结果。∎
+
+### 💻 函数实现
+
+```haskell
+-- | 返回第 k 小的元素 (k 从1开始)
+-- | 如果 k 超出范围，返回 Nothing
+atRank :: Int -> Tree a -> Maybe a
+atRank k Empty = Nothing
+atRank k (Node l k' c r)
+    | k <= 0    = Nothing                     -- k 无效
+    | leftSize >= k = atRank k l              -- 在左子树中
+    | leftSize + c >= k = Just k'             -- 在当前节点中
+    | otherwise = atRank (k - leftSize - c) r -- 在右子树中
+  where
+    leftSize = size l
+```
+
+### 🔄 互为逆运算性质
+
+`rank` 和 `atRank` 在某种意义上互为逆运算：
+
+- 对于树中存在的元素 `x`：`atRank (rank x t) t = Just x`
+- 对于有效的排名 `k`：`rank (atRank k t) t = k`
+
+这个性质在实现顺序统计树（Order Statistic Tree）时非常有用。
+
+### 🧪 测试示例
+
+```haskell
+-- 测试树: [1,2,3,4,5,7,8,9]
+let testTree = fromList [5,3,8,1,4,7,9,2]
+
+-- rank 测试
+rank 4 testTree  -- 返回 4 (第4小的元素)
+rank 6 testTree  -- 返回 6 (6不在树中，会排在第6位)
+
+-- atRank 测试  
+atRank 4 testTree  -- 返回 Just 4
+atRank 8 testTree  -- 返回 Just 9 (第8个元素是9)
+atRank 9 testTree  -- 返回 Nothing (只有8个元素)
+
+-- 重复值测试
+let dupTree = fromList [1,1,2,2,2,3]
+rank 2 dupTree     -- 返回 3 (第一个2的排名是3)
+atRank 3 dupTree   -- 返回 Just 2
+atRank 5 dupTree   -- 返回 Just 2 (第5个元素也是2)
+```
 
 -- | ---------------------------------------------------------------------------
 -- | 映射和折叠 (Map & Fold)
