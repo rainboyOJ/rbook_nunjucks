@@ -1,5 +1,7 @@
 #include <memory_resource>
 #include <iostream>
+#include <string>
+#include <string_view>
 
 template <template<typename> class Node,typename T>
 class BST_common_operation {
@@ -10,7 +12,7 @@ public:
     // 左旋，让右孩子 y 上位，自己 x 下沉
     // 传入的 root 是一个指向子树根节点的指针的引用(NodePtr&), 方便直接修改
     // 口诀:  1. 查空  2. 过继 3. 调整父子关系 4. 更新根
-    void rotateLeft(NodePtr &x)
+    static void rotateLeft(NodePtr &x)
     {
         // 1. 定义新根 y (x的右孩子)
         NodePtr y = x->right;
@@ -32,7 +34,7 @@ public:
 
     // 右旋，让左孩子 x 上位，自己 y 下沉 (与左旋完全对称)
     // 口诀:  1. 查空  2. 过继 3. 调整父子关系 4. 更新根
-    void rotateRight(NodePtr &y)
+    static void rotateRight(NodePtr &y)
     {
         // 1. 定义新根 y (x的左孩子)
         NodePtr x = y->left;
@@ -70,13 +72,14 @@ public:
 
 namespace RBTree
 {
+    using std::operator""sv;
 
     enum class Color
     {
-        RED,
-        BLACK,
-        DOUBLE_BLACK,
-        ANY
+        RED, // 🔴
+        BLACK, // ⚫
+        DOUBLE_BLACK, // ⚫⚫
+        ANY // 任意颜色,主要用于[匹配]
     };
     
     // c++17 
@@ -85,12 +88,30 @@ namespace RBTree
     constexpr Color DOUBLE_BLACK = Color::DOUBLE_BLACK;
     constexpr Color ANY = Color::ANY;
 
-    bool operator==(Color a, Color b) {
-        if( a == Color::ANY || b == Color::ANY ) return true;
-        return a == b;
+    std::string color_to_string(const Color &c)
+    {
+        switch (c)
+        {
+        case Color::RED:
+            return "R";
+        case Color::BLACK:
+            return "B";
+        case Color::DOUBLE_BLACK:
+            return "DB";
+        case Color::ANY:
+            return "_";
+        }
+        return "?";
     }
-    bool operator!=(Color a, Color b) { return !(a == b); }
 
+    // bool operator==(Color a, Color b) {
+    //     if( a == Color::ANY || b == Color::ANY ) return true;
+    //     return a == b;
+    // }
+    // bool operator!=(Color a, Color b) { return !(a == b); }
+
+    template <typename T>
+    class Node;
 
 
     template <typename T>
@@ -124,11 +145,45 @@ namespace RBTree
         bool isRed() const { return color == RED; }
         bool isBlack() const { return color == BLACK; }
         bool isDoubleBlack() const { return color == DOUBLE_BLACK; }
+
+
+        void debug() const;
     };
 
     // helper
     // BST_common_operation<Node,T> COMMON_OPT;
+    template <typename T>
+    void printRecursive(const Node<T>* node, const std::string &prefix, bool isLeft)
+    {
+        if (node->isEmpty())
+        {
+            return;
+        }
 
+        std::cout << prefix;
+        std::cout << (isLeft ? "├──" : "└──");
+
+        std::cout << " " << node->data << " (" << color_to_string(node->color) << ")" << std::endl;
+
+        printRecursive(node->left, prefix + (isLeft ? "│   " : "    "), true);
+        printRecursive(node->right, prefix + (isLeft ? "│   " : "    "), false);
+    }
+
+    // 实现 Node::debug()
+    template <typename T>
+    void Node<T>::debug() const
+    {
+#ifdef RBTree_DEBUG
+        // printRecursive(this, "", false);
+        if (this->isEmpty())
+            return;
+        // 1. 直接打印当前节点信息
+        std::cout << this->data << " (" << color_to_string(this->color) << ")" << std::endl;
+        // 2. 递归打印左右子树，初始前缀为空
+        printRecursive(this->left, "", true); // 如果有右子树，则左子树不是最后一个
+        printRecursive(this->right, "", false);
+#endif
+    }
 
     template <typename T,int SIZE = 1000005>
     class RBTree
@@ -173,7 +228,7 @@ namespace RBTree
                 char rotate_type;
             } rot[10]; 
 
-            RBTree_Descriptor(const std::string & str) {
+            RBTree_Descriptor(std::string_view str) {
                 int i = 0;
                 for(auto c : str) {
                     // if (isspace(c) || c == '|') continue;
@@ -185,23 +240,26 @@ namespace RBTree
                     else if ( isdigit(c) ) {
                         rot[rot_size++].node_id = c - '0';
                     }
-                    else if ( c == 'l') rot[rot_size].rotate_type = 'l';
-                    else if ( c == 'r') rot[rot_size].rotate_type = 'r';
+                    else if ( c == 'l')
+                        rot[rot_size-1].rotate_type = 'l';
+                    else if ( c == 'r')
+                        rot[rot_size-1].rotate_type = 'r';
                 }
             }
 
-            bool match(NodePtr & root) {
-                if( root->isEmpty() ) return false;
-                if( root != ANY && root->color != root ) return false;
-                if( l != ANY && root->left->color != l ) return false;
-                if( r != ANY && root->right->color != r ) return false;
-                if( ll != ANY && root->left->left->color != ll ) return false;
-                if( lr != ANY && root->left->right->color != lr ) return false;
-                if( rl != ANY && root->right->left->color != rl ) return false;
-                if( rr != ANY && root->right->right->color != rr ) return false;
+            bool match(NodePtr & u) const {
+                if( u->isEmpty() ) return false;
+                if( root != ANY && u->color != root ) return false;
+                if( l != ANY && u->left->color != l ) return false;
+                if( r != ANY && u->right->color != r ) return false;
+                if( ll != ANY && u->left->left->color != ll ) return false;
+                if( lr != ANY && u->left->right->color != lr ) return false;
+                if( rl != ANY && u->right->left->color != rl ) return false;
+                if( rr != ANY && u->right->right->color != rr ) return false;
+                return true; // 都匹配
             }
 
-            NodePtr & findNode(NodePtr & root,int id) {
+            NodePtr & findNode(NodePtr & root,int id) const {
                 if( id == 0 ) return root;
                 else if( id == 1 ) return root->left;
                 else if( id == 2 ) return root->right;
@@ -209,16 +267,38 @@ namespace RBTree
                 else if( id == 4 ) return root->left->right;
                 else if( id == 5 ) return root->right->left;
                 else if( id == 6 ) return root->right->right;
+                return root; // 都不匹配,无需调整
             }
 
-            NodePtr & rotate(NodePtr & root) {
+            NodePtr & rotate(NodePtr & root) const {
                 for(int i = 0; i < rot_size; i++) {
                     auto & node = findNode(root,rot[i].node_id);
-                    if( rot[i].rotate_type == 'l' ) rotateLeft(node);
-                    else if( rot[i].rotate_type == 'r' ) rotateRight(node);
+                    if( rot[i].rotate_type == 'l' )  NodeType::rotateLeft(node);
+                    else if( rot[i].rotate_type == 'r' ) NodeType::rotateRight(node);
+
+#ifdef RBTree_DEBUG
+                    cout << "after rotate: " << rot[i].node_id << " " << rot[i].rotate_type << endl;
+                    root->debug();
+                    cout << "-----------------------------------" << endl;
+#endif
                 }
                 return root;
             }
+
+            void debug()  const {
+                for(int i = 0; i < 7; i++) {
+                    // std::cout << (desc[i] == BLACK ? "B" : "R") ;
+                    char c;
+                    if( desc[i] == BLACK ) c = 'B';
+                    else if( desc[i] == RED ) c = 'R';
+                    else if( desc[i] == DOUBLE_BLACK ) c = 'D';
+                    else if( desc[i] == ANY ) c = '*';
+                    std::cout << c;
+                    std::cout << (( i == 0 || i == 2  || i == 6) ? " | "  : " ");
+                }
+                std::cout << std::endl;
+            }
+
         };
     
     public:
@@ -243,76 +323,50 @@ namespace RBTree
             node->color = RED; 
         }
 
+        void insert(T data) {
+            makeBlack( ins(data,root) );
+        }
+
+        // 返回: 调整后的根节点
         NodePtr &ins(T data,NodePtr & u)
         {
             if( u -> isEmpty() ) {
-                u = new_node(data);
-                makeBlack(u);
-                return;
+                u = new_node(data); // 新节点默认是红色
+                // makeBlack(u);
+                return u;
             }
             if( u -> data > data ) {
-                return balance( ins(data,u->left) );
+                ins(data,u->left);
             } else {
-                return balance( ins(data,u->right) );
+                ins(data,u->right);
             }
+            return balance(u);
         }
 
         NodePtr & balance(NodePtr &node)
         {
-            // 4 种情况
-            const RBTree_Descriptor rotate_desc[4] = 
+            // 4 种情况, 为什么使用static: 避免每次调用都重新构造
+            static const RBTree_Descriptor rotate_desc[4] = 
             {
-                "B | R * | R * * * | 0r",
-                "B | * R | * * R * | 0l",
-                "B | R * | * R * * | 1l 0r",
-                "B | * R | * * R * | 1r 0l"
+                "B | R * | R * * * | 0r"sv,
+                "B | * R | * * * R | 0l"sv,
+                "B | R * | * R * * | 1l 0r"sv,
+                "B | * R | * * R * | 2r 0l"sv
             };
             for(int i = 0; i < 4; i++) {
                 if( rotate_desc[i].match(node) ) {
-                    auto & root = rotate_desc[i].rotate(node);
-                    makeBlack(root->left);
-                    makeBlack(root->right);
-                    makeRed(root);
-                    return root;
+#ifdef RBTree_DEBUG
+                    cout << " match: " << i << " node: " << node->data <<  " -> ";
+                    rotate_desc[i].debug();
+#endif
+                    rotate_desc[i].rotate(node);
+                    makeBlack(node->left); // 提升红色
+                    makeBlack(node->right);
+                    makeRed(node);
+                    return node;
                 }
             }
             return node; // 都不匹配,无需调整
-            // // case 1 ll red-red
-            // if( patternMatch(node, RBTree_Descriptor("B | R * | R * * *")) ) {
-            //     // 1. 父节点变黑
-            //     // 2. 祖父节点变红
-            //     // 3. 祖父节点右旋
-            //     rotateRight(node);
-            // }
-            // // case 2 rr red-red
-            // else if( patternMatch(node, RBTree_Descriptor("B | * R | * * R *")) ) {
-            //     // 1. 父节点变黑
-            //     // 2. 祖父节点变红
-            //     // 3. 祖父节点左旋
-            //     rotateLeft(node);
-            // }
-            // // case 3 lr red-red
-            // else if( patternMatch(node, RBTree_Descriptor("B | R * | * R * *")) ) {
-            //     // 1. 父节点左旋
-            //     // 2. 祖父节点右旋
-            //     // 3. 父节点变黑
-            //     // 4. 祖父节点变红
-            //     rotateLeft(node->left);
-            //     rotateRight(node);
-            // }
-            // // case 4 rl red-red
-            // else if( patternMatch(node, RBTree_Descriptor("B | * R | * * R *")) ) {
-            //     // 1. 父节点右旋
-            //     // 2. 祖父节点左旋
-            //     // 3. 父节点变黑
-            //     // 4. 祖父节点变红
-            //     rotateRight(node->right);
-            //     rotateLeft(node);
-            // }
-            // else return node; // 都不匹配,无需调整
-
-            // // 这是就证明匹配了,需要调整:统一处理
-            // return node;
         }
 
         
@@ -320,31 +374,6 @@ namespace RBTree
         // 核心: 上移双黑
         void del(T data)
         {
-        }
-
-    private:
-        std::string color_to_string(const Color& c) const {
-            switch (c) {
-                case Color::RED: return "R";
-                case Color::BLACK: return "B";
-                case Color::DOUBLE_BLACK: return "DB";
-                case Color::ANY: return "_";
-            }
-            return "?";
-        }
-
-        void printRecursive(NodePtr node, const std::string& prefix, bool isLeft) const {
-            if (node->isEmpty()) {
-                return;
-            }
-
-            std::cout << prefix;
-            std::cout << (isLeft ? "├──" : "└──");
-
-            std::cout << " " << node->data << " (" << color_to_string(node->color) << ")" << std::endl;
-
-            printRecursive(node->left, prefix + (isLeft ? "│   " : "    "), true);
-            printRecursive(node->right, prefix + (isLeft ? "│   " : "    "), false);
         }
 
     public:
@@ -355,6 +384,77 @@ namespace RBTree
             } else {
                 printRecursive(root, "", false);
             }
+        }
+
+    private:
+        /**
+         * @brief 递归地验证红黑树的属性并计算黑高。
+         * @param node 当前子树的根。
+         * @return 如果子树是有效的红黑树，则返回其黑高；否则返回 -1。
+         */
+                int validateRecursive(const Node<T>* node) const {
+            // 属性3: 叶子节点(NIL)是黑色的。
+            // 我们将NIL节点的黑高视为1。
+            if (node->isEmpty()) {
+                return 1;
+            }
+
+            // 递归检查左右子树
+            int leftBlackHeight = validateRecursive(node->left);
+            int rightBlackHeight = validateRecursive(node->right);
+
+            // 如果任一子树无效，则整棵树无效
+            if (leftBlackHeight == -1 || rightBlackHeight == -1) {
+                return -1;
+            }
+
+            // 属性5: 从任一节点到其每个叶子的所有简单路径都包含相同数目的黑色节点。
+            if (leftBlackHeight != rightBlackHeight) {
+                // 黑高不匹配
+                std::cout << "Validation Error: Black-height mismatch at node " << node->data << std::endl;
+                return -1;
+            }
+
+            // 属性4: 如果一个节点是红色的，则它的两个子节点都是黑色的。
+            if (node->isRed()) {
+                if (node->left->isRed() || node->right->isRed()) {
+                    // 红色节点的子节点不能是红色
+                    std::cout << "Validation Error: Red node " << node->data << " has red child." << std::endl;
+                    return -1;
+                }
+            }
+
+            // 计算当前节点的黑高
+            return leftBlackHeight + (node->isBlack() ? 1 : 0);
+        }
+
+    public:
+        /**
+         * @brief 验证整个红黑树是否符合所有5条属性。
+         * @return 如果树是有效的红黑树，则返回 true，否则返回 false。
+         *
+         * 红黑树的5条属性:
+         * 1. 每个节点要么是红色，要么是黑色。 (由Color枚举保证)
+         * 2. 根节点是黑色的。
+         * 3. 每个叶子节点（NIL）是黑色的。 (在实现中保证)
+         * 4. 如果一个节点是红色的，则它的两个子节点都是黑色的。
+         * 5. 对每个节点，从该节点到其所有后代叶节点的简单路径上，均包含相同数目的黑色节点。
+         */
+        bool isValid() const {
+            // 属性2: 根节点是黑色的。
+            if (root->isRed()) {
+                std::cout << "Validation Error: Root is not black." << std::endl;
+                return false;
+            }
+
+            // 从根节点开始递归验证，并检查黑高是否有效
+            if (validateRecursive(root) == -1) {
+                // 如果validateRecursive返回-1，说明树的某个属性被违反了。
+                // 具体的错误会在递归函数中被检测到，这里我们只关心最终结果。
+                return false;
+            }
+
+            return true;
         }
     };
 
