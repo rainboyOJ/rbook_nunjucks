@@ -73,3 +73,40 @@ temp/
 
 
 **/*/__pycache__
+
+# Compiled file
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+*.lib
+*.pyc
+*.pyo
+*.pyd
+*.egg-info
+*.egg
+*.whl
+*.dist-info
+*.egg-info
+*.egg
+*.whl
+*.dist-info
+*.egg-info
+*.egg
+*.whl
+*.dist-info
+*.egg-info
+*.egg
+*.whl
+*.dist-info
+# haskell compiled file
+*.hi 
+*.o
+*.dyn_hi
+*.dyn_o
+
+## clang debug symbols
+**/*.out.dSYM
