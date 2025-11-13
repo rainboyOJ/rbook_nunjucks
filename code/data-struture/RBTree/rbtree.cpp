@@ -83,6 +83,47 @@ namespace RBTree
 
 
         void debug() const;
+
+        inline static void shiftBlack(NodePtr &node) {
+            // if( node->isEmpty() ) return;
+            if( node == NIL ) {
+                node = BBNIL;
+            }
+            else if( node->isBBEmpty() ) {
+                node = NIL;
+            }
+            else if( node->isDoubleBlack() ) {
+                node->color = BLACK;
+            }
+            else if(node -> isBlack() ) {
+                node->color = DOUBLE_BLACK;
+            }
+            else if( node->isRed() ) {
+                node->color = BLACK;
+            }
+        }
+
+        inline static void swapColor(NodePtr &a, NodePtr &b) {
+            if( a->isEmpty() || b->isEmpty() ) 
+            {
+#ifdef RBTree_DEBUG
+                std::cout << "swapColor: a or b is empty" << std::endl;
+                throw std::runtime_error("swapColor: a or b is empty");
+#endif
+                return;
+            }
+            std::swap(a->color, b->color);
+        }
+
+        inline static void setRed(NodePtr &node) {
+            if( node->isEmpty() ) return;
+            node->color = RED;
+        }
+
+        inline static void setBlack(NodePtr &node) {
+            if( node->isEmpty() ) return;
+            node->color = BLACK;
+        }
     };
 
     // helper
@@ -144,7 +185,7 @@ namespace RBTree
         // 一个三层的树的描述
         // B | R B | * * B R
         // B | R B | * * B R | 1r 7r
-        struct RBTree_Descriptor {
+        struct RBTree_pattern {
             union {
                 Color desc[7];
                 struct {
@@ -154,31 +195,74 @@ namespace RBTree
                 };
             };
             int rot_size = 0;
-            // 旋转序列 ,一个两位数字
-            // 十位数: 1 表示左旋, 2 表示右旋
-            // 个位数: 表示旋转结点的编号
-            // 17 表示 7 号结点左旋
-            struct {
-                int node_id;
-                char rotate_type;
-            } rot[10]; 
+            // 操作序列 
+            // ro1 lo0 旋转 节点编号 + 旋转类型
+            // sw12 [swap color 1 2] 交换颜色 + 节点编号 + 节点编号
+            // sb1 [set black 1] 设置颜色 + 节点编号
+            // sr1 [set red 1] 设置颜色 + 节点编号
+            // ss1 [shift black 1] 提升黑色 + 节点编号
+            // command + node_id  + node_id
+            // command + node_id
+            // 所有command 都是小写字母
 
-            RBTree_Descriptor(std::string_view str) {
-                int i = 0;
-                for(auto c : str) {
+            enum Command {
+                ROTATE_LEFT,
+                ROTATE_RIGHT,
+                SWAP_COLOR,
+                SET_BLACK,
+                SET_RED,
+                SHIFT_BLACK
+            };
+
+            char str_to_command(char c1,char c2) {
+                if( c1 == 'l') return ROTATE_LEFT;
+                else if( c1 == 'r') return ROTATE_RIGHT;
+                else if( c1 == 's' && c2 == 'w') return SWAP_COLOR;
+                else if( c1 == 's' && c2 == 'b') return SET_BLACK;
+                else if( c1 == 's' && c2 == 'r') return SET_RED;
+                else if( c1 == 's' && c2 == 's') return SHIFT_BLACK;
+                return -1;
+            }
+            
+            struct opt {
+                int id[2];
+                Command com;
+                opt(int id,Command com) : id{id,-1}, com(com) {}
+                opt(int id1,int id2,Command com) : id{id1,id2}, com(com) {}
+            }; 
+            std::vector<opt> opts; //操作序列
+
+            
+
+            RBTree_pattern(std::string_view str) {
+                // for(auto c : str) {
+                for(int i = 0 ;i < str.size() ; i++) {
+                    auto c = str[i];
                     // if (isspace(c) || c == '|') continue;
                     // if (i >= 7) break;
                     if( c == 'B' ) desc[i++] = BLACK;
                     else if( c == 'R' ) desc[i++] = RED;
                     else if( c == 'D' ) desc[i++] = DOUBLE_BLACK;
                     else if( c == '*' ) desc[i++] = ANY;
-                    else if ( isdigit(c) ) {
-                        rot[rot_size++].node_id = c - '0';
+                    else if( c == 'l' || c == 'r'){ // command
+                        char c2 = str[++i];
+                        int id = str[++i] - '0';
+                        opts.emplace_back(id,str_to_command(c,c2));
                     }
-                    else if ( c == 'l')
-                        rot[rot_size-1].rotate_type = 'l';
-                    else if ( c == 'r')
-                        rot[rot_size-1].rotate_type = 'r';
+                    else if ( c == 's') {
+                        char c2 = str[++i];
+                        int id1 = str[++i] - '0';
+                        int id2 = str[++i] - '0';
+                        opts.emplace_back(id1,id2,str_to_command(c,c2));
+                    }
+                    // else if ( isdigit(c) ) {
+                    //     rot[rot_size++].node_id = c - '0';
+                    // }
+                    // else if ( c == 'l')
+                    //     rot[rot_size-1].rotate_type = 'l';
+                    // else if ( c == 'r')
+                    //     rot[rot_size-1].rotate_type = 'r';
+                    // else
                 }
             }
 
@@ -219,6 +303,38 @@ namespace RBTree
                 }
                 return root;
             }
+
+
+            void operate(NodePtr & root) const {
+                for(auto & opt : opts) {
+                    if( opt.com == ROTATE_LEFT ) {
+                        auto & node = findNode(root,opt.id[0]);
+                        NodeType::rotateLeft(node);
+                    }
+                    else if( opt.com == ROTATE_RIGHT ) {
+                        auto & node = findNode(root,opt.id[0]);
+                        NodeType::rotateRight(node);
+                    }
+                    else if( opt.com == SWAP_COLOR ) {
+                        auto & node1 = findNode(root,opt.id[0]);
+                        auto & node2 = findNode(root,opt.id[1]);
+                        NodeType::swapColor(node1,node2);
+                    }
+                    else if( opt.com == SET_BLACK ) {
+                        auto & node = findNode(root,opt.id[0]);
+                        NodeType::setBlack(node);
+                    }
+                    else if( opt.com == SET_RED ) {
+                        auto & node = findNode(root,opt.id[0]);
+                        NodeType::setRed(node);
+                    }
+                    else if( opt.com == SHIFT_BLACK ) {
+                        auto & node = findNode(root,opt.id[0]);
+                        NodeType::shiftBlack(node);
+                    }
+                }
+            }
+
 
             void debug()  const {
                 for(int i = 0; i < 7; i++) {
@@ -281,7 +397,7 @@ namespace RBTree
         NodePtr & balance(NodePtr &node)
         {
             // 4 种情况, 为什么使用static: 避免每次调用都重新构造
-            static const RBTree_Descriptor rotate_desc[4] = 
+            static const RBTree_pattern rotate_desc[4] = 
             {
                 "B | R * | R * * * | 0r"sv,
                 "B | * R | * * * R | 0l"sv,
@@ -304,11 +420,58 @@ namespace RBTree
             return node; // 都不匹配,无需调整
         }
 
-        
+
+        void delete(T data) {
+            if( root->isEmpty() ) return;
+            makeBlack( del(data,root) );
+        }
 
         // 核心: 上移双黑
-        void del(T data)
+        NodePtr & del(T data,NodePtr & u)
         {
+            if( u-> isEmpty() ) return u; // 边界
+            if( u->data > data ) {
+                del(data,u->left);
+                fixDB(u);
+            } else if( u->data < data ) {
+                del(data,u->right);
+                fixDB(u);
+            }
+            else { // 相等
+            }
+
+
+            return u;
+        }
+
+        // 提升黑色
+        void shiftBlack(NodePtr & u) {
+
+        }
+
+        // 修复双黑
+        void fixDB(NodePtr & u) {
+            static const RBTree_pattern rotate_desc[7] =
+            {
+            // 情况1: 双黑节点的兄弟节点是黑色: 并且该兄弟节点有一个红色子节点
+                "* | D B | * * * R |l0 | SW01 SB1 SB2"sv, // c1
+                "* | B D | R * * * |0r | SW02 SB1 SB2"sv, // c2
+                "* | D B | R * * * |2r 0l | SW01 SB1 SB2"sv, // c3
+                // "* | D B | R B * * | 1r 0l"sv, // c3
+                "* | B D | * R * * |1l 0r | SB02 SB1 SB2"sv // c4
+                // 因为精心设计的匹配过程, 双黑节点的黑色兄弟的孩子双红 ....
+                // 情况 2:双重黑色节点的兄弟节点为红色
+                // 通过旋转将兄弟节点转换为黑色，然后再次检查双重黑色节点。
+                "B | D R | * * * * | 0l | SW01"sv, //c5 交换父子颜色,需要递归
+                "B | R D | * * * * | 0r | SW02"sv  //c6 交换父子颜色
+
+                // 情况 3:双重黑色的兄弟节点,该兄弟节点的两个子节点都是黑色
+                // 树上差分思想
+                " * | D B | * * B B| SS1 SB1 SR2"sv, // c7 提升root黑色 
+                "* | B D | B B * * | SS1 SR1 SB2"sv // c8
+            };
+            // c5
+
         }
 
     public:
