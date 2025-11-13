@@ -214,14 +214,14 @@ namespace RBTree
                 SHIFT_BLACK
             };
 
-            char str_to_command(char c1,char c2) {
+            Command str_to_command(char c1,char c2) {
                 if( c1 == 'l') return ROTATE_LEFT;
                 else if( c1 == 'r') return ROTATE_RIGHT;
                 else if( c1 == 's' && c2 == 'w') return SWAP_COLOR;
                 else if( c1 == 's' && c2 == 'b') return SET_BLACK;
                 else if( c1 == 's' && c2 == 'r') return SET_RED;
                 else if( c1 == 's' && c2 == 's') return SHIFT_BLACK;
-                return -1;
+                return ROTATE_LEFT;
             }
             
             struct opt {
@@ -236,14 +236,13 @@ namespace RBTree
 
             RBTree_pattern(std::string_view str) {
                 // for(auto c : str) {
+                int desc_size = 0;
                 for(int i = 0 ;i < str.size() ; i++) {
                     auto c = str[i];
-                    // if (isspace(c) || c == '|') continue;
-                    // if (i >= 7) break;
-                    if( c == 'B' ) desc[i++] = BLACK;
-                    else if( c == 'R' ) desc[i++] = RED;
-                    else if( c == 'D' ) desc[i++] = DOUBLE_BLACK;
-                    else if( c == '*' ) desc[i++] = ANY;
+                    if( c == 'B' ) desc[desc_size++] = BLACK;
+                    else if( c == 'R' ) desc[desc_size++]= RED;
+                    else if( c == 'D' ) desc[desc_size++] = DOUBLE_BLACK;
+                    else if( c == '*' ) desc[desc_size++] = ANY;
                     else if( c == 'l' || c == 'r'){ // command
                         char c2 = str[++i];
                         int id = str[++i] - '0';
@@ -289,20 +288,20 @@ namespace RBTree
                 return root; // 都不匹配,无需调整
             }
 
-            NodePtr & rotate(NodePtr & root) const {
-                for(int i = 0; i < rot_size; i++) {
-                    auto & node = findNode(root,rot[i].node_id);
-                    if( rot[i].rotate_type == 'l' )  NodeType::rotateLeft(node);
-                    else if( rot[i].rotate_type == 'r' ) NodeType::rotateRight(node);
+//             NodePtr & rotate(NodePtr & root) const {
+//                 for(int i = 0; i < rot_size; i++) {
+//                     auto & node = findNode(root,rot[i].node_id);
+//                     if( rot[i].rotate_type == 'l' )  NodeType::rotateLeft(node);
+//                     else if( rot[i].rotate_type == 'r' ) NodeType::rotateRight(node);
 
-#ifdef RBTree_DEBUG
-                    cout << "after rotate: " << rot[i].node_id << " " << rot[i].rotate_type << endl;
-                    root->debug();
-                    cout << "-----------------------------------" << endl;
-#endif
-                }
-                return root;
-            }
+// #ifdef RBTree_DEBUG
+//                     cout << "after rotate: " << rot[i].node_id << " " << rot[i].rotate_type << endl;
+//                     root->debug();
+//                     cout << "-----------------------------------" << endl;
+// #endif
+//                 }
+//                 return root;
+//             }
 
 
             void operate(NodePtr & root) const {
@@ -399,10 +398,10 @@ namespace RBTree
             // 4 种情况, 为什么使用static: 避免每次调用都重新构造
             static const RBTree_pattern rotate_desc[4] = 
             {
-                "B | R * | R * * * | 0r"sv,
-                "B | * R | * * * R | 0l"sv,
-                "B | R * | * R * * | 1l 0r"sv,
-                "B | * R | * * R * | 2r 0l"sv
+                "B | R * | R * * * | ro0"sv,
+                "B | * R | * * * R | lo0"sv,
+                "B | R * | * R * * | lo1 ro0"sv,
+                "B | * R | * * R * | ro2 lo0"sv
             };
             for(int i = 0; i < 4; i++) {
                 if( rotate_desc[i].match(node) ) {
@@ -410,7 +409,8 @@ namespace RBTree
                     cout << " match: " << i << " node: " << node->data <<  " -> ";
                     rotate_desc[i].debug();
 #endif
-                    rotate_desc[i].rotate(node);
+                    // rotate_desc[i].rotate(node);
+                    rotate_desc[i].operate(node);
                     makeBlack(node->left); // 提升红色
                     makeBlack(node->right);
                     makeRed(node);
@@ -421,9 +421,9 @@ namespace RBTree
         }
 
 
-        void delete(T data) {
-            if( root->isEmpty() ) return;
-            makeBlack( del(data,root) );
+        void Mydelete(T data) {
+            // if( root->isEmpty() ) return;
+            // makeBlack( del(data,root) );
         }
 
         // 核心: 上移双黑
