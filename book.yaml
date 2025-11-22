@@ -62,6 +62,8 @@ chapters:
         path: RBTree
       - title: AVL
         path: AVL
+      - title: FHQ-Treap
+        path: fhq-treap
   - title: 第五章 图论
     path: graph
     nolink: true
