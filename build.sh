@@ -23,7 +23,7 @@ find book/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -in
 done
 
 
-# 编译代码模板过滤器
-cd third_part/code_template_filter
-./build.sh
-cd ../..
+# # 编译代码模板过滤器
+npx vite build --base code_template \
+  --outDir ../../dist/code_template  \
+  --emptyOutDir ./third_part/code_template_filter

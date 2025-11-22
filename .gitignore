@@ -110,3 +110,5 @@ temp/
 
 ## clang debug symbols
 **/*.out.dSYM
+
+third_part/code_template_filter/public

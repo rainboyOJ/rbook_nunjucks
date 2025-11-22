@@ -5,8 +5,8 @@ import fse from "fs-extra";
 import archiver from "archiver";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import rbook from "../../src/rbook/index.js";
-import { __workdir ,__bookdir} from "../../src/rbook/index.js";
+import rbook from "./fake_rbook.js";
+import { __workdir ,__bookdir} from "./fake_rbook.js";
 import * as matter from 'gray-matter';
 
 class Markdown {

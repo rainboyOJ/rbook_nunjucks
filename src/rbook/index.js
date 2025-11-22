@@ -8,11 +8,12 @@ import { nunjucksRender } from './renderEngine.js';
 import markdown from './markdown.js';
 
 // 获取当前文件的目录路径
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const __workdir = path.join(__dirname, '../../');
-const __bookdir = path.join(__workdir, 'book');
-const __themedir = path.join(__workdir, 'theme');
+export const __filename = fileURLToPath(import.meta.url);
+export const __dirname = dirname(__filename);
+export const __workdir = path.join(__dirname, '../../');
+export const __bookdir = path.join(__workdir, 'book');
+export const __code_template_dir = path.join(__workdir, 'code');
+export const __themedir = path.join(__workdir, 'theme');
 
 class rbook {
     constructor() {
