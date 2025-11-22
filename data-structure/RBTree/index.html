@@ -335,6 +335,17 @@
 
       </li>
     
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/fhq-treap">FHQ-Treap</a>
+        
+
+        
+
+      </li>
+    
   </ul>
   
 
@@ -743,7 +754,7 @@ function hideMenuModal() {
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89">红黑树的数据结构定义</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">旋转操作</a><ol><li><a href="#%E5%B7%A6%E6%97%8B-(left-rotation)">左旋 (Left Rotation)</a></li><li><a href="#%E5%8F%B3%E6%97%8B-(right-rotation)">右旋 (Right Rotation)</a></li><li><a href="#%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA">数学表示</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E7%9A%84%E6%80%A7%E8%B4%A8">旋转的性质</a></li><li><a href="#%E6%B5%8B%E8%AF%95%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">测试旋转操作</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E5%9C%A8%E7%BA%A2%E9%BB%91%E6%A0%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8">旋转在红黑树中的应用</a></li></ol></li><li><a href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E6%97%8B%E8%BD%AC%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B">完整的旋转实现示例</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C%E7%9A%84%E6%95%B0%E5%AD%A6%E6%80%A7%E8%B4%A8">旋转操作的数学性质</a><ol><li><a href="#1.-%E4%BF%9D%E6%8C%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E6%80%A7%E8%B4%A8">1. 保持二叉搜索树性质</a></li><li><a href="#2.-%E5%8F%AF%E9%80%86%E6%80%A7">2. 可逆性</a></li><li><a href="#3.-%E9%AB%98%E5%BA%A6%E5%8F%98%E5%8C%96">3. 高度变化</a></li></ol></li><li><a href="#%E6%97%8B%E8%BD%AC%E5%9C%A8%E5%B9%B3%E8%A1%A1%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8">旋转在平衡操作中的作用</a></li><li><a href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89">红黑树的定义</a></li><li><a href="#%E6%80%A7%E8%B4%A85%E4%BF%9D%E6%8C%81%E5%B9%B3%E8%A1%A1%E7%9A%84%E5%8E%9F%E5%9B%A0%E3%80%82">性质5保持平衡的原因。</a></li><li><a href="#%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C">插入操作</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%A0%87%E5%87%86bst%E6%8F%92%E5%85%A5">第一步：执行标准BST插入</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E4%BF%AE%E5%A4%8D%E7%BA%A2%E9%BB%91%E6%A0%91%E6%80%A7%E8%B4%A8">第二步：修复红黑树性质</a><ol><li><a href="#a.-%E7%88%B6%E8%8A%82%E7%82%B9-p-%E6%98%AF%E7%A5%96%E7%88%B6%E8%8A%82%E7%82%B9-g-%E7%9A%84%E5%B7%A6%E5%AD%A9%E5%AD%90">A. 父节点 p 是祖父节点 g 的左孩子</a></li><li><a href="#b.-%E7%88%B6%E8%8A%82%E7%82%B9-p-%E6%98%AF%E7%A5%96%E7%88%B6%E8%8A%82%E7%82%B9-g-%E7%9A%84%E5%8F%B3%E5%AD%A9%E5%AD%90">B. 父节点 p 是祖父节点 g 的右孩子</a></li></ol></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%A1%AE%E4%BF%9D%E6%A0%B9%E8%8A%82%E7%82%B9%E4%B8%BA%E9%BB%91%E8%89%B2">第三步：确保根节点为黑色</a></li><li><a href="#%E6%8F%92%E5%85%A5%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93">插入流程总结</a></li></ol></li><li><a href="#%E5%88%A0%E9%99%A4">删除</a></li></ol></nav><h2 id="%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89" tabindex="-1">红黑树的数据结构定义</h2>
+    <nav class="table-of-contents"><ol><li><a href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89">红黑树的数据结构定义</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">旋转操作</a><ol><li><a href="#%E5%B7%A6%E6%97%8B-(left-rotation)">左旋 (Left Rotation)</a></li><li><a href="#%E5%8F%B3%E6%97%8B-(right-rotation)">右旋 (Right Rotation)</a></li><li><a href="#%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA">数学表示</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E7%9A%84%E6%80%A7%E8%B4%A8">旋转的性质</a></li><li><a href="#%E6%B5%8B%E8%AF%95%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">测试旋转操作</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E5%9C%A8%E7%BA%A2%E9%BB%91%E6%A0%91%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8">旋转在红黑树中的应用</a></li></ol></li><li><a href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E6%97%8B%E8%BD%AC%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B">完整的旋转实现示例</a></li><li><a href="#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C%E7%9A%84%E6%95%B0%E5%AD%A6%E6%80%A7%E8%B4%A8">旋转操作的数学性质</a><ol><li><a href="#1.-%E4%BF%9D%E6%8C%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E6%80%A7%E8%B4%A8">1. 保持二叉搜索树性质</a></li><li><a href="#2.-%E5%8F%AF%E9%80%86%E6%80%A7">2. 可逆性</a></li><li><a href="#3.-%E9%AB%98%E5%BA%A6%E5%8F%98%E5%8C%96">3. 高度变化</a></li></ol></li><li><a href="#%E6%97%8B%E8%BD%AC%E5%9C%A8%E5%B9%B3%E8%A1%A1%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8">旋转在平衡操作中的作用</a></li><li><a href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E5%AE%9A%E4%B9%89">红黑树的定义</a></li><li><a href="#%E6%80%A7%E8%B4%A85%E4%BF%9D%E6%8C%81%E5%B9%B3%E8%A1%A1%E7%9A%84%E5%8E%9F%E5%9B%A0%E3%80%82">性质5保持平衡的原因。</a></li><li><a href="#%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C">插入操作</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%A0%87%E5%87%86bst%E6%8F%92%E5%85%A5">第一步：执行标准BST插入</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E4%BF%AE%E5%A4%8D%E7%BA%A2%E9%BB%91%E6%A0%91%E6%80%A7%E8%B4%A8">第二步：修复红黑树性质</a><ol><li><a href="#a.-%E7%88%B6%E8%8A%82%E7%82%B9-p-%E6%98%AF%E7%A5%96%E7%88%B6%E8%8A%82%E7%82%B9-g-%E7%9A%84%E5%B7%A6%E5%AD%A9%E5%AD%90">A. 父节点 p 是祖父节点 g 的左孩子</a></li><li><a href="#b.-%E7%88%B6%E8%8A%82%E7%82%B9-p-%E6%98%AF%E7%A5%96%E7%88%B6%E8%8A%82%E7%82%B9-g-%E7%9A%84%E5%8F%B3%E5%AD%A9%E5%AD%90">B. 父节点 p 是祖父节点 g 的右孩子</a></li></ol></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%A1%AE%E4%BF%9D%E6%A0%B9%E8%8A%82%E7%82%B9%E4%B8%BA%E9%BB%91%E8%89%B2">第三步：确保根节点为黑色</a></li><li><a href="#%E6%8F%92%E5%85%A5%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93">插入流程总结</a></li></ol></li><li><a href="#%E5%88%A0%E9%99%A4">删除</a><ol><li><a href="#%E6%83%85%E5%86%B51%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E7%BA%A2%E8%89%B2">情况1：兄弟 s 是红色</a></li><li><a href="#%E6%83%85%E5%86%B52%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E9%BB%91%E8%89%B2%EF%BC%8C%E4%B8%94%E5%85%84%E5%BC%9F%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AD%A9%E5%AD%90%E9%83%BD%E6%98%AF%E9%BB%91%E8%89%B2">情况2：兄弟 s 是黑色，且兄弟的两个孩子都是黑色</a></li><li><a href="#%E6%83%85%E5%86%B53%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E9%BB%91%E8%89%B2%EF%BC%8C%E5%85%84%E5%BC%9F%E7%9A%84%E5%B7%A6%E5%AD%A9%E5%AD%90%E6%98%AF%E7%BA%A2%E8%89%B2%EF%BC%8C%E5%8F%B3%E5%AD%A9%E5%AD%90%E6%98%AF%E9%BB%91%E8%89%B2(%E8%BF%91%E7%82%B9)">情况3：兄弟 s 是黑色，兄弟的左孩子是红色，右孩子是黑色(近点)</a></li><li><a href="#%E6%83%85%E5%86%B54%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E9%BB%91%E8%89%B2%EF%BC%8C%E5%85%84%E5%BC%9F%E7%9A%84%E5%8F%B3%E5%AD%A9%E5%AD%90%E6%98%AF%E7%BA%A2%E8%89%B2(%E8%BF%9C%E7%82%B9)(%E8%BE%B9%E7%95%8C)">情况4：兄弟 s 是黑色，兄弟的右孩子是红色(远点)(边界)</a></li></ol></li></ol></nav><h2 id="%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89" tabindex="-1">红黑树的数据结构定义</h2>
 <p>首先，我们需要定义红黑树的数据结构，包括颜色和节点的定义：</p>
 <div class="language-haskell line-numbers-mode">
     <div class="code-info-header">
@@ -1227,7 +1238,7 @@ function hideMenuModal() {
 · s_left (sl): 兄弟节点 s 的左孩子
 · s_right (sr): 兄弟节点 s 的右孩子</p>
 <p>总共有 4 种主要情况：</p>
-<p>情况1：兄弟 s 是红色</p>
+<h3 id="%E6%83%85%E5%86%B51%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E7%BA%A2%E8%89%B2" tabindex="-1">情况1：兄弟 s 是红色</h3>
 <p>情况：s 是红色的。 推论：根据红黑树性质，p和 s 的子节点 (sl, sr) 必须是黑色的。</p>
 <p>目标：将这种情况转换为兄弟节点是黑色的情况（情况2、3或4），因为我们对黑色兄弟节点的操作更直接。</p>
 <p>操作：</p>
@@ -1247,7 +1258,7 @@ function hideMenuModal() {
 </code></pre>
 <p>After Case 1 (Now S is black, proceed to other cases)</p>
 <hr>
-<p>情况2：兄弟 s 是黑色，且兄弟的两个孩子都是黑色</p>
+<h3 id="%E6%83%85%E5%86%B52%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E9%BB%91%E8%89%B2%EF%BC%8C%E4%B8%94%E5%85%84%E5%BC%9F%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AD%A9%E5%AD%90%E9%83%BD%E6%98%AF%E9%BB%91%E8%89%B2" tabindex="-1">情况2：兄弟 s 是黑色，且兄弟的两个孩子都是黑色</h3>
 <p>情况：s 是黑色的，并且 s 的两个孩子 (sl, sr) 都是黑色的。</p>
 <p>目标：将“双黑”问题上推到父节点 p。我们通过将兄弟节点 s 变红来抵消 u 的“双黑”。</p>
 <p>操作：</p>
@@ -1268,7 +1279,7 @@ function hideMenuModal() {
 // 如果P原为黑，则P成为新的双黑节点，继续向上修复。
 </code></pre>
 <hr>
-<p>情况3：兄弟 s 是黑色，兄弟的左孩子是红色，右孩子是黑色</p>
+<h3 id="%E6%83%85%E5%86%B53%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E9%BB%91%E8%89%B2%EF%BC%8C%E5%85%84%E5%BC%9F%E7%9A%84%E5%B7%A6%E5%AD%A9%E5%AD%90%E6%98%AF%E7%BA%A2%E8%89%B2%EF%BC%8C%E5%8F%B3%E5%AD%A9%E5%AD%90%E6%98%AF%E9%BB%91%E8%89%B2(%E8%BF%91%E7%82%B9)" tabindex="-1">情况3：兄弟 s 是黑色，兄弟的左孩子是红色，右孩子是黑色(近点)</h3>
 <p>情况：s 是黑色的，s 的左孩子 (sl) 是红色，右孩子 (sr) 是黑色。（如果 u 是右孩子，则条件相反：兄弟的右孩子是红色，左孩子是黑色）</p>
 <p>目标：将这种情况转换为情况4（兄弟的右孩子是红色）。</p>
 <p>操作：</p>
@@ -1290,7 +1301,7 @@ function hideMenuModal() {
 </code></pre>
 <p>After Case 3 (Now ready for Case 4)</p>
 <hr>
-<p>情况4：兄弟 s 是黑色，兄弟的右孩子是红色</p>
+<h3 id="%E6%83%85%E5%86%B54%EF%BC%9A%E5%85%84%E5%BC%9F-s-%E6%98%AF%E9%BB%91%E8%89%B2%EF%BC%8C%E5%85%84%E5%BC%9F%E7%9A%84%E5%8F%B3%E5%AD%A9%E5%AD%90%E6%98%AF%E7%BA%A2%E8%89%B2(%E8%BF%9C%E7%82%B9)(%E8%BE%B9%E7%95%8C)" tabindex="-1">情况4：兄弟 s 是黑色，兄弟的右孩子是红色(远点)(边界)</h3>
 <p>情况：s 是黑色的，s 的右孩子 (sr) 是红色。（如果 u 是右孩子，则条件是兄弟的左孩子是红色）</p>
 <p>目标：这是终极情况，通过一次旋转和重新着色可以彻底解决问题。</p>
 <p>操作：</p>
@@ -1337,7 +1348,7 @@ function hideMenuModal() {
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/11/9 11:04:43</p>
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/11/22 15:31:01</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>
