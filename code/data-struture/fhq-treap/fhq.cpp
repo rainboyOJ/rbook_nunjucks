@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <random>
 #include <limits>
 
@@ -276,5 +277,24 @@ struct FHQ
      */
     T upper_bound(T v) {
         return succ(v);
+    }
+
+    // 打印这个tree, 用于调试
+    void print() {
+        printf("==== FHQ Tree Print Start (root: %d) ====\n", root);
+        print_recursive(root, 0);
+        printf("==== FHQ Tree Print End ====\n");
+    }
+    void print_recursive(int u, int depth) {
+        if (!u) {
+            return;
+        }
+        print_recursive(tr[u].r, depth + 1);
+        for (int i = 0; i < depth; ++i) {
+            printf("    ");
+        }
+        printf("id=%d, val=%lld, size=%d, fix=%u (l:%d, r:%d)\n",
+               u, (long long)tr[u].val, tr[u].size, tr[u].fix, tr[u].l, tr[u].r);
+        print_recursive(tr[u].l, depth + 1);
     }
 }; // ==== fhq end === 
