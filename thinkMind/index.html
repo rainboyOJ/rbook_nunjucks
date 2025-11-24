@@ -823,288 +823,108 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>如何调试</h1>
+        <h1></h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <p>vscode 调试c++</p>
-<p>前提条件</p>
-<ol>
-<li>
-<p>已经安装 vscode 官方 c++ 插件.</p>
-</li>
-<li>
-<p>linux系统</p>
-</li>
-<li>
-<p>linux已经 安装 g++</p>
-</li>
-<li>
-<p>新建立一个code2文件夹,</p>
-</li>
-</ol>
-<div class="language-bash line-numbers-mode">
-    <div class="code-info-header">
-        <span>bash</span>
-        <div class="zeroclipboard-container">
-            <div class="clipboard-copy">
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
-                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
-                </svg>
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
-                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-                </svg>
-                copy
-            </div>
-        </div>
-    </div>
-    <pre class="language-bash">
-        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div>
-        <code><span class="token builtin class-name">cd</span> ~
-<span class="token function">mkdir</span> code2
-</code>
-    </pre>
-</div>
-<p>并用vscode打开这个文件夹</p>
-<ol start="2">
-<li>创建一个文件<code>1.cpp</code>,写如如下代码</li>
-</ol>
-<div class="language-clike line-numbers-mode">
-    <div class="code-info-header">
-        <span>cpp</span>
-        <div class="zeroclipboard-container">
-            <div class="clipboard-copy">
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
-                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
-                </svg>
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
-                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-                </svg>
-                copy
-            </div>
-        </div>
-    </div>
-    <pre class="language-clike">
-        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div>
-        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
-using namespace std<span class="token punctuation">;</span>
-
-int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    int a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    int b <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    int c <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> c <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code>
-    </pre>
-</div>
-<ol start="3">
-<li>点击run and debug 按钮</li>
-</ol>
-<figure><img src="./images/vscode-debug1.png" alt=""></figure>
-<figure><img src="./images/vscode-debug2.png" alt=""></figure>
-<p>出现一个.vscode/tasks.json 文件</p>
-<pre><code class="language-json">{
-    &quot;tasks&quot;: [
-        {
-            &quot;type&quot;: &quot;cppbuild&quot;,
-            &quot;label&quot;: &quot;C/C++: g++ build active file&quot;,//注意这里
-            &quot;command&quot;: &quot;/usr/bin/g++&quot;,
-            &quot;args&quot;: [
-                &quot;-fdiagnostics-color=always&quot;,
-                &quot;-g&quot;,
-                &quot;${file}&quot;,
-                &quot;-o&quot;,
-                &quot;${fileDirname}/${fileBasenameNoExtension}&quot;
-            ],
-            &quot;options&quot;: {
-                &quot;cwd&quot;: &quot;${fileDirname}&quot;
-            },
-            &quot;problemMatcher&quot;: [
-                &quot;$gcc&quot;
-            ],
-            &quot;group&quot;: {
-                &quot;kind&quot;: &quot;build&quot;,
-                &quot;isDefault&quot;: true
-            },
-            &quot;detail&quot;: &quot;Task generated by Debugger.&quot;
-        }
-    ],
-    &quot;version&quot;: &quot;2.0.0&quot;
-}
-</code></pre>
-<ol start="5">
-<li>下断点</li>
-</ol>
-<h2 id="%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96in%E6%96%87%E4%BB%B6" tabindex="-1">如何读取in文件</h2>
-<p>修改<code>1.cpp</code>如下</p>
-<div class="language-clike line-numbers-mode">
-    <div class="code-info-header">
-        <span>cpp</span>
-        <div class="zeroclipboard-container">
-            <div class="clipboard-copy">
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
-                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
-                </svg>
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
-                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-                </svg>
-                copy
-            </div>
-        </div>
-    </div>
-    <pre class="language-clike">
-        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div>
-        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
-using namespace std<span class="token punctuation">;</span>
-
-int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    int a<span class="token punctuation">,</span>b<span class="token punctuation">;</span>
-    cin <span class="token operator">></span><span class="token operator">></span>a <span class="token operator">></span><span class="token operator">></span>b<span class="token punctuation">;</span>
-    int c <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> c <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code>
-    </pre>
-</div>
-<p><code>1.cpp</code>同目录下面创建一个<code>in.txt</code>,如下</p>
-<pre><code>12 14
-</code></pre>
-<p>要把 <code>in.txt</code> 作为标准输入喂给调试/运行的程序，有两种常见做法：</p>
-<ol>
-<li>
-<p><strong>终端里手动重定向</strong>（最简单）：</p>
-<div class="language-bash line-numbers-mode">
-    <div class="code-info-header">
-        <span>bash</span>
-        <div class="zeroclipboard-container">
-            <div class="clipboard-copy">
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
-                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
-                </svg>
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
-                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-                </svg>
-                copy
-            </div>
-        </div>
-    </div>
-    <pre class="language-bash">
-        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div>
-        <code>./1 <span class="token operator">&lt;</span> in.txt
-</code>
-    </pre>
-</div>
-<p>但无法在 VS Code 的 F5 调试里直接用。</p>
-</li>
-<li>
-<p><strong>让 debugger/启动器帮你重定向</strong>：<br>
-在 <strong>launch.json</strong> 里加一行 <code>&quot;args&quot;:[]</code>，但把输入玩转需要用到 <code>&quot;redirectOutput&quot; + &quot;console&quot;</code>，或者直接 <strong>外部终端</strong>。更简单的是直接配置<strong>运行时参数实现重定向</strong>。</p>
-</li>
-</ol>
-<p>快速方案：把下面内容贴到你的 <code>.vscode/launch.json</code> 里（没有就新建）。核心是 <code>&quot;externalConsole&quot;: true</code> + <code>&quot;args&quot;: [ &quot;&lt;&quot;, &quot;in.txt&quot; ]</code>，先调用 shell 实现重定向：</p>
-<pre><code class="language-json">{
-    &quot;version&quot;: &quot;0.2.0&quot;,
-    &quot;configurations&quot;: [
-        {
-            &quot;name&quot;: &quot;g++ build &amp; debug cpp&quot;,
-            &quot;type&quot;: &quot;cppdbg&quot;,
-            &quot;request&quot;: &quot;launch&quot;,
-            &quot;program&quot;: &quot;${fileDirname}/${fileBasenameNoExtension}&quot;,
-            &quot;args&quot;: [&quot;&lt;&quot;, &quot;${workspaceFolder}/in.txt&quot;],
-            &quot;stopAtEntry&quot;: true, // 自动breakpoint在main的第一行
-            &quot;cwd&quot;: &quot;${fileDirname}&quot;,
-            &quot;environment&quot;: [],
-            &quot;externalConsole&quot;: false,        // 弹一个外部终端，shell 会解析 &lt;
-            &quot;MIMode&quot;: &quot;gdb&quot;,
-            &quot;setupCommands&quot;: [],
-            &quot;preLaunchTask&quot;: &quot;C/C++: g++ build active file&quot;   // 与你的 task.json label 保持一致
-        }
-    ]
-}
-</code></pre>
+    <p>这里记录一下有些神奇的思想</p>
+<h2 id="%E6%95%B4%E4%BD%93%E6%95%B0%E5%80%BC%E5%81%8F%E7%A7%BB%E5%8F%8A%E5%90%8E%E7%BB%AD" tabindex="-1">整体数值偏移及后续</h2>
+<p>题目是 <a href="https://www.luogu.com.cn/problem/P1486">P1486 NOI2004 郁闷的出纳员 - 洛谷</a></p>
+<p>重要的思想: 偏移,以及后序偏移的影响(也就是反偏移,去除偏移的影响,使之加上偏移之后就是原来的值0)</p>
 <blockquote>
-<p><strong>Warning</strong></p>
-<ol>
-<li>在同1.cpp 同目录下面创建一个in.txt 文件</li>
-<li>“preLaunchTask”: “C/C++: g++ build active file”<br>
-preLaunchTask 里面的内容 与你的 task.json label 保持一致</li>
-</ol>
+<p>例如我们进行三个操作，插入工资为20的人，加工资50，插入工资为60的人。具体执行的时候，我们现在数据结构中插入一个20，然后将偏移量+50，然后再插入一个60-偏移量，既插入10。</p>
 </blockquote>
-<p>用法：</p>
+<h2 id="%E5%B8%B8%E7%94%A8" tabindex="-1">常用</h2>
+<ul>
+<li>枚举
+<ul>
+<li>优化枚举范围:
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>→</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A \to B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></eq>,可以枚举B对应的集合</li>
+</ul>
+</li>
+<li>折半枚举 (Meet-in-the-middle): 将指数级枚举变为两次根号级别的枚举</li>
+</ul>
+</li>
+<li>集合
+<ul>
+<li>集合的最值等于子集的最值的最值:<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mi>B</mi><mo>∪</mo><mi>C</mi><mo>⇒</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">A = B \cup C \Rightarrow \max( A)  = \max(\max (B),\max(C))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mclose">))</span></span></span></span></eq></li>
+<li>求数组最值 : <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>min</mi><mo>⁡</mo><mi>B</mi><mo>=</mo><mi>min</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>min</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>B</mi><mo>∖</mo><mi>c</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">{</mo><mi>c</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\min B =\min( \min (B \setminus c) ,\{c\} )</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mop">min</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">(</span><span class="mop">min</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∖</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">c</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">{</span><span class="mord mathnormal">c</span><span class="mclose">})</span></span></span></span></eq></li>
+<li>集合的基等于不重不漏的子集的基的和</li>
+</ul>
+</li>
+<li>前缀和与差分
+<ul>
+<li>把区间操作转成两个点的操作,O(1)操作,O(n)查询单点的值</li>
+<li>平数: 最少多少次区间<code>+1</code>或<code>-1</code>操作后,所有的数字一样大</li>
+</ul>
+</li>
+<li>贪心
+<ul>
+<li>交换验证法:
+<ul>
+<li>最优方案转换成目标方法:区间选点,最小生成树</li>
+<li>通过邻项交换证明贪心策略的正确性，常用于排序相关问题。</li>
+</ul>
+</li>
+<li>反悔贪心: 先做出一个看似最优的决策，之后如果发现有更优的决策，可以撤销之前的选择。常使用优先队列实现。</li>
+<li>排序后贪心: 对元素按某种规则排序后，按顺序处理。</li>
+</ul>
+</li>
+<li>二分: 数据具有二分性
+<ul>
+<li>答案二分: 解决&quot;最大化最小值&quot;或&quot;最小化最大值&quot;问题。</li>
+<li>数据二分: 在单调序列上查找。</li>
+</ul>
+</li>
+<li>双指针/滑动窗口
+<ul>
+<li>在序列上维护一个区间，通过移动左右端点来解决问题。</li>
+<li>
 <ol>
-<li>把 <code>in.txt</code> 放在项目根目录里。</li>
-<li>打开 <code>1.cpp</code>，按 F5 调试。程序会自动编译，然后在弹出的小终端里从 <code>in.txt</code> 读入。</li>
+<li>有序 2. 及时排除不可的点,</li>
 </ol>
-<p>如果你 <strong>不想弹外部黑框</strong>，也可以把 <code>externalConsole</code> 设为 <code>false</code>，然后把 <code>&quot;args&quot;</code> 改为空数组，再在 <code>Program arguments</code> 输入框里 <strong>手动输入</strong> <code>&lt; in.txt</code>（新版 VS Code UI 会在启动调试序列时把整条命令传给集成终端，所以也能正确重定向，但旧版不一定）。</p>
-<h2 id="launch.json-%E4%B8%8E-tasks.json-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%3F" tabindex="-1">launch.json 与 tasks.json 有什么区别?</h2>
-<p>一句话总结<br>
-• tasks.json：告诉 VS Code “<strong>怎么编译/构建/预处理</strong>” 你的代码。<br>
-• launch.json：告诉 VS Code “<strong>怎么运行/调试</strong>” 已经生成的二进制。</p>
-<p>两者各司其职，也可以配合使用。</p>
-<table>
-<thead>
-<tr>
-<th>对比维度</th>
-<th>tasks.json</th>
-<th>launch.json</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>目的</td>
-<td>提供“任务”：编译、清理、打包、单元测试等</td>
-<td>提供“调试配置”：启动程序并附加调试器</td>
-</tr>
-<tr>
-<td>触发方式</td>
-<td>手动（Ctrl + Shift + P → Run Task）或 VS Code 在后台调用</td>
-<td>调试启动（F5 或点击 Run &amp; Debug）</td>
-</tr>
-<tr>
-<td>典型指令</td>
-<td><code>g++ -g main.cpp -o main</code></td>
-<td><code>gdb ./main</code></td>
-</tr>
-<tr>
-<td>关键字段</td>
-<td><code>label</code> <code>command</code> <code>args</code> <code>group</code></td>
-<td><code>program</code> <code>args</code> <code>cwd</code> <code>MIMode</code> <code>preLaunchTask</code></td>
-</tr>
-<tr>
-<td>是否必须</td>
-<td>不必须（没有它仍可 CLI 编译）</td>
-<td>若想用 VS Code 调试就必须有</td>
-</tr>
-<tr>
-<td>能否串联</td>
-<td>可以！<code>launch.json</code> 里可以指定 <code>preLaunchTask</code> 字段，让调试前先跑某个任务（如编译）</td>
-<td>不能反向调用</td>
-</tr>
-</tbody>
-</table>
-<p>示例</p>
-<pre><code class="language-json">// tasks.json
-{
-    &quot;label&quot;: &quot;build&quot;,
-    &quot;command&quot;: &quot;g++&quot;,
-    &quot;args&quot;: [&quot;-g&quot;, &quot;main.cpp&quot;, &quot;-o&quot;, &quot;main&quot;]
-}
-</code></pre>
-<pre><code class="language-json">// launch.json
-{
-    &quot;program&quot;: &quot;${workspaceFolder}/main&quot;,
-    &quot;preLaunchTask&quot;: &quot;build&quot;,
-    &quot;miDebuggerPath&quot;: &quot;gdb&quot;
-}
-</code></pre>
-<p>流程<br>
-按下 F5 → VS Code 先用 tasks.json 里名为 <code>build</code> 的任务编译 → 生成 <code>./main</code> → 再按 launch.json 的规则启动 gdb 调试。</p>
+</li>
+</ul>
+</li>
+<li>动态规划
+<ul>
+<li>将问题分解为重叠的子问题，通过记录子问题的解来避免重复计算。</li>
+<li>常见类型: 线性DP, 背包DP, 区间DP, 树形DP, 状压DP, 数位DP。</li>
+</ul>
+</li>
+<li>数学
+<ul>
+<li>异或运算的值与1的奇偶数量右观</li>
+</ul>
+</li>
+<li>分治
+<ul>
+<li>将大问题分解为小问题，递归求解，再合并结果。</li>
+<li>常见应用: CDQ分治, 整体二分。</li>
+</ul>
+</li>
+<li>倍增
+<ul>
+<li>静态区间信息统计</li>
+<li>结合率,合并性: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mi>u</mi><mi>m</mi><mi>p</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mi>j</mi><mi>u</mi><mi>m</mi><mi>p</mi><mo stretchy="false">(</mo><mi>j</mi><mi>u</mi><mi>m</mi><mi>p</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>x</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">jump(i,x+y) = jump(jump(i,x),y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mord mathnormal">p</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></eq></li>
+<li>本质统计的是两点边上的信息</li>
+<li>常见应用: ST表 (RMQ问题), 树上LCA (最近公共祖先)。</li>
+</ul>
+</li>
+<li>构造
+<ul>
+<li>根据题目要求，直接构造出一种合法的解。</li>
+</ul>
+</li>
+<li>思维转换/建模
+<ul>
+<li>正难则反: 直接求解困难时，考虑求解其对立面（补集）。</li>
+<li>图论建模: 将问题抽象成图论模型来解决。</li>
+</ul>
+</li>
+</ul>
 
 </div> 
     </div>
