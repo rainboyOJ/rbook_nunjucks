@@ -4,10 +4,17 @@ import { useToast } from "vue-toastification";
   // import HelloWorld from './components/HelloWorld.vue'
 // import tableCell from './components/tableCell.vue'
 import Fuse from 'fuse.js'
+import codeShow from './components/codeShow.vue'
 
 const template_array = inject('template_array')
 const search_text = ref("")
 const toast = useToast()
+
+// 模态框相关状态
+const showCodeModal = ref(false)
+const modalTitle = ref('')
+const modalCode = ref('')
+const modalFilename = ref('')
 
 const FuseOptions = {
 	// isCaseSensitive: false,
@@ -52,7 +59,24 @@ const fetch_code = (codeFileUrl) => {
 }
 
 const view_code = (item) => {
-    toast.info('查看功能待实现!');
+    modalTitle.value = item.title;
+    modalFilename.value = item.code.split('/').pop();
+    
+    fetch_code(item.code).then(code => {
+        if (code) {
+            modalCode.value = code;
+            showCodeModal.value = true;
+        }
+    }).catch(error => {
+        toast.error('获取代码失败: ' + error.message);
+    });
+}
+
+const closeCodeModal = () => {
+    showCodeModal.value = false;
+    modalCode.value = '';
+    modalTitle.value = '';
+    modalFilename.value = '';
 }
 
 const download_code = (item) => {
@@ -157,6 +181,15 @@ const search_result = computed(
                 </tbody>
             </table>
         </div>
+        
+        <!-- 代码查看模态框 -->
+        <codeShow 
+            :isVisible="showCodeModal"
+            :title="modalTitle"
+            :code="modalCode"
+            :filename="modalFilename"
+            @close="closeCodeModal"
+        />
     </div>
 </template>
 
