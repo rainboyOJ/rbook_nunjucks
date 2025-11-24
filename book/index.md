@@ -9,12 +9,4 @@ layout: index
 
 > 学习算法不仅能够提高编程技能，更能培养逻辑思维能力。希望本书能够帮助你在编程之路上更进一步。
 
-!!! note This is the admonition title
-This is the admonition body
-!!!
-
-!!! proof This is the proof title
-This is the admonition body
-!!!
-
 ## 目录

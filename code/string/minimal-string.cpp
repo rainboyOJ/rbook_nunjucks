@@ -1,3 +1,6 @@
+// 2025-11-23 代码 我虽然凭直觉写了出来
+// 但是我不能进行数学证明,我无法理解这个代码
+// 我甚至无法证明这个算法是O(n)的
 #include <bits/stdc++.h>
 using namespace std;
 const int maxn  = 2e7+5;
@@ -16,10 +19,11 @@ int get_min(){
             if( a[min_pos+k] != a[i+k]) break;
         }
         // if( k == n) break; // 周期串
-        if( a[min_pos+k] < a[i+k]) {
+        if( a[min_pos+k] < a[i+k]) { // min_pos 更小
             i = i+k+1; // 排除不可能的位置
         }
-        else  {
+        else  { // i 更小
+            // 计算下一个可能的位置
             int next_pos_1 =  min_pos +k+1;
             int next_pos_2 = i+1;
 

@@ -78,9 +78,19 @@ chapters:
         path: kruskal
       - title: floyed算法
         path: floyed
+  - title: 字符串
+    path: string
+    sections:
+      - title: 最小表示法
+        path: 最小表示法/index.md
+  - title: 数学
+    path: math
+    sections:
   - title: 思维方式
     path: thinkMind
     sections:
+      - title: 总结
+        path: index.md
       - title: 约束松弛
         path: 约束松弛.md
       - title: 特例化-归纳
@@ -92,6 +102,8 @@ chapters:
         path: 向上取整.md
       - title: 集合
         path: 集合.md
+      - title: 反证法
+        path: 反证法.md
       - title: 组合数学
         type: info
         icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0"/><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z"/></g></svg>
@@ -108,6 +120,8 @@ chapters:
         path: tricks/quickIO.md
       - title: assert断言的使用
         path: tricks/assert的使用.md
+      - title: 写题步奏
+        path: tricks/写题步奏.md
       - title: macos下使用万能头文件
         path: tricks/macos.md
       - title: 常用命令

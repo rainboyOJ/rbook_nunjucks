@@ -11,3 +11,9 @@ find book/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -in
   # 复制文件
   cp "$file" "dist/$relative_path"
 done
+
+
+# 编译代码模板过滤器
+cd third_part/code_template_filter
+npm run build
+cd ../..

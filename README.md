@@ -178,6 +178,11 @@ npm run build
 - **js-yaml**: YAML 配置解析
 - **原生 Node.js**: 无额外框架依赖
 
+## 其他方面的使用
+
+- [各种脚本,配置](./dotfiles/readme.md)
+
+
 ## 许可证
 
 本项目采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议。

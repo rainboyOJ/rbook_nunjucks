@@ -39,15 +39,14 @@ def run_test(main_program, data_path, result_out_path='test_out'):
         result_out_path (str): 结果输出文件路径
     """
     
+    # 如果没有指定路径分隔符，则添加 ./ 前缀以确保在当前目录中执行
+    if os.path.sep not in main_program:
+        main_program = f"./{main_program}"
+    
     # 检查主程序是否存在
     if not os.path.exists(main_program):
-        # 如果没有指定路径分隔符，尝试添加 ./ 前缀
-        if not os.path.sep in main_program:
-            main_program = f"./{main_program}"
-        
-        if not os.path.exists(main_program):
-            print(f"错误: 找不到程序 '{main_program}'")
-            sys.exit(1)
+        print(f"错误: 找不到程序 '{main_program}'")
+        sys.exit(1)
     
     # 获取数据列表
     try:
@@ -137,52 +136,36 @@ def main():
         description="对目录下的数据进行简单的 diff 评测",
         epilog="""使用示例:
   python test_data.py 1.out data        # 用1.out测试data目录下的数据
-  python test_data.py -p ./sol data     # 用./sol程序测试data目录下的数据
-  python test_data.py --program sol --data-path test_data""",
+  python test_data.py ./sol data     # 用./sol程序测试data目录下的数据""",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     
     # 添加命令行参数
     parser.add_argument(
         'program',
-        help='要测试的程序名称(默认为1.out)',
+        help='要测试的程序路径 (默认为 ./1.out)',
         nargs='?',
         default='1.out'
     )
     
     parser.add_argument(
         'data_path',
-        help='数据目录路径(默认为data)',
+        help='数据目录路径 (默认为 data)',
         nargs='?',
         default='data'
     )
     
     parser.add_argument(
         '-o', '--output',
-        help='结果输出文件路径(默认为test_out)',
+        help='结果输出文件路径 (默认为 test_out)',
         default='test_out'
-    )
-    
-    parser.add_argument(
-        '-p', '--program-path',
-        help='程序完整路径',
-        dest='program'
-    )
-    
-    parser.add_argument(
-        '--data-path',
-        help='数据目录路径'
     )
     
     # 解析命令行参数
     args = parser.parse_args()
     
-    # 处理参数优先级
-    program = args.program_path if args.program_path else args.program
-    data_path = args.data_path if args.data_path else args.data_path
-    
     # 运行测试
-    success = run_test(program, data_path, args.output)
+    success = run_test(args.program, args.data_path, args.output)
     
     # 根据测试结果设置退出码
     sys.exit(0 if success else 1)
