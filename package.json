@@ -8,10 +8,9 @@
     "rbook": "./bin/rbook.js"
   },
   "scripts": {
-    "build": "./build.sh",
+    "build": "bash build.sh",
     "serve": "node bin/rbook.js serve",
-    "dev": "node src/server.js",
-    "postbuild": "bin/postbuild.sh"
+    "dev": "node src/server.js"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
