@@ -1,4 +1,22 @@
+---
+id: "binary_search"
+title: "二分查找"
+date: 2025-11-25 17:02
+toc: true
+tags: ["二分查找"]
+categories: [""]
+code_template:
+  - title: 二分查找
+    desc: "二分查找"
+    tags: ["二分查找"]
+    code: /code/base/binary_search.cpp
+---
+
+[[TOC]]
+
+
 ## 问题
+
 
 @include_md("./problem.md")
 
