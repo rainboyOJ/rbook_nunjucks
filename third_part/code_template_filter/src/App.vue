@@ -160,6 +160,7 @@ const search_result = computed(
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">标题</th>
+                        <th scope="col">描述</th>
                         <th scope="col">标签</th>
                         <th scope="col">功能</th>
                     </tr>
@@ -168,6 +169,7 @@ const search_result = computed(
                     <tr v-for="(d,index) in search_result">
                         <th scope="row">{{index+1}}</th>
                         <td>{{d.title}}</td>
+                        <td style="max-width: 300px;">{{d.desc || "" }}</td>
                         <td>{{ tags_string(d.tags)}}</td>
                         <td>
                           <div class="btn-group">
