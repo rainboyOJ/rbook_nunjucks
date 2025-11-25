@@ -18,5 +18,11 @@
   "files.associations": {
     "*.ejs": "html",
     "iostream": "cpp"
-  }
+  },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "使用中文编写 commit message",
+      "title": "中文commit message"
+    },
+  ]
 }
