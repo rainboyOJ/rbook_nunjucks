@@ -4,13 +4,16 @@ description: 这是一本关于算法的书
 
 github_repository: https://github.com/rainboyOJ/rbook_nunjucks
 
-# 那些不想显示的文件,但是又想被渲染到的文件,可以放在这里
+# 那些不想在目录中显示的文件,但是又想被渲染到的文件,可以放在这里
 glob:
   - math/combinatorics/112_combinatorial_problems/*.md
 
 chapters:
-  - title: 第一章
-    path: chapter1
+  - title: 基础
+    path: base
+    sections:
+      - title: ST稀疏表
+        path: sparse_table/index.md
   - title: 第二章
     path: chapter2
     sections:
@@ -100,6 +103,8 @@ chapters:
     sections:
       - title: 向上取整
         path: 向上取整.md
+      - title: 对数
+        path: log.md
       - title: 集合
         path: 集合.md
       - title: 反证法

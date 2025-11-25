@@ -37,12 +37,27 @@ $$x = \log_{a}b$$
 
 1.  **乘积法则 (Product Rule)**: 两个正数乘积的对数，等于这两个数对数的和。
     $$\log_{a}(MN) = \log_{a}M + \log_{a}N$$
+    **证明**：
+      - 设 $\log_{a}M = x$，$\log_{a}N = y$，
+      - 则 $a^x = M$，$a^y = N$。
+      - 因此 $MN = a^x \cdot a^y = a^{x+y}$，
+      - 所以 $\log_{a}(MN) = x + y = \log_{a}M + \log_{a}N$。
 
 2.  **商法则 (Quotient Rule)**: 两个正数商的对数，等于被除数的对数减去除数的对数。
     $$\log_{a}\left(\frac{M}{N}\right) = \log_{a}M - \log_{a}N$$
+    **证明**：
+      - 设 $\log_{a}M = x$，$\log_{a}N = y$，
+      - 则 $a^x = M$，$a^y = N$。
+      - 因此 $\frac{M}{N} = \frac{a^x}{a^y} = a^{x-y}$，
+      - 所以 $\log_{a}\left(\frac{M}{N}\right) = x - y = \log_{a}M - \log_{a}N$。
 
 3.  **幂法则 (Power Rule)**: 一个正数的幂的对数，等于幂的指数乘以该数的对数。
     $$\log_{a}(M^k) = k \cdot \log_{a}M$$
+    **证明**：
+    - 设 $\log_{a}M = x$，
+    - 则 $a^x = M$。
+    - 因此 $M^k = (a^x)^k = a^{kx}$
+    - 所以 $\log_{a}(M^k) = kx = k \cdot \log_{a}M$。
 
 #### 重要公式
 
