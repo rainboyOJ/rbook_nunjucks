@@ -4,6 +4,11 @@ date: 2025-11-25 15:30
 toc: true
 tags: ["算法", "数据结构", "倍增", "RMQ"]
 categories: ["动态规划"]
+code_template:
+  - title: ST表
+    desc: "静态区间信息查询"
+    tags: ["集合最值"]
+    code: /code/base/sparse_table.cpp
 ---
 
 [[TOC]]
@@ -26,7 +31,16 @@ ST (Sparse Table, 稀疏表) 算法是一种基于倍增思想的数据结构，
 
 ## 一句话算法
 
+符合交换律,幂等律的二元运算,静态区间信息,可以使用ST表.
+
+
 利用倍增思想，预处理出所有从 $i$ 开始、长度为 $2^j$ 的区间的最值，查询时用两个预处理过的区间覆盖整个查询范围。
+
+符合交换律,幂等律的二元运算
+
+- AND,OR(元素是否存在)
+- max,min
+- gcd,lcm
 
 ## 关键思路
 
@@ -198,8 +212,10 @@ void build_st(const vector<int>& arr) {
     }
 
     // 递推构建
-    for (int j = 1; (1 << j) <= n; j++) {
-        for (int i = 0; i + (1 << j) <= n; i++) {
+    // 枚举区间长度 2^j
+    for (int j = 1; (1 << j) <= n; j++) { 
+        // 枚举 区间的开头
+        for (int i = 0; i + (1 << j) <= n; i++) { 
             st[i][j] = max(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
         }
     }
