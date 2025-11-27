@@ -22,8 +22,19 @@ find book/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -in
   cp "$file" "dist/$relative_path"
 done
 
+# 编译题目解析列表
+echo  "=== 编译题目解析列表 ==="
+npx vite build --base problems \
+  --outDir ../../dist/problems  \
+  --emptyOutDir ./third_part/problem_list/
+
+# 编译所有的题目解析
+echo "=== 编译所有的题目解析 ==="
+node ./bin/renderAllproblem.js
+
 
 # # 编译代码模板过滤器
+echo "=== 编译代码模板过滤器 ==="
 npx vite build --base code_template \
   --outDir ../../dist/code_template  \
   --emptyOutDir ./third_part/code_template_filter
