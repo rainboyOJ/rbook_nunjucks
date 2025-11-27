@@ -3,8 +3,12 @@
 # 删除dist目录
 rm -rf dist
 
+# 删除problems.json
+rm -f problems.json
+
 # 运行rbook build命令
 node bin/rbook.js build
+
 
 
 # 编译markdown样式

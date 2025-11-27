@@ -19,11 +19,32 @@ export const __problemdir = path.join(__workdir, 'problems');
 
 class Problems {
 
-    constructor() {
+    constructor(opts = {auto_load : true}) {
         this.name = 'problems';
         this.problem_files = [];
-        this.init();
+        if( opts.auto_load ) // 如果自动加载,则加载所有的题目信息
+          this.init();
         this.config = this.load_config();
+        this.problemJsonPath = path.join(__workdir, 'problems.json');
+    }
+
+    save_problems() {
+      // 保存到文件
+      fs.writeFileSync(this.problemJsonPath, JSON.stringify(this.problems, null, 2));
+    }
+
+    load_problems() {
+      if( !fs.existsSync(this.problemJsonPath) ) {
+        this.init();
+        this.save_problems();
+        return;
+      }
+      // 从文件加载
+      this.problems = JSON.parse(fs.readFileSync(this.problemJsonPath, 'utf8'));
+    }
+
+    find(oj, problem_id) {
+      return this.problems.find(p => p.oj === oj && p.problem_id === problem_id);
     }
 
     load_config(configPath = 'book.yaml') {

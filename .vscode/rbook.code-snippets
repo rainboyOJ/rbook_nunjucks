@@ -12,6 +12,15 @@
     "body": "$$1$",
     "description": "Auto-completes $ to $$"
   },
+	"rbook problem link": {
+    "scope": "markdown",
+    "prefix": "problem-link",
+    "body": [
+      "[[problem: ${1:ojname},${2:problem_id}]]"
+    ],
+    "description": "rbook problem题目链接"
+  },
+  },
 	"rbook problem  Matter": {
 		"scope": "markdown",
 		"prefix": "problem-front",

@@ -43,6 +43,8 @@ import tocDoneRight from 'markdown-it-toc-done-right';
 import tocAnchorExtent from './lib/tocAnchorExtent.js';
 import codetabs from 'markdown-it-codetabs';
 
+import problemLinkPlugin from './lib/problemLink.js';
+
 import MDItPseudo from './lib/markdown-it-pseudocodejs/index.js';
 
 // .excalidraw.svg
@@ -177,6 +179,9 @@ md.use(sub);
 
 // Marked/highlighted text
 md.use(mark);
+
+// Problem link support [[problem: ojname,id]]
+md.use(problemLinkPlugin);
 
 // Abbreviation support
 md.use(abbr);
