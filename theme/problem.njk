@@ -1,0 +1,14 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<article class="page">
+    <header class="page-header">
+        <h1>{{ front_matter.title }}</h1>
+    </header>
+    
+    <div class="container">
+        {% include "partials/markdown-body.njk" %} 
+    </div>
+
+</article>
+{% endblock %}
