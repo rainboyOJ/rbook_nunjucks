@@ -66,10 +66,54 @@ clang++ -g -O0 -std=c++17 your_code.cpp -o your_program
 | `print i` | `p i` | 打印变量 `i` 的值 |
 | `expression i = 10` | `expr i = 10` | 修改变量的值 |
 | `frame variable --type` | `fr v -T` | 显示当前帧所有变量及其类型 |
-| `watchpoint set variable i` | `wa s v i` | 监视变量 `i` 的变化 |
 | `parray 10 arr` | | 打印数组 `arr` 的前10个元素 |
 
-### 5. 调用栈
+### 5. 监视点 (Watchpoint)
+
+监视点是一种特殊的断点，当指定变量的值被修改时程序会自动暂停。这对于追踪意外的数值变化非常有用。
+
+| 命令 | 别名 | 功能 |
+| --- | --- | --- |
+| `watchpoint set variable i` | `wa s v i` | 监视变量 `i` 的变化 |
+| `watchpoint set expression -- &arr[5]` | `wa s e -- &arr[5]` | 监视数组元素 `arr[5]` 的变化 |
+| `watchpoint list` | `wa l` | 列出所有监视点 |
+| `watchpoint delete 1` | `wa del 1` | 删除编号为1的监视点 |
+| `watchpoint disable 1` | `wa dis 1` | 禁用监视点 |
+| `watchpoint enable 1` | `wa en 1` | 启用监视点 |
+
+#### Watchpoint 使用示例
+
+```bash
+# 监视单个变量
+(lldb) watchpoint set variable sum
+Watchpoint created: Watchpoint 1: addr = 0x7ffeefbff5c8 size = 4 state = enabled type = w
+    declare @ '/Users/user/test.cpp:15'
+    watchpoint spec = 'sum'
+
+# 监视数组元素
+(lldb) watchpoint set expression -- &arr[3]
+Watchpoint created: Watchpoint 2: addr = 0x7ffeefbff5d0 size = 4 state = enabled type = w
+
+# 设置条件监视点
+(lldb) watchpoint set variable i -c "i >= 5"
+
+# 查看所有监视点
+(lldb) watchpoint list
+Current watchpoints:
+1: name = 'sum', size = 4, type = w, state = enabled
+2: name = 'arr[3]', size = 4, type = w, state = enabled
+```
+
+#### Watchpoint 实际应用场景
+
+1. **追踪变量意外修改**：当某个变量的值在预期之外被修改时
+2. **调试数组越界**：监视数组边界元素的变化
+3. **检查指针操作**：监视指针指向的内存区域
+4. **验证算法正确性**：确认关键变量在正确时机被修改
+
+**注意**：Watchpoint 会消耗额外的系统资源，建议在不需要时及时删除或禁用。
+
+### 6. 调用栈
 
 | 命令 | 别名 | 功能 |
 | --- | --- | --- |
@@ -77,7 +121,7 @@ clang++ -g -O0 -std=c++17 your_code.cpp -o your_program
 | `frame select 2` | `fr s 2` | 切换到2号栈帧 |
 | `frame variable` | `fr v` | 显示当前栈帧的变量 |
 
-### 6. 其他
+### 7. 其他
 
 | 命令 | 别名 | 功能 |
 | --- | --- | --- |
