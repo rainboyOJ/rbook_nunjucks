@@ -12,6 +12,27 @@
     "body": "$$1$",
     "description": "Auto-completes $ to $$"
   },
+	"rbook problem  Matter": {
+		"scope": "markdown",
+		"prefix": "problem-front",
+		"body": [
+			"---",
+			"oj: \"${1:luogu}\"",
+			"problem_id: \"${2:1000}\"",
+			"title: \"${3:${TM_FILENAME_BASE}}\"",
+			"date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE",
+			"toc: true",
+			"tags: [\"$4\"]",
+			"categories: [\"${4}\"]",
+      "source: ${5:https://www.luogu.com.cn/problem/P1000}",
+			"---",
+			"",
+			"[[TOC]]",
+			"",
+			"$5"
+		],
+		"description": "problem 题目解析文章前置元数据 - title默认使用文件名"
+	},
 	"rbook Front Matter": {
 		"scope": "markdown",
 		"prefix": "rbook-front",

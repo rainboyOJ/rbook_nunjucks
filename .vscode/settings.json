@@ -17,6 +17,7 @@
   },
   "files.associations": {
     "*.ejs": "html",
+    "*.njk": "html",
     "iostream": "cpp"
   },
   "github.copilot.chat.commitMessageGeneration.instructions": [
