@@ -52,6 +52,9 @@ def _run_gum(subcommand: str, *args: str, **kwargs: Any) -> str:
                     raise GumError(f"gum {subcommand} exited with code {process.returncode}: {process.stderr.strip()}")
                 # If no stderr, it's likely a cancellation, so we return an empty string.
         
+        if subcommand == 'confirm':
+            # For confirm, we return True if the return code is 0, False otherwise.
+            return process.returncode == 0
         return process.stdout.strip()
 
     except FileNotFoundError:
@@ -85,8 +88,8 @@ def confirm(prompt: str = "Are you sure?", **kwargs: Any) -> bool:
         # We run the command but don't need its output, only the exit code.
         # The return code logic is handled inside _run_gum.
         # This will now correctly show the interactive prompt.
-        _run_gum('confirm', prompt, **kwargs)
-        return True # If _run_gum didn't raise an error, it means return code was 0 ("Yes").
+        return _run_gum('confirm', prompt, **kwargs)
+        # return True # If _run_gum didn't raise an error, it means return code was 0 ("Yes").
     except GumError as e:
         # A non-zero return code from confirm will raise a GumError.
         # We catch it and interpret it as "No".
