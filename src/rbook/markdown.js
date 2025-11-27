@@ -9,7 +9,7 @@ class Markdown {
         this.name = 'rbook';
         this.front_matter = {};
         this.md_content = '';
-        this.html_content = '';
+        this.html_content = undefined;
         if( md_path && md_path.length > 0 ) {
             this.md_path = md_path; // md文件路径
             // let raw_md = fs.readFileSync(md_path, 'utf8');
@@ -18,7 +18,7 @@ class Markdown {
             let result = this.matter(raw_md);
             this.front_matter = result.data;
             this.md_content = result.content;
-            this.html_content = this.toHTML(result.content);
+            // this.html_content = this.toHTML(result.content);
         }
     }
 
@@ -94,6 +94,9 @@ class Markdown {
     }
 
     toJSON() {
+        if(this.html_content === undefined) {
+            this.html_content = this.toHTML(this.md_content);
+        }
         return {
             front_matter: this.front_matter,
             md_content: this.md_content,
