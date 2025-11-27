@@ -541,9 +541,8 @@
 }
 .table-of-contents {
   position: fixed;
-  top: 18em;
-  right: 2.5vw;
-  transform: translateY(-50%);
+  top: 4.5em;
+  right: 4em;
   z-index: 100;
   background: transparent;
   border-radius: 16px;
@@ -555,6 +554,27 @@
   font-size: var(--table-of-conents-font-size);
   color: #222;
   transition: background 0.3s, color 0.3s;
+  /* 自定义滚动条样式 */
+}
+.table-of-contents::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.table-of-contents::-webkit-scrollbar-track {
+  background: transparent;
+}
+.table-of-contents::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.table-of-contents::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+.table-of-contents {
+  /* Firefox 滚动条样式 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
 .table-of-contents ol {
