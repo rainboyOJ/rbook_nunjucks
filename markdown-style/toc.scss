@@ -1,9 +1,9 @@
 .table-of-contents {
   position: fixed;
   // top: 50%;
-  top: 18em;
-  right: 2.5vw;
-  transform: translateY(-50%);
+  top: 4.5em;
+  right: 4em;
+  // transform: translateY(-50%);
   z-index: 100;
   // background: var(--container-background-color-light);
   background:  transparent;
@@ -17,6 +17,30 @@
   font-size: var(--table-of-conents-font-size);
   color: #222;
   transition: background 0.3s, color 0.3s;
+
+  /* 自定义滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  /* Firefox 滚动条样式 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
 .table-of-contents ol {
