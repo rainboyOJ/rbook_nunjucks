@@ -12,6 +12,8 @@ chapters:
   - title: 基础
     path: base
     sections:
+      - title: 双指针
+        path: double_point/index.md
       - title: 二分查找
         path: binary_search/index.md
       - title: ST稀疏表
