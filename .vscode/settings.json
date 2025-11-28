@@ -13,7 +13,7 @@
   "[markdown]": {
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingQuotes": "never",
-    "editor.autoClosingTags": false
+    "editor.autoClosingTags": false,
   },
   "files.associations": {
     "*.ejs": "html",
@@ -25,5 +25,5 @@
       "text": "使用中文编写 commit message",
       "title": "中文commit message"
     },
-  ]
+  ],
 }
