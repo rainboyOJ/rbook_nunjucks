@@ -46,7 +46,7 @@ function problemLinkPlugin(md) {
     const id = match[2].trim();
     let Pinfo = Prob.find(ojname,id);
     if( Pinfo == null ) {
-      throw new Error(`Problem ${ojname}/${id} not found, ${md.env.filePath}`);
+      throw new Error(`Problem ${ojname}/${id} not found, ${state.env.filePath}`);
       return false;
     }
     let title = Pinfo.title;
