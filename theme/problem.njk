@@ -2,8 +2,20 @@
 
 {% block content %}
 <article class="page">
-    <header class="page-header">
+    <header class="container page-header">
         <h1>{{ front_matter.title }}</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            {% for tags in front_matter.tags%}
+              <span>#{{ tags }}</span>
+            {% endfor %}
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="{{front_matter.source}}"> {{front_matter.oj}}-{{front_matter.problem_id}}</a>
+          </div>
+        </div>
     </header>
     
     <div class="container">
