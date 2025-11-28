@@ -60,9 +60,11 @@ categories: ["基础算法"]
 
 ## 经典例题
 
-1. poj 3061
-2. poj 2566
-3. hdu 5358
+1. [[problem: luogu,P1102]]
+2. poj 3061
+3. [[problem: poj,2566]]
+3. [[problem: hdu,5358]]
+4. [[problem: uva,11572]]
 
 4.  **LeetCode 167. Two Sum II - Input array is sorted**:
     *   **描述**: 即“指定和的整数对”问题。
@@ -85,11 +87,3 @@ categories: ["基础算法"]
 -   **链表中的双指针**: 双指针在链表中也有广泛应用，如“快慢指针”判断链表是否有环、寻找链表中点、删除倒数第 N 个节点等。
 -   **与二分查找的关系**: 对于某些问题，双指针和二分查找可以互相替代。例如，在有序数组中寻找和为 target 的数对，也可以通过遍历每个数 `x`，然后二分查找 `target - x` 来解决，但时间复杂度为 $O(n \log n)$，不如双指针的 $O(n)$ 高效。
 
-
-## 练习题目
-
-
-- [[problem: luogu,P1102]]
-- [[problem: poj,2566]]
-- [[problem: hdu,5358]]
-- [[problem: uva,11572]]
