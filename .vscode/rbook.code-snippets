@@ -20,7 +20,6 @@
     ],
     "description": "rbook problem题目链接"
   },
-  },
 	"rbook problem  Matter": {
 		"scope": "markdown",
 		"prefix": "problem-front",
@@ -31,14 +30,14 @@
 			"title: \"${3:${TM_FILENAME_BASE}}\"",
 			"date: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE",
 			"toc: true",
-			"tags: [\"$4\"]",
+			"tags: [\"${4}\"]",
 			"categories: [\"${4}\"]",
       "source: ${5:https://www.luogu.com.cn/problem/P1000}",
 			"---",
 			"",
 			"[[TOC]]",
 			"",
-			"$5"
+			"$0"
 		],
 		"description": "problem 题目解析文章前置元数据 - title默认使用文件名"
 	},
