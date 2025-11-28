@@ -1,7 +1,7 @@
 ---
 oj: "luogu"
 problem_id: "P1102"
-title: "luogu P1102 A-B 数对"
+title: "A-B 数对"
 date: 2025-11-26 20:04
 toc: true
 tags: ["双指针"]
