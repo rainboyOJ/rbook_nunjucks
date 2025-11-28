@@ -7,7 +7,7 @@ rm -rf dist
 rm -f problems.json
 
 # 运行rbook build命令
-node bin/rbook.js build
+node bin/rbook.js build || (echo "=======> 构建rbook build失败,检查错误" && exit 1 )
 
 
 
