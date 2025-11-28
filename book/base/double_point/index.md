@@ -61,7 +61,7 @@ categories: ["基础算法"]
 ## 经典例题
 
 1. [[problem: luogu,P1102]]
-2. poj 3061
+2. [[problem: poj,3061]]
 3. [[problem: poj,2566]]
 3. [[problem: hdu,5358]]
 4. [[problem: uva,11572]]
