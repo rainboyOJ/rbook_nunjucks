@@ -1,13 +1,12 @@
-给一个数组,和数字$C$
-求数组中$A-B=C$的对数
+## A-B=C 的数对
 
-暴力$n^2$
+给一个数组,和数字$C$,求数组中$A-B=C$的对数
 
-
-## 二分
-1. 排序后不影响结果,先排序
-2. 固定一个数$A$,然后二分查找$B = A - C$的数量
-3. $O(nlogn)$
+- 暴力: $n^2$
+- **二分**
+  1. 排序后不影响结果,先排序
+  2. 固定一个数$A$,然后二分查找$B = A - C$的数量
+  3. $O(nlogn)$
 
 在一个不没有重复元素的数组中,求数组中$A-B=C$的对数
 
@@ -43,55 +42,7 @@
 
 -----
 
-### 代码实现
-
-#### Python 实现
-
-```python
-from typing import List
-
-def count_diff_pairs(nums: List[int], c: int) -> int:
-    # 1. 预处理：处理负数 C，并将数组排序
-    c = abs(c) 
-    nums.sort()
-    
-    n = len(nums)
-    left = 0
-    right = 1 # 让 right 从第二个元素开始
-    count = 0
-    
-    while right < n:
-        # 边界保护：确保 left 永远不追上 right（针对 C=0 的情况）
-        # 如果 left == right，说明没有间隔，强制 right 走一步
-        if left == right:
-            right += 1
-            continue
-            
-        diff = nums[right] - nums[left]
-        
-        if diff == c:
-            count += 1
-            # 题目承诺无重复元素，所以这一对用完就可以扔了
-            left += 1
-            right += 1
-        elif diff < c:
-            # 差太小，增大被减数
-            right += 1
-        else:
-            # 差太大，增大减数（即减小差值）
-            left += 1
-            
-    return count
-
-# 测试
-# 排序后: [1, 2, 3, 5, 8], C=3
-# 5-2=3, 8-5=3 -> 2对
-arr = [8, 5, 1, 3, 2]
-target = 3
-print(count_diff_pairs(arr, target)) # 输出: 2
-```
-
-#### C++ 实现
+### C++ 实现
 
 ```cpp
 #include <vector>
@@ -157,8 +108,7 @@ int countDiffPairs(vector<int>& nums, int c) {
   * 然后指针跳过所有相同的元素。
   * **本题因为“无重复”这一条件，极大地简化了逻辑。**
 
-
-## 证明
+### 证明
 
 为了证明这个双指针算法的正确性，我们利用**“单调性”**和**“解空间覆盖”**的思路。
 
@@ -222,67 +172,22 @@ int countDiffPairs(vector<int>& nums, int c) {
    
 这个证明展示了算法的严谨性，确保了它不会漏掉任何一对满足条件的 $(A, B)$。
 
+### 拓展
 
-## luogu P1102
+问题更改:  求满足 $k1 <=A-B <= k2$ 的对数
 
+思路一样,但这里使用三指针
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-const long long maxn = 1e6+5;
-long long a[maxn];
-long long b[maxn];
-long long cnt[maxn];
-long long n,c;
-int main(long long argc, char const *argv[])
-{
-  cin >> n >> c;
-  for (long long i = 0; i < n; i++)
-  {
-    cin >> a[i+1];
-  }
-  sort(a+1,a+1+n);
-  b[1] = a[1];
-  cnt[1]++;
-  long long idx = 1;
-  for(long long i = 2;i<=n;i++) {
-    if( a[i] == a[i-1]) {
-      cnt[idx]++;
-    }
-    else {
-      idx++;
-      cnt[idx] = 1;
-      b[idx] = a[i];
-    }
-  }
-  // for(long long i =1;i<=idx;i++)
-  // {
-  //   cout << b[i] << ' ' << cnt[i] << endl;
-  // }
+先排序,固定前一个指针$a[i]$
 
-  long long h=1,t=2;
+找到第一个$k1 \leqslant  a[j_1] - a[i]$,因为单调性,$j_1$右移增加,那么 $a[j_1] - a[i]$ 就会增加,直到到达边界 $k2$,此时$j_2$
 
-  long long ans = 0;
-  while(1) {
+显然 $i \to i+1$ 的时候,$j_1,j_2$ 增加.
 
-    if( t > idx || h > idx ) break;
+**暴力代码**
 
-    if( b[t] - b[h] == c) {
-      ans += cnt[t] * cnt[h];
-      // b[t]不可能再和前面产生贡献了
-      t++;
-    }
-    else if (b[t] - b[h] > c) {
-      h++;
-    }
-    else if ( b[t] - b[h] < c) {
-      t++;
-    }
-  }
-  cout << ans << endl;
-  
-  
-  return 0;
-}
+@include-code(./code/A_sub_B_baoli.cpp, cpp)
 
-```
+**优化代码**
+
+@include-code(./code/A_sub_B_k1k2.cpp, cpp)
