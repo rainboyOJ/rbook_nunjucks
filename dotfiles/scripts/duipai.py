@@ -11,6 +11,7 @@ import subprocess
 import argparse
 import shutil
 import json
+import glob
 
 # 添加 gum 模块路径
 sys.path.append(os.path.join(os.path.dirname(__file__), 'mylib'))
@@ -37,6 +38,11 @@ DATA_GENERATOR = None
 # 比较的基本路径
 # tmp 是一个在内存中的filesystem,速度快
 BASE_DIR = "/tmp"
+
+
+def find_files(pattern):
+    """查找匹配模式的文件"""
+    return glob.glob(pattern, recursive=True)
 
 def load_config():
     """加载配置文件"""
@@ -133,7 +139,8 @@ def select_file_with_gum(files, prompt):
     """使用 gum 选择文件"""
     if GUM_AVAILABLE:
         try:
-            return gum_choose(files, header=prompt)
+            # return gum_choose(files, header=prompt)
+            return gum_filter(files,header=prompt)
         except Exception:
             # 如果 gum 失败，回退到普通选择
             pass
