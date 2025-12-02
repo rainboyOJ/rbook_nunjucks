@@ -12,17 +12,7 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
-
-# 添加 mylib 到路径
-mylib_path = os.path.join(os.path.dirname(__file__), 'mylib')
-sys.path.insert(0, mylib_path)
-
-try:
-    import gum as gum
-except ImportError:
-    print("错误: 无法导入 gum 模块", file=sys.stderr)
-    print(f"请确保 mylib 目录存在: {mylib_path}", file=sys.stderr)
-    sys.exit(1)
+from mylib.gum import choose as gum_choose, filter as gum_filter, input as gum_input ,confirm as gum_confirm
 
 
 class TemplateEngine:
@@ -98,6 +88,10 @@ class TemplateEngine:
             # 跳过include语法
             if var_name.startswith('include '):
                 return match.group(0)
+
+            if self.template_vars.get(var_name) is None:
+               new_var = gum_input(value="", header=f"输入变量 {var_name} 的值:")
+               return new_var
             
             return str(self.template_vars.get(var_name, match.group(0)))
         
@@ -190,14 +184,14 @@ def select_and_apply_template():
     
     # 使用 gum.filter 选择模板
     try:
-        selected = gum.filter(templates, header="选择模板文件:", placeholder="搜索模板...")
+        selected = gum_filter(templates, header="选择模板文件:", placeholder="搜索模板...")
         if selected:
             template_engine = TemplateEngine()
             template_path = template_engine.code_path / 'template' / selected
             
             if template_path.exists():
                 # 应用模板到标准输出
-                output_cpp_file = gum.input(value="1", header="输入输出文件名(默认1.cpp):")
+                output_cpp_file = gum_input(value="1", header="输入输出文件名(默认1.cpp):")
                 ## 后缀不是.cpp 则添加.cpp
                 if not output_cpp_file.endswith('.cpp'):
                     output_cpp_file += '.cpp'

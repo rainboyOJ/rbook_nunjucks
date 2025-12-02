@@ -83,7 +83,7 @@ def compile_source(source_file, target_file, std_option, args):
     if args.debug:
         compile_args.append("-DDEBUG")
     else:
-        compile_args.append("-DONLINE_JUDGE -O2")
+        compile_args.append("-DONLINE_JUDGE -O0")
 
     compile_args.extend(["-o", target_file, source_file])
 
