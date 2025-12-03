@@ -1,5 +1,6 @@
 {
   "recommendations": [
-    "zhuyuanxiang.pangu-markdown-vscode"
+    "zhuyuanxiang.pangu-markdown-vscode",
+    "tintinweb.graphviz-interactive-preview"
   ]
 }
