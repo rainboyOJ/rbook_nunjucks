@@ -48,6 +48,16 @@ class Problems extends Problemlib {
         site: this.config
        });
       fs.writeFileSync(prob_html_path, prob_html_content);
+
+      // 将 prob 目录下面的所有的 png,svg ,jpg 文件复制到 prob_html_dir
+      let prob_dir = path.dirname(path.join(__problemdir, md_path));
+      let prob_files = glob.sync(path.join(prob_dir, '*.{png,svg,jpg}'));
+      for( let prob_file of prob_files ) {
+        let prob_file_name = path.basename(prob_file);
+        let prob_file_dest = path.join(prob_html_dir, prob_file_name);
+        fs.copyFileSync(prob_file, prob_file_dest);
+      }
+
     }
 }
 export default Problems;
