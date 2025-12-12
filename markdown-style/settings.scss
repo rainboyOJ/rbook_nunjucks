@@ -42,7 +42,11 @@
   /* == 颜色设置 == */
   /* 超链接颜色 */
   --link-color-light: #2E67D3;
-  --link-color-dark: #8bb1f9;
+  --link-hover-color-light: #2E67D3;
+  --link-color-dark: gold;
+  --link-hover-color-dark: rgb(121, 108, 34);
+
+  /* 字体颜色 */
 
   --font-color-light: black;
   --font-color-dark: #ccc;

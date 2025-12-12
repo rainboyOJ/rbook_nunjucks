@@ -20,6 +20,8 @@
 @use "codetabs.scss";
 @use "pseudocode.min.css";
 
+@use "markdown-body-img.scss";
+
 // @import "./dark.scss";
 
 
@@ -61,4 +63,31 @@ body {
         font-weight: 800;
         font-family: var(--base-Header-font);
     }
+}
+
+
+// ---------- link style
+.markdown-body a {
+  color: var(--link-color-light);
+  &:hover {
+    color: var(--link-hover-color-light);
+  }
+}
+
+
+[data-darkmode="dark"] .markdown-body a  {
+  color: var(--link-color-dark);
+  &:hover {
+    color: var(--link-hover-color-dark);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode="auto"] .markdown-body a {
+      color: var(--link-color-dark);
+  
+      &:hover {
+        color: var(--link-hover-color-dark);
+      }
+  }
 }

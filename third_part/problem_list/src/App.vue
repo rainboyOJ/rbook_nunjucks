@@ -160,17 +160,17 @@ const search_result = computed(
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">标题</th>
+                        <th scope="col">简要描述</th>
                         <th scope="col">OJ</th>
-                        <th scope="col">ID</th>
                         <th scope="col">标签</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(d,index) in search_result">
                         <th scope="row">{{index+1}}</th>
-                        <td><a :href="d.url" target="_blank">{{d.title}}</a></td>
-                        <td><a :href="d.source" target="_blank">{{d.oj}}</a></td>
-                        <td><a :href="d.url" target="_blank">{{d.problem_id}}</a></td>
+                        <td><a class="p_title" :href="d.url" target="_blank">{{d.title}}</a></td>
+                        <td class="p_desc">{{ d.desc || "" }}</td>
+                        <td><a class="oj_name" :href="d.source" target="_blank">{{d.oj}}-{{ d.problem_id }}</a></td>
                         <td>{{ tags_string(d.tags)}}</td>
                     </tr>
                 </tbody>
@@ -197,7 +197,7 @@ const search_result = computed(
 
 .container {
     background-color: #000;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 2rem auto;
     padding: 2rem;
     /* border: 1px solid #FFC700; */
@@ -295,5 +295,42 @@ h1 {
     background-color: #FFC700;
     color: #000;
     box-shadow: 0 0 10px #FFC700;
+}
+
+.p_title {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+}
+.p_title:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.p_desc {
+    color: #ccc; /* Lighter gray for description */
+    font-size: 0.9em;
+}
+
+.oj_name {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: 1px solid #FFC700;
+    cursor: pointer;
+    color: #FFC700;
+    background-color: transparent;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    text-align: center;
+    min-width: 80px;
+}
+
+.oj_name:hover {
+    background-color: #FFC700;
+    color: #000;
+    box-shadow: 0 0 8px #FFC700;
 }
 </style>

@@ -137,6 +137,10 @@ $$
 
 @include_md("./model.md")
 
+## 二分的应用
+
+@include_md("./应用.md")
+
 ## 练习题目
 
 - luogu P1083

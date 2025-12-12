@@ -142,10 +142,19 @@ print("hello")
 
 #### 链接或图片
 
+使用了`https://github.com/tatsy/markdown-it-imsize` 扩展.
+
 - **描述:** 快速插入 Markdown 格式的链接或图片。
 - **示例:**
   - 图片: `![alt text](/images/filename.png)`
   - 链接: `[alt text](https://example.com)`
+  - `![test](image.png "title" =100x200)`
+  ```
+  // size must follow = without any white spaces as follows
+  // (1) =300x200
+  // (2) =300x 高度自动
+  // (3) =x200
+  ```
 
 #### 表格
 

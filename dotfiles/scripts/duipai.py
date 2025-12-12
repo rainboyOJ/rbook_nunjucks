@@ -39,6 +39,8 @@ DATA_GENERATOR = None
 # tmp 是一个在内存中的filesystem,速度快
 BASE_DIR = "/tmp"
 
+valid_code_file_ext = [".cpp",".c",".py",".hs"]
+
 
 def find_files(pattern):
     """查找匹配模式的文件"""
@@ -98,20 +100,45 @@ def compile_if_newer(code_file, out_file):
 
     if not os.path.exists(out_file) or os.path.getmtime(code_file) > os.path.getmtime(out_file):
         print(f"{code_file} 比 {out_file} 新，正在编译...")
-        # 调用b脚本进行编译
-        # compile_cmd = ["b", "--no_debug", code_file, "-o", out_file, "--not_in"]
-        # macos
-        compile_soft = "g++"
-        if sys.platform == "darwin":
-          compile_soft = "clang++"
-        compile_cmd = [compile_soft, "-O0","-g","-std=c++17", code_file, "-o", out_file]
+        
+        # 获取文件扩展名
+        _, ext = os.path.splitext(code_file)
+        
         try:
-            result = subprocess.run(compile_cmd, check=True)
-            if result.returncode != 0:
-                print("编译失败!")
+            if ext == ".cpp":
+                # C++ 文件编译
+                compile_soft = "g++"
+                if sys.platform == "darwin":
+                    compile_soft = "clang++"
+                compile_cmd = [compile_soft, "-O2", "-std=c++17", code_file, "-o", out_file]
+                subprocess.run(compile_cmd, check=True)
+                
+            elif ext == ".c":
+                # C 文件编译
+                compile_soft = "gcc"
+                if sys.platform == "darwin":
+                    compile_soft = "clang"
+                compile_cmd = [compile_soft, "-O2", code_file, "-o", out_file]
+                subprocess.run(compile_cmd, check=True)
+                
+            elif ext == ".py":
+                # Python 文件：创建可执行的脚本
+                with open(out_file, 'w') as f:
+                    f.write(f"#!/usr/bin/env python3\n")
+                    f.write(f"exec(open('{os.path.abspath(code_file)}').read())\n")
+                os.chmod(out_file, 0o755)
+                
+            elif ext == ".hs":
+                # Haskell 文件编译
+                compile_cmd = ["ghc", "-O2", code_file, "-o", out_file]
+                subprocess.run(compile_cmd, check=True)
+                
+            else:
+                print(f"错误: 不支持的文件类型 {ext}")
                 sys.exit(1)
+                
         except subprocess.CalledProcessError:
-            print("编译失败!")
+            print(f"编译 {code_file} 失败!")
             sys.exit(1)
 
 def show_progress(total, current, width=50):
@@ -130,10 +157,13 @@ def show_progress(total, current, width=50):
     # 显示进度条和百分比
     print(f"\r[{bar:<{width}}] {current}/{total} {percentage}%", end="", flush=True)
 
-def scan_cpp_files():
-    """扫描当前目录下的所有cpp文件"""
+def scan_code_files():
+    """扫描当前目录下的所有代码文件"""
     import glob
-    return glob.glob("*.cpp")
+    code_files = []
+    for ext in valid_code_file_ext:
+        code_files.extend(glob.glob(f"*{ext}"))
+    return code_files
 
 def select_file_with_gum(files, prompt):
     """使用 gum 选择文件"""
@@ -231,12 +261,12 @@ def main():
         COMPARE_DIR = get_user_input("请输入比较目录", "compare")
     
     # 如果命令行参数没有提供，则扫描目录让用户通过fzf选择
-    cpp_files = scan_cpp_files()
+    code_files = scan_code_files()
     
     if args.data:
         DATA_CODE = args.data
     else:
-        DATA_CODE = select_file_with_gum(cpp_files, "请选择数据生成程序源码")
+        DATA_CODE = select_file_with_gum(code_files, "请选择数据生成程序源码")
         if DATA_CODE is None:
             print("未选择数据生成程序源码")
             sys.exit(1)
@@ -244,7 +274,7 @@ def main():
     if args.user:
         USR_CODE = args.user
     else:
-        USR_CODE = select_file_with_gum(cpp_files, "请选择用户程序源码")
+        USR_CODE = select_file_with_gum(code_files, "请选择用户程序源码")
         if USR_CODE is None:
             print("未选择用户程序源码")
             sys.exit(1)
@@ -252,7 +282,7 @@ def main():
     if args.std:
         STD_CODE = args.std
     else:
-        STD_CODE = select_file_with_gum(cpp_files, "请选择标准程序源码")
+        STD_CODE = select_file_with_gum(code_files, "请选择标准程序源码")
         if STD_CODE is None:
             print("未选择标准程序源码")
             sys.exit(1)
@@ -275,12 +305,37 @@ def main():
     
     # 初始化程序变量
     global USR_PROGRAM, STD_PROGRAM, DATA_GENERATOR
-    USR_PROGRAM = f"{USR_CODE.split('.')[0]}.out"
-    STD_PROGRAM = f"{STD_CODE.split('.')[0]}.out"
-    DATA_GENERATOR = f"{DATA_CODE.split('.')[0]}.out"    # 编译程序
+    
+    def get_executable_name(code_file):
+        """根据代码文件类型获取可执行文件名"""
+        _, ext = os.path.splitext(code_file)
+        if ext == ".py":
+            return code_file  # Python文件直接使用源文件
+        else:
+            return f"{code_file.split('.')[0]}.out"
+    
+    USR_PROGRAM = get_executable_name(USR_CODE)
+    STD_PROGRAM = get_executable_name(STD_CODE)
+    DATA_GENERATOR = get_executable_name(DATA_CODE)    # 编译程序
     compile_if_newer(USR_CODE, USR_PROGRAM)
     compile_if_newer(STD_CODE, STD_PROGRAM)
     compile_if_newer(DATA_CODE, DATA_GENERATOR)
+
+    def run_program(program_file, stdin_file, stdout_file):
+        """运行程序，支持多种语言"""
+        _, ext = os.path.splitext(program_file)
+        
+        if ext == ".py":
+            cmd = ["python3", program_file]
+        else:
+            cmd = [f"./{program_file}"]
+        
+        try:
+            with open(stdin_file, "r") as infile, open(stdout_file, "w") as outfile:
+                subprocess.run(cmd, stdin=infile, stdout=outfile, stderr=subprocess.DEVNULL, check=True)
+        except subprocess.CalledProcessError:
+            return False
+        return True
 
     # 创建比较目录
     os.makedirs(COMPARE_DIR, exist_ok=True)
@@ -291,24 +346,22 @@ def main():
         # 生成测试数据
         try:
             with open(f"{BASE_DIR}/in", "w") as infile:
-                subprocess.run([f"./{DATA_GENERATOR}"], stdout=infile, check=True)
+                _, data_ext = os.path.splitext(DATA_GENERATOR)
+                if data_ext == ".py":
+                    subprocess.run(["python3", DATA_GENERATOR], stdout=infile, check=True)
+                else:
+                    subprocess.run([f"./{DATA_GENERATOR}"], stdout=infile, check=True)
         except subprocess.CalledProcessError:
             print(f"\n生成测试数据失败，第 {i} 次")
             sys.exit(1)
 
         # 运行用户程序
-        try:
-            with open(f"{BASE_DIR}/in", "r") as infile, open(f"{BASE_DIR}/user_out", "w") as userout:
-                subprocess.run([f"./{USR_PROGRAM}"], stdin=infile, stdout=userout, stderr=subprocess.DEVNULL)
-        except subprocess.CalledProcessError:
+        if not run_program(USR_PROGRAM, f"{BASE_DIR}/in", f"{BASE_DIR}/user_out"):
             print(f"\n运行用户程序失败，第 {i} 次")
             sys.exit(1)
 
         # 运行标准程序
-        try:
-            with open(f"{BASE_DIR}/in", "r") as infile, open(f"{BASE_DIR}/std_out", "w") as stdout:
-                subprocess.run([f"./{STD_PROGRAM}"], stdin=infile, stdout=stdout, stderr=subprocess.DEVNULL)
-        except subprocess.CalledProcessError:
+        if not run_program(STD_PROGRAM, f"{BASE_DIR}/in", f"{BASE_DIR}/std_out"):
             print(f"\n运行标准程序失败，第 {i} 次")
             sys.exit(1)
 

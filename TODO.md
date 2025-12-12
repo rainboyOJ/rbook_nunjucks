@@ -24,3 +24,11 @@
 
 
 - [ ] code-tab 的样式完 善
+
+- [ ] problems third-part的创建
+  - [ ] link-map ,mind-map ?
+  - [ ] 简单的题目filter, 根据OJ, 标题的名字
+  - [ ] 题目的id转换
+    - [ ] /oj-name/id
+  - [ ] Problems类,管理problem
+  - [ ] markdown 语法 id转换连接 `@problem(id)

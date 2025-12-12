@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import rbook from '../src/rbook/index.js';
+import chalk from 'chalk';
 
 // 获取命令行参数
 const args = process.argv.slice(2);
@@ -16,7 +17,7 @@ switch (command) {
       app.build();
       app.build_glob();
     } catch (error) {
-      console.error('构建失败:', error.message);
+      console.error(chalk.red('构建失败:'), chalk.blue( error.message));
       process.exit(1);
     }
     break;
