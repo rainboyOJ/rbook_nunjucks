@@ -32,7 +32,10 @@
   /* == 颜色设置 == */
   /* 超链接颜色 */
   --link-color-light: #2E67D3;
-  --link-color-dark: #8bb1f9;
+  --link-hover-color-light: #2E67D3;
+  --link-color-dark: gold;
+  --link-hover-color-dark: rgb(121, 108, 34);
+  /* 字体颜色 */
   --font-color-light: black;
   --font-color-dark: #ccc;
   --table-of-conents-font-size: 1.58rem;
@@ -2899,6 +2902,14 @@ iframe.bilibili_iframe {
   text-indent: 0;
 }
 
+.markdown-body img {
+  max-width: 100%;
+}
+
+.markdown-body .image-wrapper {
+  margin: 1em 0;
+}
+
 html, body {
   font-size: 62.5%;
 }
@@ -2927,6 +2938,29 @@ body {
 .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
   font-weight: 800;
   font-family: var(--base-Header-font);
+}
+
+.markdown-body a {
+  color: var(--link-color-light);
+}
+.markdown-body a:hover {
+  color: var(--link-hover-color-light);
+}
+
+[data-darkmode=dark] .markdown-body a {
+  color: var(--link-color-dark);
+}
+[data-darkmode=dark] .markdown-body a:hover {
+  color: var(--link-hover-color-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-darkmode=auto] .markdown-body a {
+    color: var(--link-color-dark);
+  }
+  [data-darkmode=auto] .markdown-body a:hover {
+    color: var(--link-hover-color-dark);
+  }
 }
 
 /*# sourceMappingURL=markdown.css.map */

@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - 树状数组</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+
+<div class="chapter-list">
+  
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base">基础</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/double_point/index.html">双指针</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/binary_search/index.html">二分查找</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/sparse_table/index.html">ST稀疏表</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="tree-algo">树相关算法树</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="tree-algo/dfs-order">dfs序</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="chapter3">第三章 动态规划</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><path fill="#c62828" d="m31.37 26.45l.17-18.43L40 5.43l9.75 16.73z"/><path fill="#37474f" d="M36.76 20.48s-2.6-11.89.34-13.07c5.23-2.09 9.31 11.65 9.31 11.65z" opacity="0.59"/><path fill="#f44336" d="M20.59 32.81c-.09-1.63-2.29-14.63 1.05-21.88c1.53-3.31 7.81-5.51 13.43-6.76c1.39-.31 4.98-.51 7.21 2.05c2.01 2.31 4.98 7.37 7.91 15l-2.11 4.54s-2.91-7.7-5.82-14.06c-2.41-5.27-5.47-3.52-5.78-2.29c-.56 2.26 2.3 14.51 2.3 14.51c-4.16 1.77-18.19 8.89-18.19 8.89"/><path fill="#455a64" d="m42.36 17.37l1.75-8.5L51 4.88l8.29.02l6.9 5.59l1.91 10.9l-8.33-2.81l-1.13-7.81l-7.64-.19l-1.02 6.21z"/><path fill="#ff7555" d="M35.06 4.18c-5.62 1.24-11.27 3.03-13.43 6.76c-1.24 2.14-1.96 7.75-1.82 12.96c1.09-1.72 5.54-4.69 8.86-6.13c3.31-1.44 3.69-2.87 3.74-3.5c.25-2.86.01-5.22.85-7.24c1.06-2.56 2.57-2.88 3.45-3.01c-.67 0-1.26.07-1.65.16m4.53.28c-.54-.19-1.08-.31-1.6-.37c.54.14 1.07.32 1.6.37"/><path fill="none" stroke="#784d30" stroke-miterlimit="10" stroke-width="9.816" d="M89.99 109.24c14.88-3.95 19.32-20.76 23.54-22.17"/><path fill="#c62828" d="M104.48 74.9c1.09 7.09 3.23 7.62 6.96 7.43c5.65-.28 6.27-1.58 7.53-11.26c1.56-12.02-2.95-28.77-6.84-40.25c-2.06-6.08-1.85-10.25-6.44-14.89c-2.52-2.55-12.33-6.3-15.18-1.42c-1.96 3.36-.98 6.77.89 9.47c5.43 7.86 10.43 33.77 13.08 50.92"/><path fill="#37474f" d="M93.06 26.91c1.04 2.13 2.11 4.89 2.98 8c8.86-.27 18.46 3.98 18.46 3.72c0-.22-.75-5.99-3.19-11.71c-1.06-2.48-4.29-9.28-8.29-8.62c-5.03.84-9.96 8.61-9.96 8.61" opacity="0.59"/><path fill="#f44336" d="M85.95 39.19c2.61-5.58 12.26-19.78 17.81-20.24c2.75-.23 5.84 5.46 6.97 8.57c3.17 8.73 6.62 22.43 7.63 36.73c.63 8.92-1 16.02-4.36 18.97c12.88-2.41 7.85-30.52 6.76-36.34c-3.67-19.49-8.48-26.84-12.17-30.77c-2.82-3-15.1-9.35-21.58-9.05c-4.99.23-15.91 9.56-18.89 14.73c-.88 1.52 17.83 17.4 17.83 17.4"/><path fill="#ff7555" d="M68.66 123.73c16.9-1.34 27.59-10.84 28.71-19.85c3.86-31.14-3.77-76.17-34.16-84.9c-3.39-.97-9.35-2.25-14.53-2.25c-6.03 0-15.33 1.27-22.01 5.85c-12.18 8.36-15.43 20.26-16.23 26.16c-2.95 21.63 36.96 76.68 58.22 74.99"/><path fill="#c62828" d="M97.37 103.88c2.01-16.2.91-36.15-4.89-52.81c-3.02-3.9-6.38-5.73-9.16-4.83c-3.34 1.08-6.27 5.53-5.21 10.01c0 0 8.09 32.46 2.59 52.99c-3.64 13.59-13.23 14.52-13.23 14.52c.4 0 .8 0 1.19-.03c16.91-1.34 27.59-10.84 28.71-19.85"/><path fill="#f44336" d="M18.62 120.38c5.1 1.61 18.51 3.62 42.26 3.62c21.33 0 21.18-7.59 22.94-16.5c3.62-18.38-1.34-78.26-38.49-79.55C12.84 26.81 9.59 45.89 7.14 66.61c-2.56 21.67-1.96 29.78-.72 38.61c1.61 11.54 8.69 14.05 12.2 15.16"/><path fill="#37474f" d="M90.05 59.81c-.86-4.52-2.08-9.49-4.09-14.34l-2.42.11c1.81 4.11 3.31 8.94 4.39 14.63c3.45 18.23 3.85 30.45 3.67 37.08c-.11 3.98 2.08 4 2.19-.25c.17-6.81-.29-18.99-3.74-37.23"/><path fill="#e2a610" d="M92.53 95.21a2.626 2.626 0 0 0-1.73 2.92l1.3 7.54a2.19 2.19 0 0 0 3.17 1.64l3.62-1.85c1.18-.6 1.56-2.11.81-3.2l-4.17-6.06a2.62 2.62 0 0 0-3-.99"/><path fill="#ffca28" d="M94.23 105.83c-.18-.33-1.14-5.47-1.43-7.81c-.32-2.63.81-2.78.98-2.92a2.62 2.62 0 0 0-2.99 3.03l1.3 7.54c.15 1.03.96 1.75 1.89 1.87c.42.05.86-.01 1.28-.23l.84-.43c-.04-.01-1.28.03-1.87-1.05"/><path fill="#546e7a" d="m119.95 92.13l-9.34.83c-.86.08-1.63-.56-1.7-1.43l-.71-7.93c-.08-.86.56-1.63 1.43-1.7l9.34-.83c.86-.08 1.63.56 1.7 1.43l.71 7.93c.07.86-.57 1.62-1.43 1.7"/><path fill="#37474f" d="m117.41 92.43l-8.84.79c-.86.08-1.63-.56-1.7-1.43l-.72-8.09c-.08-.86.56-1.63 1.43-1.7l8.84-.79c.86-.08 1.63.56 1.7 1.43l.72 8.09c.07.86-.57 1.62-1.43 1.7"/><path fill="#a06841" d="m111.28 101.56l-2.71-14.28c-.05-.24.12-.47.37-.49l7.13-.72c.2-.02.39.11.44.31l3.52 13.18c.23.86-.3 1.75-1.17 1.95l-5.68 1.3c-.87.19-1.74-.37-1.9-1.25"/><path fill="#fff59d" d="m49.47 58.81l-15.43-.46c-1.35 0-2.45-1.1-2.45-2.45l.21-7.94c0-1.33 1.06-2.42 2.39-2.45l15.26.41a2.453 2.453 0 0 1 2.52 2.4l-.03 7.99c.01 1.37-1.09 2.5-2.47 2.5" opacity="0.65"/><path fill="#ff7555" d="M87.01 7.05c-3.78.12-11.09 5.62-15.58 10.49c2.32-.19 7.81 2.38 12.37 5.9c.91.7 3.15.57 4.61-1c1.33-1.43 2.58-2.53 3.92-3.95c7.86-8.33 14.04-4.2 14.04-4.2c-6.5-4.23-14.42-7.39-19.36-7.24"/><path fill="#546e7a" d="M86.27 46.23C81.34 33.91 71.39 22.06 49.65 20.1c-15.1-1.36-25.27 5.65-29.41 8.19c-.92.56-1.95 1.26-2.65 2.22c-.89 1.22-1.01 2.22-1.01 2.22s13.1-12.23 32.87-10.48c11.3 1 26.14 4.77 34.31 23.87c.69-.17 1.62-.07 2.51.11"/><path fill="#ff7555" d="M69.35 114.25s-15.98 1.11-33.95.13c-9.47-.52-16.41-1.88-17.82-3.71c-1.74-2.26-3.8-4.45-3.8-16.07c0-7.83 2.89-14.14 8.49-14.28c4.28-.11 49.21-.6 45.82-.6s-6.45 7.43-6.14 15.44c.76 19.63 7.4 19.09 7.4 19.09"/><path fill="#ff7555" d="M53.67 94.6c.35-.1 3.53.18 6.07-1.59c.96-.67 1.72-1.23 2.33-1.87c.59-6 2.95-10.89 5.59-11.37c.09-.02.18-.04.26-.05c-3.92.08-35.97-1.1-45.98-.95c-4.64.07-8.22 5.53-7.9 11.95c.67 1.19 1.75 2.47 3.4 2.72c3.24.49 35.88 1.27 36.23 1.16"/><path fill="#fff59d" d="M53.67 94.6c.35-.1 3.53.18 6.07-1.59c.96-.67 1.72-1.23 2.33-1.87c.59-6 2.95-10.89 5.59-11.37c.09-.02.18-.04.26-.05c-3.92.08-35.97-1.1-45.98-.95c-4.64.07-8.22 5.53-7.9 11.95c.67 1.19 1.75 2.47 3.4 2.72c3.24.49 35.88 1.27 36.23 1.16" opacity="0.45"/><path fill="#c62828" d="M74.42 89.7c-.34-5.22-1.57-7.7-2.69-8.88c-1.03-1.1-2.64-1.19-4.93-1.08c-1.42.07-4.01 1.43-5.1 9.46v-.01c-.86 1.95-3.11 3.89-6.84 3.89l-35.75-1.16c-3.58-.23-4.89-3.65-5.06-3.96c0 0-.52 2.41-.03 3.94c.62 1.92 2.9 3.06 5.09 3.06l35.75 1.16c2.85 0 5.02-1.13 6.42-2.18q-.09 1.86-.09 4.05c0 15.36 4.43 16.52 7.26 16.39c2.83-.14 5.6-1.22 6.05-3.73c.64-3.51.57-10.89-.08-20.95"/></svg> </span>
+              
+             背包 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="chapter3/knapsack/01-knapsack">01背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="chapter3/knapsack/multiple-knapsack">多重背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="#00bcd4" d="M19 22h10v20H19zM32 8h10v34H32zM6 30h10v12H6z"/><g fill="#3f51b5"><path d="m11 8l10 10V8z"/><path d="m9.394 22.437l-2.828-2.828l9.969-9.969l2.828 2.828z"/></g></svg> </span>
+              
+             线性动态规划 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="chapter3/linear/lcs">lcs</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="chapter3/linear/lis">lis</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><path fill="#000" d="M16 120h480V16H16Zm32-72h416v40H48Zm192 96H16v96h224Zm-32 64H48v-32h160Zm64 32h224v-96H272Zm32-64h160v32H304Zm-152 96H16v88h136Zm-32 56H48v-24h72Zm72 32h128v-88H192Zm32-56h64v24h-64Zm136 56h136v-88H360Zm32-56h72v24h-72ZM121.442 443.278A52.721 52.721 0 1 0 68.722 496a52.78 52.78 0 0 0 52.72-52.722m-73.442 0A20.721 20.721 0 1 1 68.722 464A20.745 20.745 0 0 1 48 443.278m92.853 0a52.721 52.721 0 1 0 52.721-52.72a52.78 52.78 0 0 0-52.721 52.72m73.442 0a20.721 20.721 0 1 1-20.721-20.72a20.745 20.745 0 0 1 20.726 20.72Zm51.41 0a52.721 52.721 0 1 0 52.721-52.72a52.78 52.78 0 0 0-52.721 52.72m73.442 0a20.721 20.721 0 1 1-20.721-20.72a20.745 20.745 0 0 1 20.721 20.72m104.131-52.72A52.721 52.721 0 1 0 496 443.278a52.78 52.78 0 0 0-52.722-52.72m0 73.442A20.721 20.721 0 1 1 464 443.278A20.745 20.745 0 0 1 443.278 464"/></svg> </span>
+              
+             区间动态规划 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><path fill="currentColor" d="M7 8H5V7H4V6H3V4h6v2H8v1H7m-4 5H1v-2h2m9 2H9v-2h3m9 2h-3v-2h3M7 13H5v-1H4v-2h1V9h2v1h1v2H7m9 1h-2v-1h-1v-2h1V9h2v1h1v2h-1m2 6h-6v-2h1v-1h1v-1h2v1h1v1h1Z"/></svg> </span>
+              
+             动态规划优化 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-folder-open-o"></i>
+          <a href="javascript:void(0);" class="menu-no-link">第四章 数据结构</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/Block">分块算法</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/BIT">树状数组</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/segment-tree">线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/stack">栈</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/stack/表达式">表达式求值</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/stack/monotonic-stack">单调栈</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="512" height="105" viewBox="0 0 512 105"><path fill="#4fb58b" d="m92.384 56.139l.068.005l7.077.74c.497.053.953.296 1.275.675l.053.064l-.068.034c.331.417.477.952.404 1.48a52.72 52.72 0 0 1-16.456 32.072a50.97 50.97 0 0 1-34.662 13.598a50.4 50.4 0 0 1-18.257-3.389l-.317-.124a1.87 1.87 0 0 1-1.062-1.001l-.03-.074a1.94 1.94 0 0 1-.034-1.448l2.794-6.815a1.917 1.917 0 0 1 2.42-1.108l.064.024a40.06 40.06 0 0 0 41.67-8a41.32 41.32 0 0 0 13.01-25.047a1.95 1.95 0 0 1 1.983-1.69zM259.52 27.215c6.034 0 10.753 1.841 13.767 5.377l.1.12V29.72a1.68 1.68 0 0 1 1.514-1.592l.067-.005h8.052c.828.057 1.487.71 1.559 1.53l.004.067v44.696a27.2 27.2 0 0 1-5.48 17.532c-4.337 5.278-10.926 7.951-19.583 7.951c-12.035 0-21.533-7.614-23.096-18.49a1.68 1.68 0 0 1 1.144-1.762l.066-.02l7.867-1.85q.06-.012.124-.022a1.58 1.58 0 0 1 1.792 1.334a11.9 11.9 0 0 0 12.103 10.506c9.303 0 13.68-4.728 13.766-14.61l.001-.3v-3.917a17.67 17.67 0 0 1-13.767 5.9c-13.38 0-23.08-10.388-23.08-24.676a26 26 0 0 1 6.355-17.532a22.17 22.17 0 0 1 16.725-7.245M17.198 81.577l.1-.001h.1a5.9 5.9 0 0 1 5.833 5.834v.1l-.001.1a5.934 5.934 0 1 1-6.032-6.033m381.7-54.984l.412.003c14.384.199 23.296 10.211 23.296 26.237q0 1.272-.136 2.538a1.56 1.56 0 0 1-1.478 1.41l-.067.002h-34.19c.21 7.18 6.146 12.862 13.33 12.758a11.986 11.986 0 0 0 12.237-8.539a1.58 1.58 0 0 1 1.903-.96l.063.019l6.824 2.403c.378.122.686.39.86.74l.031.067c.188.37.22.8.087 1.194a22.51 22.51 0 0 1-22.004 15.296a24.3 24.3 0 0 1-17.348-7.043a27.12 27.12 0 0 1-7.447-19.684c0-16.391 11.78-26.242 23.284-26.438zm-193.47 0h.017c14.641 0 23.735 10.052 23.735 26.24a25 25 0 0 1-.135 2.538a1.546 1.546 0 0 1-1.481 1.41l-.065.002h-34.19c.21 7.2 6.177 12.89 13.38 12.758a11.97 11.97 0 0 0 12.237-8.539a1.563 1.563 0 0 1 1.903-.961l.064.02l6.824 2.403c.4.13.724.423.891.807c.16.382.16.812 0 1.194a22.51 22.51 0 0 1-21.986 15.296a24.3 24.3 0 0 1-17.381-7.043a27.2 27.2 0 0 1-7.447-19.684c0-16.557 12.019-26.44 23.634-26.44m-51.773-.017c6.572 0 11.884 1.597 15.818 4.74c2.66 2.12 4.63 4.98 5.665 8.22l.003.013a1.076 1.076 0 0 1-.738 1.284l-.055.014l-8.153 2.69a1.53 1.53 0 0 1-1.126 0a1.2 1.2 0 0 1-.64-.74l-.042-.16c-.743-2.654-3.17-6.916-10.732-6.916c-5.379 0-8.606 3.093-8.606 6.085l.001.118c.04 1.946 1.098 4.388 5.737 5.316l.145.029l8.976 1.68c9.918 1.998 15.635 7.388 15.749 14.9l.001.23l-.033-.135l-.002.228c-.144 7.53-7.429 15.455-20.842 15.455c-15.716 0-21.885-8.892-23.029-14.137a1.126 1.126 0 0 1 .784-1.228l.057-.016l8.405-2.622a1.4 1.4 0 0 1 .453 0a1.4 1.4 0 0 1 .618.132l.072.036c.308.148.536.425.621.756c1.06 5.044 5.615 8.052 12.17 8.052c6.102 0 8.876-3.194 8.876-6.085c0-2.86-2.417-4.979-6.584-5.854l-.14-.03l-9.43-1.831c-8.791-1.664-14.27-7.128-14.27-14.238c0-8.657 9.295-15.986 20.271-15.986M492.67 12.574h7.346a1.68 1.68 0 0 1 1.578 1.616l.002.065v13.8h8.84c.86.061 1.53.76 1.564 1.615l.001.066v7.393a1.58 1.58 0 0 1-1.5 1.531l-.066.002h-8.84v24.525c0 4.068 1.612 5.75 5.764 5.75a22 22 0 0 0 2.514-.192l.312-.044a1.56 1.56 0 0 1 1.277.353c.317.294.507.699.536 1.13l.003.08v6.909a1.58 1.58 0 0 1-1.127 1.53a22 22 0 0 1-5.945.809l-.274-.003c-8.772 0-14.245-5.585-14.354-14.618l-.001-.275V38.763h-7.65a1.68 1.68 0 0 1-1.575-1.53l-.004-.067v-7.362a1.68 1.68 0 0 1 1.515-1.676l.065-.005h2.056l.219-.004c2.4-.07 6.087-1.042 6.162-6.4l.002-.169v-7.295a1.68 1.68 0 0 1 1.515-1.676zM349.897 26.586l.193.007h-.017c8.654 0 17.39 6.03 17.564 19.198l.002.402v31.131a1.68 1.68 0 0 1-1.512 1.592l-.068.005h-8.052a1.68 1.68 0 0 1-1.575-1.53l-.005-.067V47.202l-.002-.232c-.049-3.839-1.353-10.006-9.259-10.006c-5.842 0-10.004 4.548-10.086 11.163l-.002.2v28.997a1.68 1.68 0 0 1-1.512 1.592l-.068.005h-8.15a1.68 1.68 0 0 1-1.576-1.53l-.004-.067V47.202l-.002-.232c-.049-3.839-1.353-10.006-9.262-10.006c-6.073 0-10.186 4.515-10.268 11.26l-.001.205v28.895a1.68 1.68 0 0 1-1.513 1.592l-.067.005h-8.053a1.68 1.68 0 0 1-1.558-1.53l-.004-.067V29.619a1.68 1.68 0 0 1 1.496-1.591l.066-.006h7.75a1.68 1.68 0 0 1 1.576 1.53l.004.067v2.874a18.1 18.1 0 0 1 13.614-5.9a16.08 16.08 0 0 1 14.508 8.22a18.2 18.2 0 0 1 15.843-8.227m120.566 5.94a22.23 22.23 0 0 1 4.511 14.157l-.008.216v30.425a1.68 1.68 0 0 1-1.496 1.591l-.066.006h-8.151a1.684 1.684 0 0 1-1.578-1.53l-.005-.067V48.529c0-7.53-3.546-11.363-10.27-11.363a9.35 9.35 0 0 0-7.648 3.564a14.75 14.75 0 0 0-2.626 8.742l.005.184v27.668a1.68 1.68 0 0 1-1.513 1.592l-.067.005h-8.136a1.68 1.68 0 0 1-1.576-1.53l-.004-.067V29.585c.04-.835.688-1.51 1.513-1.592l.067-.005h7.951a1.68 1.68 0 0 1 1.559 1.53l.004.067v3.362a17.5 17.5 0 0 1 13.885-6.354a17.01 17.01 0 0 1 13.649 5.934M1.95 58.179h57.875a1.967 1.967 0 0 1 1.95 1.916v7.313a1.967 1.967 0 0 1-1.883 1.981l-.067.002H1.95A1.97 1.97 0 0 1 0 67.474v-7.38a1.97 1.97 0 0 1 1.88-1.914zm258.966-20.91c-7.934 0-12.977 5.647-12.977 14.724S252.915 66.7 260.916 66.7c7.632 0 12.775-5.916 12.775-14.708c0-8.808-5.143-14.725-12.775-14.725m-67.25 9.82l-.021.18h23.92c-.583-6.39-5.086-10.374-11.83-10.453l-.206-.002A11.77 11.77 0 0 0 193.69 46.91zm193.493 0l-.021.18h23.921c-.582-6.39-5.087-10.374-11.832-10.453l-.205-.002a11.77 11.77 0 0 0-11.839 10.098zM67.07 2.892c.502.18.908.557 1.127 1.042c.2.49.2 1.04 0 1.53l-2.521 6.724a1.916 1.916 0 0 1-2.438 1.176a40.04 40.04 0 0 0-38.662 6.909a41.64 41.64 0 0 0-13.649 21.751a1.95 1.95 0 0 1-1.882 1.463h-.438l-6.925-1.664a1.93 1.93 0 0 1-1.227-.908H.42a1.95 1.95 0 0 1-.218-1.53a52.76 52.76 0 0 1 17.566-27.77A50.95 50.95 0 0 1 67.07 2.893M41.436 31.939H99.31a1.967 1.967 0 0 1 1.947 1.847l.003.069V41.1a1.967 1.967 0 0 1-1.882 1.982l-.068.001H41.435a1.967 1.967 0 0 1-1.932-1.915v-7.246a1.967 1.967 0 0 1 1.864-1.981zM81.612 9.834h.2a5.9 5.9 0 0 1 5.832 5.834v.2a5.934 5.934 0 1 1-6.032-6.034"/></svg> </span>
+              
+             线段树 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/persistent-segment-tree">可持久化线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/BST">二叉搜索树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/RBTree">红黑树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/AVL">AVL</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/fhq-treap">FHQ-Treap</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-folder-open-o"></i>
+          <a href="javascript:void(0);" class="menu-no-link">第五章 图论</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/diameter_of_tree">树的直径</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/center_of_tree">树的中心</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/pseudotree">基环树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/kruskal">Kruskal</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/floyed">floyed算法</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string">字符串</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string/进制hash/index.html">进制hash</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string/manacher/index.html">马拉车-Manacher</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string/最小表示法/index.html">最小表示法</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math">数学</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind">思维方式</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind/index.html">总结</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind/约束松弛.html">约束松弛</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind/特例化-归纳.html">特例化-归纳</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math">数学</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/向上取整.html">向上取整</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/log.html">对数</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/集合.html">集合</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/反证法.html">反证法</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0"/><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z"/></g></svg> </span>
+              
+             组合数学 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/combinatorics/112_combinatorial_problems/index.html">112个组合问题</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/index.html">数论</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/group_theory/index.html">群论</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/Eratosthenes.html">埃氏筛</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/inverse/index.html">模逆元</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-folder-open-o"></i>
+          <a href="javascript:void(0);" class="menu-no-link">附录</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22"/></svg> </span>
+              
+             技巧 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/quickIO.html">quickIO</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/assert的使用.html">assert断言的使用</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/写题步奏.html">写题步奏</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/macos.html">macos下使用万能头文件</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/常用命令.html">常用命令</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/常用变量名.html">常用变量名</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#0065a9" d="m29.01 5.03l-5.766-2.776a1.74 1.74 0 0 0-1.989.338L2.38 19.8a1.166 1.166 0 0 0-.08 1.647q.037.04.077.077l1.541 1.4a1.165 1.165 0 0 0 1.489.066L28.142 5.75A1.158 1.158 0 0 1 30 6.672v-.067a1.75 1.75 0 0 0-.99-1.575"/><path fill="#007acc" d="m29.01 26.97l-5.766 2.777a1.745 1.745 0 0 1-1.989-.338L2.38 12.2a1.166 1.166 0 0 1-.08-1.647q.037-.04.077-.077l1.541-1.4A1.165 1.165 0 0 1 5.41 9.01l22.732 17.24A1.158 1.158 0 0 0 30 25.328v.072a1.75 1.75 0 0 1-.99 1.57"/><path fill="#1f9cf0" d="M23.244 29.747a1.745 1.745 0 0 1-1.989-.338A1.025 1.025 0 0 0 23 28.684V3.316a1.024 1.024 0 0 0-1.749-.724a1.74 1.74 0 0 1 1.989-.339l5.765 2.772A1.75 1.75 0 0 1 30 6.6v18.8a1.75 1.75 0 0 1-.991 1.576Z"/></svg> </span>
+              
+             vscode 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/vscode/如何调试.html">如何调试</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="#000"><path d="m3.463 12.86l-.005-.07zm7.264.69l-3.034-3.049l1.014-1.014l3.209 3.225l3.163-3.163l1.014 1.014l-3.034 3.034l3.034 3.05l-1.014 1.014l-3.209-3.225L8.707 17.6l-1.014-1.014l3.034-3.034z"/><path fill-rule="evenodd" d="M16.933 5.003V6h1.345l2.843-2.842l1.014 1.014l-2.692 2.691l.033.085a13.8 13.8 0 0 1 .885 4.912q0 .503-.034.995l-.005.075h3.54v1.434h-3.72l-.01.058c-.303 1.653-.891 3.16-1.692 4.429l-.06.094l3.423 3.44l-1.017 1.012l-3.274-3.29l-.099.11c-1.479 1.654-3.395 2.646-5.483 2.646c-2.12 0-4.063-1.023-5.552-2.723l-.098-.113l-3.209 3.208l-1.014-1.014l3.366-3.365l-.059-.095c-.772-1.25-1.34-2.725-1.636-4.34l-.01-.057H0V12.93h3.538l-.005-.075a14 14 0 0 1-.034-.995c0-1.743.31-3.39.863-4.854l.032-.084l-2.762-2.776L2.65 3.135L5.5 6h1.427v-.997a5.003 5.003 0 0 1 10.006 0m-8.572 0V6H15.5v-.997a3.569 3.569 0 0 0-7.138 0zm9.8 2.522l-.034-.09H5.733l-.034.09a12.3 12.3 0 0 0-.766 4.335c0 2.76.862 5.201 2.184 6.92c1.32 1.716 3.036 2.649 4.813 2.649s3.492-.933 4.813-2.65c1.322-1.718 2.184-4.16 2.184-6.919c0-1.574-.28-3.044-.766-4.335" clip-rule="evenodd"/></g></svg> </span>
+              
+             lldb的使用 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/lldb/lldb如何调试.html">lldb如何调试</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/lldb/lldb实现display命令.html">lldb实现display命令</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/lldb/lldbinit.html">lldbinit使用</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/gdb/lldbpython脚本入门.html">lldbpython脚本入门</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/software/常用软件.html">常用软件</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+</div>
+
+
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="page-header">
+        <h1>树状数组</h1>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#1.-%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89%EF%BC%9A%E8%8A%82%E7%82%B9%E4%BB%A3%E8%A1%A8%E4%BB%80%E4%B9%88%EF%BC%9F">1. 核心定义：节点代表什么？</a></li><li><a href="#2.-%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-p-%2B-lowbit(p)-%E8%A6%86%E7%9B%96%E4%BA%86-p">2. 数学证明：为什么 p + lowbit(p) 覆盖了 p</a></li><li><a href="#3.-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%EF%BC%88%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%9B%E4%BD%8D%EF%BC%89">3. 直观理解（二进制进位）</a></li><li><a href="#4.-%E6%80%BB%E7%BB%93">4. 总结</a></li><li><a href="#5.-%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%BB%BA%E8%AE%AE">5. 下一步建议</a></li><li><a href="#%E6%A0%B8%E5%BF%83%E7%9B%B4%E8%A7%89%EF%BC%9A%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%9B%E4%BD%8D-%3D-%E7%A7%AF%E6%9C%A8%E5%90%88%E5%B9%B6">核心直觉：二进制进位 = 积木合并</a></li><li><a href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93">一句话总结</a></li><li><a href="#%E7%AE%80%E6%B4%81%E7%9B%B4%E8%A7%82%E7%9A%84%E8%AF%81%E6%98%8E%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%AD%E9%97%B4%E7%9A%84%E8%8A%82%E7%82%B9%E9%83%BD%E2%80%9C%E6%89%8B%E5%A4%AA%E7%9F%AD%E2%80%9D%EF%BC%9F">简洁直观的证明：为什么中间的节点都“手太短”？</a></li><li><a href="#%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%E9%AA%8C%E8%AF%81-(n%3D8)">举个例子验证 (N=8)</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li><li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9%2C%E5%8D%95%E7%82%B9%E6%9F%A5%E8%AF%A2">区间修改,单点查询</a></li><li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li></ol></nav><h1>You Asked:</h1>
+<pre><code>template&lt;typename T,int N=maxn&gt;
+struct Bit {
+    T c[N+5];
+    //Bit(){}
+    inline int lowbit(int x) { return x &amp; -x;      }
+    inline int fa(int p)     { return p+lowbit(p); }
+    inline int left(int p)   { return p-lowbit(p); }
+
+    void update(int p, T v){
+        for( ; p &lt;= N; p = fa(p) ) c[p] += v;
+    }
+
+    T query(int p){ //前缀合
+        T sum=0;
+        for( ;p &gt; 0 ; p = left(p)) sum+= c[p];
+        return sum;
+    }
+};
+Bit&lt;ll&gt; bit;
+</code></pre>
+<p>如何证明(数学), p+ lowbit(p) 就是父亲</p>
+<h1>Gemini Responded:</h1>
+<p>这是一个非常深刻且经典的问题。要理解为什么 <code>p + lowbit(p)</code> 是 <code>p</code> 的父亲（或者更准确地说是<strong>直接覆盖 <code>p</code> 的下一个区间节点</strong>），我们需要从<strong>二进制表示</strong>和<strong>树状数组（BIT）的区间定义</strong>两个角度来证明。</p>
+<h3 id="1.-%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89%EF%BC%9A%E8%8A%82%E7%82%B9%E4%BB%A3%E8%A1%A8%E4%BB%80%E4%B9%88%EF%BC%9F" tabindex="-1">1. 核心定义：节点代表什么？</h3>
+<p>在树状数组中，每一个索引 <code>t</code> 不仅仅是一个下标，它代表一个<strong>区间</strong>。
+对于任意节点 <code>t</code>，它维护的区间是：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">[</mo><mi>t</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mspace width="1em"/><mi>t</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[t - \text{lowbit}(t) + 1, \quad t]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mclose">]</span></span></span></span></span></eqn></section></p>
+<p><strong>更新操作（Update）的本质</strong>：
+当我们更新位置 <code>p</code> 的值时，我们需要更新所有<strong>覆盖了位置 <code>p</code></strong> 的节点。
+也就是寻找所有满足以下条件的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq>：</p>
+<ol>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>≥</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">y \ge p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8304em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> （父节点索引必然大于等于子节点）</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>∈</mo><mo stretchy="false">[</mo><mi>y</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mspace width="1em"/><mi>y</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">p \in [y - \text{lowbit}(y) + 1, \quad y]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">]</span></span></span></span></eq> （区间包含关系）</li>
+</ol>
+<hr>
+<h3 id="2.-%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-p-%2B-lowbit(p)-%E8%A6%86%E7%9B%96%E4%BA%86-p" tabindex="-1">2. 数学证明：为什么 <code>p + lowbit(p)</code> 覆盖了 <code>p</code></h3>
+<p>我们要证明：如果令 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y = p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq>，那么节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的区间一定包含 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</p>
+<p><strong>步骤 A：二进制表示</strong>
+设 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的二进制表示中，最低位的 <code>1</code> 在第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 位（从0开始计数）。
+那么 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 可以写成：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>p</mi><mo>=</mo><mi>A</mi><mo>⋅</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>+</mo><mn>1</mn><mo>⋅</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">p = A \cdot 2^{k+1} + 1 \cdot 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9824em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></eqn></section>
+其中 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span></eq> 是比第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 位更高的部分。因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 是最低位的 1，所以第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 位右边全为 0。
+此时：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">\text{lowbit}(p) = 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></eqn></section></p>
+<p><strong>步骤 B：执行加法</strong>
+计算 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y = p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq>：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mo stretchy="false">(</mo><mi>A</mi><mo>⋅</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mn>2</mn><mi>k</mi></msup><mo stretchy="false">)</mo><mo>+</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">y = (A \cdot 2^{k+1} + 2^k) + 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9824em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1491em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></eqn></section>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mi>A</mi><mo>⋅</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>+</mo><mn>2</mn><mo>⋅</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">y = A \cdot 2^{k+1} + 2 \cdot 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9824em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></eqn></section>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mi>A</mi><mo>⋅</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>+</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">y = A \cdot 2^{k+1} + 2^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.9824em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></span></eqn></section>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mo stretchy="false">(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>⋅</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">y = (A + 1) \cdot 2^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></span></eqn></section></p>
+<p><strong>步骤 C：分析 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的性质</strong>
+观察 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的表达式 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>A</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>⋅</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">(A + 1) \cdot 2^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></eq>。这意味着 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的二进制末尾至少有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 个 0。
+因此，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的最低位 1 的位置至少是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。
+所以我们得到一个关键不等式：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>≥</mo><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\text{lowbit}(y) \ge 2^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8991em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></span></eqn></section>
+而我们要记得 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">\text{lowbit}(p) = 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq>，所以：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>&gt;</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(y) &gt; \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></span></eqn></section></p>
+<p><strong>步骤 D：验证区间包含</strong>
+节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的管辖范围左边界是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>y</mi></msub><mo>=</mo><mi>y</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L_y = y - \text{lowbit}(y) + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。
+我们需要证明 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>y</mi></msub><mo>≤</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">L_y \le p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9694em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</p>
+<p>由 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y = p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 可得：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y - \text{lowbit}(y) = p + \text{lowbit}(p) - \text{lowbit}(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></span></eqn></section></p>
+<p>因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>≥</mo><mn>2</mn><mo>⋅</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(y) \ge 2 \cdot \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> (即 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>≥</mo><mn>2</mn><mo>⋅</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^{k+1} \ge 2 \cdot 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9851em;vertical-align:-0.136em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq>)，
+所以 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(p) - \text{lowbit}(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></eq> 一定是一个<strong>负数</strong>。</p>
+<p>这意味着：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">y - \text{lowbit}(y) &lt; p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></span></eqn></section>
+所以：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn><mo>≤</mo><mi>p</mi><mo>≤</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">y - \text{lowbit}(y) + 1 \le p \le y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8304em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></span></eqn></section>
+<strong>证毕</strong>。节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 的区间确实覆盖了位置 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</p>
+<hr>
+<h3 id="3.-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%EF%BC%88%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%9B%E4%BD%8D%EF%BC%89" tabindex="-1">3. 直观理解（二进制进位）</h3>
+<p>用一个具体的例子最容易理解。设 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">N=8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span></span></span></span></eq>。</p>
+<p><strong>例子：更新位置 3</strong>
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">p = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq> (二进制 <code>0011</code>)
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(3) = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">3</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> (<code>0001</code>)</p>
+<p><strong>找父节点：</strong>
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>3</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">y = 3 + 1 = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq> (二进制 <code>0100</code>)</p>
+<p>我们来看看这就发生了什么：</p>
+<ol>
+<li><strong>节点 3</strong> (<code>0011</code>) 的管辖长度是 <code>lowbit(3) = 1</code>。区间是 <code>[3, 3]</code>。</li>
+<li><strong>加法进位</strong>：<code>0011 + 0001 = 0100</code>。末尾连续的 1 全部变成了 0，并在更高位产生了一个 1。</li>
+<li><strong>节点 4</strong> (<code>0100</code>) 的管辖长度是 <code>lowbit(4) = 4</code>。区间是 <code>[1, 4]</code>。</li>
+<li>显然 <code>[1, 4]</code> 包含 <code>3</code>。</li>
+</ol>
+<p><strong>再往上找：</strong>
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">p = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq> (<code>0100</code>)
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(4) = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">4</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq> (<code>0100</code>)
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>4</mn><mo>+</mo><mn>4</mn><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">y = 4 + 4 = 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span></span></span></span></eq> (<code>1000</code>)
+节点 8 的区间是 <code>[1, 8]</code>，显然包含节点 4 的区间 <code>[1, 4]</code>，也包含原始位置 3。</p>
+<h3 id="4.-%E6%80%BB%E7%BB%93" tabindex="-1">4. 总结</h3>
+<p><code>p + lowbit(p)</code> 这个操作在数学上的意义是：
+<strong>找到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 作为一个子区间，被合并进的那个更大的区间的右端点。</strong></p>
+<ul>
+<li><strong><code>lowbit(p)</code></strong>：代表当前节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 管辖的区域长度。</li>
+<li><strong><code>p + lowbit(p)</code></strong>：把这个长度加回去，利用二进制进位，找到了一个<strong>更高位的、且能覆盖当前区域</strong>的节点。</li>
+</ul>
+<p>这就是为什么在 <code>update</code> 操作中，我们不断执行 <code>p += lowbit(p)</code> 就能遍历所有包含位置 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的节点（即树上的祖先）。</p>
+<h3 id="5.-%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%BB%BA%E8%AE%AE" tabindex="-1">5. 下一步建议</h3>
+<p>既然你已经深入了解了 BIT 的数学原理，你是否需要我为你解释：</p>
+<ol>
+<li>如何利用这个性质实现 <strong>区间修改 + 区间查询</strong> (需要两个 BIT)？</li>
+<li>或者对比一下 <strong>线段树 (Segment Tree)</strong>，在什么情况下 BIT 的这种父子关系会失效或不够用？</li>
+</ol>
+<hr>
+<h1>You Asked:</h1>
+<p>这个证明复杂了,有没有 简洁一点的证明</p>
+<h1>Gemini Responded:</h1>
+<p>当然，我们可以从 <strong>“补齐” (Completion)</strong> 的角度给出一个极简的直觉证明。</p>
+<h3 id="%E6%A0%B8%E5%BF%83%E7%9B%B4%E8%A7%89%EF%BC%9A%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%9B%E4%BD%8D-%3D-%E7%A7%AF%E6%9C%A8%E5%90%88%E5%B9%B6" tabindex="-1">核心直觉：二进制进位 = 积木合并</h3>
+<p>想象 BIT 的结构就是搭积木。</p>
+<ul>
+<li>节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 代表一块长度为 <code>lowbit(p)</code> 的积木。</li>
+<li>这块积木放置在数轴的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>p</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mspace width="1em"/><mi>p</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[p - \text{lowbit}(p) + 1, \quad p]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span><span class="mclose">]</span></span></span></span></eq> 位置。</li>
+</ul>
+<p><strong>证明逻辑如下：</strong></p>
+<ol>
+<li>
+<p><strong>现状</strong>：
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的二进制末尾是一个 <code>1</code> 后面跟着 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个 <code>0</code>（例如 <code>...0100</code>）。
+这意味着 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 目前管辖着一段长度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq> 的区间。</p>
+</li>
+<li>
+<p><strong>目标</strong>：
+我们要找 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的父亲。父亲必须是一个<strong>更大的区间</strong>，并且这个大区间要<strong>包含</strong> <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 这个小区间。</p>
+</li>
+<li>
+<p><strong>操作</strong>：
+做加法 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq>。
+这相当于在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的基础上，<strong>再加一段</strong>同样长度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq> 的积木。</p>
+</li>
+<li>
+<p><strong>结果</strong>：
+二进制发生进位：<code>...0100</code> + <code>...0000</code> (lowbit) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> <code>...1000</code>。
+末尾的 <code>1</code> 消失了，进位到了更高位。</p>
+<p>这意味两块长度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq> 的小积木，<strong>合并</strong>成了一块长度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></eq> 的大积木。
+这块新的大积木的右边界就是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq>，它自然包含了原来的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</p>
+</li>
+</ol>
+<hr>
+<h3 id="%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93" tabindex="-1">一句话总结</h3>
+<p><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 的本质，就是把 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 当前代表的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq> 区间，填满补齐，进位成 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></eq> 的大区间。</strong></p>
+<p>这个大区间（父亲）当然包含原来的小区间（儿子）。</p>
+<hr>
+<h1>You Asked:</h1>
+<p>是不是要证明<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 是第一个包含p的点呢?</p>
+<h1>Gemini Responded:</h1>
+<p><strong>是的，你非常敏锐，这正是问题的关键！</strong></p>
+<p>证明“<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 包含 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>”是不够的，因为爷爷节点也包含 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>，祖先节点都包含 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。
+要证明 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 是树结构中的<strong>直接父亲（Parent）</strong>，我们必须证明它是<strong>第一个</strong>（最小的）包含 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 且下标大于 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的节点。</p>
+<p>换句话说，我们要证明：
+<strong>在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 之间，不存在任何其他节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 能够覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</strong></p>
+<hr>
+<h3 id="%E7%AE%80%E6%B4%81%E7%9B%B4%E8%A7%82%E7%9A%84%E8%AF%81%E6%98%8E%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%AD%E9%97%B4%E7%9A%84%E8%8A%82%E7%82%B9%E9%83%BD%E2%80%9C%E6%89%8B%E5%A4%AA%E7%9F%AD%E2%80%9D%EF%BC%9F" tabindex="-1">简洁直观的证明：为什么中间的节点都“手太短”？</h3>
+<p>我们用<strong>区间长度</strong>来思考。</p>
+<p><strong>1. 设定的场景</strong></p>
+<ul>
+<li>令 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo>=</mo><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">next = p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>假设有一个中间点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq>，满足 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>&lt;</mo><mi>z</mi><mo>&lt;</mo><mi>n</mi><mi>e</mi><mi>x</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">p &lt; z &lt; next</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">n</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">t</span></span></span></span></eq>。</li>
+</ul>
+<p><strong>2. 关键推导：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 的性质</strong>
+因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 比 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 大，但还没大到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p + \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq>，这说明 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 是在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的基础上加上了一个比 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> <strong>更小</strong>的数。</p>
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的二进制末尾有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个 0（因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">\text{lowbit}(p) = 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq>）。</li>
+<li>既然 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 只是增加了一个很小的量（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&lt;</mo><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">&lt; 2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></eq>），那么 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 的二进制变化必然发生在这些末尾的 0 里面。</li>
+<li><strong>结论</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 的末尾 0 的数量一定比 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 少。也就是说：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(z) &lt; \text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></span></eqn></section></li>
+</ul>
+<p><strong>3. 判定覆盖：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 能否够得着 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>？</strong>
+一个节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 的管辖范围左边界是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>=</mo><mi>z</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L_z = z - \text{lowbit}(z) + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。
+如果 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 要覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>，必须满足 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>≤</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">L_z \le p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</p>
+<p>让我们来看看 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 的左边界在哪里：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>=</mo><mi>z</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L_z = z - \text{lowbit}(z) + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></eqn></section></p>
+<p>因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>&gt;</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">z &gt; p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>，我们可以把 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 写成 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mi>δ</mi></mrow><annotation encoding="application/x-tex">p + \delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span></span></span></span></eq>（其中 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\delta &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></eq>）：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>=</mo><mi>p</mi><mo>+</mo><mi>δ</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L_z = p + \delta - \text{lowbit}(z) + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></eqn></section></p>
+<p>回顾上面的结论：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi></mrow><annotation encoding="application/x-tex">\delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span></span></span></span></eq> 是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的差值。由于 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 是由 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的低位填充进来的，根据二进制性质，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(z)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span></eq> 其实就是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>δ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(\delta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mclose">)</span></span></span></span></eq>（或者更小）。
+在二进制加法中，增加的量 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi></mrow><annotation encoding="application/x-tex">\delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span></span></span></span></eq> 和结果的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{lowbit}(z)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span></eq> 满足：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>≥</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\delta \ge \text{lowbit}(z)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8304em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span></eq>。
+<em>(比如 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>→</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">4 \to 6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq>，增加2，lowbit是2；<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>→</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">4 \to 7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span></span></span></span></eq>，增加3，lowbit是1)</em></p>
+<p>既然 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mo>≥</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\delta \ge \text{lowbit}(z)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8304em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span></eq>，那么：
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>=</mo><mi>p</mi><mo>+</mo><mo stretchy="false">(</mo><mi>δ</mi><mo>−</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L_z = p + (\delta - \text{lowbit}(z)) + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">))</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></eqn></section>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>≥</mo><mi>p</mi><mo>+</mo><mn>0</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">L_z \ge p + 0 + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></eqn></section>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>&gt;</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">L_z &gt; p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></span></eqn></section></p>
+<p><strong>4. 最终结论</strong>
+因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>z</mi></msub><mo>&gt;</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">L_z &gt; p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>，所以中间节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 的管辖范围的左边界，在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的右边。
+<strong>中间的节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 根本覆盖不到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</strong></p>
+<hr>
+<h3 id="%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%E9%AA%8C%E8%AF%81-(n%3D8)" tabindex="-1">举个例子验证 (N=8)</h3>
+<p>设 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">p = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq> (<code>0100</code>)。
+<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(4) = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">4</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq>。
+下一个目标是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>+</mo><mn>4</mn><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">4+4=8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span></span></span></span></eq>。</p>
+<p><strong>我们来看看中间的数 5, 6, 7 是否包含 4？</strong></p>
+<ol>
+<li>
+<p><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">z=5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> (<code>0101</code>)</strong>:</p>
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(5) = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">5</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。</li>
+<li>管辖区间：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>5</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[5, 5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></eq>。</li>
+<li><strong>左边界 5 &gt; 4</strong>，不包含。</li>
+</ul>
+</li>
+<li>
+<p><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">z=6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq> (<code>0110</code>)</strong>:</p>
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>6</mn><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(6) = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">6</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq>。</li>
+<li>管辖区间：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>5</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[5, 6]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">]</span></span></span></span></eq>。</li>
+<li><strong>左边界 5 &gt; 4</strong>，不包含。</li>
+</ul>
+</li>
+<li>
+<p><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">z=7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span></span></span></span></eq> (<code>0111</code>)</strong>:</p>
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>7</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(7) = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">7</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。</li>
+<li>管辖区间：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>7</mn><mo separator="true">,</mo><mn>7</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[7, 7]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">7</span><span class="mclose">]</span></span></span></span></eq>。</li>
+<li><strong>左边界 7 &gt; 4</strong>，不包含。</li>
+</ul>
+</li>
+</ol>
+<p><strong>只有到了 8 (<code>1000</code>)</strong>：</p>
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>lowbit</mtext><mo stretchy="false">(</mo><mn>8</mn><mo stretchy="false">)</mo><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">\text{lowbit}(8) = 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord">8</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span></span></span></span></eq>。</li>
+<li>管辖区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>8</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 8]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">8</span><span class="mclose">]</span></span></span></span></eq>。</li>
+<li><strong>左边界 1 &lt;= 4</strong>，包含！</li>
+</ul>
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
+<p>你说得对，证明不仅要是“包含”，还要是“紧邻”。
+上面的推导证明了：<strong>在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p+\text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 之间的所有数，因为 <code>lowbit</code> 太小（手太短），都无法向左伸长去覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq>。</strong>
+所以 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>+</mo><mtext>lowbit</mtext><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p+\text{lowbit}(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">lowbit</span></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mclose">)</span></span></span></span></eq> 就是第一个能覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq> 的节点（父亲）。</p>
+<hr>
+<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div>
+        <code>const int maxn <span class="token operator">=</span> <span class="token number">1e5</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+using ll <span class="token operator">=</span> long long<span class="token punctuation">;</span>
+
+template<span class="token operator">&lt;</span>typename T<span class="token punctuation">,</span>int N<span class="token operator">=</span>maxn<span class="token operator">></span>
+struct Bit <span class="token punctuation">{</span>
+    T c<span class="token punctuation">[</span>N<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 树状数组, 1-based</span>
+    <span class="token comment">//Bit(){}</span>
+    inline int <span class="token function">lowbit</span><span class="token punctuation">(</span>int x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token operator">-</span>x<span class="token punctuation">;</span>      <span class="token punctuation">}</span> <span class="token comment">// lowbit</span>
+    inline int <span class="token function">fa</span><span class="token punctuation">(</span>int p<span class="token punctuation">)</span>     <span class="token punctuation">{</span> <span class="token keyword">return</span> p<span class="token operator">+</span><span class="token function">lowbit</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token comment">// update a[p] 时, 下一个要更新的节点</span>
+    inline int <span class="token function">left</span><span class="token punctuation">(</span>int p<span class="token punctuation">)</span>   <span class="token punctuation">{</span> <span class="token keyword">return</span> p<span class="token operator">-</span><span class="token function">lowbit</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token comment">// query a[1..p] 时, 下一个要求和的节点</span>
+
+    <span class="token comment">// 单点更新 a[p] += v</span>
+    void <span class="token function">update</span><span class="token punctuation">(</span>int p<span class="token punctuation">,</span> T v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span> p <span class="token operator">&lt;=</span> N<span class="token punctuation">;</span> p <span class="token operator">=</span> <span class="token function">fa</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">)</span> c<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> v<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 查询前缀和 a[1..p]</span>
+    T <span class="token function">query</span><span class="token punctuation">(</span>int p<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment">//前缀和</span>
+        T sum<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span>p <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">;</span> p <span class="token operator">=</span> <span class="token function">left</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> sum<span class="token operator">+</span><span class="token operator">=</span> c<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+Bit<span class="token operator">&lt;</span>ll<span class="token operator">></span> bit<span class="token punctuation">;</span>
+</code>
+    </pre>
+</div>
+<h2 id="%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9%2C%E5%8D%95%E7%82%B9%E6%9F%A5%E8%AF%A2" tabindex="-1">区间修改,单点查询</h2>
+<div class="admonition tip">
+<p class="admonition-title">一句话算法</p>
+<p>就是差分数组做BIT</p>
+<p><strong>区间修改,单点查询,在差分数组上就是单点修改,区间查询</strong></p>
+</div>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div>
+        <code>const int maxn <span class="token operator">=</span> <span class="token number">1e5</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+using ll <span class="token operator">=</span> long long<span class="token punctuation">;</span>
+
+template<span class="token operator">&lt;</span>typename T<span class="token punctuation">,</span>int N<span class="token operator">=</span>maxn<span class="token operator">></span>
+struct Bit <span class="token punctuation">{</span>
+    T c<span class="token punctuation">[</span>N<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 树状数组, 1-based</span>
+    <span class="token comment">//Bit(){}</span>
+    inline int <span class="token function">lowbit</span><span class="token punctuation">(</span>int x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token operator">-</span>x<span class="token punctuation">;</span>      <span class="token punctuation">}</span> <span class="token comment">// lowbit</span>
+    inline int <span class="token function">fa</span><span class="token punctuation">(</span>int p<span class="token punctuation">)</span>     <span class="token punctuation">{</span> <span class="token keyword">return</span> p<span class="token operator">+</span><span class="token function">lowbit</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token comment">// update a[p] 时, 下一个要更新的节点</span>
+    inline int <span class="token function">left</span><span class="token punctuation">(</span>int p<span class="token punctuation">)</span>   <span class="token punctuation">{</span> <span class="token keyword">return</span> p<span class="token operator">-</span><span class="token function">lowbit</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token comment">// query a[1..p] 时, 下一个要求和的节点</span>
+
+    <span class="token comment">// 单点更新 a[p] += v</span>
+    void <span class="token function">update</span><span class="token punctuation">(</span>int p<span class="token punctuation">,</span> T v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span> p <span class="token operator">&lt;=</span> N<span class="token punctuation">;</span> p <span class="token operator">=</span> <span class="token function">fa</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">)</span> c<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> v<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment">// 查询前缀和 a[1..p]</span>
+    T <span class="token function">query</span><span class="token punctuation">(</span>int p<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment">//前缀和</span>
+        T sum<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span>p <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">;</span> p <span class="token operator">=</span> <span class="token function">left</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> sum<span class="token operator">+</span><span class="token operator">=</span> c<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 区间和</span>
+    T <span class="token function">query</span><span class="token punctuation">(</span>int l<span class="token punctuation">,</span> int r<span class="token punctuation">)</span><span class="token punctuation">{</span> 
+        <span class="token keyword">return</span> <span class="token function">query</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">query</span><span class="token punctuation">(</span>l<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 区间加法 a[l..r] += v</span>
+    void <span class="token function">range_add</span><span class="token punctuation">(</span>int l<span class="token punctuation">,</span> int r<span class="token punctuation">,</span> T v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">update</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">update</span><span class="token punctuation">(</span>r<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+Bit<span class="token operator">&lt;</span>ll<span class="token operator">></span> bit<span class="token punctuation">;</span>
+</code>
+    </pre>
+</div>
+<h2 id="%E9%A2%98%E7%9B%AE" tabindex="-1">题目</h2>
+<p><a href="/problems/luogu/P1972/index.html" class="problem-link" target="_blank">luogu-P1972 [SDOI2009] HH 的项链 tags: [树状数组,可持久化线段树,莫队]</a></p>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/12/14 10:28:57</p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>
