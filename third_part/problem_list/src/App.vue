@@ -10,6 +10,11 @@ const template_array = inject('template_array')
 const search_text = ref("")
 const toast = useToast()
 
+// 筛选相关状态
+const selectedOJs = ref([])
+const selectedTags = ref([])
+const showFilters = ref(false)
+
 // 模态框相关状态
 const showCodeModal = ref(false)
 const modalTitle = ref('')
@@ -31,11 +36,31 @@ const FuseOptions = {
 	// ignoreFieldNorm: false,
 	// fieldNormWeight: 1,
 	keys: [
-		"title"
+		"title","problem_id","oj","desc"
 	]
 }
 
 const fuse = new Fuse(template_array,FuseOptions)
+
+// 获取所有唯一的OJ列表
+const uniqueOJs = computed(() => {
+    const ojs = new Set()
+    template_array.forEach(item => {
+        if (item.oj) ojs.add(item.oj)
+    })
+    return Array.from(ojs).sort()
+})
+
+// 获取所有唯一的tag列表
+const uniqueTags = computed(() => {
+    const tags = new Set()
+    template_array.forEach(item => {
+        if (item.tags && Array.isArray(item.tags)) {
+            item.tags.forEach(tag => tags.add(tag))
+        }
+    })
+    return Array.from(tags).sort()
+})
 
 const tags_string = (tags) => {
     return tags.join(",")
@@ -139,10 +164,26 @@ const search_result = computed(
         else
             result = fuse.search(search_text.value).map(r => r.item);
         
+        // OJ筛选
+        if (selectedOJs.value.length > 0) {
+            result = result.filter(item => 
+                selectedOJs.value.includes(item.oj)
+            )
+        }
+        
+        // Tag筛选
+        if (selectedTags.value.length > 0) {
+            result = result.filter(item => 
+                item.tags && selectedTags.value.some(tag => item.tags.includes(tag))
+            )
+        }
+        
         // 按日期从新到旧排序
         return result.sort((a, b) => {
             // 将日期字符串转换为时间戳进行比较
-            return b.dateA - a.dateA; // 降序排列（从新到旧）
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
+            return dateB - dateA; // 降序排列（从新到旧）
         });
     }
 )
@@ -156,6 +197,53 @@ const search_result = computed(
                 <span class="input-group-text" id="addon-wrapping">搜索</span>
                 <!-- <input @keydown.enter="search_func"  v-model="search_text" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping"> -->
                 <input  v-model="search_text" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping">
+            </div>
+        </div>
+
+        <!-- 筛选区域 -->
+        <div class="filter-section">
+            <div class="filter-header" @click="showFilters = !showFilters">
+                <span>筛选选项</span>
+                <span class="filter-toggle">{{ showFilters ? '▼' : '▶' }}</span>
+            </div>
+            
+            <div v-show="showFilters" class="filter-content">
+                <!-- OJ筛选 -->
+                <div class="filter-group">
+                    <h4>OJ平台</h4>
+                    <div class="checkbox-grid">
+                        <label v-for="oj in uniqueOJs" :key="oj" class="checkbox-label">
+                            <input 
+                                type="checkbox" 
+                                :value="oj" 
+                                v-model="selectedOJs"
+                            >
+                            <span>{{ oj }}</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Tag筛选 -->
+                <div class="filter-group">
+                    <h4>标签</h4>
+                    <div class="checkbox-grid">
+                        <label v-for="tag in uniqueTags" :key="tag" class="checkbox-label">
+                            <input 
+                                type="checkbox" 
+                                :value="tag" 
+                                v-model="selectedTags"
+                            >
+                            <span>{{ tag }}</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 清除筛选按钮 -->
+                <div class="filter-actions">
+                    <button @click="selectedOJs = []; selectedTags = []" class="clear-filters-btn">
+                        清除所有筛选
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -225,6 +313,106 @@ h1 {
 
 .search_box {
     margin-bottom: 2rem;
+}
+
+/* 筛选区域样式 */
+.filter-section {
+    margin-bottom: 2rem;
+    border: 1px solid #FFC700;
+    background-color: #111;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #332a00;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #FFC700;
+}
+
+.filter-header:hover {
+    background-color: #443300;
+}
+
+.filter-toggle {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.filter-content {
+    padding: 1rem;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-group:last-child {
+    margin-bottom: 1rem;
+}
+
+.filter-group h4 {
+    color: #FFD700;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.checkbox-label:hover {
+    background-color: #221c00;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 0.5rem;
+    accent-color: #FFC700;
+}
+
+.checkbox-label span {
+    color: #FFC700;
+    font-size: 0.9rem;
+}
+
+.filter-actions {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px dotted #554400;
+}
+
+.clear-filters-btn {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    color: #FFC700;
+    border: 1px solid #FFC700;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.clear-filters-btn:hover {
+    background-color: #FFC700;
+    color: #000;
+    box-shadow: 0 0 8px #FFC700;
 }
 
 .input-group, .form-control, .input-group-text {
