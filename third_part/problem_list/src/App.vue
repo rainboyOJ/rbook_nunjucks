@@ -133,10 +133,17 @@ const search_func = () => {
 
 const search_result = computed(
     () =>{
+        let result;
         if( search_text.value.length == 0)
-            return template_array
+            result = template_array
         else
-            return fuse.search(search_text.value).map(r => r.item);
+            result = fuse.search(search_text.value).map(r => r.item);
+        
+        // 按日期从新到旧排序
+        return result.sort((a, b) => {
+            // 将日期字符串转换为时间戳进行比较
+            return b.dateA - a.dateA; // 降序排列（从新到旧）
+        });
     }
 )
 </script>
@@ -163,6 +170,7 @@ const search_result = computed(
                         <th scope="col">简要描述</th>
                         <th scope="col">OJ</th>
                         <th scope="col">标签</th>
+                        <th scope="col">时间</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -172,6 +180,7 @@ const search_result = computed(
                         <td class="p_desc">{{ d.desc || "" }}</td>
                         <td><a class="oj_name" :href="d.source" target="_blank">{{d.oj}}-{{ d.problem_id }}</a></td>
                         <td>{{ tags_string(d.tags)}}</td>
+                        <td>{{ d.date }}</td>
                     </tr>
                 </tbody>
             </table>

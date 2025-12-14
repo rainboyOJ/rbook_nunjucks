@@ -49,6 +49,10 @@ var template_array = []
 async function load_data() {
   const ProbEntiy = new Problem();
   template_array = ProbEntiy.problems
+  // 给 template_array 添加一个属性，用于时间戳
+  template_array.forEach((item) => {
+    item.dateA = new Date(item.date).getTime();
+  });
   return ProbEntiy.problems
 }
 
