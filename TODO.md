@@ -32,3 +32,13 @@
     - [ ] /oj-name/id
   - [ ] Problems类,管理problem
   - [ ] markdown 语法 id转换连接 `@problem(id)
+
+
+## problem-list
+
+
+- [ ] 按标签,OJ 筛选
+- [ ] 按时间排序(为高到低)
+- [ ] 增加 book 字段,记录用到的rbook的哪些知识
+- [ ] 增加 pre 字段,记录前置的题目
+- [ ] 设计 dag 导航图 ,记录题目的网络
