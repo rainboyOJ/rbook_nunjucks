@@ -30,7 +30,7 @@ int main () {
     }
     for(int i = 1;i <= n ;++i ) // i: 1->n
     {
-
+        for(int j = 0 ;j<=up-w[i];j++)
             f[j] = f[j] || f[j+w[i]];
     }
 

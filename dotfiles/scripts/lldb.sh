@@ -53,7 +53,10 @@ selected_file=$(find . -maxdepth 1 -type f | grep 'in' | sed 's|^\./||' | \
 if [ -n "$selected_file" ]; then
     # 如果选择了, 打印确认信息并执行 lldb
     echo "✅ Starting lldb for '$executable' with input '$selected_file'"
-    lldb -o "process launch -i '$selected_file'" -f "$executable"
+    lldb \
+      -o "command alias u thread until %1" \
+      -o "command alias rr process launch -i '$selected_file'" \
+      -o "rr" -f "$executable"
 else
     # 如果没选择, 打印取消信息并退出
     echo "🚫 No input file selected. Aborting."

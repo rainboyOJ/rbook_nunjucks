@@ -102,9 +102,6 @@ chapters:
         path: manacher/index.md
       - title: 最小表示法
         path: 最小表示法/index.md
-  - title: 数学
-    path: math
-    sections:
   - title: 思维方式
     path: thinkMind
     sections:
@@ -138,6 +135,14 @@ chapters:
         path: numherTheory/Eratosthenes.md
       - title: 模逆元
         path: numherTheory/inverse/index.md
+      - title: 中国剩余定理
+        path: numherTheory/crt.md
+      - title: 线性筛
+        path: 线性筛/index.md
+      - title: 欧拉函数
+        path: numherTheory/欧拉函数.md
+      - title: 线性筛欧拉函数
+        path: numherTheory/线性欧拉函数.md
   - title: 附录
     path: appendix
     nolink: true
