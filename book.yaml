@@ -133,6 +133,8 @@ chapters:
         path: group_theory/index.md
       - title: 埃氏筛
         path: numherTheory/Eratosthenes.md
+      - title: 整除分块
+        path: numherTheory/整除分块/index.md
       - title: 模逆元
         path: numherTheory/inverse/index.md
       - title: 中国剩余定理
