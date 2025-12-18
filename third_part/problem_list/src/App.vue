@@ -197,6 +197,7 @@ const search_result = computed(
                 <span class="input-group-text" id="addon-wrapping">搜索</span>
                 <!-- <input @keydown.enter="search_func"  v-model="search_text" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping"> -->
                 <input  v-model="search_text" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping">
+                <span> 题目数量 : {{  search_result.length }}</span>
             </div>
         </div>
 
@@ -415,7 +416,7 @@ h1 {
     box-shadow: 0 0 8px #FFC700;
 }
 
-.input-group, .form-control, .input-group-text {
+.form-control, .input-group-text {
     background-color: transparent;
     color: #FFC700;
     border: 1px solid #FFC700;
