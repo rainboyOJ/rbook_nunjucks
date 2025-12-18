@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的算法书 - 数学一本通</title>
+    <title>我的算法书 - 拓扑排序</title>
     <meta name="description" content="这是一本关于算法的书">
     <meta name="author" content="rainboy">
 
@@ -1024,17 +1024,40 @@ function hideMenuModal() {
         
 <article class="page">
     <header class="page-header">
-        <h1>数学一本通</h1>
+        <h1>拓扑排序</h1>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%95%B0%E8%AE%BA">第一章 数论</a></li></ol></nav><p>来自: <a href="https://vjudge.net/article/7975">https://vjudge.net/article/7975</a></p>
-<h2 id="%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%95%B0%E8%AE%BA" tabindex="-1">第一章 数论</h2>
+    <nav class="table-of-contents"><ol><li><a href="#kahn-%E7%AE%97%E6%B3%95">Kahn 算法</a></li><li><a href="#%E8%BE%93%E5%87%BA%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84topsort">输出字典序最小的topsort</a><ol><li><a href="#%F0%9F%92%A1-%E6%A0%B8%E5%BF%83%E6%80%BB%E7%BB%93%EF%BC%9A%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%EF%BC%9F">💡 核心总结：如何实现字典序最小的拓扑排序？</a></li></ol></li><li><a href="#dfs%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89topsort">dfs输出所有topsort</a></li></ol></nav><h2 id="kahn-%E7%AE%97%E6%B3%95" tabindex="-1">Kahn 算法</h2>
+<h2 id="%E8%BE%93%E5%87%BA%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84topsort" tabindex="-1">输出字典序最小的topsort</h2>
+<p>你可以直接使用这段文字，它简洁地概括了“字典序最小拓扑排序”的本质：</p>
+<hr>
+<h3 id="%F0%9F%92%A1-%E6%A0%B8%E5%BF%83%E6%80%BB%E7%BB%93%EF%BC%9A%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%EF%BC%9F" tabindex="-1">💡 核心总结：如何实现字典序最小的拓扑排序？</h3>
+<p><strong>1. 核心工具：</strong></p>
+<p>将标准 Kahn 算法中的“队列”替换为**“小根堆（优先队列）”**。</p>
+<p><strong>2. 算法本质：</strong></p>
 <ul>
-<li><a href="/problems/luogu/T225994/index.html" class="problem-link" target="_blank">luogu-T225994 教堂（church） tags: [数论]</a></li>
-<li><a href="/problems/luogu/P3518/index.html" class="problem-link" target="_blank">luogu-P3518 [POI 2011] SEJ-Strongbox tags: [数论,exgcd]</a></li>
-<li><a href="/problems/luogu/P1290/index.html" class="problem-link" target="_blank">luogu-P1290 欧几里德的游戏 tags: [gcd,博弈论]</a></li>
+<li><strong>入度为 0 是前提</strong>：只有当一个节点的入度减为 0 时，才意味着它所有的前驱节点都已删除完毕。此时，该节点才具备进入序列的“资格”。</li>
+<li><strong>贪心策略是关键</strong>：在任何时刻，所有入度为 0 的节点都是彼此独立、可以随时输出的。为了让整体字典序最小，我们每次都从这群“自由节点”中，利用小根堆挑出<strong>编号最小</strong>的那一个优先输出。</li>
+</ul>
+<p><strong>3. 一句话证明：</strong></p>
+<ul>
+<li>由于进入堆的节点<strong>前驱已全部清空</strong>，它们之间不存在先后约束，因此“每一步都选最小的”这一局部最优解，最终会导向全局字典序最小的拓扑序。</li>
+<li>进入堆是“前驱已全部删除”的充分必要条件。</li>
+</ul>
+<h2 id="dfs%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89topsort" tabindex="-1">dfs输出所有topsort</h2>
+<p>为了能求出所有的可能的topsort,这里使用<code>dfs</code>回溯法</p>
+<ul>
+<li>
+<p>类似 <strong>[走迷宫]</strong>, 在一个分叉口,每个分叉的路线,我们都走一遍.</p>
+</li>
+<li>
+<p>当<strong>回溯到</strong>这个路口的时候,我们要保证: 恢复现场,就像<strong>时间回溯到事情的开始,我们从新做一次选择</strong>.</p>
+</li>
+<li>
+<p><a href="/problems/poj/1270/index.html" class="problem-link" target="_blank">poj-1270 Following Orders tags: [topsort,回溯法]</a></p>
+</li>
 </ul>
 
 </div> 
