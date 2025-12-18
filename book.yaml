@@ -83,6 +83,8 @@ chapters:
     path: graph
     nolink: true
     sections:
+      - title: 拓扑排序
+        path: topsort/index.md
       - title: 树的直径
         path: diameter_of_tree
       - title: 树的中心
