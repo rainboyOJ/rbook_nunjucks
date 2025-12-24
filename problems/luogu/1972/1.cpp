@@ -1,5 +1,5 @@
 /**
- * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * Author by Rainboy blog: https://blog.roj.ac.cn github : https://github.com/rainboylvx
  * date: 2025-12-02 15:03:03
  * oj: luogu-1972
  * title: [SDOI2009] HH 的项链

@@ -1,5 +1,5 @@
 /**
- * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * Author by Rainboy blog: https://blog.roj.ac.cn github : https://github.com/rainboylvx
  * date: 2025-12-05 16:08:25
  * oj: 51Node-1256
  * title: 乘法逆元

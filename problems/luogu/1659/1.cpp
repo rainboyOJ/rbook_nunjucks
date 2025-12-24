@@ -1,5 +1,5 @@
 /**
- * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * Author by Rainboy blog: https://blog.roj.ac.cn github : https://github.com/rainboylvx
  * date: 2025-12-14 09:04:01
  * oj: luogu-1659
  * title: [国家集训队] 拉拉队排练
