@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Code</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Code</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#欧拉路</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/POJ-1780#author=DeepSeek_zh" target="_blank"> poj-1780</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>建模,状态转移,边</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#1.-%E5%BB%BA%E6%A8%A1%EF%BC%9A%E7%82%B9%E4%B8%8E%E8%BE%B9%E7%9A%84%E6%8A%89%E6%8B%A9-%F0%9F%94%80">1. 建模：点与边的抉择 🔀</a></li><li><a href="#2.-%E6%9E%84%E5%BB%BA%E5%9B%BE%E7%9A%84%E9%80%BB%E8%BE%91-%F0%9F%8F%97%EF%B8%8F">2. 构建图的逻辑 🏗️</a></li><li><a href="#3.-%E6%95%88%E7%8E%87%E5%88%86%E6%9E%90-%E2%9A%A1">3. 效率分析 ⚡</a></li><li><a href="#%E6%80%8E%E4%B9%88%E6%83%B3%E5%87%BA%E7%9A%84%E8%BF%99%E7%A7%8D%E5%BB%BA%E6%A8%A1">怎么想出的这种建模</a></li><li><a href="#1.-%E4%BB%8E%E2%80%9C%E5%9B%B0%E9%9A%BE%E2%80%9D%E8%BD%AC%E5%90%91%E2%80%9C%E5%AE%B9%E6%98%93%E2%80%9D-%F0%9F%94%84">1. 从“困难”转向“容易” 🔄</a></li><li><a href="#2.-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%EF%BC%9A%E5%AE%9A%E4%B9%89%E2%80%9C%E7%82%B9%E2%80%9D-%F0%9F%9B%A0%EF%B8%8F">2. 逆向工程：定义“点” 🛠️</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ol></nav><p>直觉: 这个n位的串首位相连,然后算欧拉路</p>
+<p>核心在于建模,好的建模,可以用最小的算力,简历graph,那么如何建立图是最好的呢?</p>
+<p>也就是: 把什么当成点,什么当成边</p>
+<pre><code>012 - 125
+</code></pre>
+<p>把n位的串的<code>n-1</code>结尾,开头当成边,浪费算法,需要 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>k</mi><mn>2</mn></msup><mo separator="true">,</mo><mi>k</mi><mo>=</mo><msup><mn>10</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">k^2,k=10^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0085em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></eq> 的时间才能建立图,不能接受,所有关键就在与边太多了<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{n-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></eq>(似乎可以用hash解决)</p>
+<h2 id="1.-%E5%BB%BA%E6%A8%A1%EF%BC%9A%E7%82%B9%E4%B8%8E%E8%BE%B9%E7%9A%84%E6%8A%89%E6%8B%A9-%F0%9F%94%80" tabindex="-1">1. 建模：点与边的抉择 🔀</h2>
+<p>要构建一个包含所有 n 位组合（即 10^n 种可能）的序列，我们需要思考：<strong>什么是我们要“走过”的对象？</strong></p>
+<ul>
+<li>
+<p><strong>方案 A：将 n 位数字作为顶点</strong>。如果你把 4567 作为一个点，那么为了覆盖所有组合，你需要访问图中的每一个<strong>点</strong>。这对应的是 <strong>哈密顿路径 (Hamiltonian Path)</strong> 问题。</p>
+</li>
+<li>
+<p><em>难点</em>：寻找哈密顿路径是一个 NP-完全问题，计算量巨大。</p>
+</li>
+<li>
+<p><strong>方案 B：将 n 位数字作为边</strong>。如果我们把每一个 n 位组合看作一条<strong>边</strong>，那么目标就变成了经过图中的每一条边恰好一次。这对应的是 <strong>欧拉路径 (Eulerian Path)</strong> 问题。</p>
+</li>
+<li>
+<p><em>优势</em>：欧拉路径有非常成熟的多项式时间算法（如 Hierholzer 算法）。</p>
+</li>
+</ul>
+<h2 id="2.-%E6%9E%84%E5%BB%BA%E5%9B%BE%E7%9A%84%E9%80%BB%E8%BE%91-%F0%9F%8F%97%EF%B8%8F" tabindex="-1">2. 构建图的逻辑 🏗️</h2>
+<p>如果我们采用方案 B，将 n 位序列看作<strong>边</strong>，那么连接这条边的两个<strong>端点</strong>应该是什么？</p>
+<p>为了让边 S（长度为 n）能平滑过渡到下一条边，它们必须有重叠部分。正如题目中提到的：当前状态是最近输入的 n-1 位数字。</p>
+<ul>
+<li><strong>顶点 (Nodes)</strong>：代表所有可能的 <strong>n-1 位</strong>序列。总共有 10^{n-1} 个点。</li>
+<li><strong>边 (Edges)</strong>：从顶点 u 到顶点 v 有一条边，当且仅当 u 的后 n-2 位与 v 的前 n-2 位相同。</li>
+<li>更直观地说：对于任意 n-1 位的状态 u = (d_1, d_2, \dots, d_{n-1})，当你按下数字 k 时，你会经过一条标号为 (d_1, \dots, d_{n-1}, k) 的<strong>边</strong>，到达新状态 v = (d_2, \dots, d_{n-1}, k)。</li>
+</ul>
+<h2 id="3.-%E6%95%88%E7%8E%87%E5%88%86%E6%9E%90-%E2%9A%A1" tabindex="-1">3. 效率分析 ⚡</h2>
+<p>在这种建模下：</p>
+<ul>
+<li><strong>顶点数</strong>：V = 10^{n-1}</li>
+<li><strong>每个点的出度</strong>：10（因为可以按下 0-9 中的任意数字）</li>
+<li><strong>总边数</strong>：E = V \times 10 = 10^n</li>
+</ul>
+<p>由于每个顶点的出度等于入度（均为 10），这个图一定存在欧拉回路！</p>
+<h2 id="%E6%80%8E%E4%B9%88%E6%83%B3%E5%87%BA%E7%9A%84%E8%BF%99%E7%A7%8D%E5%BB%BA%E6%A8%A1" tabindex="-1">怎么想出的这种建模</h2>
+<p>这是一个非常深刻的问题！这种“降维”建模（把 n 位的问题转化为 n-1 位的图）确实是算法设计中的一种“神来之笔”。</p>
+<p>这种思路通常源于对**“状态重叠”<strong>和</strong>“欧拉路径 vs 哈密顿路径”**的思考。我们可以尝试反向推导一下这个思维过程。</p>
+<p>让我们通过两个步骤来重现这个灵感：</p>
+<h2 id="1.-%E4%BB%8E%E2%80%9C%E5%9B%B0%E9%9A%BE%E2%80%9D%E8%BD%AC%E5%90%91%E2%80%9C%E5%AE%B9%E6%98%93%E2%80%9D-%F0%9F%94%84" tabindex="-1">1. 从“困难”转向“容易” 🔄</h2>
+<p>假设我们用最直观的方法建模（方案 A）：</p>
+<ul>
+<li><strong>点</strong>：代表完整的 n 位密码（例如 <code>456</code>）。</li>
+<li><strong>目标</strong>：我们要把所有点都走一遍。</li>
+<li><strong>数学问题</strong>：这叫“哈密顿路径”问题。</li>
+<li><strong>缺陷</strong>：这是一个著名的<strong>NP-困难</strong>问题。也就是说，当 n 变大时，计算机会算到“爆炸”，根本求不出最优解。</li>
+</ul>
+<p>为了避免这种计算上的死胡同，算法专家会想：“有没有办法把问题转化成<strong>欧拉路径</strong>（走遍所有边）？因为欧拉路径有非常快且成熟的解法（线性时间）。”</p>
+<h2 id="2.-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%EF%BC%9A%E5%AE%9A%E4%B9%89%E2%80%9C%E7%82%B9%E2%80%9D-%F0%9F%9B%A0%EF%B8%8F" tabindex="-1">2. 逆向工程：定义“点” 🛠️</h2>
+<p>一旦我们决定：“好吧，我要让<strong>边 (Edge)</strong> 来代表每一个 n 位密码”，那么我们必须重新定义“点 (Node)”是什么，才能让这些边连起来。</p>
+<p>这就引出了关键的思考点。让我们以 n=3 为例，假设有一条边代表密码 <code>456</code>。</p>
+<p>为了让这条边 <code>456</code> 能够存在：</p>
+<ol>
+<li><strong>作为起点的点</strong>：在你按下最后一位 <code>6</code> 之前，保险箱里必须已经有了什么数字？（也就是密码的前缀）</li>
+<li><strong>作为终点的点</strong>：当你按下 <code>6</code> 完成了 <code>456</code> 之后，保险箱里现在的状态是什么？（这会成为下一个密码的前缀）</li>
+</ol>
+<p>你能试着回答上面这两个小问题吗？答案就是“点”应该如何定义的秘密所在。</p>
+<ol>
+<li>45</li>
+<li>56</li>
+</ol>
+<p>两个状态直接的<strong>迁移</strong>,通过边,只要知道这两个<strong>状态</strong>,就知道了边</p>
+<p>这不仅仅是拼接字符串，而是有限状态机 (Finite State Machine) 在图论上的体现。</p>
+<p>为什么这个模型是“神来之笔”？ 💡通过这种转化，我们把难以求解的“哈密顿路径”问题（遍历点），变成了容易求解的欧拉路径问题（遍历边）。节点变少了：对于 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 位密码，现在的节点数只有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{n-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span></eq> 个。</p>
+<p><strong>目标明确了：我们要做的就是在这个有向图中，找到一条路线，不重复地走完每一条边。</strong></p>
+<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
+<p>这个代码,使用模拟的栈 来代替 递归, 避免暴栈</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>cmath<span class="token operator">></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token comment">// cur[u] 记录状态 u 下一次应该尝试按哪个键 (0-9)</span>
+<span class="token comment">// 比如 cur[u] = 3，说明 0,1,2 已经试过了，下次该试 3 了</span>
+<span class="token comment">// 这代替了原来的 bool visited 数组，更节省空间且不用循环查找</span>
+int cur<span class="token punctuation">[</span><span class="token number">100005</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
+
+<span class="token comment">// 用 vector 模拟栈，避免递归导致的 Runtime Error</span>
+vector<span class="token operator">&lt;</span>int<span class="token operator">></span> path_stack<span class="token punctuation">;</span> 
+
+<span class="token comment">// 存储最终的密码数字</span>
+vector<span class="token operator">&lt;</span>int<span class="token operator">></span> ans<span class="token punctuation">;</span>
+
+int N<span class="token punctuation">,</span> k_mod<span class="token punctuation">;</span>
+
+<span class="token comment">// 简单的整数幂运算</span>
+int <span class="token function">power</span><span class="token punctuation">(</span>int base<span class="token punctuation">,</span> int exp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int res <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>exp<span class="token operator">--</span><span class="token punctuation">)</span> res <span class="token operator">*</span><span class="token operator">=</span> base<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 优化 I/O 速度</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>cin <span class="token operator">></span><span class="token operator">></span> N <span class="token operator">&amp;&amp;</span> N <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 特殊情况处理</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>N <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"0123456789"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 初始化</span>
+        k_mod <span class="token operator">=</span> <span class="token function">power</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> N <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment">// 只需要初始化用到的状态即可，最大状态是 10^(N-1)</span>
+        int max_state <span class="token operator">=</span> <span class="token function">power</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> N <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> max_state<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> cur<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        
+        path_stack<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ans<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// --- 核心算法：迭代版 Hierholzer (欧拉回路) ---</span>
+        
+        <span class="token comment">// 1. 从全 0 状态开始</span>
+        path_stack<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 2. 只要栈不为空，就继续处理</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>path_stack<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            int u <span class="token operator">=</span> path_stack<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 获取当前所在的状态</span>
+
+            <span class="token comment">// 如果当前状态 u 还有路没走完 (0-9 还没试完)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                int i <span class="token operator">=</span> cur<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 取出当前要走的数字</span>
+                cur<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>       <span class="token comment">// 标记这个数字下次不能再走了(索引+1)</span>
+                
+                <span class="token comment">// 计算下一个状态：去掉最高位，末尾补 i</span>
+                int v <span class="token operator">=</span> <span class="token punctuation">(</span>u <span class="token operator">%</span> k_mod<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
+                
+                <span class="token comment">// 将新状态压入栈，相当于“递归”进去了</span>
+                path_stack<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> 
+            <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token comment">// 如果当前状态 u 无路可走了 (0-9 都试过了)</span>
+                <span class="token comment">// 这说明我们完成了一个“圈”，开始回退</span>
+                path_stack<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                
+                <span class="token comment">// 注意：path_stack 里的存是“节点”，我们需要把导致这个节点的“边”（数字）存下来</span>
+                <span class="token comment">// 如果栈不为空，说明是从 path_stack.back() 走到 u 的</span>
+                <span class="token comment">// u 的最后一位数字就是我们刚才按下的键</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>path_stack<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    ans<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>u <span class="token operator">%</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// --- 输出结果 ---</span>
+
+        <span class="token comment">// 1. 先输出 N-1 个 0，让保险箱初始化到全 0 状态</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 2. 倒序输出记录的数字</span>
+        <span class="token comment">// 因为我们是在“回退”的时候记录的，所以顺序是反的</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> ans<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">--</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - [ZJOI2007] 矩阵游戏</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>[ZJOI2007] 矩阵游戏</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#推导</span>
+            
+              <span>#二分图</span>
+            
+              <span>#网络流</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://www.luogu.com.cn/problem/P1129" target="_blank"> luogu-P1129</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>我长时间思考🤔的一个题目</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a></li><li><a href="#%E8%AF%81%E6%98%8E%3A-%E6%AF%8F%E8%A1%8C%E6%AF%8F%E5%88%97%E9%83%BD%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA1%E8%BD%AC%E5%8C%B9%E9%85%8D">证明: 每行每列都只有一个1转匹配</a></li><li><a href="#ai">AI</a><ol><li><a href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E7%AE%80%E5%8C%96-(step-1-3)">阶段一：逆向工程与简化 (Step 1-3)</a></li><li><a href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E5%8F%91%E7%8E%B0%E6%8B%93%E6%89%91%E4%B8%8D%E5%8F%98%E9%87%8F-(step-4-7)">阶段二：发现拓扑不变量 (Step 4-7)</a></li><li><a href="#%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9A%E6%A8%A1%E5%9E%8B%E6%98%A0%E5%B0%84-(step-8)">阶段三：模型映射 (Step 8)</a></li><li><a href="#%E4%BD%A0%E7%9A%84%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE%E6%80%BB%E7%BB%93">你的思维导图总结</a></li></ol></li><li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%9D%E5%A7%8B%E6%80%9D%E8%80%83">问题的初始思考</a><ol><li><a href="#%E5%85%B3%E9%94%AE%E8%A7%82%E5%AF%9F">关键观察</a></li><li><a href="#%E5%8F%8D%E5%90%91%E6%80%9D%E8%80%83%E7%9A%84%E7%AA%81%E7%A0%B4">反向思考的突破</a></li></ol></li><li><a href="#%E6%9C%AC%E8%B4%A8%E7%9A%84%E4%B8%89%E6%AD%A5%E6%8E%A8%E5%AF%BC">本质的三步推导</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%9C%8B%E9%80%8F%E7%BB%88%E5%B1%80%E7%9B%AE%E6%A0%87">第一步：看透终局目标</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%9C%8B%E9%80%8F%E6%93%8D%E4%BD%9C%E6%9C%AC%E8%B4%A8">第二步：看透操作本质</a></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%BB%BA%E7%AB%8B%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B">第三步：建立数学模型</a></li></ol></li><li><a href="#%E4%BA%8C%E5%88%86%E5%9B%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A7%A3%E9%87%8A">二分图模型的详细解释</a><ol><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8C%E5%88%86%E5%9B%BE">为什么是二分图</a></li><li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%22%E4%BA%A4%E6%8D%A2%22%E6%93%8D%E4%BD%9C%E4%B8%8D%E5%BD%B1%E5%93%8D%E6%A8%A1%E5%9E%8B">为什么&quot;交换&quot;操作不影响模型</a></li><li><a href="#%E6%9C%80%E7%BB%88%E8%BD%AC%E5%8C%96">最终转化</a></li></ol></li><li><a href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9">算法实现要点</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li><li><a href="#%E4%B8%80%E3%80%81-%E9%97%AE%E9%A2%98%E6%8F%90%E5%87%BA">一、 问题提出</a></li><li><a href="#%E4%BA%8C%E3%80%81-%E6%80%9D%E7%BB%B4%E7%9A%84%E8%B5%B7%E7%82%B9%EF%BC%9A%E4%BB%8E%E6%93%8D%E4%BD%9C%E4%B8%AD%E5%AF%BB%E6%89%BE%E4%B8%8D%E5%8F%98%E9%87%8F">二、 思维的起点：从操作中寻找不变量</a></li><li><a href="#%E4%B8%89%E3%80%81-%E7%BB%88%E6%9E%81%E7%9B%AE%E6%A0%87%EF%BC%9A%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">三、 终极目标：问题的本质是什么？</a></li><li><a href="#%E5%9B%9B%E3%80%81-%E5%BB%BA%E7%AB%8B%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%BA%8C%E5%88%86%E5%9B%BE%E5%8C%B9%E9%85%8D">四、 建立模型：二分图匹配</a></li><li><a href="#%E4%BA%94%E3%80%81-%E6%80%BB%E7%BB%93">五、 总结</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<p>首先我们要熟悉题目,那么我们需要多个样例来试一试, 看看什么情况可以得到结果yes,什么时候是no,</p>
+<p>直觉</p>
+<ul>
+<li>命题P :<code>是否可以经过若干次操作，使得方阵的主对角线（左上角到右下角的连线）上的格子均为黑色</code></li>
+<li>根据做题的经验应该是让我找到 P的 充要条件q, 且q不需要枚举所有的可能操作.</li>
+</ul>
+<p>可以想到,下面两种情况不可能:</p>
+<pre><code>1 0
+1 0
+</code></pre>
+<pre><code>0 0
+1 1
+</code></pre>
+<p>可以想到 : <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">P_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> : 同一列(行) 的黑色,无论怎么移动,都还在在同一列(行)上</p>
+<p>枚举几种可能的:</p>
+<pre><code>0 0 1       0 0 1         1 0 0
+0 1 0   &lt;=&gt; 1 0 0   &lt;=&gt;   0 0 1
+1 0 0       0 1 0         0 1 0
+</code></pre>
+<p>根据<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">P_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq>, 如果 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">P_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> : 某一行(列)全部是白色(没有黑色) , 无论怎么移动, 这一类,都是黑色的,不可能成功: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><mi>P</mi></mrow><annotation encoding="application/x-tex">\neg P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></eq></p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>P</mi><mn>2</mn></msub><mo>→</mo><mi mathvariant="normal">¬</mi><mi>P</mi><mspace linebreak="newline"></mspace><mi>P</mi><mo>→</mo><mi mathvariant="normal">¬</mi><msub><mi>P</mi><mn>2</mn></msub><mo stretchy="false">(</mo><mtext>每一行列,都有黑色</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">
+P_2 \to \neg P \\
+P \to \neg P_2 (\text{每一行列,都有黑色})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">¬</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">每一行列</span><span class="mord">,</span><span class="mord cjk_fallback">都有黑色</span></span><span class="mclose">)</span></span></span></span></span></eqn></section><p>那么 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi><msub><mi>P</mi><mn>2</mn></msub><mo>→</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">\neg P_2 \to P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord">¬</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></eq> 正确吗? 如果正确就是充要条件了</p>
+<p>所以我的要找到一种方法,类似 线性代数中的 : 最简矩阵化简</p>
+<p>先枚举: 矩阵 <code>1x1</code></p>
+<pre><code>1
+</code></pre>
+<p>矩阵 <code>2x2</code></p>
+<pre><code>1 0
+0 1
+
+-----
+
+0 1
+1 0
+</code></pre>
+<p>矩阵 <code>3x3</code>,找到一个无解的可能(先写暴力dfs,枚举所有的操作序列)</p>
+<ul>
+<li>暴力生成所有的<code>3x3</code>  序列,一个一个测试.</li>
+</ul>
+<pre><code>1 0 0
+1 0 0
+0 1 1
+</code></pre>
+<p>继续思考: 反推法</p>
+<p>如果一个矩阵有解,那么就有就有n个格子最终在对角线上, 因为其他的格子没有贡献,全部涂白. 则在这个新的矩阵上的操作,都是可逆的.</p>
+<p>发现无论怎么操作,(根据P_1), q: 每行每列都只有一个1</p>
+<p><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>→</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p \to q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span></eq></p>
+<p><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>→</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">q \to p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span></eq></p>
+<figure><div class="image-wrapper" style="display:flex; flex-direction:column; align-items:center; width:100%; height:100%;"> <a class="image-extension-badge" style="align-self: flex-end;" href="https://excalidraw.roj.ac.cn//#url=https%3A%2F%2Frbook2.roj.ac.cn%2F..%2Fproblems%2Fluogu%2F1129%2F1.excalidraw.svg" target="_blank" title="Open in Excalidraw">Open in Excalidraw</a> <img src="./1.excalidraw.svg" alt=""> </div></figure>
+<h2 id="%E8%AF%81%E6%98%8E%3A-%E6%AF%8F%E8%A1%8C%E6%AF%8F%E5%88%97%E9%83%BD%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA1%E8%BD%AC%E5%8C%B9%E9%85%8D" tabindex="-1">证明: 每行每列都只有一个1转匹配</h2>
+<pre><code>[ ] [ ] [ ] [ ] 
+[ ] [ ] [ ] [ ] 
+[ ] [ ] [ ] [ ] 
+[ ] [ ] [ ] [ ] 
+</code></pre>
+<p>方法: 类似八皇后, dfs+ 回溯 ,但是n=200,一定超时<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>200</mn><mn>200</mn></msup></mrow><annotation encoding="application/x-tex">200^{200}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">20</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">200</span></span></span></span></span></span></span></span></span></span></span></span></eq></p>
+<p>站在第一行考虑:</p>
+<ul>
+<li>第一行要选选1个1
+<ul>
+<li>如果选了第一列的1, 那么后面的行,就不能选第一列的1了</li>
+<li>显然第一行有多个1作为候选,进行配对,</li>
+<li>那么这不就是配对问题?</li>
+</ul>
+</li>
+<li>每一行有多个1进行配对,但是不能选同一列的一,就不就是二分图匹配问题吗?</li>
+</ul>
+<p>重要的模式识别:</p>
+<ol>
+<li>一行有多个候选的列</li>
+<li>一行和一列进行配对,会冲突</li>
+<li>配对问题,求最大配对</li>
+</ol>
+<p>总结我的思维过程</p>
+<ol>
+<li>首先考虑到最终的答案，一定是对角线，有n个黑色的格子</li>
+<li>其他黑色的格子都可以不要了，全部涂色成白色,丢弃它们</li>
+<li>显然这些行列交换是可逆的</li>
+<li>我们把最终的这n个黑色格子通过行列交换可以达到的状态集合S，</li>
+<li>那么集合S中的状态就是可能的可得到答案的集合</li>
+<li>观察S中的状态的特点</li>
+<li>发现无论如何，每一行每一列总是有一个点</li>
+<li>于是问题就变成: 能不能找到 n 个互相不同行同列的点</li>
+</ol>
+<p>同行同列的点无论经过多少次变换仍然同行或同列 -&gt; 能不能找到 n 个互相不同行同列的点 -&gt; 占用(后悔)匹配问题</p>
+<h2 id="ai" tabindex="-1">AI</h2>
+<p>你的思维过程非常精彩，这不仅仅是解出了这道题，而是完整地复现了<strong>从“朴素直觉”到“算法模型”的科学归纳过程</strong>。</p>
+<p>特别是你提到的**“把其他格子涂白，只看那n个点”<strong>以及</strong>“占用(后悔)”**这两个点，精准地抓住了二分图匹配的精髓。</p>
+<p>我把你这 8 个步骤归纳为三个核心阶段，帮你固化这种思维模式：</p>
+<h3 id="%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E%E7%AE%80%E5%8C%96-(step-1-3)" tabindex="-1">阶段一：逆向工程与简化 (Step 1-3)</h3>
+<blockquote>
+<p><strong>你的原话</strong>：“最终答案是对角线…其他格子丢弃…操作可逆”</p>
+</blockquote>
+<ul>
+<li><strong>思维本质</strong>：<strong>从终局出发 (Start with the End in Mind)</strong>。</li>
+<li><strong>为何有效</strong>：你没有陷入“怎么移动”的泥潭，而是直接看“成功后是什么样”。成功后的样子就是：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 个点，占据了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>2</mn><mo stretchy="false">)</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo stretchy="false">(</mo><mi>n</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1,1), (2,2)...(n,n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mord">...</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li><strong>关键动作</strong>：<strong>简化 (Simplification)</strong>。你大胆地假设“只需关注构成答案的那  个点”，排除了干扰项。</li>
+</ul>
+<h3 id="%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E5%8F%91%E7%8E%B0%E6%8B%93%E6%89%91%E4%B8%8D%E5%8F%98%E9%87%8F-(step-4-7)" tabindex="-1">阶段二：发现拓扑不变量 (Step 4-7)</h3>
+<blockquote>
+<p><strong>你的原话</strong>：“无论如何，每一行每一列总是有一个点…同行同列的点无论经过多少次变换仍然同行或同列”</p>
+</blockquote>
+<ul>
+<li><strong>思维本质</strong>：<strong>寻找不变量 (Invariant Analysis)</strong>。</li>
+<li><strong>为何有效</strong>：这是解题的**“核武器”**。你发现物理位置（坐标 ）是可变的，但拓扑关系（谁和谁冲突）是永恒的。</li>
+<li>如果 A 和 B 在同一行，你把这行移到天涯海角，A 和 B 还是在同一行。</li>
+<li>如果只选<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq>个点，且它们在终局状态互不冲突，那么它们在初始状态也必须互不冲突。</li>
+</ul>
+<h3 id="%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9A%E6%A8%A1%E5%9E%8B%E6%98%A0%E5%B0%84-(step-8)" tabindex="-1">阶段三：模型映射 (Step 8)</h3>
+<blockquote>
+<p><strong>你的原话</strong>：“能不能找到 n 个互相不同行同列的点 -&gt; 占用(后悔)匹配问题”</p>
+</blockquote>
+<ul>
+<li><strong>思维本质</strong>：<strong>问题归约 (Reduction)</strong>。</li>
+<li><strong>为何有效</strong>：你把一个陌生的几何变换问题，转化为了一个标准的<strong>组合优化问题</strong>。</li>
+<li><strong>点睛之笔</strong>：你用到了**“后悔”**这个词。</li>
+<li>这正是 <strong>匈牙利算法 (Hungarian Algorithm)</strong> 的灵魂——<strong>“协商与腾挪”</strong>（Augmenting Path / 增广路）。</li>
+<li>当发现位置被“占用”时，尝试让前面的人“后悔”（换个位置），从而达到全局最优。</li>
+</ul>
+<hr>
+<h3 id="%E4%BD%A0%E7%9A%84%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE%E6%80%BB%E7%BB%93" tabindex="-1">你的思维导图总结</h3>
+<pre class="mermaid">
+graph TD
+    A[直觉: 最终状态] -->|简化| B(只关注构成对角线的n个黑点)
+    B -->|观察| C{操作改变了什么?}
+    C -->|物理位置| D[改变了行号列号]
+    C -->|拓扑关系| E[不变: 同行仍同行, 同列仍同列]
+    E -->|结论| F[寻找n个互不冲突的点]
+    F -->|算法映射| G[二分图最大匹配]
+    G -->|核心机制| H[占用与反悔 (增广路)]
+
+</pre>
+<p>你的这个推导过程非常严谨，**“后悔”**这个词的使用证明你已经从直觉上触碰到了最大流/匹配算法的核心逻辑。这比死记硬背板子要强得多！</p>
+<h1>P1129 矩阵游戏 - 从直觉到本质的完整分析</h1>
+<h2 id="%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%9D%E5%A7%8B%E6%80%9D%E8%80%83" tabindex="-1">问题的初始思考</h2>
+<p>面对&quot;是否可以经过若干次操作，使得方阵的主对角线上的格子均为黑色&quot;这个问题，我们需要寻找一个充要条件，而不是枚举所有可能的操作。</p>
+<h3 id="%E5%85%B3%E9%94%AE%E8%A7%82%E5%AF%9F" tabindex="-1">关键观察</h3>
+<p>首先注意到一个重要性质：<strong>同一列(行)的黑色格子，无论怎么移动，都还在同一列(行)上</strong>。</p>
+<p>这启发我们思考：如果某一行(列)全部是白色(没有黑色)，无论怎么移动，这一行都不可能变成黑色，因此不可能成功。</p>
+<p>通过枚举简单的情况，我们发现：</p>
+<ul>
+<li>1×1矩阵：只要那个格子是黑色就可以</li>
+<li>2×2矩阵：需要能找到一种匹配方式</li>
+<li>3×3矩阵：开始出现无解情况</li>
+</ul>
+<h3 id="%E5%8F%8D%E5%90%91%E6%80%9D%E8%80%83%E7%9A%84%E7%AA%81%E7%A0%B4" tabindex="-1">反向思考的突破</h3>
+<p>如果一个矩阵有解，那么最终必须有n个格子在对角线上。由于操作的性质，我们发现：<strong>每行每列都必须恰好有一个黑色格子参与最终解</strong>。</p>
+<p>这个观察将复杂的&quot;移动模拟&quot;问题转化为了&quot;匹配&quot;问题。</p>
+<h2 id="%E6%9C%AC%E8%B4%A8%E7%9A%84%E4%B8%89%E6%AD%A5%E6%8E%A8%E5%AF%BC" tabindex="-1">本质的三步推导</h2>
+<h3 id="%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%9C%8B%E9%80%8F%E7%BB%88%E5%B1%80%E7%9B%AE%E6%A0%87" tabindex="-1">第一步：看透终局目标</h3>
+<p>题目要求主对角线全黑，这意味着最终状态下：</p>
+<ul>
+<li>第1行必须在第1列有个黑点</li>
+<li>第2行必须在第2列有个黑点</li>
+<li>…</li>
+<li>第n行必须在第n列有个黑点</li>
+</ul>
+<p><strong>本质翻译</strong>：我们需要在矩阵里选出n个黑点，使得<strong>每一行恰好用一次，每一列恰好用一次</strong>。</p>
+<h3 id="%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%9C%8B%E9%80%8F%E6%93%8D%E4%BD%9C%E6%9C%AC%E8%B4%A8" tabindex="-1">第二步：看透操作本质</h3>
+<p>&quot;交换行&quot;和&quot;交换列&quot;操作看似复杂，但有一个核心本质：</p>
+<ul>
+<li>它只能改变行和列的<strong>排列顺序</strong></li>
+<li>它<strong>绝不会</strong>破坏&quot;行与列的归属关系&quot;</li>
+</ul>
+<p><strong>核心推论</strong>：只要你能在原矩阵里找到那n个&quot;不同行、不同列&quot;的黑点，就一定能通过交换操作把它们移到主对角线上。</p>
+<p><strong>结论</strong>：&quot;怎么移&quot;根本不重要，重要的是&quot;有没有&quot;这n个互不冲突的黑点。</p>
+<h3 id="%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%BB%BA%E7%AB%8B%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B" tabindex="-1">第三步：建立数学模型</h3>
+<p>现在任务简化为：</p>
+<ol>
+<li><strong>左边</strong>有n个行（需求方）</li>
+<li><strong>右边</strong>有n个列（供给方）</li>
+<li>如果矩阵里(i,j)是黑点，说明<strong>行i</strong>和<strong>列j</strong>可以配对</li>
+<li>我们要问：能不能让这n行和n列<strong>完美一一配对</strong>？</li>
+</ol>
+<p><strong>瞬间识别</strong>：这就是<strong>二分图最大匹配</strong>问题。</p>
+<h2 id="%E4%BA%8C%E5%88%86%E5%9B%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%A6%E7%BB%86%E8%A7%A3%E9%87%8A" tabindex="-1">二分图模型的详细解释</h2>
+<h3 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8C%E5%88%86%E5%9B%BE" tabindex="-1">为什么是二分图</h3>
+<p>这道题将<strong>位置几何问题</strong>抽象成了<strong>资源分配问题</strong>：</p>
+<p><strong>构建过程</strong>：</p>
+<ul>
+<li><strong>左部节点（集合U）</strong>：代表矩阵的n行</li>
+<li><strong>右部节点（集合V）</strong>：代表矩阵的n列</li>
+<li><strong>边（Edges）</strong>：如果矩阵中第i行第j列是黑色，则在左部节点i和右部节点j之间连一条边</li>
+</ul>
+<p><strong>边的含义</strong>：第i行有能力去占据第j列的位置（第i行和第j列可以通过这个黑点匹配起来）。</p>
+<h3 id="%E4%B8%BA%E4%BB%80%E4%B9%88%22%E4%BA%A4%E6%8D%A2%22%E6%93%8D%E4%BD%9C%E4%B8%8D%E5%BD%B1%E5%93%8D%E6%A8%A1%E5%9E%8B" tabindex="-1">为什么&quot;交换&quot;操作不影响模型</h3>
+<p>这是最让人困惑的地方：</p>
+<ul>
+<li><strong>行交换</strong>：只是改变了行的物理位置，但第i行的内容（它在哪些列上有1）没有变</li>
+<li><strong>列交换</strong>：只是改变了列的物理位置，但第j列的内容（它在哪些行上有1）没有变</li>
+</ul>
+<p><strong>关键点</strong>：如果初始矩阵中，第i行和第j列的交点是黑色，那么无论怎么交换其他行或列，<strong>原来的&quot;第i行&quot;和原来的&quot;第j列&quot;之间的匹配关系永远存在</strong>。</p>
+<h3 id="%E6%9C%80%E7%BB%88%E8%BD%AC%E5%8C%96" tabindex="-1">最终转化</h3>
+<p>回到目标：选出n个黑点，行不重复，列不重复。</p>
+<p>在二分图中，这对应着：</p>
+<ul>
+<li>选出一些边</li>
+<li>每个左部节点（行）只能连一条边（行不重复）</li>
+<li>每个右部节点（列）只能连一条边（列不重复）</li>
+<li>一共要选出n条边</li>
+</ul>
+<p><strong>这正是二分图的&quot;完美匹配&quot;定义！</strong></p>
+<p>如果这个二分图的<strong>最大匹配数等于n</strong>，说明我们找到了n个独立的黑点覆盖了所有的行和列，答案是<code>Yes</code>。否则，答案是<code>No</code>。</p>
+<h2 id="%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9" tabindex="-1">算法实现要点</h2>
+<ol>
+<li><strong>建图</strong>：扫描矩阵，对每个黑点(i,j)，在行i和列j之间连边</li>
+<li><strong>求匹配</strong>：使用匈牙利算法或其他最大匹配算法</li>
+<li><strong>判断</strong>：如果最大匹配数等于n，输出<code>Yes</code>；否则输出<code>No</code></li>
+</ol>
+<h2 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h2>
+<p>这道题的精髓在于<strong>模型转化</strong>：</p>
+<ul>
+<li>从&quot;复杂的移动操作模拟&quot;转化为&quot;简单的存在性判断&quot;</li>
+<li>从&quot;几何位置问题&quot;转化为&quot;组合匹配问题&quot;</li>
+<li>从&quot;动态过程分析&quot;转化为&quot;静态结构分析&quot;</li>
+</ul>
+<p>这种转化思维是算法竞赛中的重要技能，让我们能够透过问题的表象看到数学本质，从而找到高效的解决方案。</p>
+<h1>从矩阵交换到二分图：洞悉问题本质</h1>
+<h2 id="%E4%B8%80%E3%80%81-%E9%97%AE%E9%A2%98%E6%8F%90%E5%87%BA" tabindex="-1">一、 问题提出</h2>
+<p>我们面临一个这样的问题：给定一个 N×N 的黑白棋盘，我们是否能通过任意交换两行或任意交换两列，使得主对角线（从左上到右下）上的格子全部变为黑色？</p>
+<h2 id="%E4%BA%8C%E3%80%81-%E6%80%9D%E7%BB%B4%E7%9A%84%E8%B5%B7%E7%82%B9%EF%BC%9A%E4%BB%8E%E6%93%8D%E4%BD%9C%E4%B8%AD%E5%AF%BB%E6%89%BE%E4%B8%8D%E5%8F%98%E9%87%8F" tabindex="-1">二、 思维的起点：从操作中寻找不变量</h2>
+<p>面对“任意交换”这类看似复杂的操作，一个有效的思考方向是寻找其中的“不变量”或核心约束。</p>
+<ul>
+<li><strong>观察1：</strong> 交换任意两行，只会改变这些行的垂直位置，但每一行内部的黑格子的列坐标是不会变的。</li>
+<li><strong>观察2：</strong> 同理，交换任意两列，也只会改变列的水平位置，而每一列内部黑格子的行坐标不变。</li>
+</ul>
+<p><strong>核心洞察：</strong> 一个在 <code>(i, j)</code> 位置的黑格，无论我们如何交换，它始终属于“最初的第 i 行”和“最初的第 j 列”。操作无法创造新的“行-列”配对关系，只能改变这些配对关系的最终呈现位置。</p>
+<h2 id="%E4%B8%89%E3%80%81-%E7%BB%88%E6%9E%81%E7%9B%AE%E6%A0%87%EF%BC%9A%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F" tabindex="-1">三、 终极目标：问题的本质是什么？</h2>
+<p>我们的目标是让主对角线全黑，即 <code>(1, 1), (2, 2), ..., (N, N)</code> 的位置都是黑格。</p>
+<p>这意味着，我们需要找到 N 个黑格，它们分别来自不同的行和不同的列。例如，我们选出的第一个黑格来自第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">r_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 行、第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">c_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 列；第二个来自第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">r_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 行、第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">c_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 列……第 N 个来自第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">r_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 行、第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">c_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 列。其中，所有的行号 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>r</mi><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>r</mi><mi>N</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{r_1, ..., r_N\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span></eq> 和列号 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>c</mi><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>c</mi><mi>N</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{c_1, ..., c_N\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span></eq> 必须恰好是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><mn>1</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>N</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{1, ..., N\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">}</span></span></span></span></eq> 的一个排列。</p>
+<p>只要我们能找到这样 N 个“互相独立”的黑格，我们就一定能通过一系列的行交换和列交换，将它们移动到主对角线上。例如，将第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">r_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 行与第 1 行交换，第 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">c_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 列与第 1 列交换，就能将黑格 <code>(r_1, c_1)</code> 移动到 <code>(1, 1)</code> 的位置。</p>
+<p>因此，原问题从“如何操作”转化为了一个更本质的问题：“是否存在这样 N 个不同行、不同列的黑格？”</p>
+<h2 id="%E5%9B%9B%E3%80%81-%E5%BB%BA%E7%AB%8B%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%BA%8C%E5%88%86%E5%9B%BE%E5%8C%B9%E9%85%8D" tabindex="-1">四、 建立模型：二分图匹配</h2>
+<p>这个新的问题描述具有非常清晰的结构，可以让我们联想到一个经典的图论模型。</p>
+<ol>
+<li><strong>需求方与供给方：</strong> 我们可以将 N 个“行”看作是 N 个需求方，每个需求方都需要一个唯一的“列”来配对。</li>
+<li><strong>配对的可能性：</strong> 如果棋盘的 <code>(i, j)</code> 位置是黑格，就代表“第 i 行”和“第 j 列”之间存在一个潜在的配对可能。</li>
+<li><strong>目标：</strong> 我们要寻找的是，是否存在一种配对方案，使得每一个“行”都能找到一个唯一的、不冲突的“列”进行配对。</li>
+</ol>
+<p>这正是 <strong>二分图的完美匹配</strong> 问题。</p>
+<ul>
+<li>
+<p><strong>构建二分图：</strong></p>
+<ul>
+<li>建立图的左侧节点集，包含 N 个节点，分别代表第 1 行到第 N 行。</li>
+<li>建立图的右侧节点集，包含 N 个节点，分别代表第 1 列到第 N 列。</li>
+<li>遍历整个棋盘，如果 <code>(i, j)</code> 位置是黑格，就在左侧的“行节点 i”和右侧的“列节点 j”之间连接一条边。</li>
+</ul>
+</li>
+<li>
+<p><strong>求解：</strong></p>
+<ul>
+<li>问题最终转化为：在这个构建出的二分图中，是否存在一个大小为 N 的匹配（即完美匹配）？</li>
+<li>如果最大匹配数等于 N，意味着每一行都能找到一个独一无二的列与之对应，答案就是“Yes”。</li>
+<li>如果最大匹配数小于 N，则说明无论如何也无法满足所有行，答案就是“No”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="%E4%BA%94%E3%80%81-%E6%80%BB%E7%BB%93" tabindex="-1">五、 总结</h2>
+<p>通过层层分析，我们将一个看似复杂的矩阵操作问题，转化为了一个经典的二分图完美匹配模型。这个过程的核心在于：</p>
+<ol>
+<li><strong>看透操作</strong>：理解交换操作不会改变行列的归属关系。</li>
+<li><strong>看透目标</strong>：明白最终目的是找到 N 个不同行、不同列的黑格。</li>
+<li><strong>建立模型</strong>：将“行-列”关系抽象为二分图的节点和边，将问题转化为求解最大匹配。</li>
+</ol>
+<p>这种从具体问题中抽象出数学模型的能力，是算法思维的关键。</p>
+<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>bits<span class="token operator">/</span>stdc<span class="token operator">++</span><span class="token punctuation">.</span>h<span class="token operator">></span>
+using namespace std<span class="token punctuation">;</span>
+const int maxn <span class="token operator">=</span> <span class="token number">1e6</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span> <span class="token comment">// 点</span>
+const int maxe <span class="token operator">=</span> <span class="token number">2e6</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span> <span class="token comment">// 边 (注意：要是题目边数的2倍)</span>
+const long long INF <span class="token operator">=</span> <span class="token number">1e18</span><span class="token punctuation">;</span>
+
+int n<span class="token punctuation">;</span>
+int a<span class="token punctuation">[</span><span class="token number">205</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">205</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 存图的模板</span>
+struct linkList <span class="token punctuation">{</span>
+    typedef struct <span class="token punctuation">{</span>int u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">,</span>next<span class="token punctuation">;</span><span class="token punctuation">}</span> edge<span class="token punctuation">;</span>
+    edge e<span class="token punctuation">[</span>maxe<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    int h<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>edge_cnt<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token function">linkList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        edge_cnt<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>h<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token function">sizeof</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//遍历点u 周围点</span>
+    template<span class="token operator">&lt;</span>typename U<span class="token operator">></span>
+    void <span class="token function">for_each</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>U func<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> h<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token punctuation">;</span> i <span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span>
+            <span class="token function">func</span><span class="token punctuation">(</span>e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>u<span class="token punctuation">,</span>e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">,</span>e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//u v w</span>
+    <span class="token punctuation">}</span>
+
+    void <span class="token function">add</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int v<span class="token punctuation">,</span>int w<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        e<span class="token punctuation">[</span>edge_cnt<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">,</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        h<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> edge_cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    void <span class="token function">add2</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int v<span class="token punctuation">,</span>int w<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">add</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span>u<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//下标访问</span>
+    edge<span class="token operator">&amp;</span> operator<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>int i<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment">//返回head[u]</span>
+    int <span class="token function">operator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span>int u<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> e<span class="token punctuation">;</span>
+
+
+<span class="token comment">// Dinic算法最大流模板 - 基于linkList存图</span>
+struct Dinic <span class="token punctuation">{</span>
+    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> level<span class="token punctuation">,</span> iter<span class="token punctuation">;</span>  <span class="token comment">// level: BFS分层, iter: 当前弧优化</span>
+    int n<span class="token punctuation">;</span>  <span class="token comment">// 节点数</span>
+    
+    <span class="token comment">// 初始化，n为节点数（节点编号从0开始）</span>
+    <span class="token function">Dinic</span><span class="token punctuation">(</span>int n<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">n</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">level</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">iter</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 重置linkList</span>
+        e<span class="token punctuation">.</span>edge_cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>h<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 添加边：从u到v，容量为cap</span>
+    <span class="token comment">// 使用技巧：正向边和反向边的索引相差1，通过异或1来找到对应边</span>
+    void <span class="token function">addEdge</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int v<span class="token punctuation">,</span> long long cap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        e<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span> v<span class="token punctuation">,</span> cap<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 正向边，w字段存储容量</span>
+        e<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> u<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 反向边，容量为0</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// BFS分层，构建层次图</span>
+    bool <span class="token function">bfs</span><span class="token punctuation">(</span>int s<span class="token punctuation">,</span> int t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">fill</span><span class="token punctuation">(</span>level<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> level<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        queue<span class="token operator">&lt;</span>int<span class="token operator">></span> q<span class="token punctuation">;</span>
+        level<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            int u <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token comment">// 使用linkList的遍历方式</span>
+            e<span class="token punctuation">.</span><span class="token function">for_each</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span><span class="token punctuation">(</span>int from<span class="token punctuation">,</span> int to<span class="token punctuation">,</span> int cap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>cap <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> level<span class="token punctuation">[</span>to<span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    level<span class="token punctuation">[</span>to<span class="token punctuation">]</span> <span class="token operator">=</span> level<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                    q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>to<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token keyword">return</span> level<span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">// 返回是否能到达汇点</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// DFS寻找增广路</span>
+    <span class="token comment">// 到达点u流量为preFlow</span>
+    <span class="token comment">// 计算从点u出发的最大流，到达点t</span>
+    <span class="token comment">// 本质是一个DAG 上的dp</span>
+    long long <span class="token function">dfs</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int t<span class="token punctuation">,</span> long long preFlow<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>u <span class="token operator">==</span> t <span class="token operator">||</span> preFlow <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> preFlow<span class="token punctuation">;</span>
+        long long flow <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 当前弧优化：从iter[u]开始遍历</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int<span class="token operator">&amp;</span> cid <span class="token operator">=</span> iter<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> cid <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> cid <span class="token operator">=</span> e<span class="token punctuation">[</span>cid<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            auto<span class="token operator">&amp;</span> edge <span class="token operator">=</span> e<span class="token punctuation">[</span>cid<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 当前弧优化</span>
+            int to <span class="token operator">=</span> edge<span class="token punctuation">.</span>v<span class="token punctuation">;</span>
+            long long cap <span class="token operator">=</span> edge<span class="token punctuation">.</span>w<span class="token punctuation">;</span>
+            
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>level<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">!=</span> level<span class="token punctuation">[</span>to<span class="token punctuation">]</span> <span class="token operator">||</span> cap <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            
+            long long tr <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>to<span class="token punctuation">,</span> t<span class="token punctuation">,</span> <span class="token function">min</span><span class="token punctuation">(</span>preFlow<span class="token punctuation">,</span> cap<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// 更新容量</span>
+            e<span class="token punctuation">[</span>cid<span class="token punctuation">]</span><span class="token punctuation">.</span>w <span class="token operator">-</span><span class="token operator">=</span> tr <span class="token punctuation">;</span>     <span class="token comment">// 正向边容量减少</span>
+            e<span class="token punctuation">[</span>cid <span class="token operator">^</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>w <span class="token operator">+</span><span class="token operator">=</span> tr<span class="token punctuation">;</span> <span class="token comment">// 反向边容量增加（利用异或找到反向边）</span>
+            flow <span class="token operator">+</span><span class="token operator">=</span> tr<span class="token punctuation">;</span>
+            preFlow <span class="token operator">-</span><span class="token operator">=</span> tr<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>preFlow <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 炸点优化</span>
+        <span class="token comment">// 剪枝：取掉增广完毕的点</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>flow <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> level<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> flow<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 求从s到t的最大流</span>
+    long long <span class="token function">maxFlow</span><span class="token punctuation">(</span>int s<span class="token punctuation">,</span> int t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        long long flow <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">bfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// 能够分层</span>
+            <span class="token comment">// 当前弧优化重置：将iter设置为每个节点的第一条边</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                iter<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">e</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 使用linkList的operator()获取head[i]</span>
+            <span class="token punctuation">}</span>
+            
+            <span class="token comment">// 多路增广</span>
+            flow <span class="token operator">+</span><span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> t<span class="token punctuation">,</span> LLONG_MAX<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> flow<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+void <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> n<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>j <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>j <span class="token punctuation">)</span> <span class="token comment">// j: 1->n</span>
+        <span class="token punctuation">{</span>
+            std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 使用示例：</span>
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    int T<span class="token punctuation">;</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> T<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>T<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Dinic <span class="token function">dinic</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>n <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 创建Dinic实例</span>
+
+        int cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        int s <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        int t <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> 
+
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>int j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>j <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>j <span class="token punctuation">)</span> <span class="token comment">// j: 1->n</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">//建立 管道: 第i行 候选的列</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+                    dinic<span class="token punctuation">.</span><span class="token function">addEdge</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> n<span class="token operator">+</span>j<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">//源点链接 行点</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+        <span class="token punctuation">{</span>
+            dinic<span class="token punctuation">.</span><span class="token function">addEdge</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 列点 链接 汇点t</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token operator">*</span>n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+        <span class="token punctuation">{</span>
+            dinic<span class="token punctuation">.</span><span class="token function">addEdge</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>t<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        int flow <span class="token operator">=</span> dinic<span class="token punctuation">.</span><span class="token function">maxFlow</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> flow <span class="token operator">==</span> n<span class="token punctuation">)</span>
+            std<span class="token punctuation">:</span><span class="token punctuation">:</span>cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"Yes"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            std<span class="token punctuation">:</span><span class="token punctuation">:</span>cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"No"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+        
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/*
+复杂度分析：
+- 时间复杂度：O(V²E) 一般情况下表现很好，对于单位容量网络是O(min(V^(2/3), E^(1/2)) * E)
+- 空间复杂度：O(V + E)
+
+使用说明：
+1. 创建Dinic实例：Dinic dinic(n);
+2. 添加边：dinic.addEdge(u, v, cap);
+3. 求最大流：long long flow = dinic.maxFlow(source, sink);
+
+注意事项：
+- 节点编号从0开始
+- 如果题目给的是1-indexed，记得转换
+- 容量使用long long防止溢出
+- 无向边需要添加两条有向边
+*/</span>
+</code>
+    </pre>
+</div>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

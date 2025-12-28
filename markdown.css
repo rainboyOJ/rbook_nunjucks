@@ -575,7 +575,7 @@
 .table-of-contents {
   position: fixed;
   top: 4.5em;
-  right: 4em;
+  right: 0.6em;
   z-index: 100;
   background: transparent;
   border-radius: 16px;

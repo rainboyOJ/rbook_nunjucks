@@ -449,6 +449,39 @@
       <li>
         
           <i class="fa fa-file-text"></i>
+          <a href="graph/Eulerian-path/index.html">欧拉回路</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/cut/cut_node.html">割点</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/cut/cut_edge.html">割边</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
           <a href="graph/diameter_of_tree">树的直径</a>
         
 
@@ -494,6 +527,45 @@
         
           <i class="fa fa-file-text"></i>
           <a href="graph/floyed">floyed算法</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#000" d="m26 8l-4-4l-4 4l1.41 1.42L21 7.83V18h2V7.83l1.58 1.58zM12.59 22.58L11 24.17V14H9v10.17l-1.58-1.58L6 24l4 4l4-4zM2 2h2v28H2zm26 0h2v28h-2zM15 2h2v4h-2zm0 8h2v4h-2zm0 8h2v4h-2zm0 8h2v4h-2z"/></svg> </span>
+              
+             网络流 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/网络流/index.html">网络流:序</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/网络流/二分图/index.html">二分图</a>
         
 
         
@@ -899,6 +971,17 @@
       
       <li>
         
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/口诀.html">口诀 🧠📜</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
           <a href="javascript:void(0);" class="menu-info">
             <span>
               
@@ -1029,7 +1112,7 @@ function hideMenuModal() {
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E5%AE%9A%E4%B9%89">定义</a><ol><li><a href="#%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91">无向基环树</a></li><li><a href="#%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91">有向基环树</a><ol><li><a href="#%E5%86%85%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(in-tree)">内向基环树 (In-tree)</a></li><li><a href="#%E5%A4%96%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(out-tree)">外向基环树 (Out-tree)</a></li></ol></li></ol></li><li><a href="#%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF">通用处理思路</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF">如何找环</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF">算法思路</a></li></ol></li><li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98">相关问题</a></li><li><a href="#topsrt%E6%89%BE%E7%8E%AF">topsrt找环</a></li><li><a href="#dfs%E6%89%BE%E7%8E%AF">dfs找环</a><ol><li><a href="#1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5">1. 基础概念</a></li><li><a href="#2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F">2. 核心问题：为什么要有 if (dfn[v] &lt; dfn[u]) continue;？</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B7%B1%E8%8A%82%E7%82%B9-d-%E9%81%87%E5%88%B0%E6%B5%85%E8%8A%82%E7%82%B9-a)">第一次相遇 (深节点 D 遇到浅节点 A)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B5%85%E8%8A%82%E7%82%B9-a-%E9%81%87%E5%88%B0%E6%B7%B1%E8%8A%82%E7%82%B9-d)">第二次相遇 (浅节点 A 遇到深节点 D)</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ol></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9B%B4%E5%BE%84">基环树直径</a></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E4%B8%A4%E7%82%B9%E7%9B%B4%E6%8E%A5%E7%9A%84%E8%B7%9D%E7%A6%BB">基环树两点直接的距离</a></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91dp">基环树DP</a></li><li><a href="#%E5%8F%82%E8%80%83">参考</a></li></ol></nav><h2 id="%E5%AE%9A%E4%B9%89" tabindex="-1">定义</h2>
+    <nav class="table-of-contents"><ol><li><a href="#%E5%AE%9A%E4%B9%89">定义</a><ol><li><a href="#%E6%97%A0%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91">无向基环树</a></li><li><a href="#%E6%9C%89%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91">有向基环树</a><ol><li><a href="#%E5%86%85%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(in-tree)">内向基环树 (In-tree)</a></li><li><a href="#%E5%A4%96%E5%90%91%E5%9F%BA%E7%8E%AF%E6%A0%91-(out-tree)">外向基环树 (Out-tree)</a></li></ol></li></ol></li><li><a href="#%E9%80%9A%E7%94%A8%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF">通用处理思路</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%89%BE%E7%8E%AF">如何找环</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF">算法思路</a></li></ol></li><li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98">相关问题</a></li><li><a href="#topsrt%E6%89%BE%E7%8E%AF">topsrt找环</a></li><li><a href="#dfs%E6%89%BE%E7%8E%AF">dfs找环</a><ol><li><a href="#1.-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5">1. 基础概念</a></li><li><a href="#2.-%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-if-(dfn%5Bv%5D-%3C-dfn%5Bu%5D)-continue%3B%EF%BC%9F">2. 核心问题：为什么要有 if (dfn[v] &lt; dfn[u]) continue;？</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B7%B1%E8%8A%82%E7%82%B9-d-%E9%81%87%E5%88%B0%E6%B5%85%E8%8A%82%E7%82%B9-a)">第一次相遇 (深节点 D 遇到浅节点 A)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E7%9B%B8%E9%81%87-(%E6%B5%85%E8%8A%82%E7%82%B9-a-%E9%81%87%E5%88%B0%E6%B7%B1%E8%8A%82%E7%82%B9-d)">第二次相遇 (浅节点 A 遇到深节点 D)</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ol></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9B%B4%E5%BE%84">基环树直径</a></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91%E4%B8%A4%E7%82%B9%E7%9B%B4%E6%8E%A5%E7%9A%84%E8%B7%9D%E7%A6%BB">基环树两点直接的距离</a></li><li><a href="#%E5%9F%BA%E7%8E%AF%E6%A0%91dp">基环树DP</a></li><li><a href="#%E7%BB%83%E4%B9%A0%E9%A2%98%E7%9B%AE">练习题目</a></li><li><a href="#%E5%8F%82%E8%80%83">参考</a></li></ol></nav><h2 id="%E5%AE%9A%E4%B9%89" tabindex="-1">定义</h2>
 <p><strong>基环树</strong>（Pseudo-tree），有时也被称为环套树，是图论中的一个概念。严格来说，它并不是一棵树，而是一个包含 <strong>n 个节点</strong>和 <strong>n 条边</strong>的<strong>连通图</strong>。</p>
 <p>从结构上看，一棵 n 个节点的树有 n-1 条边，如果在树上任意两个节点之间添加一条边，就会形成一个且仅有一个环。因此，基环树可以被理解为<strong>一棵树加上一条额外的边</strong>所构成的图。</p>
 <p>如果图不保证连通，那么一个含有 n 个节点和 n 条边的图可能是一个<strong>基环树森林</strong>（Pseudo-forest），即由若干个基环树组成。</p>
@@ -1254,8 +1337,24 @@ void <span class="token function">get_ring</span><span class="token punctuation"
 <h2 id="%E5%9F%BA%E7%8E%AF%E6%A0%91%E7%9B%B4%E5%BE%84" tabindex="-1">基环树直径</h2>
 <h2 id="%E5%9F%BA%E7%8E%AF%E6%A0%91%E4%B8%A4%E7%82%B9%E7%9B%B4%E6%8E%A5%E7%9A%84%E8%B7%9D%E7%A6%BB" tabindex="-1">基环树两点直接的距离</h2>
 <h2 id="%E5%9F%BA%E7%8E%AF%E6%A0%91dp" tabindex="-1">基环树DP</h2>
+<h2 id="%E7%BB%83%E4%B9%A0%E9%A2%98%E7%9B%AE" tabindex="-1">练习题目</h2>
+<ul>
+<li><a href="/problems/luogu/P2607/index.html" class="problem-link" target="_blank">luogu-P2607 [ZJOI2008] 骑士 tags: [基环树,树形DP,反向图]</a></li>
+<li>P5022, 基环树断边枚举</li>
+<li>P4381 [IOI 2008] Island</li>
+<li>P3472 [POI 2008] MAF-Mafia</li>
+<li>P10933 创世纪</li>
+<li>CF711D</li>
+<li>P1453 城市环路</li>
+<li>[NOI2013] 快餐店</li>
+<li>P5049</li>
+<li>P4381</li>
+<li>P1399</li>
+<li>P1453</li>
+</ul>
 <h2 id="%E5%8F%82%E8%80%83" tabindex="-1">参考</h2>
 <ul>
+<li><a href="https://www.luogu.com.cn/article/qrtj98oz">浅谈基环树</a></li>
 <li><a href="https://www.luogu.com.cn/article/0i6swvk6">https://www.luogu.com.cn/article/0i6swvk6</a></li>
 <li><a href="https://entiesci.github.io/oi-beats/site/%E5%9B%BE%E8%AE%BA/%E5%9F%BA%E7%8E%AF%E6%A0%91/">https://entiesci.github.io/oi-beats/site/图论/基环树/</a></li>
 </ul>
@@ -1269,7 +1368,7 @@ void <span class="token function">get_ring</span><span class="token punctuation"
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/12/18 11:07:06</p>
+        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/12/28 10:02:28</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>
