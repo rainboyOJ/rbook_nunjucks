@@ -3,8 +3,6 @@ const Path = require("path")
 const fs = require("fs")
 const raw_html_template = fs.readFileSync(Path.join(__dirname,"./html_title.html"),{encoding:"utf8"})
 const Tooltip = ejs.compile(raw_html_template)
-const _problemDB = require("../../problems/src/lib/database/index.js")
-const problemDB = new _problemDB()
 
 
 //1. 加载数据menu

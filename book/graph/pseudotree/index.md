@@ -1,4 +1,5 @@
 ---
+id: "one-loop-graph"
 title: "基环树入门"
 date: 2025-10-07 09:33
 toc: true
@@ -194,7 +195,25 @@ dfs
 
 ## 基环树DP
 
+## 练习题目
+
+- [[problem: luogu,P2607]] 
+- P5022, 基环树断边枚举
+- P4381 [IOI 2008] Island 
+- P3472 [POI 2008] MAF-Mafia 
+- P10933 创世纪 
+- CF711D
+- P1453 城市环路
+- [NOI2013] 快餐店
+- P5049
+- P4381
+- P1399
+- P1453
+
+
 ## 参考
 
+
+- [浅谈基环树](https://www.luogu.com.cn/article/qrtj98oz)
 - https://www.luogu.com.cn/article/0i6swvk6
 - https://entiesci.github.io/oi-beats/site/%E5%9B%BE%E8%AE%BA/%E5%9F%BA%E7%8E%AF%E6%A0%91/

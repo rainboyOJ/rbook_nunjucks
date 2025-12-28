@@ -5,6 +5,11 @@ date: 2025-12-18 10:01
 toc: true
 tags: ["topsort"]
 categories: [""]
+code_template:
+  - title: topsort
+    desc: "topsort"
+    tags: ["topsort"]
+    code: /code/graph/topsort.cpp
 ---
 
 [[TOC]]
@@ -43,3 +48,16 @@ categories: [""]
 - 当**回溯到**这个路口的时候,我们要保证: 恢复现场,就像**时间回溯到事情的开始,我们从新做一次选择**.
 
 - [[problem: poj,1270]]
+
+
+## 练习题目
+
+- P1113 topsort+DP
+- P1347 判断topsort是不是唯一的,topsort是不是有环. 
+- P1685 topsort+DP
+- P3243 反例说明： $n=4$, 限制为 $(3,1), (4,1)$。,需要思考,然后证明(直接暴力全排列,进行验证) : 反序列的字典序最大的topsort排列
+- [[problem: luogu,P1983]] 根据题意思,教理相对等级模型
+- P1038 toposrt +dp
+- P4017 最大食物链计数 toposrt +dp
+- P4934
+- P2597

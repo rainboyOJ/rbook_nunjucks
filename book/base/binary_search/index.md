@@ -139,7 +139,7 @@ $$
 
 ## 二分的应用
 
-@include_md("./应用.md")
+@include_md("./二分查找应用分类.md")
 
 ## 练习题目
 
@@ -148,6 +148,7 @@ $$
 - luogu P1314
 - luogu P1868
 - luogu P1493
+- [[problem: luogu,P1419]]
 - hdu 6231
 - poj 3273
 - poj 3258

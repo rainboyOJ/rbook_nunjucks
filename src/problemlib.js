@@ -99,17 +99,21 @@ class Problems {
         let md_path = path.join(__problemdir, md);
         // let prob_front = new markdown(md_path).front_matter;
         let prob_front = this.front_matter(md_path);
+
         if( !prob_front )
-          throw new Error(`md_path: ${md_path} front_matter is empty`);
-        if( !prob_front.oj || !prob_front.problem_id )
-          throw new Error(`md_path: ${md_path} front_matter.oj or front_matter.problem_id is empty`);
-        this.problems.push(
-          {
-            ...prob_front,
-            md_path: md, // 相对路径
-            url: this.problem_url(prob_front.oj, prob_front.problem_id) // url
-          }
-        );
+          // throw new Error(`md_path: ${md_path} front_matter is empty`);
+          console.log(`md_path: ${md_path} front_matter is empty`);
+        else if( !prob_front.oj || !prob_front.problem_id )
+          // throw new Error(`md_path: ${md_path} front_matter.oj or front_matter.problem_id is empty`);
+          console.log(`md_path: ${md_path} front_matter.oj or front_matter.problem_id is empty`);
+        else
+          this.problems.push(
+            {
+              ...prob_front,
+              md_path: md, // 相对路径
+              url: this.problem_url(prob_front.oj, prob_front.problem_id) // url
+            }
+          );
       }
       // console.log(this.problems);
     }

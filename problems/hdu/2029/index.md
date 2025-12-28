@@ -17,6 +17,8 @@ book:
 
 ## 题目解析
 
+直觉,代码直接写
+
 ## 代码 
 
 @include-code(./1.cpp, cpp)

@@ -1,3 +1,4 @@
+const webUrl = import.meta.env.VITE_RBOOK_WEB_URL
 import { DataSet, Network } from "vis-network/standalone";
 // import mynodes from "./nodes.js";
 // CSS will be automatically injected into the page.

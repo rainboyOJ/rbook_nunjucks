@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+VITE_RBOOK_WEB_URL="https://rbook2.roj.ac.cn/"
+
 # 删除dist目录
 rm -rf dist
 

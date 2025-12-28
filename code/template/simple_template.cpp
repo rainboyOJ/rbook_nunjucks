@@ -1,5 +1,6 @@
 /**
  * Author by {{author}} blog: {{blog}} github : {{github}}
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
  * date: {{date}}
  */
 #include <bits/stdc++.h>
