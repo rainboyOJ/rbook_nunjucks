@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Color the Ball</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Color the Ball</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#线段树</span>
+            
+              <span>#离散化</span>
+            
+              <span>#模板题</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/HDU-1199#author=DeepSeek_zh" target="_blank"> HDU-1199</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>好题: 区间转点离散化的模板题目</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#1.-%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E9%9A%BE%E7%82%B9">1. 题目核心难点</a></li><li><a href="#2.-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF">2. 解题思路</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A6%BB%E6%95%A3%E5%8C%96-(discretization)">第一步：离散化 (Discretization)</a><ol><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E7%BA%BF%E6%AE%B5%E6%A0%91-(segment-tree)">第二步：线段树 (Segment Tree)</a></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E7%BB%9F%E8%AE%A1%E7%AD%94%E6%A1%88">第三步：统计答案</a></li></ol></li><li><a href="#3.-%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%9D%BF-(c%2B%2B)">3. 代码模板 (C++)</a></li><li><a href="#4.-%E5%85%B3%E9%94%AE%E7%82%B9%E8%A7%A3%E6%9E%90-(why-it-works)">4. 关键点解析 (Why it works)</a></li></ol></li><li><a href="#%E6%80%9D%E8%80%83">思考</a></li><li><a href="#%E6%93%8D%E4%BD%9C%E4%B8%BE%E4%BE%8B-1">操作举例 1</a><ol><li><a href="#%E6%BC%94%E7%A4%BA%E6%95%B0%E6%8D%AE">演示数据</a></li><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%94%B6%E9%9B%86%E5%85%B3%E9%94%AE%E7%82%B9-(%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8A%A0-1)">第一步：收集关键点 (为什么要加 1)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%87%E5%88%86%E5%8C%BA%E9%97%B4-(%E6%9C%80%E5%85%B3%E9%94%AE%E7%9A%84%E4%B8%80%E6%AD%A5)">第二步：切分区间 (最关键的一步)</a></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C-(%E7%9C%8B%E7%9C%8B%E4%BC%9A%E4%B8%8D%E4%BC%9A%E5%87%BA%E9%94%99)">第三步：执行操作 (看看会不会出错)</a><ol><li><a href="#1.-%E6%89%A7%E8%A1%8C-1-4-w-(%E7%99%BD%E8%89%B2)">1. 执行 1 4 w (白色)</a></li><li><a href="#2.-%E6%89%A7%E8%A1%8C-3-5-b-(%E9%BB%91%E8%89%B2)">2. 执行 3 5 b (黑色)</a></li></ol></li><li><a href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%9C%80%E7%BB%88%E7%BB%9F%E8%AE%A1">第四步：最终统计</a></li><li><a href="#%E5%8F%8D%E4%BE%8B%EF%BC%9A%E5%A6%82%E6%9E%9C%E6%88%91%E4%BB%AC%E4%B8%8D%E5%AD%98-%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F">反例：如果我们不存  会发生什么？</a></li></ol></li><li><a href="#%E6%93%8D%E4%BD%9C%E4%B8%BE%E4%BE%8B-2">操作举例 2</a><ol><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%94%B6%E9%9B%86%E5%85%B3%E9%94%AE%E7%82%B9-(key-points)">第一步：收集关键点 (Key Points)</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%87%E5%88%86%E5%8C%BA%E9%97%B4-(slicing)">第二步：切分区间 (Slicing)</a></li><li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C-(coloring)">第三步：执行操作 (Coloring)</a><ol><li><a href="#1.-%E6%89%A7%E8%A1%8C-1-4-w">1. 执行 1 4 w</a></li><li><a href="#2.-%E6%89%A7%E8%A1%8C-3-5-w">2. 执行 3 5 w</a></li></ol></li><li><a href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%9C%80%E7%BB%88%E7%BB%9F%E8%AE%A1-(merging)">第四步：最终统计 (Merging)</a></li><li><a href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C">第五步：输出结果</a></li><li><a href="#%E6%80%BB%E7%BB%93%E8%BF%99%E4%B8%AA%E4%BE%8B%E5%AD%90%E7%9A%84%E6%84%8F%E4%B9%89">总结这个例子的意义</a></li></ol></li></ol></nav><p>这是一道经典的 <strong>线段树 + 离散化 (Segment Tree + Discretization)</strong> 题目。</p>
+<h2 id="1.-%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E9%9A%BE%E7%82%B9" tabindex="-1">1. 题目核心难点</h2>
+<ul>
+<li><strong>坐标范围极大</strong>：球的编号（坐标）可以达到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>31</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^{31}-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">31</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>（约 20 亿），无法直接开数组模拟。</li>
+<li><strong>操作次数较少</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>≤</mo><mn>2000</mn></mrow><annotation encoding="application/x-tex">N \le 2000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2000</span></span></span></span></eq>，这意味着涉及的关键坐标点最多只有 4000 个。</li>
+<li><strong>区间操作</strong>：涉及区间染色（覆盖），最后询问最长的连续白色区间。</li>
+</ul>
+<h2 id="2.-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF" tabindex="-1">2. 解题思路</h2>
+<h3 id="%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A6%BB%E6%95%A3%E5%8C%96-(discretization)" tabindex="-1">第一步：离散化 (Discretization)</h3>
+<p>由于坐标很大但关键点很少，我们需要将坐标“压缩”。</p>
+<p>对于区间染色问题，有一个经典的离散化技巧：</p>
+<p>如果题目给出的操作是闭区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[a, b]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">]</span></span></span></span></eq>，我们在离散化数组中不仅要存入 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></eq>，还要存入 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。</p>
+<p>为什么是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>？</p>
+<p>我们将数轴离散化为若干个左闭右开的区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><msub><mi>X</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>X</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[X_i, X_{i+1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></eq>。</p>
+<p>如果要表示覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 4]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">]</span></span></span></span></eq>，在逻辑上等同于覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq>。如果不存 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>，我们就无法精确地表示出“从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq> 结束，下一个区间从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 开始”这个分界点。</p>
+<p>具体步骤：</p>
+<ol>
+<li>读取所有操作 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">,</mo><mi>t</mi><mi>y</mi><mi>p</mi><mi>e</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a, b, type)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">p</span><span class="mord mathnormal">e</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 加入一个数组 <code>X</code>。</li>
+<li>对 <code>X</code> 进行排序并去重 (sort + unique)。</li>
+<li>此时，两个相邻的离散化点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">X[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">X[i+1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq> 构成了一个基本区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[X[i], X[i+1]-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq>，其长度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo><mo>−</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">X[i+1] - X[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span></span></span></span></eq>。</li>
+</ol>
+<h4>第二步：线段树 (Segment Tree)</h4>
+<p>我们建立一棵线段树来维护离散化后的下标 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></eq> 到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span></eq>（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span></eq> 是去重后点的数量）。</p>
+<p>线段树的每个叶子节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></eq> 代表实际数轴上的区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[X[i], X[i+1]-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq>。</p>
+<ul>
+<li><strong>维护值</strong>：因为这题只需要最后的结果，我们不需要在节点中维护复杂的“最大连续长度”。只需要维护一个标记 <code>val</code>：
+<ul>
+<li><code>-1</code>：表示该区间颜色不统一（杂色）。</li>
+<li><code>0</code>：表示全黑。</li>
+<li><code>1</code>：表示全白。</li>
+</ul>
+</li>
+<li><strong>懒惰标记 (Lazy Propagation)</strong>：这是必须的，因为是区间修改。当我们将一个大区间染成白色时，不需要遍历到底，打个标记即可。只有当需要访问子节点时才下传标记 (<code>pushdown</code>)。</li>
+</ul>
+<h4>第三步：统计答案</h4>
+<p>题目问的是“最终”的最长连续白色序列。</p>
+<ol>
+<li>处理完所有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 次操作。</li>
+<li>从左到右遍历离散化后的每一个基本区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[X[i], X[i+1]-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq>。</li>
+<li>查询该区间的颜色。
+<ul>
+<li>如果是<strong>白色</strong>，累加长度到 <code>current_len</code>。</li>
+<li>如果是<strong>黑色</strong>，结算当前的 <code>current_len</code>，尝试更新最大值，并重置 <code>current_len</code> 为 0。</li>
+</ul>
+</li>
+<li>注意处理连续两个基本区间都是白色的情况（它们在数轴上是首尾相接的，直接合并即可）。</li>
+</ol>
+<h3 id="3.-%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%9D%BF-(c%2B%2B)" tabindex="-1">3. 代码模板 (C++)</h3>
+<p>C++</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int MAXN = 2005;
+const int MAXM = MAXN * 4; // 离散化后的点最多 2*N，线段树开 4 倍
+
+// 存储原始操作
+struct Operation {
+    int a, b;
+    char type;
+} ops[MAXN];
+
+// 离散化数组
+vector&lt;int&gt; X;
+
+// 线段树数组，tree[i] 存储颜色的标记
+// -1: 杂色/无标记, 0: 黑色, 1: 白色
+int tree[MAXM * 4];
+
+// 下传标记
+void pushdown(int node) {
+    if (tree[node] != -1) {
+        tree[node * 2] = tree[node];
+        tree[node * 2 + 1] = tree[node];
+        tree[node] = -1; // 标记下传后，当前节点设为杂色(或者不处理也行，但这题覆盖逻辑简单)
+                         // 其实严格来说，对于覆盖类线段树，父节点有值就意味着子节点全被覆盖
+                         // 父节点变为-1只在update在这个节点区间只有部分被覆盖时发生
+                         // 但为了方便最后统计，我们这里仅仅利用 pushdown 将颜色推到叶子即可
+    }
+}
+
+// 区间更新
+// L, R 是当前节点覆盖的离散化下标范围
+// qL, qR 是查询的离散化下标范围
+void update(int node, int L, int R, int qL, int qR, int color) {
+    if (qL &lt;= L &amp;&amp; R &lt;= qR) {
+        tree[node] = color;
+        return;
+    }
+    
+    // 如果当前节点有纯色标记，先下传，否则子节点的数据是旧的
+    if (tree[node] != -1) {
+        tree[node * 2] = tree[node];
+        tree[node * 2 + 1] = tree[node];
+        tree[node] = -1; // 当前节点不再纯色，因为下面即将只有一部分被修改
+    }
+
+    int mid = (L + R) / 2;
+    if (qL &lt;= mid) update(node * 2, L, mid, qL, qR, color);
+    if (qR &gt; mid) update(node * 2 + 1, mid + 1, R, qL, qR, color);
+}
+
+// 这里的查询稍微变通一下：
+// 我们不需要标准的 query 函数，而是在最后写一个 dfs 或循环
+// 把线段树所有的标记推到叶子节点，得到最终每个区间的颜色数组
+int colors[MAXM]; // 存储最终每个基本区间的颜色
+
+void extract_colors(int node, int L, int R) {
+    if (L == R) {
+        colors[L] = tree[node];
+        return;
+    }
+    // 强制下传标记，确保叶子节点是最新的颜色
+    if (tree[node] != -1) {
+        tree[node * 2] = tree[node];
+        tree[node * 2 + 1] = tree[node];
+        tree[node] = -1;
+    }
+    int mid = (L + R) / 2;
+    extract_colors(node * 2, L, mid);
+    extract_colors(node * 2 + 1, mid + 1, R);
+}
+
+int main() {
+    int n;
+    while (cin &gt;&gt; n) {
+        X.clear();
+        // 1. 读取输入并收集离散化点
+        for (int i = 0; i &lt; n; i++) {
+            cin &gt;&gt; ops[i].a &gt;&gt; ops[i].b &gt;&gt; ops[i].type;
+            X.push_back(ops[i].a);
+            X.push_back(ops[i].b + 1); // 关键：右端点 + 1
+        }
+        
+        // 2. 离散化处理
+        sort(X.begin(), X.end());
+        X.erase(unique(X.begin(), X.end()), X.end());
+        
+        int m = X.size(); // 离散化后点的个数
+        
+        // 3. 初始化线段树 (0表示黑色)
+        // 线段树维护的下标范围是 0 到 m-1 (代表 m-1 个区间)
+        // 对应的区间是 [X[i], X[i+1]-1]
+        // 注意：数组要清空或者赋初值，这里题目说初始全是黑球
+        memset(tree, 0, sizeof(tree)); 
+
+        // 4. 执行操作
+        for (int i = 0; i &lt; n; i++) {
+            // 二分查找对应的离散化下标
+            int l_idx = lower_bound(X.begin(), X.end(), ops[i].a) - X.begin();
+            int r_idx = lower_bound(X.begin(), X.end(), ops[i].b + 1) - X.begin();
+            
+            // 实际上更新的区间下标是 [l_idx, r_idx - 1]
+            // r_idx 是 b+1 的位置，我们要染色的区间是到 b 截止，属于下标 r_idx-1 所代表的区间
+            int col = (ops[i].type == 'w' ? 1 : 0);
+            if (l_idx &lt;= r_idx - 1) {
+                update(1, 0, m - 1, l_idx, r_idx - 1, col);
+            }
+        }
+
+        // 5. 提取最终颜色到 colors 数组
+        // 如果只有一个点，也就没有区间，m-1 会导致越界或逻辑错误，加个判断
+        if (m &gt; 1) {
+            extract_colors(1, 0, m - 1);
+        } else {
+            // 极端情况
+            cout &lt;&lt; &quot;Oh, my god&quot; &lt;&lt; endl;
+            continue;
+        }
+
+        // 6. 线性扫描找最长连续白色区间
+        int max_len = 0;
+        int ans_l = -1, ans_r = -1;
+        
+        int cur_len = 0;
+        int cur_start = -1;
+        
+        // 遍历所有基本区间
+        for (int i = 0; i &lt; m - 1; i++) {
+            if (colors[i] == 1) {
+                if (cur_start == -1) cur_start = X[i]; // 新的一段开始
+                cur_len += (X[i+1] - X[i]); // 累加长度
+            } else {
+                // 如果遇到黑色，结算上一段
+                if (cur_start != -1) {
+                    if (cur_len &gt; max_len) {
+                        max_len = cur_len;
+                        ans_l = cur_start;
+                        ans_r = X[i] - 1; // 上一个区间的结束点是 X[i]-1
+                    }
+                    cur_start = -1;
+                    cur_len = 0;
+                }
+            }
+        }
+        
+        // 循环结束后别忘了检查最后一段
+        if (cur_start != -1) {
+            if (cur_len &gt; max_len) {
+                max_len = cur_len;
+                ans_l = cur_start;
+                ans_r = X[m - 1] - 1;
+            }
+        }
+
+        if (ans_l == -1) {
+            cout &lt;&lt; &quot;Oh, my god&quot; &lt;&lt; endl;
+        } else {
+            cout &lt;&lt; ans_l &lt;&lt; &quot; &quot; &lt;&lt; ans_r &lt;&lt; endl;
+        }
+    }
+    return 0;
+}
+</code></pre>
+<h3 id="4.-%E5%85%B3%E9%94%AE%E7%82%B9%E8%A7%A3%E6%9E%90-(why-it-works)" tabindex="-1">4. 关键点解析 (Why it works)</h3>
+<ol>
+<li>
+<p>区间对应关系：</p>
+<p>离散化后的数组 X 为 [x0, x1, x2, x3…]。</p>
+<p>线段树的叶子节点 i 对应的是实数轴区间 [ X[i], X[i+1]-1 ]。</p>
+<p>例如 X = {1, 5, 8}。</p>
+<ul>
+<li>
+<p>下标 <code>0</code> 对应 <code>[1, 4]</code> (长度 4)。</p>
+</li>
+<li>
+<p>下标 <code>1</code> 对应 <code>[5, 7]</code> (长度 3)。</p>
+</li>
+<li>
+<p>下标 2 越界，不使用。</p>
+<p>所以线段树只需要覆盖 0 到 X.size() - 2 的范围。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>右端点处理：</p>
+<p>代码中 r_idx 查找到的是 b+1 在 X 中的位置。</p>
+<p>例如 1 4 w，离散化点有 1, 5。</p>
+<p>l_idx 指向 1 (index 0)。</p>
+<p>r_idx 指向 5 (index 1)。</p>
+<p>我们要染色的区间是 [1, 4]，这正是下标 0 对应的区间。</p>
+<p>所以 update 的范围是 l_idx 到 r_idx - 1。</p>
+</li>
+<li>
+<p>合并逻辑：</p>
+<p>在最后扫描时，如果 colors[i] 和 colors[i+1] 都是白色，我们在 else 分支不会触发结算，而是直接在 cur_len 累加长度。这自然地处理了跨越离散化点的连续区间合并问题。</p>
+</li>
+</ol>
+<h2 id="%E6%80%9D%E8%80%83" tabindex="-1">思考</h2>
+<figure><div class="image-wrapper" style="display:flex; flex-direction:column; align-items:center; width:100%; height:100%;"> <a class="image-extension-badge" style="align-self: flex-end;" href="https://excalidraw.roj.ac.cn//#url=https%3A%2F%2Frbook2.roj.ac.cn%2F..%2Fproblems%2Fhdu%2F1199%2F1.excalidraw.svg" target="_blank" title="Open in Excalidraw">Open in Excalidraw</a> <img src="./1.excalidraw.svg" alt=""> </div></figure>
+<p>怎么解决这个问题?</p>
+<p>类比求出第一个白色点所代表的区间的计算方式: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">3-1 = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq></p>
+<p>核心思想:  每个点所代表的区间由此点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></eq> 和 它右边的点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7429em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 共同觉决定: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>get</mtext><mo stretchy="false">(</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mtext>get</mtext><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{get}(i+1) - \text{get}(i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">get</span></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">get</span></span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mclose">)</span></span></span></span></eq></p>
+<p>比如, 操作 : <code>1 4 w</code> 真正应该创建的两个点应该是<code>1, 5</code>,代表区间: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1,5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq></p>
+<h2 id="%E6%93%8D%E4%BD%9C%E4%B8%BE%E4%BE%8B-1" tabindex="-1">操作举例 1</h2>
+<pre><code>1 4 w
+3 5 b
+</code></pre>
+<p>核心核心理念：</p>
+<p>在计算机处理区间时，“左闭右开” <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>L</mi><mo separator="true">,</mo><mi>R</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[L, R)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">L</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span></eq> 是最完美的处理方式。</p>
+<ul>
+<li>题目说：涂色 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 4]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">]</span></span></span></span></eq> （包含1，包含4）。</li>
+<li>我们大脑转化：涂色从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 开始，一直涂到 <strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 之前</strong> 停止。</li>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 的本质就是“停止点”</strong>。</li>
+</ul>
+<hr>
+<h3 id="%E6%BC%94%E7%A4%BA%E6%95%B0%E6%8D%AE" tabindex="-1">演示数据</h3>
+<ol>
+<li><code>1 4 w</code> (区间 [1, 4] 染白)</li>
+<li><code>3 5 b</code> (区间 [3, 5] 染黑)</li>
+</ol>
+<h3 id="%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%94%B6%E9%9B%86%E5%85%B3%E9%94%AE%E7%82%B9-(%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8A%A0-1)" tabindex="-1">第一步：收集关键点 (为什么要加 1)</h3>
+<p>我们要切分这个无限长的数轴，需要确定哪些位置是**“状态发生改变”**的界碑。</p>
+<ul>
+<li><strong>操作 1 (<code>1 4 w</code>)</strong>：
+<ul>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq></strong>：这是<strong>开始</strong>染白的地方。（放入数组）</li>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq></strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">4+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>)：这是<strong>停止</strong>染白的地方。从 5 开始就不受这个操作影响了。（放入数组）</li>
+</ul>
+</li>
+<li><strong>操作 2 (<code>3 5 b</code>)</strong>：
+<ul>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq></strong>：这是<strong>开始</strong>染黑的地方。（放入数组）</li>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq></strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">5+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>)：这是<strong>停止</strong>染黑的地方。（放入数组）</li>
+</ul>
+</li>
+</ul>
+<p>离散化数组 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> (排序后)：</p>
+<p>[1, 3, 5, 6]</p>
+<hr>
+<h3 id="%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%87%E5%88%86%E5%8C%BA%E9%97%B4-(%E6%9C%80%E5%85%B3%E9%94%AE%E7%9A%84%E4%B8%80%E6%AD%A5)" tabindex="-1">第二步：切分区间 (最关键的一步)</h3>
+<p>现在数轴被这 4 个点切成了 3 段。</p>
+<p>注意： 线段树的每一个叶子节点，管理的是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">X[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span></span></span></span></eq> 到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">X[i+1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq> 之间的这段距离。</p>
+<table>
+<thead>
+<tr>
+<th><strong>线段树下标 (ID)</strong></th>
+<th><strong>离散化区间 [L,R)</strong></th>
+<th><strong>对应的真实球编号</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>1, 2</strong></td>
+<td>从 1 开始，到 3 结束(不含3)</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>3, 4</strong></td>
+<td>从 3 开始，到 5 结束(不含5)</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>5</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[5, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>5</strong></td>
+<td>从 5 开始，到 6 结束(不含6)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>这就是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 的威力！</strong> 它帮我们把公共部分和独立部分完美切开了。</p>
+<hr>
+<h3 id="%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C-(%E7%9C%8B%E7%9C%8B%E4%BC%9A%E4%B8%8D%E4%BC%9A%E5%87%BA%E9%94%99)" tabindex="-1">第三步：执行操作 (看看会不会出错)</h3>
+<h4>1. 执行 <code>1 4 w</code> (白色)</h4>
+<ul>
+<li><strong>逻辑</strong>：涂色范围是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 4]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">]</span></span></span></span></eq>，转化为左闭右开是 <strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq></strong>。</li>
+<li><strong>操作</strong>：我们需要覆盖所有在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 之间的区间。</li>
+<li><strong>查找</strong>：
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 数组的下标是 <code>0</code>。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 数组的下标是 <code>2</code>。</li>
+<li>我们要染色的线段树区间是 <code>0</code> 到 <code>2-1</code> (即下标 <code>0</code> 和 <code>1</code>)。</li>
+</ul>
+</li>
+<li><strong>结果</strong>：
+<ul>
+<li>区间 ID <strong>0</strong> (对应球 1,2) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 变 <strong>白</strong>。</li>
+<li>区间 ID <strong>1</strong> (对应球 3,4) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 变 <strong>白</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4>2. 执行 <code>3 5 b</code> (黑色)</h4>
+<ul>
+<li><strong>逻辑</strong>：涂色范围是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[3, 5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></eq>，转化为左闭右开是 <strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq></strong>。</li>
+<li><strong>操作</strong>：我们需要覆盖所有在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq> 之间的区间。</li>
+<li><strong>查找</strong>：
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq> 在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 数组的下标是 <code>1</code>。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq> 在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 数组的下标是 <code>3</code>。</li>
+<li>我们要染色的线段树区间是 <code>1</code> 到 <code>3-1</code> (即下标 <code>1</code> 和 <code>2</code>)。</li>
+</ul>
+</li>
+<li><strong>结果</strong>：
+<ul>
+<li>区间 ID <strong>1</strong> (对应球 3,4) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> <strong>被覆盖</strong>，变 <strong>黑</strong>。</li>
+<li>区间 ID <strong>2</strong> (对应球 5) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 变 <strong>黑</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%9C%80%E7%BB%88%E7%BB%9F%E8%AE%A1" tabindex="-1">第四步：最终统计</h3>
+<p>我们来看最后每个格子的颜色：</p>
+<ul>
+<li><strong>区间 0 (球 1, 2)</strong>：白色 (操作1染的，操作2没碰它)。</li>
+<li><strong>区间 1 (球 3, 4)</strong>：黑色 (操作1染白，但操作2<strong>覆盖</strong>了它)。</li>
+<li><strong>区间 2 (球 5)</strong>：黑色 (操作2染的)。</li>
+</ul>
+<p>最终连续白色序列：球 1 到 球 2。</p>
+<p>答案：1 2。</p>
+<p>这与实际逻辑（1-4白，然后3-5黑，剩下1-2白，3-5黑）完全一致！✅</p>
+<hr>
+<h3 id="%E5%8F%8D%E4%BE%8B%EF%BC%9A%E5%A6%82%E6%9E%9C%E6%88%91%E4%BB%AC%E4%B8%8D%E5%AD%98-%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F" tabindex="-1">反例：如果我们不存 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 会发生什么？</h3>
+<p>假设我们只存 1, 4, 3, 5。</p>
+<p>排序后 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 数组：[1, 3, 4, 5]。</p>
+<p>切分出来的区间是：</p>
+<ol>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span></eq> <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 球 <strong>1, 2</strong></li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 4)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">)</span></span></span></span></eq> <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 球 <strong>3</strong></li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>4</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[4, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq> <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 球 <strong>4</strong></li>
+</ol>
+<p>请注意，球 5 去哪了？</p>
+<p>最后一个区间是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>4</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[4, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq>，只包含了球 4。球 5 丢失了！</p>
+<p>因为我们没有记录“5之后的那个边界”，程序不知道球 5 也是一个需要被独立对待的实体。</p>
+<p>这就是为什么要存 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">b+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 的原因：</p>
+<p>如果不加 1，原本的闭区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[3, 5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></eq> 就会变成 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq>，导致右端点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 永远无法被包含进最后的统计区间里。通过存入 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">5+1=6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq>，我们构建了区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>5</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[5, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq>，确保了球 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 拥有了自己的“领地”。</p>
+<h2 id="%E6%93%8D%E4%BD%9C%E4%B8%BE%E4%BE%8B-2" tabindex="-1">操作举例 2</h2>
+<p>数据:</p>
+<pre><code>1 4 w
+3 5 w
+</code></pre>
+<p>我们依然遵循 <strong>“左闭右开 + 右端点加1”</strong> 的黄金法则。</p>
+<h3 id="%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%94%B6%E9%9B%86%E5%85%B3%E9%94%AE%E7%82%B9-(key-points)" tabindex="-1">第一步：收集关键点 (Key Points)</h3>
+<p>我们的规则是：把闭区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[a, b]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">]</span></span></span></span></eq> 转化为左闭右开 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[a, b+1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></eq>。</p>
+<ol>
+<li><strong>操作 1 (<code>1 4 w</code>)</strong>：
+<ul>
+<li>区间变成 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>收集点：<strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq></strong> 和 <strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq></strong>。</li>
+</ul>
+</li>
+<li><strong>操作 2 (<code>3 5 w</code>)</strong>：
+<ul>
+<li>区间变成 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>收集点：<strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq></strong> 和 <strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq></strong>。</li>
+</ul>
+</li>
+</ol>
+<p>离散化数组 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> (排序去重后)：</p>
+<p>[1, 3, 5, 6]</p>
+<hr>
+<h3 id="%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%87%E5%88%86%E5%8C%BA%E9%97%B4-(slicing)" tabindex="-1">第二步：切分区间 (Slicing)</h3>
+<p>数轴被这 4 个点切成了 3 个原子区间。这就是线段树叶子节点所管理的范围。</p>
+<table>
+<thead>
+<tr>
+<th><strong>线段树下标 (ID)</strong></th>
+<th><strong>离散化区间 [L,R)</strong></th>
+<th><strong>对应的真实球编号</strong></th>
+<th><strong>长度计算 (R−L)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>1, 2</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn mathvariant="bold">2</mn></mrow><annotation encoding="application/x-tex">3 - 1 = \mathbf{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathbf">2</span></span></span></span></eq></td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>3, 4</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>−</mo><mn>3</mn><mo>=</mo><mn mathvariant="bold">2</mn></mrow><annotation encoding="application/x-tex">5 - 3 = \mathbf{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathbf">2</span></span></span></span></eq></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>5</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[5, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>5</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mo>−</mo><mn>5</mn><mo>=</mo><mn mathvariant="bold">1</mn></mrow><annotation encoding="application/x-tex">6 - 5 = \mathbf{1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathbf">1</span></span></span></span></eq></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C-(coloring)" tabindex="-1">第三步：执行操作 (Coloring)</h3>
+<p>现在我们开始“涂色”。</p>
+<h4>1. 执行 <code>1 4 w</code></h4>
+<ul>
+<li><strong>目标</strong>：覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li><strong>查找</strong>：
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 在数组 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 的下标是 <code>0</code>。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 在数组 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 的下标是 <code>2</code>。</li>
+<li><strong>线段树操作范围</strong>：下标 <code>0</code> 到 <code>2-1</code> (即 <code>0</code> 到 <code>1</code>)。</li>
+</ul>
+</li>
+<li><strong>效果</strong>：
+<ul>
+<li>区间 <strong>0</strong> (球 1-2) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 变 <strong>白</strong>。</li>
+<li>区间 <strong>1</strong> (球 3-4) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 变 <strong>白</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4>2. 执行 <code>3 5 w</code></h4>
+<ul>
+<li><strong>目标</strong>：覆盖 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li><strong>查找</strong>：
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq> 在数组 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 的下标是 <code>1</code>。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">6</span></span></span></span></eq> 在数组 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></eq> 的下标是 <code>3</code>。</li>
+<li><strong>线段树操作范围</strong>：下标 <code>1</code> 到 <code>3-1</code> (即 <code>1</code> 到 <code>2</code>)。</li>
+</ul>
+</li>
+<li><strong>效果</strong>：
+<ul>
+<li>区间 <strong>1</strong> (球 3-4) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> <strong>再次被涂白</strong> (原本就是白，现在还是白，无冲突)。</li>
+<li>区间 <strong>2</strong> (球 5) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 变 <strong>白</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%9C%80%E7%BB%88%E7%BB%9F%E8%AE%A1-(merging)" tabindex="-1">第四步：最终统计 (Merging)</h3>
+<p>现在我们遍历所有区间，计算结果。</p>
+<ol>
+<li><strong>检查区间 0</strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[1, 3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span></eq>)：
+<ul>
+<li>颜色：<strong>白</strong>。</li>
+<li>当前长度：<code>2</code>。</li>
+<li>序列起点：<code>1</code>。</li>
+<li>目前覆盖：<code>1, 2</code>。</li>
+</ul>
+</li>
+<li><strong>检查区间 1</strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>3</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[3, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span></eq>)：
+<ul>
+<li>颜色：<strong>白</strong>。</li>
+<li><strong>关键点</strong>：因为它也是白色，且它是紧挨着区间 0 的（区间0结束于3，区间1开始于3），所以我们<strong>不打断</strong>，直接累加。</li>
+<li>当前总长度：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn mathvariant="bold">4</mn></mrow><annotation encoding="application/x-tex">2 + 2 = \mathbf{4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathbf">4</span></span></span></span></eq>。</li>
+<li>目前覆盖：<code>1, 2, 3, 4</code>。</li>
+</ul>
+</li>
+<li><strong>检查区间 2</strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>5</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">[5, 6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">6</span><span class="mclose">)</span></span></span></span></eq>)：
+<ul>
+<li>颜色：<strong>白</strong>。</li>
+<li><strong>关键点</strong>：依然是白色，且紧挨着区间 1（区间1结束于5，区间2开始于5），继续累加。</li>
+<li>当前总长度：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn mathvariant="bold">5</mn></mrow><annotation encoding="application/x-tex">4 + 1 = \mathbf{5}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathbf">5</span></span></span></span></eq>。</li>
+<li>目前覆盖：<code>1, 2, 3, 4, 5</code>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C" tabindex="-1">第五步：输出结果</h3>
+<ul>
+<li><strong>最大长度</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq>。</li>
+<li><strong>起点</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>。</li>
+<li><strong>终点</strong>：起点 + 长度 - 1 = <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>5</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn mathvariant="bold">5</mn></mrow><annotation encoding="application/x-tex">1 + 5 - 1 = \mathbf{5}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord mathbf">5</span></span></span></span></eq>。</li>
+<li>(或者直接看最后一个区间的右边界 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false">[</mo><mn>3</mn><mo stretchy="false">]</mo><mo>−</mo><mn>1</mn><mo>=</mo><mn>6</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">X[3] - 1 = 6 - 1 = 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mopen">[</span><span class="mord">3</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq>)。</li>
+</ul>
+<p><strong>输出</strong>：<code>1 5</code>。</p>
+<hr>
+<h3 id="%E6%80%BB%E7%BB%93%E8%BF%99%E4%B8%AA%E4%BE%8B%E5%AD%90%E7%9A%84%E6%84%8F%E4%B9%89" tabindex="-1">总结这个例子的意义</h3>
+<p>这个例子完美展示了为什么要把 <strong>区间切碎</strong>：</p>
+<ol>
+<li><strong>区间 1 (球 3, 4)</strong> 是一个<strong>公共区域</strong>。
+<ul>
+<li>操作 1 染了它。</li>
+<li>操作 2 也染了它。</li>
+</ul>
+</li>
+<li>通过离散化，区间 1 变成了一个独立的原子单元。</li>
+<li>无论被染多少次，它始终保持白色。</li>
+<li>最后统计时，因为它左右两边（区间 0 和 区间 2）也都是白色，程序会自动把它们<strong>串</strong>起来，形成一个完整的长区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mclose">]</span></span></span></span></eq>。</li>
+</ol>
+<p>这就是离散化处理<strong>区间合并</strong>的魔力：<strong>切碎 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 染色 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 拼合</strong>。</p>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

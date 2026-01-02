@@ -60,6 +60,17 @@
       <li>
         
           <i class="fa fa-file-text"></i>
+          <a href="base/quicksort/index.html">快速排序</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
           <a href="base/double_point/index.html">双指针</a>
         
 
@@ -268,6 +279,17 @@
           
   
   <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/heap">堆</a>
+        
+
+        
+
+      </li>
     
       
       <li>
@@ -482,6 +504,28 @@
       <li>
         
           <i class="fa fa-file-text"></i>
+          <a href="graph/bcc/index.html">双连通分量</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/scc/index.html">强连通分量</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
           <a href="graph/diameter_of_tree">树的直径</a>
         
 
@@ -555,6 +599,17 @@
         
           <i class="fa fa-file-text"></i>
           <a href="graph/网络流/index.html">网络流:序</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/二分图/黑白染色.html">二分图染色</a>
         
 
         
@@ -1129,42 +1184,92 @@ function hideMenuModal() {
         </div>
     </div>
     <pre class="language-clike">
-        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br></div>
-        <code><span class="token comment">// ---- 求割点 ----</span>
-int root<span class="token punctuation">;</span> <span class="token comment">//root点</span>
-int dfn<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>low<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>cnt<span class="token punctuation">;</span> <span class="token comment">//dfn是编号,low是能到达的最小编号</span>
-bool cut<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">//标记割点</span>
-void <span class="token function">cut_node</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int fa<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">++</span>cnt<span class="token punctuation">;</span> <span class="token comment">// 编号</span>
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br></div>
+        <code>struct TarjanCut <span class="token punctuation">{</span>
+    int n<span class="token punctuation">,</span> timer<span class="token punctuation">;</span> <span class="token comment">// timer 对应你代码中的 cnt</span>
+    int dfn<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span> low<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    bool is_cut<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 标记是否为割点 (对应 cut[])</span>
+    int root<span class="token punctuation">;</span> <span class="token comment">// 当前 DFS 树的根节点</span>
 
-    int child<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//记录root的孩子数</span>
-    
-    int i<span class="token punctuation">;</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span>head<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>i<span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">=</span>E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment">//遍历相邻点</span>
-        int v <span class="token operator">=</span> E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v <span class="token punctuation">;</span><span class="token comment">//另一个点</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span> dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment">//v点的编号为0，也就是没有被访问</span>
-            child<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">// u的孩子数加1</span>
-            <span class="token function">cut_node</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span>fa<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//从这个点开始dfs</span>
-
-            <span class="token comment">//树枝边,用后代的low来更新u的low</span>
-            low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span>low<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            
-            <span class="token keyword">if</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">>=</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> u <span class="token operator">!=</span> root<span class="token punctuation">)</span> <span class="token comment">// 情况2</span>
-                cut<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment">// 处理返祖边</span>
-        <span class="token comment">//注意:v可能是u的父亲,但没有关系,最多low[u] == dfn[fa[u]]</span>
-        <span class="token comment">// dfn[v] &lt; dfn[u] 说明v是u的祖先, </span>
-        <span class="token comment">// 在无向图上其实不可能 dfn[v] > dfn[u]</span>
-        <span class="token comment">// 因为: v 是一个已经访问过的点, 如果dfn[v] > dfn[u] 说明u是v的祖先, 那么v在u的子树上, </span>
-        <span class="token comment">// 根据dfs 的性质, 应该先访问u, 再访问v,但此时v已经被访问, 所以不可能出现dfn[v] > dfn[u]的情况</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&lt;</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> v <span class="token operator">!=</span> fa<span class="token punctuation">)</span> <span class="token comment">//v是u的祖先</span>
-            low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//回边</span>
+    void <span class="token function">set</span><span class="token punctuation">(</span>int _n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        n <span class="token operator">=</span> _n<span class="token punctuation">;</span>
+        timer <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>dfn<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>dfn<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>low<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>low<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>is_cut<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>is_cut<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-    <span class="token comment">// 退出这个点</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span> u <span class="token operator">==</span> root <span class="token operator">&amp;&amp;</span> child <span class="token operator">></span><span class="token number">1</span><span class="token punctuation">)</span>  <span class="token comment">//情况1:</span>
-        cut<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+
+    <span class="token comment">/*
+     * u: 当前节点
+     * fa: u 的父节点 (防止走回头路)
+     */</span>
+    void <span class="token function">dfs</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int fa <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">++</span>timer<span class="token punctuation">;</span>
+        int child <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 记录 root 在 DFS 树中的子节点数量</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> e<span class="token punctuation">.</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">~</span>i<span class="token punctuation">;</span> i <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            int v <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">;</span>
+
+            <span class="token comment">// 不走父子边</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>v <span class="token operator">==</span> fa<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// v 没有被访问过，是树边</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+                child<span class="token operator">++</span><span class="token punctuation">;</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 【注意】这里必须传 u，表示 v 的父亲是 u</span>
+
+                <span class="token comment">// 回溯时用子节点的 low 更新当前节点的 low</span>
+                low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> low<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// 割点判定情况 2: 非根节点</span>
+                <span class="token comment">// 如果子节点 v 无法回到 u 的祖先 (low[v] >= dfn[u])</span>
+                <span class="token comment">// 说明 u 是连接 v 子树和其他部分的必经点</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>low<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">>=</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> u <span class="token operator">!=</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    is_cut<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token comment">// 处理返祖边</span>
+                <span class="token comment">// 注意:v可能是u的父亲,但没有关系,最多low[u] == dfn[fa[u]]</span>
+                <span class="token comment">// dfn[v] &lt; dfn[u] 说明v是u的祖先,</span>
+                <span class="token comment">// 在无向图上其实不可能 dfn[v] > dfn[u]</span>
+                <span class="token comment">// 因为: v 是一个已经访问过的点, 如果dfn[v] > dfn[u] 说明u是v的祖先, 那么v在u的子树上,</span>
+                <span class="token comment">// 根据dfs 的性质, 应该先访问u, 再访问v,但此时v已经被访问, 所以不可能出现dfn[v] > dfn[u]的情况</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span> dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&lt;</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// v 已经被访问过，是返祖边 (Back Edge)</span>
+                <span class="token comment">// 用 v 的 dfn 更新 u 的 low</span>
+                low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// 注意：有些版本写成 min(low[u], low[v]) (对于已访问的 v) 是错误的。</span>
+                <span class="token comment">// 对于返祖边，只能取 dfn[v]，因为 low[v] 可能包含从 v 回到更上层的路径，</span>
+                <span class="token comment">// 而边 (u, v) 并不代表 u 可以通过 v 再跳跃回去（除非有其他边）。</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 割点判定情况 1: 根节点</span>
+        <span class="token comment">// 如果根节点在 DFS 树中有两个及以上的子节点，则它是割点</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>u <span class="token operator">==</span> root <span class="token operator">&amp;&amp;</span> child <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            is_cut<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    void <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 遍历所有点，防止图不连通</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dfn<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                root <span class="token operator">=</span> i<span class="token punctuation">;</span> <span class="token comment">// 记录当前连通块的 DFS 根</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 辅助函数：获取所有割点</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> <span class="token function">get_cuts</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> cuts<span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>is_cut<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> cuts<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> cuts<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code>
     </pre>
 </div>
@@ -1178,7 +1283,7 @@ void <span class="token function">cut_node</span><span class="token punctuation"
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2025 rainboy. All rights reserved. last build time 2025/12/28 10:02:28</p>
+        <p>&copy; 2026 rainboy. All rights reserved. last build time 2026/1/2 14:33:59</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>

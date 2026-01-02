@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Knights of the Round Table</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Knights of the Round Table</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#好题</span>
+            
+              <span>#v-bcc</span>
+            
+              <span>#二分图染色</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/POJ-2942#author=muyangren907" target="_blank"> POJ-2942</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>图论中的奇偶环排斥,BCC奇环传染定理,一个神奇的题目</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E6%95%B0%E5%AD%A6%E5%8C%96">题目数学化</a></li><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a><ol><li><a href="#1.-%E9%97%AE%E9%A2%98%E7%BF%BB%E8%AF%91%EF%BC%9A%E4%BB%8E%E6%95%85%E4%BA%8B%E5%88%B0%E5%9B%BE%E8%AE%BA">1. 问题翻译：从故事到图论</a></li><li><a href="#2.-%E4%BA%BA%E7%B1%BB%E6%80%9D%E7%BB%B4(%E6%88%91%E7%9A%84)">2. 人类思维(我的)</a></li><li><a href="#3.-%E6%A0%B8%E5%BF%83%E5%AE%A1%E5%88%A4%EF%BC%9A%E5%A5%87%E7%8E%AF%E4%BC%A0%E6%9F%93%E5%AE%9A%E7%90%86">3. 核心审判：奇环传染定理</a></li><li><a href="#%E8%AF%81%E6%98%8E-1%EF%BC%9A%E8%B7%AF%E5%BE%84-%E4%B8%8E-%E4%B8%A4%E8%80%85%E4%B8%BA%E4%BD%95%E4%B8%8D%E9%87%8D%E5%90%88%EF%BC%9F">证明 1：路径  与  两者为何不重合？</a></li><li><a href="#%E8%AF%81%E6%98%8E-2%EF%BC%9A%E8%B7%AF%E5%BE%84-%E4%B8%BA%E4%BD%95%E4%B8%8D%E4%B8%8E%E5%A5%87%E7%8E%AF%E6%9C%89%E9%87%8D%E5%90%88%E7%9A%84%E8%BE%B9%EF%BC%88%E9%99%A4%E4%BA%86%E7%BB%88%E7%82%B9%EF%BC%89%EF%BC%9F">证明 2：路径  为何不与奇环有重合的边（除了终点）？</a></li><li><a href="#%E6%80%BB%E7%BB%93%EF%BC%9A%E6%89%87%E5%BD%A2%E5%BC%95%E7%90%86-(the-fan-lemma)">总结：扇形引理 (The Fan Lemma)</a></li></ol></li><li><a href="#%E9%A2%98%E7%9B%AE%E9%9A%BE%E5%BA%A6%E7%9A%84%E8%AE%A8%E8%AE%BA">题目难度的讨论</a><ol><li><a href="#1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E9%81%93%E9%A2%98%E8%BF%99%E4%B9%88%E9%9A%BE%EF%BC%9F">1. 为什么这道题这么难？</a></li><li><a href="#2.-%E6%80%8E%E4%B9%88%E9%9D%A2%E5%AF%B9%E8%BF%99%E7%A7%8D%E2%80%9C%E6%95%B0%E5%AD%A6%E9%A2%98%E2%80%9D%EF%BC%9F%E2%80%94%E2%80%94%E2%80%9C%E5%8F%B8%E6%9C%BA%E2%80%9D%E7%90%86%E8%AE%BA">2. 怎么面对这种“数学题”？——“司机”理论</a></li><li><a href="#3.-%E8%BF%99%E9%81%93%E9%A2%98%E7%9A%84%E4%BB%B7%E5%80%BC%EF%BC%9A%E5%AE%83%E6%98%AF%E4%B8%80%E4%B8%AA%E2%80%9C%E9%87%8C%E7%A8%8B%E7%A2%91%E2%80%9D">3. 这道题的价值：它是一个“里程碑”</a></li><li><a href="#4.-%E7%BB%99%E4%BD%A0%E7%9A%84%E5%BB%BA%E8%AE%AE">4. 给你的建议</a></li></ol></li><li><a href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E5%9B%BE">算法流程图</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li><li><a href="#%E7%AE%80%E6%B4%81%E4%BB%A3%E7%A0%81">简洁代码</a></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E6%95%B0%E5%AD%A6%E5%8C%96" tabindex="-1">题目数学化</h2>
+<p>给定一个无向图 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><mi>V</mi><mo separator="true">,</mo><mi>E</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">G=(V,E)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mclose">)</span></span></span></span></eq>，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span></eq> 为骑士集合，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi></mrow><annotation encoding="application/x-tex">E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span></span></eq> 为互相厌恶的骑士对。求最少需要移除多少个顶点，使得剩余的图 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>G</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">G&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></eq> 中的每个点都在一个奇数长度的简单环(环中没有重复的点)中，且该环的边均不在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi></mrow><annotation encoding="application/x-tex">E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span></span></eq> 中(那就是在补图中求)。求 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>G</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow><annotation encoding="application/x-tex">G&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></eq> 的顶点数。</p>
+<h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<h3 id="1.-%E9%97%AE%E9%A2%98%E7%BF%BB%E8%AF%91%EF%BC%9A%E4%BB%8E%E6%95%85%E4%BA%8B%E5%88%B0%E5%9B%BE%E8%AE%BA" tabindex="-1">1. 问题翻译：从故事到图论</h3>
+<p>首先，我们需要剥离题目的故事外壳，还原其数学本质。</p>
+<ul>
+<li><strong>原始条件</strong>：
+<ol>
+<li>骑士们互相憎恨的不能挨着坐。</li>
+<li>圆桌会议需要围成一圈。</li>
+<li>人数必须是奇数。</li>
+<li>问：有多少骑士<strong>永远无法</strong>参加任何符合上述条件的会议。</li>
+</ol>
+</li>
+<li><strong>图论建模</strong>：
+<ol>
+<li><strong>反向思考（补图）</strong>：题目给的是“憎恨关系”（排斥），这很难处理。我们要建立“兼容关系”。如果 A 和 B 不憎恨，就连一条边。
+<ul>
+<li>现在问题变为：在这个“兼容图”中找结构。</li>
+</ul>
+</li>
+<li><strong>圆桌 = 简单环</strong>：围成一圈，意味着这是一个简单环（Simple Cycle）。</li>
+<li><strong>奇数 = 奇环</strong>：人数是奇数，意味着这是一个<strong>奇环 (Odd Cycle)</strong>。</li>
+<li><strong>目标</strong>：找出所有<strong>不能被包含在任何简单奇环中</strong>的节点个数。
+<ul>
+<li>最终答案 = 总人数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> - (能被包含在任意奇环中的节点集合大小)。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="2.-%E4%BA%BA%E7%B1%BB%E6%80%9D%E7%BB%B4(%E6%88%91%E7%9A%84)" tabindex="-1">2. 人类思维(我的)</h3>
+<ul>
+<li>集合 B : 能被包含在任意奇环中的节点</li>
+<li>集合 A : 能被包含在任意环中的节点</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>⊂</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">B \subset A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7224em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊂</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span></eq></li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo mathvariant="normal">∉</mo><mi>A</mi><mo>→</mo><mi>u</mi><mo mathvariant="normal">∉</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">u \notin A \to u \notin B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mord"><span class="mrel">∈</span></span><span class="mord vbox"><span class="thinbox"><span class="llap"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="inner"><span class="mord"><span class="mord">/</span><span class="mspace" style="margin-right:0.0556em;"></span></span></span><span class="fix"></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mord"><span class="mrel">∈</span></span><span class="mord vbox"><span class="thinbox"><span class="llap"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="inner"><span class="mord"><span class="mord">/</span><span class="mspace" style="margin-right:0.0556em;"></span></span></span><span class="fix"></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></eq></li>
+</ul>
+<p>所以我先去思考环在哪里(视角转变到环上, A 是B 的必要条件,先满足A再说)!!!(缩放条件,极限法)</p>
+<p>怎么转变思路 去 bcc 中寻找的呢?</p>
+<ul>
+<li>直觉: 环不能跨越两个不同的 BCC , (反证法)</li>
+<li>结论 1： 任何一个简单环，都必然完整地、严格地包含在某一个 BCC 内部。</li>
+</ul>
+<p>这使得我们可以把整张图切碎，一块一块（一个个 BCC）独立处理，互不干扰。我们不需要担心“左边 BCC 的一半”和“右边 BCC 的一半”拼成一个奇环</p>
+<p>切碎 不影响 去分析点 是否在环上 !!!</p>
+<p>我作为一个普通人, 觉的上面的思维跳跃 很难受,超乎我的思维能力</p>
+<p><strong>符合人类直觉的思考路径应该是：</strong></p>
+<ol>
+<li>我想找环，但图太大了，好乱。</li>
+<li>有没有什么地方是“一旦分开就不影响找环”的？</li>
+<li>有！那种“单点连接”的地方（割点）。因为环不能过了那个点又折回来。</li>
+<li>好，那我把所有这种点都切开。</li>
+<li>切开后的每一块，给他起个名字吧，就叫 BCC。</li>
+<li>现在问题变成了：在每个 BCC 里找环。</li>
+</ol>
+<p>所以，不是**“我要去 BCC 里找”<strong>，而是</strong>“只有在 BCC 里找才有用，去别的地方找是浪费时间”**。</p>
+<h3 id="3.-%E6%A0%B8%E5%BF%83%E5%AE%A1%E5%88%A4%EF%BC%9A%E5%A5%87%E7%8E%AF%E4%BC%A0%E6%9F%93%E5%AE%9A%E7%90%86" tabindex="-1">3. 核心审判：奇环传染定理</h3>
+<p>这是本题最难理解、也最精彩的部分。</p>
+<p>对于每一个 BCC，我们只需要问两个问题：</p>
+<ol>
+<li><strong>它是二分图吗？</strong>
+<ul>
+<li>如果是二分图 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 它不包含任何奇环 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 这个 BCC 里的所有人全都没救了（除非它属于另一个能救它的 BCC）。</li>
+</ul>
+</li>
+<li><strong>它不是二分图吗？</strong>
+<ul>
+<li>如果不是二分图 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 它至少包含一个奇环。</li>
+<li><strong>关键定理</strong>：在一个点双连通分量中，只要存在<strong>一个</strong>奇环，那么该分量内的<strong>每一个点</strong>，都必定属于某个奇环。</li>
+</ul>
+</li>
+</ol>
+<p>证明:</p>
+<p>直观证明（传染逻辑）：</p>
+<p>假设 BCC 里有一个奇环 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>o</mi><mi>d</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{odd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">dd</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq>，还有一个点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 在环外（但在同一个 BCC 里）。</p>
+<ul>
+<li>双连通的定义：根据 Menger 定理，BCC 内任意两点之间至少有两条点不相交的路径。</li>
+<li>连接：这意味着点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 可以通过两条不同的路径连到奇环 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>o</mi><mi>d</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{odd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">dd</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 上，设连接点为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq>。</li>
+<li>构造：
+<ul>
+<li>奇环 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>o</mi><mi>d</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{odd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">dd</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 被 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x, y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 分成了两段路径：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>t</mi><msub><mi>h</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">Path_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>t</mi><msub><mi>h</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">Path_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li>因为环的总长度是奇数，所以 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>t</mi><msub><mi>h</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">Path_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>t</mi><msub><mi>h</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">Path_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq> 的长度奇偶性一定不同（一奇一偶，或者一偶一奇，这样加起来才是奇数）。</li>
+<li>选择：
+<ul>
+<li>从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 出发，经过 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq>，走某一条环上的路径，再经过 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 回到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq>，这就构成了一个新环。</li>
+</ul>
+</li>
+<li>无论 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>→</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">u \to x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>→</mo><mi>u</mi></mrow><annotation encoding="application/x-tex">y \to u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 这两条路的长度是多少，我们只要在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>t</mi><msub><mi>h</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">Path_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq>（奇）和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>t</mi><msub><mi>h</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">Path_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></eq>（偶）里挑那个能让总长度变成奇数的路径即可！</li>
+<li>结论 2：
+只要 BCC 不是二分图（即含有奇环），那么这个 BCC 里的所有人都是“安全”的。</li>
+</ul>
+<figure><img src="./1.png" alt=""></figure>
+<h3 id="%E8%AF%81%E6%98%8E-1%EF%BC%9A%E8%B7%AF%E5%BE%84-%E4%B8%8E-%E4%B8%A4%E8%80%85%E4%B8%BA%E4%BD%95%E4%B8%8D%E9%87%8D%E5%90%88%EF%BC%9F" tabindex="-1">证明 1：路径 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>u</mi><mo>→</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(u \to x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></eq> 与 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>u</mi><mo>→</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(u \to y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></eq> 两者为何不重合？</h3>
+<p><strong>目标</strong>：我们要证明从点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 出发，一定能找到两条路径分别到达奇环上的两个不同点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq>，且这两条路径除了起点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 以外，没有任何公共点。</p>
+<p><strong>直观证明（反证法）：</strong></p>
+<ol>
+<li><strong>假设重合</strong>：
+假设从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 出发走向那个奇环的所有路径，都<strong>必须</strong>经过某个公共点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq>（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo mathvariant="normal">≠</mo><mi>u</mi></mrow><annotation encoding="application/x-tex">v \neq u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq>）。</li>
+<li><strong>构造割点</strong>：
+如果我们把这个点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 删掉（炸掉），会发生什么？
+因为所有路都要经过 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq>，删掉 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 之后，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 就再也无法到达那个奇环了。</li>
+<li><strong>矛盾爆发</strong>：
+这意味着图被分成了两半（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 在一边，奇环在另一边），<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 变成了连接这两部分的唯一通道。
+那么 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 就是一个 <strong>割点 (Articulation Point)</strong>。</li>
+<li><strong>结论</strong>：
+然而，我们是在一个 <strong>BCC（双连通分量）</strong> 内部讨论问题。BCC 的定义就是<strong>没有割点</strong>。
+所以，“所有路径都必须经过同一个点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq>” 这个假设不成立。
+因此，必然存在至少两条从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 出发，“分道扬镳”互不干扰的路径通向那个集合（奇环）。</li>
+</ol>
+<hr>
+<h3 id="%E8%AF%81%E6%98%8E-2%EF%BC%9A%E8%B7%AF%E5%BE%84-%E4%B8%BA%E4%BD%95%E4%B8%8D%E4%B8%8E%E5%A5%87%E7%8E%AF%E6%9C%89%E9%87%8D%E5%90%88%E7%9A%84%E8%BE%B9%EF%BC%88%E9%99%A4%E4%BA%86%E7%BB%88%E7%82%B9%EF%BC%89%EF%BC%9F" tabindex="-1">证明 2：路径 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>u</mi><mo>→</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(u \to x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></eq> 为何不与奇环有重合的边（除了终点）？</h3>
+<p><strong>目标</strong>：我们要证明路径 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>→</mo><mo>⋯</mo><mo>→</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">u \to \dots \to x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 在到达 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 之前，不会“不小心”踩到奇环上的其他点（比如 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq>）。</p>
+<p><strong>直观证明（最小化原理 / 第一次接触原则）：</strong></p>
+<p>这其实是一个<strong>定义的技巧</strong>，而不是复杂的几何证明。我们可以通过“截断”来保证这一点。</p>
+<ol>
+<li><strong>设定</strong>：
+想象我们要从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 修一条路去接触那个奇环。</li>
+<li><strong>过程</strong>：
+我们沿着路径走，假设路径原计划是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>→</mo><mi>a</mi><mo>→</mo><mi>b</mi><mo>→</mo><mi>z</mi><mo>→</mo><mo>⋯</mo><mo>→</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">u \to a \to b \to z \to \dots \to x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq>。
+其中 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 是我们要去的终点，但 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 是奇环上的另一个点。</li>
+<li><strong>修正</strong>：
+如果路径在到达 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 之前，先在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 点碰到了奇环，那我们为什么还要傻傻地继续走到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 呢？
+我们直接<strong>把 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span></eq> 视为新的终点</strong>不就行了吗？
+我们将这条路径定义为：<strong>从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 出发，第一次碰到奇环上的点即停止。</strong></li>
+<li><strong>结论</strong>：
+只要我们将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></eq> 定义为两条路径与奇环的<strong>第一个交点</strong>，那么路径中间就绝对不会有奇环上的其他点。
+如果路径“蹭”到了奇环，我们就把蹭到的那个点作为终点，抛弃后面的部分。</li>
+</ol>
+<hr>
+<h3 id="%E6%80%BB%E7%BB%93%EF%BC%9A%E6%89%87%E5%BD%A2%E5%BC%95%E7%90%86-(the-fan-lemma)" tabindex="-1">总结：扇形引理 (The Fan Lemma)</h3>
+<p>在图论中，上面的逻辑被总结为 <strong>扇形引理</strong>（它是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq>-连通图性质的一个特例，这里 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq>）：</p>
+<blockquote>
+<p><strong>定理</strong>：在一个 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq>-连通图（BCC）中，从任意一个顶点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 到任意一个由至少 2 个点组成的集合 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></eq>（这里的奇环），都存在两条路径。这两条路径：</p>
+<ol>
+<li>除了起点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 外，<strong>互不相交</strong>（对应你的疑问 1）。</li>
+<li>分别终止于集合 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></eq> 中的<strong>不同</strong>两点（对应你的疑问 2，通过“首次接触”保证内部不相交）。</li>
+</ol>
+</blockquote>
+<p>所以，你的这两个疑问在数学上是由 <strong>“BCC 没有割点”</strong> 这个性质严格保证的。我们可以放心地画出那个像“圆锥”或“扇子”一样的图形。</p>
+<h2 id="%E9%A2%98%E7%9B%AE%E9%9A%BE%E5%BA%A6%E7%9A%84%E8%AE%A8%E8%AE%BA" tabindex="-1">题目难度的讨论</h2>
+<blockquote>
+<p>我觉得这个题目的难度太高了,需要这么多的数学证明, 才能开始做 这个题目</p>
+</blockquote>
+<p>你的这种感觉非常真实，而且我必须告诉你：<strong>你的感觉是对的。</strong></p>
+<p>这道题（POJ 2942 / Luogu P3225 Knights of the Round Table）在图论题目中属于**“分水岭”**级别的存在。</p>
+<p>它之所以让你觉得“难得离谱”，是因为它<strong>不是在考你算法模版，而是在考你数学定理的积累</strong>。</p>
+<h3 id="1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E9%81%93%E9%A2%98%E8%BF%99%E4%B9%88%E9%9A%BE%EF%BC%9F" tabindex="-1">1. 为什么这道题这么难？</h3>
+<p>这道题其实是三座大山叠在一起：</p>
+<ol>
+<li><strong>思维转换</strong>：要把“互相憎恨”转成“补图”（能坐在一起）。（这一步还算正常）</li>
+<li><strong>算法组合</strong>：要会写 Tarjan 求点双连通分量，还要会写二分图染色。（这是代码能力的门槛，工作量大）</li>
+<li><strong>数学定理（最难的一点）</strong>：你必须<strong>预先知道</strong>或者<strong>现场推导</strong>出“BCC 内有一个奇环 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 全员安全”这个结论。</li>
+</ol>
+<p><strong>很多 ACMer/OIer 第一次遇到这道题时，都是直接懵圈的。</strong> 如果没有学过这个定理，靠考场上想出来，那得是图论直觉非常顶尖的选手。</p>
+<h3 id="2.-%E6%80%8E%E4%B9%88%E9%9D%A2%E5%AF%B9%E8%BF%99%E7%A7%8D%E2%80%9C%E6%95%B0%E5%AD%A6%E9%A2%98%E2%80%9D%EF%BC%9F%E2%80%94%E2%80%94%E2%80%9C%E5%8F%B8%E6%9C%BA%E2%80%9D%E7%90%86%E8%AE%BA" tabindex="-1">2. 怎么面对这种“数学题”？——“司机”理论</h3>
+<p>我建议你换一种心态来对待这种题目：<strong>学会当“老司机”，而不是“修车工”。</strong></p>
+<ul>
+<li><strong>修车工（数学家）</strong>：必须弄懂发动机的每一个齿轮怎么咬合，为什么要双连通，为什么要Menger定理，怎么证明路径不重合……（这就是我们刚才讨论的，非常累）</li>
+<li><strong>老司机（竞赛选手）</strong>：我只需要知道**“踩油门车会走，踩刹车车会停”**。</li>
+</ul>
+<p><strong>对于这道题，你只需要记住“结论”作为你的武器库：</strong></p>
+<blockquote>
+<p><strong>武器名称</strong>：【奇环传染定理】
+<strong>武器效果</strong>：在一个点双连通分量（BCC）里，只要你能找到<strong>任意一个</strong>奇环，那么这个分量里的<strong>所有点</strong>都可以被包含在奇环里。
+<strong>使用条件</strong>：补图、求最大独立集、圆桌会议类问题。</p>
+</blockquote>
+<p>下次再见到类似的“排斥”、“循环”、“凑奇数”的题目，你直接把这个结论掏出来用就行了，<strong>不需要每次都去证明一遍</strong>。</p>
+<h3 id="3.-%E8%BF%99%E9%81%93%E9%A2%98%E7%9A%84%E4%BB%B7%E5%80%BC%EF%BC%9A%E5%AE%83%E6%98%AF%E4%B8%80%E4%B8%AA%E2%80%9C%E9%87%8C%E7%A8%8B%E7%A2%91%E2%80%9D" tabindex="-1">3. 这道题的价值：它是一个“里程碑”</h3>
+<p>虽然它很难，但它非常经典。经典的意义在于：<strong>做完这一道题，你就通关了一类题。</strong></p>
+<p>图论的学习曲线往往是阶梯状的：</p>
+<ul>
+<li><strong>台阶 1</strong>：学会 DFS/BFS，能做迷宫题。</li>
+<li><strong>台阶 2</strong>：学会最短路、最小生成树，能做修路题。</li>
+<li><strong>台阶 3</strong>：学会 Tarjan 缩点（有向图 SCC），能做依赖关系题（像刚才的软件安装）。</li>
+<li><strong>台阶 4（当前位置）</strong>：学会双连通分量（无向图 BCC）+ 二分图性质。</li>
+</ul>
+<p>你现在正卡在<strong>台阶 4</strong> 的翻越过程中。这种“痛苦”是因为你在<strong>吸收一个新的数学模型</strong>。一旦你 AC 了这道题，以后凡是涉及“点双+奇环”的题目，对你来说就是秒杀。</p>
+<h3 id="4.-%E7%BB%99%E4%BD%A0%E7%9A%84%E5%BB%BA%E8%AE%AE" tabindex="-1">4. 给你的建议</h3>
+<ol>
+<li><strong>放过证明，通过代码</strong>：
+既然证明让你头大，先暂时跳过严谨的数学推导。直接承认那个结论是对的。
+把精力花在<strong>把代码写对</strong>上：怎么建补图？怎么存 BCC？怎么染色？这才是程序设计的硬功夫。</li>
+<li><strong>不要死磕</strong>：
+如果觉得太累，可以先把这道题挂起（Pending），去刷几道简单的 Tarjan 缩点题（比如求割点、求桥）找找手感，过几天再回来。</li>
+<li><strong>把它当成模版题</strong>：
+把这道题的代码保存好，标注为“点双连通分量+二分图判定模版”。以后这就是你的工具。</li>
+</ol>
+<p><strong>一句话总结：</strong>
+并不是你太弱，而是这道题本身就是把<strong>图论算法</strong>和<strong>数学性质</strong>强行缝合在一起的“劝退题”。能坚持分析到这一步，你已经很强了！先把它 AC 掉，把结论记在小本本上，然后继续前进！加油！</p>
+<h2 id="%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E5%9B%BE" tabindex="-1">算法流程图</h2>
+<ol>
+<li><strong>建图</strong>：
+<ul>
+<li>读入 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span></eq> 条憎恨边。</li>
+<li>构建 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">N \times N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 的邻接矩阵。</li>
+<li>遍历所有点对，如果没憎恨边，就在邻接表中加边（建立补图）。</li>
+</ul>
+</li>
+<li><strong>找 BCC (Tarjan)</strong>：
+<ul>
+<li>遍历每个连通块，跑 Tarjan 算法。</li>
+<li>用栈（Stack）来存储边。当发现割点（<code>low[v] &gt;= dfn[u]</code>）时，弹出的所有边构成一个 BCC。</li>
+<li>注意：割点可能属于多个 BCC，所以要存边而不是存点。</li>
+</ul>
+</li>
+<li><strong>判定 BCC</strong>：
+<ul>
+<li>对于每个提取出来的 BCC，提取其包含的所有点。</li>
+<li>对这个子图进行<strong>二分图染色判定</strong>。</li>
+<li>如果染色失败（发现同色相邻，即发现奇环），则将该 BCC 内所有点标记为 <code>able[i] = true</code>。</li>
+</ul>
+</li>
+<li><strong>统计</strong>：
+<ul>
+<li>输出 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>−</mo><mtext>count(able)</mtext></mrow><annotation encoding="application/x-tex">N - \text{count(able)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">count(able)</span></span></span></span></span></eq>。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br><span class="line-number">221</span><br><span class="line-number">222</span><br><span class="line-number">223</span><br><span class="line-number">224</span><br><span class="line-number">225</span><br><span class="line-number">226</span><br><span class="line-number">227</span><br><span class="line-number">228</span><br><span class="line-number">229</span><br><span class="line-number">230</span><br><span class="line-number">231</span><br><span class="line-number">232</span><br><span class="line-number">233</span><br><span class="line-number">234</span><br><span class="line-number">235</span><br><span class="line-number">236</span><br><span class="line-number">237</span><br><span class="line-number">238</span><br><span class="line-number">239</span><br><span class="line-number">240</span><br><span class="line-number">241</span><br><span class="line-number">242</span><br><span class="line-number">243</span><br><span class="line-number">244</span><br><span class="line-number">245</span><br><span class="line-number">246</span><br><span class="line-number">247</span><br><span class="line-number">248</span><br><span class="line-number">249</span><br><span class="line-number">250</span><br><span class="line-number">251</span><br><span class="line-number">252</span><br><span class="line-number">253</span><br><span class="line-number">254</span><br><span class="line-number">255</span><br><span class="line-number">256</span><br><span class="line-number">257</span><br><span class="line-number">258</span><br><span class="line-number">259</span><br><span class="line-number">260</span><br><span class="line-number">261</span><br><span class="line-number">262</span><br><span class="line-number">263</span><br><span class="line-number">264</span><br><span class="line-number">265</span><br><span class="line-number">266</span><br><span class="line-number">267</span><br><span class="line-number">268</span><br><span class="line-number">269</span><br><span class="line-number">270</span><br><span class="line-number">271</span><br><span class="line-number">272</span><br><span class="line-number">273</span><br><span class="line-number">274</span><br><span class="line-number">275</span><br><span class="line-number">276</span><br><span class="line-number">277</span><br><span class="line-number">278</span><br><span class="line-number">279</span><br><span class="line-number">280</span><br><span class="line-number">281</span><br><span class="line-number">282</span><br><span class="line-number">283</span><br><span class="line-number">284</span><br><span class="line-number">285</span><br><span class="line-number">286</span><br><span class="line-number">287</span><br><span class="line-number">288</span><br><span class="line-number">289</span><br><span class="line-number">290</span><br><span class="line-number">291</span><br><span class="line-number">292</span><br><span class="line-number">293</span><br><span class="line-number">294</span><br><span class="line-number">295</span><br><span class="line-number">296</span><br><span class="line-number">297</span><br><span class="line-number">298</span><br><span class="line-number">299</span><br></div>
+        <code><span class="token comment">/**  
+ * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx  
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn  
+ * date: 2025-12-31 08:47:02  
+ */</span>  
+#include <span class="token operator">&lt;</span>cstdio<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>cstring<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>stack<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>queue<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>algorithm<span class="token operator">></span>
+using namespace std<span class="token punctuation">;</span>  
+typedef  long long ll<span class="token punctuation">;</span>  
+typedef  unsigned long long ull<span class="token punctuation">;</span>  
+  
+const int maxn <span class="token operator">=</span> <span class="token number">1005</span><span class="token punctuation">;</span>  
+const int maxe <span class="token operator">=</span> <span class="token number">200005</span><span class="token punctuation">;</span>  
+const int mod <span class="token operator">=</span> <span class="token number">1000000007</span><span class="token punctuation">;</span>  
+  
+int n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>  
+int hate<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>       <span class="token comment">// 邻接矩阵存"讨厌"关系  </span>
+bool keep<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 点i 是否保留  </span>
+bool vis_bcc<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 是否对bcc上的点进行黑白染色  </span>
+int bcc_id<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 记录点i的bcc id  </span>
+int color<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 记录 点i的黑色还是白色  </span>
+  
+  
+<span class="token comment">//oisnip_begin code/graph/linklist.cpp 内容开始  </span>
+  
+<span class="token comment">// const int maxn = 1e6+5;  </span>
+<span class="token comment">// const int maxe = 1e6+5;  </span>
+  
+struct linkList <span class="token punctuation">{</span>  
+    struct edge <span class="token punctuation">{</span>int u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">,</span>next<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  
+    edge e<span class="token punctuation">[</span>maxe<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+    int h<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span>edge_cnt<span class="token punctuation">;</span>  
+    <span class="token function">linkList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
+        <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    void <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        edge_cnt<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>  
+        <span class="token function">memset</span><span class="token punctuation">(</span>h<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token function">sizeof</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token comment">//遍历点u 周围点  </span>
+    template<span class="token operator">&lt;</span>typename U<span class="token operator">></span>  
+    void <span class="token function">for_each</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>U func<span class="token punctuation">)</span><span class="token punctuation">{</span>  
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> h<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token punctuation">;</span> i <span class="token operator">!=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span>  
+            <span class="token function">func</span><span class="token punctuation">(</span>e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>u<span class="token punctuation">,</span>e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">,</span>e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//u v w  </span>
+    <span class="token punctuation">}</span>  
+  
+    void <span class="token function">add</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int v<span class="token punctuation">,</span>int w<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
+        e<span class="token punctuation">[</span>edge_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span>u <span class="token operator">=</span> u<span class="token punctuation">;</span>  
+        e<span class="token punctuation">[</span>edge_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>  
+        e<span class="token punctuation">[</span>edge_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span>w <span class="token operator">=</span> w<span class="token punctuation">;</span>  
+        e<span class="token punctuation">[</span>edge_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span>next <span class="token operator">=</span> h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+        h<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> edge_cnt<span class="token operator">++</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+    void <span class="token function">add2</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int v<span class="token punctuation">,</span>int w<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
+        <span class="token function">add</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span>u<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+    <span class="token comment">//下标访问  </span>
+    edge<span class="token operator">&amp;</span> operator<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>int i<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span> e<span class="token punctuation">;</span>  
+  
+<span class="token comment">//oisnip_end code/graph/linklist.cpp 内容结束  </span>
+  
+<span class="token comment">//oisnip_beginv-bcc.cpp  </span>
+<span class="token comment">/*  
+代码细节解释：  
+  
+0. 此代码同时点双连通分量 和 割点. 因为 求 v-bcc 的时候,通常都会问: 哪些点是割点  
+  
+1. **`std::vector&lt;int> bcc[maxn]`**:  
+* 与 SCC 不同，SCC 中每个点只属于一个分量，可以用 `id[u]` 数组标记。  
+* 在点双 (v-BCC) 中，**割点**会同时属于多个 BCC。因此，我们通常用 `vector` 列表来保存每个 BCC 里有哪些点，而不是给每个点打唯一的 ID 标记。  
+  
+  
+2. **`st.push(u)` 与出栈逻辑**:  
+* 我们将点入栈。  
+* 当满足 `low[v] >= dfn[u]` 时，说明找到了一个以 `u` 为"顶端"的双连通分量。  
+* 我们不断 `pop` 直到弹出 `v`。  
+* **关键点**：`u` 也是这个分量的一部分，需要 `bcc[...].push_back(u)`，但是 **`u` 不能出栈**。因为 `u` 还是它父节点所在 BCC 的一部分（如果 `u` 不是根），或者是其他子树分支 BCC 的分割点。  
+  
+  
+3. **`e(u)`**:  
+* 这里保留了你代码中的 `e(u)` 写法，假设你已经定义了类似 `#define e(u) head[u]` 或者相应的函数来获取邻接表头指针。  
+这是一个求 **点双连通分量 (v-BCC)** 的模板。  
+  
+  
+主要区别在于：  
+  
+1. **无向图 DFS**：需要传入 `father` 参数防止走回头路（或通过边索引判断）。  
+2. **出栈时机**：SCC 是在回溯完 `u` 后判断 `low[u] == dfn[u]` 出栈；而 BCC 是在处理子节点 `v` 时，若发现 `low[v] >= dfn[u]`，则说明 `v` 及其子树无法绕过 `u` 到达更早的祖先，此时 `u` 和 `v` 的子树构成一个点双。  
+3. **割点特性**：一个割点 (Articulation Point) 可以属于多个点双连通分量。  
+  
+*/</span>  
+  
+struct TarjanBCC <span class="token punctuation">{</span>  
+    int n<span class="token punctuation">,</span> timer<span class="token punctuation">;</span>  
+    stack<span class="token operator">&lt;</span>int<span class="token operator">></span> st<span class="token punctuation">;</span>  
+    int dfn<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span> low<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+    int bcc_cnt<span class="token punctuation">;</span> <span class="token comment">// BCC 计数  </span>
+    bool is_cut<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+    int root<span class="token punctuation">;</span> <span class="token comment">//记录根节点  </span>
+    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> bcc<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 存储每个 BCC 包含的具体节点  </span>
+  
+    void <span class="token function">set</span><span class="token punctuation">(</span>int _n<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        n <span class="token operator">=</span> _n<span class="token punctuation">;</span>  
+        timer <span class="token operator">=</span> bcc_cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+        <span class="token function">memset</span><span class="token punctuation">(</span>dfn<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>dfn<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token function">memset</span><span class="token punctuation">(</span>low<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>low<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token function">memset</span><span class="token punctuation">(</span>is_cut<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token function">sizeof</span><span class="token punctuation">(</span>is_cut<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> bcc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token comment">// 无向图，需要 fa 参数防止直接走回父节点  </span>
+    void <span class="token function">dfs</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int fa<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">++</span>timer<span class="token punctuation">;</span>  
+        st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        int child <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+  
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> e<span class="token punctuation">.</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            int v <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">;</span>  
+              
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>v <span class="token operator">==</span> fa<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment">// 无向图核心：不走回头路  </span>
+  
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 如果 v 没被访问过  </span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+                child<span class="token operator">++</span><span class="token punctuation">;</span>  
+  
+                <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">!=</span> root  <span class="token operator">&amp;&amp;</span> low<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">>=</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                    is_cut<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>   
+                <span class="token punctuation">}</span>  
+                  
+                <span class="token comment">// 更新 low 值  </span>
+                low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> low<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+                <span class="token comment">// 核心判断：low[v] >= dfn[u] 说明 v 没法回到 u 的祖先  </span>
+                <span class="token comment">// 此时 u 是割点（或者根），u-v 这条边及其下方的点构成一个 BCC  </span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>low<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">>=</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                    bcc_cnt<span class="token operator">++</span><span class="token punctuation">;</span>  
+                    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                        int node <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+                        bcc<span class="token punctuation">[</span>bcc_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">==</span> v<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment">// 只要弹到 v 为止  </span>
+                    <span class="token punctuation">}</span>  
+                    <span class="token comment">// 注意：u 也是这个 BCC 的一部分，但 u 可能属于多个 BCC，  </span>
+                    <span class="token comment">// 所以 u 不能出栈，只是把 u 加入到当前 BCC 列表中  </span>
+                    bcc<span class="token punctuation">[</span>bcc_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+                <span class="token punctuation">}</span>  
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&lt;</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 返祖边  </span>
+                low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token punctuation">}</span>  
+        <span class="token punctuation">}</span>  
+  
+        <span class="token keyword">if</span><span class="token punctuation">(</span> u <span class="token operator">==</span> root <span class="token operator">&amp;&amp;</span> child <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span>   
+            is_cut<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span>  <span class="token number">1</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    void <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dfn<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> e<span class="token punctuation">.</span>h<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                <span class="token comment">// 此时栈为空，dfs 根节点  </span>
+                <span class="token comment">// 根节点的特判通常包含在上述 dfs 逻辑中  </span>
+                <span class="token comment">// 只有当图中有孤立点时，需额外注意栈内残留  </span>
+                root <span class="token operator">=</span> i<span class="token punctuation">;</span>  
+                <span class="token function">dfs</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+                  
+                <span class="token comment">// 如果是孤立点或者根节点处理完栈里还有元素（极少见情况，视题目定义而定）  </span>
+                <span class="token comment">// 实际上标准 v-BCC 逻辑中，上述 dfs 里的 if (low[v] >= dfn[u]) 会处理所有连通块  </span>
+                <span class="token comment">// 唯一的例外是如果 i 是一个孤立点（没有边的点），它不会进入循环  </span>
+                <span class="token comment">// 如果需要记录孤立点为 BCC，可以在这里补判  </span>
+            <span class="token punctuation">}</span>  
+        <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token comment">// helper   </span>
+    int <span class="token function">cut_cnt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        int cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n  </span>
+            cnt <span class="token operator">+</span><span class="token operator">=</span> is_cut<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+        <span class="token keyword">return</span> cnt<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span><span class="token punctuation">;</span>  
+<span class="token comment">//oisnip_end  </span>
+  
+TarjanBCC tj<span class="token punctuation">;</span>  
+  
+  
+bool <span class="token function">bfs_bw</span><span class="token punctuation">(</span>int id<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    queue<span class="token operator">&lt;</span>int<span class="token operator">></span> q<span class="token punctuation">;</span>  
+    int u <span class="token operator">=</span> tj<span class="token punctuation">.</span>bcc<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  
+    q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    color<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>  
+  
+    <span class="token keyword">while</span><span class="token punctuation">(</span> q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        int u <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> e<span class="token punctuation">.</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">;</span>i <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+            int v <span class="token operator">=</span> e<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">;</span>  
+  
+            <span class="token comment">// 关键：只走属于当前BCC的点  </span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> bcc_id<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">!=</span> id<span class="token punctuation">)</span>  <span class="token keyword">continue</span><span class="token punctuation">;</span>  
+  
+            <span class="token comment">// 没有染色  </span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> color<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                color<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token operator">-</span> color<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 1变2，2变1  </span>
+                q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token punctuation">}</span>  
+            <span class="token comment">// 冲突  </span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span> color<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> color<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span>   
+                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
+  
+  
+void <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
+    <span class="token function">memset</span><span class="token punctuation">(</span>hate<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token function">sizeof</span><span class="token punctuation">(</span>hate<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token function">memset</span><span class="token punctuation">(</span>keep<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token function">sizeof</span><span class="token punctuation">(</span>keep<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token function">memset</span><span class="token punctuation">(</span>vis_bcc<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token function">sizeof</span><span class="token punctuation">(</span>vis_bcc<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+    <span class="token function">memset</span><span class="token punctuation">(</span>bcc_id<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>bcc_id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token function">memset</span><span class="token punctuation">(</span>color<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>color<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    e<span class="token punctuation">.</span><span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    tj<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+    <span class="token comment">// 读入讨厌关系  </span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        int u<span class="token punctuation">,</span> v<span class="token punctuation">;</span>  
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>u<span class="token punctuation">,</span> <span class="token operator">&amp;</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        hate<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> hate<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token comment">// 构建补图  </span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n  </span>
+    <span class="token punctuation">{</span>  
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int j <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">;</span>j <span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span>  
+            <span class="token keyword">if</span><span class="token punctuation">(</span> <span class="token operator">!</span>hate<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+                e<span class="token punctuation">.</span><span class="token function">add2</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token punctuation">}</span>  
+    <span class="token punctuation">}</span>  
+  
+<span class="token punctuation">}</span>  
+  
+int main <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>n<span class="token punctuation">,</span><span class="token operator">&amp;</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">if</span><span class="token punctuation">(</span> n <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> m <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>  
+        <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token comment">// 跑 v-bcc 代码  </span>
+        tj<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+        <span class="token comment">// bfs 黑白染色每一个  </span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span> <span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> tj<span class="token punctuation">.</span>bcc_cnt <span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+              
+            vector<span class="token operator">&lt;</span>int<span class="token operator">></span> <span class="token operator">&amp;</span> bcc <span class="token operator">=</span> tj<span class="token punctuation">.</span>bcc<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+  
+            <span class="token comment">// 只有一个点, 不可以  </span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> bcc<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>  <span class="token keyword">continue</span><span class="token punctuation">;</span>  
+            <span class="token comment">// 准备工作：将该BCC内的点标记一下，方便后续只在BCC内部走  </span>
+            <span class="token comment">// 同时重置颜色  </span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>size_t j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> bcc<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>   
+            <span class="token punctuation">{</span>  
+                int u <span class="token operator">=</span> bcc<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+                color<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+                bcc_id<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>  
+            <span class="token punctuation">}</span>  
+  
+            bool ret <span class="token operator">=</span> <span class="token function">bfs_bw</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+            <span class="token comment">// ret == 0 表示不是二分图,有奇环  </span>
+            <span class="token comment">// 桶标记,留下来的人  </span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> ret <span class="token operator">==</span> <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">for</span><span class="token punctuation">(</span>size_t j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> bcc<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    int u <span class="token operator">=</span> bcc<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    keep<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>  
+  
+        <span class="token punctuation">}</span>  
+  
+        int ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> ans <span class="token operator">+</span><span class="token operator">=</span> keep<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>  
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> n<span class="token operator">-</span>ans<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+          
+    <span class="token punctuation">}</span>  
+      
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h2 id="%E7%AE%80%E6%B4%81%E4%BB%A3%E7%A0%81" tabindex="-1">简洁代码</h2>
+<blockquote>
+<p>注意⚠️: 这个代码可能通过不了 POJ ,因为POJ 古老的编译器问题</p>
+</blockquote>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>cstdio<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>cstring<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>stack<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>algorithm<span class="token operator">></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+const int MAXN <span class="token operator">=</span> <span class="token number">1005</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 存储边的结构体，用于Tarjan栈</span>
+struct Edge <span class="token punctuation">{</span>
+    int u<span class="token punctuation">,</span> v<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+int n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
+int hate<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">;</span>       <span class="token comment">// 邻接矩阵存"讨厌"关系</span>
+vector<span class="token operator">&lt;</span>int<span class="token operator">></span> G<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">;</span>        <span class="token comment">// 邻接表存补图（兼容关系）</span>
+int dfn<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">,</span> low<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">,</span> dfs_clock<span class="token punctuation">;</span>
+stack<span class="token operator">&lt;</span>Edge<span class="token operator">></span> stk<span class="token punctuation">;</span>            <span class="token comment">// 存边的栈</span>
+int bcc_cnt<span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span>int<span class="token operator">></span> bcc_nodes<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 存每个BCC包含的点列表</span>
+int color<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">;</span>             <span class="token comment">// 染色数组 (0:未染, 1:黑, 2:白)</span>
+bool able<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">;</span>             <span class="token comment">// 最终标记：该骑士是否能上桌</span>
+int node_marker<span class="token punctuation">[</span>MAXN<span class="token punctuation">]</span><span class="token punctuation">;</span>       <span class="token comment">// 辅助数组，用于标记节点属于当前BCC</span>
+
+<span class="token comment">// 初始化函数，多组数据必备</span>
+void <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>hate<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>hate<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> G<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>dfn<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>dfn<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>low<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>low<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>able<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>able<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    dfs_clock <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    bcc_cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>stk<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> stk<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 判定一个具体的 BCC 是否为二分图</span>
+<span class="token comment">// id: BCC的编号</span>
+bool <span class="token function">check_bipartite</span><span class="token punctuation">(</span>int id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1. 准备工作：将该BCC内的点标记一下，方便后续只在BCC内部走</span>
+    <span class="token comment">// 同时重置颜色</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int u <span class="token punctuation">:</span> bcc_nodes<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        color<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        node_marker<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> id<span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 2. 染色 BFS/DFS</span>
+    <span class="token comment">// 即使在BCC内部，染色也要遍历所有点（防止BCC本身不连通？</span>
+    <span class="token comment">// 其实BCC定义上是连通的，但为了代码健壮性，通常只需从第一个点开始）</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bcc_nodes<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// 用队列进行BFS染色</span>
+    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> q<span class="token punctuation">;</span>
+    q<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>bcc_nodes<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    color<span class="token punctuation">[</span>bcc_nodes<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    
+    int head <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>head <span class="token operator">&lt;</span> q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        int u <span class="token operator">=</span> q<span class="token punctuation">[</span>head<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int v <span class="token punctuation">:</span> G<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment">// 关键：只走属于当前BCC的点</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">!=</span> id<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            
+            <span class="token keyword">if</span><span class="token punctuation">(</span>color<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                color<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">3</span> <span class="token operator">-</span> color<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 1变2，2变1</span>
+                q<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>color<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> color<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 发现冲突，不是二分图 -> 有奇环</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment">// 没有冲突 -> 是二分图 -> 无奇环</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Tarjan求点双连通分量</span>
+void <span class="token function">tarjan</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int fa<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">++</span>dfs_clock<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int v <span class="token punctuation">:</span> G<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>v <span class="token operator">==</span> fa<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>u<span class="token punctuation">,</span> v<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 存边</span>
+            <span class="token function">tarjan</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> low<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>low<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">>=</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 割点判定条件</span>
+                bcc_cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+                bcc_nodes<span class="token punctuation">[</span>bcc_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                
+                <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    Edge e <span class="token operator">=</span> stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    stk<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token comment">// 将边的两端加入点集</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">[</span>e<span class="token punctuation">.</span>u<span class="token punctuation">]</span> <span class="token operator">!=</span> bcc_cnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        bcc_nodes<span class="token punctuation">[</span>bcc_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        node_marker<span class="token punctuation">[</span>e<span class="token punctuation">.</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> bcc_cnt<span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">[</span>e<span class="token punctuation">.</span>v<span class="token punctuation">]</span> <span class="token operator">!=</span> bcc_cnt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        bcc_nodes<span class="token punctuation">[</span>bcc_cnt<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        node_marker<span class="token punctuation">[</span>e<span class="token punctuation">.</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> bcc_cnt<span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>u <span class="token operator">==</span> u <span class="token operator">&amp;&amp;</span> e<span class="token punctuation">.</span>v <span class="token operator">==</span> v<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                
+                <span class="token comment">// 立即对该BCC进行审判</span>
+                <span class="token comment">// 如果不是二分图（有奇环），则该BCC所有人都复活</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">check_bipartite</span><span class="token punctuation">(</span>bcc_cnt<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span>int k <span class="token punctuation">:</span> bcc_nodes<span class="token punctuation">[</span>bcc_cnt<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        able<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&lt;</span> dfn<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>u<span class="token punctuation">,</span> v<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            low<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>low<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> dfn<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>n<span class="token punctuation">,</span> <span class="token operator">&amp;</span>m<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>n <span class="token operator">||</span> m<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 读入讨厌关系</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            int u<span class="token punctuation">,</span> v<span class="token punctuation">;</span>
+            <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>u<span class="token punctuation">,</span> <span class="token operator">&amp;</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            hate<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> hate<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 构建补图</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>int j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>hate<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    G<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    G<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 遍历全图（防止原图不连通）</span>
+        <span class="token comment">// 这里重置node_marker用于Tarjan过程中的临时去重</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">sizeof</span><span class="token punctuation">(</span>node_marker<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dfn<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">tarjan</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        int ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>able<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> ans<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> ans<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

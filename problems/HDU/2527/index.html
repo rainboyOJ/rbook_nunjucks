@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Safe Or Unsafe</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Safe Or Unsafe</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#哈夫曼编码</span>
+            
+              <span>#模板</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/HDU-2527" target="_blank"> HDU-2527</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>哈夫曼编码模板题目,同样是入门huffman编码的题目</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E8%A7%A3%E6%9E%90">题目核心解析</a></li><li><a href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4">算法步骤</a></li><li><a href="#c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">C++ 代码实现</a></li><li><a href="#%E6%A0%B7%E4%BE%8B%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90">样例图解分析</a></li><li><a href="#%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E8%A7%A3%E6%9E%90-1">题目核心解析</a></li><li><a href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-1">算法步骤</a></li><li><a href="#c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1">C++ 代码实现</a></li><li><a href="#%E6%A0%B7%E4%BE%8B%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90-1">样例图解分析</a></li><li><a href="#%E9%80%9A%E8%BF%87helloworld%E6%9D%A5%E7%90%86%E8%A7%A3huffman%E7%9A%84%E8%BF%87%E7%A8%8B">通过helloworld来理解huffman的过程</a><ol><li><a href="#1.-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A%E7%BB%9F%E8%AE%A1%E9%A2%91%E7%8E%87">1. 准备工作：统计频率</a></li><li><a href="#2.-%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B-(%E5%9B%BE%E8%A7%A3%E6%A8%A1%E6%8B%9F)">2. 哈夫曼树构建过程 (图解模拟)</a></li><li><a href="#3.-%E2%80%9Chelloworld%E2%80%9D-%E7%9A%84%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%E5%9B%BE%E7%A4%BA">3. “helloworld” 的哈夫曼树图示</a></li><li><a href="#4.-%E7%BB%93%E6%9E%9C%E9%AA%8C%E8%AF%81%E4%B8%8E%E5%88%86%E6%9E%90">4. 结果验证与分析</a></li></ol></li><li><a href="#faq-1%3A-%E5%B7%A6%E5%AD%90%E6%A0%91%E8%BF%98%E6%98%AF%E5%8F%B3%E5%AD%90%E6%A0%91">FAQ 1: 左子树还是右子树</a><ol><li><a href="#1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BD%B1%E5%93%8D%E6%80%BB%E7%BC%96%E7%A0%81%E9%95%BF%E5%BA%A6-(wpl)%EF%BC%9F">1. 为什么不影响总编码长度 (WPL)？</a></li><li><a href="#2.-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%BD%B1%E5%93%8D%E5%85%B7%E4%BD%93%E7%9A%84%E7%BC%96%E7%A0%81%EF%BC%9F">2. 为什么会影响具体的编码？</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ol></li><li><a href="#faq-2-wpl-%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E6%A0%B7">FAQ 2 WPL 的两种计算方式为什么一样</a><ol><li><a href="#1.-%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A%E8%B4%A1%E7%8C%AE%E5%BA%A6%E5%88%86%E6%9E%90">1. 核心逻辑：贡献度分析</a><ol><li><a href="#%E8%A7%92%E5%BA%A6%E4%B8%80%EF%BC%9A%E6%A0%B9%E6%8D%AE%E6%A0%91%E7%9A%84%E7%BB%93%E6%9E%84%EF%BC%88%E6%9C%80%E7%BB%88%E7%8A%B6%E6%80%81%EF%BC%89">角度一：根据树的结构（最终状态）</a></li><li><a href="#%E8%A7%92%E5%BA%A6%E4%BA%8C%EF%BC%9A%E5%90%88%E5%B9%B6%E4%BB%A3%E4%BB%B7%E6%B3%95%EF%BC%88%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B%EF%BC%89">角度二：合并代价法（构建过程）</a></li></ol></li><li><a href="#2.-%E7%AE%80%E5%8D%95%E7%9A%84%E6%95%B0%E5%AD%A6%E7%A4%BA%E4%BE%8B">2. 简单的数学示例</a><ol><li><a href="#%E9%AA%8C%E8%AF%81%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A">验证两种方法：</a></li></ol></li><li><a href="#3.-%E7%9B%B4%E8%A7%82%E7%9A%84%E6%AF%94%E5%96%BB%EF%BC%9A%E8%BF%87%E8%B7%AF%E8%B4%B9">3. 直观的比喻：过路费</a></li><li><a href="#%E6%80%BB%E7%BB%93-1">总结</a></li></ol></li></ol></nav><p>这道题目是经典的 <strong>哈夫曼编码 (Huffman Coding)</strong> 问题。</p>
+<h3 id="%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E8%A7%A3%E6%9E%90" tabindex="-1">题目核心解析</h3>
+<p>题目要求判断给定字符串经过哈夫曼编码后的<strong>总长度</strong>（所占空间）是否小于等于给定的安全值 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span></eq>。</p>
+<p><strong>哈夫曼编码的原理</strong>：</p>
+<ol>
+<li><strong>频率越高的字符，编码越短</strong>：为了让总长度最小，出现次数多的字符应该用更少的比特位（bit）表示。</li>
+<li><strong>贪心算法</strong>：每次从所有当前的节点中，找出<strong>权值（频率）最小</strong>的两个节点进行合并，生成一个新的节点（权值为两个子节点之和），直到只剩下一个节点（根节点）。</li>
+<li><strong>计算总长度</strong>：
+<ul>
+<li><strong>方法一</strong>：建好树后，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><mo stretchy="false">(</mo><mtext>字符频率</mtext><mo>×</mo><mtext>该字符在树中的深度</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sum (\text{字符频率} \times \text{该字符在树中的深度})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">字符频率</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord cjk_fallback">该字符在树中的深度</span></span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li><strong>方法二（编程常用）</strong>：在合并过程中，每次合并产生的<strong>新节点的权值之和</strong>，就是最终的加权路径长度（WPL）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4" tabindex="-1">算法步骤</h3>
+<ol>
+<li><strong>统计频率</strong>：遍历字符串，统计每个字符出现的次数。</li>
+<li><strong>使用优先队列</strong>：将所有出现过的字符的频率放入一个<strong>小顶堆</strong>（Min-Priority Queue）。</li>
+<li><strong>模拟合并</strong>：
+<ul>
+<li>如果队列中元素个数大于 1：
+<ul>
+<li>取出最小的两个数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq>。</li>
+<li>计算 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi><mo>=</mo><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">sum = a + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq>。</li>
+<li>将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span></span></span></span></eq> 累加到最终结果 <code>ans</code> 中。</li>
+<li>将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span></span></span></span></eq> 放回队列。</li>
+</ul>
+</li>
+<li>重复上述步骤。</li>
+</ul>
+</li>
+<li><strong>特殊情况处理</strong>：如果字符串中只有一种字符（例如 “aaaa”），哈夫曼树只有根节点，通常在竞赛题中，这种情况每个字符至少需要 1 bit，所以长度等于字符串长度。</li>
+<li><strong>比较输出</strong>：判断 <code>ans &lt;= m</code>，输出 yes 或 no。</li>
+</ol>
+<h3 id="c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">C++ 代码实现</h3>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>string<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>queue<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>map<span class="token operator">></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int n<span class="token punctuation">;</span>
+    <span class="token comment">// 读取测试组数</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cin <span class="token operator">></span><span class="token operator">></span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            int m<span class="token punctuation">;</span>
+            string s<span class="token punctuation">;</span>
+            cin <span class="token operator">></span><span class="token operator">></span> m <span class="token operator">></span><span class="token operator">></span> s<span class="token punctuation">;</span>
+
+            <span class="token comment">// 1. 统计字符频率</span>
+            map<span class="token operator">&lt;</span>char<span class="token punctuation">,</span> int<span class="token operator">></span> counts<span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>char c <span class="token punctuation">:</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                counts<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 2. 将频率放入小顶堆 (优先队列)</span>
+            <span class="token comment">// priority_queue 默认是大顶堆，使用 greater&lt;int> 变为小顶堆</span>
+            priority_queue<span class="token operator">&lt;</span>int<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token punctuation">,</span> greater<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token operator">></span> pq<span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>auto const<span class="token operator">&amp;</span> <span class="token punctuation">[</span>key<span class="token punctuation">,</span> val<span class="token punctuation">]</span> <span class="token punctuation">:</span> counts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                pq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            long long ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// 3. 特殊情况：如果只有一种字符 (例如 "aaaa")</span>
+            <span class="token comment">// 队列里只有一个元素 4，循环不会执行，ans 为 0</span>
+            <span class="token comment">// 但实际上一串字符至少占用 字符串长度 的位 (每个字符1位)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>pq<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                ans <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 4. 标准哈夫曼合并过程</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>pq<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                int a <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+                pq<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                int b <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+                pq<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                int sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+                ans <span class="token operator">+</span><span class="token operator">=</span> sum<span class="token punctuation">;</span> <span class="token comment">// 累加合并代价</span>
+                pq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 新节点入队</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 5. 输出结果</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>ans <span class="token operator">&lt;=</span> m<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"yes"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"no"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E6%A0%B7%E4%BE%8B%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90" tabindex="-1">样例图解分析</h3>
+<p>假设输入是 <code>helloworld</code>：</p>
+<ol>
+<li>
+<p>统计频率：</p>
+<p>l: 3, o: 2, h: 1, e: 1, w: 1, r: 1, d: 1</p>
+</li>
+<li>
+<p><strong>入队</strong> (排序后): <code>1, 1, 1, 1, 1, 2, 3</code></p>
+</li>
+<li>
+<p><strong>合并过程</strong>：</p>
+<ul>
+<li>取 1, 1 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 2 (代价+2) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>1, 1, 1, 2, 2, 3</code></li>
+<li>取 1, 1 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 2 (代价+2) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>1, 2, 2, 2, 3</code></li>
+<li>取 1, 2 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 3 (代价+3) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>2, 2, 2, 3</code></li>
+<li>取 2, 2 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 4 (代价+4) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>2, 3, 4</code></li>
+<li>取 2, 3 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 5 (代价+5) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>4, 5</code></li>
+<li>取 4, 5 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 9 (代价+9) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>9</code></li>
+<li><strong>总代价</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>5</mn><mo>+</mo><mn>9</mn><mo>=</mo><mn>25</mn></mrow><annotation encoding="application/x-tex">2 + 2 + 3 + 4 + 5 + 9 = 25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">25</span></span></span></span></eq> (注：不同的优先队列实现顺序可能微调，但总和 WPL 是一样的，这里算出来大约是 25-27 左右，具体取决于相同权值的合并顺序，但标准哈夫曼结果是唯一的)。</li>
+<li><strong>实际计算验证</strong>：
+<ul>
+<li>(h, w, r, d, e) 深度可能为 3 或 4</li>
+<li>(o) 深度 3</li>
+<li>(l) 深度 2</li>
+<li>计算示例: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>2</mn><mo stretchy="false">(</mo><mtext>l</mtext><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mo>×</mo><mn>3</mn><mo stretchy="false">(</mo><mtext>o</mtext><mo stretchy="false">)</mo><mo>+</mo><mn>5</mn><mo>×</mo><mn>3</mn><mo stretchy="false">(</mo><mtext>其他</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>6</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>15</mn><mo>=</mo><mn>27</mn></mrow><annotation encoding="application/x-tex">3\times2(\text{l}) + 2\times3(\text{o}) + 5\times3(\text{其他}) = 6 + 6 + 15 = 27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord text"><span class="mord">l</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mopen">(</span><span class="mord text"><span class="mord">o</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">其他</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">15</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">27</span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li><strong>结果</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>27</mn><mo>&gt;</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">27 &gt; 12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6835em;vertical-align:-0.0391em;"></span><span class="mord">27</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">12</span></span></span></span></eq>，输出 <strong>no</strong>。</li>
+</ul>
+</li>
+</ol>
+<p>这道题目是经典的 <strong>哈夫曼编码 (Huffman Coding)</strong> 问题。</p>
+<h3 id="%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E8%A7%A3%E6%9E%90-1" tabindex="-1">题目核心解析</h3>
+<p>题目要求判断给定字符串经过哈夫曼编码后的<strong>总长度</strong>（所占空间）是否小于等于给定的安全值 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span></eq>。</p>
+<p><strong>哈夫曼编码的原理</strong>：</p>
+<ol>
+<li><strong>频率越高的字符，编码越短</strong>：为了让总长度最小，出现次数多的字符应该用更少的比特位（bit）表示。</li>
+<li><strong>贪心算法</strong>：每次从所有当前的节点中，找出<strong>权值（频率）最小</strong>的两个节点进行合并，生成一个新的节点（权值为两个子节点之和），直到只剩下一个节点（根节点）。</li>
+<li><strong>计算总长度</strong>：
+<ul>
+<li><strong>方法一</strong>：建好树后，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><mo stretchy="false">(</mo><mtext>字符频率</mtext><mo>×</mo><mtext>该字符在树中的深度</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sum (\text{字符频率} \times \text{该字符在树中的深度})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">字符频率</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord cjk_fallback">该字符在树中的深度</span></span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li><strong>方法二（编程常用）</strong>：在合并过程中，每次合并产生的<strong>新节点的权值之和</strong>，就是最终的加权路径长度（WPL）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4-1" tabindex="-1">算法步骤</h3>
+<ol>
+<li><strong>统计频率</strong>：遍历字符串，统计每个字符出现的次数。</li>
+<li><strong>使用优先队列</strong>：将所有出现过的字符的频率放入一个<strong>小顶堆</strong>（Min-Priority Queue）。</li>
+<li><strong>模拟合并</strong>：
+<ul>
+<li>如果队列中元素个数大于 1：
+<ul>
+<li>取出最小的两个数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq>。</li>
+<li>计算 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi><mo>=</mo><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">sum = a + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq>。</li>
+<li>将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span></span></span></span></eq> 累加到最终结果 <code>ans</code> 中。</li>
+<li>将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">u</span><span class="mord mathnormal">m</span></span></span></span></eq> 放回队列。</li>
+</ul>
+</li>
+<li>重复上述步骤。</li>
+</ul>
+</li>
+<li><strong>特殊情况处理</strong>：如果字符串中只有一种字符（例如 “aaaa”），哈夫曼树只有根节点，通常在竞赛题中，这种情况每个字符至少需要 1 bit，所以长度等于字符串长度。</li>
+<li><strong>比较输出</strong>：判断 <code>ans &lt;= m</code>，输出 yes 或 no。</li>
+</ol>
+<h3 id="c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1" tabindex="-1">C++ 代码实现</h3>
+<p>C++</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>string<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>queue<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>map<span class="token operator">></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int n<span class="token punctuation">;</span>
+    <span class="token comment">// 读取测试组数</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cin <span class="token operator">></span><span class="token operator">></span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            int m<span class="token punctuation">;</span>
+            string s<span class="token punctuation">;</span>
+            cin <span class="token operator">></span><span class="token operator">></span> m <span class="token operator">></span><span class="token operator">></span> s<span class="token punctuation">;</span>
+
+            <span class="token comment">// 1. 统计字符频率</span>
+            map<span class="token operator">&lt;</span>char<span class="token punctuation">,</span> int<span class="token operator">></span> counts<span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>char c <span class="token punctuation">:</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                counts<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 2. 将频率放入小顶堆 (优先队列)</span>
+            <span class="token comment">// priority_queue 默认是大顶堆，使用 greater&lt;int> 变为小顶堆</span>
+            priority_queue<span class="token operator">&lt;</span>int<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token punctuation">,</span> greater<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token operator">></span> pq<span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>auto const<span class="token operator">&amp;</span> <span class="token punctuation">[</span>key<span class="token punctuation">,</span> val<span class="token punctuation">]</span> <span class="token punctuation">:</span> counts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                pq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            long long ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// 3. 特殊情况：如果只有一种字符 (例如 "aaaa")</span>
+            <span class="token comment">// 队列里只有一个元素 4，循环不会执行，ans 为 0</span>
+            <span class="token comment">// 但实际上一串字符至少占用 字符串长度 的位 (每个字符1位)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>pq<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                ans <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 4. 标准哈夫曼合并过程</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>pq<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                int a <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+                pq<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                int b <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+                pq<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                int sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+                ans <span class="token operator">+</span><span class="token operator">=</span> sum<span class="token punctuation">;</span> <span class="token comment">// 累加合并代价</span>
+                pq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 新节点入队</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 5. 输出结果</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>ans <span class="token operator">&lt;=</span> m<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"yes"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"no"</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E6%A0%B7%E4%BE%8B%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90-1" tabindex="-1">样例图解分析</h3>
+<p>假设输入是 <code>helloworld</code>：</p>
+<ol>
+<li>
+<p>统计频率：</p>
+<p>l: 3, o: 2, h: 1, e: 1, w: 1, r: 1, d: 1</p>
+</li>
+<li>
+<p><strong>入队</strong> (排序后): <code>1, 1, 1, 1, 1, 2, 3</code></p>
+</li>
+<li>
+<p><strong>合并过程</strong>：</p>
+<ul>
+<li>取 1, 1 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 2 (代价+2) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>1, 1, 1, 2, 2, 3</code></li>
+<li>取 1, 1 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 2 (代价+2) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>1, 2, 2, 2, 3</code></li>
+<li>取 1, 2 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 3 (代价+3) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>2, 2, 2, 3</code></li>
+<li>取 2, 2 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 4 (代价+4) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>2, 3, 4</code></li>
+<li>取 2, 3 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 5 (代价+5) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>4, 5</code></li>
+<li>取 4, 5 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 合并得 9 (代价+9) <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 队: <code>9</code></li>
+<li><strong>总代价</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>3</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>5</mn><mo>+</mo><mn>9</mn><mo>=</mo><mn>25</mn></mrow><annotation encoding="application/x-tex">2 + 2 + 3 + 4 + 5 + 9 = 25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">25</span></span></span></span></eq> (注：不同的优先队列实现顺序可能微调，但总和 WPL 是一样的，这里算出来大约是 25-27 左右，具体取决于相同权值的合并顺序，但标准哈夫曼结果是唯一的)。</li>
+<li><strong>实际计算验证</strong>：
+<ul>
+<li>(h, w, r, d, e) 深度可能为 3 或 4</li>
+<li>(o) 深度 3</li>
+<li>(l) 深度 2</li>
+<li>计算示例: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>2</mn><mo stretchy="false">(</mo><mtext>l</mtext><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mo>×</mo><mn>3</mn><mo stretchy="false">(</mo><mtext>o</mtext><mo stretchy="false">)</mo><mo>+</mo><mn>5</mn><mo>×</mo><mn>3</mn><mo stretchy="false">(</mo><mtext>其他</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>6</mn><mo>+</mo><mn>6</mn><mo>+</mo><mn>15</mn><mo>=</mo><mn>27</mn></mrow><annotation encoding="application/x-tex">3\times2(\text{l}) + 2\times3(\text{o}) + 5\times3(\text{其他}) = 6 + 6 + 15 = 27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord text"><span class="mord">l</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mopen">(</span><span class="mord text"><span class="mord">o</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">其他</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">6</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">15</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">27</span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li><strong>结果</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>27</mn><mo>&gt;</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">27 &gt; 12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6835em;vertical-align:-0.0391em;"></span><span class="mord">27</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">12</span></span></span></span></eq>，输出 <strong>no</strong>。</li>
+</ul>
+</li>
+</ol>
+<h2 id="%E9%80%9A%E8%BF%87helloworld%E6%9D%A5%E7%90%86%E8%A7%A3huffman%E7%9A%84%E8%BF%87%E7%A8%8B" tabindex="-1">通过helloworld来理解huffman的过程</h2>
+<p>这是一个非常好的练习。理解哈夫曼树的构建过程对于理解哈夫曼编码至关重要。</p>
+<p>我们严格按照哈夫曼算法的流程来构建 “helloworld” 的哈夫曼树。</p>
+<h3 id="1.-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A%E7%BB%9F%E8%AE%A1%E9%A2%91%E7%8E%87" tabindex="-1">1. 准备工作：统计频率</h3>
+<p>字符串：<code>helloworld</code> (总长度 10)
+字符频率统计（按频率从小到大排序）：</p>
+<ul>
+<li>h: 1</li>
+<li>e: 1</li>
+<li>w: 1</li>
+<li>r: 1</li>
+<li>d: 1</li>
+<li>o: 2</li>
+<li>l: 3</li>
+</ul>
+<p>我们将这些作为初始的叶子节点放入优先队列（小顶堆）。</p>
+<h3 id="2.-%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B-(%E5%9B%BE%E8%A7%A3%E6%A8%A1%E6%8B%9F)" tabindex="-1">2. 哈夫曼树构建过程 (图解模拟)</h3>
+<p><strong>重要提示关于“相同频率的处理”：</strong>
+当队列中有多个相同频率的节点时（例如初始有5个频率为1的节点），选择哪两个进行合并在算法上是任意的。这可能会导致最终画出的树的形状略有不同（比如某个字符在左子树还是右子树），<strong>但是，最终的加权路径长度（WPL，即编码总长度）一定是相同的，且是最优的。</strong></p>
+<p>为了绘制这棵树，我将按照一种标准的模拟路径进行合并：</p>
+<p><strong>初始状态 (森林):</strong>
+<code>h(1)</code>, <code>e(1)</code>, <code>w(1)</code>, <code>r(1)</code>, <code>d(1)</code>, <code>o(2)</code>, <code>l(3)</code></p>
+<p><strong>步骤 1:</strong> 取出最小的两个 <code>h(1)</code> 和 <code>e(1)</code>，合并成新节点 <code>[2]</code>。
+森林状态: <code>w(1)</code>, <code>r(1)</code>, <code>d(1)</code>, <code>o(2)</code>, <code>l(3)</code>, <code>[2](包含了h,e)</code></p>
+<p><strong>步骤 2:</strong> 取出最小的两个 <code>w(1)</code> 和 <code>r(1)</code>，合并成新节点 <code>[2]</code>。
+森林状态: <code>d(1)</code>, <code>o(2)</code>, <code>l(3)</code>, <code>[2](h,e)</code>, <code>[2](w,r)</code></p>
+<p><strong>步骤 3:</strong> 取出最小的两个 <code>d(1)</code> 和一个 <code>[2]</code>（假设取包含了h,e的那个），合并成新节点 <code>[3]</code>。
+森林状态: <code>o(2)</code>, <code>l(3)</code>, <code>[2](w,r)</code>, <code>[3](包含了d,h,e)</code></p>
+<p><strong>步骤 4:</strong> 取出最小的两个 <code>o(2)</code> 和 <code>[2](w,r)</code>，合并成新节点 <code>[4]</code>。
+森林状态: <code>l(3)</code>, <code>[3](d,h,e)</code>, <code>[4](包含了o,w,r)</code></p>
+<p><strong>步骤 5:</strong> 取出最小的两个 <code>l(3)</code> 和 <code>[3](d,h,e)</code>，合并成新节点 <code>[6]</code>。
+森林状态: <code>[4](o,w,r)</code>, <code>[6](包含了l,d,h,e)</code></p>
+<p><strong>步骤 6:</strong> 最后剩下两个，<code>[4]</code> 和 <code>[6]</code>，合并成根节点 <code>[10]</code>。
+构建完成。</p>
+<hr>
+<h3 id="3.-%E2%80%9Chelloworld%E2%80%9D-%E7%9A%84%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%E5%9B%BE%E7%A4%BA" tabindex="-1">3. “helloworld” 的哈夫曼树图示</h3>
+<p>我们约定：<strong>左分支走 0，右分支走 1</strong>。
+方括号 <code>[ ]</code> 中的数字表示内部节点的合并权值。
+圆括号 <code>( )</code> 中的数字表示叶子字符的频率。</p>
+<figure><img src="./hellworld_huffman.png" alt=""></figure>
+<p><strong>ASCII文本版</strong></p>
+<pre><code>                  [10] Root
+                 /    \
+               0/      \1
+               /        \
+             [6]        [4]
+             / \        / \
+           0/   \1    0/   \1
+           /     \    /     \
+        l(3)    [3] o(2)    [2]
+                / \         / \
+              0/   \1     0/   \1
+              /     \     /     \
+            d(1)   [2]  w(1)   r(1)
+                   / \
+                 0/   \1
+                 /     \
+               h(1)   e(1)
+
+</code></pre>
+<h3 id="4.-%E7%BB%93%E6%9E%9C%E9%AA%8C%E8%AF%81%E4%B8%8E%E5%88%86%E6%9E%90" tabindex="-1">4. 结果验证与分析</h3>
+<p>根据上面绘制的树，我们可以得出每个字符的编码和长度：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>频率</th>
+<th>路径 (编码)</th>
+<th>编码长度 (深度)</th>
+<th>总贡献长度 (频率 x 深度)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>l</strong></td>
+<td>3</td>
+<td>00</td>
+<td>2</td>
+<td>3 * 2 = 6</td>
+</tr>
+<tr>
+<td><strong>o</strong></td>
+<td>2</td>
+<td>10</td>
+<td>2</td>
+<td>2 * 2 = 4</td>
+</tr>
+<tr>
+<td><strong>d</strong></td>
+<td>1</td>
+<td>010</td>
+<td>3</td>
+<td>1 * 3 = 3</td>
+</tr>
+<tr>
+<td><strong>w</strong></td>
+<td>1</td>
+<td>110</td>
+<td>3</td>
+<td>1 * 3 = 3</td>
+</tr>
+<tr>
+<td><strong>r</strong></td>
+<td>1</td>
+<td>111</td>
+<td>3</td>
+<td>1 * 3 = 3</td>
+</tr>
+<tr>
+<td><strong>h</strong></td>
+<td>1</td>
+<td>0110</td>
+<td>4</td>
+<td>1 * 4 = 4</td>
+</tr>
+<tr>
+<td><strong>e</strong></td>
+<td>1</td>
+<td>0111</td>
+<td>4</td>
+<td>1 * 4 = 4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总编码长度 (WPL):</strong>
+6 + 4 + 3 + 3 + 3 + 4 + 4 = <strong>27 bit</strong></p>
+<p>这与题目分析中得出的结论一致。频率最高的 ‘l’ (3次) 位于树较浅的位置（深度2），而频率最低的 ‘h’ 和 ‘e’ (1次) 位于最深的位置（深度4），这完美体现了哈夫曼编码的设计思想。</p>
+<h2 id="faq-1%3A-%E5%B7%A6%E5%AD%90%E6%A0%91%E8%BF%98%E6%98%AF%E5%8F%B3%E5%AD%90%E6%A0%91" tabindex="-1">FAQ 1: 左子树还是右子树</h2>
+<blockquote>
+<p>1 权值中的点, 是作为左子树, 还是右子树, 会不会影响结果?</p>
+</blockquote>
+<p>这是一个非常深刻且关键的问题，触及了哈夫曼编码的核心性质。</p>
+<p>简单直接的回答是：</p>
+<p><strong>它会影响最终生成的具体编码（每个字符对应的 01 串），但绝不会影响最终的总编码长度（WPL）。</strong></p>
+<p>对于你之前展示的题目（判断总长度是否符合要求）来说，答案是 <strong>不会影响结果</strong>。</p>
+<p>下面我们详细拆解原因：</p>
+<h3 id="1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BD%B1%E5%93%8D%E6%80%BB%E7%BC%96%E7%A0%81%E9%95%BF%E5%BA%A6-(wpl)%EF%BC%9F" tabindex="-1">1. 为什么不影响总编码长度 (WPL)？</h3>
+<p>我们需要理解哈夫曼树总路径长度（WPL）的计算本质。</p>
+<p>方法一：基于深度的计算</p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>W</mi><mi>P</mi><mi>L</mi><mo>=</mo><mo>∑</mo><mo stretchy="false">(</mo><mtext>每个叶子节点的频率</mtext><mo>×</mo><mtext>该节点在树中的深度</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">WPL = \sum (每个叶子节点的频率 \times 该节点在树中的深度)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.6em;vertical-align:-0.55em;"></span><span class="mop op-symbol large-op" style="position:relative;top:0em;">∑</span><span class="mopen">(</span><span class="mord cjk_fallback">每个叶子节点的频率</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">该节点在树中的深度</span><span class="mclose">)</span></span></span></span></span></eqn></section><p>当我们选取两个最小的节点（比如 A 和 B）进行合并时，无论我们将 A 放在左边还是 B 放在左边：</p>
+<ul>
+<li>它们都会成为同一个新父节点的子节点。</li>
+<li><strong>它们的深度都会相对于这个新父节点增加 1。</strong></li>
+</ul>
+<p>既然它们增加的深度是一样的，那么它们对最终 WPL 的贡献（频率 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">×</span></span></span></span></eq> 深度）在数值上就是一样的，与左右位置无关。</p>
+<p>方法二：基于合并代价的计算 (编程中常用的方法)</p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>W</mi><mi>P</mi><mi>L</mi><mo>=</mo><mtext>所有非叶子节点（内部节点）的权值之和</mtext></mrow><annotation encoding="application/x-tex">WPL = \text{所有非叶子节点（内部节点）的权值之和}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">所有非叶子节点（内部节点）的权值之和</span></span></span></span></span></span></eqn></section><p>回顾一下代码中的核心循环：</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div>
+        <code><span class="token comment">// 4. 标准哈夫曼合并过程</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>pq<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int a <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> pq<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    int b <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> pq<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    int sum <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+    ans <span class="token operator">+</span><span class="token operator">=</span> sum<span class="token punctuation">;</span>     <span class="token comment">// 关键在这里：累加的是 sum</span>
+    pq<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 将 sum 放回</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<p>在这个过程中，算法只关心这步合并产生了多大的代价 (<code>sum = a + b</code>)，并将这个代价累加到总结果 <code>ans</code> 中。算法完全<strong>不关心</strong>是谁加谁，也不关心谁在左谁在右，它只关心这个和是多少。</p>
+<p><strong>结论：对于题目要求计算的“总长度”而言，左右子树的放置顺序没有影响。</strong></p>
+<hr>
+<h3 id="2.-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%BD%B1%E5%93%8D%E5%85%B7%E4%BD%93%E7%9A%84%E7%BC%96%E7%A0%81%EF%BC%9F" tabindex="-1">2. 为什么会影响具体的编码？</h3>
+<p>虽然总长度不变，但是树的形状变了，路径就变了。</p>
+<p>通常约定：<strong>走左子树记为 ‘0’，走右子树记为 ‘1’</strong>。</p>
+<p>举例说明：</p>
+<p>假设当前最小的两个节点是 c(频率2) 和 d(频率3)。</p>
+<p>情况 A：c 作左子树，d 作右子树</p>
+<p>合并出新节点 [5]。</p>
+<ul>
+<li>要到达 <code>c</code>，路径最后一步必须往左走，编码以 <code>...0</code> 结尾。</li>
+<li>要到达 <code>d</code>，路径最后一步必须往右走，编码以 <code>...1</code> 结尾。</li>
+</ul>
+<p>Plaintext</p>
+<pre><code>      [5]
+     /   \
+   c(2) d(3)
+</code></pre>
+<p>情况 B：d 作左子树，c 作右子树</p>
+<p>合并出新节点 [5]。</p>
+<ul>
+<li>要到达 <code>d</code>，路径最后一步往左走，编码以 <code>...0</code> 结尾。</li>
+<li>要到达 <code>c</code>，路径最后一步往右走，编码以 <code>...1</code> 结尾。</li>
+</ul>
+<p>Plaintext</p>
+<pre><code>      [5]
+     /   \
+   d(3) c(2)
+</code></pre>
+<p><strong>显然，情况 A 和情况 B 生成的最终 01 编码串是不一样的。但是，在这两种情况下，<code>c</code> 和 <code>d</code> 的深度是一样的，它们对总长度的贡献也是一样的。</strong></p>
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
+<ul>
+<li><strong>哈夫曼树不唯一：</strong> 由于合并时左右子树选择的任意性，以及当存在多个相同频率节点时选择的任意性，同一个字符串可以构建出形态不同的哈夫曼树，从而得到不同的编码方案。</li>
+<li><strong>最短加权路径长度唯一：</strong> 无论构建出哪种形态的哈夫曼树，它们最终的总编码长度（WPL）一定是相同的，且是所有可能的二叉树中最小的。</li>
+</ul>
+<p>在算法竞赛中，如果题目只问“最小长度”，你不需要纠结左右；如果题目要求输出具体的“编码”，通常题目会附加约定（例如：权值较小的必须在左子树，或者频率相同时优先处理 ASCII 码较小的字符等）来保证答案的唯一性。</p>
+<h2 id="faq-2-wpl-%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E6%A0%B7" tabindex="-1">FAQ 2 WPL 的两种计算方式为什么一样</h2>
+<blockquote>
+<p>空间占用计算 (WPL) ,我发现有两种计算方式,</p>
+<ol>
+<li>根据树的结构 : 深度 乘以 频率</li>
+<li>合并代价法
+为什么这两种方式计算的结果一样?</li>
+</ol>
+</blockquote>
+<p>这是一个非常深刻且经典的算法问题！你能发现这一点说明你对哈夫曼树的构造过程有了很直观的理解。</p>
+<p>这两种计算方式之所以结果<strong>完全一样</strong>，是因为它们本质上是在统计<strong>同一个东西</strong>，只是观察的<strong>角度不同</strong>。</p>
+<p>我们可以通过一个简单的例子和逻辑推导来解释。</p>
+<hr>
+<h3 id="1.-%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A%E8%B4%A1%E7%8C%AE%E5%BA%A6%E5%88%86%E6%9E%90" tabindex="-1">1. 核心逻辑：贡献度分析</h3>
+<p>要理解为什么两者相等，我们只需要盯着<strong>某一个叶子节点</strong>（比如字符 <code>a</code>，频率为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span></eq>）看它在两种计算方式中分别贡献了多少值。</p>
+<h4>角度一：根据树的结构（最终状态）</h4>
+<p>公式是：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>频率</mtext><mo>×</mo><mtext>深度</mtext></mrow><annotation encoding="application/x-tex">\text{频率} \times \text{深度}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord cjk_fallback">频率</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">深度</span></span></span></span></span></eq>。</p>
+<p>假设叶子节点 a 的频率是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span></eq>，它在树中的深度是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq>（也就是它上面有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq> 条边，或者说它经过了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq> 个父节点/祖先节点到达根）。</p>
+<p>那么，节点 a 对总结果的贡献就是：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>×</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">w \times d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq>。</p>
+<h4>角度二：合并代价法（构建过程）</h4>
+<p>公式是：所有非叶子节点（内部节点）的权值之和。</p>
+<p>思考一下，哈夫曼树是怎么构建的？是自底向上的。</p>
+<ol>
+<li>当叶子 <code>a</code> 被第一次合并时，它的值 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span></eq> 加到了它的<strong>父节点</strong>中。</li>
+<li>这个<strong>父节点</strong>之后又被合并，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span></eq> 作为父节点值的一部分，又加到了<strong>爷爷节点</strong>中。</li>
+<li>…以此类推…</li>
+<li>直到到达<strong>根节点</strong>。</li>
+</ol>
+<p>结论：</p>
+<p>一个叶子节点 a 的深度是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq>，意味着它上面有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq> 层祖先（内部节点）。</p>
+<p>在计算“合并代价”时，这个 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span></eq> 的值实际上被累加到了每一个祖先节点的权值里。</p>
+<p>既然它有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq> 个祖先，那么 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span></eq> 就被加了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq> 次。</p>
+<p>所以，节点 a 对总结果的贡献依然是：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>×</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">w \times d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></eq>。</p>
+<hr>
+<h3 id="2.-%E7%AE%80%E5%8D%95%E7%9A%84%E6%95%B0%E5%AD%A6%E7%A4%BA%E4%BE%8B" tabindex="-1">2. 简单的数学示例</h3>
+<p>假设我们有三个字符，频率分别是：<strong>A: 10, B: 20, C: 30</strong>。</p>
+<p><strong>构建过程：</strong></p>
+<ol>
+<li>最小的是 A(10) 和 B(20)。</li>
+<li>合并 A 和 B，生成一个内部节点 <strong>N1</strong>，权值为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mo>+</mo><mn>20</mn><mo>=</mo><mn>30</mn></mrow><annotation encoding="application/x-tex">10+20=30</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">20</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">30</span></span></span></span></eq>。</li>
+<li>现在剩下 N1(30) 和 C(30)。</li>
+<li>合并 N1 和 C，生成根节点 <strong>Root</strong>，权值为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>30</mn><mo>+</mo><mn>30</mn><mo>=</mo><mn>60</mn></mrow><annotation encoding="application/x-tex">30+30=60</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">60</span></span></span></span></eq>。</li>
+</ol>
+<p>树的结构如下：</p>
+<p>Plaintext</p>
+<pre><code>      Root (60)
+      /      \
+   N1(30)    C(30)
+   /   \
+A(10) B(20)
+</code></pre>
+<ul>
+<li>A 的深度是 2</li>
+<li>B 的深度是 2</li>
+<li>C 的深度是 1</li>
+</ul>
+<h4>验证两种方法：</h4>
+<p><strong>方法 1：深度 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">×</span></span></span></span></eq> 频率 (Leaf-based)</strong></p>
+<ul>
+<li>A: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mo>×</mo><mn>2</mn><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">10 \times 2 = 20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">20</span></span></span></span></eq></li>
+<li>B: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>20</mn><mo>×</mo><mn>2</mn><mo>=</mo><mn>40</mn></mrow><annotation encoding="application/x-tex">20 \times 2 = 40</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">20</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">40</span></span></span></span></eq></li>
+<li>C: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>30</mn><mo>×</mo><mn>1</mn><mo>=</mo><mn>30</mn></mrow><annotation encoding="application/x-tex">30 \times 1 = 30</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">30</span></span></span></span></eq></li>
+<li><strong>总和：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>20</mn><mo>+</mo><mn>40</mn><mo>+</mo><mn>30</mn><mo>=</mo><mn>90</mn></mrow><annotation encoding="application/x-tex">20 + 40 + 30 = 90</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">20</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">40</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">90</span></span></span></span></eq></strong></li>
+</ul>
+<p>方法 2：合并代价法 (Internal-node-based)</p>
+<p>我们要把所有新生成的节点（圆圈里的数）加起来。</p>
+<ul>
+<li>第一次合并产生的节点 N1：<strong>30</strong></li>
+<li>第二次合并产生的节点 Root：<strong>60</strong></li>
+<li><strong>总和：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>30</mn><mo>+</mo><mn>60</mn><mo>=</mo><mn>90</mn></mrow><annotation encoding="application/x-tex">30 + 60 = 90</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">60</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">90</span></span></span></span></eq></strong></li>
+</ul>
+<hr>
+<h3 id="3.-%E7%9B%B4%E8%A7%82%E7%9A%84%E6%AF%94%E5%96%BB%EF%BC%9A%E8%BF%87%E8%B7%AF%E8%B4%B9" tabindex="-1">3. 直观的比喻：过路费</h3>
+<p>想象你要把几袋金币（叶子节点）运送到山顶（根节点）。</p>
+<ul>
+<li>
+<p>方法 1（统计每袋金币的运输成本）：</p>
+<p>你算一下：A袋金币重10斤，要走2公里；B袋重20斤，要走2公里；C袋重30斤，要走1公里。</p>
+<p>总功 = <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn><mo>×</mo><mn>2</mn><mo>+</mo><mn>20</mn><mo>×</mo><mn>2</mn><mo>+</mo><mn>30</mn><mo>×</mo><mn>1</mn><mo>=</mo><mn>90</mn></mrow><annotation encoding="application/x-tex">10\times2 + 20\times2 + 30\times1 = 90</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">20</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">90</span></span></span></span></eq>。</p>
+</li>
+<li>
+<p>方法 2（统计关卡流量）：</p>
+<p>在每一个路口（内部节点/合并点），都设有一个传感器，记录流经这里的金币总重量。</p>
+<ul>
+<li>在路口 N1，A和B通过了，传感器记录：30斤。</li>
+<li>在山顶路口 Root，A、B、C都通过了（A和B打包成了N1），传感器记录：60斤。</li>
+<li>把所有传感器的读数加起来：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>30</mn><mo>+</mo><mn>60</mn><mo>=</mo><mn>90</mn></mrow><annotation encoding="application/x-tex">30 + 60 = 90</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">30</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">60</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">90</span></span></span></span></eq>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="%E6%80%BB%E7%BB%93-1" tabindex="-1">总结</h3>
+<p>这两种方法是<strong>等价</strong>的：</p>
+<ul>
+<li><strong>方法 1</strong> 是从<strong>空间</strong>的角度（横向）看最终结果。</li>
+<li><strong>方法 2</strong> 是从<strong>时间</strong>的角度（纵向）看构建过程。</li>
+</ul>
+<p>在编程竞赛或算法实现中，<strong>方法 2（合并代价法）通常更方便</strong>。因为在使用优先队列（堆）编写代码时，我们每做一次加法（<code>sum = a + b</code>），就可以直接把这个 <code>sum</code> 累加到 <code>total_cost</code> 变量里，不需要等到最后建完树再去递归计算深度。</p>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

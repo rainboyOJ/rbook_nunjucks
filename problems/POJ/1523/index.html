@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - SPF</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>SPF</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#割点</span>
+            
+              <span>#v-bcc</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/POJ-1523#author=DeepSeek_zh" target="_blank"> POJ-1523</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>cut-code vbcc 两种解法</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#1.-%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">1. 题目大意</a></li><li><a href="#2.-%E6%A0%B8%E5%BF%83%E7%90%86%E8%AE%BA">2. 核心理论</a><ol><li><a href="#%E5%89%B2%E7%82%B9-(articulation-point)">割点 (Articulation Point)</a></li><li><a href="#tarjan-%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80">Tarjan 算法基础</a></li></ol></li><li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E7%9B%B4%E6%8E%A5-tarjan-%E5%88%A4%E5%AE%9A%E6%B3%95-(%E7%BB%8F%E5%85%B8%E8%A7%A3%E6%B3%95)">方法一：直接 Tarjan 判定法 (经典解法)</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E9%80%BB%E8%BE%91">算法逻辑</a></li><li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">代码实现</a></li></ol></li><li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9Av-bcc-%E5%88%86%E8%A7%A3%E6%B3%95-(%E7%BB%93%E6%9E%84%E5%8C%96%E8%A7%A3%E6%B3%95)">方法二：v-BCC 分解法 (结构化解法)</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E9%80%BB%E8%BE%91-1">算法逻辑</a></li><li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1">代码实现</a></li></ol></li><li><a href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E5%AF%B9%E6%AF%94">总结与对比</a></li></ol></nav><p>这篇题解结合了 <strong>直接 Tarjan 判定法</strong> 和 <strong>v-BCC（点双连通分量）分解法</strong> 两种视角，不仅解决当前题目，更帮助你理解图论中“割点”与“点双”的本质联系。</p>
+<hr>
+<h1>题目解析：Network (SPF / 割点判定)</h1>
+<h2 id="1.-%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F" tabindex="-1">1. 题目大意</h2>
+<p>给定一个无向图（网络），定义 SPF (Single Point of Failure) 节点为：如果删除该节点，会导致剩余网络不再连通（即连通分量增加）。</p>
+<p>我们需要：</p>
+<ol>
+<li>找出所有的 SPF 节点（即<strong>割点</strong>）。</li>
+<li>计算删除该节点后，剩余的全连通子网（连通分量）数量。</li>
+</ol>
+<h2 id="2.-%E6%A0%B8%E5%BF%83%E7%90%86%E8%AE%BA" tabindex="-1">2. 核心理论</h2>
+<h3 id="%E5%89%B2%E7%82%B9-(articulation-point)" tabindex="-1">割点 (Articulation Point)</h3>
+<p>在无向连通图中，若删除节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 及其相连的边，图的连通分量数量增加，则 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 为割点。</p>
+<h3 id="tarjan-%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80" tabindex="-1">Tarjan 算法基础</h3>
+<p>利用 DFS 生成树维护两个核心数组：</p>
+<ul>
+<li><strong><code>dfn[u]</code></strong>：节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 被访问的时间戳。</li>
+<li><strong><code>low[u]</code></strong>：节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 通过<strong>DFS 树边</strong>或<strong>返祖边</strong>（不经过父节点）所能追溯到的最小时间戳。</li>
+</ul>
+<p>判定法则：</p>
+<p>对于边 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>→</mo><mi>v</mi></mrow><annotation encoding="application/x-tex">u \to v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq>（<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 的父节点）：</p>
+<p>若 low[v] &gt;= dfn[u]，说明 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 及其子树无法回到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 的祖先，必须经过 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq>，因此 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 是割点。</p>
+<hr>
+<h2 id="%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E7%9B%B4%E6%8E%A5-tarjan-%E5%88%A4%E5%AE%9A%E6%B3%95-(%E7%BB%8F%E5%85%B8%E8%A7%A3%E6%B3%95)" tabindex="-1">方法一：直接 Tarjan 判定法 (经典解法)</h2>
+<p>这种方法直接在 DFS 过程中统计分量变化，空间极小，逻辑紧凑。</p>
+<h3 id="%E7%AE%97%E6%B3%95%E9%80%BB%E8%BE%91" tabindex="-1">算法逻辑</h3>
+<p>我们用 <code>subnet_cnt[u]</code> 记录删除 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 后产生的连通块数量。</p>
+<ol>
+<li><strong>根节点 (Root)</strong>：</li>
+</ol>
+<ul>
+<li>在 DFS 树中，根节点每有一个“DFS 树子节点”（即 <code>!dfn[v]</code> 进入的分支），就是一个独立的连通块。</li>
+<li>若子节点数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\ge 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq>，则根是割点。</li>
+<li><strong>子网数</strong> = DFS 树中实际子节点的数量。</li>
+</ul>
+<ol start="2">
+<li><strong>非根节点 (Non-Root)</strong>：</li>
+</ol>
+<ul>
+<li>每发现一个子节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 满足 <code>low[v] &gt;= dfn[u]</code>，说明切断 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 后，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 所在分支会掉落，<code>subnet_cnt</code> 加 1。</li>
+<li>除了掉落的子树外，<strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 的父节点方向</strong>还连着一大块网络。只要 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 切断了任意一个子节点，父节点方向的那块也算作一个独立的剩余子网。</li>
+<li><strong>子网数</strong> = (满足条件的子节点数) + 1。</li>
+</ul>
+<h3 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">代码实现</h3>
+<p>C++</p>
+<p>@incclude-code(./2.cpp,cpp)</p>
+<h2 id="%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9Av-bcc-%E5%88%86%E8%A7%A3%E6%B3%95-(%E7%BB%93%E6%9E%84%E5%8C%96%E8%A7%A3%E6%B3%95)" tabindex="-1">方法二：v-BCC 分解法 (结构化解法)</h2>
+<p>这种方法基于<strong>点双连通分量 (v-BCC)</strong> 的定义。它更加抽象，但能揭示图的内部结构（即圆方树的雏形）。</p>
+<h3 id="%E7%AE%97%E6%B3%95%E9%80%BB%E8%BE%91-1" tabindex="-1">算法逻辑</h3>
+<ol>
+<li><strong>v-BCC 定义</strong>：极大的不包含割点的子图（任意两点间至少有两条不相交路径）。</li>
+<li><strong>割点与 BCC 的关系</strong>：</li>
+</ol>
+<ul>
+<li>割点是多个 v-BCC 的“公共交点”。</li>
+<li>如果把每个 BCC 想象成一个“房间”，割点就是连接不同房间的“门”。</li>
+</ul>
+<ol start="3">
+<li><strong>计算子网数</strong>：</li>
+</ol>
+<ul>
+<li>统计每个点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 出现在了多少个不同的 BCC 中。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo></mrow><annotation encoding="application/x-tex">Count(u) =</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">o</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span></eq> 包含 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 的 BCC 数量。</li>
+<li>如果 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">Count(u) &gt; 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">o</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>，则 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 是割点，且删除 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 后，这 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Count(u)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">o</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mopen">(</span><span class="mord mathnormal">u</span><span class="mclose">)</span></span></span></span></eq> 个 BCC 会散开成为独立的连通块。</li>
+</ul>
+<h3 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1" tabindex="-1">代码实现</h3>
+<p>C++</p>
+<pre><code>/*
+* 方法二：v-BCC 分解法
+* 优点：结构清晰，根节点无需特殊逻辑，适用于后续构建圆方树
+* 核心：统计每个点属于多少个 BCC
+*/
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;stack&gt;
+
+// ... Edge 结构体同上 ...
+// ... add_edge 函数同上 ...
+
+struct TarjanBCC {
+ int n, timer;
+ std::stack&lt;int&gt; st;
+ int dfn[maxn], low[maxn];
+ int bcc_cnt; 
+ std::vector&lt;int&gt; bcc[maxn]; // 存储每个 BCC 中的点
+
+ void set(int _n) {
+     n = _n;
+     timer = bcc_cnt = 0;
+     memset(dfn, 0, sizeof(dfn));
+     memset(low, 0, sizeof(low));
+     while (!st.empty()) st.pop();
+     for (int i = 0; i &lt;= n; i++) bcc[i].clear();
+ }
+
+ void dfs(int u, int fa) {
+     dfn[u] = low[u] = ++timer;
+     st.push(u);
+
+     for (int i = head[u]; i; i = e[i].next) {
+         int v = e[i].v;
+         if (v == fa) continue;
+
+         if (!dfn[v]) {
+             dfs(v, u);
+             low[u] = std::min(low[u], low[v]);
+
+             // 发现 BCC 的闭环条件
+             if (low[v] &gt;= dfn[u]) {
+                 bcc_cnt++;
+                 while (true) {
+                     int node = st.top(); st.pop();
+                     bcc[bcc_cnt].push_back(node);
+                     if (node == v) break;
+                 }
+                 // u 也是这个 BCC 的一部分
+                 bcc[bcc_cnt].push_back(u);
+             }
+         } else if (dfn[v] &lt; dfn[u]) {
+             low[u] = std::min(low[u], dfn[v]);
+         }
+     }
+ }
+
+ void solve() {
+     for (int i = 1; i &lt;= 1000; i++) {
+         if (!dfn[i] &amp;&amp; head[i]) dfs(i, 0);
+     }
+ }
+};
+
+TarjanBCC solver;
+int node_bcc_count[maxn]; // 统计数组
+
+int main() {
+ // ... 输入读取部分同上 ...
+ // ... (在 while 循环内) ...
+
+ solver.solve();
+
+ // 统计频率
+ memset(node_bcc_count, 0, sizeof(node_bcc_count));
+ for (int i = 1; i &lt;= solver.bcc_cnt; i++) {
+     for (int node : solver.bcc[i]) {
+         node_bcc_count[node]++;
+     }
+ }
+
+ // 输出结果
+ std::cout &lt;&lt; &quot;Network#&quot; &lt;&lt; ++case_id &lt;&lt; &quot;\n&quot;;
+ bool has_spf = false;
+ for (int i = 1; i &lt;= 1000; i++) {
+     // 只要属于超过 1 个 BCC，就是割点
+     if (node_bcc_count[i] &gt; 1) { 
+         has_spf = true;
+         std::cout &lt;&lt; &quot;  SPF node &quot; &lt;&lt; i &lt;&lt; &quot; leaves &quot; &lt;&lt; node_bcc_count[i] &lt;&lt; &quot; subnets\n&quot;;
+     }
+ }
+ // ... 后续输出同上 ...
+}
+</code></pre>
+<hr>
+<h2 id="%E6%80%BB%E7%BB%93%E4%B8%8E%E5%AF%B9%E6%AF%94" tabindex="-1">总结与对比</h2>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>方法一：直接 Tarjan</strong></th>
+<th><strong>方法二：v-BCC 分解</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>思维模型</strong></td>
+<td><strong>剪切视角</strong>：把点抠掉，看树分叉了几枝</td>
+<td><strong>积木视角</strong>：图是由 BCC 积木搭成的，割点是连接积木的关节</td>
+</tr>
+<tr>
+<td><strong>根节点</strong></td>
+<td>需要特判 <code>child_count</code></td>
+<td><strong>无需特判</strong>，算法自然归纳</td>
+</tr>
+<tr>
+<td><strong>复杂度</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>+</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N+M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></eq>，常数极小</td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>+</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N+M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></eq>，<code>vector</code> 操作略带常数</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>仅需判定割点或求连通块数</td>
+<td>需构建圆方树、求路径必经点、树上 DP 等复杂问题</td>
+</tr>
+</tbody>
+</table>
+<p><strong>建议</strong>：</p>
+<ul>
+<li>在比赛中如果只是单纯求 SPF，<strong>方法一</strong> 写法更快。</li>
+<li>如果题目涉及“从 A 到 B 的路径上必须经过的点”或“两点间路径的并集”等，建议使用 <strong>方法二</strong> 的思想，因为这往往是圆方树题目的前置步骤。</li>
+</ul>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

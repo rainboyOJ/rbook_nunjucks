@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Text Reverse</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Text Reverse</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#栈</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/HDU-1062#author=liaohaoyun" target="_blank"> HDU-1062</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>纯用栈解题</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF">核心思路</a></li><li><a href="#%E5%9B%BE%E8%A7%A3%E6%B5%81%E7%A8%8B">图解流程</a></li><li><a href="#c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">C++ 代码实现</a></li><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">题目解析与注意事项</a><ol><li><a href="#1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-getchar()%EF%BC%9F">1. 为什么需要 getchar()？</a></li><li><a href="#2.-%E5%85%B3%E4%BA%8E-gets()-%E5%92%8C-getline()">2. 关于 gets() 和 getline()</a></li><li><a href="#3.-%E8%BE%B9%E7%95%8C%E5%A4%84%E7%90%86">3. 边界处理</a></li></ol></li></ol></nav><p>这是一道非常经典的利用<strong>栈（Stack）</strong>“后进先出”（LIFO, Last In First Out）特性来解决字符串处理的题目。</p>
+<p>这个问题（通常对应 HDU OJ 1062 Text Reverse）的核心在于：<strong>单词内部的字符需要反转，但单词与单词之间的顺序不变。</strong></p>
+<h2 id="%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF" tabindex="-1">核心思路</h2>
+<p>栈的特性是“先进后出”，这正好对应“反转”的操作。</p>
+<ol>
+<li><strong>遍历字符串</strong>：从左到右逐个读取字符。</li>
+<li><strong>遇到普通字符</strong>：如果是单词的一部分，将其<strong>压入栈（Push）</strong>。</li>
+<li><strong>遇到空格</strong>：说明前一个单词结束了。此时栈里保存的是该单词的所有字符（顺序是反的）。我们依次**弹出栈（Pop）**并打印字符，就能得到正序的单词。然后，直接原样输出这个空格。</li>
+<li><strong>遇到换行符/字符串结束</strong>：说明整行结束。将栈中剩余的字符全部弹出并打印（处理这一行最后一个单词），然后输出换行符。</li>
+</ol>
+<h2 id="%E5%9B%BE%E8%A7%A3%E6%B5%81%E7%A8%8B" tabindex="-1">图解流程</h2>
+<p>以输入 <code>olleh !dlrow</code> 为例：</p>
+<ol>
+<li><strong>读取 ‘o’, ‘l’, ‘l’, ‘e’, ‘h’</strong>: 依次入栈。</li>
+</ol>
+<ul>
+<li>此时栈（从底到顶）: <code>[o, l, l, e, h]</code></li>
+</ul>
+<ol start="2">
+<li><strong>读取 ’ ’ (空格)</strong>: 触发输出。</li>
+</ol>
+<ul>
+<li>循环弹栈输出: <code>h</code> -&gt; <code>e</code> -&gt; <code>l</code> -&gt; <code>l</code> -&gt; <code>o</code> (输出了 “hello”)</li>
+<li>输出空格本身。</li>
+<li>此时屏幕显示: <code>hello </code>，栈为空。</li>
+</ul>
+<ol start="3">
+<li><strong>读取 ‘!’, ‘d’, ‘l’, ‘r’, ‘o’, ‘w’</strong>: 依次入栈。</li>
+</ol>
+<ul>
+<li>此时栈（从底到顶）: <code>[!, d, l, r, o, w]</code></li>
+</ul>
+<ol start="4">
+<li><strong>读取结束</strong>: 触发输出。</li>
+</ol>
+<ul>
+<li>循环弹栈输出: <code>w</code> -&gt; <code>o</code> -&gt; <code>r</code> -&gt; <code>l</code> -&gt; <code>d</code> -&gt; <code>!</code> (输出了 “world!”)</li>
+<li>此时屏幕显示: <code>hello world!</code></li>
+</ul>
+<hr>
+<h2 id="c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">C++ 代码实现</h2>
+<p>这里使用 C++ 标准库中的 <code>&lt;stack&gt;</code> 和 <code>getline</code>（比 <code>gets</code> 更安全且现代，但逻辑是一样的）。</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>stack<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>string<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>cstdio<span class="token operator">></span> <span class="token comment">// 用于 getchar</span>
+
+using namespace std<span class="token punctuation">;</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int t<span class="token punctuation">;</span>
+    <span class="token comment">// 读取测试用例数量</span>
+    cin <span class="token operator">></span><span class="token operator">></span> t<span class="token punctuation">;</span>
+    
+    <span class="token comment">// 【关键点1】吃掉输入整数T后的换行符</span>
+    <span class="token comment">// 如果不写这一句，后面的 getline 会直接读到一个空行</span>
+    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>t<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        string line<span class="token punctuation">;</span>
+        <span class="token comment">// 读取整行包含空格的文本</span>
+        <span class="token function">getline</span><span class="token punctuation">(</span>cin<span class="token punctuation">,</span> line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        stack<span class="token operator">&lt;</span>char<span class="token operator">></span> s<span class="token punctuation">;</span>
+        
+        <span class="token comment">// 遍历这一行的每一个字符</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> line<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>line<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// 【关键点2】遇到空格，说明一个单词结束</span>
+                <span class="token comment">// 将栈中所有字符弹出并打印</span>
+                <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    s<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token comment">// 打印空格本身</span>
+                cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token comment">// 普通字符，压入栈中</span>
+                s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>line<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 【关键点3】处理最后一个单词</span>
+        <span class="token comment">// 循环结束后，栈里可能还有最后一个单词的字符（因为行尾可能没有空格）</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            s<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 每个测试用例输出后换行</span>
+        cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code>
+    </pre>
+</div>
+<h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" tabindex="-1">题目解析与注意事项</h2>
+<h4>1. 为什么需要 <code>getchar()</code>？</h4>
+<p>当你使用 <code>cin &gt;&gt; t;</code> 输入数字（例如 3）并按下回车键时，输入缓冲区里实际是 <code>3\n</code>。
+<code>cin</code> 读取了 <code>3</code>，但 <code>\n</code>（换行符）还留在缓冲区里。
+如果不加 <code>getchar()</code>，随后的 <code>getline</code>（或 <code>gets</code>）会认为遇到了换行符，直接读取一个空字符串，导致第一个测试用例输出错误。</p>
+<h4>2. 关于 <code>gets()</code> 和 <code>getline()</code></h4>
+<p>题目提示中提到的 <code>gets()</code> 是 C 语言的老函数，因为存在严重的缓冲区溢出安全隐患，在现代 C++（C++14 及以后）中已经被移除。</p>
+<ul>
+<li><strong>推荐做法</strong>：使用 C++ 的 <code>getline(cin, string_variable)</code>。</li>
+<li><strong>如果不使用 String 类</strong>：可以使用 <code>cin.getline(char_array, size)</code> 或 <code>fgets</code>。</li>
+</ul>
+<h4>3. 边界处理</h4>
+<p>最容易犯错的地方是<strong>行尾的那个单词</strong>。
+循环逻辑是“遇到空格才输出栈内容”。如果一行文本的末尾没有空格（通常都是这样），循环结束后，最后一个单词还在栈里。所以必须在循环外面再写一次 <code>while (!s.empty())</code> 的输出逻辑。</p>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Entropy</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Entropy</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#哈夫曼编码</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/POJ-1521#author=DeepSeek_zh" target="_blank"> POJ-1521</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>哈夫曼编码模板题</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a></li><li><a href="#1.-%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90">1. 题目核心概念解析</a></li><li><a href="#2.-%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF%EF%BC%9A%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%EF%BC%88huffman-tree%EF%BC%89">2. 算法思路：哈夫曼树（Huffman Tree）</a></li><li><a href="#3.-%E6%A0%B7%E4%BE%8B%E5%88%86%E6%9E%90">3. 样例分析</a></li><li><a href="#4.-c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">4. C++ 代码实现</a></li><li><a href="#5.-%E4%BB%A3%E7%A0%81%E5%85%B3%E9%94%AE%E7%82%B9%E8%AF%B4%E6%98%8E">5. 代码关键点说明</a></li><li><a href="#6.-%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">6. 复杂度分析</a></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<p>这是一个非常经典的算法题目，源自 <strong>POJ 1521 - Entropy</strong>。</p>
+<p>题目的核心本质是要求你实现 <strong>哈夫曼编码（Huffman Coding）</strong> 算法，并将其压缩效果与定长的 8位 ASCII 编码进行对比。</p>
+<h2 id="1.-%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90" tabindex="-1">1. 题目核心概念解析</h2>
+<ul>
+<li><strong>原始编码（ASCII）</strong>：固定长度编码。无论字符出现的频率如何，每个字符都占用 <strong>8 bits</strong>。
+<ul>
+<li>计算公式：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mi>r</mi><mi>i</mi><mi>g</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>S</mi><mi>i</mi><mi>z</mi><mi>e</mi><mo>=</mo><mtext>字符串长度</mtext><mo>×</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">Original\_Size = \text{字符串长度} \times 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">ina</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">i</span><span class="mord mathnormal">ze</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord cjk_fallback">字符串长度</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li><strong>最优无前缀变长编码（Entropy/Huffman）</strong>：根据字符出现的频率构建编码。
+<ul>
+<li>频率高的字符用短的比特串表示。</li>
+<li>频率低的字符用长的比特串表示。</li>
+<li><strong>无前缀（Prefix-free）</strong>：没有任何一个字符的编码是另一个字符编码的前缀（例如，如果 A 是 <code>0</code>，那么 B 不可能是 <code>01</code>，否则解码会有歧义）。这正是哈夫曼树的特性。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2.-%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF%EF%BC%9A%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91%EF%BC%88huffman-tree%EF%BC%89" tabindex="-1">2. 算法思路：哈夫曼树（Huffman Tree）</h2>
+<p>要计算最优编码的总长度，我们不需要真正生成每个字符的编码（如 “00”, “01”），只需要计算<strong>带权路径长度之和（WPL）</strong>。</p>
+<p><strong>具体步骤：</strong></p>
+<ol>
+<li><strong>统计频率</strong>：遍历输入字符串，统计每个字符（包括下划线）出现的次数。</li>
+<li><strong>构建优先队列</strong>：将所有出现过的字符的频率放入一个<strong>小顶堆</strong>（Min-Priority Queue）。</li>
+<li><strong>贪心策略构建树</strong>：
+<ul>
+<li>从小顶堆中取出两个最小的频率值，设为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span></eq> 和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq>。</li>
+<li>将它们合并，产生一个新的节点，频率为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq>。</li>
+<li>这个 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq> 就是这两个节点在树中产生的“代价”（即编码长度贡献）。</li>
+<li>将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq> 重新放入堆中。</li>
+<li><strong>累加代价</strong>：将 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></eq> 加到总的压缩位长度变量中。</li>
+<li>重复上述步骤，直到堆中只剩下一个节点。</li>
+</ul>
+</li>
+<li><strong>特殊情况处理</strong>：
+<ul>
+<li>如果字符串中只有一种字符（例如 “AAAAA”），哈夫曼树逻辑会直接结束。但在这种情况下，我们需要 1 个比特来表示该字符。</li>
+<li>所以，如果字符种类数为 1，压缩后的长度 = 字符串长度 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">×</span></span></span></span></eq> 1。</li>
+</ul>
+</li>
+</ol>
+<h2 id="3.-%E6%A0%B7%E4%BE%8B%E5%88%86%E6%9E%90" tabindex="-1">3. 样例分析</h2>
+<p>以输入 <code>AAAAABCD</code> 为例：</p>
+<ol>
+<li><strong>统计</strong>：A:5, B:1, C:1, D:1。</li>
+<li><strong>堆</strong>：<code>{1, 1, 1, 5}</code>。</li>
+<li><strong>合并 1</strong>：取出两个最小的 <code>1</code> (B) 和 <code>1</code> ©。合并得 <code>2</code>。
+<ul>
+<li>当前代价累加：2。</li>
+<li>堆变成：<code>{1, 2, 5}</code> （剩下的D和新合成的BC）。</li>
+</ul>
+</li>
+<li><strong>合并 2</strong>：取出 <code>1</code> (D) 和 <code>2</code> (BC)。合并得 <code>3</code>。
+<ul>
+<li>当前代价累加：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>+</mo><mn>3</mn><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">2 + 3 = 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq>。</li>
+<li>堆变成：<code>{3, 5}</code>。</li>
+</ul>
+</li>
+<li><strong>合并 3</strong>：取出 <code>3</code> 和 <code>5</code> (A)。合并得 <code>8</code>。
+<ul>
+<li>当前代价累加：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>+</mo><mn>8</mn><mo>=</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">5 + 8 = 13</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">13</span></span></span></span></eq>。</li>
+<li>堆变成：<code>{8}</code>。停止。</li>
+</ul>
+</li>
+<li><strong>结果</strong>：
+<ul>
+<li>ASCII长度：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>8</mn><mo>×</mo><mn>8</mn><mo>=</mo><mn>64</mn></mrow><annotation encoding="application/x-tex">8 \times 8 = 64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">64</span></span></span></span></eq>。</li>
+<li>哈夫曼长度：13。</li>
+<li>比率：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>64</mn><mi mathvariant="normal">/</mi><mn>13</mn><mo>≈</mo><mn>4.9</mn></mrow><annotation encoding="application/x-tex">64 / 13 \approx 4.9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">64/13</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4.9</span></span></span></span></eq>。</li>
+</ul>
+</li>
+</ol>
+<h2 id="4.-c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">4. C++ 代码实现</h2>
+<p>C++</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;vector&gt;
+#include &lt;cstdio&gt; // 用于 printf
+
+using namespace std;
+
+int main() {
+    string s;
+    while (cin &gt;&gt; s &amp;&amp; s != &quot;END&quot;) {
+        map&lt;char, int&gt; freq;
+        // 1. 统计字符频率
+        for (char c : s) {
+            freq[c]++;
+        }
+
+        // 2. 将频率放入小顶堆
+        // priority_queue 默认是大顶堆，使用 greater 变成小顶堆
+        priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;
+        
+        for (auto const&amp; [key, val] : freq) {
+            pq.push(val);
+        }
+
+        long long original_len = s.length() * 8;
+        long long compressed_len = 0;
+
+        // 3. 特殊情况：只有一种字符
+        if (pq.size() == 1) {
+            compressed_len = s.length(); // 每个字符用1位表示
+        } else {
+            // 4. 哈夫曼树构建过程
+            while (pq.size() &gt; 1) {
+                int a = pq.top(); pq.pop();
+                int b = pq.top(); pq.pop();
+                
+                int combined = a + b;
+                compressed_len += combined; // 累加代价
+                
+                pq.push(combined);
+            }
+        }
+
+        // 5. 输出结果
+        // %.1f 保留一位小数
+        printf(&quot;%lld %lld %.1f\n&quot;, original_len, compressed_len, (double)original_len / compressed_len);
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="5.-%E4%BB%A3%E7%A0%81%E5%85%B3%E9%94%AE%E7%82%B9%E8%AF%B4%E6%98%8E" tabindex="-1">5. 代码关键点说明</h2>
+<ol>
+<li><strong>数据类型</strong>：虽然题目描述的字符串长度通常不会溢出 <code>int</code>，但在累加过程中使用 <code>long long</code> 是个好习惯，防止溢出。</li>
+<li><strong>小顶堆</strong>：<code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt;</code> 是 C++ STL 实现哈夫曼编码最方便的数据结构。它能保证每次 <code>pop()</code> 出来的都是当前频率最小的两个节点。</li>
+<li><strong>计算逻辑</strong>：
+<ul>
+<li>传统的哈夫曼编码计算通常是：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><mo stretchy="false">(</mo><mtext>频率</mtext><mo>×</mo><mtext>深度</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sum (\text{频率} \times \text{深度})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">频率</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord cjk_fallback">深度</span></span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>代码中的简便算法利用了一个数学性质：<strong>非叶子节点的权值之和等于所有叶子节点的带权路径长度之和</strong>。每次合并操作 <code>a+b</code> 实际上就是生成了一个内部节点，所以直接累加 <code>a+b</code> 即可得到最终总长度。</li>
+</ul>
+</li>
+<li><strong>Corner Case (边界情况)</strong>：
+<ul>
+<li>务必注意 <code>if (pq.size() == 1)</code> 的判断。如果没有这个判断，<code>while (pq.size() &gt; 1)</code> 循环一次都不会执行，导致 <code>compressed_len</code> 为 0，最终计算比率时会出现除以零错误（Runtime Error 或 NaN）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="6.-%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90" tabindex="-1">6. 复杂度分析</h2>
+<ul>
+<li><strong>时间复杂度</strong>：
+<ul>
+<li>统计频率：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></eq>，其中 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 是字符串长度。</li>
+<li>堆操作：假设字符集大小为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></eq>（这里是大写字母+数字+下划线，最多约 40 种）。构建堆和循环合并的复杂度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>C</mi><mi>log</mi><mo>⁡</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(C \log C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>由于 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></eq> 很小，整体复杂度主要取决于字符串长度，即 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li><strong>空间复杂度</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>C</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(C)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mclose">)</span></span></span></span></eq>，用于存储字符频率映射和优先队列。</li>
+</ul>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

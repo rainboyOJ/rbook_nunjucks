@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - 表达式的转换</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>表达式的转换</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#栈</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://www.luogu.com.cn/problem/P1175" target="_blank"> luogu-P1175</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>利用栈把中缀表达式转后缀表达式</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a></li><li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E4%B8%AD%E7%BC%80%E8%BD%AC%E5%90%8E%E7%BC%80%EF%BC%88%E5%88%A9%E7%94%A8%E6%A0%88%EF%BC%89">第一步：中缀转后缀（利用栈）</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%BF%90%E7%AE%97%E4%B8%8E%E8%BE%93%E5%87%BA">第二步：后缀表达式的运算与输出</a></li><li><a href="#c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">C++ 代码实现</a></li><li><a href="#%E5%85%B3%E9%94%AE%E7%82%B9%E8%A7%A3%E6%9E%90">关键点解析</a></li><li><a href="#%E5%8F%82%E8%80%83">参考</a></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<p>这道题目（洛谷 P1175）是练习**栈（Stack）**应用的经典题目。它考察了两个核心环节：</p>
+<ol>
+<li><strong>中缀表达式转后缀表达式</strong>（逆波兰表达式）。</li>
+<li><strong>后缀表达式的计算</strong>，并要求输出每一步的计算过程。</li>
+</ol>
+<p>虽然标准的后缀表达式计算通常使用栈来完成，但由于题目要求<strong>输出每一步的中间形态</strong>（即未计算的后缀部分还要保留），直接使用纯栈来做计算部分的输出会比较麻烦（因为栈底元素看不见）。因此，这道题最好的解法是：<strong>用栈做转换，用动态数组（或列表）做计算演示。</strong></p>
+<p>下面我将分步解析解题思路和代码。</p>
+<h2 id="%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E4%B8%AD%E7%BC%80%E8%BD%AC%E5%90%8E%E7%BC%80%EF%BC%88%E5%88%A9%E7%94%A8%E6%A0%88%EF%BC%89" tabindex="-1">第一步：中缀转后缀（利用栈）</h2>
+<p>这是标准的“调度场算法”（Shunting Yard Algorithm）变体。</p>
+<p><strong>规则：</strong></p>
+<ol>
+<li><strong>数字</strong>：直接输出（存入结果数组）。</li>
+<li><strong>左括号 <code>(</code></strong>：直接入栈。</li>
+<li><strong>右括号 <code>)</code></strong>：不断弹出栈顶元素并输出，直到遇到左括号 <code>(</code> 为止。左括号弹出但不输出。</li>
+<li><strong>运算符 <code>+ - \* / ^</code></strong>：
+<ul>
+<li>栈为空或栈顶为 <code>(</code> 时，直接入栈。</li>
+<li><strong>优先级比较</strong>：
+<ul>
+<li>如果当前运算符优先级 <strong>大于</strong> 栈顶运算符：直接入栈。</li>
+<li>如果当前运算符优先级 <strong>小于或等于</strong> 栈顶运算符：
+<ul>
+<li><strong>特例</strong>：对于乘方 <code>^</code>，它是<strong>右结合</strong>的（<code>2^2^3</code> 等于 <code>2^(2^3)</code>）。如果当前是 <code>^</code> 且栈顶也是 <code>^</code>，则不弹出，直接入栈。</li>
+<li><strong>普通情况</strong>（左结合）：如果栈顶优先级 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo></mrow><annotation encoding="application/x-tex">\ge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span></span></span></span></eq> 当前优先级，弹出栈顶并输出，重复比较，直到条件不满足或栈空，然后将当前运算符入栈。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>优先级设定：</strong></p>
+<ul>
+<li><code>^</code> : 3</li>
+<li><code>* /</code> : 2</li>
+<li><code>+ -</code> : 1</li>
+<li><code>(</code> : 0</li>
+</ul>
+<h2 id="%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%BF%90%E7%AE%97%E4%B8%8E%E8%BE%93%E5%87%BA" tabindex="-1">第二步：后缀表达式的运算与输出</h2>
+<p>题目要求输出如下格式：</p>
+<pre><code>8 3 2 6 * + 5 / - 4 + 
+8 3 12 + 5 / - 4 + 
+...
+</code></pre>
+<p>这意味着我们需要维护一个<strong>序列</strong>。每次找到序列中<strong>第一个出现的运算符</strong>，取出它前面的两个数字进行计算，将结果放回原位，然后输出整个序列。</p>
+<p><strong>策略：</strong></p>
+<ol>
+<li>将生成的后缀表达式存入一个 <code>struct</code> 数组或 <code>vector</code> 中，每个节点存储它是数字还是运算符。</li>
+<li>循环操作，直到数组只剩下一个元素：
+<ul>
+<li>遍历数组，找到<strong>第一个</strong>运算符。</li>
+<li>取出该运算符前两个位置的数字（设为 <code>a</code> 和 <code>b</code>）。</li>
+<li>计算 <code>a op b</code>。</li>
+<li>修改数组：删除这三个元素（数 数 符），在原位置插入计算结果。</li>
+<li>输出当前数组内容。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="c%2B%2B-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">C++ 代码实现</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>stack<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>string<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>cmath<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>algorithm<span class="token operator">></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token comment">// 定义节点，用于存储后缀表达式的元素</span>
+struct Node <span class="token punctuation">{</span>
+    bool isOp<span class="token punctuation">;</span>  <span class="token comment">// 是否是运算符</span>
+    long long num<span class="token punctuation">;</span>    <span class="token comment">// 如果是数字，存数值</span>
+    char op<span class="token punctuation">;</span>    <span class="token comment">// 如果是运算符，存符号</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 获取运算符优先级</span>
+int <span class="token function">getPriority</span><span class="token punctuation">(</span>char op<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>op <span class="token operator">==</span> <span class="token string">'^'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>op <span class="token operator">==</span> <span class="token string">'*'</span> <span class="token operator">||</span> op <span class="token operator">==</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>op <span class="token operator">==</span> <span class="token string">'+'</span> <span class="token operator">||</span> op <span class="token operator">==</span> <span class="token string">'-'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// '(' 的优先级最低</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 执行单步运算</span>
+long long <span class="token function">calc</span><span class="token punctuation">(</span>long long a<span class="token punctuation">,</span> long long b<span class="token punctuation">,</span> char op<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">switch</span><span class="token punctuation">(</span>op<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        case <span class="token string">'+'</span><span class="token punctuation">:</span> <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+        case <span class="token string">'-'</span><span class="token punctuation">:</span> <span class="token keyword">return</span> a <span class="token operator">-</span> b<span class="token punctuation">;</span>
+        case <span class="token string">'*'</span><span class="token punctuation">:</span> <span class="token keyword">return</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
+        case <span class="token string">'/'</span><span class="token punctuation">:</span> <span class="token keyword">return</span> a <span class="token operator">/</span> b<span class="token punctuation">;</span>
+        case <span class="token string">'^'</span><span class="token punctuation">:</span> <span class="token keyword">return</span> <span class="token function">pow</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 打印当前的表达式序列</span>
+void <span class="token function">printList</span><span class="token punctuation">(</span>const vector<span class="token operator">&lt;</span>Node<span class="token operator">></span><span class="token operator">&amp;</span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>size_t i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>list<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>isOp<span class="token punctuation">)</span> cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> list<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>op <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> list<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>num <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    string s<span class="token punctuation">;</span>
+    cin <span class="token operator">></span><span class="token operator">></span> s<span class="token punctuation">;</span>
+
+    stack<span class="token operator">&lt;</span>char<span class="token operator">></span> opStack<span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span>Node<span class="token operator">></span> postfixList<span class="token punctuation">;</span>
+
+    <span class="token comment">// --- 阶段 1: 中缀 转 后缀 ---</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>char c <span class="token punctuation">:</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isdigit</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 题目保证数字只有一位，直接存入</span>
+            postfixList<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>long long<span class="token punctuation">)</span><span class="token punctuation">(</span>c <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'('</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            opStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">')'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>opStack<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> opStack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">'('</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                postfixList<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> opStack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                opStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            opStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 弹出 '('</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 是运算符</span>
+            int curPri <span class="token operator">=</span> <span class="token function">getPriority</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>opStack<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                char topOp <span class="token operator">=</span> opStack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                int topPri <span class="token operator">=</span> <span class="token function">getPriority</span><span class="token punctuation">(</span>topOp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                
+                <span class="token comment">// 核心逻辑：</span>
+                <span class="token comment">// 1. 如果栈顶优先级 > 当前，必须弹</span>
+                <span class="token comment">// 2. 如果优先级相等：</span>
+                <span class="token comment">//    如果是左结合 (+ - * /)，要弹 (先进先算)</span>
+                <span class="token comment">//    如果是右结合 (^)，不弹 (后进先算)</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>topPri <span class="token operator">></span> curPri <span class="token operator">||</span> <span class="token punctuation">(</span>topPri <span class="token operator">==</span> curPri <span class="token operator">&amp;&amp;</span> c <span class="token operator">!=</span> <span class="token string">'^'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    postfixList<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> topOp<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    opStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            opStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 将栈中剩余运算符弹出</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>opStack<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        postfixList<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> opStack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        opStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// --- 阶段 2: 运算并输出过程 ---</span>
+    
+    <span class="token comment">// 先输出最原始的后缀表达式</span>
+    <span class="token function">printList</span><span class="token punctuation">(</span>postfixList<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>postfixList<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 寻找第一个运算符</span>
+        int idx <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> postfixList<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>postfixList<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>isOp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                idx <span class="token operator">=</span> i<span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 找到运算符后，前面两个必定是数字 (后缀表达式特性)</span>
+        long long b <span class="token operator">=</span> postfixList<span class="token punctuation">[</span>idx<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>num<span class="token punctuation">;</span> <span class="token comment">// 栈顶元素 (右操作数)</span>
+        long long a <span class="token operator">=</span> postfixList<span class="token punctuation">[</span>idx<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>num<span class="token punctuation">;</span> <span class="token comment">// 次栈顶元素 (左操作数)</span>
+        char op <span class="token operator">=</span> postfixList<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>op<span class="token punctuation">;</span>
+
+        <span class="token comment">// 计算结果</span>
+        long long res <span class="token operator">=</span> <span class="token function">calc</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> op<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 修改列表：将 [idx-2, idx] 这三项替换为 res</span>
+        <span class="token comment">// 为了方便，我们在 idx-2 处修改为结果，然后删除 idx-1 和 idx</span>
+        postfixList<span class="token punctuation">[</span>idx<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token boolean">false</span><span class="token punctuation">,</span> res<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        postfixList<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>postfixList<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> idx <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> postfixList<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 输出当前状态</span>
+        <span class="token function">printList</span><span class="token punctuation">(</span>postfixList<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h2 id="%E5%85%B3%E9%94%AE%E7%82%B9%E8%A7%A3%E6%9E%90" tabindex="-1">关键点解析</h2>
+<ol>
+<li>
+<p>右结合的处理 (^)：</p>
+<p>在中缀转后缀时，普通的 2+2+3 会变成 2 2 + 3 +（先算左边的）。</p>
+<p>但是 2<sup>2</sup>3 应该变成 2 2 3 ^ ^（先算右边的）。</p>
+<p>所以在代码的 while 循环判断优先级时，c != ‘^’ 这个条件非常关键。如果当前是 ^ 且栈顶也是 ^，我们不弹出，而是让新的 ^ 压在上面，这样出栈时新的（右边的）就会先出来。</p>
+</li>
+<li>
+<p>为什么不用 stack 做第二步？</p>
+<p>如果只用一个 stack<int> 来计算，我们只能看到计算结果 9，而无法方便地打印出类似 8 3 12 + 5 / … 这种混合了“未处理后缀部分”的中间状态。使用 vector 并在中间进行替换（Erase + Insert 或原地修改）能最直观地模拟题目要求的输出过程。</p>
+</li>
+<li>
+<p>操作数顺序：</p>
+<p>在后缀表达式中，例如 8 3 -，3 是原本在运算符右边的数，8 是在左边的。</p>
+<p>当我们在 vector 中找到运算符 op (位置 i) 时，i-1 是右操作数，i-2 是左操作数。计算时要是 (i-2) op (i-1)。这一步特别是做除法和减法时绝对不能反。</p>
+</li>
+</ol>
+<h2 id="%E5%8F%82%E8%80%83" tabindex="-1">参考</h2>
+<ul>
+<li><a href="https://www.luogu.com.cn/article/e1ogbx9e">https://www.luogu.com.cn/article/e1ogbx9e</a></li>
+</ul>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

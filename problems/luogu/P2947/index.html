@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - [USACO09MAR] Look Up S</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>[USACO09MAR] Look Up S</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#单调栈</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://www.luogu.com.cn/problem/P2947" target="_blank"> luogu-P2947</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>单调栈模板题目</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a><ol><li><a href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95">暴力解法</a></li><li><a href="#%E5%8D%95%E8%B0%83%E6%A0%88%E4%BC%98%E5%8C%96">单调栈优化</a><ol><li><a href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B">算法流程</a></li><li><a href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">复杂度分析</a></li></ol></li></ol></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<h3 id="%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95" tabindex="-1">暴力解法</h3>
+<p>对于每头牛 <code>i</code>，我们都需要向右寻找第一个身高比它高的牛 <code>j</code>。最直接的方法是使用两层循环：</p>
+<ul>
+<li>外层循环遍历每头牛 <code>i</code> (从 <code>1</code> 到 <code>n</code>)。</li>
+<li>内层循环从 <code>i+1</code> 开始向右遍历，找到第一个身高 <code>h[j] &gt; h[i]</code> 的牛 <code>j</code>，并记录其下标。</li>
+</ul>
+<p>这种方法的时间复杂度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></eq>。对于本题的数据范围，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 最大可达 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">10^5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></eq>， <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></eq> 的算法无法通过所有测试点，只能得到部分分数。因此，我们需要更高效的算法。</p>
+<h3 id="%E5%8D%95%E8%B0%83%E6%A0%88%E4%BC%98%E5%8C%96" tabindex="-1">单调栈优化</h3>
+<blockquote>
+<p>我的思路:
+直觉: 二层暴力 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></eq>, 得到50分</p>
+<p>直接: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>i</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i,i+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 两个cow的 备选空间大部分相同,看看是否有单调性.</p>
+<p>和单调队列的思维方式一样:</p>
+<ul>
+<li>对i的后选区间<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[i+1,n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">]</span></span></span></span></eq>,进行刷选,去除不可能的值(被遮挡的值),</li>
+<li>留下来的元素是单调的</li>
+</ul>
+<p>证明: 留下来的元素是单调的,</p>
+<ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo>∈</mo><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">x, y \in [i+1,n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">]</span></span></span></span></eq></li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">[</mo><mi>y</mi><mo stretchy="false">]</mo><mo>&lt;</mo><mi>h</mi><mo stretchy="false">[</mo><mi>x</mi><mo stretchy="false">]</mo><mo>→</mo><mtext>y 不能对 [1,i] 中的所有的元素产生贡献</mtext></mrow><annotation encoding="application/x-tex">h[y] &lt; h[x] \to \text{y 不能对 [1,i] 中的所有的元素产生贡献}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">[</span><span class="mord mathnormal">x</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">y </span><span class="mord cjk_fallback">不能对</span><span class="mord"> [1,i] </span><span class="mord cjk_fallback">中的所有的元素产生贡献</span></span></span></span></span></eq></li>
+<li>得到 候选元素中不可能存在,一对元素 <img class="emoji" draggable="false" alt="😒" src="https://twemoji.maxcdn.com/v/14.0.2/72x72/1f612.png"/> x &lt; y \land h[y] &lt; h[x]$</li>
+<li>也就是: 任意两个元素: 总是前面小后面大</li>
+<li>当 <code>i</code> 变到 <code>i-1</code> 时, 更新候选元素</li>
+</ul>
+</blockquote>
+<p>观察暴力解法，我们会发现其中存在大量的重复计算。当我们为牛 <code>i</code> 寻找答案时，扫描了区间 <code>[i+1, n]</code>。当我们为牛 <code>i-1</code> 寻找答案时，我们又会扫描区间 <code>[i, n]</code>。这两个区间高度重合，这提示我们可以利用之前计算的信息来加速后续的查找。</p>
+<p>这种 “寻找下一个更大/更小元素” 的问题是单调栈的典型应用场景。单调栈是一种特殊的栈，其内部元素始终保持单调性（单调递增或单调递减）。</p>
+<p>在本题中，我们的目标是为每个元素 <code>a[i]</code> 找到右边第一个比它大的元素。为了方便处理，我们可以从右向左遍历数组。这样，当我们处理元素 <code>a[i]</code> 时，所有在 <code>a[i]</code> 右边的元素都已经处理过，并且相关信息可以存储在数据结构中。</p>
+<p>我们维护一个单调栈，栈中存储牛的<strong>下标</strong>。这个栈从栈底到栈顶，对应牛的身高是<strong>单调递减</strong>的。</p>
+<h4>算法流程</h4>
+<p>我们从 <code>i = n</code> 遍历到 <code>1</code>：</p>
+<ol>
+<li>
+<p><strong>维护单调性</strong>：对于当前牛 <code>i</code>，我们查看栈顶的牛 <code>stk.top()</code>。</p>
+<ul>
+<li>如果栈不为空，且栈顶牛的身高 <code>a[stk.top()]</code> 小于或等于当前牛的身高 <code>a[i]</code>，说明栈顶的牛被当前牛 <code>i</code> &quot;挡住&quot;了。对于任何在 <code>i</code> 左边的牛来说，如果它们想找一个更高的牛，它们会先看到 <code>i</code> 而不是 <code>stk.top()</code>。因此，<code>stk.top()</code> 不可能成为 <code>i</code> 左边任何一头牛的答案，我们可以放心地将它弹出栈。</li>
+<li>我们重复这个过程，直到栈为空或者栈顶的牛比当前牛 <code>i</code> 更高。</li>
+</ul>
+</li>
+<li>
+<p><strong>寻找答案</strong>：</p>
+<ul>
+<li>经过上一步处理后，如果栈为空，说明在 <code>i</code> 的右边没有比它更高的牛了，所以牛 <code>i</code> 的答案是 <code>0</code>。</li>
+<li>如果栈不为空，那么此时的栈顶元素 <code>stk.top()</code> 就是 <code>i</code> 右侧第一个比它高的牛的下标。</li>
+</ul>
+</li>
+<li>
+<p><strong>入栈</strong>：将当前牛 <code>i</code> 的下标压入栈中。这既是为了维持栈的单调性，也是为了让 <code>i</code> 成为后续（其左侧）牛的候选答案。</p>
+</li>
+</ol>
+<p>由于我们是从右向左遍历的，得到的答案序列是反的。因此，需要将最终结果反转后输出。</p>
+<h4>复杂度分析</h4>
+<ul>
+<li><strong>时间复杂度</strong>：每个元素的下标最多被压入栈一次，也最多被弹出栈一次。因此，总的时间复杂度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li><strong>空间复杂度</strong>：在最坏的情况下（例如，所有牛的身高单调递减），所有牛的下标都会被压入栈中，所以空间复杂度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></eq>。</li>
+</ul>
+<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br></div>
+        <code><span class="token comment">/**
+ * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
+ * date: 2025-12-31 11:21:52
+ */</span>
+#include <span class="token operator">&lt;</span>algorithm<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>bits<span class="token operator">/</span>stdc<span class="token operator">++</span><span class="token punctuation">.</span>h<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>stack<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+using namespace std<span class="token punctuation">;</span>
+typedef  long long ll<span class="token punctuation">;</span>
+typedef  unsigned long long ull<span class="token punctuation">;</span>
+
+const int maxn <span class="token operator">=</span> <span class="token number">2e6</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+int n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+int a<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 存储牛的高度</span>
+
+
+<span class="token comment">// 从后往前遍历，所以答案需要倒序存储</span>
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> ans<span class="token punctuation">;</span>
+
+<span class="token comment">// 单调栈，存储牛的下标</span>
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>stack<span class="token operator">&lt;</span>int<span class="token operator">></span> stk<span class="token punctuation">;</span>
+
+signed main <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> n<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+    <span class="token punctuation">{</span>
+        std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 从后往前遍历，寻找每个元素右边第一个比它大的元素</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> n<span class="token punctuation">;</span>i <span class="token operator">>=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// std::cout &lt;&lt; "deal " &lt;&lt; a[i] &lt;&lt;   "\n";</span>
+
+
+        <span class="token comment">// 维护单调栈：当栈不为空，且栈顶牛的高度小于等于当前牛的高度时，</span>
+        <span class="token comment">// 说明栈顶的牛不可能成为在当前牛左边任何一头牛的答案（因为它更近且更矮，被当前牛挡住了），</span>
+        <span class="token comment">// 所以将其弹出。</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span> stk<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token boolean">false</span> <span class="token operator">&amp;&amp;</span> a<span class="token punctuation">[</span>stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">&lt;=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">)</span>
+            stk<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 经过上面的循环，栈顶的元素（如果存在）就是i右边第一个比a[i]大的牛的下标</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> stk<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> 
+            ans<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 如果栈为空，说明右边没有比它高的牛</span>
+        <span class="token keyword">else</span>
+            ans<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 否则，栈顶就是答案</span>
+
+        <span class="token comment">// 将当前牛的下标压入栈中，作为后续（左边）牛的候选答案</span>
+        stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment">// 因为是倒序遍历得到的答案，所以需要反转</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">reverse</span><span class="token punctuation">(</span>ans<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>ans<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span> auto u<span class="token punctuation">:</span> ans<span class="token punctuation">)</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span>cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> u <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+
+</div> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+</body>
+</html>

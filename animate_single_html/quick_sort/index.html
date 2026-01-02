@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三路切分 (3-Way Partition) 教学演示</title>
+  <!-- 引入 Vue 3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.22/vue.global.min.js"
+    integrity="sha512-9pgCGZQFu7n9zOnAzjxPAWt6Fv23ZyzXUK4wul+72qKUIb9lq5ljNRQaXg/qR7PbXyh0nVuNtg/FwmBtPPqLPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <div id="app">
+    <h1>三路切分 (3-Way Partition) 可视化</h1>
+    <div class="subtitle">用于 Quick Sort 的核心子过程演示</div>
+
+    <div class="container">
+      <!-- 可视化面板 -->
+      <div class="viz-panel">
+
+        <!-- 控制区 -->
+        <div class="controls">
+          <div class="input-group">
+            <input type="text" primary" @click="generateRandom">随机数据</button>
+            <button class="btn-primary" @click="generateRandom">随机数据</button>
+            <button class="btn-secondary" @click="applyInput">应用输入</button>
+          </div>
+
+          <div class="input-group">
+            <label style="font-size:12px; color:#666;">速度:</label>
+            <input type="range" v-model.number="speed" min="100" max="2000" step="100" style="width: 100px;">
+
+            <button class="btn-secondary" @click="reset">重置</button>
+            <button class="btn-secondary" @click="previousStep" :disabled="historyIndex <= 0 || isPlaying">上一步</button>
+            <button class="btn-secondary" @click="nextStep" :disabled="finished || isPlaying">下一步</button>
+            <button class="btn-primary" @click="togglePlay" :disabled="finished">
+              {{ isPlaying ? '暂停' : '自动播放' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- 图例 -->
+        <div class="legend">
+          <div class="legend-item"><span class="dot" style="background:var(--color-less-dark)"></span> &lt; Key</div>
+          <div class="legend-item"><span class="dot" style="background:var(--color-equal-dark)"></span> == Key</div>
+          <div class="legend-item"><span class="dot" style="background:var(--color-greater-dark)"></span> &gt; Key</div>
+          <div class="legend-item"><span class="dot" style="background:#6366f1"></span> 当前扫描 (i)</div>
+        </div>
+
+        <!-- 数组显示区 -->
+        <div class="array-container">
+          <div v-for="(val, index) in arr" :key="index" class="array-item-wrapper">
+
+            <!-- 指针 lt -->
+            <div v-if="index === lt" class="pointer pointer-lt">
+              <span>lt</span>
+              <div class="arrow-down"></div>
+            </div>
+
+            <!-- 指针 gt -->
+            <div v-if="index === gt" class="pointer pointer-gt">
+              <span>gt</span>
+              <div class="arrow-down"></div>
+            </div>
+
+            <!-- 盒子本体 -->
+            <div class="array-box" :class="getCellClass(index)">
+              {{ arr[index] }}
+
+              <!-- 下标 -->
+              <div class="index-label">{{ index }}</div>
+
+              <!-- 指针 i -->
+              <div v-if="index === i && !finished" class="pointer pointer-i">
+                <div class="arrow-up"></div>
+                <span>i</span>
+              </div>
+              <div v-if="index === i && finished" class="pointer pointer-i">
+                <div class="arrow-up"></div>
+                <span>i</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="code-and-info-bar-container">
+
+        <div class="info-bar">
+
+          <!-- 状态消息 -->
+          <div class="status-bar">
+            <span class="status-highlight">></span>
+            <span>{{ message }}</span>
+          </div>
+
+          <div style="margin-top:10px; font-size: 13px; color:#666;">
+            当前 Key (基准值) = <b>{{ keyVal }}</b> (初始位置 a[0])
+          </div>
+        </div>
+
+        <!-- 代码面板 -->
+        <div class="code-panel">
+          <div class="code-header">C++ Code</div>
+          <div class="code-content">
+            <div v-for="(line, index) in codeLines" :key="index" class="code-line"
+              :class="{ active: currentLine === index + 1 }">
+              <span class="line-num">{{ index + 1 }}</span>{{ line }}
+            </div>
+            <div v-if="finished" class="code-line">
+              <span class="line-num">{{ codeLines.length + 1 }}</span> // 分区完成，返回 lt 和 gt
+            </div>
+          </div>
+        </div>
+
+        </div> <!-- code-and-info-bar-container -->
+      </div>
+    </div>
+
+    <script>
+      const { createApp, ref, computed, onMounted, watch } = Vue;
+
+      createApp({
+        setup() {
+          // --- 状态定义 ---
+          const arr = ref([]);
+          const initialArr = ref([]);
+          const inputString = ref("");
+          
+          const lt = ref(0);
+          const gt = ref(0);
+          const i = ref(0);
+          const keyVal = ref(0);
+
+          const isPlaying = ref(false);
+          const finished = ref(false);
+          const speed = ref(800);
+          const currentLine = ref(-1);
+          const message = ref("");
+          
+          let timer = null;
+
+          // --- History for Undo/Redo ---
+          const history = ref([]);
+          const historyIndex = ref(-1);
+
+          const codeLines = [
+            '// 2. 定义指针',
+            'int lt = l;    // "等于区"起点',
+            'int gt = r;    // "等于区"终点',
+            'int i = l + 1; // 扫描位置',
+            '',
+            '// 3. 扫描并分类',
+            'while (i <= gt) {',
+            '    if (a[i] < key) {',
+            '        // 情况A: < key',
+            '        swap(a[i], a[lt]);',
+            '        lt++;',
+            '        i++;',
+            '    } ',
+            '    else if (a[i] > key) {',
+            '        // 情况B: > key',
+            '        swap(a[i], a[gt]);',
+            '        gt--;',
+            '    }',
+            '    else {',
+            '        // 情况C: == key',
+            '        i++;',
+            '    }',
+            '}'
+          ];
+
+          // --- 逻辑方法 ---
+
+          const applyState = (index) => {
+            const state = history.value[index];
+            if (!state) return;
+
+            arr.value = state.arr;
+            lt.value = state.lt;
+            gt.value = state.gt;
+            i.value = state.i;
+            keyVal.value = state.keyVal;
+            finished.value = state.finished;
+            message.value = state.message;
+            currentLine.value = state.currentLine;
+          };
+
+          const init = (data) => {
+            initialArr.value = [...data];
+            inputString.value = data.join(', ');
+            
+            let l = 0;
+            let r = data.length - 1;
+            
+            const initialState = {
+                arr: [...data],
+                lt: l,
+                gt: r,
+                i: l + 1,
+                keyVal: data[l],
+                finished: data.length <= 1,
+                message: `初始化: Key = ${data[l]}, lt = ${l}, gt = ${r}, i = ${l + 1}`,
+                currentLine: 4
+            };
+            
+            history.value = [initialState];
+            historyIndex.value = 0;
+            applyState(0);
+            
+            isPlaying.value = false;
+            if (timer) clearInterval(timer);
+          };
+
+          const generateRandom = () => {
+            const len = Math.floor(Math.random() * 8) + 8;
+            const newArr = Array.from({length: len}, () => Math.floor(Math.random() * 10));
+            init(newArr);
+          };
+
+          const applyInput = () => {
+            const parts = inputString.value.replace(/，/g, ',').split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+            if (parts.length > 1) {
+              init(parts);
+            } else {
+              alert("请输入有效的数组，至少2个数字");
+            }
+          };
+
+          const reset = () => {
+            init(initialArr.value);
+          };
+
+          const nextStep = () => {
+            if (historyIndex.value < history.value.length - 1) {
+                historyIndex.value++;
+                applyState(historyIndex.value);
+                return;
+            }
+
+            const currentState = history.value[historyIndex.value];
+            if (currentState.finished) {
+                isPlaying.value = false;
+                if(timer) clearInterval(timer);
+                return;
+            }
+
+            const nextState = JSON.parse(JSON.stringify(currentState));
+
+            if (nextState.i > nextState.gt) {
+                nextState.finished = true;
+                nextState.message = "完成！i > gt，扫描结束。";
+                nextState.currentLine = 7;
+            } else {
+                const val = nextState.arr[nextState.i];
+                const kv = nextState.keyVal;
+
+                if (val < kv) {
+                    nextState.message = `a[i]=${val} < key. 交换 a[${nextState.i}] 和 a[${nextState.lt}].`;
+                    nextState.currentLine = 10;
+                    const temp = nextState.arr[nextState.i];
+                    nextState.arr[nextState.i] = nextState.arr[nextState.lt];
+                    nextState.arr[nextState.lt] = temp;
+                    nextState.lt++;
+                    nextState.i++;
+                } else if (val > kv) {
+                    nextState.message = `a[i]=${val} > key. 交换 a[${nextState.i}] 和 a[${nextState.gt}].`;
+                    nextState.currentLine = 16;
+                    const temp = nextState.arr[nextState.i];
+                    nextState.arr[nextState.i] = nextState.arr[nextState.gt];
+                    nextState.arr[nextState.gt] = temp;
+                    nextState.gt--;
+                } else {
+                    nextState.message = `a[i]=${val} == key. i 右移.`;
+                    nextState.currentLine = 21;
+                    nextState.i++;
+                }
+            }
+
+            history.value.push(nextState);
+            historyIndex.value++;
+            applyState(historyIndex.value);
+          };
+
+          const previousStep = () => {
+            if (historyIndex.value > 0) {
+                historyIndex.value--;
+                applyState(historyIndex.value);
+            }
+          };
+
+          const togglePlay = () => {
+            if (isPlaying.value) {
+                isPlaying.value = false;
+                clearInterval(timer);
+            } else {
+                if (finished.value) return;
+                isPlaying.value = true;
+                nextStep(); 
+                timer = setInterval(nextStep, speed.value);
+            }
+          };
+
+          watch(speed, (newSpeed) => {
+            if (isPlaying.value) {
+                clearInterval(timer);
+                timer = setInterval(nextStep, newSpeed);
+            }
+          });
+
+          const getCellClass = (idx) => {
+            if (idx < lt.value) return 'bg-less';
+            if (idx > gt.value) return 'bg-greater';
+            if (idx >= lt.value && idx < i.value) return 'bg-equal';
+            if (idx === i.value && !finished.value) return 'box-active';
+            return '';
+          };
+
+          onMounted(() => {
+            generateRandom();
+          });
+
+          return {
+            arr, lt, gt, i, keyVal,
+            inputString, isPlaying, finished, speed, message,
+            codeLines, currentLine, historyIndex,
+            init, generateRandom, applyInput, reset, nextStep, previousStep, togglePlay,
+            getCellClass
+          };
+        }
+      }).mount('#app');
+    </script>
+
+</body>
+
+</html>
