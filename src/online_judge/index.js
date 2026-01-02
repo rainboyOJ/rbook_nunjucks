@@ -114,6 +114,7 @@ if (argv.length == 3 && argv[2].startsWith('http')) {
     if (oj.match_by_link( argv[2] )) {
       console.log(" match oj by link : " + oj.name)
       oj.download_by_link(argv[2])
+      break;
     }
   }
   process.exit(0)
@@ -133,5 +134,6 @@ for ( let oj of online_judges) {
     if( oj.match_by_name(ojName) ) {
         console.log(" match oj : " + oj.name)
         oj.download(id,ojName)
+        break;
     }
 }

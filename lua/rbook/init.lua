@@ -69,8 +69,20 @@ end
 
 -- 插入代码片段（从code目录）
 local function insert_code_snippet_from_code(snippet_info)
-  local lines =  vim.fn.readfile(rbook_root .. snippet_info.path)
-  local filename = snippet_info.name
+  local _path = snippet_info.path
+
+  -- 判断是否为绝对路径
+  local full_path
+  if string.match(_path, "^/") then
+    -- 绝对路径，直接使用
+    full_path = _path
+  else
+    -- 相对路径，拼接 rbook_root
+    full_path = rbook_root .. _path
+  end
+
+  local lines =  vim.fn.readfile(full_path)
+  local filename = snippet_info.name or vim.fn.fnamemodify(full_path, ":t")
 
   -- 添加折叠标记
   table.insert(lines, 1, "//oisnip_begin" .. filename)
@@ -129,6 +141,45 @@ function InsertCodeSnippet()
       end)
     end
   })
+end
+
+-- 从 builtinCodePath 选择代码插入
+-- M.builtinCodePath
+function __InsertSnippet_From_CodePath()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local winid = vim.api.nvim_get_current_win()
+	
+	-- 使用 Snacks picker
+	-- print(M.snippetPath)
+  -- print("hello world!")
+  -- print(M.builtinCodePath)
+	Snacks.picker.pick("files",{
+		dirs = {M.builtinCodePath},
+		hidden = true,
+		cwd = M.snippetPath,
+		prompt = "Select Snippet:",
+		confirm = function(picker,item)
+				picker:norm(function()
+					if item then
+						picker:close()
+						-- insert_code_snippet(item.file)
+            insert_code_snippet_from_code({path = item.file, name = item.name})
+						-- print("item.file", item.file)
+						-- vim.api.nvim_input(item.file)
+					end
+				end)
+				-- print("item.file", item.file)
+				-- local lines = read_snippet_content(item.path)
+				-- vim.api.nvim_buf_set_lines(bufnr, vim.api.nvim_win_get_cursor(winid)[1] - 1, vim.api.nvim_win_get_cursor(winid)[1], false, lines)
+		end
+		-- items = items,
+		-- cb = function(item)
+		-- 	if item and item.path then
+		-- 		local lines = read_snippet_content(item.path)
+		-- 		vim.api.nvim_buf_set_lines(bufnr, vim.api.nvim_win_get_cursor(winid)[1] - 1, vim.api.nvim_win_get_cursor(winid)[1], false, lines)
+		-- 	end
+		-- end
+	})
 end
 
 -- 插入文件内容的辅助函数
@@ -270,7 +321,9 @@ function M.setup(opts)
 
   -- 创建命令（只保留 code 相关的命令）
   vim.api.nvim_create_user_command("OICodeSnip", function()
-    InsertCodeSnippet()
+    print(M.builtinCodePath)
+    -- InsertCodeSnippet()
+    __InsertSnippet_From_CodePath()
   end, { desc = "Insert code snippet from code directory" })
 
   vim.api.nvim_create_user_command("OICodeSnipPick", function()

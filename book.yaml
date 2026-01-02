@@ -15,6 +15,8 @@ chapters:
   - title: 基础
     path: base
     sections:
+      - title: 快速排序
+        path: quicksort/index.md
       - title: 双指针
         path: double_point/index.md
       - title: 二分查找
@@ -53,6 +55,8 @@ chapters:
     nolink: true
     path: data-structure
     sections:
+      - title: 堆
+        path: heap
       - title: 分块算法
         path: Block
       - title: 树状数组
@@ -91,6 +95,10 @@ chapters:
         path: cut/cut_node.md
       - title: 割边
         path: cut/cut_edge.md
+      - title: 双连通分量
+        path: bcc/index.md
+      - title: 强连通分量
+        path: scc/index.md
       - title: 树的直径
         path: diameter_of_tree
       - title: 树的中心
@@ -106,6 +114,8 @@ chapters:
         icon: <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#000" d="m26 8l-4-4l-4 4l1.41 1.42L21 7.83V18h2V7.83l1.58 1.58zM12.59 22.58L11 24.17V14H9v10.17l-1.58-1.58L6 24l4 4l4-4zM2 2h2v28H2zm26 0h2v28h-2zM15 2h2v4h-2zm0 8h2v4h-2zm0 8h2v4h-2zm0 8h2v4h-2z"/></svg>
       - title: 网络流:序
         path: 网络流/index.md
+      - title: 二分图染色
+        path: 二分图/黑白染色.md
       - title: 二分图
         path: 网络流/二分图/index.md
   - title: 字符串

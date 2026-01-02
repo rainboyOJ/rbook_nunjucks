@@ -141,7 +141,7 @@ class LUOGU extends Base {
 
         let save_id = id[0].toLowerCase() == 'p' ? id.slice(1) : id
 
-        this.save(save_id,md_content)
+        let md_path = this.save(save_id,md_content)
     }
 
     download_by_link(link) {

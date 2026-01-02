@@ -28,7 +28,7 @@ struct TarjanBridge {
         dfn[u] = low[u] = ++timer;
 
         // 遍历以 u 为起点的所有边
-        for (int i = e(u); i != -1; i = e[i].next) {
+        for (int i = e.h[u]; i != -1; i = e[i].next) {
             int v = e[i].v;
 
             // 判定条件：i 不是“进入 u 的那条边”的反向边

@@ -7,6 +7,14 @@
     ],
     "description": "include code"
   },
+  "include md" : {
+    "prefix": "include-md",
+    "body": [
+      "@include-md(\"${1:./1.md}\")",
+      ""
+    ],
+    "description": "include md"
+  },
   "Auto-complete Dollar Signs": {
     "prefix": "$",
     "body": "$$1$",

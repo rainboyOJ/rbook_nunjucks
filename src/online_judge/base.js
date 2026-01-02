@@ -63,13 +63,20 @@ class Base {
       fs.mkdirSync(dir, { recursive: true });
     }
     let md_path = path.join(dir, `index.md`)
-    if( fs.existsSync(md_path)){
+    if( fs.existsSync(md_path))
+    {
       console.log(`${md_path} 已存在`)
-      return
+    }
+    else 
+    {
+      fs.writeFileSync(md_path, md_content, { encoding: 'utf-8' });
+      console.log(`[${this._OJ}] ${id} 保存成功: ${md_path}`)
     }
 
-    fs.writeFileSync(md_path, md_content,{encoding:'utf-8'});
-    console.log(`[${this._OJ}] ${id} 保存成功: ${md_path}`)
+    // -- 给oj 命令使用,得到 下载的目录
+    console.log( path.dirname(md_path))
+    //最后返回文件路径
+    return md_path
   }
 
   render(data) {

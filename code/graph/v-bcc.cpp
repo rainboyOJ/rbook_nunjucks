@@ -1,6 +1,8 @@
 /*
 代码细节解释：
 
+0. 此代码同时点双连通分量 和 割点. 因为 求 v-bcc 的时候,通常都会问: 哪些点是割点
+
 1. **`std::vector<int> bcc[maxn]`**:
 * 与 SCC 不同，SCC 中每个点只属于一个分量，可以用 `id[u]` 数组标记。
 * 在点双 (v-BCC) 中，**割点**会同时属于多个 BCC。因此，我们通常用 `vector` 列表来保存每个 BCC 里有哪些点，而不是给每个点打唯一的 ID 标记。
@@ -31,6 +33,8 @@ struct TarjanBCC {
     std::stack<int> st;
     int dfn[maxn], low[maxn];
     int bcc_cnt; // BCC 计数
+    bool is_cut[maxn];
+    int root; //记录根节点
     std::vector<int> bcc[maxn]; // 存储每个 BCC 包含的具体节点
 
     void set(int _n) {
@@ -38,6 +42,8 @@ struct TarjanBCC {
         timer = bcc_cnt = 0;
         memset(dfn, 0, sizeof(dfn));
         memset(low, 0, sizeof(low));
+        memset(is_cut,0,sizeof(is_cut));
+
         while (!st.empty()) st.pop();
         for (int i = 0; i <= n; i++) bcc[i].clear();
     }
@@ -46,14 +52,20 @@ struct TarjanBCC {
     void dfs(int u, int fa) {
         dfn[u] = low[u] = ++timer;
         st.push(u);
+        int child = 0;
 
-        for (int i = e(u); ~i; i = e[i].next) {
+        for (int i = e.h[u]; ~i; i = e[i].next) {
             int v = e[i].v;
             
             if (v == fa) continue; // 无向图核心：不走回头路
 
             if (!dfn[v]) { // 如果 v 没被访问过
                 dfs(v, u);
+                child++;
+
+                if(u != root  && low[v] >= dfn[u]) {
+                    is_cut[u] = 1; 
+                }
                 
                 // 更新 low 值
                 low[u] = std::min(low[u], low[v]);
@@ -75,14 +87,18 @@ struct TarjanBCC {
                 low[u] = std::min(low[u], dfn[v]);
             }
         }
+
+        if( u == root && child > 1) 
+            is_cut[u] =  1;
     }
 
     void solve() {
         for (int i = 1; i <= n; i++) {
-            if (!dfn[i]) {
+            if (!dfn[i] && e.h[i] != -1 ) {
                 // 此时栈为空，dfs 根节点
                 // 根节点的特判通常包含在上述 dfs 逻辑中
                 // 只有当图中有孤立点时，需额外注意栈内残留
+                root = i;
                 dfs(i, 0); 
                 
                 // 如果是孤立点或者根节点处理完栈里还有元素（极少见情况，视题目定义而定）
@@ -91,5 +107,13 @@ struct TarjanBCC {
                 // 如果需要记录孤立点为 BCC，可以在这里补判
             }
         }
+    }
+
+    // helper 
+    int cut_cnt() {
+        int cnt = 0;
+        for(int i = 1;i <= n ;++i ) // i: 1->n
+            cnt += is_cut[i];
+        return cnt;
     }
 };

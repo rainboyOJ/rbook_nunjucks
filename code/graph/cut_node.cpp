@@ -20,7 +20,7 @@ struct TarjanCut {
         dfn[u] = low[u] = ++timer;
         int child = 0; // 记录 root 在 DFS 树中的子节点数量
 
-        for (int i = e(i); ~i; i = e[i].next) {
+        for (int i = e.h[u]; ~i; i = e[i].next) {
             int v = e[i].v;
 
             // 不走父子边

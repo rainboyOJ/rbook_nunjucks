@@ -30,6 +30,9 @@ find book/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -in
   cp "$file" "dist/$relative_path"
 done
 
+# 复制动画单页html
+cp -r ./third_part/animate_single_html ./dist/animate_single_html
+
 # 编译题目解析列表
 echo  "=== 编译题目解析列表 ==="
 npx vite build --base problems \

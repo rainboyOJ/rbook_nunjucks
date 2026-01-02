@@ -18,7 +18,7 @@ struct TarjanScc {
         st.push(u);
         in_stack[u] = true;
 
-        for (int i = e(u); ~i ; i = e[i].next) {
+        for (int i = e.h[u]; ~i ; i = e[i].next) {
             int v = e[i].v;
             if (!dfn[v]) { // 如果 v 没被访问过
                 dfs(v);

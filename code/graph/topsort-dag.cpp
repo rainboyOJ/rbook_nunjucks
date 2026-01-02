@@ -14,7 +14,7 @@ struct TopSort {
             int u = q.front();
             sorted.push_back(u);
             q.pop();
-            for(int i = e(u) ; ~i;i = e[i].next){
+            for(int i = e.h[u] ; ~i;i = e[i].next){
                 int v = e[i].v;
                 in_degree[v]--;
                 if( in_degree[v] == 0) q.push(v);
