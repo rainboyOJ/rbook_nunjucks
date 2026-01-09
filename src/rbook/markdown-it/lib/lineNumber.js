@@ -46,8 +46,9 @@ const lineNumber =  md => {
             return `<pre class="mermaid">\n${content}</pre>\n`;
         }
         const viz_reg = /^viz($|-\w+)/;
-        if( viz_reg.test(info) ) {
-            return 'viz!!'
+        if( info == "dot" || info == "graphviz" || viz_reg.test(info) ) {
+            // return 'viz!!'
+            return `<div class="graphviz"><pre class="dot">\n${content}</pre></div>\n`;
         }
 
         let lang = info.toLowerCase()

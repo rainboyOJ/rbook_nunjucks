@@ -26,7 +26,7 @@ class vjudge extends Base {
 
     match_by_name(oj_name) {
       // console.log(oj_name)
-      const ojList = ['poj', 'hdu','atcoder'];
+      const ojList = ['poj', 'hdu','atcoder',"OpenJ_Bailian"];
       // console.log(ojList.includes(oj_name.toLowerCase()))
       return ojList.includes(oj_name.toLowerCase())
     }
