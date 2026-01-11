@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - [NOIP 2018 提高组] 旅行</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>[NOIP 2018 提高组] 旅行</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://www.luogu.com.cn/problem/P5022" target="_blank"> luogu-P5022</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>按题目的旅行的要求就是树上回溯</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E6%A0%B7%E4%BE%8B%E8%A7%A3%E6%9E%90">样例解析</a><ol><li><a href="#%E6%A0%B7%E4%BE%8B-1%EF%BC%9A%E6%A0%91-()">样例 1：树 ()</a><ol><li><a href="#graphviz-%E5%9B%BE%E7%A4%BA-(sample-1)">Graphviz 图示 (Sample 1)</a></li></ol></li><li><a href="#%E6%A0%B7%E4%BE%8B-2%EF%BC%9A%E5%9F%BA%E7%8E%AF%E6%A0%91-()">样例 2：基环树 ()</a><ol><li><a href="#graphviz-%E5%9B%BE%E7%A4%BA-(sample-2)">Graphviz 图示 (Sample 2)</a></li></ol></li><li><a href="#%E5%85%B3%E9%94%AE%E9%80%BB%E8%BE%91%E8%A7%A3%E9%87%8A">关键逻辑解释</a></li></ol></li><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a><ol><li><a href="#1.-%E6%95%B0%E6%8D%AE%E7%9A%84%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E5%9F%BA%E7%8E%AF%E6%A0%91%E2%80%9D%EF%BC%9F">1. 数据的拓扑结构：为什么是“基环树”？</a></li><li><a href="#2.-%E6%97%85%E8%A1%8C%E8%A7%84%E5%88%99%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AD%89%E4%BB%B7%E4%BA%8E%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%9F">2. 旅行规则：为什么等价于生成树？</a></li><li><a href="#3.-%E6%A0%B8%E5%BF%83%E6%8E%A8%E5%AF%BC%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E2%80%9C%E6%96%AD%E6%8E%89%E4%B8%80%E6%9D%A1%E8%BE%B9%E2%80%9D%EF%BC%9F">3. 核心推导：为什么要“断掉一条边”？</a></li><li><a href="#%E6%80%BB%E7%BB%93%EF%BC%9A%E9%80%BB%E8%BE%91%E9%97%AD%E7%8E%AF">总结：逻辑闭环</a></li><li><a href="#%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%BE%E7%A4%BA%E5%B8%AE%E5%8A%A9%E7%90%86%E8%A7%A3">简单的图示帮助理解</a></li></ol></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ol></nav><h2 id="%E6%A0%B7%E4%BE%8B%E8%A7%A3%E6%9E%90" tabindex="-1">样例解析</h2>
+<h3 id="%E6%A0%B7%E4%BE%8B-1%EF%BC%9A%E6%A0%91-()" tabindex="-1">样例 1：树 (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m=n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>)</h3>
+<p><strong>输入：</strong></p>
+<pre><code class="language-text">6 5 
+1 3 
+2 3 
+2 5 
+3 4 
+4 6
+</code></pre>
+<p><strong>分析：</strong>
+这是一个简单的树结构。</p>
+<ol>
+<li>起点固定为 1（为了字典序最小）。</li>
+<li>1 的邻居只有 3，去 3。</li>
+<li>3 的邻居有 2 和 4。<strong>2 &lt; 4</strong>，先去 2。</li>
+<li>2 的邻居有 5。去 5。</li>
+<li>5 无路可走，回溯到 2，回溯到 3。</li>
+<li>3 的下一个邻居是 4。去 4。</li>
+<li>4 的邻居有 6。去 6。
+<strong>结果：</strong> 1 3 2 5 4 6</li>
+</ol>
+<h4>Graphviz 图示 (Sample 1)</h4>
+<p>图中红色实线箭头表示<strong>实际前进的路径</strong>，数字标签表示访问顺序。</p>
+<div class="graphviz"><pre class="dot">
+digraph G {
+    label = "Sample 1: Tree Structure (m = n-1)\nResult: 1 3 2 5 4 6";
+    labelloc = "t";
+    node [shape=circle, style=filled, fillcolor=lightblue];
+  
+    // 强制层级，使图看起来像一棵树
+    {rank=same; 1}
+    {rank=same; 3}
+    {rank=same; 2; 4}
+    {rank=same; 5; 6}
+
+    // 节点定义
+    1; 2; 3; 4; 5; 6;
+
+    // 边定义
+    // 红色箭头表示 DFS 首次访问路径
+    1 -> 3 [color=red, label="1", fontcolor=red, penwidth=2.0];
+  
+    // 3 的子节点是 2 和 4，因为 2 < 4，先走 2
+    3 -> 2 [color=red, label="2", fontcolor=red, penwidth=2.0];
+  
+    // 2 的子节点是 5
+    2 -> 5 [color=red, label="3", fontcolor=red, penwidth=2.0];
+  
+    // 回溯后，从 3 走到 4
+    3 -> 4 [color=red, label="4", fontcolor=red, penwidth=2.0];
+  
+    // 4 的子节点是 6
+    4 -> 6 [color=red, label="5", fontcolor=red, penwidth=2.0];
+
+    // 辅助隐形边辅助布局（可选）
+    edge [style=invis];
+    2 -> 4;
+}
+</pre></div>
+<hr>
+<h3 id="%E6%A0%B7%E4%BE%8B-2%EF%BC%9A%E5%9F%BA%E7%8E%AF%E6%A0%91-()" tabindex="-1">样例 2：基环树 (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m=n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq>)</h3>
+<p><strong>输入：</strong></p>
+<pre><code class="language-text">6 6 
+1 3 
+2 3 
+2 5 
+3 4 
+4 5 
+4 6
+</code></pre>
+<p><strong>分析：</strong>
+图包含一个环：<strong>2-3-4-5-2</strong>。</p>
+<ol>
+<li><strong>1 -&gt; 3</strong>。</li>
+<li>在节点 3，邻居有 2 和 4。显然 <strong>2 &lt; 4</strong>，先去 2。</li>
+<li>在节点 2，邻居有 5。
+<ul>
+<li><em>关键决策</em>：如果我们现在去 5，路径是 <code>1 3 2 5 ...</code>。</li>
+<li>如果我们<strong>不去</strong> 5（回溯），而是回到 3 走另一条路 4，路径是 <code>1 3 2 ... 4</code>。</li>
+<li>比较这两个选择：如果不走 2-&gt;5，下一次访问的新节点将是 4（从3走过去）。如果走 2-&gt;5，下一次是 5。</li>
+<li>因为 <strong>4 &lt; 5</strong>，所以我们在节点 2 应该选择<strong>回溯</strong>，暂时放弃边 (2,5)。这相当于在逻辑上断开了环上的 (2,5) 边。</li>
+</ul>
+</li>
+<li>回溯到 3，去 4。</li>
+<li>在节点 4，邻居有 5 和 6。<strong>5 &lt; 6</strong>，去 5。</li>
+<li>在节点 5，邻居有 2，但 2 已访问，回溯。</li>
+<li>回到 4，去 6。
+<strong>结果：</strong> 1 3 2 4 5 6</li>
+</ol>
+<h4>Graphviz 图示 (Sample 2)</h4>
+<p>图中展示了环结构。红色实线是实际生成的 DFS 树，<strong>灰色虚线</strong>表示那条存在但未被用来“首次访问”的边（即逻辑断开的边）。</p>
+<div class="graphviz"><pre class="dot">
+digraph G {
+    label = "Sample 2: Unicyclic Graph (m = n)\nCycle: 2-3-4-5-2\nResult: 1 3 2 4 5 6";
+    labelloc = "t";
+    // 使用 neato 布局以更好地展示环
+    layout = dot; 
+  
+    node [shape=circle, style=filled, fillcolor=lightyellow];
+  
+    // 节点
+    1 [xlabel="Start"];
+    3;
+    2;
+    4;
+    5;
+    6;
+
+    // 路径：1 -> 3
+    1 -> 3 [color=red, label="①", fontcolor=red, penwidth=2.0];
+
+    // 路径：3 -> 2 (因为 2 < 4)
+    3 -> 2 [color=red, label="②", fontcolor=red, penwidth=2.0];
+
+    // 在节点 2，虽然有边连向 5，但为了更早访问到 4 (从3那边)，
+    // 我们选择不走 2->5，而是回溯。
+    // 这条边 (2, 5) 在 DFS 树中没有被使用（或者理解为回边）
+    2 -> 5 [dir=none, style=dashed, color=grey, label="Backtracking\nDecision:\n4 < 5", fontcolor=grey];
+
+    // 回溯到 3 后，走 3 -> 4
+    3 -> 4 [color=red, label="③", fontcolor=red, penwidth=2.0];
+
+    // 在节点 4，先走 5 (5 < 6)
+    4 -> 5 [color=red, label="④", fontcolor=red, penwidth=2.0];
+
+    // 回溯到 4 后，走 4 -> 6
+    4 -> 6 [color=red, label="⑤", fontcolor=red, penwidth=2.0];
+
+    // 物理连接关系补充说明：
+    // 实际上 2-5 是相连的，4-5 也是相连的。
+    // 在这里 4->5 是树边，2->5 是非树边。
+}
+</pre></div>
+<h3 id="%E5%85%B3%E9%94%AE%E9%80%BB%E8%BE%91%E8%A7%A3%E9%87%8A" tabindex="-1">关键逻辑解释</h3>
+<p>在图 2 中，最让人困惑的一步是：<strong>为什么到了 2 之后不继续走到 5？</strong></p>
+<p>这是因为这道题要求<strong>字典序最小</strong>。
+当我们在环上时，我们实际上是在寻找一个位置“断开”环，使得生成的序列最优。
+在节点 2 时，我们面临两个潜在的“下一个新节点”：</p>
+<ol>
+<li>直接走 (2, 5)，下一个记录的数是 <strong>5</strong>。</li>
+<li>回溯到 3，走 (3, 4)，下一个记录的数是 <strong>4</strong>。</li>
+</ol>
+<p>因为 <strong>4 &lt; 5</strong>，所以策略告诉我们：不要走 (2, 5)，赶紧回溯去走 (3, 4) 吧！这样我们就能在序列的更前面填入更小的数字 4。</p>
+<h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<p>要从 <strong>题目描述</strong> 推导出“<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m=n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 等价于在一棵树上行走，实际上就是枚举删除环上的一条边”，我们需要理清以下三个逻辑链条：</p>
+<h3 id="1.-%E6%95%B0%E6%8D%AE%E7%9A%84%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E5%9F%BA%E7%8E%AF%E6%A0%91%E2%80%9D%EF%BC%9F" tabindex="-1">1. 数据的拓扑结构：为什么是“基环树”？</h3>
+<p>首先，从图论的基础定义来看：</p>
+<ul>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m = n - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 且连通</strong>：这必然是一棵<strong>树</strong>。树没有环，路径是唯一的（不走回头路的情况下）。</li>
+<li><strong><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m = n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 且连通</strong>：这相当于在 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 条边的树上，<strong>多加了一条边</strong>。
+<ul>
+<li>在一棵树上任意连接两个不相邻的节点，必然会形成<strong>且仅形成一个环</strong>。</li>
+<li>这种结构被称为 <strong>“基环树” (Unicyclic Graph)</strong>，也就是你理解的“带有一个环的树”。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2.-%E6%97%85%E8%A1%8C%E8%A7%84%E5%88%99%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AD%89%E4%BB%B7%E4%BA%8E%E7%94%9F%E6%88%90%E6%A0%91%EF%BC%9F" tabindex="-1">2. 旅行规则：为什么等价于生成树？</h3>
+<p>这是理解问题的关键。让我们仔细拆解题目中的<strong>小 Y 的旅行方案</strong>：</p>
+<blockquote>
+<p>规则 A： “从起点开始，每次可以选择一条与当前城市相连的道路，走向一个没有去过的城市。”</p>
+<p>规则 B： “或者沿着第一次访问该城市时经过的道路后退到上一个城市。”</p>
+<p>规则 C： “每个城市都被访问到。”</p>
+</blockquote>
+<p>这三条规则合起来，实际上完整描述了一个 <strong>DFS（深度优先搜索）</strong> 的过程：</p>
+<ol>
+<li><strong>规则 A</strong> 对应 DFS 的“递归进入（Traverse）”：只要有未访问的邻居，就继续深入。</li>
+<li><strong>规则 B</strong> 对应 DFS 的“回溯（Backtrack）”：当走到死胡同（所有邻居都去过了），就退回上一步。</li>
+<li><strong>规则 C</strong> 意味着这个 DFS 遍历必须覆盖图中的所有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 个点。</li>
+</ol>
+<p>结论：</p>
+<p>小 Y 走过的所有“走向没有去过的城市”的边，实际上构成了原图的一棵 生成树 (Spanning Tree)。</p>
+<ul>
+<li>原图有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 个点。</li>
+<li>要访问所有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 个点，且不重复记录（只记录第一次到达），你需要且仅需要经过 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 条边来“发现”这些点。</li>
+<li>这 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 条边构成的结构，就是一棵树。</li>
+</ul>
+<h3 id="3.-%E6%A0%B8%E5%BF%83%E6%8E%A8%E5%AF%BC%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E2%80%9C%E6%96%AD%E6%8E%89%E4%B8%80%E6%9D%A1%E8%BE%B9%E2%80%9D%EF%BC%9F" tabindex="-1">3. 核心推导：为什么要“断掉一条边”？</h3>
+<p>现在我们将 <strong>1（原图结构）</strong> 和 <strong>2（行走轨迹）</strong> 结合起来：</p>
+<ul>
+<li><strong>原图</strong>：有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 个点，<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 条边（包含一个环）。</li>
+<li><strong>实际有效的行走路径（生成树）</strong>：使用了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 条边。</li>
+</ul>
+<p>数学计算：</p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>剩余的边数</mtext><mo>=</mo><mtext>原图总边数</mtext><mo>−</mo><mtext>生成树边数</mtext><mo>=</mo><mi>n</mi><mo>−</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\text{剩余的边数} = \text{原图总边数} - \text{生成树边数} = n - (n - 1) = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">剩余的边数</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord text"><span class="mord cjk_fallback">原图总边数</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">生成树边数</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></span></eqn></section><p>这意味着，在小 Y 的整个旅行过程中，<strong>原图中必然有且仅有一条边，从来没有被用来“走向一个没有去过的城市”。</strong></p>
+<p>这条被“遗弃”的边有以下性质：</p>
+<ol>
+<li><strong>它必须在环上。</strong>
+<ul>
+<li>如果你“遗弃”的边不在环上（即它是树枝上的边，也就是桥），那么图就会断开，你就无法访问所有节点了。只有断开环上的边，图依然保持连通。</li>
+</ul>
+</li>
+<li><strong>它的逻辑等价性。</strong>
+<ul>
+<li>既然这条边在遍历中没有起到“发现新节点”的作用，那么对于生成最终的访问序列来说，<strong>这条边存不存在是完全一样的</strong>。</li>
+<li>因此，我们可以<strong>假装这条边不存在</strong>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E6%80%BB%E7%BB%93%EF%BC%9A%E9%80%BB%E8%BE%91%E9%97%AD%E7%8E%AF" tabindex="-1">总结：逻辑闭环</h3>
+<ol>
+<li><strong>结构</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m=n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 的连通图是一个带有一个环的树。</li>
+<li><strong>规则</strong>：题目要求的遍历方式本质是寻找一棵生成树。</li>
+<li><strong>冲突</strong>：生成树只需要 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 条边，而图有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span></eq> 条边。</li>
+<li><strong>解决</strong>：必然有一条边多余。为了保持连通，这条多余的边只能是环上的某一条。</li>
+<li><strong>策略</strong>：既然必然要废弃环上的一条边，为了找到字典序最小的序列，我们只需要<strong>枚举</strong>环上的每一条边，尝试将其暂时删除，然后按照 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m=n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 的贪心策略（每次走编号最小的邻居）跑一遍，最后取最优解即可。</li>
+</ol>
+<h3 id="%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%BE%E7%A4%BA%E5%B8%AE%E5%8A%A9%E7%90%86%E8%A7%A3" tabindex="-1">简单的图示帮助理解</h3>
+<p>假设有这样一个基环树：</p>
+<p>代码段</p>
+<pre class="mermaid">
+graph TD
+    1((1)) --- 2((2))
+    2 --- 3((3))
+    3 --- 4((4))
+    4 --- 2
+    2 --- 5((5))
+</pre>
+<ul>
+<li><strong>环是：</strong> 2 - 3 - 4 - 2</li>
+<li><strong>总边数：</strong> 5 条。</li>
+<li><strong>节点数：</strong> 5 个。</li>
+</ul>
+<p>小 Y 要访问所有点。当她走到环的入口（节点 2）时，她必须决定是先去 3 还是先去 4。</p>
+<ul>
+<li>如果她选择了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>→</mo><mn>3</mn><mo>→</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">2 \to 3 \to 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq>，那么边 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2, 4)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">)</span></span></span></span></eq> 实际上就没有被用来“发现新节点”（当她从 4 想要去 2 时，发现 2 已经去过了，只能回溯）。这等同于把 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2, 4)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span><span class="mclose">)</span></span></span></span></eq> 断开了。</li>
+<li>如果她选择了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>→</mo><mn>4</mn><mo>→</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2 \to 4 \to 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq>，这等同于把 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2, 3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span></eq> 断开了。</li>
+</ul>
+<p>因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 只有 5000，且 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></eq> 的复杂度在 1秒内对于 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>5000</mn></mrow><annotation encoding="application/x-tex">N=5000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5000</span></span></span></span></eq> 是可以通过的（稍微有点紧，但 NOIP 数据通常比较弱或者是特定构造），所以**“找环 -&gt; 枚举断边 -&gt; 贪心DFS”** 是完全正确的思路。</p>
+<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br></div>
+        <code><span class="token comment">/**
+ * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
+ * date: 2026-01-10 08:58:46
+ */</span>
+#include <span class="token operator">&lt;</span>bits<span class="token operator">/</span>stdc<span class="token operator">++</span><span class="token punctuation">.</span>h<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+using namespace std<span class="token punctuation">;</span>
+typedef  long long ll<span class="token punctuation">;</span>
+typedef  unsigned long long ull<span class="token punctuation">;</span>
+
+const int maxn <span class="token operator">=</span> <span class="token number">5005</span><span class="token punctuation">;</span>
+const int maxe <span class="token operator">=</span> <span class="token number">4e6</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+const int mod <span class="token operator">=</span> <span class="token number">1e9</span><span class="token operator">+</span><span class="token number">7</span><span class="token punctuation">;</span>
+
+
+int n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+int a<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+int del_edge <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">//枚举删除的边</span>
+
+typedef std<span class="token punctuation">:</span><span class="token punctuation">:</span>pair<span class="token operator">&lt;</span>int<span class="token punctuation">,</span>int<span class="token operator">></span> edge<span class="token punctuation">;</span>
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>edge<span class="token operator">></span> adj<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+
+
+void <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> n <span class="token operator">></span><span class="token operator">></span> m<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> m <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->m</span>
+    <span class="token punctuation">{</span>
+        int u<span class="token punctuation">,</span>v<span class="token punctuation">;</span>
+        std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> u <span class="token operator">></span><span class="token operator">></span> v<span class="token punctuation">;</span>
+        <span class="token comment">// debug</span>
+        <span class="token comment">// std::cout &lt;&lt; "id : " &lt;&lt; i &lt;&lt; " -> "  &lt;&lt; u &lt;&lt; " " &lt;&lt; v ; std::cout  &lt;&lt; "\n";</span>
+
+        <span class="token comment">//next点 ,边的编号</span>
+        adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span>v<span class="token punctuation">,</span>i<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        adj<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token punctuation">{</span>u<span class="token punctuation">,</span>i<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+    <span class="token punctuation">{</span>
+        std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sort</span><span class="token punctuation">(</span>adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> ans<span class="token punctuation">;</span>
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> tmp_ans<span class="token punctuation">;</span>
+
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> loop<span class="token punctuation">;</span> <span class="token comment">//记录环上的边</span>
+<span class="token comment">// 回溯法找环: 原理: 找到环上的点,立刻回溯</span>
+bool vis<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+int <span class="token function">dfs_find_loop</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int fa<span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+
+    <span class="token comment">// 表示找到了, 返回环上的其实点</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span> vis<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token punctuation">)</span> <span class="token keyword">return</span> u<span class="token punctuation">;</span> 
+
+    vis<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>auto <span class="token punctuation">[</span>v<span class="token punctuation">,</span>id<span class="token punctuation">]</span> <span class="token punctuation">:</span> adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> v <span class="token operator">==</span> fa<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+
+        int loop_first <span class="token operator">=</span> <span class="token function">dfs_find_loop</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span><span class="token punctuation">(</span> loop_first <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            loop<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            vis<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">//标记是环上的点</span>
+            <span class="token keyword">return</span> u <span class="token operator">==</span> loop_first <span class="token operator">?</span> <span class="token number">0</span> <span class="token punctuation">:</span> loop_first<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">//表示没有找到</span>
+<span class="token punctuation">}</span>
+
+
+void <span class="token function">dfs</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span>int fa<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    
+    tmp_ans<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span> auto <span class="token punctuation">[</span>v<span class="token punctuation">,</span>id<span class="token punctuation">]</span> <span class="token punctuation">:</span> adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> id <span class="token operator">==</span> del_edge<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> v <span class="token operator">==</span> fa<span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ans 里面存的序列 比 tmp_ans 大</span>
+<span class="token comment">// 字典序比较</span>
+bool <span class="token function">compare_ans</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span> ans<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span> i <span class="token operator">&lt;</span> ans<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span> ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> tmp_ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span> ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> tmp_ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+signed main <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 找环上的边</span>
+    <span class="token comment">// 1. topsort</span>
+    <span class="token comment">// 2. dfs法 -- >这里使用</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span> m <span class="token operator">==</span> n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span> auto u <span class="token punctuation">:</span> tmp_ans<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            std<span class="token punctuation">:</span><span class="token punctuation">:</span>cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> u <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token function">dfs_find_loop</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// debug: 输出环上的边</span>
+    <span class="token comment">// for( auto &amp; i : loop ) {</span>
+    <span class="token comment">//     std::cout &lt;&lt; "id : "  &lt;&lt; i &lt;&lt;   endl;</span>
+    <span class="token comment">// }</span>
+
+    
+    <span class="token keyword">for</span><span class="token punctuation">(</span> auto  i <span class="token punctuation">:</span> loop <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        tmp_ans<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        del_edge <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token comment">//debug</span>
+        <span class="token comment">// std::cout &lt;&lt;" del -> " &lt;&lt; i  &lt;&lt; "\n";</span>
+        <span class="token comment">// for( auto u : tmp_ans) std::cout &lt;&lt; u &lt;&lt; " ";</span>
+        <span class="token comment">// std::cout &lt;&lt; "\n";</span>
+
+        <span class="token keyword">if</span><span class="token punctuation">(</span> <span class="token function">compare_ans</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">swap</span><span class="token punctuation">(</span>tmp_ans<span class="token punctuation">,</span>ans<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// for( auto u : ans) std::cout &lt;&lt; u &lt;&lt; " ";</span>
+        <span class="token comment">// std::cout  &lt;&lt; "\n";</span>
+        <span class="token comment">// std::cout  &lt;&lt; "\n";</span>
+        <span class="token comment">// std::cout  &lt;&lt; "\n";</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span> auto u <span class="token punctuation">:</span> ans<span class="token punctuation">)</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span>cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> u <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
+</body>
+</html>

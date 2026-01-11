@@ -60,8 +60,6 @@ function hideMenuModal() {
             
               <span>#树形dp</span>
             
-              <span>#todo</span>
-            
           </div>
           <div class="problem-source">
             <span>原题目:</span>
@@ -70,18 +68,625 @@ function hideMenuModal() {
         </div>
         <div>
           <span>简要描述:</span>
-          <span></span>
+          <span>分组背包模型的树形DP,模板</span>
         </div>
     </header>
     
     <div class="container">
         <div class="heti markdown-body">
-    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a></li><li><a href="#%E7%AE%97%E5%87%BA%E6%A0%B7%E4%BE%8B">算出样例</a><ol><li><a href="#1.-%E6%A2%B3%E7%90%86%E8%AF%BE%E7%A8%8B%E7%BB%93%E6%9E%84">1. 梳理课程结构</a></li><li><a href="#2.-%E9%80%89%E6%8B%A9%E9%80%BB%E8%BE%91%E6%8E%A8%E6%BC%94">2. 选择逻辑推演</a></li><li><a href="#3.-%E8%AE%A1%E7%AE%97%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C">3. 计算最终结果</a></li></ol></li><li><a href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF">我的思路</a></li><li><a href="#1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E2%80%9C%E8%99%9A%E6%8B%9F%E8%8A%82%E7%82%B9%E2%80%9D-(the-virtual-root)">1. 为什么要有“虚拟节点” (The Virtual Root)</a></li><li><a href="#2.-%E9%9B%86%E5%90%88%E7%9A%84%E5%88%92%E5%88%86%E4%B8%8E%E8%84%91%E6%B5%B7%E6%9E%84%E5%9B%BE">2. 集合的划分与脑海构图</a></li><li><a href="#3.-%E6%A0%B8%E5%BF%83%E9%9A%BE%E7%82%B9%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E5%88%86%E7%BB%84%E8%83%8C%E5%8C%85%E2%80%9D%EF%BC%9F">3. 核心难点：为什么是“分组背包”？</a><ol><li><a href="#%E4%B8%BE%E4%BE%8B%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BB%A5%E4%BD%A0%E7%9A%84%E6%80%9D%E8%B7%AF%E4%B8%BA%E4%BE%8B%EF%BC%89%EF%BC%9A">举例详解（以你的思路为例）：</a></li></ol></li><li><a href="#4.-%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E6%96%B9%E7%A8%8B%E7%9A%84%E6%8E%A8%E5%AF%BC">4. 状态转移方程的推导</a></li><li><a href="#5.-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">5. 代码实现</a></li><li><a href="#6.-%E6%80%BB%E7%BB%93-(teacher%E2%80%99s-note)">6. 总结 (Teacher’s Note)</a></li><li><a href="#%E4%BB%A3%E7%A0%81%E8%AF%84%E6%9E%90">代码评析</a><ol><li><a href="#1.-%E7%96%91%E9%97%AE%E8%A7%A3%E7%AD%94%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96">1. 疑问解答：关于初始化</a></li><li><a href="#2.-%E7%96%91%E9%97%AE%E8%A7%A3%E7%AD%94%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%AD%90%E6%A0%91%E5%A4%A7%E5%B0%8F%E4%BC%98%E5%8C%96">2. 疑问解答：关于子树大小优化</a></li><li><a href="#3.-%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%A6%82%E4%BD%95%E5%86%99%E5%87%BA-o(nm)-%E7%9A%84%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81">3. 进阶：如何写出 O(NM) 的优化代码</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ol></li></ol></nav><h1>p2014 选课 教程：当背包挂在树上 —— 树形DP与分组背包</h1>
+<h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
 <p>分组背包模型的树形DP</p>
-<h2 id="%E4%BB%A3%E7%A0%81" tabindex="-1">代码</h2>
-<p>todo</p>
+<pre class="mermaid">
+graph TD
+        C0(虚拟根)
+        C1("课程1<br>学分: 2")
+        C2("课程2<br>学分: 1")
+        C3("课程3<br>学分: 4")
+        C4("课程4<br>学分: 1")
+        C5("课程5<br>学分: 1")
+        C6("课程6<br>学分: 6")
+        C7("课程7<br>学分: 2")
+    
+        C0 --> C2
+        C0 --> C3
+        C2 --> C1
+        C2 --> C4
+        C2 --> C7
+        C7 --> C5
+        C7 --> C6
+</pre>
+<h2 id="%E7%AE%97%E5%87%BA%E6%A0%B7%E4%BE%8B" tabindex="-1">算出样例</h2>
+<p>要理解样例输出的 <code>13</code> 是怎么来的，我们需要先把题目给出的“课程依赖关系”画成一棵（或多棵）树，然后根据“选子节点必须先选父节点”的规则来找出最优组合。</p>
+<h3 id="1.-%E6%A2%B3%E7%90%86%E8%AF%BE%E7%A8%8B%E7%BB%93%E6%9E%84" tabindex="-1">1. 梳理课程结构</h3>
+<p>首先，我们将输入数据转化为树形结构。</p>
+<p>输入格式是：直接先修课(父节点) 学分。</p>
+<p>如果先修课是 0，说明它是顶级课程（树根）。</p>
+<table>
+<thead>
+<tr>
+<th><strong>课程编号</strong></th>
+<th><strong>先修课 (父节点)</strong></th>
+<th><strong>学分</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>0 (无)</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>0 (无)</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>7</td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>根据上表构建的依赖关系图如下：</strong></p>
+<ul>
+<li><strong>课程 2</strong> (学分 1) —— <em>顶级课程</em>
+<ul>
+<li>课程 1 (学分 2)</li>
+<li>课程 4 (学分 1)</li>
+<li><strong>课程 7</strong> (学分 2)
+<ul>
+<li>课程 5 (学分 1)</li>
+<li><strong>课程 6</strong> (学分 6)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>课程 3</strong> (学分 4) —— <em>顶级课程</em></li>
+</ul>
+<p>这是一个包含两棵树的“森林”。通常为了方便做题（树形DP），我们会虚拟一个 <strong>0号节点</strong> 作为所有顶级课程的父节点（学分为0）。</p>
+<p>结构变成了：</p>
+<p>0 -&gt; 2 -&gt; (1, 4, 7 -&gt; (5, 6))</p>
+<p>0 -&gt; 3</p>
+<pre class="mermaid">
+graph TD
+        C0(虚拟根)
+        C1("课程1<br>学分: 2")
+        C2("课程2<br>学分: 1")
+        C3("课程3<br>学分: 4")
+        C4("课程4<br>学分: 1")
+        C5("课程5<br>学分: 1")
+        C6("课程6<br>学分: 6")
+        C7("课程7<br>学分: 2")
+  
+        C0 --> C2
+        C0 --> C3
+        C2 --> C1
+        C2 --> C4
+        C2 --> C7
+        C7 --> C5
+        C7 --> C6
 
-</div> 
+</pre>
+<hr>
+<h3 id="2.-%E9%80%89%E6%8B%A9%E9%80%BB%E8%BE%91%E6%8E%A8%E6%BC%94" tabindex="-1">2. 选择逻辑推演</h3>
+<p>题目要求选 4 门课 (M=4)。</p>
+<p>规则：想选下面的课(孩子)，必须先把上面的课选(父亲)了。</p>
+<p>我们要凑齐4门课，并让学分总和最大。我们要寻找学分“性价比”最高的路径。</p>
+<p>分析高分节点：</p>
+<p>我们一眼就能看到 课程 6 的学分非常高，是 6分。</p>
+<p>我们看看选课程 6 需要付出什么代价（前置课程）：</p>
+<ul>
+<li>选 6 必须选 7。</li>
+<li>选 7 必须选 2。</li>
+<li><strong>路径：</strong> 2 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 7 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 6。</li>
+<li><strong>消耗课程数：</strong> 3门。</li>
+<li><strong>获得学分：</strong> <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>7</mn><mo stretchy="false">)</mo><mo>+</mo><mn>6</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>6</mn><mo stretchy="false">)</mo><mo>=</mo><mn>9</mn></mrow><annotation encoding="application/x-tex">1 (\text{课}2) + 2 (\text{课}7) + 6 (\text{课}6) = 9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">7</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">6</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">6</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span></span></span></span></eq> 分。</li>
+</ul>
+<p>现在我们已经选了 <strong>3</strong> 门课，题目允许选 <strong>4</strong> 门，所以我们<strong>还可以再选 1 门</strong>。</p>
+<p>选择剩下的那 1 门：</p>
+<p>现在的备选项必须是“已经解锁”的课程（即父节点已经被选中的课程）或者新的顶级课程。</p>
+<p>目前的已选集合是 {2, 7, 6}。</p>
+<p>剩余可选的课程有：</p>
+<ol>
+<li><strong>课程 3</strong> (顶级课程)：学分 <strong>4</strong>。</li>
+<li><strong>课程 1</strong> (父节点2已选)：学分 <strong>2</strong>。</li>
+<li><strong>课程 4</strong> (父节点2已选)：学分 <strong>1</strong>。</li>
+<li><strong>课程 5</strong> (父节点7已选)：学分 <strong>1</strong>。</li>
+</ol>
+<p>显然，<strong>课程 3</strong> 的学分（4分）是最高的。</p>
+<h3 id="3.-%E8%AE%A1%E7%AE%97%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C" tabindex="-1">3. 计算最终结果</h3>
+<p>所以最优的方案是选择：<code>{2, 7, 6, 3}</code>。</p>
+<p>计算总分：</p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Total Score</mtext><mo>=</mo><mn>1</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mn>2</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>7</mn><mo stretchy="false">)</mo><mo>+</mo><mn>6</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>6</mn><mo stretchy="false">)</mo><mo>+</mo><mn>4</mn><mo stretchy="false">(</mo><mtext>课</mtext><mn>3</mn><mo stretchy="false">)</mo><mo>=</mo><mn mathvariant="bold">13</mn></mrow><annotation encoding="application/x-tex">\text{Total Score} = 1 (\text{课}2) + 2 (\text{课}7) + 6 (\text{课}6) + 4 (\text{课}3) = \mathbf{13}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Total Score</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">7</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">6</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">6</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4</span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">课</span></span><span class="mord">3</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord"><span class="mord mathbf">13</span></span></span></span></span></span></eqn></section><p>这就是样例输出 <strong>13</strong> 的由来。</p>
+<h2 id="%E6%88%91%E7%9A%84%E6%80%9D%E8%B7%AF" tabindex="-1">我的思路</h2>
+<ol>
+<li>为什么有虚拟节点</li>
+<li>集合的划分
+<ol>
+<li>在脑海里想象:  最终答案形成的树的样子,
+<ol>
+<li>必选: 虚拟节点0</li>
+<li>有一些虚拟节点0的孩子,可能会选</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>孩子的子树上的点的数量的和 </mtext><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\text{孩子的子树上的点的数量的和 }=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">孩子的子树上的点的数量的和</span><span class="mord"> </span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq></li>
+</ol>
+</li>
+<li>我们能否通过DP,覆盖所有的可能的情况呢?</li>
+</ol>
+</li>
+<li>设 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[0][5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mclose">]</span></span></span></span></eq> 表示点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></eq> 的子树上选了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq> 个点 后得到的最大值</li>
+<li>显然可以想到 可以把 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 个额度 分给所有的孩子: <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">1,3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span></span></span></span></eq></li>
+<li>考虑到节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>, 可以拿到的额度,的情况
+1.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></eq> , 就是不选子树上的所有点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[2][0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span></span></span></span></eq>
+2.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>, <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[2][1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq>
+3.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq>,<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[2][2]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span></span></span></span></eq>
+4.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq>,<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>3</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[2][3]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">3</span><span class="mclose">]</span></span></span></span></eq>
+5.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq>,<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>4</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[2][4]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">4</span><span class="mclose">]</span></span></span></span></eq>
+6.  显然这些情况是互斥的</li>
+<li>考虑到节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq>, 可以拿到的额度,的情况
+1.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></eq> , 就是不选子树上的所有点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>3</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[3][0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">3</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span></span></span></span></eq>
+2.  额度为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>, <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>3</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[3][1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">3</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq>
+3. 显然这些情况是互斥的</li>
+<li>因为 … ,所有可以把这些看成 分组背包, 组内的物品最多选一个</li>
+<li>所以我们 可以 一组 一组的来求 ,在容量 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq> 的情况下的最值</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo stretchy="false">]</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo>−</mo><mi>k</mi><mo stretchy="false">]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">dp[0][5] = \max(dp[0][5],dp[0][5 - k] + dp[1][k])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">])</span></span></span></span></eq></li>
+</ol>
+<p>这是一个非常棒的思路！你已经敏锐地抓住了**“树形DP”<strong>和</strong>“分组背包”**之间最核心的联系。</p>
+<p>为了帮助新手彻底理解这个过程，我将你的思路整理、润色，并展开成一份完整的**“树形DP入门教程：从分组背包的角度”**。我们将一步步揭开这个算法的面纱。</p>
+<h2 id="1.-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E2%80%9C%E8%99%9A%E6%8B%9F%E8%8A%82%E7%82%B9%E2%80%9D-(the-virtual-root)" tabindex="-1">1. 为什么要有“虚拟节点” (The Virtual Root)</h2>
+<p>题目给出的课程结构可能不是一棵完整的树，而是一片“森林”（例如高等数学和大学英语可能互不依赖，它们都是独立的根）。</p>
+<p>如果我们对每一个根都做一次DP，会很麻烦。</p>
+<p>魔法操作：</p>
+<p>我们人为创造一个 0号节点（校长）。</p>
+<ul>
+<li><strong>规则</strong>：规定所有原本没有先修课的课程，现在的先修课都是 0号节点。</li>
+<li><strong>代价</strong>：0号节点的学分为 0。</li>
+<li><strong>影响</strong>：因为想要选任何课，必须先选它们的“祖宗”0号节点。所以，<strong>我们实际要选的课程总数变成了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">M+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq></strong>。</li>
+</ul>
+<p><strong>结论</strong>：这就把“森林”变成了一棵唯一的“大树”，根节点是 0。我们只需要从 0 开始做一次 DP 即可。</p>
+<figure><img src="./1.png" alt=""></figure>
+<hr>
+<h2 id="2.-%E9%9B%86%E5%90%88%E7%9A%84%E5%88%92%E5%88%86%E4%B8%8E%E8%84%91%E6%B5%B7%E6%9E%84%E5%9B%BE" tabindex="-1">2. 集合的划分与脑海构图</h2>
+<blockquote>
+<p>&quot;在脑海里想象: 最终答案形成的树的样子… 孩子的子树上的点的数量的和 = 5</p>
+</blockquote>
+<p>想象一下，你（作为节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq>）是一个部门经理。公司给你分配了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></eq> 个招聘名额（容量）。</p>
+<ol>
+<li><strong>你自己</strong>：首先，你自己必须占 1 个名额（因为选子节点必须先选父节点）。</li>
+<li><strong>剩下的名额</strong>：你手里还剩下 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 个名额。</li>
+<li><strong>分配任务</strong>：你需要把这 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 个名额，分给你的下属部门（子节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>v</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo></mrow><annotation encoding="application/x-tex">v_1, v_2, \dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span></span></span></span></eq>）。</li>
+<li><strong>目标</strong>：你要通过分配这些名额，让下属部门汇报上来的总业绩（学分）最大。</li>
+</ol>
+<p><strong>这就是典型的“资源分配”问题！</strong></p>
+<hr>
+<h2 id="3.-%E6%A0%B8%E5%BF%83%E9%9A%BE%E7%82%B9%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E5%88%86%E7%BB%84%E8%83%8C%E5%8C%85%E2%80%9D%EF%BC%9F" tabindex="-1">3. 核心难点：为什么是“分组背包”？</h2>
+<blockquote>
+<p>“显然可以想到 可以把 m-1 个额度 分给所有的孩子… 显然这些情况是互斥的”</p>
+</blockquote>
+<p>这是最精彩的洞察！让我们把<strong>树形DP</strong>映射到<strong>分组背包</strong>的模型上：</p>
+<table>
+<thead>
+<tr>
+<th><strong>分组背包概念</strong></th>
+<th><strong>对应树形DP概念</strong></th>
+<th><strong>解释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>背包总容量</strong></td>
+<td>当前节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 的可用名额 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></eq></td>
+<td>我们最多只能选 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></eq> 门课。</td>
+</tr>
+<tr>
+<td><strong>物品组 (Group)</strong></td>
+<td><strong>子节点 (子树)</strong></td>
+<td>每一个子节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq>，就是一个“物品组”。</td>
+</tr>
+<tr>
+<td><strong>组内的物品</strong></td>
+<td><strong>给子树分配的名额方案</strong></td>
+<td>在这个组里，有不同的“策略”作为物品。</td>
+</tr>
+<tr>
+<td><strong>互斥性</strong></td>
+<td><strong>只能选一种分配方案</strong></td>
+<td>你不能既给子节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 分配 1 个名额，又分配 2 个名额。只能二选一。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E4%B8%BE%E4%BE%8B%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BB%A5%E4%BD%A0%E7%9A%84%E6%80%9D%E8%B7%AF%E4%B8%BA%E4%BE%8B%EF%BC%89%EF%BC%9A" tabindex="-1">举例详解（以你的思路为例）：</h3>
+<p>假设当前节点是 0，它有两个孩子 1 和 3。手里有 5 个名额。</p>
+<p>除去 0 号节点自己吃掉 1 个，还剩 4 个名额要分给孩子 1 和 3。</p>
+<p><strong>对于孩子（组）1，我们面临的选择（物品）是：</strong></p>
+<ul>
+<li><strong>策略 A</strong>：给它 0 个名额 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 获得价值 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[1][0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span></span></span></span></eq>，消耗容量 0。</li>
+<li><strong>策略 B</strong>：给它 1 个名额 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 获得价值 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[1][1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span></span></span></span></eq>，消耗容量 1。</li>
+<li><strong>策略 C</strong>：给它 2 个名额 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span></eq> 获得价值 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[1][2]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span></span></span></span></eq>，消耗容量 2。</li>
+<li>…</li>
+<li><strong>注意</strong>：这些策略是<strong>互斥</strong>的！就像在分组背包里，你在一组里只能拿一件物品。</li>
+</ul>
+<pre class="mermaid">
+graph TD
+    A["开始: 经理 u, 总共有 j 个名额"] --> B["1. 经理 u 自己必须占用 1 个名额"]
+    B --> C["剩余名额: j - 1"]
+    C --> D["2. 将 j-1 个名额分配给下属部门 (子节点 v1, v2, ...）"]
+    D -- "分 k1 个给 v1" --> E1["子树 v1 贡献价值 dp[v1][k1]"]
+    D -- "分 k2 个给 v2" --> E2["子树 v2 贡献价值 dp[v2][k2]"]
+    D -- "..." --> E3["..."]
+    subgraph "目标: 使总价值最大"
+        E1 --> F((汇总))
+        E2 --> F((汇总))
+        E3 --> F((汇总))
+    end
+    F --> G["最终 u 的总价值 = s[u] + v1价值 + v2价值 + ..."]
+
+    style A fill:#lightgreen,stroke:#333,stroke-width:2px
+    style G fill:#lightgreen,stroke:#333,stroke-width:2px
+</pre>
+<hr>
+<h2 id="4.-%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E6%96%B9%E7%A8%8B%E7%9A%84%E6%8E%A8%E5%AF%BC" tabindex="-1">4. 状态转移方程的推导</h2>
+<p><strong>你的思路</strong>：</p>
+<blockquote>
+<p>“<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo stretchy="false">]</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mtext> </mtext><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>5</mn><mo>−</mo><mi>k</mi><mo stretchy="false">]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">dp[0][5] = \max(dp[0][5], \ dp[0][5 - k] + dp[1][k])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace"> </span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">])</span></span></span></span></eq>”</p>
+</blockquote>
+<p>完整逻辑：</p>
+<p>设 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[u][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span></eq> 表示在以 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 为根的子树中，选 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></eq> 个节点（包括 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 自己）所能获得的最大学分。</p>
+<p>我们使用 <strong>三层循环</strong> 来实现这个分组背包：</p>
+<ol>
+<li>
+<p>第一层：枚举物品组（子节点）</p>
+<p>我们一个一个孩子来处理。设当前处理到的孩子是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq>。</p>
+<p>for (int v : adj[u]) { … }</p>
+</li>
+<li>
+<p>第二层：枚举背包容量（当前给 u 的总名额）</p>
+<p>为了保证每组物品只选一次（0/1背包的滚动数组优化原理），我们需要从大到小枚举容量。</p>
+<p>范围是从 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">M+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq> 到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>（至少选1个，即根节点）。</p>
+<p>for (int j = M + 1; j &gt;= 1; j–) { … }</p>
+</li>
+<li>
+<p>第三层：枚举决策（给孩子 v 分多少个名额）</p>
+<p>设给孩子 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 分 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个名额。</p>
+<p><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 的范围是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></eq> 到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span></eq>（因为 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 至少要留 1 个给自己）。</p>
+<p>for (int k = 0; k &lt; j; k++) { … }</p>
+</li>
+</ol>
+<p>最终方程：</p>
+<section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mspace width="1em"/><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mi>k</mi><mo stretchy="false">]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>v</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">dp[u][j] = \max(dp[u][j], \quad dp[u][j - k] + dp[v][k])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">])</span></span></span></span></span></eqn></section><ul>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[u][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span></eq> (旧状态)：还没考虑给孩子 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 分 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个名额时的最大值。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mi>k</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[u][j-k]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">]</span></span></span></span></eq>：除去给孩子 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个，我自己和之前的孩子共占用了 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>−</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">j-k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个名额时的最大值。</li>
+<li><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>v</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[v][k]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">]</span></span></span></span></eq>：孩子 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 拿到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></eq> 个名额能贡献的最大值。</li>
+</ul>
+<p>显然: 根据写一维分组背包的经验,我们应该:</p>
+<ol>
+<li>先枚举容量,到过来枚举</li>
+<li>枚举组内的每一个物品</li>
+</ol>
+<hr>
+<h2 id="5.-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">5. 代码实现</h2>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br></div>
+        <code><span class="token comment">/**
+ * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
+ * date: 2026-01-05 21:45:08
+ */</span>
+#include <span class="token operator">&lt;</span>bits<span class="token operator">/</span>stdc<span class="token operator">++</span><span class="token punctuation">.</span>h<span class="token operator">></span>
+using namespace std<span class="token punctuation">;</span>
+typedef  long long ll<span class="token punctuation">;</span>
+typedef  unsigned long long ull<span class="token punctuation">;</span>
+
+const int maxn <span class="token operator">=</span> <span class="token number">305</span><span class="token punctuation">;</span>
+int n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+int w<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// dp[u][j] u在容量j的情况下的最大解</span>
+int dp<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+std<span class="token punctuation">:</span><span class="token punctuation">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> adj<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+void <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> n <span class="token operator">></span><span class="token operator">></span> m<span class="token punctuation">;</span>
+    m<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 1->n</span>
+    <span class="token punctuation">{</span>
+        int fa<span class="token punctuation">;</span>
+        std<span class="token punctuation">:</span><span class="token punctuation">:</span>cin <span class="token operator">></span><span class="token operator">></span> fa <span class="token operator">></span><span class="token operator">></span> w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        adj<span class="token punctuation">[</span>fa<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> maxn <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> <span class="token comment">// i: 0->n</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>j <span class="token operator">&lt;</span> maxn <span class="token punctuation">;</span><span class="token operator">++</span>j <span class="token punctuation">)</span> <span class="token comment">// j: 0->n</span>
+        <span class="token punctuation">{</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1e8</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+void <span class="token function">dfs</span><span class="token punctuation">(</span>int u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//1. 初始化,边界就是至少可以选自己</span>
+    <span class="token comment">// for(int i = 1;i &lt;= m ;++i ) // i: 1->m</span>
+    <span class="token comment">//     dp[u][i] = w[u];</span>
+
+    <span class="token comment">// 似乎和上面的写法的效果是一样的</span>
+    <span class="token comment">// 不知道为什么?</span>
+    dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> w<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">// 知道了,这是一种严格的写法,类似01背包恰好装满</span>
+    <span class="token comment">// 如果你不理解: 根据样例 ,进行手动dp填表</span>
+
+    <span class="token comment">//2. 枚举物品</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int v <span class="token punctuation">:</span> adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+
+        <span class="token comment">// j最少是1</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>int j <span class="token operator">=</span> m <span class="token punctuation">;</span>j <span class="token operator">>=</span> <span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            <span class="token comment">// 不用知道 v 子树的大小吗?</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>int k <span class="token operator">=</span> <span class="token number">1</span> <span class="token punctuation">;</span> k <span class="token operator">&lt;</span> j <span class="token punctuation">;</span>k <span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">-</span> k<span class="token punctuation">]</span> <span class="token operator">+</span> dp<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+signed main <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h2 id="6.-%E6%80%BB%E7%BB%93-(teacher%E2%80%99s-note)" tabindex="-1">6. 总结 (Teacher’s Note)</h2>
+<p>你的思路非常清晰，已经抓住了问题的本质。</p>
+<ol>
+<li><strong>虚拟节点</strong>解决了“多棵树”的问题。</li>
+<li><strong>状态定义</strong> <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[u][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span></eq> 明确了子问题的边界。</li>
+<li><strong>最关键的一步</strong>：将子节点看作<strong>互斥的决策组</strong>，从而成功将问题转化为<strong>分组背包</strong>模型。</li>
+</ol>
+<p>只要理解了 <strong>“给子树分配 k 个名额” = “在分组背包里选择了重量为 k 的物品”</strong>，你就彻底掌握了树形背包DP！</p>
+<h2 id="%E4%BB%A3%E7%A0%81%E8%AF%84%E6%9E%90" tabindex="-1">代码评析</h2>
+<p>这份代码写得很棒！逻辑清晰，核心的“树形DP+分组背包”思想运用得非常正确。</p>
+<p>这段代码是可以直接通过 P2014 的。下面我针对你在代码中提出的疑问（注释部分）以及代码的细节进行深度评析。</p>
+<hr>
+<h3 id="1.-%E7%96%91%E9%97%AE%E8%A7%A3%E7%AD%94%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96" tabindex="-1">1. 疑问解答：关于初始化</h3>
+<p><strong>你的注释：</strong></p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div>
+        <code><span class="token comment">// 1. 初始化,边界就是至少可以选自己</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> m <span class="token punctuation">;</span><span class="token operator">++</span>i <span class="token punctuation">)</span> 
+    dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> w<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 似乎和上面的写法的效果是一样的，不知道为什么?</span>
+<span class="token comment">// dp[u][1] = w[u];</span>
+</code>
+    </pre>
+</div>
+<p>解析：</p>
+<p>这两种写法的最终效果确实是一样的，但背后的逻辑不同：</p>
+<ul>
+<li><strong>严谨逻辑 (<code>dp[u][1] = w[u]</code>)</strong>：
+<ul>
+<li>物理意义：节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 自己只占 1 个体积，所以只有在容量为 1 时，获得 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo stretchy="false">[</mo><mi>u</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">w[u]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mopen">[</span><span class="mord mathnormal">u</span><span class="mclose">]</span></span></span></span></eq> 的价值。</li>
+<li>其他状态 <code>dp[u][2...m]</code> 应该初始化为负无穷（或者由代码逻辑自然处理），表示“不可能仅靠 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq> 自己这就消耗 2 个体积”。</li>
+</ul>
+</li>
+<li><strong>你的写法 (<code>for</code> 循环全赋值)</strong>：
+<ul>
+<li>物理意义：这相当于你允许了一种“<strong>挥霍</strong>”的情况。比如 <code>dp[u][5] = w[u]</code>，意思是“我花了 5 个体积的代价，但我只选了节点 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">u</span></span></span></span></eq>（实际只值 1 体积），剩下的 4 体积我故意浪费掉了”。</li>
+<li><strong>为什么结果是对的？</strong> 因为我们求的是 <code>max</code>。
+<ul>
+<li>父节点在决策时，如果能把这浪费的 4 体积给别的兄弟节点，带来的价值肯定大于等于 0（题目学分是正的）。</li>
+<li>所以，算法会自动选择“不浪费”的组合（即 <code>dp[u][1] + 其他兄弟的贡献</code>），而抛弃掉 <code>dp[u][5]</code> 这种“浪费”的状态。</li>
+</ul>
+</li>
+<li><strong>结论</strong>：你的这种写法是“<strong>容错式</strong>”写法，虽然物理意义上有点奇怪（允许浪费），但在求最大值问题中是安全的，而且写起来方便。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2.-%E7%96%91%E9%97%AE%E8%A7%A3%E7%AD%94%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%AD%90%E6%A0%91%E5%A4%A7%E5%B0%8F%E4%BC%98%E5%8C%96" tabindex="-1">2. 疑问解答：关于子树大小优化</h3>
+<p><strong>你的注释：</strong></p>
+<p>C++</p>
+<pre><code>// 不用知道 v 子树的大小吗?
+for(int k = 1 ; k &lt; j ;k ++) {
+</code></pre>
+<p><strong>解析：</strong></p>
+<ul>
+<li><strong>不优化（当前代码）</strong>：
+<ul>
+<li>你这里 <code>k</code> 循环到了 <code>j</code>（最大可能是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span></eq>）。</li>
+<li>如果子树 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span></eq> 实际上只有 1 个点，但你尝试给它分配了 100 个名额（<code>k=100</code>），会发生什么？</li>
+<li>因为 <code>dp</code> 数组初始化为 0（全局变量），或者被初始化为了 <code>w[v]</code>（根据你的dfs逻辑），这些无效状态的值很小。<code>max</code> 函数会自动忽略它们。</li>
+<li><strong>时间复杂度</strong>：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>⋅</mo><msup><mi>M</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N \cdot M^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></eq>。</li>
+<li>对于这道题 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo separator="true">,</mo><mi>M</mi><mo>≤</mo><mn>300</mn></mrow><annotation encoding="application/x-tex">N, M \le 300</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">300</span></span></span></span></eq>，运算量大约是 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2.7</mn><mo>×</mo><msup><mn>10</mn><mn>7</mn></msup></mrow><annotation encoding="application/x-tex">2.7 \times 10^7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">2.7</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span></span></span></span></span></span></span></span></eq>，C++ 跑起来毫无压力（1秒内）。</li>
+</ul>
+</li>
+<li><strong>优化（上下界优化）</strong>：
+<ul>
+<li>如果我们记录了 <code>size[v]</code>，我们可以让 <code>k</code> 只循环到 <code>min(j-1, size[v])</code>。</li>
+<li><strong>时间复杂度</strong>：会降低到 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo>⋅</mo><mi>M</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N \cdot M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span></eq>。这是树形背包的一个经典结论。</li>
+<li><strong>建议</strong>：虽然这道题不需要优化也能过，但养成记录 <code>size</code> 并进行优化的习惯，在数据范围更大（如 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>2000</mn></mrow><annotation encoding="application/x-tex">N=2000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2000</span></span></span></span></eq>）的题目中是必须的。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<h3 id="3.-%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%A6%82%E4%BD%95%E5%86%99%E5%87%BA-o(nm)-%E7%9A%84%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81" tabindex="-1">3. 进阶：如何写出 O(NM) 的优化代码</h3>
+<p>为了让你掌握更通用的写法，我提供一份加上了 <code>size</code> 优化的标准模板供参考：</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div>
+        <code>int sz<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 记录子树大小</span>
+
+void <span class="token function">dfs</span><span class="token punctuation">(</span>int u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1. 初始化</span>
+    dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> w<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    sz<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// u 自己大小为 1</span>
+
+    <span class="token comment">// 2. 枚举物品组（子节点）</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int v <span class="token punctuation">:</span> adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 优化点：更新当前 u 的子树大小</span>
+        <span class="token comment">// 这一步是为了让下面的 j 循环上限更精确，不优化也行</span>
+        sz<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> sz<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> 
+
+        <span class="token comment">// 3. 枚举容量：j 从大到小</span>
+        <span class="token comment">// 优化点：j 最大只需要到 min(m, sz[u])，不需要每次都跑满 m</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>int j <span class="token operator">=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">min</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> sz<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> j <span class="token operator">>=</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            
+            <span class="token comment">// 4. 枚举决策：给子节点 v 分 k 个</span>
+            <span class="token comment">// 优化点：k 不能超过子树 v 的实际大小 sz[v]</span>
+            <span class="token comment">// 同时 j-k >= 1 (也就是 k &lt;= j-1)，u 自己要留 1 个</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>int k <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> k <span class="token operator">&lt;=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">min</span><span class="token punctuation">(</span>sz<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">,</span> j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> k<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">-</span> k<span class="token punctuation">]</span> <span class="token operator">+</span> dp<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h3>
+<p>你的代码逻辑自洽，能够AC。</p>
+<p>对于新手来说，你的写法（不带size优化、初始化允许“浪费”）其实是最不容易写错的写法。</p>
+<p>建议下一步可以尝试把 <code>size</code> 优化加上，体验一下效率的提升（虽然这题感觉不出来，但在大规模题目上很关键）。</p>
+<p>如果你想追求极致的运行速度（比如 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>2000</mn></mrow><annotation encoding="application/x-tex">N=2000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2000</span></span></span></span></eq> 的题），只需要把你注释里提到的“子树大小优化”加进去即可：</p>
+<ol>
+<li><code>dfs</code> 里维护 <code>sz[u]</code>。</li>
+<li><code>j</code> 的循环上限改为 <code>min(m, sz[u])</code>。</li>
+<li><code>k</code> 的循环上限改为 <code>min(j-1, sz[v])</code>。</li>
+</ol>
+<p><strong>现在，这份代码已经可以直接 AC 并且作为你的个人模板保存了！</strong></p>
+
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
     </div>
 
 </article>
@@ -106,5 +711,9 @@ function hideMenuModal() {
         // error 自动挤压,增加空格 在Katex 公式中
         //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
     </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
 </body>
 </html>

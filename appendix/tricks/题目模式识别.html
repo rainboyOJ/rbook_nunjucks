@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - 题目模式识别</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+
+<div class="chapter-list">
+  
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base">基础</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/quicksort/index.html">快速排序</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/double_point/index.html">双指针</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/binary_search/index.html">二分查找</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="base/sparse_table/index.html">ST稀疏表</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="tree-algo">树相关算法树</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="tree-algo/dfs-order">dfs序</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="dynamic_programming">第三章 动态规划</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><path fill="#c62828" d="m31.37 26.45l.17-18.43L40 5.43l9.75 16.73z"/><path fill="#37474f" d="M36.76 20.48s-2.6-11.89.34-13.07c5.23-2.09 9.31 11.65 9.31 11.65z" opacity="0.59"/><path fill="#f44336" d="M20.59 32.81c-.09-1.63-2.29-14.63 1.05-21.88c1.53-3.31 7.81-5.51 13.43-6.76c1.39-.31 4.98-.51 7.21 2.05c2.01 2.31 4.98 7.37 7.91 15l-2.11 4.54s-2.91-7.7-5.82-14.06c-2.41-5.27-5.47-3.52-5.78-2.29c-.56 2.26 2.3 14.51 2.3 14.51c-4.16 1.77-18.19 8.89-18.19 8.89"/><path fill="#455a64" d="m42.36 17.37l1.75-8.5L51 4.88l8.29.02l6.9 5.59l1.91 10.9l-8.33-2.81l-1.13-7.81l-7.64-.19l-1.02 6.21z"/><path fill="#ff7555" d="M35.06 4.18c-5.62 1.24-11.27 3.03-13.43 6.76c-1.24 2.14-1.96 7.75-1.82 12.96c1.09-1.72 5.54-4.69 8.86-6.13c3.31-1.44 3.69-2.87 3.74-3.5c.25-2.86.01-5.22.85-7.24c1.06-2.56 2.57-2.88 3.45-3.01c-.67 0-1.26.07-1.65.16m4.53.28c-.54-.19-1.08-.31-1.6-.37c.54.14 1.07.32 1.6.37"/><path fill="none" stroke="#784d30" stroke-miterlimit="10" stroke-width="9.816" d="M89.99 109.24c14.88-3.95 19.32-20.76 23.54-22.17"/><path fill="#c62828" d="M104.48 74.9c1.09 7.09 3.23 7.62 6.96 7.43c5.65-.28 6.27-1.58 7.53-11.26c1.56-12.02-2.95-28.77-6.84-40.25c-2.06-6.08-1.85-10.25-6.44-14.89c-2.52-2.55-12.33-6.3-15.18-1.42c-1.96 3.36-.98 6.77.89 9.47c5.43 7.86 10.43 33.77 13.08 50.92"/><path fill="#37474f" d="M93.06 26.91c1.04 2.13 2.11 4.89 2.98 8c8.86-.27 18.46 3.98 18.46 3.72c0-.22-.75-5.99-3.19-11.71c-1.06-2.48-4.29-9.28-8.29-8.62c-5.03.84-9.96 8.61-9.96 8.61" opacity="0.59"/><path fill="#f44336" d="M85.95 39.19c2.61-5.58 12.26-19.78 17.81-20.24c2.75-.23 5.84 5.46 6.97 8.57c3.17 8.73 6.62 22.43 7.63 36.73c.63 8.92-1 16.02-4.36 18.97c12.88-2.41 7.85-30.52 6.76-36.34c-3.67-19.49-8.48-26.84-12.17-30.77c-2.82-3-15.1-9.35-21.58-9.05c-4.99.23-15.91 9.56-18.89 14.73c-.88 1.52 17.83 17.4 17.83 17.4"/><path fill="#ff7555" d="M68.66 123.73c16.9-1.34 27.59-10.84 28.71-19.85c3.86-31.14-3.77-76.17-34.16-84.9c-3.39-.97-9.35-2.25-14.53-2.25c-6.03 0-15.33 1.27-22.01 5.85c-12.18 8.36-15.43 20.26-16.23 26.16c-2.95 21.63 36.96 76.68 58.22 74.99"/><path fill="#c62828" d="M97.37 103.88c2.01-16.2.91-36.15-4.89-52.81c-3.02-3.9-6.38-5.73-9.16-4.83c-3.34 1.08-6.27 5.53-5.21 10.01c0 0 8.09 32.46 2.59 52.99c-3.64 13.59-13.23 14.52-13.23 14.52c.4 0 .8 0 1.19-.03c16.91-1.34 27.59-10.84 28.71-19.85"/><path fill="#f44336" d="M18.62 120.38c5.1 1.61 18.51 3.62 42.26 3.62c21.33 0 21.18-7.59 22.94-16.5c3.62-18.38-1.34-78.26-38.49-79.55C12.84 26.81 9.59 45.89 7.14 66.61c-2.56 21.67-1.96 29.78-.72 38.61c1.61 11.54 8.69 14.05 12.2 15.16"/><path fill="#37474f" d="M90.05 59.81c-.86-4.52-2.08-9.49-4.09-14.34l-2.42.11c1.81 4.11 3.31 8.94 4.39 14.63c3.45 18.23 3.85 30.45 3.67 37.08c-.11 3.98 2.08 4 2.19-.25c.17-6.81-.29-18.99-3.74-37.23"/><path fill="#e2a610" d="M92.53 95.21a2.626 2.626 0 0 0-1.73 2.92l1.3 7.54a2.19 2.19 0 0 0 3.17 1.64l3.62-1.85c1.18-.6 1.56-2.11.81-3.2l-4.17-6.06a2.62 2.62 0 0 0-3-.99"/><path fill="#ffca28" d="M94.23 105.83c-.18-.33-1.14-5.47-1.43-7.81c-.32-2.63.81-2.78.98-2.92a2.62 2.62 0 0 0-2.99 3.03l1.3 7.54c.15 1.03.96 1.75 1.89 1.87c.42.05.86-.01 1.28-.23l.84-.43c-.04-.01-1.28.03-1.87-1.05"/><path fill="#546e7a" d="m119.95 92.13l-9.34.83c-.86.08-1.63-.56-1.7-1.43l-.71-7.93c-.08-.86.56-1.63 1.43-1.7l9.34-.83c.86-.08 1.63.56 1.7 1.43l.71 7.93c.07.86-.57 1.62-1.43 1.7"/><path fill="#37474f" d="m117.41 92.43l-8.84.79c-.86.08-1.63-.56-1.7-1.43l-.72-8.09c-.08-.86.56-1.63 1.43-1.7l8.84-.79c.86-.08 1.63.56 1.7 1.43l.72 8.09c.07.86-.57 1.62-1.43 1.7"/><path fill="#a06841" d="m111.28 101.56l-2.71-14.28c-.05-.24.12-.47.37-.49l7.13-.72c.2-.02.39.11.44.31l3.52 13.18c.23.86-.3 1.75-1.17 1.95l-5.68 1.3c-.87.19-1.74-.37-1.9-1.25"/><path fill="#fff59d" d="m49.47 58.81l-15.43-.46c-1.35 0-2.45-1.1-2.45-2.45l.21-7.94c0-1.33 1.06-2.42 2.39-2.45l15.26.41a2.453 2.453 0 0 1 2.52 2.4l-.03 7.99c.01 1.37-1.09 2.5-2.47 2.5" opacity="0.65"/><path fill="#ff7555" d="M87.01 7.05c-3.78.12-11.09 5.62-15.58 10.49c2.32-.19 7.81 2.38 12.37 5.9c.91.7 3.15.57 4.61-1c1.33-1.43 2.58-2.53 3.92-3.95c7.86-8.33 14.04-4.2 14.04-4.2c-6.5-4.23-14.42-7.39-19.36-7.24"/><path fill="#546e7a" d="M86.27 46.23C81.34 33.91 71.39 22.06 49.65 20.1c-15.1-1.36-25.27 5.65-29.41 8.19c-.92.56-1.95 1.26-2.65 2.22c-.89 1.22-1.01 2.22-1.01 2.22s13.1-12.23 32.87-10.48c11.3 1 26.14 4.77 34.31 23.87c.69-.17 1.62-.07 2.51.11"/><path fill="#ff7555" d="M69.35 114.25s-15.98 1.11-33.95.13c-9.47-.52-16.41-1.88-17.82-3.71c-1.74-2.26-3.8-4.45-3.8-16.07c0-7.83 2.89-14.14 8.49-14.28c4.28-.11 49.21-.6 45.82-.6s-6.45 7.43-6.14 15.44c.76 19.63 7.4 19.09 7.4 19.09"/><path fill="#ff7555" d="M53.67 94.6c.35-.1 3.53.18 6.07-1.59c.96-.67 1.72-1.23 2.33-1.87c.59-6 2.95-10.89 5.59-11.37c.09-.02.18-.04.26-.05c-3.92.08-35.97-1.1-45.98-.95c-4.64.07-8.22 5.53-7.9 11.95c.67 1.19 1.75 2.47 3.4 2.72c3.24.49 35.88 1.27 36.23 1.16"/><path fill="#fff59d" d="M53.67 94.6c.35-.1 3.53.18 6.07-1.59c.96-.67 1.72-1.23 2.33-1.87c.59-6 2.95-10.89 5.59-11.37c.09-.02.18-.04.26-.05c-3.92.08-35.97-1.1-45.98-.95c-4.64.07-8.22 5.53-7.9 11.95c.67 1.19 1.75 2.47 3.4 2.72c3.24.49 35.88 1.27 36.23 1.16" opacity="0.45"/><path fill="#c62828" d="M74.42 89.7c-.34-5.22-1.57-7.7-2.69-8.88c-1.03-1.1-2.64-1.19-4.93-1.08c-1.42.07-4.01 1.43-5.1 9.46v-.01c-.86 1.95-3.11 3.89-6.84 3.89l-35.75-1.16c-3.58-.23-4.89-3.65-5.06-3.96c0 0-.52 2.41-.03 3.94c.62 1.92 2.9 3.06 5.09 3.06l35.75 1.16c2.85 0 5.02-1.13 6.42-2.18q-.09 1.86-.09 4.05c0 15.36 4.43 16.52 7.26 16.39c2.83-.14 5.6-1.22 6.05-3.73c.64-3.51.57-10.89-.08-20.95"/></svg> </span>
+              
+             背包 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="dynamic_programming/背包/index.html">01背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="dynamic_programming/多重背包/index.html">多重背包</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="#00bcd4" d="M19 22h10v20H19zM32 8h10v34H32zM6 30h10v12H6z"/><g fill="#3f51b5"><path d="m11 8l10 10V8z"/><path d="m9.394 22.437l-2.828-2.828l9.969-9.969l2.828 2.828z"/></g></svg> </span>
+              
+             线性动态规划 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-folder-open-o"></i>
+          <a href="javascript:void(0);" class="menu-no-link">第四章 数据结构</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/heap">堆</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/Block">分块算法</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/BIT">树状数组</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/segment-tree">线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/stack">栈</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/stack/表达式">表达式求值</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/stack/monotonic-stack">单调栈</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="512" height="105" viewBox="0 0 512 105"><path fill="#4fb58b" d="m92.384 56.139l.068.005l7.077.74c.497.053.953.296 1.275.675l.053.064l-.068.034c.331.417.477.952.404 1.48a52.72 52.72 0 0 1-16.456 32.072a50.97 50.97 0 0 1-34.662 13.598a50.4 50.4 0 0 1-18.257-3.389l-.317-.124a1.87 1.87 0 0 1-1.062-1.001l-.03-.074a1.94 1.94 0 0 1-.034-1.448l2.794-6.815a1.917 1.917 0 0 1 2.42-1.108l.064.024a40.06 40.06 0 0 0 41.67-8a41.32 41.32 0 0 0 13.01-25.047a1.95 1.95 0 0 1 1.983-1.69zM259.52 27.215c6.034 0 10.753 1.841 13.767 5.377l.1.12V29.72a1.68 1.68 0 0 1 1.514-1.592l.067-.005h8.052c.828.057 1.487.71 1.559 1.53l.004.067v44.696a27.2 27.2 0 0 1-5.48 17.532c-4.337 5.278-10.926 7.951-19.583 7.951c-12.035 0-21.533-7.614-23.096-18.49a1.68 1.68 0 0 1 1.144-1.762l.066-.02l7.867-1.85q.06-.012.124-.022a1.58 1.58 0 0 1 1.792 1.334a11.9 11.9 0 0 0 12.103 10.506c9.303 0 13.68-4.728 13.766-14.61l.001-.3v-3.917a17.67 17.67 0 0 1-13.767 5.9c-13.38 0-23.08-10.388-23.08-24.676a26 26 0 0 1 6.355-17.532a22.17 22.17 0 0 1 16.725-7.245M17.198 81.577l.1-.001h.1a5.9 5.9 0 0 1 5.833 5.834v.1l-.001.1a5.934 5.934 0 1 1-6.032-6.033m381.7-54.984l.412.003c14.384.199 23.296 10.211 23.296 26.237q0 1.272-.136 2.538a1.56 1.56 0 0 1-1.478 1.41l-.067.002h-34.19c.21 7.18 6.146 12.862 13.33 12.758a11.986 11.986 0 0 0 12.237-8.539a1.58 1.58 0 0 1 1.903-.96l.063.019l6.824 2.403c.378.122.686.39.86.74l.031.067c.188.37.22.8.087 1.194a22.51 22.51 0 0 1-22.004 15.296a24.3 24.3 0 0 1-17.348-7.043a27.12 27.12 0 0 1-7.447-19.684c0-16.391 11.78-26.242 23.284-26.438zm-193.47 0h.017c14.641 0 23.735 10.052 23.735 26.24a25 25 0 0 1-.135 2.538a1.546 1.546 0 0 1-1.481 1.41l-.065.002h-34.19c.21 7.2 6.177 12.89 13.38 12.758a11.97 11.97 0 0 0 12.237-8.539a1.563 1.563 0 0 1 1.903-.961l.064.02l6.824 2.403c.4.13.724.423.891.807c.16.382.16.812 0 1.194a22.51 22.51 0 0 1-21.986 15.296a24.3 24.3 0 0 1-17.381-7.043a27.2 27.2 0 0 1-7.447-19.684c0-16.557 12.019-26.44 23.634-26.44m-51.773-.017c6.572 0 11.884 1.597 15.818 4.74c2.66 2.12 4.63 4.98 5.665 8.22l.003.013a1.076 1.076 0 0 1-.738 1.284l-.055.014l-8.153 2.69a1.53 1.53 0 0 1-1.126 0a1.2 1.2 0 0 1-.64-.74l-.042-.16c-.743-2.654-3.17-6.916-10.732-6.916c-5.379 0-8.606 3.093-8.606 6.085l.001.118c.04 1.946 1.098 4.388 5.737 5.316l.145.029l8.976 1.68c9.918 1.998 15.635 7.388 15.749 14.9l.001.23l-.033-.135l-.002.228c-.144 7.53-7.429 15.455-20.842 15.455c-15.716 0-21.885-8.892-23.029-14.137a1.126 1.126 0 0 1 .784-1.228l.057-.016l8.405-2.622a1.4 1.4 0 0 1 .453 0a1.4 1.4 0 0 1 .618.132l.072.036c.308.148.536.425.621.756c1.06 5.044 5.615 8.052 12.17 8.052c6.102 0 8.876-3.194 8.876-6.085c0-2.86-2.417-4.979-6.584-5.854l-.14-.03l-9.43-1.831c-8.791-1.664-14.27-7.128-14.27-14.238c0-8.657 9.295-15.986 20.271-15.986M492.67 12.574h7.346a1.68 1.68 0 0 1 1.578 1.616l.002.065v13.8h8.84c.86.061 1.53.76 1.564 1.615l.001.066v7.393a1.58 1.58 0 0 1-1.5 1.531l-.066.002h-8.84v24.525c0 4.068 1.612 5.75 5.764 5.75a22 22 0 0 0 2.514-.192l.312-.044a1.56 1.56 0 0 1 1.277.353c.317.294.507.699.536 1.13l.003.08v6.909a1.58 1.58 0 0 1-1.127 1.53a22 22 0 0 1-5.945.809l-.274-.003c-8.772 0-14.245-5.585-14.354-14.618l-.001-.275V38.763h-7.65a1.68 1.68 0 0 1-1.575-1.53l-.004-.067v-7.362a1.68 1.68 0 0 1 1.515-1.676l.065-.005h2.056l.219-.004c2.4-.07 6.087-1.042 6.162-6.4l.002-.169v-7.295a1.68 1.68 0 0 1 1.515-1.676zM349.897 26.586l.193.007h-.017c8.654 0 17.39 6.03 17.564 19.198l.002.402v31.131a1.68 1.68 0 0 1-1.512 1.592l-.068.005h-8.052a1.68 1.68 0 0 1-1.575-1.53l-.005-.067V47.202l-.002-.232c-.049-3.839-1.353-10.006-9.259-10.006c-5.842 0-10.004 4.548-10.086 11.163l-.002.2v28.997a1.68 1.68 0 0 1-1.512 1.592l-.068.005h-8.15a1.68 1.68 0 0 1-1.576-1.53l-.004-.067V47.202l-.002-.232c-.049-3.839-1.353-10.006-9.262-10.006c-6.073 0-10.186 4.515-10.268 11.26l-.001.205v28.895a1.68 1.68 0 0 1-1.513 1.592l-.067.005h-8.053a1.68 1.68 0 0 1-1.558-1.53l-.004-.067V29.619a1.68 1.68 0 0 1 1.496-1.591l.066-.006h7.75a1.68 1.68 0 0 1 1.576 1.53l.004.067v2.874a18.1 18.1 0 0 1 13.614-5.9a16.08 16.08 0 0 1 14.508 8.22a18.2 18.2 0 0 1 15.843-8.227m120.566 5.94a22.23 22.23 0 0 1 4.511 14.157l-.008.216v30.425a1.68 1.68 0 0 1-1.496 1.591l-.066.006h-8.151a1.684 1.684 0 0 1-1.578-1.53l-.005-.067V48.529c0-7.53-3.546-11.363-10.27-11.363a9.35 9.35 0 0 0-7.648 3.564a14.75 14.75 0 0 0-2.626 8.742l.005.184v27.668a1.68 1.68 0 0 1-1.513 1.592l-.067.005h-8.136a1.68 1.68 0 0 1-1.576-1.53l-.004-.067V29.585c.04-.835.688-1.51 1.513-1.592l.067-.005h7.951a1.68 1.68 0 0 1 1.559 1.53l.004.067v3.362a17.5 17.5 0 0 1 13.885-6.354a17.01 17.01 0 0 1 13.649 5.934M1.95 58.179h57.875a1.967 1.967 0 0 1 1.95 1.916v7.313a1.967 1.967 0 0 1-1.883 1.981l-.067.002H1.95A1.97 1.97 0 0 1 0 67.474v-7.38a1.97 1.97 0 0 1 1.88-1.914zm258.966-20.91c-7.934 0-12.977 5.647-12.977 14.724S252.915 66.7 260.916 66.7c7.632 0 12.775-5.916 12.775-14.708c0-8.808-5.143-14.725-12.775-14.725m-67.25 9.82l-.021.18h23.92c-.583-6.39-5.086-10.374-11.83-10.453l-.206-.002A11.77 11.77 0 0 0 193.69 46.91zm193.493 0l-.021.18h23.921c-.582-6.39-5.087-10.374-11.832-10.453l-.205-.002a11.77 11.77 0 0 0-11.839 10.098zM67.07 2.892c.502.18.908.557 1.127 1.042c.2.49.2 1.04 0 1.53l-2.521 6.724a1.916 1.916 0 0 1-2.438 1.176a40.04 40.04 0 0 0-38.662 6.909a41.64 41.64 0 0 0-13.649 21.751a1.95 1.95 0 0 1-1.882 1.463h-.438l-6.925-1.664a1.93 1.93 0 0 1-1.227-.908H.42a1.95 1.95 0 0 1-.218-1.53a52.76 52.76 0 0 1 17.566-27.77A50.95 50.95 0 0 1 67.07 2.893M41.436 31.939H99.31a1.967 1.967 0 0 1 1.947 1.847l.003.069V41.1a1.967 1.967 0 0 1-1.882 1.982l-.068.001H41.435a1.967 1.967 0 0 1-1.932-1.915v-7.246a1.967 1.967 0 0 1 1.864-1.981zM81.612 9.834h.2a5.9 5.9 0 0 1 5.832 5.834v.2a5.934 5.934 0 1 1-6.032-6.034"/></svg> </span>
+              
+             线段树 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/persistent-segment-tree">可持久化线段树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/BST">二叉搜索树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/RBTree">红黑树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/AVL">AVL</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="data-structure/fhq-treap">FHQ-Treap</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-folder-open-o"></i>
+          <a href="javascript:void(0);" class="menu-no-link">第五章 图论</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/topsort/index.html">拓扑排序</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/Eulerian-path/index.html">欧拉回路</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/cut/cut_node.html">割点</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/cut/cut_edge.html">割边</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/bcc/index.html">双连通分量</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/scc/index.html">强连通分量</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/diameter_of_tree">树的直径</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/center_of_tree">树的中心</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/MST">最小生成树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/MST/严格次小生成树/index.html">严格次小生成树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/pseudotree">基环树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/kruskal">Kruskal</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/floyed">floyed算法</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#000" d="m26 8l-4-4l-4 4l1.41 1.42L21 7.83V18h2V7.83l1.58 1.58zM12.59 22.58L11 24.17V14H9v10.17l-1.58-1.58L6 24l4 4l4-4zM2 2h2v28H2zm26 0h2v28h-2zM15 2h2v4h-2zm0 8h2v4h-2zm0 8h2v4h-2zm0 8h2v4h-2z"/></svg> </span>
+              
+             网络流 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/网络流/index.html">网络流:序</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/二分图/黑白染色.html">二分图染色</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/网络流/二分图/index.html">二分图</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string">字符串</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string/进制hash/index.html">进制hash</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string/manacher/index.html">马拉车-Manacher</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="string/最小表示法/index.html">最小表示法</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind">思维方式</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind/index.html">总结</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind/约束松弛.html">约束松弛</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="thinkMind/特例化-归纳.html">特例化-归纳</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math">数学</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/向上取整.html">向上取整</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/log.html">对数</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/集合.html">集合</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/反证法.html">反证法</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0"/><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="m12 3l4.33 6.75H7.67zM3 14h7v7H3zm18 3.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z"/></g></svg> </span>
+              
+             组合数学 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/combinatorics/112_combinatorial_problems/index.html">112个组合问题</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/index.html">数论</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/group_theory/index.html">群论</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/Eratosthenes.html">埃氏筛</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/整除分块/index.html">整除分块</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/inverse/index.html">模逆元</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/crt.html">中国剩余定理</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/线性筛/index.html">线性筛</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/欧拉函数.html">欧拉函数</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="math/numherTheory/线性欧拉函数.html">线性筛欧拉函数</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-folder-open-o"></i>
+          <a href="javascript:void(0);" class="menu-no-link">附录</a>
+        
+
+        
+          
+  
+  <ul>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22"/></svg> </span>
+              
+             技巧 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/quickIO.html">quickIO</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/assert的使用.html">assert断言的使用</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/写题步奏.html">写题步奏</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/macos.html">macos下使用万能头文件</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/常用命令.html">常用命令</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/常用变量名.html">常用变量名</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/口诀.html">口诀 🧠📜</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/题目模式识别.html">题目模式识别📜</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="#0065a9" d="m29.01 5.03l-5.766-2.776a1.74 1.74 0 0 0-1.989.338L2.38 19.8a1.166 1.166 0 0 0-.08 1.647q.037.04.077.077l1.541 1.4a1.165 1.165 0 0 0 1.489.066L28.142 5.75A1.158 1.158 0 0 1 30 6.672v-.067a1.75 1.75 0 0 0-.99-1.575"/><path fill="#007acc" d="m29.01 26.97l-5.766 2.777a1.745 1.745 0 0 1-1.989-.338L2.38 12.2a1.166 1.166 0 0 1-.08-1.647q.037-.04.077-.077l1.541-1.4A1.165 1.165 0 0 1 5.41 9.01l22.732 17.24A1.158 1.158 0 0 0 30 25.328v.072a1.75 1.75 0 0 1-.99 1.57"/><path fill="#1f9cf0" d="M23.244 29.747a1.745 1.745 0 0 1-1.989-.338A1.025 1.025 0 0 0 23 28.684V3.316a1.024 1.024 0 0 0-1.749-.724a1.74 1.74 0 0 1 1.989-.339l5.765 2.772A1.75 1.75 0 0 1 30 6.6v18.8a1.75 1.75 0 0 1-.991 1.576Z"/></svg> </span>
+              
+             vscode 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/vscode/如何调试.html">如何调试</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <a href="javascript:void(0);" class="menu-info">
+            <span>
+              
+                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="#000"><path d="m3.463 12.86l-.005-.07zm7.264.69l-3.034-3.049l1.014-1.014l3.209 3.225l3.163-3.163l1.014 1.014l-3.034 3.034l3.034 3.05l-1.014 1.014l-3.209-3.225L8.707 17.6l-1.014-1.014l3.034-3.034z"/><path fill-rule="evenodd" d="M16.933 5.003V6h1.345l2.843-2.842l1.014 1.014l-2.692 2.691l.033.085a13.8 13.8 0 0 1 .885 4.912q0 .503-.034.995l-.005.075h3.54v1.434h-3.72l-.01.058c-.303 1.653-.891 3.16-1.692 4.429l-.06.094l3.423 3.44l-1.017 1.012l-3.274-3.29l-.099.11c-1.479 1.654-3.395 2.646-5.483 2.646c-2.12 0-4.063-1.023-5.552-2.723l-.098-.113l-3.209 3.208l-1.014-1.014l3.366-3.365l-.059-.095c-.772-1.25-1.34-2.725-1.636-4.34l-.01-.057H0V12.93h3.538l-.005-.075a14 14 0 0 1-.034-.995c0-1.743.31-3.39.863-4.854l.032-.084l-2.762-2.776L2.65 3.135L5.5 6h1.427v-.997a5.003 5.003 0 0 1 10.006 0m-8.572 0V6H15.5v-.997a3.569 3.569 0 0 0-7.138 0zm9.8 2.522l-.034-.09H5.733l-.034.09a12.3 12.3 0 0 0-.766 4.335c0 2.76.862 5.201 2.184 6.92c1.32 1.716 3.036 2.649 4.813 2.649s3.492-.933 4.813-2.65c1.322-1.718 2.184-4.16 2.184-6.919c0-1.574-.28-3.044-.766-4.335" clip-rule="evenodd"/></g></svg> </span>
+              
+             lldb的使用 
+            </span>
+          </a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/lldb/lldb如何调试.html">lldb如何调试</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/lldb/lldb实现display命令.html">lldb实现display命令</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/lldb/lldbinit.html">lldbinit使用</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/gdb/lldbpython脚本入门.html">lldbpython脚本入门</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/software/常用软件.html">常用软件</a>
+        
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+        
+
+      </li>
+    
+  </ul>
+  
+
+</div>
+
+
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="page-header">
+        <h1>题目模式识别</h1>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">第一章 基础数据结构</a></li><li><a href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95">第二章 基本算法</a></li><li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%90%9C%E7%B4%A2">第三章 搜索</a></li><li><a href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">第四章 高级数据结构</a></li><li><a href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-(dp)">第五章 动态规划 (DP)</a></li><li><a href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%95%B0%E8%AE%BA%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0">第六章 数论与线性代数</a></li><li><a href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6">第七章 组合数学</a></li><li><a href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95">第八章 计算几何</a></li><li><a href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E5%AD%97%E7%AC%A6%E4%B8%B2">第九章 字符串</a></li><li><a href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-%E5%9B%BE%E8%AE%BA-(%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D)">第十章 图论 (重中之重)</a></li><li><a href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BF%99%E4%B8%AA%E8%A1%A8%E6%A0%BC%EF%BC%9F">如何使用这个表格？</a></li></ol></nav><h2 id="%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" tabindex="-1">第一章 基础数据结构</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>只涉及两端的插入删除</strong> / “滑动窗口” / “保持队列单调性”</td>
+<td><strong>双端队列 / 单调队列</strong></td>
+<td>滑动窗口最大值</td>
+<td><strong>P1886 滑动窗口</strong> LeetCode 239</td>
+</tr>
+<tr>
+<td><strong>“后进先出”</strong> / “括号匹配” / “后缀表达式”</td>
+<td><strong>栈 (Stack)</strong></td>
+<td>简单的语法解析</td>
+<td><strong>P1739 表达式括号匹配</strong> P1449 后缀表达式</td>
+</tr>
+<tr>
+<td><strong>“找左边/右边第一个比它大/小的数”</strong></td>
+<td><strong>单调栈</strong></td>
+<td>接雨水, 柱状图最大矩形</td>
+<td><strong>P5788 单调栈模板</strong> LeetCode 84 (柱状图)</td>
+</tr>
+<tr>
+<td><strong>“中位数动态维护”</strong> / “动态第 K 大”</td>
+<td><strong>堆 (Heap) / 优先队列</strong></td>
+<td>对顶堆维护中位数</td>
+<td><strong>P1168 中位数</strong> P1090 合并果子</td>
+</tr>
+<tr>
+<td><strong>“合并果子”</strong> / “最小代价合并” / “带权路径长度最短”</td>
+<td><strong>哈夫曼树 (Huffman)</strong></td>
+<td>贪心合并策略</td>
+<td><strong>P1090 合并果子</strong></td>
+</tr>
+<tr>
+<td><strong>“最近最久未使用 (LRU)”</strong> / “频繁的中间删除与插入”</td>
+<td><strong>双向链表</strong></td>
+<td>通常结合 Hash 使用</td>
+<td><strong>LeetCode 146 LRU缓存</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95" tabindex="-1">第二章 基本算法</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“区间和”</strong> / “求某段连续子数组的和”</td>
+<td><strong>前缀和</strong></td>
+<td>二维前缀和</td>
+<td><strong>P1719 最大加权矩形</strong> P1387 最大正方形</td>
+</tr>
+<tr>
+<td><strong>“区间修改，单点查询”</strong> / “原序列差分后变单点修改”</td>
+<td><strong>差分数组</strong></td>
+<td>频繁区间加减</td>
+<td><strong>P1083 借教室</strong> P3397 地毯</td>
+</tr>
+<tr>
+<td><strong>“连续子区间”</strong> + <strong>“满足某条件”</strong></td>
+<td><strong>尺取法 / 滑动窗口</strong></td>
+<td>找和 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">\ge S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></eq> 的最短子数组</td>
+<td><strong>P1638 逛画展</strong> POJ 3061</td>
+</tr>
+<tr>
+<td><strong>“最大值最小”</strong> / <strong>“最小值最大”</strong></td>
+<td><strong>二分答案</strong></td>
+<td>Check 函数判定</td>
+<td><strong>P2440 木材加工</strong> P2678 跳石头</td>
+</tr>
+<tr>
+<td><strong>“求单峰函数的极值”</strong> (如抛物线)</td>
+<td><strong>三分法</strong></td>
+<td>物理/几何求极值</td>
+<td><strong>P3382 三分法模板</strong></td>
+</tr>
+<tr>
+<td><strong>“静态区间最值查询 (RMQ)”</strong> / “不可修改”</td>
+<td><strong>ST 表</strong></td>
+<td>倍增思想</td>
+<td><strong>P3865 ST 表模板</strong></td>
+</tr>
+<tr>
+<td><strong>“求第 K 个祖先”</strong> / “路径上的跳跃”</td>
+<td><strong>倍增法</strong></td>
+<td>LCA 的基础</td>
+<td><strong>P3379 LCA 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“坐标范围很大 (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></eq>)”</strong> 但 <strong>“点数很少”</strong></td>
+<td><strong>离散化</strong></td>
+<td>只关心相对大小</td>
+<td><strong>P1496 火烧赤壁</strong> P1955 程序自动分析</td>
+</tr>
+<tr>
+<td><strong>“求逆序对”</strong> / “只交换相邻元素还原序列的最小次数”</td>
+<td><strong>归并排序 / 树状数组</strong></td>
+<td></td>
+<td><strong>P1908 逆序对</strong></td>
+</tr>
+<tr>
+<td><strong>“区间调度”</strong> / “局部最优致全局最优”</td>
+<td><strong>贪心</strong></td>
+<td>活动安排问题</td>
+<td><strong>P1803 凌乱的yyy</strong> P1223 排队接水</td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%90%9C%E7%B4%A2" tabindex="-1">第三章 搜索</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“最小步数”</strong> / <strong>“最短路”</strong> (边权为1)</td>
+<td><strong>BFS</strong></td>
+<td>迷宫问题</td>
+<td><strong>P1443 马的遍历</strong> P1162 填涂颜色</td>
+</tr>
+<tr>
+<td><strong>“连通块计数”</strong> / “填充颜色”</td>
+<td><strong>Flood Fill</strong></td>
+<td>岛屿数量</td>
+<td><strong>LeetCode 200 岛屿数量</strong></td>
+</tr>
+<tr>
+<td><strong>“求所有方案”</strong> / “全排列” / “棋盘摆放”</td>
+<td><strong>DFS + 回溯</strong></td>
+<td>N 皇后, 数独</td>
+<td><strong>P1219 八皇后</strong> P1784 数独</td>
+</tr>
+<tr>
+<td><strong>“已知起点和终点”</strong> + <strong>“状态空间巨大但深度已知”</strong></td>
+<td><strong>双向广搜</strong></td>
+<td>单词接龙, 华容道</td>
+<td><strong>P1379 八数码难题</strong></td>
+</tr>
+<tr>
+<td><strong>“网格图最短路”</strong> + <strong>“有启发式估价函数”</strong></td>
+<td><strong>A* 算法</strong></td>
+<td>K 短路问题</td>
+<td><strong>P1379 八数码 (A*版)</strong> P2483 K短路</td>
+</tr>
+<tr>
+<td><strong>“状态极多”</strong> + <strong>“要求最短路”</strong> + <strong>“内存受限”</strong></td>
+<td><strong>IDA</strong>*</td>
+<td>埃及分数</td>
+<td><strong>P1763 埃及分数</strong> P2324 骑士精神</td>
+</tr>
+<tr>
+<td><strong>“决策树极大”</strong> / “博弈”</td>
+<td><strong>Minimax + Alpha-Beta</strong></td>
+<td>棋类 AI</td>
+<td><strong>LeetCode 486 预测赢家</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" tabindex="-1">第四章 高级数据结构</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“判断连通性”</strong> / “集合合并”</td>
+<td><strong>并查集 (DSU)</strong></td>
+<td>关押罪犯</td>
+<td><strong>P3367 并查集模板</strong> P1525 关押罪犯</td>
+</tr>
+<tr>
+<td><strong>“边带权值的集合关系”</strong> (A比B大1…)</td>
+<td><strong>带权并查集</strong></td>
+<td>食物链</td>
+<td><strong>P2024 食物链</strong> P1196 银河英雄传说</td>
+</tr>
+<tr>
+<td><strong>“单点修改 + 区间查询”</strong> / “求逆序对”</td>
+<td><strong>树状数组 (BIT)</strong></td>
+<td>简单高效</td>
+<td><strong>P3374 树状数组 1</strong></td>
+</tr>
+<tr>
+<td><strong>“区间修改 + 区间查询”</strong></td>
+<td><strong>线段树</strong></td>
+<td>懒标记</td>
+<td><strong>P3372 线段树 1</strong> P3373 线段树 2</td>
+</tr>
+<tr>
+<td><strong>“查询历史版本”</strong> / <strong>“静态区间第 K 小”</strong></td>
+<td><strong>主席树</strong></td>
+<td>强制在线</td>
+<td><strong>P3834 可持久化线段树 1</strong></td>
+</tr>
+<tr>
+<td><strong>“离线区间查询”</strong> + <strong>“区间端点移动代价小”</strong></td>
+<td><strong>莫队算法</strong></td>
+<td>奇偶排序优化</td>
+<td><strong>P1494 小Z的袜子</strong> P2709 小B的询问</td>
+</tr>
+<tr>
+<td><strong>“树上两点的距离”</strong> / <strong>“树上路径信息”</strong></td>
+<td><strong>LCA</strong></td>
+<td>倍增或 Tarjan</td>
+<td><strong>P3379 LCA 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“修改树上路径权值”</strong> / <strong>“修改子树权值”</strong></td>
+<td><strong>树链剖分</strong></td>
+<td>树拉直成序列</td>
+<td><strong>P3384 树链剖分模板</strong></td>
+</tr>
+<tr>
+<td><strong>“平衡树操作”</strong> + <strong>“区间翻转/移动”</strong></td>
+<td><strong>Splay / FHQ Treap</strong></td>
+<td>文艺平衡树</td>
+<td><strong>P3369 普通平衡树</strong> P3391 文艺平衡树</td>
+</tr>
+<tr>
+<td><strong>“动态维护森林连通性”</strong> / “动态加删边”</td>
+<td><strong>LCT</strong></td>
+<td>动态树问题</td>
+<td><strong>P3690 LCT 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“二维平面最近点对”</strong></td>
+<td><strong>K-D Tree</strong></td>
+<td>多维二分</td>
+<td><strong>P1429 平面最近点对</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-(dp)" tabindex="-1">第五章 动态规划 (DP)</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“N <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo></mrow><annotation encoding="application/x-tex">\le</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≤</span></span></span></span></eq> 20”</strong> / “集合状态” / “哈密顿路径”</td>
+<td><strong>状压 DP</strong></td>
+<td>TSP 问题</td>
+<td><strong>P1879 Corn Fields</strong> P1896 互不侵犯</td>
+</tr>
+<tr>
+<td><strong>“求区间 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>L</mi><mo separator="true">,</mo><mi>R</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[L, R]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">L</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">]</span></span></span></span></eq> 内满足某条件的数”</strong></td>
+<td><strong>数位 DP</strong></td>
+<td>不要 62</td>
+<td><strong>P2602 数字计数</strong> P2657 Windy 数</td>
+</tr>
+<tr>
+<td><strong>“合并石子”</strong> / “括号匹配”</td>
+<td><strong>区间 DP</strong></td>
+<td>枚举断点</td>
+<td><strong>P1880 石子合并</strong> P1063 能量项链</td>
+</tr>
+<tr>
+<td><strong>“树上最大独立集”</strong> / “树的直径”</td>
+<td><strong>树形 DP</strong></td>
+<td>选父不选子</td>
+<td><strong>P1352 没有上司的舞会</strong> P2015 二叉苹果树</td>
+</tr>
+<tr>
+<td><strong>“求总方案数”</strong> + <strong>“N 很大”</strong> + <strong>“线性递推”</strong></td>
+<td><strong>矩阵快速幂优化</strong></td>
+<td>斐波那契</td>
+<td><strong>P1939 矩阵加速</strong> P1962 斐波那契</td>
+</tr>
+<tr>
+<td><strong>“状态转移方程类似 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>=</mo><mi>min</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>+</mo><mo>…</mo></mrow><annotation encoding="application/x-tex">dp[i] = \min(dp[j]) + \dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">])</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.123em;"></span><span class="minner">…</span></span></span></span></eq>”</strong></td>
+<td><strong>单调队列优化</strong></td>
+<td>滑动窗口最值</td>
+<td><strong>P1886 滑动窗口</strong> (DP基础) P2627 修剪草坪</td>
+</tr>
+<tr>
+<td><strong>“状态转移含乘积项”</strong> ( <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>×</mo><mi>B</mi><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">A[i] \times B[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span></eq> )</td>
+<td><strong>斜率优化</strong></td>
+<td>维护凸包</td>
+<td><strong>P3195 玩具装箱</strong> P2365 任务安排</td>
+</tr>
+<tr>
+<td><strong>“区间 DP 的决策点单调”</strong></td>
+<td><strong>四边形不等式优化</strong></td>
+<td></td>
+<td><strong>P1880 石子合并 (优化版)</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E5%85%AD%E7%AB%A0-%E6%95%B0%E8%AE%BA%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0" tabindex="-1">第六章 数论与线性代数</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“最大公约数”</strong> / “不定方程”</td>
+<td><strong>GCD / ExGCD</strong></td>
+<td>裴蜀定理</td>
+<td><strong>P1082 同余方程</strong> P5656 ExGCD模板</td>
+</tr>
+<tr>
+<td><strong>“求逆元”</strong> / “组合数取模”</td>
+<td><strong>费马小定理 / 逆元</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mrow><mi>p</mi><mo>−</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">a^{p-2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mbin mtight">−</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></eq></td>
+<td><strong>P3811 乘法逆元</strong></td>
+</tr>
+<tr>
+<td><strong>“求 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>∼</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">1 \sim N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 中与 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 互质的数”</strong></td>
+<td><strong>欧拉函数</strong></td>
+<td>欧拉定理</td>
+<td><strong>P2158 仪仗队</strong> P2303 Longge的问题</td>
+</tr>
+<tr>
+<td><strong>“求解模线性方程组”</strong> (韩信点兵)</td>
+<td><strong>中国剩余定理 (CRT)</strong></td>
+<td>模数互质</td>
+<td><strong>P1495 曹冲养猪</strong></td>
+</tr>
+<tr>
+<td><strong>“大组合数取模”</strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 大, <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></eq> 小)</td>
+<td><strong>卢卡斯定理</strong></td>
+<td></td>
+<td><strong>P3807 Lucas 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“求解异或方程组”</strong> / <strong>“子集异或最大值”</strong></td>
+<td><strong>线性基</strong></td>
+<td>异或空间基底</td>
+<td><strong>P3812 线性基模板</strong></td>
+</tr>
+<tr>
+<td><strong>“求解线性方程组”</strong> / “图的生成树计数”</td>
+<td><strong>高斯消元</strong></td>
+<td>矩阵行列式</td>
+<td><strong>P3389 高斯消元模板</strong></td>
+</tr>
+<tr>
+<td><strong>“求 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∑</mo><mo stretchy="false">⌊</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>i</mi><mo stretchy="false">⌋</mo></mrow><annotation encoding="application/x-tex">\sum \lfloor n/i \rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="mopen">⌊</span><span class="mord mathnormal">n</span><span class="mord">/</span><span class="mord mathnormal">i</span><span class="mclose">⌋</span></span></span></span></eq>”</strong></td>
+<td><strong>数论分块</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\sqrt{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0503em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8003em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">n</span></span></span><span style="top:-2.7603em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2397em;"><span></span></span></span></span></span><span class="mclose">)</span></span></span></span></eq></td>
+<td><strong>P2261 余数求和</strong></td>
+</tr>
+<tr>
+<td><strong>“涉及 GCD 求和”</strong> / <strong>“含有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi></mrow><annotation encoding="application/x-tex">\mu</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">μ</span></span></span></span></eq> 函数”</strong></td>
+<td><strong>莫比乌斯反演</strong></td>
+<td></td>
+<td><strong>P2522 Problem b</strong> P2257 YY的GCD</td>
+</tr>
+<tr>
+<td><strong>“0/1 分数规划”</strong> (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>max</mi><mo>⁡</mo><mfrac><mrow><mo>∑</mo><mi>a</mi></mrow><mrow><mo>∑</mo><mi>b</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\max \frac{\sum a}{\sum b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em;"></span><span class="mop">max</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∑</span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mathnormal mtight">b</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∑</span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mathnormal mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></eq>)</td>
+<td><strong>二分答案</strong></td>
+<td></td>
+<td><strong>POJ 2976 Dropping Tests</strong></td>
+</tr>
+<tr>
+<td><strong>“前缀和求得慢 (<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><msup><mn>10</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">N=10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></eq>)”</strong></td>
+<td><strong>杜教筛</strong></td>
+<td>积性函数前缀和</td>
+<td><strong>P4213 杜教筛模板</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E4%B8%83%E7%AB%A0-%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6" tabindex="-1">第七章 组合数学</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“证明存在性”</strong> / “同余类个数”</td>
+<td><strong>鸽巢原理</strong></td>
+<td></td>
+<td><strong>POJ 2356 Find a multiple</strong></td>
+</tr>
+<tr>
+<td><strong>“求方案数”</strong> / “多重集组合”</td>
+<td><strong>二项式定理 / 组合数</strong></td>
+<td></td>
+<td><strong>P1313 计算系数</strong></td>
+</tr>
+<tr>
+<td><strong>“合法方案 = 总方案 - 非法方案”</strong></td>
+<td><strong>容斥原理</strong></td>
+<td>错排问题</td>
+<td><strong>P1450 硬币购物</strong> P2197 lookback</td>
+</tr>
+<tr>
+<td><strong>“进出栈序列数”</strong> / “多边形三角剖分”</td>
+<td><strong>卡特兰数</strong></td>
+<td></td>
+<td><strong>P1044 栈</strong></td>
+</tr>
+<tr>
+<td><strong>“第一类/第二类斯特林数”</strong></td>
+<td><strong>Stirling Number</strong></td>
+<td>环排列/集合划分</td>
+<td><strong>P1287 盒子与球</strong></td>
+</tr>
+<tr>
+<td><strong>“本质不同的染色方案”</strong></td>
+<td><strong>Burnside / Polya</strong></td>
+<td>群论计数</td>
+<td><strong>POJ 2409 Let it Bead</strong></td>
+</tr>
+<tr>
+<td><strong>“博弈游戏”</strong> / “多堆石子取物”</td>
+<td><strong>SG 函数 / Nim 游戏</strong></td>
+<td>异或和为 0</td>
+<td><strong>P2197 Nim游戏</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E5%85%AB%E7%AB%A0-%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95" tabindex="-1">第八章 计算几何</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“点在直线的哪一侧”</strong> / “线段相交”</td>
+<td><strong>叉积</strong></td>
+<td>右手法则</td>
+<td><strong>POJ 1269 Intersecting Lines</strong></td>
+</tr>
+<tr>
+<td><strong>“围住所有点的最小周长多边形”</strong></td>
+<td><strong>凸包</strong></td>
+<td>Andrew 算法</td>
+<td><strong>P2742 二维凸包模板</strong></td>
+</tr>
+<tr>
+<td><strong>“最远点对”</strong> / “最小矩形覆盖”</td>
+<td><strong>旋转卡壳</strong></td>
+<td>基于凸包</td>
+<td><strong>P1452 Beauty Contest</strong></td>
+</tr>
+<tr>
+<td><strong>“矩形面积并”</strong> / “轮廓线长度”</td>
+<td><strong>扫描线</strong></td>
+<td>线段树维护</td>
+<td><strong>P5490 扫描线模板</strong></td>
+</tr>
+<tr>
+<td><strong>“半平面交”</strong> / “多边形核”</td>
+<td><strong>半平面交算法</strong></td>
+<td>线性规划</td>
+<td><strong>P4196 半平面交模板</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E4%B9%9D%E7%AB%A0-%E5%AD%97%E7%AC%A6%E4%B8%B2" tabindex="-1">第九章 字符串</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“字符串匹配”</strong> / “判断字符串相等”</td>
+<td><strong>哈希 (Hash)</strong></td>
+<td>滚动哈希</td>
+<td><strong>P3370 字符串哈希模板</strong></td>
+</tr>
+<tr>
+<td><strong>“最长回文子串”</strong></td>
+<td><strong>Manacher</strong></td>
+<td><eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>N</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span></eq> 复杂度</td>
+<td><strong>P3805 Manacher 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“多模式串匹配”</strong></td>
+<td><strong>AC 自动机</strong></td>
+<td>Trie + KMP</td>
+<td><strong>P3808 AC自动机模板</strong></td>
+</tr>
+<tr>
+<td><strong>“前缀出现次数”</strong> / <strong>“循环节”</strong></td>
+<td><strong>KMP</strong></td>
+<td>Next 数组</td>
+<td><strong>P3375 KMP 模板</strong> POJ 2406 Power Strings</td>
+</tr>
+<tr>
+<td><strong>“异或最大值”</strong> / “前缀查询”</td>
+<td><strong>字典树 (Trie)</strong></td>
+<td>01-Trie</td>
+<td><strong>P2580 于是他错误的…</strong> P4551 最长异或路径</td>
+</tr>
+<tr>
+<td><strong>“最长公共子串”</strong> / <strong>“本质不同子串”</strong></td>
+<td><strong>SA / SAM</strong></td>
+<td>终极武器</td>
+<td><strong>P3804 后缀自动机模板</strong> P3809 后缀排序</td>
+</tr>
+<tr>
+<td><strong>“回文串计数”</strong> / “本质不同回文串”</td>
+<td><strong>回文树 (PAM)</strong></td>
+<td></td>
+<td><strong>P5496 回文自动机模板</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="%E7%AC%AC%E5%8D%81%E7%AB%A0-%E5%9B%BE%E8%AE%BA-(%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D)" tabindex="-1">第十章 图论 (重中之重)</h2>
+<table>
+<thead>
+<tr>
+<th><strong>题面特征</strong></th>
+<th><strong>可能的思考方向 (触发器)</strong></th>
+<th><strong>经典/备注</strong></th>
+<th><strong>经典题目 (必刷)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>“依赖关系”</strong> / <strong>“有向无环图”</strong></td>
+<td><strong>拓扑排序</strong></td>
+<td>判环</td>
+<td><strong>P1038 神经网络</strong> P4017 最大食物链计数</td>
+</tr>
+<tr>
+<td><strong>“所有边恰好经过一次”</strong></td>
+<td><strong>欧拉路</strong></td>
+<td>一笔画</td>
+<td><strong>P6066 Watchcow</strong> P7771 欧拉路径模板</td>
+</tr>
+<tr>
+<td><strong>“任意两点间最短路”</strong> / <strong>N <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo></mrow><annotation encoding="application/x-tex">\le</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≤</span></span></span></span></eq> 500</strong></td>
+<td><strong>Floyd</strong></td>
+<td>传递闭包</td>
+<td><strong>P1364 医院设置</strong></td>
+</tr>
+<tr>
+<td><strong>“单源最短路”</strong> + <strong>“非负边权”</strong></td>
+<td><strong>Dijkstra</strong></td>
+<td>堆优化</td>
+<td><strong>P4779 单源最短路模板</strong></td>
+</tr>
+<tr>
+<td><strong>“单源最短路”</strong> + <strong>“负权边”</strong></td>
+<td><strong>SPFA</strong></td>
+<td>判负环</td>
+<td><strong>P3385 负环</strong></td>
+</tr>
+<tr>
+<td><strong>“连通所有点的最小代价”</strong></td>
+<td><strong>最小生成树 (MST)</strong></td>
+<td>Kruskal</td>
+<td><strong>P3366 最小生成树模板</strong></td>
+</tr>
+<tr>
+<td><strong>“强连通分量 (SCC)”</strong> / “缩点转 DAG”</td>
+<td><strong>Tarjan</strong></td>
+<td>缩点做 DP</td>
+<td><strong>P2863 The Cow Prom</strong> P3387 缩点</td>
+</tr>
+<tr>
+<td><strong>“割点 / 割边”</strong> / “必经点”</td>
+<td><strong>Tarjan (无向图)</strong></td>
+<td>连通性</td>
+<td><strong>P3388 割点模板</strong></td>
+</tr>
+<tr>
+<td><strong>“二分图匹配”</strong> / “最小点覆盖”</td>
+<td><strong>匈牙利 / 网络流</strong></td>
+<td>柯尼希定理</td>
+<td><strong>P3386 二分图匹配模板</strong></td>
+</tr>
+<tr>
+<td><strong>“流量分配”</strong> / <strong>“最大收益”</strong></td>
+<td><strong>最大流</strong></td>
+<td>Dinic</td>
+<td><strong>P3376 最大流模板</strong> P2756 飞行员配对</td>
+</tr>
+<tr>
+<td><strong>“花费最小代价割断图”</strong></td>
+<td><strong>最小割</strong></td>
+<td>最大流最小割定理</td>
+<td><strong>P2763 试题库问题</strong></td>
+</tr>
+<tr>
+<td><strong>“流量有费用”</strong> / “总成本最低”</td>
+<td><strong>最小费用最大流</strong></td>
+<td>SPFA 找增广路</td>
+<td><strong>P3381 MCMF 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“N个点 N条边”</strong> / “树上多了一条边”</td>
+<td><strong>基环树</strong></td>
+<td>拆掉环上一条边</td>
+<td><strong>P2607 骑士</strong></td>
+</tr>
+<tr>
+<td><strong>“布尔变量满足条件”</strong></td>
+<td><strong>2-SAT</strong></td>
+<td>建图跑 SCC</td>
+<td><strong>P4782 2-SAT 模板</strong></td>
+</tr>
+<tr>
+<td><strong>“DAG最少路径覆盖所有点”</strong></td>
+<td><strong>最小路径覆盖</strong></td>
+<td>转化为二分图匹配</td>
+<td><strong>P2764 最小路径覆盖</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BF%99%E4%B8%AA%E8%A1%A8%E6%A0%BC%EF%BC%9F" tabindex="-1">如何使用这个表格？</h2>
+<ol>
+<li><strong>索引而非背诵</strong>：不要死记硬背。当你做题卡住时，看一眼题目属于哪个领域（比如是图论），然后扫一遍该领域的“题面特征”，看看有没有哪个击中了你。</li>
+<li><strong>不断扩充</strong>：遇到一个新题，如果它用了一个你没想到的模型（比如 P6628 把重复走转化为欧拉回路），就把它加到表格对应的备注里。</li>
+<li><strong>组合拳</strong>：省选/NOI 难度的题目通常是 2-3 个特征的组合。比如“树上”+“第K大” -&gt; 主席树上树；“网格图”+“最短路”+“钥匙限制” -&gt; 分层图最短路。</li>
+</ol>
+<p>这个表格是你建立**“条件反射”**的基石。加油！</p>
+
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2026 rainboy. All rights reserved. last build time 2026/1/11 08:46:27</p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
+</body>
+</html>

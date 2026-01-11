@@ -77,7 +77,7 @@ function hideMenuModal() {
     <div class="container">
         <div class="heti markdown-body">
     <nav class="table-of-contents"><ol><li><a href="#%E6%80%9D%E8%B7%AF%E5%A4%A7%E7%BA%B2">思路大纲</a></li><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a></li><li><a href="#1.-%E5%9B%BE%E8%AE%BA%E5%BB%BA%E6%A8%A1%EF%BC%9A%E8%AF%81%E6%98%8E%E5%9B%BE%E7%9A%84%E7%BB%93%E6%9E%84">1. 图论建模：证明图的结构</a></li><li><a href="#2.-%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%A4%84%E7%90%86%EF%BC%9Ascc-%E7%BC%A9%E7%82%B9">2. 循环依赖的处理：SCC 缩点</a></li><li><a href="#3.-%E8%AF%81%E6%98%8E%EF%BC%9A%E7%BC%A9%E7%82%B9-%2B-%E8%99%9A%E6%8B%9F%E8%8A%82%E7%82%B9-%3D-%E4%B8%80%E6%A3%B5%E6%A0%91">3. 证明：缩点 + 虚拟节点 = 一棵树</a></li><li><a href="#4.-%E8%BD%AC%E5%8C%96%E4%B8%BA-p2014-%E9%80%89%E8%AF%BE-(%E6%A0%91%E5%BD%A2%E8%83%8C%E5%8C%85-dp)">4. 转化为 P2014 选课 (树形背包 DP)</a><ol><li><a href="#%E6%80%BB%E7%BB%93%E6%B5%81%E7%A8%8B">总结流程</a></li></ol></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ol></nav><h2 id="%E6%80%9D%E8%B7%AF%E5%A4%A7%E7%BA%B2" tabindex="-1">思路大纲</h2>
-<p>本题有前置题目:  <a href="/problems/luogu/P2014/index.html" class="problem-link" target="_blank">luogu-P2014 [CTSC1997] 选课 tags: [树形dp,todo]</a></p>
+<p>本题有前置题目:  <a href="/problems/luogu/P2014/index.html" class="problem-link" target="_blank">luogu-P2014 [CTSC1997] 选课 tags: [树形dp]</a></p>
 <p>本题目的核心:</p>
 <ol>
 <li>证明: 是一个内向基环树</li>
@@ -89,7 +89,7 @@ function hideMenuModal() {
 <p>这是一份基于你提供的大纲，为你量身定制的 <strong>P2515 [HAOI2010] 软件安装</strong> 详细解析。</p>
 <hr>
 <h1>P2515 [HAOI2010] 软件安装 题目解析</h1>
-<p><strong>前置题目</strong>：<a href="/problems/luogu/P2014/index.html" class="problem-link" target="_blank">luogu-P2014 [CTSC1997] 选课 tags: [树形dp,todo]</a> ([CTSC1997] 选课)</p>
+<p><strong>前置题目</strong>：<a href="/problems/luogu/P2014/index.html" class="problem-link" target="_blank">luogu-P2014 [CTSC1997] 选课 tags: [树形dp]</a> ([CTSC1997] 选课)</p>
 <p>本题本质上是 <strong>P2014 选课</strong> 的 <strong>图论加强版</strong>。它在标准的树形背包模型之上，增加了一层<strong>循环依赖</strong>的处理。</p>
 <h2 id="1.-%E5%9B%BE%E8%AE%BA%E5%BB%BA%E6%A8%A1%EF%BC%9A%E8%AF%81%E6%98%8E%E5%9B%BE%E7%9A%84%E7%BB%93%E6%9E%84" tabindex="-1">1. 图论建模：证明图的结构</h2>
 <p>首先，我们需要理清图的形态。</p>
@@ -525,7 +525,59 @@ signed main <span class="token punctuation">(</span><span class="token punctuati
     </pre>
 </div>
 
-</div> 
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
     </div>
 
 </article>
@@ -550,5 +602,9 @@ signed main <span class="token punctuation">(</span><span class="token punctuati
         // error 自动挤压,增加空格 在Katex 公式中
         //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
     </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
 </body>
 </html>

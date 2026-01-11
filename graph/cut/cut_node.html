@@ -141,7 +141,7 @@
       <li>
         
           <i class="fa fa-file-text"></i>
-          <a href="chapter3">第三章 动态规划</a>
+          <a href="dynamic_programming">第三章 动态规划</a>
         
 
         
@@ -170,7 +170,7 @@
       <li>
         
           <i class="fa fa-file-text"></i>
-          <a href="chapter3/knapsack/01-knapsack">01背包</a>
+          <a href="dynamic_programming/背包/index.html">01背包</a>
         
 
         
@@ -181,7 +181,7 @@
       <li>
         
           <i class="fa fa-file-text"></i>
-          <a href="chapter3/knapsack/multiple-knapsack">多重背包</a>
+          <a href="dynamic_programming/多重背包/index.html">多重背包</a>
         
 
         
@@ -197,62 +197,6 @@
                 <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="#00bcd4" d="M19 22h10v20H19zM32 8h10v34H32zM6 30h10v12H6z"/><g fill="#3f51b5"><path d="m11 8l10 10V8z"/><path d="m9.394 22.437l-2.828-2.828l9.969-9.969l2.828 2.828z"/></g></svg> </span>
               
              线性动态规划 
-            </span>
-          </a>
-        
-
-        
-
-      </li>
-    
-      
-      <li>
-        
-          <i class="fa fa-file-text"></i>
-          <a href="chapter3/linear/lcs">lcs</a>
-        
-
-        
-
-      </li>
-    
-      
-      <li>
-        
-          <i class="fa fa-file-text"></i>
-          <a href="chapter3/linear/lis">lis</a>
-        
-
-        
-
-      </li>
-    
-      
-      <li>
-        
-          <a href="javascript:void(0);" class="menu-info">
-            <span>
-              
-                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><path fill="#000" d="M16 120h480V16H16Zm32-72h416v40H48Zm192 96H16v96h224Zm-32 64H48v-32h160Zm64 32h224v-96H272Zm32-64h160v32H304Zm-152 96H16v88h136Zm-32 56H48v-24h72Zm72 32h128v-88H192Zm32-56h64v24h-64Zm136 56h136v-88H360Zm32-56h72v24h-72ZM121.442 443.278A52.721 52.721 0 1 0 68.722 496a52.78 52.78 0 0 0 52.72-52.722m-73.442 0A20.721 20.721 0 1 1 68.722 464A20.745 20.745 0 0 1 48 443.278m92.853 0a52.721 52.721 0 1 0 52.721-52.72a52.78 52.78 0 0 0-52.721 52.72m73.442 0a20.721 20.721 0 1 1-20.721-20.72a20.745 20.745 0 0 1 20.726 20.72Zm51.41 0a52.721 52.721 0 1 0 52.721-52.72a52.78 52.78 0 0 0-52.721 52.72m73.442 0a20.721 20.721 0 1 1-20.721-20.72a20.745 20.745 0 0 1 20.721 20.72m104.131-52.72A52.721 52.721 0 1 0 496 443.278a52.78 52.78 0 0 0-52.722-52.72m0 73.442A20.721 20.721 0 1 1 464 443.278A20.745 20.745 0 0 1 443.278 464"/></svg> </span>
-              
-             区间动态规划 
-            </span>
-          </a>
-        
-
-        
-
-      </li>
-    
-      
-      <li>
-        
-          <a href="javascript:void(0);" class="menu-info">
-            <span>
-              
-                <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><path fill="currentColor" d="M7 8H5V7H4V6H3V4h6v2H8v1H7m-4 5H1v-2h2m9 2H9v-2h3m9 2h-3v-2h3M7 13H5v-1H4v-2h1V9h2v1h1v2H7m9 1h-2v-1h-1v-2h1V9h2v1h1v2h-1m2 6h-6v-2h1v-1h1v-1h2v1h1v1h1Z"/></svg> </span>
-              
-             动态规划优化 
             </span>
           </a>
         
@@ -538,6 +482,28 @@
         
           <i class="fa fa-file-text"></i>
           <a href="graph/center_of_tree">树的中心</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/MST">最小生成树</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
+          <i class="fa fa-file-text"></i>
+          <a href="graph/MST/严格次小生成树/index.html">严格次小生成树</a>
         
 
         
@@ -1037,6 +1003,17 @@
       
       <li>
         
+          <i class="fa fa-file-text"></i>
+          <a href="appendix/tricks/题目模式识别.html">题目模式识别📜</a>
+        
+
+        
+
+      </li>
+    
+      
+      <li>
+        
           <a href="javascript:void(0);" class="menu-info">
             <span>
               
@@ -1274,7 +1251,59 @@ function hideMenuModal() {
     </pre>
 </div>
 
-</div> 
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
     </div>
 
 </article>
@@ -1283,7 +1312,7 @@ function hideMenuModal() {
     
     <footer class="site-footer">
     <div class="footer-content">
-        <p>&copy; 2026 rainboy. All rights reserved. last build time 2026/1/2 14:33:59</p>
+        <p>&copy; 2026 rainboy. All rights reserved. last build time 2026/1/11 08:46:27</p>
         <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
             <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
         </a> 协议</p>
@@ -1299,5 +1328,9 @@ function hideMenuModal() {
         // error 自动挤压,增加空格 在Katex 公式中
         //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
     </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
 </body>
 </html>

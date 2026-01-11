@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - Play on Words</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>Play on Words</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#欧拉路</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/HDU-1116#author=201830221033" target="_blank"> HDU-1116</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>有向图的欧拉路径（Eulerian Path）存在性判定</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a><ol><li><a href="#%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84%E5%AD%98%E5%9C%A8%E7%9A%84%E5%85%85%E5%88%86%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%88%E6%9C%89%E5%90%91%E5%9B%BE%EF%BC%89">欧拉路径存在的充分必要条件（有向图）</a></li><li><a href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4">算法实现步骤</a></li><li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">代码实现</a></li><li><a href="#%E6%A0%B7%E4%BE%8B%E5%88%86%E6%9E%90">样例分析</a></li></ol></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<blockquote>
+<p>有向图的欧拉路径（Eulerian Path）存在性判定</p>
+</blockquote>
+<p>这个问题实际上是一个经典的图论问题。我们可以将问题进行如下建模：</p>
+<ol>
+<li><strong>节点 (Nodes)</strong>: 将26个小写英文字母 (‘a’ 到 ‘z’) 看作图中的节点。</li>
+<li><strong>有向边 (Directed Edges)</strong>: 每一个单词看作一条有向边。单词的首字母是边的起点，尾字母是边的终点。例如，单词 “acm” 可以看作一条从节点 ‘a’ 指向节点 ‘m’ 的有向边。</li>
+</ol>
+<p>问题的目标:</p>
+<p>题目要求我们判断是否能将所有给定的单词（边）按顺序排列，使得前一个单词的尾字母等于后一个单词的首字母，并且所有单词都必须恰好被使用一次。</p>
+<p>转化到图论语言，这就是要求我们在构建的有向图中找到一条路径，这条路径<strong>恰好经过图中所有的边一次</strong>。这就是著名的 <strong>欧拉路径 (Eulerian Path)</strong> 问题。如果这条路径的起点和终点是同一个节点，则称为 <strong>欧拉回路 (Eulerian Circuit)</strong>。</p>
+<h3 id="%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84%E5%AD%98%E5%9C%A8%E7%9A%84%E5%85%85%E5%88%86%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%88%E6%9C%89%E5%90%91%E5%9B%BE%EF%BC%89" tabindex="-1">欧拉路径存在的充分必要条件（有向图）</h3>
+<p>对于一个有向图，存在欧拉路径的条件有两个：</p>
+<p>条件 1：连通性 (Connectivity)</p>
+<p>忽略边的方向后，图中所有度数不为0的节点必须属于同一个连通分量。简单来说，就是所有出现过的字母必须能“串”在一起，不能出现几个单词自成一派，和别的单词完全搭不上边的情况。</p>
+<p>例如：单词组 {“ab”, “bc”} 和 {“xy”, “yz”}。虽然它们内部可以连接，但这两组之间无法连接，所以不行。</p>
+<p>条件 2：度数限制 (Degree Constraints)</p>
+<p>我们需要统计每个节点（字母）的入度 (In-degree) 和 出度 (Out-degree)。</p>
+<ul>
+<li>入度：有多少个单词以该字母结尾。</li>
+<li>出度：有多少个单词以该字母开头。</li>
+</ul>
+<p>有向图存在欧拉路径，当且仅当满足以下两种情况之一：</p>
+<ol>
+<li><strong>欧拉回路情况</strong>：所有节点的入度等于出度。</li>
+<li><strong>欧拉路径情况</strong>：
+<ul>
+<li>恰好有一个节点，其 出度 = 入度 + 1 (这个点是路径起点)。</li>
+<li>恰好有一个节点，其 入度 = 出度 + 1 (这个点是路径终点)。</li>
+<li>其余所有节点的 入度 = 出度。</li>
+</ul>
+</li>
+</ol>
+<p>如果在这两种情况之外（例如，某个点的入度和出度差值大于1，或者有多个起点的特征），则不存在欧拉路径。</p>
+<hr>
+<h3 id="%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4" tabindex="-1">算法实现步骤</h3>
+<p>我们可以使用以下步骤来解决这个问题：</p>
+<ol>
+<li><strong>数据结构准备</strong>:
+<ul>
+<li><code>in[26]</code> 和 <code>out[26]</code> 数组：分别存储 ‘a’-‘z’ 的入度和出度。</li>
+<li><code>present[26]</code> 布尔数组：标记哪些字母在单词中出现过。</li>
+<li><strong>并查集 (Disjoint Set Union, DSU)</strong>：用于高效判断图的连通性。我们需要一个 <code>parent[26]</code> 数组。</li>
+</ul>
+</li>
+<li><strong>处理输入</strong>:
+<ul>
+<li>对于每组数据的 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 个单词，进行遍历。</li>
+<li>对于每个单词，找到其首字母 <code>u</code> 和尾字母 <code>v</code>。</li>
+<li>更新度数：<code>out[u]++</code>, <code>in[v]++</code>。</li>
+<li>标记出现：<code>present[u] = true</code>, <code>present[v] = true</code>。</li>
+<li>维护连通性：在并查集中合并 <code>u</code> 和 <code>v</code> 所在的集合 (<code>union(u, v)</code>)。</li>
+</ul>
+</li>
+<li><strong>验证条件</strong>:
+<ul>
+<li><strong>验证连通性</strong>: 遍历 <code>present</code> 数组。统计对于所有出现过的字母，它们在并查集中是否都有同一个根节点（即属于同一个集合）。如果出现过的字母分属不同的集合，则不连通，输出不可行。</li>
+<li><strong>验证度数</strong>: 遍历 26 个字母。
+<ul>
+<li>统计满足 <code>out[i] == in[i] + 1</code> 的节点数，记为 <code>start_nodes</code>。</li>
+<li>统计满足 <code>in[i] == out[i] + 1</code> 的节点数，记为 <code>end_nodes</code>。</li>
+<li>如果发现任何节点 <code>abs(out[i] - in[i]) &gt; 1</code>，则直接输出不可行。</li>
+</ul>
+</li>
+<li>最后判断：如果 <code>(start_nodes == 1 &amp;&amp; end_nodes == 1)</code> 或者 <code>(start_nodes == 0 &amp;&amp; end_nodes == 0)</code>，则输出可行，否则不可行。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">代码实现</h3>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br></div>
+        <code><span class="token comment">/**
+ * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
+ * Problem: 三小只探险/密码门 (欧拉路径存在性判定)
+ * Analysis: 这个题目是 P1127 的简化版。
+ * 我们只需要判定有向图中是否存在欧拉路径，不需要输出路径，也不需要字典序最小。
+ * 因此，我们只需要进行度数检查和连通性检查，不需要 DFS 和排序。
+ * 由于是多组测试数据，需要注意每次初始化全局变量。
+ */</span>
+#include <span class="token operator">&lt;</span>bits<span class="token operator">/</span>stdc<span class="token operator">++</span><span class="token punctuation">.</span>h<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>cstdlib<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>functional<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>string<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+using namespace std<span class="token punctuation">;</span>
+typedef  long long ll<span class="token punctuation">;</span>
+typedef  unsigned long long ull<span class="token punctuation">;</span>
+
+const int maxn <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span> <span class="token comment">// 最多26个字母</span>
+
+<span class="token comment">// 全局变量，用于存储图的状态</span>
+int n<span class="token punctuation">;</span>
+<span class="token comment">// out[i]: 字母 i 的出度</span>
+int out<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">// in[i]: 字母 i 的入度</span>
+int <span class="token keyword">in</span><span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">// exist[i]: 标记字母 i 是否在输入的单词中出现过</span>
+bool exist<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> 
+
+<span class="token comment">// 注意：本题不需要存储具体的边和路径，所以去掉了 adj 和 ans</span>
+
+<span class="token comment">// === 并查集 (用于判断图的弱连通性) ===</span>
+<span class="token comment">// 保持原有的并查集实现不变</span>
+int fa<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 并查集父节点数组</span>
+
+<span class="token comment">// 查找元素 x 所在集合的代表元素（根节点），带路径压缩</span>
+int <span class="token function">find</span><span class="token punctuation">(</span>int x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">==</span> x <span class="token operator">?</span> x <span class="token punctuation">:</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 合并 u 和 v 所在的两个集合</span>
+void <span class="token function">dsu_merge</span><span class="token punctuation">(</span>int u<span class="token punctuation">,</span> int v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int fu <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    int fv <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>fu <span class="token operator">!=</span> fv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        fa<span class="token punctuation">[</span>fu<span class="token punctuation">]</span> <span class="token operator">=</span> fv<span class="token punctuation">;</span> <span class="token comment">// 将 u 的根指向 v 的根</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// === 并查集结束 ===</span>
+
+<span class="token comment">// 多组数据初始化函数：重置所有状态数组</span>
+void <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">26</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        fa<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>      <span class="token comment">// 重置并查集</span>
+        out<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">// 重置出度</span>
+        <span class="token keyword">in</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>      <span class="token comment">// 重置入度</span>
+        exist<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 重置存在标记</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 处理单组数据的函数</span>
+void <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 每次开始前清空状态</span>
+    cin <span class="token operator">></span><span class="token operator">></span> n<span class="token punctuation">;</span>
+    
+    <span class="token comment">// 特判 n=0 的情况（虽然题目说 n>=1，但防御性编程是个好习惯）</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"Ordering is possible.\n"</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        string s<span class="token punctuation">;</span>
+        cin <span class="token operator">></span><span class="token operator">></span> s<span class="token punctuation">;</span>
+        int u <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span> <span class="token comment">// 首字母</span>
+        int v <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span>  <span class="token comment">// 尾字母</span>
+
+        <span class="token comment">// 标记首尾字母已存在</span>
+        exist<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        exist<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 更新出度及入度</span>
+        out<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">in</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 在并查集中合并首尾字母所在的集合，维护弱连通性</span>
+        <span class="token function">dsu_merge</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// --- 1. 度数检查 ---</span>
+    int cnt_start <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 统计符合起点度数条件 (out = in + 1) 的节点个数</span>
+    int cnt_end <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">// 统计符合终点度数条件 (in = out + 1) 的节点个数</span>
+    
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>exist<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment">// 跳过未出现的字母</span>
+        
+        <span class="token comment">// 如果任意节点的入度和出度差绝对值大于1，一定不存在欧拉路径</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">abs</span><span class="token punctuation">(</span>out<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token keyword">in</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"The door cannot be opened.\n"</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>out<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token keyword">in</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cnt_start<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">in</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> out<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cnt_end<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// else if (out[i] == in[i]) { 继续循环 }</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 判定度数条件是否满足欧拉路径或欧拉回路的定义</span>
+    <span class="token comment">// 欧拉路径: 1个起点, 1个终点; 欧拉回路: 0个起点, 0个终点</span>
+    bool degree_ok  <span class="token operator">=</span> <span class="token punctuation">(</span>cnt_start <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> cnt_end <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>cnt_start <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> cnt_end <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>degree_ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"The door cannot be opened.\n"</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// --- 2. 连通性检查 ---</span>
+    <span class="token comment">// 找到第一个存在的字母作为基准点</span>
+    int start_node <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>exist<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            start_node <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 如果 n > 0，start_node 一定能找到。</span>
+    int root <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>start_node<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 获取基准点的集合代表元素</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果某个存在的点与基准点不在同一个集合，说明图不连通</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>exist<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token function">find</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">!=</span> root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"The door cannot be opened.\n"</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 如果度数和连通性都满足</span>
+    cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token string">"Ordering is possible.\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+signed main <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 关闭同步流，加速输入输出</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    int t<span class="token punctuation">;</span>
+    cin <span class="token operator">></span><span class="token operator">></span> t<span class="token punctuation">;</span> <span class="token comment">// 读取测试数据组数</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>t<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E6%A0%B7%E4%BE%8B%E5%88%86%E6%9E%90" tabindex="-1">样例分析</h3>
+<p>Sample 1:</p>
+<p>2</p>
+<p>acm (a -&gt; m)</p>
+<p>ibm (i -&gt; m)</p>
+<ul>
+<li>度数: ‘a’ (out 1), ‘i’ (out 1), ‘m’ (in 2).</li>
+<li>分析: ‘m’ 的入度比出度大 2，不满足任一度数条件。</li>
+<li>输出: The door cannot be opened.</li>
+</ul>
+<p>Sample 2:</p>
+<p>3</p>
+<p>acm (a -&gt; m)</p>
+<p>malform (m -&gt; m)</p>
+<p>mouse (m -&gt; e)</p>
+<ul>
+<li>连通性: a-m 相连，m-m 相连，m-e 相连。所有出现字母 a,m,e 在一个连通块内。</li>
+<li>度数:
+<ul>
+<li>‘a’: out 1, in 0 (起点特征)</li>
+<li>‘m’: out 2, in 2 (平衡)</li>
+<li>‘e’: out 0, in 1 (终点特征)</li>
+</ul>
+</li>
+<li>分析: 1个起点，1个终点，其余平衡。满足欧拉路径条件。</li>
+<li>输出: Ordering is possible.</li>
+</ul>
+<p>Sample 3:</p>
+<p>2</p>
+<p>ok (o -&gt; k)</p>
+<p>ok (o -&gt; k)</p>
+<ul>
+<li>连通性: o-k 相连。</li>
+<li>度数:
+<ul>
+<li>‘o’: out 2, in 0</li>
+<li>‘k’: out 0, in 2</li>
+</ul>
+</li>
+<li>分析: ‘o’ 出度比入度大2，‘k’ 入度比出度大2。不满足条件。</li>
+<li>输出: The door cannot be opened.</li>
+</ul>
+
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
+</body>
+</html>

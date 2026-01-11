@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh" data-darkmode="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的算法书 - How Many Tables</title>
+    <meta name="description" content="这是一本关于算法的书">
+    <meta name="author" content="rainboy">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/style.min.css" integrity="sha512-VqbHLQtJ5icD77Z4HH8NsrtoRJlTAkOKdSrymwYZtZ1Ipbit8L/Pp8RIeHS2vpNk2bVOszUUDotVl7sK403sjw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/markdown.css">
+    <link rel="stylesheet" href="/prism-theme/prism-tomorrow.css">
+</head>
+<body>
+    <aside class="panel">
+    <ul class="panel-list">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="javascript:void(0);" onclick="showMenuModal()"><i class="fa fa-list"></i></a></li>
+    </ul>
+    <ul class="panel-list">
+      <li><input type="radio" class="J_darkMode" value="auto" name="darkmode" id="darkmode-auto" checked=""><label for="darkmode-auto"><i class="fa fa-adjust"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="light" name="darkmode" id="darkmode-light"><label for="darkmode-light"><i class="fa fa-sun-o"></i></label></li>
+      <li><input type="radio" class="J_darkMode" value="dark" name="darkmode" id="darkmode-dark"><label for="darkmode-dark"><i class="fa fa-moon-o"></i></label></li>
+    </ul>
+  </aside>
+    <div id="modal-menu" class="modal-menu" style="display:none;">
+  <div class="modal-menu-mask" onclick="hideMenuModal()"></div>
+  <div class="modal-menu-content">
+    <button class="modal-menu-close" onclick="hideMenuModal()">×</button>
+    <h2>目录</h2>
+    
+  </div>
+</div>
+<script>
+function showMenuModal() {
+  document.getElementById('modal-menu').style.display = 'block';
+}
+function hideMenuModal() {
+  document.getElementById('modal-menu').style.display = 'none';
+}
+</script>
+
+    <main>
+        
+<article class="page">
+    <header class="container page-header">
+        <h1>How Many Tables</h1>
+        <div class="problem-info">
+          <div class="problem-tags">
+            <span>标签:</span>
+            
+              <span>#并查集</span>
+            
+          </div>
+          <div class="problem-source">
+            <span>原题目:</span>
+            <a href="https://vjudge.net/problem/HDU-1213#author=DeepSeek_zh" target="_blank"> HDU-1213</a>
+          </div>
+        </div>
+        <div>
+          <span>简要描述:</span>
+          <span>并查集入门</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="heti markdown-body">
+    <nav class="table-of-contents"><ol><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90">题目解析</a><ol><li><a href="#%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90">题目核心逻辑分析</a><ol><li><a href="#%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E5%9B%9E%E9%A1%BE">输入数据回顾</a></li><li><a href="#%E5%9B%BE%E7%A4%BA">图示</a></li></ol></li><li><a href="#%E5%9B%BE%E5%BD%A2%E8%A7%A3%E8%AF%BB">图形解读</a></li><li><a href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90-1">题目解析</a></li><li><a href="#%E6%A0%B7%E4%BE%8B%E6%8E%A8%E5%AF%BC">样例推导</a></li><li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">代码实现</a></li><li><a href="#%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93">关键点总结</a></li></ol></li></ol></nav><h2 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90" tabindex="-1">题目解析</h2>
+<p>这是杭电 OJ (HDU) 1213 题 “How Many Tables”，也是一个非常经典的<strong>并查集 (Union-Find / DSU)</strong> 或 <strong>图的连通分量 (Connected Components)</strong> 计数问题。</p>
+<h3 id="%E9%A2%98%E7%9B%AE%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90" tabindex="-1">题目核心逻辑分析</h3>
+<ol>
+<li><strong>关系传递性</strong>：如果 A 认识 B，B 认识 C，那么 A、B、C 属于同一个社交圈，可以坐同一张桌子。这在图论中意味着他们属于同一个<strong>连通分量</strong>。</li>
+<li><strong>孤立点</strong>：如果不认识任何人，自己也需要单独坐一张桌子。</li>
+<li><strong>目标</strong>：求连通分量的个数。即：<eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>总人数</mtext><mo>−</mo><mtext>合并次数</mtext></mrow><annotation encoding="application/x-tex">总人数 - 合并次数</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord cjk_fallback">总人数</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord cjk_fallback">合并次数</span></span></span></span></eq>（如果使用并查集），或者直接统计有多少个独立的集合。</li>
+</ol>
+<h4>输入数据回顾</h4>
+<ul>
+<li><strong>Case 1</strong>: 5人, 3个关系 (1-2, 2-3, 4-5) -&gt; 预期输出: 2</li>
+<li><strong>Case 2</strong>: 5人, 1个关系 (2-5) -&gt; 预期输出: 4 (2-5一桌，1,3,4各一桌)</li>
+</ul>
+<h4>图示</h4>
+<div class="graphviz"><pre class="dot">
+graph HowManyTables {
+    // 全局设置
+    fontname="Helvetica,Arial,sans-serif";
+    node [fontname="Helvetica,Arial,sans-serif", shape=circle, style=filled, fillcolor="lightblue", width=0.5];
+    compound=true;
+  
+    // --- 样例 1 ---
+    subgraph cluster_case1 {
+        label = "Sample 1: N=5, Relations={(1,2), (2,3), (4,5)}\nAnswer: 2 Tables";
+        fontsize=14;
+        style = dashed;
+        color = blue;
+        margin = 15;
+
+        // 逻辑推导：1-2, 2-3 -> {1,2,3} 连通
+        subgraph cluster_c1_table1 {
+            label = "Table 1";
+            style = filled;
+            color = lightgrey;
+            node [fillcolor="white"];
+          
+            c1_1 [label="1"];
+            c1_2 [label="2"];
+            c1_3 [label="3"];
+          
+            c1_1 -- c1_2;
+            c1_2 -- c1_3;
+            // 虚线表示由传递性隐含的关系，题目逻辑上存在，但输入没直接给
+            c1_1 -- c1_3 [style=dotted, color=gray, label="implicit"];
+        }
+
+        // 逻辑推导：4-5 -> {4,5} 连通
+        subgraph cluster_c1_table2 {
+            label = "Table 2";
+            style = filled;
+            color = lightgrey;
+            node [fillcolor="white"];
+          
+            c1_4 [label="4"];
+            c1_5 [label="5"];
+          
+            c1_4 -- c1_5;
+        }
+    }
+
+    // --- 样例 2 ---
+    subgraph cluster_case2 {
+        label = "Sample 2: N=5, Relations={(2,5)}\nAnswer: 4 Tables";
+        fontsize=14;
+        style = dashed;
+        color = red;
+        margin = 15;
+
+        // 逻辑推导：2-5 -> {2,5} 连通
+        subgraph cluster_c2_table1 {
+            label = "Table 1";
+            style = filled;
+            color = lightgrey;
+            node [fillcolor="white"];
+          
+            c2_2 [label="2"];
+            c2_5 [label="5"];
+          
+            c2_2 -- c2_5;
+        }
+
+        // 孤立点 1
+        subgraph cluster_c2_table2 {
+            label = "Table 2";
+            style = filled;
+            color = lightgrey;
+            node [fillcolor="white"];
+            c2_1 [label="1"];
+        }
+      
+        // 孤立点 3
+        subgraph cluster_c2_table3 {
+            label = "Table 3";
+            style = filled;
+            color = lightgrey;
+            node [fillcolor="white"];
+            c2_3 [label="3"];
+        }
+
+        // 孤立点 4
+        subgraph cluster_c2_table4 {
+            label = "Table 4";
+            style = filled;
+            color = lightgrey;
+            node [fillcolor="white"];
+            c2_4 [label="4"];
+        }
+    }
+}
+</pre></div>
+<h3 id="%E5%9B%BE%E5%BD%A2%E8%A7%A3%E8%AF%BB" tabindex="-1">图形解读</h3>
+<ol>
+<li>
+<p><strong>Sample 1</strong>:</p>
+<ul>
+<li>左边的灰色框 (Table 1) 展示了 1, 2, 3 号通过 1-2 和 2-3 连接在一起。</li>
+<li>右边的灰色框 (Table 2) 展示了 4, 5 号连接在一起。</li>
+<li>总共有 <strong>2</strong> 个灰色块，所以答案是 2。</li>
+</ul>
+</li>
+<li>
+<p><strong>Sample 2</strong>:</p>
+<ul>
+<li>只有 2 和 5 建立了关系，他们组成 Table 1。</li>
+<li>1, 3, 4 号虽然没有任何关系输入，但根据题目规则“所有朋友都不愿意和陌生人同桌”，他们必须各自独自坐一张桌子。</li>
+<li>总共有 <strong>4</strong> 个灰色块，所以答案是 4。</li>
+</ul>
+</li>
+</ol>
+<p>这是一个非常经典的**求连通分量个数（Connected Components）**的问题。</p>
+<h3 id="%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90-1" tabindex="-1">题目解析</h3>
+<p>这道题的本质非常直观：</p>
+<ol>
+<li><strong>初始状态</strong>：每个人如果不认识其他人，自己就必须坐一张桌子。所以一开始如果有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 个人，我们就需要 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 张桌子。</li>
+<li><strong>合并规则</strong>：题目说“A认识B，且B认识C，那么A、B、C彼此都认识”。这正是**并查集（Union-Find）**的传递性特性。</li>
+<li><strong>操作</strong>：每当我们发现两个人（A 和 B）认识时，如果他们原本不在同一个朋友圈（集合）里，我们就把这两个圈子合并成一个大圈子。</li>
+<li><strong>结果</strong>：
+<ul>
+<li>每成功合并一次两个不同的圈子，需要的桌子数量就会<strong>减 1</strong>。</li>
+<li>或者，你可以理解为：最后剩下多少个<strong>集合的根节点</strong>（即 <code>find(x) == x</code> 的节点），就需要多少张桌子。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E6%A0%B7%E4%BE%8B%E6%8E%A8%E5%AF%BC" tabindex="-1">样例推导</h3>
+<p>假设 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">N=5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq>（5个人），初始桌子数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>n</mi><mi>t</mi><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">cnt = 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span></span></span></span></eq>：<code>{1}, {2}, {3}, {4}, {5}</code>。</p>
+<ol>
+<li>输入 <code>1 2</code>：
+<ul>
+<li>1 和 2 合并。</li>
+<li>集合变为 <code>{1, 2}, {3}, {4}, {5}</code>。</li>
+<li>桌子数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">5 - 1 = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li>输入 <code>2 3</code>：
+<ul>
+<li>2 和 3 合并（因为 1,2 是一起的，所以 1,2,3 现在一起了）。</li>
+<li>集合变为 <code>{1, 2, 3}, {4}, {5}</code>。</li>
+<li>桌子数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">4 - 1 = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span></eq>。</li>
+</ul>
+</li>
+<li>输入 <code>4 5</code>：
+<ul>
+<li>4 和 5 合并。</li>
+<li>集合变为 <code>{1, 2, 3}, {4, 5}</code>。</li>
+<li>桌子数 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">3 - 1 = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span></eq>。</li>
+</ul>
+</li>
+</ol>
+<p><strong>最终答案：2</strong></p>
+<hr>
+<h3 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0" tabindex="-1">代码实现</h3>
+<p>使用之前的<strong>并查集模板</strong>，这道题做起来非常简单。为了方便，我们直接在 <code>DSU</code> 结构体外部或者 <code>merge</code> 函数中维护“当前剩余集合数量”。</p>
+<div class="language-clike line-numbers-mode">
+    <div class="code-info-header">
+        <span>cpp</span>
+        <div class="zeroclipboard-container">
+            <div class="clipboard-copy">
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                </svg>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success">
+                    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+                </svg>
+                copy
+            </div>
+        </div>
+    </div>
+    <pre class="language-clike">
+        <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br></div>
+        <code>#include <span class="token operator">&lt;</span>iostream<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>vector<span class="token operator">></span>
+#include <span class="token operator">&lt;</span>numeric<span class="token operator">></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token comment">// 并查集结构体</span>
+struct DSU <span class="token punctuation">{</span>
+    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> fa<span class="token punctuation">;</span>
+    int count<span class="token punctuation">;</span> <span class="token comment">// 记录当前连通分量（桌子）的数量</span>
+
+    void <span class="token function">init</span><span class="token punctuation">(</span>int n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        fa<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">iota</span><span class="token punctuation">(</span>fa<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fa<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 初始化 0, 1, 2...</span>
+        count <span class="token operator">=</span> n<span class="token punctuation">;</span> <span class="token comment">// 初始时，每个朋友一张桌子，共 n 张</span>
+    <span class="token punctuation">}</span>
+
+    int <span class="token function">find</span><span class="token punctuation">(</span>int x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> x <span class="token operator">==</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">?</span> x <span class="token punctuation">:</span> fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 路径压缩</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 合并函数</span>
+    void <span class="token function">merge</span><span class="token punctuation">(</span>int x<span class="token punctuation">,</span> int y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        int fx <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        int fy <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 如果两个人在不同的桌子，就把两张桌子拼起来</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fx <span class="token operator">!=</span> fy<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span> <span class="token operator">=</span> fy<span class="token punctuation">;</span>
+            count<span class="token operator">--</span><span class="token punctuation">;</span> <span class="token comment">// 桌子总数减 1</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> dsu<span class="token punctuation">;</span>
+
+void <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    int N<span class="token punctuation">,</span> M<span class="token punctuation">;</span>
+    cin <span class="token operator">></span><span class="token operator">></span> N <span class="token operator">></span><span class="token operator">></span> M<span class="token punctuation">;</span>
+
+    dsu<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> M<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        int u<span class="token punctuation">,</span> v<span class="token punctuation">;</span>
+        cin <span class="token operator">></span><span class="token operator">></span> u <span class="token operator">></span><span class="token operator">></span> v<span class="token punctuation">;</span>
+        dsu<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 输出剩下的桌子数量</span>
+    cout <span class="token operator">&lt;</span><span class="token operator">&lt;</span> dsu<span class="token punctuation">.</span>count <span class="token operator">&lt;</span><span class="token operator">&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+int <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 优化输入输出</span>
+    ios<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    int T<span class="token punctuation">;</span>
+    cin <span class="token operator">></span><span class="token operator">></span> T<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>T<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code>
+    </pre>
+</div>
+<h3 id="%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93" tabindex="-1">关键点总结</h3>
+<ol>
+<li><strong>思维转换</strong>：不要去想“怎么排座位”，而是想“一开始有 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq> 个集合，每次关系确认就减少集合数量”。</li>
+<li><strong>变量维护</strong>：在 DSU 初始化时，<code>count = N</code>。在 <code>merge</code> 成功（即 <code>fx != fy</code>）时，<code>count--</code>。最终输出 <code>count</code> 即可。这是最快的方法。</li>
+<li><strong>另一种统计方法</strong>：如果你不想用 <code>count</code> 变量，也可以在处理完所有输入后，遍历 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>∼</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">1 \sim N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></eq>，统计有多少个 <eq><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span></eq> 满足 <code>fa[i] == i</code>（即有多少个根节点），结果是一样的。</li>
+</ol>
+<p>这道题是并查集最基础、最直接的应用场景，用来测试模板非常合适。</p>
+
+</div>
+
+<script type="module">
+  import { instance } from "/js/viz.js";
+
+  // Viz.instance().then(viz => {
+  //   document.body.appendChild(viz.renderSVGElement("digraph { a -> b }"))
+  // });
+  // 假设你通过 npm 安装并打包了，或者直接引用 CDN
+  // 如果是本地文件: import { instance } from "./path/to/viz-js/index.js";
+  // import { instance } from "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.2.4/+esm";
+
+  async function renderAllGraphs() {
+    try {
+      // 1. 初始化 Viz 实例 (加载 WASM)
+      const viz = await instance();
+
+      // 2. 选择所有需要渲染的代码块
+      // markdown-it 默认生成 <pre><code class="language-dot">...</code></pre>
+      const codes = document.querySelectorAll('pre.dot, pre.graphviz');
+
+      // 3. 遍历并处理
+      codes.forEach(codeElement => {
+        const preElement = codeElement.parentElement; // 获取外层的 <pre>
+        const sourceCode = codeElement.textContent;   // 获取 DOT 源码
+
+        try {
+          // 4. 渲染 SVG DOM 元素
+          const svgElement = viz.renderSVGElement(sourceCode);
+
+          // 5. 原位替换：用生成的 SVG 替换掉原本的 <pre> 标签
+          // 这样图表就会出现在原本代码所在的位置
+          codeElement.replaceWith(svgElement);
+
+        } catch (renderError) {
+          console.error("Graphviz 渲染失败:", renderError);
+
+          // 可选：在页面上显示错误信息，而不是让它崩溃
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'viz-error';
+          errorDiv.innerText = `渲染错误: ${renderError.message}`;
+          preElement.replaceWith(errorDiv);
+        }
+      });
+
+    } catch (err) {
+      console.error("Viz 实例初始化失败:", err);
+    }
+  }
+
+  // 执行渲染
+  renderAllGraphs();
+</script> 
+    </div>
+
+</article>
+
+    </main>
+    
+    <footer class="site-footer">
+    <div class="footer-content">
+        <p>&copy; 2024 rainboy. All rights reserved. last build time </p>
+        <p class="license">内容遵循 <a style="text-decoration:none;" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+            <img decoding="async" loading="lazy" src="/ccbyncsa.png" width="65" height="auto" style="display:inline-block;">
+        </a> 协议</p>
+        <p class="powered-by">Powered by <a href="https://github.com/rainboyOJ/rbook_nunjucks" target="_blank"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDAwIiBkPSJNMTIgMkExMCAxMCAwIDAgMCAyIDEyYzAgNC40MiAyLjg3IDguMTcgNi44NCA5LjVjLjUuMDguNjYtLjIzLjY2LS41di0xLjY5Yy0yLjc3LjYtMy4zNi0xLjM0LTMuMzYtMS4zNGMtLjQ2LTEuMTYtMS4xMS0xLjQ3LTEuMTEtMS40N2MtLjkxLS42Mi4wNy0uNi4wNy0uNmMxIC4wNyAxLjUzIDEuMDMgMS41MyAxLjAzYy44NyAxLjUyIDIuMzQgMS4wNyAyLjkxLjgzYy4wOS0uNjUuMzUtMS4wOS42My0xLjM0Yy0yLjIyLS4yNS00LjU1LTEuMTEtNC41NS00LjkyYzAtMS4xMS4zOC0yIDEuMDMtMi43MWMtLjEtLjI1LS40NS0xLjI5LjEtMi42NGMwIDAgLjg0LS4yNyAyLjc1IDEuMDJjLjc5LS4yMiAxLjY1LS4zMyAyLjUtLjMzczEuNzEuMTEgMi41LjMzYzEuOTEtMS4yOSAyLjc1LTEuMDIgMi43NS0xLjAyYy41NSAxLjM1LjIgMi4zOS4xIDIuNjRjLjY1LjcxIDEuMDMgMS42IDEuMDMgMi43MWMwIDMuODItMi4zNCA0LjY2LTQuNTcgNC45MWMuMzYuMzEuNjkuOTIuNjkgMS44NVYyMWMwIC4yNy4xNi41OS42Ny41QzE5LjE0IDIwLjE2IDIyIDE2LjQyIDIyIDEyQTEwIDEwIDAgMCAwIDEyIDIiLz48L3N2Zz4="/>
+         rbook</a></p>
+    </div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+    <script src="/assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heti/0.9.6/heti-addon.min.js" integrity="sha512-GChf2qekcjrSoPicCypQLPqkaZkEnkcsJr85AmkczY0HG5SkfbxOmZY6RoFJLdoeKTGk8EZvkRBaF7BIqV1Ipw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //const heti = new Heti('.heti');
+        // error 自动挤压,增加空格 在Katex 公式中
+        //heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+    </script>
+      <script type="module">
+        import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.esm.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
+</body>
+</html>
