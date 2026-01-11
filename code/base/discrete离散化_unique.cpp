@@ -26,6 +26,20 @@ struct Discrete {
     int get(int x) {
         return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin() + 1;
     }
+    //  可能得找不到对应的值, 返回-1
+    int get_maybe(int x) {
+        // 直接使用 lower_bound 查找迭代器
+        auto it = std::lower_bound(xs.begin(), xs.end(), x);
+        
+        // 1. 检查是否到达末尾 (所有数都比 x 小)
+        // 2. 检查找到的值是否严格等于 x (lower_bound 只是找 >= 的)
+        if (it == xs.end() || *it != x) {
+            return -1;
+        }
+        
+        // 转换为 1-based 下标返回
+        return it - xs.begin() + 1;
+    }
 
     // 3.2 查询 x 映射后的最大的值 (从 1 开始)
     int get_max() {

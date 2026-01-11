@@ -330,6 +330,7 @@ def main():
         else:
             cmd = [f"./{program_file}"]
         
+        # print(f"运行 {program_file}...")
         try:
             with open(stdin_file, "r") as infile, open(stdout_file, "w") as outfile:
                 subprocess.run(cmd, stdin=infile, stdout=outfile, stderr=subprocess.DEVNULL, check=True)
@@ -350,6 +351,7 @@ def main():
                 if data_ext == ".py":
                     subprocess.run(["python3", DATA_GENERATOR], stdout=infile, check=True)
                 else:
+                    # print(f"运行 {DATA_GENERATOR}...")
                     subprocess.run([f"./{DATA_GENERATOR}"], stdout=infile, check=True)
         except subprocess.CalledProcessError:
             print(f"\n生成测试数据失败，第 {i} 次")

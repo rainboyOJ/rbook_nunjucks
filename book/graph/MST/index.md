@@ -1,3 +1,38 @@
+---
+id: "mst"
+title: "最小生成树"
+date: 2026-01-06 15:45
+toc: true
+tags: ["todo"]
+categories: [""]
+code_template:
+  - title: 最小生成树mst_kruskal
+    desc: "最小生成树 kruskal 算法"
+    tags: ["mst"]
+    code: /code/graph/最小生成树mst_kruskal.cpp
+---
+
+[[TOC]]
+
+## 用到的定理
+
+简单来说：
+
+切分性质 (Cut Property) 告诉你哪些边 一定要选。
+
+环路性质 (Cycle Property) 告诉你哪些边 一定不要选。
+
+1. 切分性质 (Cut Property) —— 选边的依据
+一句话总结： 如果要把图分成两部分，连接这两部分的所有边中，最短的那条边一定在 MST 里。
+
+算法应用
+Prim 算法：Prim 算法的每一步，都是把点分成“已访问”和“未访问”两个集合，然后通过切分性质，贪心地选取连接这两个集合的最短边。
+
+定理：在无向图中，两点 $u, v$ 之间所有路径中，瓶颈路（最大边权最小的路径）一定在最小生成树上
+
+
+2. 环路性质 (Cycle Property) —— 删边的依据一句话总结： 在图中任意一个环中，权值最大的那条边，一定不在 MST 里。详细解释如果在图 $G$ 中存在一个环（Cycle）。那么这个环上权值最大的那条边 $e_{max}$，一定不包含在最小生成树中。(注：如果有多条权值相同的最大边，则至少有一条不包含在 MST 中)。
+
 ## 最小生成树计数
 https://www.luogu.com/article/4037i7qt
 
@@ -15,3 +50,11 @@ https://www.luogu.com/article/4037i7qt
 2.  CF891C Envy
     
     问某个边集能否同时出现在 MST 上，显然每种边权是独立的，然后可以扫描线+可撤销并查集做到 O(n+m+∑klogn)。
+
+
+## 其他
+
+- ./mst常用性质.md
+- ./瓶颈路.md
+- ./瓶颈路证明.md
+- ./瓶颈路证明2.md

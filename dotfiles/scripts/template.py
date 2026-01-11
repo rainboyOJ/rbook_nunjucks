@@ -167,7 +167,7 @@ def list_templates():
         return []
     
     templates = []
-    for file_path in template_dir.rglob('*.cpp'):
+    for file_path in template_dir.rglob('*'):
         relative_path = file_path.relative_to(template_dir)
         templates.append(str(relative_path))
     
