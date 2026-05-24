@@ -3,9 +3,10 @@ extends layout.pug
 block content
   article.home
     header.home-header
-      h1= site.title
-      p.description= site.description
-      p.author 作者：#{site.author}
+      .home-title-card
+        h1= site.title
+        p.description= site.description
+        p.author 作者：#{site.author}
     .container
       include partials/app_nav_bar.pug
       include partials/markdown-body.pug
