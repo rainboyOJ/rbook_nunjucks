@@ -1,0 +1,13 @@
+#modal-menu.modal-menu(style="display:none;")
+  .modal-menu-mask(onclick="hideMenuModal()")
+  .modal-menu-content
+    button.modal-menu-close(onclick="hideMenuModal()") ×
+    h2 目录
+    != site.menuHtml
+script.
+  function showMenuModal() {
+    document.getElementById('modal-menu').style.display = 'block';
+  }
+  function hideMenuModal() {
+    document.getElementById('modal-menu').style.display = 'none';
+  }

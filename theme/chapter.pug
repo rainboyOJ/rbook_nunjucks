@@ -1,0 +1,9 @@
+extends layout.pug
+
+block content
+  article.chapter
+    header.chapter-header
+      h1= front_matter.title
+    .chapter-content
+      != html_content
+    include partials/toc.pug

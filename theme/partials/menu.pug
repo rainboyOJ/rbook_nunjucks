@@ -1,0 +1,25 @@
+mixin renderList(items, parentPath)
+  - parentPath = parentPath || ''
+  if items
+    ul
+      each item in items
+        - const currentPath = parentPath + item.path
+        li
+          if item.type && item.type == "info"
+            a.menu-info(href="javascript:void(0);")
+              span
+                if item.icon
+                  span.svg-icon
+                    != item.icon
+                | #{item.title}
+          else if item.nolink
+            i.fa.fa-folder-open-o
+            a.menu-no-link(href="javascript:void(0);")= item.title
+          else
+            i.fa.fa-file-text
+            a(href=menuLink(currentPath))= item.title
+          if item.sections
+            +renderList(item.sections, currentPath + '/')
+
+.chapter-list
+  +renderList(chapters)

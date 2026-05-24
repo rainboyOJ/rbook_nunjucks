@@ -1,0 +1,12 @@
+aside.table-of-contents
+  h3 目录
+  nav.toc-nav
+    ul.toc-list
+      each item in nav
+        li(class=['toc-item', item.type])
+          a(href=item.path)= item.title
+          if item.type == 'chapter' && item.sections
+            ul.toc-sublist
+              each section in item.sections
+                li.toc-subitem
+                  a(href=section.path)= section.title

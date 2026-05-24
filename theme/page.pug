@@ -1,0 +1,8 @@
+extends layout.pug
+
+block content
+  article.page
+    header.page-header
+      h1= front_matter.title
+    .container
+      include partials/markdown-body.pug

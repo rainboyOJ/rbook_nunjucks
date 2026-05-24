@@ -1,12 +1,12 @@
 # rbook - 极简静态书籍生成器
 
-一个基于 Markdown + Nunjucks 的静态书籍网站生成器，专注于算法和计算机科学内容的展示。
+一个基于 Markdown + Pug 的静态书籍网站生成器，专注于算法和计算机科学内容的展示。
 
 ## 特性
 
-- 🚀 **极简设计**：最小化依赖，仅需 markdownit、nunjucks、js-yaml
+- 🚀 **极简设计**：最小化依赖，仅需 markdownit、pug、js-yaml
 - 📝 **Markdown 支持**：支持 FrontMatter 和代码高亮
-- 🎨 **模板系统**：基于 Nunjucks 的灵活模板引擎
+- 🎨 **模板系统**：基于 Pug 的灵活模板引擎
 - ⚡ **开发服务器**：内存懒渲染，实时热重载
 - 📱 **响应式设计**：移动端友好的界面
 - 🔧 **配置简单**：YAML 配置文件，约定优于配置
@@ -51,7 +51,7 @@ node bin/rbook.js serve
 │   ├── about.md          # 关于页面
 │   └── chapter*/index.md # 章节内容
 ├── theme/                # 主题模板
-│   ├── *.njk            # 页面模板
+│   ├── *.pug            # 页面模板
 │   ├── partials/        # 部分模板
 │   └── assets/          # 静态资源
 ├── book.yaml            # 配置文件
@@ -136,10 +136,10 @@ function example() {
 
 ### 模板文件
 
-- `layout.njk` - 基础布局
-- `index.njk` - 首页模板
-- `page.njk` - 单页模板
-- `chapter.njk` - 章节模板
+- `layout.pug` - 基础布局
+- `index.pug` - 首页模板
+- `page.pug` - 单页模板
+- `chapter.pug` - 章节模板
 
 ## 开发特性
 
@@ -175,7 +175,7 @@ npm run build
 ## 技术栈
 
 - **markdownit**: Markdown 解析
-- **nunjucks**: 模板引擎
+- **pug**: 模板引擎
 - **js-yaml**: YAML 配置解析
 - **原生 Node.js**: 无额外框架依赖
 

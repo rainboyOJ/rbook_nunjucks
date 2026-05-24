@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import { glob, globSync, globStream, globStreamSync, Glob } from 'glob'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { nunjucksRender } from '../rbook/renderEngine.js';
+import { renderTemplate } from '../rbook/renderEngine.js';
 
 // 获取当前文件的目录路径
 export const __filename = fileURLToPath(import.meta.url);
@@ -58,6 +58,7 @@ class Base {
   }
 
   save(id,md_content) {
+    console.log(`[${this._OJ}] ${id} 保存中...`)
     let dir = path.join(this._oj_dir(),id)
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
@@ -81,11 +82,11 @@ class Base {
 
   render(data) {
     let template_name = 'default'
-    if( fs.existsSync(path.join(__template_dir, `${this._OJ}.njk`))){
+    if( fs.existsSync(path.join(__template_dir, `${this._OJ}.pug`))){
       template_name = this._OJ
     }
 
-    return nunjucksRender(__template_dir, template_name ,{
+    return renderTemplate(__template_dir, template_name ,{
       date: new Date().toLocaleString('zh-CN', {
         year: 'numeric',
         month: '2-digit',

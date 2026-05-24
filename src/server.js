@@ -11,7 +11,7 @@ const __workdir = path.join(__dirname, '../');
 
 import rbook from './rbook/index.js';
 import markdown from './rbook/markdown.js';
-import { nunjucksRender } from './rbook/renderEngine.js';
+import { renderTemplate } from './rbook/renderEngine.js';
 
 // 创建rbook实例
 const app = new rbook();
@@ -127,8 +127,8 @@ function renderPageToMemory(filePath, templateType) {
     // 确定模板类型
     const layoutType = md.front_matter.layout || templateType || 'page';
     
-    // 使用Nunjucks渲染模板
-    const htmlContent = nunjucksRender(
+    // 使用 Pug 渲染模板
+    const htmlContent = renderTemplate(
       path.join(__workdir, 'theme'), 
       layoutType, 
       {

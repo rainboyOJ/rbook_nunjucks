@@ -9,7 +9,6 @@ const Tooltip = ejs.compile(raw_html_template)
 // const {flatten_menu_json} = require("../../src/menu.js")
 const rbookDB = require("../../src/lib/database/index.js")
 
-problemDB.loadDatabase();
 rbookDB.loadDb();
 
 
@@ -22,7 +21,7 @@ rbookDB.loadDb();
 // href 这个文章的链接
 // pre 每个点的前置节点
 //
-// 下一节点,通常是题目
+// 下一节点
 // next :[
 //
 // ]
@@ -59,9 +58,6 @@ function add_node(node) {
         label: node.label || node.title,
         // title: gen_html_title(node)
     }
-
-    if( node.oj )
-        data.group = 'problem'
 
     // console.log(node)
     Nodes.push(data)
@@ -115,35 +111,6 @@ function load_next(pre_node) {
     }
 }
 
-function recv_add_problem(father_id) {
-    let problems =  problemDB.find_pre_has(father_id)
-
-    //为空
-    if(!problems) return
-    for(let p of problems) {
-        if( set.has(p._id) ) continue
-        // console.log(p)
-        add_node(p);
-        add_edge(father_id,p._id);
-        //递归
-        recv_add_problem(p._id);
-    }
-}
-
-//加载文章对应的题目
-function load_problem(d) {
-    let id = d.id
-    let problems = problemDB.find_pre_rbook(id)
-    for( let p of problems) {
-        add_node(p)
-        add_edge(id,p._id)
-
-        // 从这个p里递归的 添加
-        recv_add_problem(p._id);
-    }
-}
-
-
 function load_data(){
     let all_docs = rbookDB.findAll()
     console.log("all_docs cnt",all_docs.length)
@@ -153,7 +120,6 @@ function load_data(){
         if( ! d.id) continue;
         if( d.hiden_brain_map) continue;
         add_node(d) //添加这个节点
-        load_problem(d)
         if(d.pre) load_pre(d)
         // if(d.next) load_next(d)
     }

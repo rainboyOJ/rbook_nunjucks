@@ -1,0 +1,21 @@
+aside.panel
+  ul.panel-list
+    li
+      a(href="/")
+        i.fa.fa-home
+    li
+      a(href="javascript:void(0);" onclick="showMenuModal()")
+        i.fa.fa-list
+  ul.panel-list
+    li
+      input#darkmode-auto.J_darkMode(type="radio" value="auto" name="darkmode" checked="")
+      label(for="darkmode-auto")
+        i.fa.fa-adjust
+    li
+      input#darkmode-light.J_darkMode(type="radio" value="light" name="darkmode")
+      label(for="darkmode-light")
+        i.fa.fa-sun-o
+    li
+      input#darkmode-dark.J_darkMode(type="radio" value="dark" name="darkmode")
+      label(for="darkmode-dark")
+        i.fa.fa-moon-o

@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import { glob, globSync, globStream, globStreamSync, Glob } from 'glob'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { nunjucksRender } from './renderEngine.js';
+import { renderTemplate } from './renderEngine.js';
 import markdown from './markdown.js';
 
 // 获取当前文件的目录路径
@@ -62,7 +62,7 @@ class rbook {
             const templateType = md.front_matter.layout || defaultTemplateType || 'page';
             
             // 使用Nunjucks渲染模板
-            const htmlContent = nunjucksRender(__themedir, templateType, {...md.toJSON(), site: this.config, ...data});
+            const htmlContent = renderTemplate(__themedir, templateType, {...md.toJSON(), site: this.config, ...data});
             
             // 写入HTML文件
             fs.writeFileSync(fullOutputPath, htmlContent);
@@ -208,7 +208,7 @@ class rbook {
      * @return {string} 返回渲染后的菜单HTML
      */
     renderMenu() {
-        const htmlContent = nunjucksRender(__themedir, 'partials/menu', this.config);
+        const htmlContent = renderTemplate(__themedir, 'partials/menu', this.config);
         return htmlContent
     }
 
