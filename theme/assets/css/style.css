@@ -81,38 +81,64 @@ main {
 }
 
 .home-header {
-    margin: 1.5rem 0 2.5rem;
-    padding: 0 1rem;
+    margin: 1.5rem 0 1.5rem;
+    padding: 0;
 }
 
 .home-title-card {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2rem 2.25rem;
-    border: 1px solid #e5e7eb;
+    width: calc(100% - 32px);
+    margin: 0 16px;
+    padding: 1.8rem 2.5rem;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    background-color: var(--container-background-color-light, #ccc);
+    box-shadow:
+        inset 4px 0 0 #3498db,
+        0 8px 32px rgba(0, 0, 0, 0.12);
     text-align: left;
 }
 
 .home-header h1 {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     line-height: 1.15;
-    margin-bottom: 0.75rem;
-    color: #111827;
-    font-weight: 700;
+    margin-bottom: 0.65rem;
+    color: #2c3e50;
+    font-weight: bold;
 }
 
 .description {
     font-size: 1.08rem;
-    color: #4b5563;
-    margin-bottom: 0.85rem;
+    color: #34495e;
+    margin-bottom: 0.65rem;
 }
 
 .author {
-    color: #6b7280;
+    color: #34495e;
     font-size: 0.95rem;
+}
+
+[data-darkmode="dark"] .home-title-card {
+    background-color: var(--container-background-color-dark, #1e1e1e);
+    border-color: #444;
+}
+
+[data-darkmode="dark"] .home-header h1,
+[data-darkmode="dark"] .description,
+[data-darkmode="dark"] .author {
+    color: #e3e8ee;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-darkmode="auto"] .home-title-card {
+        background-color: var(--container-background-color-dark, #1e1e1e);
+        border-color: #444;
+    }
+
+    [data-darkmode="auto"] .home-header h1,
+    [data-darkmode="auto"] .description,
+    [data-darkmode="auto"] .author {
+        color: #e3e8ee;
+    }
 }
 
 .home-content {
@@ -267,11 +293,13 @@ main {
     }
 
     .home-header {
-        padding: 0 1rem;
+        padding: 0;
     }
 
     .home-title-card {
-        padding: 1.5rem;
+        width: 100%;
+        margin: 0;
+        padding: 1.35rem 1.25rem;
     }
 
     .home-header h1 {
