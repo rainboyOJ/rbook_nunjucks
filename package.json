@@ -40,8 +40,8 @@
     "markdown-it-texmath": "^1.0.0",
     "markdown-it-toc-done-right": "^4.2.0",
     "pangu": "^4.0.7",
-    "pug": "^3.0.3",
     "prismjs": "^1.20.0",
+    "pug": "^3.0.3",
     "sass": "^1.93.2",
     "twemoji": "^14.0.2",
     "ws": "^8.18.3"
@@ -70,6 +70,7 @@
     "glob": "^11.0.3",
     "markdown-it-mermaid": "^0.2.5",
     "mermaid": "^11.12.2",
+    "playwright": "^1.60.0",
     "uslug": "^1.0.4",
     "vis-network": "^10.0.2",
     "vite": "^7.2.4",
