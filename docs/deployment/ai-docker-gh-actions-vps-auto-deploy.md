@@ -117,6 +117,7 @@ find /www/wwwroot/rbook2.roj.ac.cn -maxdepth 2 -type f | head
 ## 注意事项
 
 - `rsync --delete` 会删除目标目录中 `dist/` 不再包含的文件。
+- workflow 会保护目标目录中的 `.user.ini`，避免宝塔面板/站点保护文件导致同步失败。
 - 不要把私钥、VPS IP、真实密码提交到仓库。
 - 如果 bohai 的 SSH 端口不是 22，配置 `VPS_SSH_PORT`。
 - 如果目标目录未来变化，配置 `VPS_DEPLOY_DIR`，不用改 workflow。

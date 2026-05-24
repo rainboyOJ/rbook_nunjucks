@@ -66,5 +66,6 @@ jobs:
         run: |
           DEPLOY_DIR="${VPS_DEPLOY_DIR:-/www/wwwroot/rbook2.roj.ac.cn}"
           rsync -az --delete \
+            --filter='P .user.ini' \
             -e "ssh -p $VPS_SSH_PORT -i ~/.ssh/deploy_key" \
             dist/ "$VPS_USER@$VPS_HOST:$DEPLOY_DIR/"
