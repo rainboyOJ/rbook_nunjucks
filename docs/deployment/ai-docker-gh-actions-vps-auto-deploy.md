@@ -1,6 +1,6 @@
 # GitHub Actions + VPS 自动部署 rbook_nunjucks
 
-本项目当前不使用 Docker 镜像部署。每次 push 到 `main` 后，GitHub Actions 在 CI 中构建静态站点，并把 `dist/` 同步到 bohai VPS 上已有 Nginx 的站点目录：
+本项目当前不使用 Docker 镜像部署。每次 push 到 `main` 后，GitHub Actions 在 CI 中构建静态站点，把 `dist/` 打包成 tar.gz，上传到 bohai VPS，再解压到已有 Nginx 的站点目录：
 
 ```text
 /www/wwwroot/rbook2.roj.ac.cn
@@ -12,8 +12,11 @@
 git push
   -> GitHub Actions 安装依赖
   -> npm run build 生成 dist/
+  -> tar.gz 打包 dist/
   -> SSH 到 bohai
-  -> rsync --delete 同步 dist/ 到 /www/wwwroot/rbook2.roj.ac.cn
+  -> scp 上传 tar.gz 到 /tmp
+  -> 清理 /www/wwwroot/rbook2.roj.ac.cn 中除 .user.ini 外的旧文件
+  -> 解压 tar.gz 到 /www/wwwroot/rbook2.roj.ac.cn
   -> VPS 上已有 Nginx 直接对外提供静态站点
 ```
 
@@ -30,10 +33,10 @@ git push
 - 在 push 到 `main` 时自动执行，也支持手动 `workflow_dispatch`。
 - 使用 Node.js 22。
 - 安装 `graphviz`，用于构建 dot 图。
-- 安装 `rsync`，用于同步静态文件。
 - 执行 `npm ci` 和 `npm run build`。
-- 通过 SSH 连接 bohai。
-- 创建目标目录并同步 `dist/`。
+- 把 `dist/` 打包为 `rbook-dist-${GITHUB_SHA}.tar.gz`。
+- 通过 `scp` 上传包到 bohai 的 `/tmp`。
+- SSH 到 bohai 清理旧文件、解压新包，并删除临时包。
 
 ## GitHub Secrets
 
@@ -60,16 +63,14 @@ VPS_DEPLOY_DIR = 可选，默认 /www/wwwroot/rbook2.roj.ac.cn
 bohai 上需要：
 
 - 已安装并运行 Nginx。
-- 已安装 `rsync`。
+- 已安装 `tar`、`find`、`rm` 等常规 GNU/Linux 基础命令。
 - Nginx 站点 root 指向 `/www/wwwroot/rbook2.roj.ac.cn`。
 - `VPS_USER` 可以 SSH 登录。
 - `VPS_USER` 对 `/www/wwwroot/rbook2.roj.ac.cn` 有写权限。
 
-如果缺少 `rsync` 或目录权限不对，在 VPS 上执行类似命令：
+如果目录权限不对，在 VPS 上执行类似命令：
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y rsync
 sudo mkdir -p /www/wwwroot/rbook2.roj.ac.cn
 sudo chown -R VPS_USER:VPS_USER /www/wwwroot/rbook2.roj.ac.cn
 ```
@@ -116,8 +117,8 @@ find /www/wwwroot/rbook2.roj.ac.cn -maxdepth 2 -type f | head
 
 ## 注意事项
 
-- `rsync --delete` 会删除目标目录中 `dist/` 不再包含的文件。
-- workflow 会保护目标目录中的 `.user.ini`，避免宝塔面板/站点保护文件导致同步失败。
+- workflow 会清理目标目录中除 `.user.ini` 外的旧文件，再解压新包。
+- workflow 会保护目标目录中的 `.user.ini`，避免宝塔面板/站点保护文件导致部署失败。
 - 不要把私钥、VPS IP、真实密码提交到仓库。
 - 如果 bohai 的 SSH 端口不是 22，配置 `VPS_SSH_PORT`。
 - 如果目标目录未来变化，配置 `VPS_DEPLOY_DIR`，不用改 workflow。
