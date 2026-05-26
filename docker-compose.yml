@@ -1,0 +1,13 @@
+services:
+  rbook:
+    image: ghcr.io/rainboyoj/rbook_nunjucks:latest
+    container_name: rbook
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      # Set this if /api/admin/reindex should require a token.
+      # RBOOK_ADMIN_TOKEN: change-me

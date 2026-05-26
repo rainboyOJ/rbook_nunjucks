@@ -9,6 +9,7 @@ duipai_config.json
 dist/
 build/
 *.tgz
+.search/
 
 # Runtime data
 pids

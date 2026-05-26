@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+.vscode
+node_modules
+dist
+.search
+npm-debug.log*
+yarn-error.log*
+*.tar.gz
+Dockerfile
+docker-compose*.yml

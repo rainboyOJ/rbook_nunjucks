@@ -1,0 +1,107 @@
+name: Build Docker and Deploy to Bohai
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  CONTAINER_NAME: rbook
+  CONTAINER_PORT: 3000
+  HOST_PORT: 3000
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+      tag: ${{ steps.meta.outputs.tag }}
+      nju_image: ${{ steps.meta.outputs.nju_image }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set image metadata
+        id: meta
+        run: |
+          IMAGE="$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')"
+          TAG="${GITHUB_SHA::12}"
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "nju_image=${IMAGE/ghcr.io/ghcr.nju.edu.cn}:$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.tag }}
+            ${{ steps.meta.outputs.image }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    environment: bohai
+    steps:
+      - name: Prepare SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT || '22' }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$VPS_SSH_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Deploy on bohai
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT || '22' }}
+          IMAGE: ${{ needs.build-and-push.outputs.nju_image }}
+          CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
+          HOST_PORT: ${{ secrets.RBOOK_HOST_PORT || env.HOST_PORT }}
+          CONTAINER_PORT: ${{ env.CONTAINER_PORT }}
+          RBOOK_ADMIN_TOKEN: ${{ secrets.RBOOK_ADMIN_TOKEN }}
+        run: |
+          ssh -p "$VPS_SSH_PORT" -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" \
+            "IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' bash -se" <<'REMOTE'
+          set -euo pipefail
+
+          docker pull "$IMAGE"
+
+          docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
+
+          docker run -d \
+            --name "$CONTAINER_NAME" \
+            --restart unless-stopped \
+            -p "${HOST_PORT}:${CONTAINER_PORT}" \
+            -e NODE_ENV=production \
+            -e HOST=0.0.0.0 \
+            -e PORT="$CONTAINER_PORT" \
+            -e RBOOK_ADMIN_TOKEN="$RBOOK_ADMIN_TOKEN" \
+            "$IMAGE"
+
+          docker image prune -f
+          docker ps --filter "name=$CONTAINER_NAME"
+          REMOTE
