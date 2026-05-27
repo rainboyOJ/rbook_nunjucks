@@ -1,6 +1,6 @@
 //创建题目的 config.json 数据
 
-class problemConfig = {
+class ProblemConfig {
 
     constructor() {
         this.title = undefined
@@ -16,16 +16,18 @@ class problemConfig = {
         return {...this}
     }
 
-    void set(name,val) {
+    set(name,val) {
         this[name] = val
+        return this
     }
 
-    void set_source(name,val) {
-        set(name,val)
+    set_source(val) {
+        return this.set('source', val)
     }
 
-    void add_tags(tag) {
+    add_tags(tag) {
         this.tags.push(tag)
+        return this
     }
 
     toJSON(){
@@ -34,4 +36,5 @@ class problemConfig = {
 
 }
 
-module.exports = problemConfig
+export default ProblemConfig
+export { ProblemConfig }
