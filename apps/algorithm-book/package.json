@@ -1,0 +1,19 @@
+{
+  "name": "@rbook/algorithm-book",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bash build.sh",
+    "build:index": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-search/src/buildIndex.js",
+    "build:all": "npm run build && npm run build:index",
+    "serve": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-server/src/serve.js",
+    "dev": "npm run serve"
+  },
+  "dependencies": {
+    "@rbook/cli": "file:../../packages/rbook-cli",
+    "@rbook/core": "file:../../packages/rbook-core",
+    "@rbook/search": "file:../../packages/rbook-search",
+    "@rbook/server": "file:../../packages/rbook-server"
+  }
+}

@@ -7,9 +7,11 @@ duipai_config.json
 
 # Build outputs
 dist/
+**/dist/
 build/
 *.tgz
 .search/
+**/.search/
 
 # Runtime data
 pids
@@ -114,3 +116,4 @@ temp/
 **/*.out.dSYM
 
 third_part/code_template_filter/public
+apps/algorithm-book/third_part/code_template_filter/public

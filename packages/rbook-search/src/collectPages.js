@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { globSync } from 'glob';
-import { bookDir, toBookPath, toPosixPath, workdir } from './paths.js';
+import { appDir, bookDir, configPath as defaultConfigPath, toBookPath, toPosixPath } from './paths.js';
 
 const ignoredNamePatterns = [
   /(^|\/)\./,
@@ -14,7 +14,7 @@ const ignoredNamePatterns = [
   /copy\.md$/i
 ];
 
-function readConfig(configPath = path.join(workdir, 'book.yaml')) {
+function readConfig(configPath = defaultConfigPath) {
   const raw = fs.readFileSync(configPath, 'utf8');
   return yaml.load(raw) || {};
 }
@@ -78,7 +78,7 @@ function collectFromGlob(config) {
   const pages = [];
   for (const pattern of config.glob || []) {
     const matches = globSync(`book/${pattern}`, {
-      cwd: workdir,
+      cwd: appDir,
       nodir: true,
       absolute: true,
       ignore: ['**/node_modules/**']

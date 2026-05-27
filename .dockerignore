@@ -4,7 +4,9 @@
 .vscode
 node_modules
 dist
+**/dist
 .search
+**/.search
 npm-debug.log*
 yarn-error.log*
 *.tar.gz

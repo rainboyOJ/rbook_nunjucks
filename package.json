@@ -5,18 +5,19 @@
   "main": "bin/rbook.js",
   "type": "module",
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "bin": {
     "rbook": "./bin/rbook.js"
   },
   "scripts": {
-    "build": "bash build.sh",
-    "build:index": "node packages/rbook-search/src/buildIndex.js",
+    "build": "npm --workspace @rbook/algorithm-book run build",
+    "build:index": "npm --workspace @rbook/algorithm-book run build:index",
     "build:all": "npm run build && npm run build:index",
-    "serve": "node packages/rbook-server/src/serve.js",
-    "serve:dev": "node src/server.js",
-    "dev": "node packages/rbook-server/src/serve.js"
+    "serve": "npm --workspace @rbook/algorithm-book run serve",
+    "serve:dev": "npm run serve",
+    "dev": "npm run serve"
   },
   "dependencies": {
     "@fastify/static": "^9.1.3",

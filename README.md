@@ -42,25 +42,26 @@ node bin/rbook.js serve
 
 ```
 ├── bin/rbook.js          # 命令行入口
-├── src/
-│   ├── builder.js        # 构建逻辑
-│   ├── parser.js         # Markdown解析
-│   └── server.js         # 开发服务器
-├── book/                 # 书籍内容
-│   ├── index.md          # 首页
-│   ├── about.md          # 关于页面
-│   └── chapter*/index.md # 章节内容
-├── theme/                # 主题模板
-│   ├── *.pug            # 页面模板
-│   ├── partials/        # 部分模板
-│   └── assets/          # 静态资源
-├── book.yaml            # 配置文件
-└── dist/                # 构建输出目录
+├── apps/
+│   └── algorithm-book/
+│       ├── book/                 # 书籍内容
+│       ├── theme/                # 主题模板
+│       ├── public/               # 静态资源
+│       ├── markdown-style/       # Markdown 样式
+│       ├── book.yaml             # 书站配置
+│       ├── dist/                 # 构建输出目录
+│       └── .search/index.json    # 搜索索引
+├── packages/
+│   ├── rbook-core/       # 静态站构建核心
+│   ├── rbook-search/     # 搜索索引和查询
+│   ├── rbook-server/     # Fastify 静态站 + API
+│   └── rbook-cli/        # CLI 入口
+└── bin/rbook.js          # 命令行入口
 ```
 
 ## 配置说明
 
-编辑 `book.yaml` 文件配置书籍信息：
+编辑 `apps/algorithm-book/book.yaml` 文件配置书籍信息：
 
 ```yaml
 title: 我的书
@@ -103,9 +104,9 @@ function example() {
 
 ### 页面类型
 
-- **首页**: `book/index.md` → `/`
-- **关于页面**: `book/about.md` → `/about.html`
-- **章节页面**: `book/{章节}/index.md` → `/{章节}/`
+- **首页**: `apps/algorithm-book/book/index.md` → `/`
+- **关于页面**: `apps/algorithm-book/book/about.md` → `/about.html`
+- **章节页面**: `apps/algorithm-book/book/{章节}/index.md` → `/{章节}/`
 
 ## 模板系统
 
@@ -159,11 +160,11 @@ function example() {
 
 ## 部署
 
-构建后的静态文件在 `dist/` 目录，可部署到任何静态托管服务：
+构建后的静态文件在 `apps/algorithm-book/dist/` 目录，可部署到任何静态托管服务：
 
 ```bash
 npm run build
-# 将 dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
+# 将 apps/algorithm-book/dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
 ```
 
 ## 作为neovim的插件: 代码片段

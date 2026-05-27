@@ -7,7 +7,8 @@ import markdown from '@rbook/markdown';
 import {
     bookDir,
     codeTemplateDir,
-    fromRoot,
+    distDir,
+    fromApp,
     rootDir,
     themeDir
 } from './paths.js';
@@ -28,7 +29,7 @@ class rbook {
 
     load_config(configPath = 'book.yaml') {
         try {
-            const configFile = path.isAbsolute(configPath) ? configPath : fromRoot(configPath);
+            const configFile = path.isAbsolute(configPath) ? configPath : fromApp(configPath);
             if (!fs.existsSync(configFile)) {
                 throw new Error(`配置文件不存在: ${configPath}`);
             }
@@ -52,7 +53,7 @@ class rbook {
         const fullPath = path.join(bookDir, filePath);
         if (fs.existsSync(fullPath)) {
             // 确保输出目录存在
-            const fullOutputPath = fromRoot(outputPath);
+            const fullOutputPath = path.isAbsolute(outputPath) ? outputPath : fromApp(outputPath);
             const outputDir = path.dirname(fullOutputPath);
             if (!fs.existsSync(outputDir)) {
                 fs.mkdirSync(outputDir, { recursive: true });
@@ -156,7 +157,7 @@ class rbook {
         
         try {
             // 确保dist目录存在
-            const outputDir = fromRoot('dist');
+            const outputDir = distDir;
             if (!fs.existsSync(outputDir)) {
                 fs.mkdirSync(outputDir, { recursive: true });
             }
@@ -173,7 +174,7 @@ class rbook {
             
             // 构建所有Markdown文件
             for (const file of markdownFiles) {
-                const outputPath = path.join('dist', file).replace(/\.md$/, '.html');
+                const outputPath = path.join(distDir, file).replace(/\.md$/, '.html');
                 this.buildMarkdownFile(file, outputPath);
             }
 
@@ -196,11 +197,11 @@ class rbook {
         console.log("===== render glob md file =====");
         // console.log(AllMarkdownFiles_in_chapters)
         for( const glob of this.config.glob ) {
-            const mdfiles = globSync('book/' + glob, { cwd: rootDir, ignore: 'node_modules/**' })
+            const mdfiles = globSync(glob, { cwd: bookDir, ignore: 'node_modules/**' })
             for( let file of mdfiles ) {
-                let mdfile = file.replace('book/','');
-                if( AllMarkdownFiles_in_chapters.includes( file.replace('book/','') ) ) continue;
-                let outputPath = file.replace(/^book\//, 'dist/').replace(/\.md$/, '.html');
+                let mdfile = file;
+                if( AllMarkdownFiles_in_chapters.includes( mdfile ) ) continue;
+                let outputPath = path.join(distDir, file).replace(/\.md$/, '.html');
                 this.buildMarkdownFile(mdfile, outputPath);
             }
         }
@@ -228,8 +229,8 @@ class rbook {
     }
 
     copy_dir(src, dest) {
-        const fullSrc = fromRoot(src);
-        const fullDest = fromRoot(dest);
+        const fullSrc = fromApp(src);
+        const fullDest = fromApp(dest);
         if (!fs.existsSync(fullSrc)) {
             throw new Error(`源目录不存在: ${src}`);
         }

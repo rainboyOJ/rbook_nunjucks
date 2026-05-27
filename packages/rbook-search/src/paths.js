@@ -1,6 +1,8 @@
 export {
+  appDir,
   bookDir,
   bookPathToUrl,
+  configPath,
   distDir,
   searchDir,
   searchIndexPath,

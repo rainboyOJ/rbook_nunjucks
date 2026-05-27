@@ -41,7 +41,7 @@ jobs:
 
       - name: Package static site
         run: |
-          tar -C dist -czf "$DEPLOY_ASSET" .
+          tar -C apps/algorithm-book/dist -czf "$DEPLOY_ASSET" .
 
       - name: Publish deploy package
         env:

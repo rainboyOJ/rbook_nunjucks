@@ -1,6 +1,6 @@
 # rbook monorepo structure
 
-This repository uses npm workspaces for reusable runtime code while keeping the current book site content at the repository root.
+This repository uses npm workspaces for reusable runtime code and app-specific book content.
 
 ## Packages
 
@@ -14,20 +14,20 @@ packages/rbook-cli       CLI entrypoint
 
 The root `bin/rbook.js` and legacy `src/*` entrypoints are compatibility shims that forward to the workspace packages.
 
-## Site Content
+## App Content
 
-These directories intentionally remain at the repository root for now:
+The current algorithm book site lives in `apps/algorithm-book`:
 
 ```text
-book/
-theme/
-public/
-markdown-style/
-third_part/
-book.yaml
+apps/algorithm-book/book/
+apps/algorithm-book/book.yaml
+apps/algorithm-book/theme/
+apps/algorithm-book/public/
+apps/algorithm-book/markdown-style/
+apps/algorithm-book/third_part/
 ```
 
-The shared path module is `@rbook/core/paths`. New code should use it instead of deriving paths from local package directories.
+The shared path module is `@rbook/core/paths`. It defaults to `apps/algorithm-book` and can be overridden with `RBOOK_APP_DIR`.
 
 ## Common Commands
 
@@ -36,5 +36,5 @@ npm run build
 npm run build:index
 npm run build:all
 npm run serve
-node bin/rbook.js build
+npm --workspace @rbook/algorithm-book run build:all
 ```

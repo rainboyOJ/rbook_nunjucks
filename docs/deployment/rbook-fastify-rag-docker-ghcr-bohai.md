@@ -8,8 +8,8 @@
 
 ```text
 Markdown 源文件
-  -> 构建 dist/ 静态站
-  -> 构建 .search/index.json 本地搜索索引
+  -> 构建 apps/algorithm-book/dist/ 静态站
+  -> 构建 apps/algorithm-book/.search/index.json 本地搜索索引
   -> Fastify 同时服务静态站和 /api/*
   -> Docker 镜像推送到 GHCR
   -> GitHub Actions SSH 到 bohai
@@ -32,14 +32,14 @@ packages/rbook-search/src/searchIndex.js
 
 职责：
 
-- 从 `book.yaml` 的 `chapters` 收集目录可见页面。
-- 从 `book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
-- 默认补充扫描 `book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
+- 从 `apps/algorithm-book/book.yaml` 的 `chapters` 收集目录可见页面。
+- 从 `apps/algorithm-book/book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
+- 默认补充扫描 `apps/algorithm-book/book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
 - 读取 Markdown，处理 `@include_md("...")`。
 - 解析 front matter。
 - 按标题把文档切成 chunk。
 - 使用 `Fuse.js` 构建本地全文检索索引。
-- 输出 `.search/index.json`。
+- 输出 `apps/algorithm-book/.search/index.json`。
 
 新增 Fastify 服务：
 
@@ -50,7 +50,7 @@ packages/rbook-server/src/serve.js
 
 职责：
 
-- 服务 `dist/` 静态文件。
+- 服务 `apps/algorithm-book/dist/` 静态文件。
 - 提供 `/api/*` 查询接口。
 - 支持受 token 保护的重建索引接口。
 
@@ -83,7 +83,7 @@ fastify
 npm run build:index   # 只构建搜索索引
 npm run build:all     # 构建静态站 + 搜索索引
 npm run serve         # 启动 Fastify 服务
-npm run serve:dev     # 保留旧 src/server.js 开发服务器
+npm run serve:dev     # 启动 Fastify 服务
 npm run dev           # 启动 Fastify 服务
 ```
 

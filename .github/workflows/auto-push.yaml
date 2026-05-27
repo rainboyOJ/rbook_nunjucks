@@ -34,7 +34,7 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.TOKEN }}
           # EXTERNAL_REPOSITORY: rainboyOJ/rbook_nunjucks
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./dist
+          PUBLISH_DIR: ./apps/algorithm-book/dist
           commit_message: auto deploy
       - name: Update rbook Server via Webhook
         run: curl -k ${{ secrets.WEBHOOK_URL }}
