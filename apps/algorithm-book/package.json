@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "bash build.sh",
-    "build:index": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-search/src/buildIndex.js",
+    "build:index": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-search/dist/buildIndex.js",
     "build:all": "npm run build && npm run build:index",
-    "serve": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-server/src/serve.js",
+    "serve": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-server/dist/serve.js",
     "dev": "npm run serve"
   },
   "dependencies": {

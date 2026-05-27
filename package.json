@@ -12,19 +12,22 @@
     "rbook": "./bin/rbook.js"
   },
   "scripts": {
-    "build": "npm --workspace @rbook/algorithm-book run build",
+    "clean": "rm -rf packages/*/dist src/online_judge/dist apps/algorithm-book/third_part/code_template_filter/dist",
+    "build:packages": "tsc -p packages/rbook-markdown && tsc -p packages/rbook-core && tsc -p packages/rbook-search && tsc -p packages/rbook-server && tsc -p packages/rbook-cli",
+    "build": "npm run build:packages && npm --workspace @rbook/algorithm-book run build",
     "build:index": "npm --workspace @rbook/algorithm-book run build:index",
-    "build:all": "npm run build && npm run build:index",
+    "build:all": "npm run build:packages && npm --workspace @rbook/algorithm-book run build:all",
     "serve": "npm --workspace @rbook/algorithm-book run serve",
     "serve:dev": "npm run serve",
-    "dev": "npm run serve"
+    "dev": "npm run serve",
+    "typecheck": "npm run build:packages && tsc -p apps/algorithm-book/third_part/code_template_filter && tsc -p src/online_judge --noEmit"
   },
   "dependencies": {
     "@fastify/static": "^9.1.3",
     "fastify": "^5.8.5",
     "fuse.js": "^7.3.0",
-    "gray-matter": "^4.0.3",
     "glob": "^11.1.0",
+    "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
     "katex": "^0.16.9",
     "markdown-it": "^13.0.1",
@@ -70,6 +73,10 @@
   "license": "MIT",
   "devDependencies": {
     "@jsonlee_12138/markdown-it-mermaid": "^0.0.6",
+    "@types/js-yaml": "^4.0.9",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^25.9.1",
+    "@types/pug": "^2.0.10",
     "@vitejs/plugin-vue": "^6.0.2",
     "@wekanteam/markdown-it-mermaid": "^0.6.4",
     "add": "^2.0.6",
@@ -80,6 +87,7 @@
     "markdown-it-mermaid": "^0.2.5",
     "mermaid": "^11.12.2",
     "playwright": "^1.60.0",
+    "typescript": "^6.0.3",
     "uslug": "^1.0.4",
     "vis-network": "^10.0.2",
     "vite": "^7.2.4",

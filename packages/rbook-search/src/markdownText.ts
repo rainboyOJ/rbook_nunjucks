@@ -2,10 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { bookDir, bookPathToUrl } from './paths.js';
+import type { CollectedPage, PageDocument } from './types.js';
 
 const includeRegex = /^@include_md\("([^"]+)"\)\s*$/gm;
 
-function readMarkdownWithIncludes(filePath, visited = new Set()) {
+function readMarkdownWithIncludes(filePath: string, visited = new Set<string>()) {
   const realPath = path.resolve(filePath);
   if (visited.has(realPath)) {
     return `<!-- skipped circular include: ${path.basename(filePath)} -->`;
@@ -24,7 +25,7 @@ function readMarkdownWithIncludes(filePath, visited = new Set()) {
   });
 }
 
-function stripMarkdownNoise(content) {
+function stripMarkdownNoise(content: string) {
   return content
     .replace(/```[\s\S]*?```/g, (block) => block.replace(/```[^\n]*\n?|\n?```/g, '\n'))
     .replace(/~~~[\s\S]*?~~~/g, (block) => block.replace(/~~~[^\n]*\n?|\n?~~~/g, '\n'))
@@ -37,12 +38,12 @@ function stripMarkdownNoise(content) {
     .trim();
 }
 
-function titleFromMarkdown(content, fallback) {
+function titleFromMarkdown(content: string, fallback: string) {
   const heading = content.match(/^#\s+(.+)$/m);
   return heading ? heading[1].trim() : fallback;
 }
 
-function splitByHeading(content) {
+function splitByHeading(content: string) {
   const lines = content.split(/\r?\n/);
   const sections = [];
   let current = { heading: '', level: 0, lines: [] };
@@ -65,7 +66,7 @@ function splitByHeading(content) {
   return sections;
 }
 
-function splitLongText(text, maxLength = 1200) {
+function splitLongText(text: string, maxLength = 1200) {
   if (text.length <= maxLength) return [text];
 
   const parts = [];
@@ -80,11 +81,11 @@ function splitLongText(text, maxLength = 1200) {
   return parts.filter(Boolean);
 }
 
-export function loadPageDocument(page) {
+export function loadPageDocument(page: CollectedPage): PageDocument {
   const fullPath = path.join(bookDir, page.path);
   const raw = readMarkdownWithIncludes(fullPath);
   const parsed = matter(raw);
-  const title = parsed.data.title || page.title || titleFromMarkdown(parsed.content, page.path);
+  const title = String(parsed.data.title || page.title || titleFromMarkdown(parsed.content, page.path));
   const text = stripMarkdownNoise(parsed.content);
   const sections = splitByHeading(parsed.content);
   const headings = sections.map((section) => section.heading).filter(Boolean);
@@ -126,7 +127,7 @@ export function loadPageDocument(page) {
     ...page,
     title,
     url: bookPathToUrl(page.path),
-    frontMatter: parsed.data,
+    frontMatter: parsed.data as Record<string, unknown>,
     headings,
     text,
     excerpt: text.slice(0, 240),

@@ -3,6 +3,7 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { globSync } from 'glob';
 import { appDir, bookDir, configPath as defaultConfigPath, toBookPath, toPosixPath } from './paths.js';
+import type { BookChapter, BookConfig, CollectedPage, CollectPagesOptions, PageSource } from './types.js';
 
 const ignoredNamePatterns = [
   /(^|\/)\./,
@@ -14,16 +15,16 @@ const ignoredNamePatterns = [
   /copy\.md$/i
 ];
 
-function readConfig(configPath = defaultConfigPath) {
+function readConfig(configPath = defaultConfigPath): BookConfig {
   const raw = fs.readFileSync(configPath, 'utf8');
-  return yaml.load(raw) || {};
+  return (yaml.load(raw) || {}) as BookConfig;
 }
 
-function shouldIndexBookPath(bookPath) {
+function shouldIndexBookPath(bookPath: string) {
   return !ignoredNamePatterns.some((pattern) => pattern.test(bookPath));
 }
 
-function checkMarkdownFile(basePath, relativePath) {
+function checkMarkdownFile(basePath: string, relativePath: string) {
   const fullPath = path.join(bookDir, basePath, relativePath);
 
   if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
@@ -45,7 +46,12 @@ function checkMarkdownFile(basePath, relativePath) {
   return null;
 }
 
-function collectFromChapters(chapters, basePath = '', pages = [], trail = []) {
+function collectFromChapters(
+  chapters: BookChapter[] | undefined,
+  basePath = '',
+  pages: CollectedPage[] = [],
+  trail: string[] = []
+) {
   if (!Array.isArray(chapters)) return pages;
 
   for (const item of chapters) {
@@ -63,7 +69,7 @@ function collectFromChapters(chapters, basePath = '', pages = [], trail = []) {
     if (!filePath) continue;
 
     pages.push({
-      source: 'chapters',
+      source: 'chapters' as PageSource,
       visible: true,
       path: filePath,
       title: item.title || '',
@@ -74,8 +80,8 @@ function collectFromChapters(chapters, basePath = '', pages = [], trail = []) {
   return pages;
 }
 
-function collectFromGlob(config) {
-  const pages = [];
+function collectFromGlob(config: BookConfig) {
+  const pages: CollectedPage[] = [];
   for (const pattern of config.glob || []) {
     const matches = globSync(`book/${pattern}`, {
       cwd: appDir,
@@ -107,11 +113,11 @@ function collectAllMarkdownFiles() {
   }).map(toPosixPath);
 }
 
-export function collectPages(options = {}) {
+export function collectPages(options: CollectPagesOptions = {}) {
   const config = readConfig(options.configPath);
-  const byPath = new Map();
+  const byPath = new Map<string, CollectedPage>();
 
-  const addPage = (page) => {
+  const addPage = (page: CollectedPage) => {
     if (!page.path || !shouldIndexBookPath(page.path)) return;
     const old = byPath.get(page.path);
     if (!old) {

@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "exports": {
-    ".": "./src/index.js",
-    "./paths": "./src/paths.js",
-    "./renderEngine": "./src/renderEngine.js"
+    ".": "./dist/index.js",
+    "./paths": "./dist/paths.js",
+    "./renderEngine": "./dist/renderEngine.js"
   },
   "dependencies": {
     "@rbook/markdown": "file:../rbook-markdown"

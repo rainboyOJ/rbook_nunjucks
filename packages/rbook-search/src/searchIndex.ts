@@ -2,11 +2,12 @@ import fs from 'fs';
 import Fuse from 'fuse.js';
 import { buildSearchIndex } from './buildIndex.js';
 import { bookDir, searchIndexPath } from './paths.js';
+import type { SearchOptions } from './types.js';
 
-let cachedPayload = null;
-let cachedFuse = null;
+let cachedPayload: any = null;
+let cachedFuse: Fuse<any> | null = null;
 
-function loadPayload({ rebuild = false } = {}) {
+function loadPayload({ rebuild = false }: { rebuild?: boolean } = {}) {
   if (!rebuild && cachedPayload && cachedFuse) {
     return { payload: cachedPayload, fuse: cachedFuse };
   }
@@ -35,12 +36,12 @@ function loadPayload({ rebuild = false } = {}) {
   return { payload, fuse };
 }
 
-function limitText(text, length = 360) {
+function limitText(text: string | undefined, length = 360) {
   if (!text || text.length <= length) return text || '';
   return `${text.slice(0, length).trim()}...`;
 }
 
-export function getIndexPayload(options = {}) {
+export function getIndexPayload(options: { rebuild?: boolean } = {}) {
   return loadPayload(options).payload;
 }
 
@@ -48,7 +49,7 @@ export function rebuildIndex() {
   return loadPayload({ rebuild: true }).payload;
 }
 
-export function searchChunks(query, options = {}) {
+export function searchChunks(query: string, options: SearchOptions = {}) {
   const { payload, fuse } = loadPayload();
   const limit = Math.min(Number(options.limit || 10), 50);
   const includeText = options.includeText !== false;
@@ -75,7 +76,7 @@ export function searchChunks(query, options = {}) {
   };
 }
 
-export function searchPages(query, options = {}) {
+export function searchPages(query: string, options: SearchOptions = {}) {
   const chunkResults = searchChunks(query, { ...options, limit: Math.min(Number(options.limit || 20) * 3, 80) });
   const byPath = new Map();
 
@@ -109,7 +110,7 @@ export function searchPages(query, options = {}) {
   };
 }
 
-export function getPage(path) {
+export function getPage(path: string) {
   const { payload } = loadPayload();
   const page = payload.pages.find((item) => item.path === path);
   if (!page) return null;

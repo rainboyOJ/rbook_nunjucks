@@ -19,6 +19,9 @@ export const __code_template_dir = codeTemplateDir;
 export const __themedir = themeDir;
 
 class rbook {
+    name: string;
+    config: any;
+
     constructor() {
         this.name = 'rbook';
         this.config = this.load_config();

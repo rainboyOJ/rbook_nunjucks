@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "./src/searchIndex.js",
+  "main": "./dist/searchIndex.js",
   "exports": {
-    ".": "./src/searchIndex.js",
-    "./buildIndex": "./src/buildIndex.js",
-    "./collectPages": "./src/collectPages.js",
-    "./paths": "./src/paths.js"
+    ".": "./dist/searchIndex.js",
+    "./buildIndex": "./dist/buildIndex.js",
+    "./collectPages": "./dist/collectPages.js",
+    "./paths": "./dist/paths.js"
   },
   "dependencies": {
     "@rbook/core": "file:../rbook-core"

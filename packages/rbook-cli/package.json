@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "bin": {
-    "rbook": "./bin/rbook.js"
+    "rbook": "./dist/bin/rbook.js"
   },
   "exports": {
-    ".": "./src/index.js"
+    ".": "./dist/src/index.js"
   },
   "dependencies": {
     "@rbook/core": "file:../rbook-core",

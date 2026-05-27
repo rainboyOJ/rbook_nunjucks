@@ -9,14 +9,26 @@ import {
   searchChunks,
   searchPages
 } from '@rbook/search';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
-function parseLimit(value, fallback = 10) {
+interface CreateAppOptions {
+  logger?: boolean;
+  staticDir?: string;
+}
+
+type QueryParams = Record<string, string | undefined>;
+
+function getQuery(request: FastifyRequest): QueryParams {
+  return request.query as QueryParams;
+}
+
+function parseLimit(value: string | number | undefined, fallback = 10) {
   const limit = Number(value || fallback);
   if (!Number.isFinite(limit) || limit <= 0) return fallback;
   return Math.min(Math.floor(limit), 50);
 }
 
-function requireAdminToken(request, reply) {
+function requireAdminToken(request: FastifyRequest, reply: FastifyReply) {
   const expected = process.env.RBOOK_ADMIN_TOKEN;
   if (!expected) return true;
 
@@ -31,7 +43,7 @@ function requireAdminToken(request, reply) {
   return false;
 }
 
-export async function createApp(options = {}) {
+export async function createApp(options: CreateAppOptions = {}) {
   const app = fastify({
     logger: options.logger ?? true
   });
@@ -56,8 +68,9 @@ export async function createApp(options = {}) {
 
   app.get('/api/pages', async (request) => {
     const index = getIndexPayload();
-    const visibleOnly = request.query.visible === 'true';
-    const pages = visibleOnly ? index.pages.filter((page) => page.visible) : index.pages;
+    const query = getQuery(request);
+    const visibleOnly = query.visible === 'true';
+    const pages = visibleOnly ? index.pages.filter((page: any) => page.visible) : index.pages;
     return {
       total: pages.length,
       pages
@@ -65,7 +78,8 @@ export async function createApp(options = {}) {
   });
 
   app.get('/api/page', async (request, reply) => {
-    const pagePath = request.query.path;
+    const query = getQuery(request);
+    const pagePath = query.path;
     if (!pagePath) {
       reply.code(400);
       return { error: 'missing query parameter: path' };
@@ -81,28 +95,30 @@ export async function createApp(options = {}) {
   });
 
   app.get('/api/search', async (request, reply) => {
-    const query = request.query.q || request.query.query;
-    if (!query) {
+    const query = getQuery(request);
+    const searchQuery = query.q || query.query;
+    if (!searchQuery) {
       reply.code(400);
       return { error: 'missing query parameter: q' };
     }
 
-    return searchPages(query, {
-      limit: parseLimit(request.query.limit)
+    return searchPages(searchQuery, {
+      limit: parseLimit(query.limit)
     });
   });
 
   app.get('/api/chunks/search', async (request, reply) => {
-    const query = request.query.q || request.query.query;
-    if (!query) {
+    const query = getQuery(request);
+    const searchQuery = query.q || query.query;
+    if (!searchQuery) {
       reply.code(400);
       return { error: 'missing query parameter: q' };
     }
 
-    return searchChunks(query, {
-      limit: parseLimit(request.query.limit),
-      textLength: Number(request.query.textLength || 900),
-      includeText: request.query.includeText !== 'false'
+    return searchChunks(searchQuery, {
+      limit: parseLimit(query.limit),
+      textLength: Number(query.textLength || 900),
+      includeText: query.includeText !== 'false'
     });
   });
 

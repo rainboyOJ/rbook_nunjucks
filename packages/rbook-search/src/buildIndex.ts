@@ -4,8 +4,9 @@ import Fuse from 'fuse.js';
 import { collectPages } from './collectPages.js';
 import { loadPageDocument } from './markdownText.js';
 import { searchDir, searchIndexPath } from './paths.js';
+import type { BuildSearchIndexOptions, PageDocument, SearchChunk } from './types.js';
 
-function createFuseData(documents) {
+function createFuseData(documents: PageDocument[]): SearchChunk[] {
   return documents.flatMap((doc) => doc.chunks.map((chunk) => ({
     ...chunk,
     navTrail: doc.navTrail || [],
@@ -14,16 +15,16 @@ function createFuseData(documents) {
   })));
 }
 
-export function buildSearchIndex(options = {}) {
+export function buildSearchIndex(options: BuildSearchIndexOptions = {}) {
   const collected = collectPages(options);
-  const documents = [];
-  const errors = [];
+  const documents: PageDocument[] = [];
+  const errors: Array<{ path: string; message: string }> = [];
 
   for (const page of collected.pages) {
     try {
       documents.push(loadPageDocument(page));
     } catch (error) {
-      errors.push({ path: page.path, message: error.message });
+      errors.push({ path: page.path, message: error instanceof Error ? error.message : String(error) });
     }
   }
 
