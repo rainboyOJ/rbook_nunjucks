@@ -13,14 +13,14 @@
   },
   "scripts": {
     "clean": "rm -rf packages/*/dist src/online_judge/dist apps/algorithm-book/third_part/code_template_filter/dist",
-    "build:packages": "tsc -p packages/rbook-markdown && tsc -p packages/rbook-core && tsc -p packages/rbook-search && tsc -p packages/rbook-server && tsc -p packages/rbook-cli",
+    "build:packages": "tsc -p packages/rbook-markdown && tsc -p packages/rbook-core && tsc -p packages/rbook-search && tsc -p packages/rbook-server && tsc -p packages/rbook-cli && tsc -p src/online_judge",
     "build": "npm run build:packages && npm --workspace @rbook/algorithm-book run build",
     "build:index": "npm --workspace @rbook/algorithm-book run build:index",
     "build:all": "npm run build:packages && npm --workspace @rbook/algorithm-book run build:all",
     "serve": "npm --workspace @rbook/algorithm-book run serve",
     "serve:dev": "npm run serve",
     "dev": "npm run serve",
-    "typecheck": "npm run build:packages && tsc -p apps/algorithm-book/third_part/code_template_filter && tsc -p src/online_judge --noEmit"
+    "typecheck": "npm run build:packages && tsc -p apps/algorithm-book/third_part/code_template_filter"
   },
   "dependencies": {
     "@fastify/static": "^9.1.3",

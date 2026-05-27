@@ -1,14 +1,16 @@
 import { spawnSync } from 'child_process';
 
 export class GumError extends Error {
-  constructor(message) {
+  constructor(message: string) {
     super(message);
     this.name = 'GumError';
   }
 }
 
-function convertKwargsToFlags(kwargs) {
-  const flags = [];
+type GumKwargs = Record<string, string | number | boolean | Array<string | number>>;
+
+function convertKwargsToFlags(kwargs: GumKwargs) {
+  const flags: string[] = [];
   for (const [key, value] of Object.entries(kwargs)) {
     const flag = `--${key.replace(/_/g, '-')}`;
     if (typeof value === 'boolean') {
@@ -26,7 +28,7 @@ function convertKwargsToFlags(kwargs) {
   return flags;
 }
 
-function runGum(subcommand, args = [], kwargs = {}) {
+function runGum(subcommand: string, args: string[] = [], kwargs: GumKwargs = {}) {
   try {
     const command = ['gum', subcommand];
     const flags = convertKwargsToFlags(kwargs);
@@ -60,32 +62,32 @@ function runGum(subcommand, args = [], kwargs = {}) {
 
     return process.stdout ? process.stdout.trim() : '';
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
       throw new GumError("gum command not found. Is it installed and in your PATH? See: https://github.com/charmbracelet/gum");
     }
-    throw new GumError(error.message);
+    throw new GumError(error instanceof Error ? error.message : String(error));
   }
 }
 
 // --- Wrapper Functions ---
 
-export function input(kwargs = {}) {
+export function input(kwargs: GumKwargs = {}) {
   return runGum('input', [], kwargs);
 }
 
-export function write(kwargs = {}) {
+export function write(kwargs: GumKwargs = {}) {
   return runGum('write', [], kwargs);
 }
 
-export function choose(options, kwargs = {}) {
+export function choose(options: string[], kwargs: GumKwargs = {}) {
   return runGum('choose', options, kwargs);
 }
 
-export function filter(options, kwargs = {}) {
+export function filter(options: string[], kwargs: GumKwargs = {}) {
   return runGum('filter', options, kwargs);
 }
 
-export function confirm(prompt = "Are you sure?", kwargs = {}) {
+export function confirm(prompt = "Are you sure?", kwargs: GumKwargs = {}) {
   try {
     return runGum('confirm', [prompt], kwargs);
   } catch (error) {
@@ -95,15 +97,15 @@ export function confirm(prompt = "Are you sure?", kwargs = {}) {
   }
 }
 
-export function spin(command, title = "Running...", kwargs = {}) {
+export function spin(command: string[], title = "Running...", kwargs: GumKwargs = {}) {
   kwargs.title = title;
   return runGum('spin', ['--', ...command], kwargs);
 }
 
-export function style(text, kwargs = {}) {
+export function style(text: string, kwargs: GumKwargs = {}) {
   return runGum('style', [text], kwargs);
 }
 
-export function join(parts, kwargs = {}) {
+export function join(parts: string[], kwargs: GumKwargs = {}) {
   return runGum('join', parts, kwargs);
 }

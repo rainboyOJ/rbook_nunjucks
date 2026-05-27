@@ -8,7 +8,7 @@ import Base from './base.js'
 
 class CF extends Base {
 
-    static instance = null
+    static instance: CF | null = null
 
     constructor() {
         super('codeforces','/codeforces',"https://codeforces.com")
@@ -19,7 +19,7 @@ class CF extends Base {
 
     // https://codeforces.com/contest/165/problem/E
     // -> 165E
-    get_id_by_link(link) {
+    get_id_by_link(link: string) {
       let id = ''
 
       let arr = link.split('/')
@@ -37,11 +37,11 @@ class CF extends Base {
       return id
     }
 
-    real_id(id) {
+    real_id(id: string) {
       return /^\d/.test(id) ? `P${id}` : id;
     }
 
-    problem_link(id) {
+    problem_link(id: string) {
       let contest_id =  id.slice(0,-1)
       let problem_id = id.slice(-1)
       return `https://www.codeforces.com/contest/${contest_id}/problem/${problem_id}`
@@ -50,13 +50,13 @@ class CF extends Base {
     download_by_link(link) {
       let id = this.get_id_by_link(link)
       this.source = link 
-      this.download(id,this._OJ_NAME)
+      this.download(id,this._OJ)
         // let id = link.split('/').pop()
         // let real_ojname = link.split('/')[3]
         // this.download(id,real_ojname)
     }
 
-    download(id,ojName='codeforces') {
+    download(id: string, ojName='codeforces') {
         // let pid = id.replace('/','-').toUpperCase();
         let pid = id
         // let data = this.http(pid)

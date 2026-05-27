@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
-import { glob, globSync, globStream, globStreamSync, Glob } from 'glob'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { renderTemplate } from '../rbook/renderEngine.js';
+import { renderTemplate } from '@rbook/core/renderEngine';
 
 // 获取当前文件的目录路径
 export const __filename = fileURLToPath(import.meta.url);
@@ -16,15 +14,20 @@ export const __problemdir = path.join(__workdir, 'problems');
 // console.log('--themdir: ',__template_dir)
 
 class Base {
+  _OJ: string;
+  _PATH: string;
+  _OJ_WEBSITE: string;
+  source?: string;
+
   // oj
-  constructor(ojName,_path,oj_website)
+  constructor(ojName: string, _path: string, oj_website: string)
   {
     this._OJ= ojName
     this._PATH = _path
     this._OJ_WEBSITE = oj_website
   }
 
-  match_by_link(url) {
+  match_by_link(url: string) {
     // console.log('url: ',url)
     // console.log('this._OJ_WEBSITE: ',this._OJ_WEBSITE)
     return url.startsWith(this._OJ_WEBSITE)
@@ -46,7 +49,7 @@ class Base {
     return process.cwd()
   }
 
-    match_by_name(oj_name) {
+  match_by_name(oj_name: string) {
       return oj_name.toLowerCase()  == this._OJ.toLowerCase()
     }
   
@@ -57,7 +60,7 @@ class Base {
     return pwd.startsWith(fullOjPath)
   }
 
-  save(id,md_content) {
+  save(id: string, md_content: string) {
     console.log(`[${this._OJ}] ${id} 保存中...`)
     let dir = path.join(this._oj_dir(),id)
     if (!fs.existsSync(dir)) {
@@ -80,7 +83,7 @@ class Base {
     return md_path
   }
 
-  render(data) {
+  render(data: Record<string, unknown>) {
     let template_name = 'default'
     if( fs.existsSync(path.join(__template_dir, `${this._OJ}.pug`))){
       template_name = this._OJ

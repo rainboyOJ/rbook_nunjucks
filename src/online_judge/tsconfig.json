@@ -6,12 +6,13 @@
     "rootDir": "."
   },
   "include": [
-    "index.js",
-    "base.js",
-    "luogu.js",
-    "vjudge.js",
-    "codeforces.js",
-    "utils/**/*.js"
+    "index.ts",
+    "base.ts",
+    "luogu.ts",
+    "vjudge.ts",
+    "codeforces.ts",
+    "utils/gum.ts",
+    "utils/make_problem_config.ts"
   ],
   "exclude": ["dist"]
 }

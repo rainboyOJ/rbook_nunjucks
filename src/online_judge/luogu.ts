@@ -9,7 +9,7 @@ import Base from './base.js'
 
 class LUOGU extends Base {
 
-    static instance = null
+    static instance: LUOGU | null = null
 
     constructor() {
         super('luogu','/luogu',"https://www.luogu.com")
@@ -18,17 +18,17 @@ class LUOGU extends Base {
         // return luogu.instance || (luogu.instance = this)
     }
 
-    real_id(id) {
+    real_id(id: string) {
       return /^\d/.test(id) ? `P${id}` : id;
     }
 
-    problem_link(id) {
+    problem_link(id: string) {
       return `https://www.luogu.com.cn/problem/${this.real_id(id)}`
     }
 
 
     //连接网络 得到题目数据
-    http(id) {
+    http(id: string): any {
         // let realId = /^\d/.test(id) ? `P${id}` : id;
         // console.log( 'realId',realId )
         let href = this.problem_link( id )
@@ -56,7 +56,7 @@ class LUOGU extends Base {
         // 4. 提取内容并解析 JSON
         if (targetScript.length > 0) {
             const jsonContent = targetScript.html();
-            const parsedData = JSON.parse(jsonContent);
+            const parsedData = JSON.parse(jsonContent || '{}');
             // console.log('提取到的数据:', parsedData);
             return parsedData.data;
         } else {
@@ -68,7 +68,7 @@ class LUOGU extends Base {
     }
 
     //下载数据
-    download_data(id ,data = null) {
+    download_data(id: string, data: any = null) {
         data  = data || this.http(id);
         if (!data) {
             console.log("无法获取题目数据");
@@ -123,7 +123,7 @@ class LUOGU extends Base {
         return true;
     }
 
-    download(id,ojName = 'luogu') {
+    download(id: string, ojName = 'luogu') {
         let data = this.http(id)
         // console.log(data)
 
@@ -144,7 +144,7 @@ class LUOGU extends Base {
         let md_path = this.save(save_id,md_content)
     }
 
-    download_by_link(link) {
+    download_by_link(link: string) {
       let link_split = link.split('/')
       let id = link_split[4]
       this.source = link 

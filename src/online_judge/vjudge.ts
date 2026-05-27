@@ -8,7 +8,7 @@ import * as cheerio from "cheerio"
 
 class vjudge extends Base {
 
-    static instance = null
+    static instance: vjudge | null = null
 
     constructor() {
         // vjude 题目的目录直接在 /problems ,
@@ -24,7 +24,7 @@ class vjudge extends Base {
         return 'config'
     }
 
-    match_by_name(oj_name) {
+    match_by_name(oj_name: string) {
       // console.log(oj_name)
       const ojList = ['poj', 'hdu','atcoder',"OpenJ_Bailian","CodeForces"];
       // console.log(ojList.includes(oj_name.toLowerCase()))
@@ -33,13 +33,13 @@ class vjudge extends Base {
 
 
     //用于显示的id,不是真正的id
-    show_id(id) {
+    show_id(id: string) {
         let pid = id.replace('/','-').toUpperCase();
         return pid
     }
 
     //连接网络 得到题目数据
-    http(id) {
+    http(id: string) {
         // let a = execSync(`wget -O - https://vjudge.net.cn/problem/${id}`,{encoding:'utf-8'})
         let a = execSync(`wget -O - https://vjudge.net/problem/${id}`,{encoding:'utf-8'})
         // console.log(a)
@@ -51,12 +51,12 @@ class vjudge extends Base {
         return {title}
     }
     
-    problem_link(id) {
+    problem_link(id: string) {
       let pid = id.replace('/','-').toUpperCase();
       return `https://vjudge.net/problem/${pid}`
     }
 
-    download(id,ojName) {
+    download(id: string, ojName: string) {
         // let pid = id.replace('/','-').toUpperCase();
         let pid = ojName + '-' + id
         let data = this.http(pid)
@@ -69,7 +69,7 @@ class vjudge extends Base {
         this.save(`${ojName}/${id}`,md_content)
     }
 
-    download_by_link(link) {
+    download_by_link(link: string) {
       let link_split = link.split('/')
       let oj_and_id = link_split[4].split('#')[0]
       let oj = oj_and_id.split('-')[0]

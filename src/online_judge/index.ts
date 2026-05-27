@@ -10,7 +10,7 @@
 //      tags
 //      
 
-import {join,resolve,extname,isAbsolute} from 'path'
+import { isAbsolute } from 'path'
 // const {relative: project_dir_relative,absolute:project_dir_absolute} = require("./base_class/pather.js")
 
 import LUOGU  from './luogu.js'
@@ -39,31 +39,30 @@ const online_judges= [
 // }
 
 //通过path 得到对应的id
-function get_match_oj(path) {
-    if( isAbsolute(path) ) path = project_dir_relative(path)
+function get_match_oj(problemPath: string) {
+    if( isAbsolute(problemPath) ) throw new Error('absolute problem paths are not supported in the TypeScript entry yet')
 
     // console.log(path)
-    for( let oj of ojs) {
-        if( oj.match(path)) {
+    for( let oj of online_judges) {
+        if( 'match' in oj && typeof oj.match === 'function' && oj.match(problemPath)) {
             return oj
         }
     }
-    throw 'not match problem by this path : ' + path
+    throw new Error('not match problem by this path : ' + problemPath)
 }
 
-function dir_to_id(path) {
-    if( isAbsolute(path) ) path = project_dir_relative(path)
-    return get_match_oj(path).dir_to_id(path)
+function dir_to_id(problemPath: string) {
+    throw new Error(`dir_to_id is not implemented in the TypeScript entry yet: ${problemPath}`)
 }
 
 //通过oj的那么得到oj object
-function get_oj_by_name(name) {
-    for( let oj of ojs) {
+function get_oj_by_name(name: string) {
+    for( let oj of online_judges) {
         if( oj.name === name ) {
             return oj
         }
     }
-    throw 'not match problem by this path : ' + path
+    throw new Error('not match oj by name : ' + name)
 }
 
 
