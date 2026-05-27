@@ -1,0 +1,16 @@
+{
+  "name": "@rbook/search",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/searchIndex.js",
+  "exports": {
+    ".": "./src/searchIndex.js",
+    "./buildIndex": "./src/buildIndex.js",
+    "./collectPages": "./src/collectPages.js",
+    "./paths": "./src/paths.js"
+  },
+  "dependencies": {
+    "@rbook/core": "file:../rbook-core"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@rbook/cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "rbook": "./bin/rbook.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@rbook/core": "file:../rbook-core",
+    "chalk": "^5.6.2"
+  }
+}

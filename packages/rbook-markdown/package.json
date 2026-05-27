@@ -1,0 +1,11 @@
+{
+  "name": "@rbook/markdown",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/markdown.js",
+  "exports": {
+    ".": "./src/markdown.js",
+    "./markdown-it": "./src/markdown-it/index.js"
+  }
+}

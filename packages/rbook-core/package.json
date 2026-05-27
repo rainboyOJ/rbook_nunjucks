@@ -1,0 +1,15 @@
+{
+  "name": "@rbook/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./paths": "./src/paths.js",
+    "./renderEngine": "./src/renderEngine.js"
+  },
+  "dependencies": {
+    "@rbook/markdown": "file:../rbook-markdown"
+  }
+}

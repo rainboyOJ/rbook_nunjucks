@@ -23,11 +23,11 @@ Markdown 源文件
 新增搜索索引模块：
 
 ```text
-src/search/paths.js
-src/search/collectPages.js
-src/search/markdownText.js
-src/search/buildIndex.js
-src/search/searchIndex.js
+packages/rbook-search/src/paths.js
+packages/rbook-search/src/collectPages.js
+packages/rbook-search/src/markdownText.js
+packages/rbook-search/src/buildIndex.js
+packages/rbook-search/src/searchIndex.js
 ```
 
 职责：
@@ -44,8 +44,8 @@ src/search/searchIndex.js
 新增 Fastify 服务：
 
 ```text
-src/server/app.js
-src/server/serve.js
+packages/rbook-server/src/app.js
+packages/rbook-server/src/serve.js
 ```
 
 职责：

@@ -4,16 +4,19 @@
   "description": "A simple static book site generator",
   "main": "bin/rbook.js",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "bin": {
     "rbook": "./bin/rbook.js"
   },
   "scripts": {
     "build": "bash build.sh",
-    "build:index": "node src/search/buildIndex.js",
+    "build:index": "node packages/rbook-search/src/buildIndex.js",
     "build:all": "npm run build && npm run build:index",
-    "serve": "node src/server/serve.js",
+    "serve": "node packages/rbook-server/src/serve.js",
     "serve:dev": "node src/server.js",
-    "dev": "node src/server/serve.js"
+    "dev": "node packages/rbook-server/src/serve.js"
   },
   "dependencies": {
     "@fastify/static": "^9.1.3",
