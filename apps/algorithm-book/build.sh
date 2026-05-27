@@ -38,5 +38,5 @@ cp -r "$APP_DIR/third_part/animate_single_html" "$APP_DIR/dist/animate_single_ht
 # # 编译代码模板过滤器
 echo "=== 编译代码模板过滤器 ==="
 npx vite build \
-  --config "$APP_DIR/third_part/code_template_filter/vite.config.js" \
+  --config "$APP_DIR/third_part/code_template_filter/vite.config.ts" \
   --base /code_template/

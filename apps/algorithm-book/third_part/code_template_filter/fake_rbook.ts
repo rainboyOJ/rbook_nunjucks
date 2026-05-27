@@ -17,6 +17,9 @@ export const __code_template_dir = codeTemplateDir;
 export const __themedir = themeDir;
 
 class rbook {
+    name: string;
+    config: any;
+
     constructor() {
         this.name = 'rbook';
         this.config = this.load_config();
@@ -44,8 +47,8 @@ class rbook {
      * @param {string} basePath - 基础路径
      * @returns {Array} - Markdown文件路径数组
      */
-    getAllMarkdownFiles(chapters, basePath = '') {
-        const files = [];
+    getAllMarkdownFiles(chapters: any[], basePath = '') {
+        const files: string[] = [];
         
         if (!chapters || !Array.isArray(chapters)) {
             return files;
@@ -90,7 +93,7 @@ class rbook {
         this.copy_dir('theme/assets', 'dist/assets');
     }
 
-    copy_dir(src, dest) {
+    copy_dir(src: string, dest: string) {
         const fullSrc = path.join(__workdir, src);
         const fullDest = path.join(__workdir, dest);
         if (!fs.existsSync(fullSrc)) {
@@ -108,7 +111,7 @@ class rbook {
      * @param {string} relativePath - 相对于基础路径的路径 (如 'multiple-knapsack')
      * @returns {string|null} - 找到的文件路径或null
      */
-    checkMarkdownFile(basePath, relativePath) {
+    checkMarkdownFile(basePath: string, relativePath: string) {
         // 构建完整路径
         const fullPath = path.join(__bookdir, basePath, relativePath);
         

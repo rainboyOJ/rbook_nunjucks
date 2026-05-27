@@ -8,8 +8,29 @@ import { dirname } from 'path';
 import rbook from "./fake_rbook.js";
 import { __workdir ,__bookdir, __code_template_dir} from "./fake_rbook.js";
 import * as matter from 'gray-matter';
+import type { Plugin } from 'vite';
+
+interface CodeTemplate {
+    title?: string;
+    tags?: string[];
+    code: string;
+    desc?: string;
+    sh?: string;
+    [key: string]: unknown;
+}
+
+interface TemplateRecord extends CodeTemplate {
+    front_matter: Record<string, any>;
+    md_path: string;
+}
 
 class Markdown {
+    name: string;
+    front_matter: Record<string, any>;
+    md_content: string;
+    html_content: string;
+    md_path: string;
+
     constructor(md_path = '') {
         this.name = 'rbook';
         this.front_matter = {};
@@ -30,7 +51,7 @@ class Markdown {
      * @param {string} md_content - Markdown内容
      * @returns {Object} - { content: markdown, data: frontmatter }
      */
-    matter(md_content) {
+    matter(md_content: string) {
         try {
             const result = matter.default(md_content);
             return result
@@ -46,7 +67,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // import {flatten_menu_json} from "../../src/menu.js";
 
 //2. 加载所有的 template 描述的array
-var template_array = []
+var template_array: TemplateRecord[] = []
 
 async function load_data() {
   const RbookEntity = new rbook();
@@ -73,7 +94,7 @@ async function load_data() {
      *  sh: // 这个是原来的sh
      * }
      *  */
-    function deal_code_template(md,d,code_template) {
+    function deal_code_template(md: Markdown, d: CodeTemplate, code_template: CodeTemplate[]) {
         // console.log("d=>",d)
         // console.log("code_template=>",code_template)
         let file_dir = md.md_path
@@ -179,7 +200,7 @@ async function load_data() {
  * @param {string} zipPath - 输出的ZIP文件路径。
  * @param {Array<object>} filesToAdd - 要添加的文件数组，格式：[{path: 'full/path/to/file.txt', name: 'file_in_zip.txt'}]
  */
-async function createZipStream(zipPath, filesToAdd) {
+async function createZipStream(zipPath: string, filesToAdd: Array<{ path: string; name: string }>) {
   // 创建一个文件写入流
   const output = fs.createWriteStream(zipPath);
   
@@ -309,5 +330,5 @@ export default async function nodejsPlugin() {
                 }
             };
         }
-    };
+    } satisfies Plugin;
 }

@@ -11,7 +11,8 @@
  *    使得所有子组件都可以通过 `inject` 来访问这个数据。这个变量预计由外部环境（如模板引擎或直接在 HTML 中定义的脚本）提供。
  * 5. 调用 `app.mount('#app')` 将整个 Vue 应用挂载到 HTML 页面中 ID 为 `app` 的 DOM 元素上，从而启动应用。
  */
-import { createApp ,provide} from 'vue'
+import { createApp } from 'vue'
+import type { Plugin } from 'vue'
 import Toast from "vue-toastification";
 import './style.scss'
 import "vue-toastification/dist/index.css";
@@ -24,7 +25,7 @@ const app = createApp(App)
 const toast_options = {
     // You can set your default options here
 };
-app.use(Toast, toast_options);
+app.use(Toast as unknown as Plugin, toast_options);
 
 
 //
