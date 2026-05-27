@@ -15,12 +15,14 @@ import {join,resolve,extname,isAbsolute} from 'path'
 
 import LUOGU  from './luogu.js'
 import VJUDGE from './vjudge.js'
+import CF from './codeforces.js'
 
 const online_judges= [
     // require("./roj.js"),
     // require("./luogu.js"),
     new LUOGU(),
-    new VJUDGE()
+    new VJUDGE(),
+    new CF()
     // require("./noi.openjudge.cn.js"),
     // require("./leetcodecn.js"),
     // require("./vjudge.js"),

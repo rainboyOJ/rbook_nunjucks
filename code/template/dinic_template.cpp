@@ -1,56 +1,40 @@
+/**
+ * Author by {{author}} blog: {{blog}} github : {{github}}
+ * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
+ * date: {{date}}
+ */
+
 #include <bits/stdc++.h>
 using namespace std;
 const int maxn = 1e6+5; // 点
 const int maxe = 2e6+5; // 边 (注意：要是题目边数的2倍)
 const long long INF = 1e18;
 
+int n,m;
+int s,t; // 源点 汇点
+int a[maxn];
+
 // 存图的模板
-struct linkList {
-    typedef struct {int u,v,w,next;} edge;
-    edge e[maxe];
-    int h[maxn],edge_cnt=0;
-    linkList(){
-        edge_cnt=0;
-        memset(h,-1,sizeof(h));
-    }
-
-    //遍历点u 周围点
-    template<typename U>
-    void for_each(int u,U func){
-        for(int i = h[u] ; i !=-1;i = e[i].next)
-            func(e[i].u,e[i].v,e[i].w); //u v w
-    }
-
-    void add(int u,int v,int w=0){
-        e[edge_cnt] = {u,v,w,h[u]};
-        h[u] = edge_cnt++;
-    }
-    void add2(int u,int v,int w=0){
-        add(u,v,w);
-        add(v,u,w);
-    }
-    //下标访问
-    edge& operator[](int i){ return e[i]; }
-    //返回head[u]
-    int operator()(int u){ return h[u]; }
-} e;
-
+{{include "code/graph/linklist.cpp"}}
 
 // Dinic算法最大流模板 - 基于linkList存图
 struct Dinic {
-    vector<int> level, iter;  // level: BFS分层, iter: 当前弧优化
+    vector<int> level, cur;  // level: BFS分层, cur: 当前弧优化
     int n;  // 节点数
     
-    // 初始化，n为节点数（节点编号从0开始）
-    Dinic(int n) : n(n), level(n+5), iter(n+5) {
+    void init(int n) {
         // 重置linkList
         e.edge_cnt = 0;
         memset(e.h, -1, sizeof(e.h));
+
+        level.resize(n+5);
+        cur.resize(n+5);
+        this->n = n;
     }
     
     // 添加边：从u到v，容量为cap
     // 使用技巧：正向边和反向边的索引相差1，通过异或1来找到对应边
-    void addEdge(int u, int v, long long cap) {
+    void addEdge(int u, int v, int cap) {
         e.add(u, v, cap);    // 正向边，w字段存储容量
         e.add(v, u, 0);      // 反向边，容量为0
     }
@@ -67,12 +51,13 @@ struct Dinic {
             q.pop();
             
             // 使用linkList的遍历方式
-            e.for_each(u, [&](int from, int to, int cap) {
-                if (cap > 0 && level[to] < 0) {
-                    level[to] = level[u] + 1;
-                    q.push(to);
+            for(int i = e.h[u] ; ~i ;i = e[i].next) {
+                int v = e[i].v, cap = e[i].w;
+                if (cap > 0 && level[v] < 0) {
+                    level[v] = level[u] + 1;
+                    q.push(v);
                 }
-            });
+            }
         }
         
         return level[t] >= 0;  // 返回是否能到达汇点
@@ -86,8 +71,8 @@ struct Dinic {
         if (u == t || preFlow == 0) return preFlow;
         long long flow = 0;
         
-        // 当前弧优化：从iter[u]开始遍历
-        for (int& cid = iter[u]; cid != -1; cid = e[cid].next) {
+        // 当前弧优化：从cur[u]开始遍历
+        for (int& cid = cur[u]; cid != -1; cid = e[cid].next) {
             auto& edge = e[cid]; // 当前弧优化
             int to = edge.v;
             long long cap = edge.w;
@@ -114,9 +99,9 @@ struct Dinic {
     long long maxFlow(int s, int t) {
         long long flow = 0;
         while (bfs(s, t)) {  // 能够分层
-            // 当前弧优化重置：将iter设置为每个节点的第一条边
+            // 当前弧优化重置：将cur设置为每个节点的第一条边
             for (int i = 0; i <= n; i++) {
-                iter[i] = e(i);  // 使用linkList的operator()获取head[i]
+                cur[i] = e.h[i];  // 使用linkList的operator()获取head[i]
             }
             
             // 多路增广
@@ -124,27 +109,29 @@ struct Dinic {
         }
         return flow;
     }
-};
+} dinic;
+
+void init(){
+    std::cin >> n >> m;
+    std::cin >> s >> t;
+
+    dinic.init(n);
+    
+    for (int i = 0; i < m; i++) {
+        int u, v,cap;
+        cin >> u >> v >> cap;
+        
+        //添加流量,自动添加反向边
+        dinic.addEdge(u, v, cap); 
+    }
+
+}
 
 // 使用示例：
 int main() {
     ios::sync_with_stdio(0); cin.tie(0);
+    init();
     
-    int n, m;  // n个节点，m条边
-    int s,t; // 源点 汇点
-    std::cin >> n >> m;
-    std::cin >> s >> t;
-    
-    Dinic dinic(n);  // 创建Dinic实例
-    
-    for (int i = 0; i < m; i++) {
-        int u, v;
-        long long cap;
-        cin >> u >> v >> cap;
-        dinic.addEdge(u, v, cap);  // 添加有向边
-        // 如果是无向边，需要再加一条反向边：dinic.addEdge(v, u, cap);
-    }
-
     cout << dinic.maxFlow(s,t) << "\n";
     
     return 0;

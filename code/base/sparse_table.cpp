@@ -1,7 +1,7 @@
 // 竞赛用简洁模板
 struct ST {
     static const int MAXN = 100005;
-    static const int LOGN = 17;
+    static const int LOGN = 20;
     int st[MAXN][LOGN];
     int log_table[MAXN];
     int n;

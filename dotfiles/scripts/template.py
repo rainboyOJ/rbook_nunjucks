@@ -191,10 +191,19 @@ def select_and_apply_template():
             
             if template_path.exists():
                 # 应用模板到标准输出
+                # 得到 template_path 的后缀
+                template_ext = os.path.splitext(template_path)[1]
                 output_cpp_file = gum_input(value="1", header="输入输出文件名(默认1.cpp):")
-                ## 后缀不是.cpp 则添加.cpp
-                if not output_cpp_file.endswith('.cpp'):
-                    output_cpp_file += '.cpp'
+
+                ## 后缀不是 template_ext 则添加 template_ext
+                if not output_cpp_file.endswith(template_ext):
+                    output_cpp_file += template_ext
+
+                ## 如果文件存在，则询问是否覆盖
+                if os.path.exists(output_cpp_file):
+                    if not gum_confirm(prompt=f"文件 {output_cpp_file} 已存在，是否覆盖?"):
+                        return
+
                 template_engine.apply_template_to_buffer(str(template_path), output_cpp_file)
             else:
                 print(f"模板文件不存在: {template_path}", file=sys.stderr)
