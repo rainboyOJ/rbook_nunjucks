@@ -18,6 +18,7 @@ import uslug from 'uslug';
 import admonition from './lib/markdown-it-admonition.js';
 import includeCode from './lib/include-code.js';
 import mdLink2Url from './lib/md-link2url.js';
+import problemLink from './lib/problem-link.js';
 
 // Content extensions
 import lineNumber from './lib/lineNumber.js';
@@ -90,6 +91,9 @@ md.use(mdLink2Url, {
     baseDir: project_book_root,
     baseUrl: '/'
 });
+
+// Problem link support: [[problem: oj,id]]
+md.use(problemLink);
 
 // Math rendering plugin
 md.use(TexMath, {

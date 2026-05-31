@@ -3,6 +3,7 @@ author: rainboy
 description: 这是一本关于算法的书 
 
 github_repository: https://github.com/rainboyOJ/rbook_nunjucks
+pcs-link: https://pcs2.roj.ac.cn
 
 # 那些不想在目录中显示的文件,但是又想被渲染到的文件,可以放在这里
 glob:
