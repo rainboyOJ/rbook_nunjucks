@@ -73,10 +73,16 @@ function findProjectRoot(startDir) {
 }
 
 const project_root = findProjectRoot(__dirname);
+const content_root = process.env.RBOOK_CONTENT_DIR
+    ? resolve(process.env.RBOOK_CONTENT_DIR)
+    : '';
 const app_root = process.env.RBOOK_APP_DIR
     ? resolve(project_root, process.env.RBOOK_APP_DIR)
     : path.join(project_root, 'apps/algorithm-book');
-const project_book_root = path.join(app_root, 'book');
+const project_book_root = content_root
+    ? path.join(content_root, 'book')
+    : path.join(app_root, 'book');
+const include_code_root = content_root || project_root;
 
 // Initialize markdown-it
 const md = MarkdownIt({
@@ -88,7 +94,7 @@ const md = MarkdownIt({
 // Plugin configuration
 
 // Include code plugin
-md.use(includeCode, { baseDir: project_root });
+md.use(includeCode, { baseDir: include_code_root });
 
 // Admonition types configuration
 const math_admonition = [

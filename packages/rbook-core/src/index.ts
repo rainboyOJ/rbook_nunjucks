@@ -8,6 +8,7 @@ import {
     bookDir,
     codeTemplateDir,
     distDir,
+    publicDir,
     fromApp,
     rootDir,
     themeDir
@@ -220,20 +221,20 @@ class rbook {
 
     renderIndex() {
         // 构建首页
-        if (this.buildMarkdownFile('index.md', 'dist/index.html', 'index', {site : this.config})) {
+        if (this.buildMarkdownFile('index.md', path.join(distDir, 'index.html'), 'index', {site : this.config})) {
             console.log('✓ 首页构建完成');
         }
     }
 
     // 处理assets 
     deal_assets() {
-        this.copy_dir('public', 'dist');
-        this.copy_dir('theme/assets', 'dist/assets');
+        this.copy_dir(publicDir, distDir);
+        this.copy_dir(path.join(themeDir, 'assets'), path.join(distDir, 'assets'));
     }
 
     copy_dir(src, dest) {
-        const fullSrc = fromApp(src);
-        const fullDest = fromApp(dest);
+        const fullSrc = path.isAbsolute(src) ? src : fromApp(src);
+        const fullDest = path.isAbsolute(dest) ? dest : fromApp(dest);
         if (!fs.existsSync(fullSrc)) {
             throw new Error(`源目录不存在: ${src}`);
         }

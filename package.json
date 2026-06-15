@@ -17,6 +17,8 @@
     "build": "npm run build:packages && npm --workspace @rbook/algorithm-book run build",
     "build:index": "npm --workspace @rbook/algorithm-book run build:index",
     "build:all": "npm run build:packages && npm --workspace @rbook/algorithm-book run build:all",
+    "build:runtime": "node packages/rbook-server/dist/buildRuntime.js",
+    "start:runtime": "npm run build:runtime && node packages/rbook-server/dist/serve.js",
     "serve": "npm --workspace @rbook/algorithm-book run serve",
     "serve:dev": "npm run serve",
     "dev": "npm run serve",

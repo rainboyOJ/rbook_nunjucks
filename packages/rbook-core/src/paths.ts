@@ -10,14 +10,32 @@ export const defaultAppDir = path.join(rootDir, 'apps/algorithm-book');
 export const appDir = process.env.RBOOK_APP_DIR
   ? path.resolve(rootDir, process.env.RBOOK_APP_DIR)
   : defaultAppDir;
-export const bookDir = path.join(appDir, 'book');
-export const codeTemplateDir = path.join(rootDir, 'code');
+export const contentDir = process.env.RBOOK_CONTENT_DIR
+  ? path.resolve(process.env.RBOOK_CONTENT_DIR)
+  : '';
+export const runtimeDir = process.env.RBOOK_RUNTIME_DIR
+  ? path.resolve(process.env.RBOOK_RUNTIME_DIR)
+  : '';
+export const bookDir = contentDir
+  ? path.join(contentDir, 'book')
+  : path.join(appDir, 'book');
+export const codeTemplateDir = process.env.RBOOK_CODE_DIR
+  ? path.resolve(process.env.RBOOK_CODE_DIR)
+  : contentDir
+    ? path.join(contentDir, 'code')
+    : path.join(rootDir, 'code');
 export const themeDir = path.join(appDir, 'theme');
 export const publicDir = path.join(appDir, 'public');
-export const distDir = path.join(appDir, 'dist');
-export const searchDir = path.join(appDir, '.search');
+export const distDir = runtimeDir
+  ? path.join(runtimeDir, 'dist')
+  : path.join(appDir, 'dist');
+export const searchDir = runtimeDir
+  ? path.join(runtimeDir, '.search')
+  : path.join(appDir, '.search');
 export const searchIndexPath = path.join(searchDir, 'index.json');
-export const configPath = path.join(appDir, 'book.yaml');
+export const configPath = contentDir
+  ? path.join(contentDir, 'book.yaml')
+  : path.join(appDir, 'book.yaml');
 
 export function fromRoot(...parts) {
   return path.join(rootDir, ...parts);

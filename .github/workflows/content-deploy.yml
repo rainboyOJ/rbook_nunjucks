@@ -1,23 +1,20 @@
-name: Deploy to VPS
+name: Deploy Content to VPS
 
 on:
-  workflow_run:
-    workflows:
-      - Build Docker Image
-    types:
-      - completed
+  push:
     branches:
       - main
+    paths:
+      - 'apps/algorithm-book/book/**'
+      - 'apps/algorithm-book/book.yaml'
+      - 'code/**'
   workflow_dispatch:
-    inputs:
-      image_tag:
-        description: Docker image tag to deploy. Defaults to latest.
-        required: false
-        default: latest
+
+permissions:
+  contents: read
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
-  PULL_PROXY_PREFIX: gh-proxy.org/docker
+  FALLBACK_IMAGE: gh-proxy.org/docker/ghcr.io/rainboyoj/rbook_nunjucks:latest
   CONTAINER_NAME: rbook
   CONTAINER_PORT: 3000
   HOST_PORT: 3000
@@ -25,24 +22,11 @@ env:
   VPS_REPO_BRANCH: main
 
 jobs:
-  deploy:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+  deploy-content:
     runs-on: ubuntu-latest
     environment: bohai
     timeout-minutes: 15
     steps:
-      - name: Set image metadata
-        id: meta
-        run: |
-          IMAGE="$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')"
-          if [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
-            TAG='${{ inputs.image_tag }}'
-          else
-            TAG="$(printf '%s' '${{ github.event.workflow_run.head_sha }}' | cut -c1-12)"
-          fi
-
-          echo "image=${{ env.PULL_PROXY_PREFIX }}/$IMAGE:$TAG" >> "$GITHUB_OUTPUT"
-
       - name: Prepare SSH
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -54,18 +38,18 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p "$VPS_SSH_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts
 
-      - name: Deploy on VPS
+      - name: Deploy content on VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT || '22' }}
-          IMAGE: ${{ steps.meta.outputs.image }}
           CONTAINER_NAME: ${{ env.CONTAINER_NAME }}
           HOST_PORT: ${{ secrets.RBOOK_HOST_PORT || env.HOST_PORT }}
           CONTAINER_PORT: ${{ env.CONTAINER_PORT }}
           RBOOK_ADMIN_TOKEN: ${{ secrets.RBOOK_ADMIN_TOKEN }}
           VPS_REPO_DIR: ${{ env.VPS_REPO_DIR }}
           VPS_REPO_BRANCH: ${{ env.VPS_REPO_BRANCH }}
+          FALLBACK_IMAGE: ${{ env.FALLBACK_IMAGE }}
         run: |
           ssh \
             -p "$VPS_SSH_PORT" \
@@ -74,12 +58,8 @@ jobs:
             -o ServerAliveCountMax=10 \
             -o TCPKeepAlive=yes \
             "$VPS_USER@$VPS_HOST" \
-            "IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' bash -se" <<'REMOTE'
+            "CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' FALLBACK_IMAGE='$FALLBACK_IMAGE' bash -se" <<'REMOTE'
           set -euo pipefail
-
-          echo "Pulling $IMAGE"
-          timeout 10m docker pull --quiet "$IMAGE"
-          echo "Pulled $IMAGE"
 
           if [ ! -d "$VPS_REPO_DIR/.git" ]; then
             echo "VPS repo not found: $VPS_REPO_DIR" >&2
@@ -89,7 +69,16 @@ jobs:
           git -C "$VPS_REPO_DIR" fetch origin "$VPS_REPO_BRANCH"
           git -C "$VPS_REPO_DIR" reset --hard "origin/$VPS_REPO_BRANCH"
 
-          TEST_NAME="${CONTAINER_NAME}-deploy-test"
+          IMAGE="$(docker inspect --format '{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null || true)"
+          if [ -z "$IMAGE" ]; then
+            IMAGE="$FALLBACK_IMAGE"
+            echo "No running image found; pulling fallback $IMAGE"
+            timeout 10m docker pull --quiet "$IMAGE"
+          else
+            echo "Reusing current image $IMAGE"
+          fi
+
+          TEST_NAME="${CONTAINER_NAME}-content-test"
           docker rm -f "$TEST_NAME" >/dev/null 2>&1 || true
           docker run --rm \
             --name "$TEST_NAME" \
@@ -118,6 +107,5 @@ jobs:
             -v "$VPS_REPO_DIR/code:/content/code:ro" \
             "$IMAGE"
 
-          docker image prune -f
           docker ps --filter "name=$CONTAINER_NAME"
           REMOTE

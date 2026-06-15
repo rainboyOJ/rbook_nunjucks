@@ -6,6 +6,7 @@
   "main": "./dist/app.js",
   "exports": {
     ".": "./dist/app.js",
+    "./buildRuntime": "./dist/buildRuntime.js",
     "./serve": "./dist/serve.js"
   },
   "dependencies": {

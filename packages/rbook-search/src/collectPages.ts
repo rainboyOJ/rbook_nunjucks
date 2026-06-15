@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { globSync } from 'glob';
-import { appDir, bookDir, configPath as defaultConfigPath, toBookPath, toPosixPath } from './paths.js';
+import { bookDir, configPath as defaultConfigPath, toBookPath, toPosixPath } from './paths.js';
 import type { BookChapter, BookConfig, CollectedPage, CollectPagesOptions, PageSource } from './types.js';
 
 const ignoredNamePatterns = [
@@ -83,8 +83,8 @@ function collectFromChapters(
 function collectFromGlob(config: BookConfig) {
   const pages: CollectedPage[] = [];
   for (const pattern of config.glob || []) {
-    const matches = globSync(`book/${pattern}`, {
-      cwd: appDir,
+    const matches = globSync(pattern, {
+      cwd: bookDir,
       nodir: true,
       absolute: true,
       ignore: ['**/node_modules/**']
@@ -109,6 +109,7 @@ function collectAllMarkdownFiles() {
     cwd: bookDir,
     nodir: true,
     absolute: false,
+    follow: true,
     ignore: ['**/node_modules/**']
   }).map(toPosixPath);
 }

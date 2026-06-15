@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'apps/algorithm-book/book/**'
+      - 'apps/algorithm-book/book.yaml'
+      - 'code/**'
   workflow_dispatch:
 
 permissions:
