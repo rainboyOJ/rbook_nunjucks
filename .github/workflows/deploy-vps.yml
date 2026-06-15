@@ -61,11 +61,19 @@ jobs:
           CONTAINER_PORT: ${{ env.CONTAINER_PORT }}
           RBOOK_ADMIN_TOKEN: ${{ secrets.RBOOK_ADMIN_TOKEN }}
         run: |
-          ssh -p "$VPS_SSH_PORT" -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" \
+          ssh \
+            -p "$VPS_SSH_PORT" \
+            -i ~/.ssh/deploy_key \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=10 \
+            -o TCPKeepAlive=yes \
+            "$VPS_USER@$VPS_HOST" \
             "IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' bash -se" <<'REMOTE'
           set -euo pipefail
 
+          echo "Pulling $IMAGE"
           docker pull "$IMAGE"
+          echo "Pulled $IMAGE"
 
           docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
 
