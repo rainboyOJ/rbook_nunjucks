@@ -43,6 +43,7 @@ import anchor from 'markdown-it-anchor';
 import tocDoneRight from 'markdown-it-toc-done-right';
 import tocAnchorExtent from './lib/tocAnchorExtent.js';
 import codetabs from 'markdown-it-codetabs';
+import fs from 'fs';
 
 import MDItPseudo from './lib/markdown-it-pseudocodejs/index.js';
 
@@ -56,8 +57,26 @@ import path, { dirname, resolve } from 'path';
 // Path configuration
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const project_root = resolve(__dirname, '../../../');
-const project_book_root = resolve(__dirname, '../../../book');
+
+function findProjectRoot(startDir) {
+    let currentDir = startDir;
+    while (currentDir && currentDir !== dirname(currentDir)) {
+        if (
+            fs.existsSync(path.join(currentDir, 'package.json')) &&
+            fs.existsSync(path.join(currentDir, 'code'))
+        ) {
+            return currentDir;
+        }
+        currentDir = dirname(currentDir);
+    }
+    return resolve(startDir, '../../../..');
+}
+
+const project_root = findProjectRoot(__dirname);
+const app_root = process.env.RBOOK_APP_DIR
+    ? resolve(project_root, process.env.RBOOK_APP_DIR)
+    : path.join(project_root, 'apps/algorithm-book');
+const project_book_root = path.join(app_root, 'book');
 
 // Initialize markdown-it
 const md = MarkdownIt({

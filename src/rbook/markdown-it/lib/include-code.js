@@ -45,6 +45,9 @@ function includeCodePlugin(md,options = {}) {
       // It's relative to the markdown file being processed.
       let currentDir = path.dirname(state.env.filePath || '.');
       absolutePath = path.resolve(currentDir, filePath);
+      if (!fs.existsSync(absolutePath) && filePath.startsWith('code/')) {
+        absolutePath = path.join(options.baseDir, filePath);
+      }
     }
 
     let content;
