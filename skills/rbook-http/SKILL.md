@@ -1,6 +1,6 @@
 ---
 name: rbook-http
-description: Use the local rbook dynamic ebook HTTP API to search and read algorithm book content. Use when answering questions from this rbook site, locating pages, resolving problem links, or gathering context from the ebook through HTTP.
+description: Use the local rbook dynamic ebook HTTP API to search and read algorithm book content. Use when answering questions from this rbook site, locating pages, or gathering context from the ebook through HTTP.
 ---
 
 # rbook HTTP Skill
@@ -97,14 +97,6 @@ GET /api/chunks/search?q=数位DP 状态 记忆化&limit=8&textLength=900
 
 Returns focused chunks. This is the default endpoint for collecting answer context.
 
-### Problem Link Resolution
-
-```bash
-GET /api/problems/resolve?oj=luogu&id=P2657
-```
-
-Resolves `[[problem: oj,id]]` references to the configured PCS problem URL. The returned URL should be opened in a new browser tab when presented in UI.
-
 ## Answering Guidance
 
 When answering ebook questions:
@@ -112,5 +104,5 @@ When answering ebook questions:
 - cite page titles and paths from API responses when useful;
 - use chunk search before full page fetch;
 - fetch full pages for detailed algorithm explanations;
-- keep problem references as links returned by `/api/problems/resolve`;
+- do not use this rbook API for problem lookup; problem data lives in a separate service/project;
 - do not invent content that is not present in the API results.

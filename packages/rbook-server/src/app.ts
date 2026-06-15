@@ -32,53 +32,8 @@ function parseLimit(value: string | number | undefined, fallback = 10) {
   return Math.min(Math.floor(limit), 50);
 }
 
-function stripTrailingSlash(url: unknown) {
-  return String(url || '').replace(/\/+$/, '');
-}
-
-function normalizeProblemId(oj: string, id: string) {
-  const raw = String(id || '').trim();
-  if (String(oj || '').toLowerCase() === 'luogu' && /^\d+$/.test(raw)) {
-    return `P${raw}`;
-  }
-
-  return raw.replace(/^([PBTU])(\d+)$/i, (_match, prefix, number) => {
-    return `${String(prefix).toUpperCase()}${number}`;
-  });
-}
-
 function loadBookConfig() {
-  if (!fs.existsSync(configPath)) return {};
   return (yaml.load(fs.readFileSync(configPath, 'utf8')) || {}) as Record<string, unknown>;
-}
-
-function getPcsLink() {
-  const config = loadBookConfig();
-  return stripTrailingSlash(config['pcs-link']);
-}
-
-function buildProblemUrl(oj: string, id: string) {
-  const baseUrl = getPcsLink();
-  const encodedOj = encodeURIComponent(oj);
-  const encodedId = encodeURIComponent(id);
-  return baseUrl
-    ? `${baseUrl}/problems/${encodedOj}/${encodedId}`
-    : `/problems/${encodedOj}/${encodedId}`;
-}
-
-function resolveProblem(oj: string | undefined, id: string | undefined) {
-  const normalizedOj = String(oj || '').trim();
-  if (!normalizedOj || !id) return null;
-
-  const normalizedId = normalizeProblemId(normalizedOj, id);
-  return {
-    oj: normalizedOj,
-    id: normalizedId,
-    label: `${normalizedOj}-${normalizedId}`,
-    url: buildProblemUrl(normalizedOj, normalizedId),
-    target: '_blank',
-    rel: 'noopener'
-  };
 }
 
 function stripHtml(html: string) {
@@ -233,21 +188,6 @@ export async function createApp(options: CreateAppOptions = {}) {
     }
 
     return createPagePayload(page);
-  });
-
-  app.get('/api/problems/resolve', async (request, reply) => {
-    const query = getQuery(request);
-    const problem = resolveProblem(query.oj, query.id || query.problem_id);
-
-    if (!problem) {
-      reply.code(400);
-      return { error: 'missing query parameters: oj, id' };
-    }
-
-    return {
-      ...problem,
-      pcsLink: getPcsLink()
-    };
   });
 
   app.get('/api/search', async (request, reply) => {
