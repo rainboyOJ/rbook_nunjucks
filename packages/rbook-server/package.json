@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@rbook/core": "file:../rbook-core",
+    "@rbook/markdown": "file:../rbook-markdown",
     "@rbook/search": "file:../rbook-search"
   }
 }
