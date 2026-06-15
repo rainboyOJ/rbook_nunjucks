@@ -20,6 +20,7 @@ env:
   HOST_PORT: 3000
   VPS_REPO_DIR: /opt/rbook/rbook_nunjucks
   VPS_REPO_BRANCH: main
+  VPS_REPO_URL: https://github.com/${{ github.repository }}.git
 
 jobs:
   deploy-content:
@@ -49,6 +50,7 @@ jobs:
           RBOOK_ADMIN_TOKEN: ${{ secrets.RBOOK_ADMIN_TOKEN }}
           VPS_REPO_DIR: ${{ env.VPS_REPO_DIR }}
           VPS_REPO_BRANCH: ${{ env.VPS_REPO_BRANCH }}
+          VPS_REPO_URL: ${{ env.VPS_REPO_URL }}
           FALLBACK_IMAGE: ${{ env.FALLBACK_IMAGE }}
         run: |
           ssh \
@@ -58,12 +60,13 @@ jobs:
             -o ServerAliveCountMax=10 \
             -o TCPKeepAlive=yes \
             "$VPS_USER@$VPS_HOST" \
-            "CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' FALLBACK_IMAGE='$FALLBACK_IMAGE' bash -se" <<'REMOTE'
+            "CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' VPS_REPO_URL='$VPS_REPO_URL' FALLBACK_IMAGE='$FALLBACK_IMAGE' bash -se" <<'REMOTE'
           set -euo pipefail
 
           if [ ! -d "$VPS_REPO_DIR/.git" ]; then
-            echo "VPS repo not found: $VPS_REPO_DIR" >&2
-            exit 1
+            echo "Cloning content repo into $VPS_REPO_DIR"
+            mkdir -p "$(dirname "$VPS_REPO_DIR")"
+            git clone --branch "$VPS_REPO_BRANCH" "$VPS_REPO_URL" "$VPS_REPO_DIR"
           fi
 
           git -C "$VPS_REPO_DIR" fetch origin "$VPS_REPO_BRANCH"
