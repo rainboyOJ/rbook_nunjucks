@@ -20,7 +20,7 @@ env:
   HOST_PORT: 3000
   VPS_REPO_DIR: /opt/rbook/rbook_nunjucks
   VPS_REPO_BRANCH: main
-  VPS_REPO_URL: https://github.com/${{ github.repository }}.git
+  VPS_REPO_URL: https://gh-proxy.com/https://github.com/${{ github.repository }}.git
 
 jobs:
   deploy-content:
