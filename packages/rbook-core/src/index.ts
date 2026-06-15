@@ -7,6 +7,7 @@ import markdown from '@rbook/markdown';
 import {
     bookDir,
     codeTemplateDir,
+    configPath as defaultConfigPath,
     distDir,
     publicDir,
     fromApp,
@@ -31,7 +32,7 @@ class rbook {
         this.config.last_build_time = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
     }
 
-    load_config(configPath = 'book.yaml') {
+    load_config(configPath = defaultConfigPath) {
         try {
             const configFile = path.isAbsolute(configPath) ? configPath : fromApp(configPath);
             if (!fs.existsSync(configFile)) {
