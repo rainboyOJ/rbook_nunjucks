@@ -17,6 +17,7 @@ on:
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository }}
+  PULL_PROXY_PREFIX: gh-proxy.org/docker
   CONTAINER_NAME: rbook
   CONTAINER_PORT: 3000
   HOST_PORT: 3000
@@ -38,7 +39,7 @@ jobs:
             TAG="$(printf '%s' '${{ github.event.workflow_run.head_sha }}' | cut -c1-12)"
           fi
 
-          echo "image=${IMAGE/ghcr.io/ghcr.nju.edu.cn}:$TAG" >> "$GITHUB_OUTPUT"
+          echo "image=${{ env.PULL_PROXY_PREFIX }}/$IMAGE:$TAG" >> "$GITHUB_OUTPUT"
 
       - name: Prepare SSH
         env:
