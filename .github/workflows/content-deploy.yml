@@ -64,12 +64,19 @@ jobs:
           set -euo pipefail
 
           if [ ! -d "$VPS_REPO_DIR/.git" ]; then
-            echo "Cloning content repo into $VPS_REPO_DIR"
-            mkdir -p "$(dirname "$VPS_REPO_DIR")"
-            git clone --branch "$VPS_REPO_BRANCH" "$VPS_REPO_URL" "$VPS_REPO_DIR"
+            echo "Initializing sparse content repo in $VPS_REPO_DIR"
+            rm -rf "$VPS_REPO_DIR"
+            mkdir -p "$VPS_REPO_DIR"
+            git -C "$VPS_REPO_DIR" init
+            git -C "$VPS_REPO_DIR" remote add origin "$VPS_REPO_URL"
           fi
 
-          git -C "$VPS_REPO_DIR" fetch origin "$VPS_REPO_BRANCH"
+          git -C "$VPS_REPO_DIR" sparse-checkout init --no-cone
+          git -C "$VPS_REPO_DIR" sparse-checkout set \
+            /apps/algorithm-book/book/ \
+            /apps/algorithm-book/book.yaml \
+            /code/
+          git -C "$VPS_REPO_DIR" fetch --depth=1 origin "$VPS_REPO_BRANCH"
           git -C "$VPS_REPO_DIR" reset --hard "origin/$VPS_REPO_BRANCH"
 
           IMAGE="$(docker inspect --format '{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null || true)"
