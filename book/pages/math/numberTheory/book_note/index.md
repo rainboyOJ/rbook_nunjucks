@@ -386,10 +386,10 @@ ac \equiv bc \pmod{n} &\Leftrightarrow n \mid c(b-a)  \\
 
 发现当m为素数时,$a^m \equiv a \pmod{m}$.其中$a < m$,根据消去律可知$a^{m-1} \equiv 1 \pmod{m}$
 
-写一下代码求一下
+写一下代码求一下。这个脚本读入一个素数 $m$，枚举 $1 \le a < m$，观察 $a^m \equiv a \pmod m$。
 
 ```python
-@include-code(./feima_baoli.py, python)
+@include-code(/code/math/numberTheory/fermat_little_theorem_demo.py, python)
 ```
 
 

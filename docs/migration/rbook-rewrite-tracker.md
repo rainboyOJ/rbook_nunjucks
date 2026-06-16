@@ -146,6 +146,7 @@
 | Wave 4D-48 | `data_structure/segment_tree/sgt_first_lt` | 已验证：值域线段树查第一个小于阈值位置模板迁入正式代码目录，页面按教程结构重写，清理旧页面局部对拍代码 |
 | Wave 4D-49 | `graph/网络流/dinic/origin`、`ai_fix` | 已验证：旧稿和修改建议改为归档入口，避免 TODO/对话稿继续作为正文页面 |
 | Wave 4D-50 | `string/最小表示法/草稿`、`Books/todo_图论与算法_程龚`、配对问题草稿归档 | 已验证：草稿和书单待办页改为归档入口，清理剩余已跟踪 TODO/对话稿噪声 |
+| Wave 4D-51 | `math/numberTheory/book_note` | 已验证：数论读书笔记页面局部 Python 演示迁入 `/code/math/numberTheory/` 正式目录，清理页面局部脚本 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
