@@ -83,6 +83,7 @@
 | Wave 3B | `enumeration_permutaion_combination`、`recursion`、`search` | 统一枚举/递归/搜索模板，避免相互引用旧 rbook 名称 |
 | Wave 3B-1 | `recursion/dynamic_loop`、`recursion/combination.md`、`enumeration_permutaion_combination/permutation/full_permutation`、`subset_enum` | 已验证：重写多重循环、组合、全排列、子集枚举基础教程，新增 `/code/base/enumerate/subset_binary.cpp`，清理对应页面局部模板和生成产物 |
 | Wave 3B-2 | `recursion/print_to_n`、`fibonacci`、`hanoi`、`div_number` | 已验证：新增 `/code/base/recursion/*.cpp` 递归基础模板，重写递归前进回溯、斐波那契、汉诺塔、整数划分教程，清理页面局部模板 |
+| Wave 3B-3 | `recursion/add_to_n`、`recursion/binary_search`、`enumeration_permutaion_combination/01_sequence` | 已验证：新增递归求和模板，重写递归求和与 01 序列教程，`recursion/binary_search` 改为归档入口，清理对应页面局部模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
