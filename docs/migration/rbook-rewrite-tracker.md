@@ -110,6 +110,7 @@
 | Wave 4D-12 | `graph/diameter_of_tree`、`data-structure/BIT`、`graph/网络流/dinic` | 已验证：重写树的直径、树状数组、Dinic 主线教程，新增树直径正式模板并修正 BIT 模板为独立可运行版本 |
 | Wave 4D-13 | `math/向上取整`、`math/numherTheory/inverse`、`math/numherTheory/Eratosthenes` | 已验证：重写整数向上取整、模逆元、埃氏筛教程，清理问答/博客草稿痕迹并修正数学模板为独立可运行版本 |
 | Wave 4D-14 | `data_structure/segment_tree/update_one`、`data_structure/segment_tree/update_range` | 已验证：重写单点修改与区间赋值线段树教程，补齐懒标记讲解，修正两个正式模板为独立可运行版本 |
+| Wave 4D-15 | `string/trie`、`string/minimal-string`、`base/tri-search` | 已验证：新增 Trie 与浮点三分正式模板，重写 Trie 与三分教程，英文最小表示法旧入口改为归档页并清理最小表示法模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
