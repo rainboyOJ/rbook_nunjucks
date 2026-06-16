@@ -65,6 +65,7 @@
 | Wave 2A | `dynamic_programming/knapsack/01knapsack`、`full_knapsack`、`grouped_knapsack` | 统一背包问题模型、状态定义、转移方向和模板路径 |
 | Wave 2A-1 | `dynamic_programming/knapsack/01knapsack` | 已验证：新增 `/code/dynamic_programming/knapsack/zero_one_*.cpp`，重写 01 背包教程 |
 | Wave 2A-2 | `dynamic_programming/knapsack/full_knapsack` | 已验证：新增 `/code/dynamic_programming/knapsack/complete_*.cpp`，重写完全背包教程 |
+| Wave 2A-3 | `dynamic_programming/knapsack/grouped_knapsack` | 已验证：新增 `/code/dynamic_programming/knapsack/grouped.cpp`，重写分组背包教程 |
 | Wave 2B | `dynamic_programming/lcs`、`lis`、`number_pyramid` | 按“状态表示、转移来源、边界、滚动优化”重写 DP 入门线 |
 | Wave 2C | `data_structure/monotonic_queue`、`monotonic_stack`、`heap`、`disjoint_set` | 把页面局部模板迁入 `book/code/data-struture/`，清理旧题单式正文 |
 | Wave 2D | `base/sparse_table`、`dynamic_programming/sparse_table` | 合并重复 ST 表内容，保留一个正式教程，另一个归档 |
