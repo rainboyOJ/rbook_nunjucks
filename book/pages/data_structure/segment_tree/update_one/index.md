@@ -192,7 +192,7 @@ int query(int l1,int r1,int l,int r,int rt){
 ## 代码模板
 
 ```c
-@include-code(../template/sgt_point.cpp, cpp)
+@include-code(/code/data-struture/segment_tree/point_add_range_sum.cpp, cpp)
 ```
 
 ## 手动练习
@@ -207,7 +207,7 @@ int query(int l1,int r1,int l,int r,int rt){
     - $1,x,y$点$x$加$y$
     - $2,x,y$查询区间$[x,y]$的和
  - 暴力程序，输出答案，用来验证[:arrow_down: check1.cpp](./code/check1.cpp)
- - 线段树程序[:arrow_down: 1.cpp](./code/1.cpp)
+ - 线段树程序：见上面的正式模板
 
 下载上面的程序，手动模拟建立Sgt，计算，直到你觉得完全熟悉为止。
 

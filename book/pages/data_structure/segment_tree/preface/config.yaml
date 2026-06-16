@@ -6,9 +6,9 @@ code_template:
     title: sgt单点更新
     tags: ['sgt']
     desc: sgt单点更新
-    code: ../template/sgt_point.cpp
+    code: /code/data-struture/segment_tree/point_add_range_sum.cpp
   -
     title: sgt区间更新
     tags: ['sgt']
     desc: sgt区间更新
-    code: ../template/sgt_range.cpp
+    code: /code/data-struture/segment_tree/range_assign_range_sum.cpp
