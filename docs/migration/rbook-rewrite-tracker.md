@@ -143,6 +143,7 @@
 | Wave 4D-45 | `data_structure/segment_tree/sgt_weights` | 已验证：重写权值线段树教程，新增动态开点普通平衡树操作模板 |
 | Wave 4D-46 | `enumeration_permutaion_combination/ball_and_box/practice` | 已验证：整理球盒模型练习页，按组合、排列、Stirling 数、隔板法分组 |
 | Wave 4D-47 | `preface`、二分教学计划、appendix 支持页 | 已验证：清理已跟踪支持页的待办状态和占位示例 |
+| Wave 4D-48 | `data_structure/segment_tree/sgt_first_lt` | 已验证：值域线段树查第一个小于阈值位置模板迁入正式代码目录，页面按教程结构重写，清理旧页面局部对拍代码 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
