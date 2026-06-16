@@ -26,7 +26,40 @@ jobs:
     environment: bohai
     timeout-minutes: 15
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check changed paths
+        id: changes
+        run: |
+          if [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
+            echo "deploy_content=true" >> "$GITHUB_OUTPUT"
+            echo "Manual dispatch; deploying content."
+            exit 0
+          fi
+
+          changed_files="$(git diff --name-only '${{ github.event.before }}' '${{ github.sha }}')"
+          if [ -z "$changed_files" ]; then
+            echo "deploy_content=false" >> "$GITHUB_OUTPUT"
+            echo "No changed files found; skipping content deploy."
+            exit 0
+          fi
+
+          non_book_files="$(printf '%s\n' "$changed_files" | grep -v '^book/' || true)"
+          if [ -n "$non_book_files" ]; then
+            echo "deploy_content=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Skipping content deploy because this push also changed non-book files. Docker deploy will handle it after the image is built."
+            printf 'Non-book files:\n%s\n' "$non_book_files"
+            exit 0
+          fi
+
+          echo "deploy_content=true" >> "$GITHUB_OUTPUT"
+          echo "Only book files changed; deploying content with the current image."
+
       - name: Prepare SSH
+        if: steps.changes.outputs.deploy_content == 'true'
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT || '22' }}
@@ -38,6 +71,7 @@ jobs:
           ssh-keyscan -p "$VPS_SSH_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy content on VPS
+        if: steps.changes.outputs.deploy_content == 'true'
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
