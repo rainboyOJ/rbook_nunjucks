@@ -2,9 +2,19 @@
     "id":"monotonic_stack",
     "title":"单调栈",
     "file":"index.md",
-    "status":"TODO",
-    "comment": [
-        "2024-4-15 : 我不能很完美的证明 最大矩形这个题目."
+    "code_template":[
+        {
+            "title":"下一个更大元素",
+            "desc":"求每个位置右侧第一个更大元素的位置",
+            "tags":["单调栈"],
+            "code":"/code/data-struture/monotonic_stack_next_greater.cpp"
+        },
+        {
+            "title":"直方图最大矩形",
+            "desc":"单调栈求每根柱子作为最低高度时的最大矩形",
+            "tags":["单调栈","直方图"],
+            "code":"/code/data-struture/monotonic_stack_largest_rectangle.cpp"
+        }
     ],
     "pre":["stack"],
     "next":[

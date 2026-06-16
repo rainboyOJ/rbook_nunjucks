@@ -72,6 +72,7 @@
 | Wave 2B-3 | `dynamic_programming/lis` | 已验证：新增 `/code/dynamic_programming/lis_n2.cpp`、`/code/dynamic_programming/lis_binary.cpp`，清理页面局部模板 |
 | Wave 2C | `data_structure/monotonic_queue`、`monotonic_stack`、`heap`、`disjoint_set` | 把页面局部模板迁入 `book/code/data-struture/`，清理旧题单式正文 |
 | Wave 2C-1 | `data_structure/monotonic_queue` | 已验证：新增 `/code/data-struture/monotonic_queue_sliding_window.cpp`、`/code/data-struture/monotonic_queue_max_subarray.cpp`，清理页面局部模板和对拍文件 |
+| Wave 2C-2 | `data_structure/monotonic_stack` | 已验证：新增 `/code/data-struture/monotonic_stack_next_greater.cpp`、`/code/data-struture/monotonic_stack_largest_rectangle.cpp`，清理页面局部模板和坏图引用 |
 | Wave 2D | `base/sparse_table`、`dynamic_programming/sparse_table` | 合并重复 ST 表内容，保留一个正式教程，另一个归档 |
 | Wave 3A | `data_structure`/`data-structure`、`tree`/`tree-algo` 重复目录 | 逐主题决定合并、重定向或归档 |
 | Wave 3B | `enumeration_permutaion_combination`、`recursion`、`search` | 统一枚举/递归/搜索模板，避免相互引用旧 rbook 名称 |
