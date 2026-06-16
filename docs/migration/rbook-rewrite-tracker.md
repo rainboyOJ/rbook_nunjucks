@@ -138,6 +138,7 @@
 | Wave 4D-40 | `math/set` | 已验证：重写集合基础教程，补齐集合关系、运算、恒等式、证明和应用分类 |
 | Wave 4D-41 | `math/combinatorics/模板题目` | 已验证：重写球盒组合模板题，复用第二类 Stirling 数枚举模板验证 25 种方案 |
 | Wave 4D-42 | `math/combinatorics/112_combinatorial_problems/1-3-chapter` | 已验证：重写 112 个组合问题 1-3 章整理页，清理待办标记与问答草稿痕迹 |
+| Wave 4D-43 | `math/4-6初等数论初步/chapter1` | 已验证：重写整除、公因数与素数基础页，清理未完成定义、内联代码和问答草稿痕迹 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
