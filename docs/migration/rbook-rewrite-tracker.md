@@ -90,6 +90,7 @@
 | Wave 3B-7 | `enumeration_permutaion_combination/pair_number` | 已验证：新增 `/code/base/pair_count/*.cpp`，重写配对问题教程，覆盖属性、Two Sum、同余、距离限制和单调队列最值模型，清理旧局部代码与草稿 |
 | Wave 4A | `dynamic_programming/数位DP` | 已验证：数位 DP 的 windy 数 DFS/递推模板迁入 `/code/dynamic_programming/digit_dp/`，页面引用改为正式模板路径 |
 | Wave 4B-1 | `data_structure/segment_tree/update_one`、`update_range` | 已验证：线段树单点加区间和、区间赋值区间和模板迁入 `/code/data-struture/segment_tree/`，页面引用改为正式模板路径 |
+| Wave 4B-2 | `data_structure/dance_linking` | 已验证：DLX 精确覆盖模板迁入 `/code/data-struture/dlx/exact_cover.cpp`，页面按教程结构重写，清理旧页面局部模板和生成产物 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
