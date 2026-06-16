@@ -94,7 +94,7 @@ topsort
 
 于是我们可以写出下面的代码
 
-@include-code(code/pseudotree_dfs_get_ring.cpp,cpp)
+@include-code(./code/pseudotree_dfs_get_ring.cpp,cpp)
 
 ::: fold
 
