@@ -129,6 +129,7 @@
 | Wave 4D-31 | `math/logarithm` | 已验证：重写对数基础教程，修正标准记法并补齐算法复杂度推论 |
 | Wave 4D-32 | `math/binary` | 已验证：重写二进制与位运算教程，新增常用位运算正式模板并修正最高位操作 |
 | Wave 4D-33 | `math/combinatorics/combinatorics` | 已验证：重写排列组合主教程，引用排列、组合和多重集排列正式模板 |
+| Wave 4D-34 | `math/combinatorics/rule_of_product` | 已验证：重写乘法原理教程，补齐证明、测试用例和应用分类 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
