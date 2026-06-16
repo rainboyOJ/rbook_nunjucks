@@ -1,406 +1,287 @@
-## 费用用流
+---
+id: "min-cost-max-flow"
+title: "最小费用最大流"
+date: 2026-06-16 00:00
+toc: true
+tags: ["图论", "网络流", "费用流", "最小费用最大流"]
+categories: ["图论", "网络流"]
+code_template:
+  - title: 最小费用最大流
+    desc: "SPFA 在残量网络中找最短增广路"
+    tags: ["网络流", "费用流", "MCMF"]
+    code: /code/graph/min_cost_max_flow_spfa.cpp
+---
 
-给定一个网络 $G=(V,E)$ ，每条边 $(x,y)$ 除了有容量限制 $c(x,y)$ ，还有一个给定的单位费用 $w(x,y)$ 。当边 $(x,y)$ 的流量为 $f(x,y)$ 时，就要花费 $f(x,y)\cdot w(x,y)$ 的费用。该网络中总花费最小的最大流被称为最小费用最大流，花费最大的最大流被称为最大费用最大流，二者合称为费用流模型。需要注意费用流的前提是最大流，然后再考虑费用的最值。
+[[TOC]]
 
-计算费用流一般使用 Edmonds-Karp 算法或 Zkw 费用流，这里仅介绍 Edmonds-Karp 算法。
+## 一句话算法
 
-思路:
+最小费用最大流就是每次在残量网络里找一条费用最小的增广路，先把流量做到最大，再让总费用尽量小。
 
- - 建立残余网络
-   - 正向边的花费为正
-   - 反向边的花费为负
- - 先找出最小费用路
-    - 可用$SPFA$
-    - $Dijkstra$+堆优化,比较稳定
-    - 公式为:$ans += dis[t] \times flow $
- - 在最小费用路上增流减流
- - 重复上面的步骤,直到找到不一条$S \to T$的最短路
+## 问题模型
 
+给定一个有向网络 $G=(V,E)$。每条边 $(u,v)$ 有两个属性：
 
-## 模板题目
+- 容量 $c(u,v)$：这条边最多能通过多少流量。
+- 单位费用 $w(u,v)$：每通过 $1$ 单位流量要付出的费用。
 
- - [题目地址:luogu P3381 【模板】最小费用最大流](https://www.luogu.org/problemnew/show/P3381)
+如果边 $(u,v)$ 上实际流量为 $f(u,v)$，则这条边贡献的费用是：
 
+$$
+f(u,v)\cdot w(u,v)
+$$
 
-## 代码:SPFA
+目标是从源点 $S$ 向汇点 $T$ 发送尽可能多的流量，并在最大流量的前提下，让总费用最小。
 
-**注意**:下面的代码在**luogu p3381**下会$T$四个点!
-```c
-/*-------------------------------------------------
-*  luogu 3381 SPFA代码
-*  Author:Rainboy
-*  2019-03-11 16:30
-*-------------------------------------------------*/
-#include <cstdio>
-#include <cstring>
-#include <queue>
-using namespace std;
+!!! definition "最小费用最大流"
+在所有最大流中，总费用最小的那一个流，称为最小费用最大流。
+!!!
 
-#define maxn 5005
-#define maxe 50005
-#define inf 0x3f3f3f3f
+注意顺序：先最大流，再最小费用。不是为了少花钱而主动少送流。
 
+## 核心直觉
 
-int n,m,S,T;
+普通最大流只关心“还能不能送更多流”。费用流还要关心“这次送流走哪条路最便宜”。
 
-int cost = 0,flow = 0;
+因此我们在残量网络里做两件事：
 
-int h[maxn] = {0};
-int dis[maxn];
-int pre_edge[maxn];
-int pre_node[maxn];
-bool in_que[maxn];
+1. 找一条从 $S$ 到 $T$ 的最短路，边权是费用。
+2. 沿着这条路尽量增广。
 
+反向边是费用流的关键。若正向边费用为 $w$，反向边费用必须是 $-w$。
 
-/* ================= 向量星 for flowNet=================*/
-int head[maxn];
-int edge_cnt = 0;
-struct _e{
-    int u,v,cap,next,f;
-}e[maxe<<1];
+它表示：如果后面发现之前的选择不够好，可以沿反向边把这段流退回去，同时退回之前支付的费用。
 
-void inline xlx_init(){
-    edge_cnt = 0;
-    memset(head,-1,sizeof(head));
-}
+## 残量网络
 
-void addEdge(int u,int v,int cap,int f){
-    e[edge_cnt].u = u;
-    e[edge_cnt].v= v;
-    e[edge_cnt].f= f;
-    e[edge_cnt].cap=cap;
-    e[edge_cnt].next = head[u];
-    head[u] = edge_cnt;
-    edge_cnt++;
-}
-/* ================= 向量星 end =================*/
+对每条原始边：
 
-
-
-void in(int &a){
-    a = 0;
-    int flag = 1;
-    char ch = getchar();
-    while( ch < '0' || ch > '9'){ if( ch == '-') flag = -1; ch = getchar(); }
-    while( ch >= '0' && ch <= '9'){ a = a*10 + ch-'0'; ch = getchar(); }
-    a = a*flag;
-}
-
-
-bool spfa(int s,int t){
-    memset(dis,0x3f,sizeof(dis));
-    memset(in_que,0,sizeof(in_que));
-
-    queue<int> q;
-    dis[s] = 0;
-    in_que[s] = 1;
-    q.push(s);
-
-    while(!q.empty()){
-        int u = q.front(); q.pop();
-        int i;
-        for(i=head[u];i != -1;i = e[i].next){
-            int v= e[i].v;
-
-            if( e[i].cap >0 && dis[v] > dis[u]+e[i].f){
-                dis[v] = dis[u] + e[i].f;
-
-                if( in_que[v] == 0){
-                    q.push(v);
-                    in_que[v] =1;
-                    pre_edge[v] = i;
-                    pre_node[v] = u;
-                }
-            }
-        }
-        in_que[u] = 0;
-    }
-
-    return dis[t] != inf;
-
-}
-
-void min_cost_flow(int s,int t){
-    while( spfa(s,t)){
-        int i;
-        /* 找增广路 */
-        int minflow = inf;
-        for(i=t; i!=s;i=pre_node[i]){
-            int f = e[pre_edge[i]].cap;
-            minflow = min(minflow,f);
-        }
-        flow += minflow;
-        cost += minflow*dis[t];
-        /* 增流减流 */
-        for(i=t;i!=s;i=pre_node[i]){
-            int edge = pre_edge[i];
-            e[edge].cap -= minflow;
-            e[edge^1].cap += minflow;
-        }
-    }
-}
-
-void init(){
-    xlx_init();
-    in(n); in(m); in(S); in(T);
-    int i,j;
-    int t1,t2,t3,t4;
-    for (i=1;i<=m;i++){
-        in(t1); in(t2); in(t3); in(t4);
-        addEdge(t1,t2,t3,t4);
-        addEdge(t2,t1,0,-t4);
-    }
-}
-int main(){
-    init();
-    min_cost_flow(S,T);
-    printf("%d ",flow);
-    printf("%d\n",cost);
-    return 0;
-}
+```text
+u -> v, capacity = cap, cost = cost
 ```
 
-## 代码:Dijkstra
+建两条边：
 
-
-鉴于现在SPFA人人喊打,以下给出一种使用$Dijkstra$算法的方法.
-
-
-### 如何解决负边权的问题
-
-$Dijkstra$不能跑含有**负边权**的图
-
-最简单的想法,每一个边都加上一个固定的值,使每条边变成正值
-
- - 加上后,新的边值可以溢出
- - 计算真正的最短路的值的时候,还要记录边的数量
-
-如果要满足上面的两点,做出来很麻烦.
-
-假如我们已经知道了每个点的到源的最短路径的值$h[i]$,面对任意一条边上的两个点$<u,v>$,同样我们设$w$表示$<u,v>$边的权值
-
-```viz-dot
-digraph g {
-
-    nodesep=1;
-    ranksep=1;
-    u[xlabel="h[u]"]
-    v[xlabel="h[v]"]
-    edge[arrowhead=vee];
-    {
-        rank=same;
-        u->v[label="w"];
-    }
-    u->S[style=dashed,arrowhead=none,dir=both,arrowtail=vee];
-}
-```
-根据**最短路的性质**,有以下的公式成立:
-$$
-h[v] - h[u] <= w
-$$
-
-变形得:
-
-$$
-h[u]-h[v]+w >= 0
-$$
-
-那么我们就让这个边的权值改成:$h[u]-h[v]+w$,就可以满足所有跑的边权都是**非负**的了!就可以用$Dijkstra$算法了
-
-$$
-dis[v] = \\\\
-(h[S]-h[1]+w1) + (h[1]-h[2]+w2) + (h[2]-h[3]+w2) + \cdots + (h[u]->h[v]+w<u,v>)
-$$
-
-因为$h[S] == 0$,所以可以得到如下的公式:
-
-$$
-dis[v] + h[v]= \sum w
-$$
-
-
-$\sum w$是我们**真正需要的真实的最短路的值**.
-
-**想一想1**:每次我们就$Dijkstra$求完最短路,我们都要更新$h[i]$为最新的真实的最短路的值,也哪是
-
-```c
-for(i=1;i<=n;i++)
-    h[i] += dis[i];
+```text
+u -> v, capacity = cap, cost = cost
+v -> u, capacity = 0,   cost = -cost
 ```
 
-**想一想2**:每次我们就$Dijkstra$求完最短路,还需要对$S \to T$的最短路径进行增流减流操作,会不会破坏:$h[u]-h[v]+w <=0$?
+当沿 $u\to v$ 推送 `f` 单位流量后：
 
-我们设一个正的边权为$w$,那么它对应的反向边就是$-w$,那么 $w' = -w+h[v]-h[u]$,也就是$-(h[u]-h[v]+w) <= 0$,那么会不会出现$<0$呢?
-其实不会,因为我们增广的路径就是最短路,也就是$h[u]+w=h[v]$,那么就不会出现反边是负数,就是一直为$0$了!
+- 正向边剩余容量减少 `f`。
+- 反向边剩余容量增加 `f`。
 
+如果以后走反向边 $v\to u$，就等价于撤销之前在 $u\to v$ 上的一部分流量。
 
-```viz-dot
-digraph g {
+## 算法步骤
 
-    rankdir=LR
-    u->v[xlabel=w,minlen=2];
-    v->u[xlabel="-w",minlen=2];
-    {
-        nodesep=0.1;
-        node[shape=plaintext]
-        1[label="h[u]"]
-        2[label="h[v]"]
-        1->u[style=invis,minlen=0.1];
-        2->v[style=invis,minlen=0.2];
-    }
+SPFA 版最小费用最大流的步骤：
 
-}
+1. 建立残量网络，每条边加一条费用相反的反向边。
+2. 在残量网络中，用 SPFA 找从 $S$ 到 $T$ 的最短费用路。
+3. 若找不到路，说明不能继续增广，算法结束。
+4. 沿最短路找到可增广的最小剩余容量 `pushed`。
+5. 总流量增加 `pushed`。
+6. 总费用增加：
+
+   $$
+   pushed\times dist[T]
+   $$
+
+7. 沿路径更新正向边和反向边容量。
+8. 回到第 2 步。
+
+## 算法证明
+
+### 为什么反向边费用是负数
+
+如果之前沿 $u\to v$ 推了 $1$ 单位流，费用增加 $w$。
+
+后来沿反向边 $v\to u$ 退回 $1$ 单位流，本质上是撤销之前的选择，所以费用应该减少 $w$。
+
+因此反向边费用必须是：
+
+$$
+-w
+$$
+
+这样残量网络里的路径费用变化，才和真实总费用变化一致。
+
+### 为什么每次找最短增广路
+
+**关键不变量**：当前流量大小固定时，算法维护的是该流量下费用最小的流。
+
+从当前流量增加到更大流量时，需要在残量网络中找一条增广路。残量网络中一条路径的费用，正好表示“把当前流改造成新流时，总费用的增量”。
+
+选择最短增广路，就是选择当前这次增加流量的最小费用增量。
+
+反向边允许路径撤销之前的局部选择，因此算法不只是贪心固定旧路径，而是在残量网络中重新调整整个流。
+
+当残量网络中不存在 $S\to T$ 路径时，最大流已经达到。由于每次都选择最小费用增量，并且反向边允许修正旧流，最终得到最大流中的最小费用方案。
+
+## 复杂度分析
+
+设点数为 $n$，边数为 $m$，最大流量为 $F$。
+
+SPFA 每次最坏 $O(nm)$，每轮至少增广 $1$ 单位流量，所以粗略上界为：
+
+$$
+O(Fnm)
+$$
+
+实际竞赛中，SPFA 版容易写、能处理负费用边，但在大数据上可能被卡。更稳定的做法是使用势能函数把费用重标号，再用 Dijkstra 找最短路。
+
+本文代码选择 SPFA 版作为入门模板。
+
+## 代码实现
+
+@include-code(/code/graph/min_cost_max_flow_spfa.cpp, cpp)
+
+## 测试用例
+
+输入：
+
+```text
+4 5 1 4
+1 2 1 3
+1 3 1 1
+2 3 1 1
+2 4 1 1
+3 4 1 3
 ```
 
-**想一想3**:这里做法能保证求出来的最短路径就是我们需要的最短路径吗?
+含义：
 
-todo!暂时没有想出来
+- 源点 `1`，汇点 `4`。
+- 每条边格式为 `u v cap cost`。
 
-**想一想4**:第一次求$h[i]$可以不可以用$Dijkstra$?
+输出：
 
-可以,因为最初的残余网络的反向边的花费为负值,但容量为$0$.
-
-
-### 代码:开O2优化可以过 Luogu p3381
-
-```c
-#include <cstdio>
-#include <cstring>
-#include <queue>
-using namespace std;
-
-#define maxn 5005
-#define maxe 50005
-#define inf 0x3f3f3f3f
-
-
-int n,m,S,T;
-
-int cost = 0,flow = 0;
-
-int h[maxn] = {0};
-int dis[maxn];
-int pre_edge[maxn];
-int pre_node[maxn];
-
-
-/* ================= 向量星 for flowNet=================*/
-int head[maxn];
-int edge_cnt = 0;
-struct _e{
-    int u,v,cap,next,f;
-}e[maxe<<1];
-
-void inline xlx_init(){
-    edge_cnt = 0;
-    memset(head,-1,sizeof(head));
-}
-
-void addEdge(int u,int v,int cap,int f){
-    e[edge_cnt].u = u;
-    e[edge_cnt].v= v;
-    e[edge_cnt].f= f;
-    e[edge_cnt].cap=cap;
-    e[edge_cnt].next = head[u];
-    head[u] = edge_cnt;
-    edge_cnt++;
-}
-/* ================= 向量星 end =================*/
-
-
-
-void in(int &a){
-    a = 0;
-    int flag = 1;
-    char ch = getchar();
-    while( ch < '0' || ch > '9'){ if( ch == '-') flag = -1; ch = getchar(); }
-    while( ch >= '0' && ch <= '9'){ a = a*10 + ch-'0'; ch = getchar(); }
-    a = a*flag;
-}
-
-typedef pair<int,int> P;
-/* 找最短路 */
-bool dijkstra(int s,int t){
-
-    priority_queue<P,vector<P>,greater<P> > pq;
-    memset(dis,0x3f,sizeof(dis));
-    dis[s] = 0;
-    pq.push(P(0,s));    //起点加入
-
-    while(!pq.empty()){
-        P now = pq.top();
-        pq.pop();
-
-        if( dis[now.second] < now.first) continue;
-
-        int u = now.second;
-
-        int i;
-        for(i=head[u];i !=-1 ;i = e[i].next){
-            int v = e[i].v;
-
-            int len = e[i].f+h[u]-h[v];
-            if( e[i].cap > 0 && dis[u]+ len < dis[v]){
-                dis[v] = dis[u] + len;
-                pre_edge[v] = i;
-                pre_node[v] = u;
-                pq.push(P(dis[v],v));
-            }
-
-        }
-
-    }
-
-    return dis[t] != inf;
-}
-
-void min_cost_flow(int s,int t){
-    while( dijkstra(s,t)){
-        int i;
-        for(i=1;i<=n;i++)
-            h[i] += dis[i];
-
-        /* 找增广路 */
-        int minflow = inf;
-        for(i=t; i!=s;i=pre_node[i]){
-            int f = e[pre_edge[i]].cap;
-            minflow = min(minflow,f);
-        }
-        flow += minflow;
-        cost += minflow*h[t];
-        /* 增流减流 */
-        for(i=t;i!=s;i=pre_node[i]){
-            int edge = pre_edge[i];
-            e[edge].cap -= minflow;
-            e[edge^1].cap += minflow;
-        }
-    }
-}
-
-void init(){
-    xlx_init();
-    in(n); in(m); in(S); in(T);
-    int i,j;
-    int t1,t2,t3,t4;
-    for (i=1;i<=m;i++){
-        in(t1); in(t2); in(t3); in(t4);
-        addEdge(t1,t2,t3,t4);
-        addEdge(t2,t1,0,-t4);
-    }
-}
-int main(){
-    init();
-    min_cost_flow(S,T);
-    printf("%d ",flow);
-    printf("%d\n",cost);
-    return 0;
-}
+```text
+2 8
 ```
 
+解释：
 
+最终发送 `2` 单位流量。两条实际路径可以看作：
 
-## 参考/引用
+```text
+1 -> 2 -> 4, cost = 3 + 1 = 4
+1 -> 3 -> 4, cost = 1 + 3 = 4
+```
 
- - [最小费用最大流(详解+模板) by  Bartholomew_](https://blog.csdn.net/qq_39809664/article/details/79109811)
- - [从入门到精通: 最小费用流的“zkw算法”](https://artofproblemsolving.com/community/h1020435)
+总费用为 `8`。
 
+## 反悔机制示例
+
+还是上面的图：
+
+```text
+1 -> 2 cost 3
+1 -> 3 cost 1
+2 -> 3 cost 1
+2 -> 4 cost 1
+3 -> 4 cost 3
+```
+
+如果第一轮选择了：
+
+```text
+1 -> 3 -> 2 -> 4
+```
+
+费用是：
+
+$$
+1+1+1=3
+$$
+
+这看起来很便宜，但它占用了中间边。
+
+第二轮残量网络可能选择：
+
+```text
+1 -> 2 -> 3 -> 4
+```
+
+其中 $2\to3$ 是上一轮 $3\to2$ 的反向边，费用为 $-1$。
+
+第二轮增量费用：
+
+$$
+3+(-1)+3=5
+$$
+
+两轮合并后，中间的 $3\to2$ 与 $2\to3$ 抵消，实际变成：
+
+```text
+1 -> 2 -> 4
+1 -> 3 -> 4
+```
+
+总费用：
+
+$$
+3+5=8
+$$
+
+这说明反向边不是“多出来的奇怪边”，而是算法自动修正旧决策的工具。
+
+## 应用分类详解
+
+费用流的本质是“带容量限制的最优分配”。只要题目既有流量/匹配/分配约束，又有代价最小或收益最大，就应该考虑费用流。
+
+### 一、带费用的最大匹配
+
+**典型模式：** 左边对象匹配右边对象，每个匹配有代价或收益。
+
+**识别信号：** 工人分配任务、学生分配宿舍、二分图匹配加权。
+
+**核心建模：** 源点连左部，右部连汇点，中间边容量为 `1`，费用为匹配代价。
+
+### 二、多商品分配
+
+**典型模式：** 若干供应点向需求点运输，每条运输线路有单位成本。
+
+**识别信号：** 仓库、工厂、运输、供给量、需求量、最小总成本。
+
+**核心建模：** 源点连供应点，供应点连需求点，需求点连汇点。
+
+### 三、路径选择与边不重复
+
+**典型模式：** 要选若干条路径，边或点容量有限，总代价最小。
+
+**识别信号：** 两条不相交路径、每条边只能用一次、总长度最短。
+
+**核心建模：** 边容量限制可使用次数，费用为路径长度。
+
+### 四、最大收益模型
+
+**典型模式：** 在容量限制下最大化收益。
+
+**识别信号：** 最大利润、最大收益、选择若干交易。
+
+**核心建模：** 把收益取负，求最小费用；或改成最大费用最大流。
+
+## 经典例题
+
+### 1. 最小费用最大流模板
+
+[[problem: luogu,P3381]]
+
+直接使用本文模板，输入边为容量和费用，输出最大流和最小费用。
+
+### 2. 运输问题
+
+多个仓库向多个商店供货，每条线路有运输成本。供给和需求都可以转成容量，运输成本转成费用。
+
+### 3. 带权二分图匹配
+
+每个左部点最多匹配一个右部点，每条匹配边有代价。用费用流可以处理“必须匹配尽量多，且总费用最小”的版本。
+
+## 参考
+
+- 本书最大流 Edmonds-Karp：`graph/netflow/ek/index.md`
+- 本书 Dinic：`graph/网络流/dinic/index.md`
+- ZKW 费用流旧笔记：`graph/网络流/费用流/zkw.md`
