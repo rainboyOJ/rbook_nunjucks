@@ -2,5 +2,12 @@
     "id":"number_pyramid",
     "file":"index.md",
     "title":"数字金字塔",
-    "pre":["set"]
+    "pre":["set"],
+    "code_template":[
+        {
+            "title":"数字三角形",
+            "tags":["dynamic_programming","number_pyramid"],
+            "code":"/code/dynamic_programming/number_pyramid.cpp"
+        }
+    ]
 }
