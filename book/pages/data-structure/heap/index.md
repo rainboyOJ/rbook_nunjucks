@@ -1,10 +1,10 @@
 ---
 id: "heap"
 title: "堆"
-date: 2026-01-01 12:20
+date: 2026-06-16 00:00
 toc: true
-tags: [""]
-categories: [""]
+tags: ["数据结构", "堆", "优先队列"]
+categories: ["数据结构"]
 code_template:
   - title: 堆
     desc: "堆"
@@ -19,7 +19,7 @@ code_template:
 
 ### C++ Struct 版小根堆模板
 
-@include-code(/code/data-struture/heap堆.cpp,cpp)
+@include-code(/code/data-struture/heap堆.cpp, cpp)
 
 ### 为什么这个版本心智负担最低？
 
