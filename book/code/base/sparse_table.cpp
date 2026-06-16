@@ -1,35 +1,61 @@
-// 竞赛用简洁模板
-struct ST {
-    static const int MAXN = 100005;
-    static const int LOGN = 20;
-    int st[MAXN][LOGN];
-    int log_table[MAXN];
-    int n;
+#include <bits/stdc++.h>
+using namespace std;
 
-    void init(vector<int>& arr) {
-        n = arr.size();
-        // 预处理对数表
-        log_table[1] = 0;
+struct SparseTable {
+    int n = 0;
+    vector<int> lg;
+    vector<vector<int>> st;
+
+    void build(const vector<int> &a) {
+        n = (int)a.size() - 1; // a 使用 1-indexed。
+
+        lg.assign(n + 1, 0);
         for (int i = 2; i <= n; i++) {
-            log_table[i] = log_table[i / 2] + 1;
+            lg[i] = lg[i / 2] + 1;
         }
 
-        // 初始化长度为 2^0 = 1 的区间
-        for (int i = 0; i < n; i++) {
-            st[i][0] = arr[i];
+        int max_log = lg[n] + 1;
+        st.assign(max_log, vector<int>(n + 1, 0));
+
+        for (int i = 1; i <= n; i++) {
+            st[0][i] = a[i];
         }
 
-        // 递推构建
-        for (int j = 1; (1 << j) <= n; j++) {
-            for (int i = 0; i + (1 << j) <= n; i++) {
-                st[i][j] = max(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
+        for (int k = 1; k < max_log; k++) {
+            int len = 1 << k;
+            int half = len >> 1;
+            for (int i = 1; i + len - 1 <= n; i++) {
+                st[k][i] = max(st[k - 1][i], st[k - 1][i + half]);
             }
         }
     }
 
-    // 查询区间 [l, r] 的最大值 (0-indexed)
-    int query(int l, int r) {
-        int k = log_table[r - l + 1];
-        return max(st[l][k], st[r - (1 << k) + 1][k]);
+    int query(int l, int r) const {
+        int k = lg[r - l + 1];
+        return max(st[k][l], st[k][r - (1 << k) + 1]);
     }
 };
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, q;
+    cin >> n >> q;
+
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+
+    SparseTable table;
+    table.build(a);
+
+    while (q--) {
+        int l, r;
+        cin >> l >> r;
+        cout << table.query(l, r) << "\n";
+    }
+
+    return 0;
+}

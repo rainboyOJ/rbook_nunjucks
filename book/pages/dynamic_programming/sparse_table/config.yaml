@@ -1,6 +1,7 @@
-id: sparse_table
-title: "st表"
+id: sparse_table_archive
+title: "ST 表归档"
 file: "index.md"
 pre:
   - binary_jump
-  - number_pyramid
+archive: true
+redirect: /base/sparse_table/index.html

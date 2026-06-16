@@ -1,7 +1,11 @@
 id: sparse_table
-title: "st表"
+title: "ST 表"
 file: "index.md"
-pre: 
+pre:
   - binary_jump
-  - number_pyramid
-                    
+code_template:
+  - title: ST 表
+    desc: "静态区间最大值查询"
+    tags: ["ST 表", "RMQ", "倍增"]
+    code: /code/base/sparse_table.cpp
+

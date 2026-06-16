@@ -76,6 +76,7 @@
 | Wave 2C-3 | `data_structure/heap` | 已验证：复用并修正 `/code/data-struture/heap堆.cpp`，清理页面局部模板 |
 | Wave 2C-4 | `data_structure/disjoint_set` | 已验证：新增 `/code/data-struture/dsu.cpp`、`/code/data-struture/dsu_bipartite.cpp`，补齐普通并查集和种类并查集教程 |
 | Wave 2D | `base/sparse_table`、`dynamic_programming/sparse_table` | 合并重复 ST 表内容，保留一个正式教程，另一个归档 |
+| Wave 2D-1 | `base/sparse_table`、`dynamic_programming/sparse_table` | 已验证：正式教程保留在 `base/sparse_table`，`dynamic_programming/sparse_table` 改为归档入口，统一模板 `/code/base/sparse_table.cpp` |
 | Wave 3A | `data_structure`/`data-structure`、`tree`/`tree-algo` 重复目录 | 逐主题决定合并、重定向或归档 |
 | Wave 3B | `enumeration_permutaion_combination`、`recursion`、`search` | 统一枚举/递归/搜索模板，避免相互引用旧 rbook 名称 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
