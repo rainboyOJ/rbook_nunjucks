@@ -62,7 +62,6 @@ node bin/rbook.js serve
 │   └── rbook-cli/                # CLI 入口
 ├── skills/                       # 给本地 agent 使用的项目 skill
 ├── docs/                         # 开发和部署文档
-├── third_part/                   # 历史可视化 demo/实验资源，非当前运行时内容
 └── bin/rbook.js                  # 命令行入口
 ```
 
