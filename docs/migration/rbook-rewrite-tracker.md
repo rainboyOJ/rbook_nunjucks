@@ -114,6 +114,7 @@
 | Wave 4D-16 | `base/binary_split`、`dynamic_programming/binary_state` | 已验证：重写二分拆分思想与状态压缩 DP 入门教程，新增 bitmask DP 最短 Hamilton 路径正式模板 |
 | Wave 4D-17 | `algorithm/dsu_on_tree` | 已验证：重写树上启发式合并教程，新增子树颜色众数统计正式模板 |
 | Wave 4D-18 | `graph/bellman-ford`、`graph/floyed` | 已验证：重写 Bellman-Ford 与 Floyd 最短路教程，新增/修正两个正式最短路模板 |
+| Wave 4D-19 | `algorithm/binary_search` | 已验证：旧二分查找迁移入口改为归档页，指向正式 `base/binary_search` 教程 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
