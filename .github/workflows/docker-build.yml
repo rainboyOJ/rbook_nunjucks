@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'content/algorithm-book/**'
+      - 'book/**'
   workflow_dispatch:
 
 permissions:

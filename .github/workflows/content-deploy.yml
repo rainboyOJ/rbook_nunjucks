@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'content/algorithm-book/**'
+      - 'book/**'
   workflow_dispatch:
 
 permissions:
@@ -71,7 +71,7 @@ jobs:
 
           git -C "$VPS_REPO_DIR" sparse-checkout init --cone
           git -C "$VPS_REPO_DIR" sparse-checkout set \
-            content/algorithm-book
+            book
           git -C "$VPS_REPO_DIR" fetch --depth=1 origin "$VPS_REPO_BRANCH"
           git -C "$VPS_REPO_DIR" reset --hard "origin/$VPS_REPO_BRANCH"
 
@@ -91,7 +91,7 @@ jobs:
             -e NODE_ENV=production \
             -e RBOOK_CONTENT_DIR=/content \
             -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
-            -v "$VPS_REPO_DIR/content/algorithm-book:/content:ro" \
+            -v "$VPS_REPO_DIR/book:/content:ro" \
             "$IMAGE" \
             npm run build:runtime
 
@@ -106,7 +106,7 @@ jobs:
             -e RBOOK_ADMIN_TOKEN="$RBOOK_ADMIN_TOKEN" \
             -e RBOOK_CONTENT_DIR=/content \
             -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
-            -v "$VPS_REPO_DIR/content/algorithm-book:/content:ro" \
+            -v "$VPS_REPO_DIR/book:/content:ro" \
             "$IMAGE"
 
           docker ps --filter "name=$CONTAINER_NAME"

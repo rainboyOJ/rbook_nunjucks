@@ -2,7 +2,6 @@ FROM node:22-bookworm-slim AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-COPY apps/algorithm-book/package.json ./apps/algorithm-book/package.json
 COPY packages/rbook-cli/package.json ./packages/rbook-cli/package.json
 COPY packages/rbook-core/package.json ./packages/rbook-core/package.json
 COPY packages/rbook-markdown/package.json ./packages/rbook-markdown/package.json
@@ -29,11 +28,10 @@ COPY bin ./bin
 COPY build_all_dot_file.py ./build_all_dot_file.py
 COPY src/online_judge ./src/online_judge
 COPY packages ./packages
-COPY apps/algorithm-book/package.json ./apps/algorithm-book/package.json
-COPY apps/algorithm-book/theme ./apps/algorithm-book/theme
-COPY apps/algorithm-book/public ./apps/algorithm-book/public
-COPY apps/algorithm-book/markdown-style ./apps/algorithm-book/markdown-style
-COPY apps/algorithm-book/third_part ./apps/algorithm-book/third_part
+COPY site/theme ./site/theme
+COPY site/public ./site/public
+COPY site/markdown-style ./site/markdown-style
+COPY site/widgets ./site/widgets
 
 RUN npm run build:packages
 

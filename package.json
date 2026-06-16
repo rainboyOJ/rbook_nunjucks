@@ -5,24 +5,23 @@
   "main": "bin/rbook.js",
   "type": "module",
   "workspaces": [
-    "apps/*",
     "packages/*"
   ],
   "bin": {
     "rbook": "./bin/rbook.js"
   },
   "scripts": {
-    "clean": "rm -rf packages/*/dist src/online_judge/dist apps/algorithm-book/third_part/code_template_filter/dist",
+    "clean": "rm -rf packages/*/dist src/online_judge/dist site/widgets/code_template_filter/dist",
     "build:packages": "tsc -p packages/rbook-markdown && tsc -p packages/rbook-core && tsc -p packages/rbook-search && tsc -p packages/rbook-server && tsc -p packages/rbook-cli && tsc -p src/online_judge",
-    "build": "npm run build:packages && npm --workspace @rbook/algorithm-book run build",
-    "build:index": "npm --workspace @rbook/algorithm-book run build:index",
-    "build:all": "npm run build:packages && npm --workspace @rbook/algorithm-book run build:all",
+    "build": "npm run build:packages && bash site/build.sh",
+    "build:index": "node packages/rbook-search/dist/buildIndex.js",
+    "build:all": "npm run build && npm run build:index",
     "build:runtime": "node packages/rbook-server/dist/buildRuntime.js",
     "start:runtime": "npm run build:runtime && node packages/rbook-server/dist/serve.js",
-    "serve": "npm --workspace @rbook/algorithm-book run serve",
+    "serve": "npm run start:runtime",
     "serve:dev": "npm run serve",
     "dev": "npm run serve",
-    "typecheck": "npm run build:packages && tsc -p apps/algorithm-book/third_part/code_template_filter"
+    "typecheck": "npm run build:packages && tsc -p site/widgets/code_template_filter"
   },
   "dependencies": {
     "@fastify/static": "^9.1.3",

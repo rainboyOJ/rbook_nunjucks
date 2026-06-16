@@ -41,19 +41,17 @@ node bin/rbook.js serve
 ## 项目结构
 
 ```
-├── content/
-│   └── algorithm-book/
-│       ├── book/                 # 算法电子书文章 Markdown
-│       ├── book.yaml             # 目录、书站元信息和页面 glob 配置
-│       └── code/                 # 可复用算法模板代码，文章用 /code/... 引用
-├── apps/
-│   └── algorithm-book/
-│       ├── theme/                # Pug 主题模板和主题资源
-│       ├── public/               # favicon、站点 manifest 等静态资源
-│       ├── markdown-style/       # Markdown 页面样式
-│       ├── third_part/           # 当前书站运行时使用的交互组件
-│       ├── dist/                 # 本地构建输出目录，已忽略
-│       └── .search/index.json    # 本地搜索索引，已忽略
+├── book/
+│   ├── book.yaml                 # 目录、书站元信息和页面 glob 配置
+│   ├── pages/                    # 算法电子书文章 Markdown
+│   └── code/                     # 可复用算法模板代码，文章用 /code/... 引用
+├── site/
+│   ├── theme/                    # Pug 主题模板和主题资源
+│   ├── public/                   # favicon、站点 manifest 等静态资源
+│   ├── markdown-style/           # Markdown 页面样式
+│   ├── widgets/                  # 当前书站运行时使用的交互组件
+│   ├── dist/                     # 本地构建输出目录，已忽略
+│   └── .search/index.json        # 本地搜索索引，已忽略
 ├── packages/
 │   ├── rbook-core/               # 书籍配置、路径、构建核心
 │   ├── rbook-markdown/           # Markdown 渲染插件
@@ -67,14 +65,14 @@ node bin/rbook.js serve
 
 目录边界：
 
-- `content/algorithm-book` 是电子书内容根。文章、目录配置和模板代码都在这里。
-- `apps/algorithm-book` 是这本书的网站外壳。它负责主题、样式、公开静态资源和运行时交互组件。
+- `book` 是电子书内容根。文章、目录配置和模板代码都在这里。
+- `site` 是这本书的网站外壳。它负责主题、样式、公开静态资源和运行时交互组件。
 - `packages/*` 是通用 rbook 引擎代码。其他书站也应优先复用这里的能力。
-- `content/algorithm-book/code` 中的文件在文章里仍然用 `/code/...` 引用，例如 `@include-code(/code/graph/scc.cpp, cpp)`。
+- `book/code` 中的文件在文章里仍然用 `/code/...` 引用，例如 `@include-code(/code/graph/scc.cpp, cpp)`。
 
 ## 配置说明
 
-编辑 `content/algorithm-book/book.yaml` 文件配置书籍信息：
+编辑 `book/book.yaml` 文件配置书籍信息：
 
 ```yaml
 title: 我的书
@@ -117,9 +115,9 @@ function example() {
 
 ### 页面类型
 
-- **首页**: `content/algorithm-book/book/index.md` → `/`
-- **关于页面**: `content/algorithm-book/book/about.md` → `/about.html`
-- **章节页面**: `content/algorithm-book/book/{章节}/index.md` → `/{章节}/`
+- **首页**: `book/pages/index.md` → `/`
+- **关于页面**: `book/pages/about.md` → `/about.html`
+- **章节页面**: `book/pages/{章节}/index.md` → `/{章节}/`
 
 ## 模板系统
 
@@ -173,11 +171,11 @@ function example() {
 
 ## 部署
 
-构建后的静态文件在 `apps/algorithm-book/dist/` 目录，可部署到任何静态托管服务：
+构建后的静态文件在 `site/dist/` 目录，可部署到任何静态托管服务：
 
 ```bash
 npm run build
-# 将 apps/algorithm-book/dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
+# 将 site/dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
 ```
 
 ## 作为neovim的插件: 代码片段

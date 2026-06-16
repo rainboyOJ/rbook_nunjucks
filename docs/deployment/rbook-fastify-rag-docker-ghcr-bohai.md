@@ -8,12 +8,12 @@
 
 ```text
 Markdown 源文件
-  -> 构建 apps/algorithm-book/dist/ 静态站
-  -> 构建 apps/algorithm-book/.search/index.json 本地搜索索引
+  -> 构建 site/dist/ 静态站
+  -> 构建 site/.search/index.json 本地搜索索引
   -> Fastify 同时服务静态站和 /api/*
   -> Docker 镜像推送到 GHCR
   -> GitHub Actions SSH 到 bohai
-  -> bohai 通过 ghcr.nju.edu.cn 拉镜像并重启容器
+  -> bohai 通过 gh-proxy.org/docker/ghcr.io 拉镜像并重启容器
 ```
 
 这样浏览器仍然访问原电子书页面，agent 可以通过 HTTP API 查询知识库内容。
@@ -32,14 +32,14 @@ packages/rbook-search/src/searchIndex.js
 
 职责：
 
-- 从 `content/algorithm-book/book.yaml` 的 `chapters` 收集目录可见页面。
-- 从 `content/algorithm-book/book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
-- 默认补充扫描 `content/algorithm-book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
+- 从 `book/book.yaml` 的 `chapters` 收集目录可见页面。
+- 从 `book/book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
+- 默认补充扫描 `book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
 - 读取 Markdown，处理 `@include_md("...")`。
 - 解析 front matter。
 - 按标题把文档切成 chunk。
 - 使用 `Fuse.js` 构建本地全文检索索引。
-- 输出 `apps/algorithm-book/.search/index.json`。
+- 输出 `site/.search/index.json`。
 
 新增 Fastify 服务：
 
@@ -50,7 +50,7 @@ packages/rbook-server/src/serve.js
 
 职责：
 
-- 服务 `apps/algorithm-book/dist/` 静态文件。
+- 服务 `site/dist/` 静态文件。
 - 提供 `/api/*` 查询接口。
 - 支持受 token 保护的重建索引接口。
 
@@ -206,40 +206,53 @@ curl -G --data-urlencode 'q=二分答案' --data-urlencode 'limit=3' http://127.
 
 ## GitHub Actions 部署
 
-新增 workflow：
+当前 workflow：
 
 ```text
-.github/workflows/docker-deploy-bohai.yml
+.github/workflows/docker-build.yml       # 网站代码变化时构建并推送 Docker 镜像
+.github/workflows/deploy-vps.yml         # Docker 镜像构建成功后部署到 VPS
+.github/workflows/content-deploy.yml     # 只有 book 内容变化时，VPS git pull 内容并重启容器
 ```
 
 触发条件：
 
-- push 到 `main`
-- 手动 `workflow_dispatch`
+- `docker-build.yml`：push 到 `main`，但忽略 `book/**`。
+- `deploy-vps.yml`：`docker-build.yml` 成功后触发，也可手动触发。
+- `content-deploy.yml`：`book/**` 变化时触发，也可手动触发。
 
 流程：
 
 ```text
-Checkout
+网站代码变化：
+  -> Checkout
   -> docker build
   -> push ghcr.io/<owner>/<repo>:<sha>
   -> push ghcr.io/<owner>/<repo>:latest
   -> SSH 到 bohai
-  -> docker pull ghcr.nju.edu.cn/<owner>/<repo>:<sha>
+  -> VPS sparse checkout book/
+  -> docker pull gh-proxy.org/docker/ghcr.io/<owner>/<repo>:<sha>
   -> docker rm -f rbook
-  -> docker run -d --restart unless-stopped -p HOST_PORT:3000 ...
+  -> docker run -d --restart unless-stopped -v /opt/rbook/rbook_nunjucks/book:/content:ro ...
+
+文章内容变化：
+  -> SSH 到 bohai
+  -> VPS sparse checkout book/
+  -> 复用当前容器镜像
+  -> 先运行 npm run build:runtime 验证内容可编译
+  -> docker rm -f rbook
+  -> docker run -d --restart unless-stopped -v /opt/rbook/rbook_nunjucks/book:/content:ro ...
 ```
 
-注意：镜像推送到官方 GHCR，bohai 拉取时使用南京大学加速域名：
+注意：镜像推送到官方 GHCR，bohai 拉取时使用 `gh-proxy.org/docker/` 前缀：
 
 ```text
-ghcr.nju.edu.cn/<owner>/<repo>:<sha>
+gh-proxy.org/docker/ghcr.io/<owner>/<repo>:<sha>
 ```
 
 这和下面这种形式一致：
 
 ```bash
-docker pull ghcr.nju.edu.cn/open-webui/open-webui:v0.8.12
+docker pull gh-proxy.org/docker/ghcr.io/rainboyoj/rbook_nunjucks:latest
 ```
 
 ## GitHub Secrets
@@ -315,7 +328,7 @@ server {
 3. bohai 是否能执行：
 
    ```bash
-   docker pull ghcr.nju.edu.cn/<owner>/<repo>:latest
+   docker pull gh-proxy.org/docker/ghcr.io/<owner>/<repo>:latest
    ```
 
 4. `RBOOK_HOST_PORT` 是否被占用。

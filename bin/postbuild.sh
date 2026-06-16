@@ -2,4 +2,4 @@
 set -e
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-exec "$ROOT_DIR/apps/algorithm-book/build.sh"
+exec "$ROOT_DIR/site/build.sh"

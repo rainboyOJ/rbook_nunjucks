@@ -63,7 +63,7 @@ function findProjectRoot(startDir) {
     while (currentDir && currentDir !== dirname(currentDir)) {
         if (
             fs.existsSync(path.join(currentDir, 'package.json')) &&
-            fs.existsSync(path.join(currentDir, 'content/algorithm-book'))
+            fs.existsSync(path.join(currentDir, 'book'))
         ) {
             return currentDir;
         }
@@ -75,13 +75,13 @@ function findProjectRoot(startDir) {
 const project_root = findProjectRoot(__dirname);
 const content_root = process.env.RBOOK_CONTENT_DIR
     ? resolve(process.env.RBOOK_CONTENT_DIR)
-    : path.join(project_root, 'content/algorithm-book');
+    : path.join(project_root, 'book');
 const app_root = process.env.RBOOK_APP_DIR
     ? resolve(project_root, process.env.RBOOK_APP_DIR)
-    : path.join(project_root, 'apps/algorithm-book');
+    : path.join(project_root, 'site');
 const project_book_root = content_root
-    ? path.join(content_root, 'book')
-    : path.join(app_root, 'book');
+    ? path.join(content_root, 'pages')
+    : path.join(app_root, 'pages');
 const include_code_root = content_root || project_root;
 
 // Initialize markdown-it

@@ -120,7 +120,7 @@ function compileMarkdownCss() {
     scssPath,
     path.join(distDir, 'markdown.css')
   ], {
-    cwd: path.resolve(appDir, '../..'),
+    cwd: path.resolve(appDir, '..'),
     stdio: 'inherit'
   });
 
@@ -137,13 +137,13 @@ function copyStaticAssets() {
   copyIfExists(publicDir, distDir);
   copyIfExists(path.join(appDir, 'theme/assets'), path.join(distDir, 'assets'));
   copyIfExists(
-    path.join(appDir, 'third_part/animate_single_html'),
+    path.join(appDir, 'widgets/animate_single_html'),
     path.join(distDir, 'animate_single_html')
   );
 }
 
 function buildCodeTemplateApp() {
-  const configPath = path.join(appDir, 'third_part/code_template_filter/vite.config.ts');
+  const configPath = path.join(appDir, 'widgets/code_template_filter/vite.config.ts');
   if (!fs.existsSync(configPath)) return;
 
   const result = spawnSync('npx', [
@@ -154,7 +154,7 @@ function buildCodeTemplateApp() {
     '--base',
     '/code_template/'
   ], {
-    cwd: path.resolve(appDir, '../..'),
+    cwd: path.resolve(appDir, '..'),
     stdio: 'inherit'
   });
 
