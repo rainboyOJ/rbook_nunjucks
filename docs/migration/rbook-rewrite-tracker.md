@@ -31,7 +31,7 @@
 | `book/pages/math/quick_pow/index.md` | `rewritten` | `/code/math/快速幂_quick_pow.cpp` | 已按高质量教程结构重写 |
 | `book/pages/math/number_base/index.md` | `rewritten` | `/code/math/base_conversion/bin2dec.cpp`、`/code/math/base_conversion/dec2bin.cpp` | 已按高质量教程结构重写 |
 | `book/pages/math/numberTheory/gcd/index.md` | `rewritten` | `/code/math/numberTheory/gcd.cpp` | 已按高质量教程结构重写 |
-| `book/pages/graph/traversal/index.md` | `raw-migrated` | 待确认 | 需要补教程结构 |
+| `book/pages/graph/traversal/index.md` | `rewritten` | `/code/graph/dfs_traversal.cpp`、`/code/graph/connected_components.cpp` | 已按高质量教程结构重写 |
 | `book/pages/string/brute-force/index.md` | `rewritten` | `/code/string/brute_force_match.cpp` | 已按高质量教程结构重写 |
 | `book/pages/string/kmp/index.md` | `rewritten` | `/code/string/kmp.cpp` | 已补前缀函数、证明和应用分类 |
 

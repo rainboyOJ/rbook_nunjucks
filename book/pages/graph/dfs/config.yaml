@@ -6,4 +6,4 @@ code_template:
     title: "dfs遍历图"
     tags:
       - graph
-    code: ./graph_dfs_template.cpp
+    code: /code/graph/dfs_traversal.cpp
