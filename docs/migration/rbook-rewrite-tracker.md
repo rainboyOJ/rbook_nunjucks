@@ -106,6 +106,7 @@
 | Wave 4D-8 | `data_structure/segment_tree/update_one` | 已验证：清理已由正式线段树模板替代的页面局部 `1.cpp`、`2.cpp`；保留 `check1.cpp`、`*gen_dot.cpp` 等对拍/图示生成资源 |
 | Wave 4D-9 | `data-structure/fhq-treap`、`tree-algo/hld` | 已验证：补齐 FHQ Treap 与树链剖分正式教程结构，重写 `/code/tree/hld.cpp` 修复旧模板 DFS 与重儿子选择风险 |
 | Wave 4D-10 | `graph/save`、`graph/cut/cut_node`、`graph/cut/cut_edge`、`graph/scc`、`graph/bcc` | 已验证：补齐图存储、割点、割边、SCC、BCC 主线教程结构，统一使用正式 `book/code/graph/` 模板 |
+| Wave 4D-11 | `graph/二分图/黑白染色`、`graph/netflow/ek` | 已验证：重写二分图黑白染色与 Edmonds-Karp 教程，修正黑白染色模板为独立可运行版本 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
