@@ -127,6 +127,7 @@
 | Wave 4D-29 | `dynamic_programming/Quadrangle_Inequality_Optimization` | 已验证：重写四边形不等式优化教程，新增 Knuth 优化石子合并正式模板 |
 | Wave 4D-30 | `tricks/quick_swap_two_range` | 已验证：重写三次翻转交换相邻区间技巧，新增正式模板 |
 | Wave 4D-31 | `math/logarithm` | 已验证：重写对数基础教程，修正标准记法并补齐算法复杂度推论 |
+| Wave 4D-32 | `math/binary` | 已验证：重写二进制与位运算教程，新增常用位运算正式模板并修正最高位操作 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
