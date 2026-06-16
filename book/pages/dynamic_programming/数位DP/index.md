@@ -183,7 +183,7 @@ dp[pos][last][lead]
 
 ## 递归模板代码
 
-@include-code(./code/windy-dfs.cpp, cpp)
+@include-code(/code/dynamic_programming/digit_dp/windy_dfs.cpp, cpp)
 
 这份写法是最通用的数位 DP 写法。以后遇到类似题目，通常只需要改两处：
 
@@ -231,7 +231,7 @@ $$
 
 ## 递推代码
 
-@include-code(./code/windy-iter.cpp, cpp)
+@include-code(/code/dynamic_programming/digit_dp/windy_iter.cpp, cpp)
 
 ## 两种写法怎么选
 
