@@ -1,34 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int maxn = 1e5+5;
-bool del[maxn]; // 0 表示没有删除
-vector<int> prime;
+vector<int> eratosthenes(int n) {
+    vector<bool> is_composite(n + 1, false);
+    vector<int> primes;
 
-//埃式筛法
-/* 原理: 
- *  - 2是最小的的素数,2的k倍都不是素数,k>=2
- *  - 下一个没有被筛掉的数是3,所以3是素数(原理:合数一定可以拆出一个小于自己的素数因子)
- *      - 删除3的k>=3倍数
- *  - 4 被删除,不用岀它的倍数
- *  - ....
- * */
-void E_prime(int n){
-    //memset(del,0,sizeof(del));
-    for(int i=2;i<=n;i++){
-        if( del[i] == 0){
-            prime.push_back(i);
-            if( i > n / i ) continue; //防溢出
-            for(int j=i*i;j<=n;j+=i) del[j] = 1;
+    for (int i = 2; i <= n; i++) {
+        if (is_composite[i]) continue;
+
+        primes.push_back(i);
+        if (i > n / i) continue;
+
+        for (int j = i * i; j <= n; j += i) {
+            is_composite[j] = true;
         }
     }
+
+    return primes;
 }
 
-int main(){
-    E_prime(100); // 求100内的素数
-    for (const auto& e : prime) {
-        cout << e << " ";
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    auto primes = eratosthenes(n);
+    for (int i = 0; i < (int)primes.size(); i++) {
+        if (i) cout << ' ';
+        cout << primes[i];
     }
-    cout << endl;
+    cout << '\n';
+
     return 0;
 }

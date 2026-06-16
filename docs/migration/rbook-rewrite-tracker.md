@@ -108,6 +108,7 @@
 | Wave 4D-10 | `graph/save`、`graph/cut/cut_node`、`graph/cut/cut_edge`、`graph/scc`、`graph/bcc` | 已验证：补齐图存储、割点、割边、SCC、BCC 主线教程结构，统一使用正式 `book/code/graph/` 模板 |
 | Wave 4D-11 | `graph/二分图/黑白染色`、`graph/netflow/ek` | 已验证：重写二分图黑白染色与 Edmonds-Karp 教程，修正黑白染色模板为独立可运行版本 |
 | Wave 4D-12 | `graph/diameter_of_tree`、`data-structure/BIT`、`graph/网络流/dinic` | 已验证：重写树的直径、树状数组、Dinic 主线教程，新增树直径正式模板并修正 BIT 模板为独立可运行版本 |
+| Wave 4D-13 | `math/向上取整`、`math/numherTheory/inverse`、`math/numherTheory/Eratosthenes` | 已验证：重写整数向上取整、模逆元、埃氏筛教程，清理问答/博客草稿痕迹并修正数学模板为独立可运行版本 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令

@@ -1,5 +1,18 @@
-// 向上取整
+#include <bits/stdc++.h>
+using namespace std;
 
-unsigned long long  myceil(unsigned long long  a ,unsigned long long b) {
-    return (a+b-1)/b;
+using i64 = long long;
+
+i64 ceil_div(i64 a, i64 b) {
+    return a / b + (a % b != 0);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    i64 a, b;
+    cin >> a >> b;
+    cout << ceil_div(a, b) << '\n';
+    return 0;
 }
