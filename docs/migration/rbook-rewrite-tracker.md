@@ -78,6 +78,7 @@
 | Wave 2D | `base/sparse_table`、`dynamic_programming/sparse_table` | 合并重复 ST 表内容，保留一个正式教程，另一个归档 |
 | Wave 2D-1 | `base/sparse_table`、`dynamic_programming/sparse_table` | 已验证：正式教程保留在 `base/sparse_table`，`dynamic_programming/sparse_table` 改为归档入口，统一模板 `/code/base/sparse_table.cpp` |
 | Wave 3A | `data_structure`/`data-structure`、`tree`/`tree-algo` 重复目录 | 逐主题决定合并、重定向或归档 |
+| Wave 3A-1 | `data_structure/stack`、`data_structure/queue`、`data_structure/binary_search_tree` | 已验证：正式教程迁移到 `data-structure/stack`、`data-structure/queue`、`data-structure/BST`，旧路径改为归档入口，复用 `/code/data-struture/stack.cpp`、`queue.cpp`、`bst.cpp` |
 | Wave 3B | `enumeration_permutaion_combination`、`recursion`、`search` | 统一枚举/递归/搜索模板，避免相互引用旧 rbook 名称 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
