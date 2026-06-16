@@ -2,5 +2,19 @@
     "id":"lcs",
     "file":"index.md",
     "title":"最长公共子序列",
-    "pre":["lis"]
+    "pre":["lis"],
+    "code_template":[
+        {
+            "title":"最长公共子序列",
+            "desc":"求两个序列的最长公共子序列长度",
+            "tags":["动态规划","LCS"],
+            "code":"/code/dynamic_programming/lcs.cpp"
+        },
+        {
+            "title":"最长公共子序列还原",
+            "desc":"在求长度后还原任意一个 LCS",
+            "tags":["动态规划","路径还原"],
+            "code":"/code/dynamic_programming/lcs_restore.cpp"
+        }
+    ]
 }
