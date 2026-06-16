@@ -7,6 +7,6 @@
         "tags":[ "data_structure", "queue" ],
         "desc":"普通队列模板",
         //代码所在的路径
-        "code":"./queue.cpp"
+        "code":"/code/data-struture/queue.cpp"
     }]
 }

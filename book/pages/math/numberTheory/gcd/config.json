@@ -6,6 +6,6 @@
         "title": "gcd",
         "desc":"求两个数的最大公约数",
         //代码所在的路径
-        "code":"./gcd.cpp"
+        "code":"/code/math/numberTheory/gcd.cpp"
     }]
 }

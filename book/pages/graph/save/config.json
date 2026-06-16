@@ -6,6 +6,6 @@
         "tags":[ "graph" ],
         "desc":"存图的基础数据结构",
         //代码所在的路径
-        "code":"./linklist.cpp"
+        "code":"/code/graph/linklist.cpp"
     }]
 }

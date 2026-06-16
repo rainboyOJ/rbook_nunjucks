@@ -6,9 +6,9 @@ code_template:
     title: discrete 离散化简单
     tags: ['discrete']
     desc: 离散化简单模板
-    code: ./discrete_simple.cpp
+    code: /code/base/discrete离散化_手写.cpp
   -
     title: discrete 离散化
     tags: ['discrete']
     desc: 离散化模板
-    code: ./discrete.cpp
+    code: /code/base/discrete离散化_unique.cpp
