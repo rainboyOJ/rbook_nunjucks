@@ -6,7 +6,7 @@ status: TODO
 
 ## 题目
 
-<%- include("./problem.md") _%>
+@include_md("./problem.md")
 
 ## 解析
 
@@ -91,6 +91,4 @@ f(i,si) = \sum_{i}^{m}  f(i-1,s_{i-1}) | a[i] \geslant 1
 
 ## 代码
 
-<%- include("./not_repeat_permutation.md") _%>
-
-
+@include_md("./not_repeat_permutation.md")

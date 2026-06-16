@@ -4,6 +4,5 @@
 时间复杂度:$n!$
 
 ```cpp
-<%- include("./full_permutation.cpp") _%>
+@include-code(./full_permutation.cpp, cpp)
 ```
-

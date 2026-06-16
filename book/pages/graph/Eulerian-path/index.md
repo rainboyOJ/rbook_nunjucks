@@ -58,7 +58,7 @@ graph LR
 证明要点：若存在欧拉回路，则每次进入某顶点也必然离开，故每个顶点度为偶数。对于欧拉路，起点与终点为奇度，其余顶点度为偶数。反向构造使用 Hierholzer 算法可构造出满足条件的路径。
 
 可以用以下等式判断边数与度的关系：
-$$\sum_{v} d(v) = 2|E|.$$ 
+$$\sum_{v} d(v) = 2|E|.$$
 因此奇数度顶点的数目为偶数。
 
 ### 有向图
@@ -133,10 +133,10 @@ int main() {
         if (!isDirected) {
             g[u].push_back({v, eid});
             g[v].push_back({u, eid});
-            deg[u]++; deg[v]++;
+            deg[u]**; deg[v]**;
         } else {
             g[u].push_back({v, eid});
-            deg[u]++; indeg[v]++;
+            deg[u]**; indeg[v]**;
         }
     }
 
@@ -175,7 +175,7 @@ int main() {
     if (!isDirected) {
         int odd = 0;
         int s = start;
-        for (int i = 1; i <= n; ++i) if (deg[i] % 2) { ++odd; s = i; }
+        for (int i = 1; i <= n; **i) if (deg[i] % 2) { **odd; s = i; }
         if (!(odd == 0 || odd == 2)) { cout << "NO\n"; return 0; }
         // Hierholzer: 非递归栈实现
         vector<char> used(eid+1, 0);
@@ -236,7 +236,7 @@ int main() {
         int u, v; cin >> u >> v; ++eid;
         g[u].push_back({v, eid});
         g[v].push_back({u, eid});
-        deg[u]++; deg[v]++;
+        deg[u]**; deg[v]**;
     }
     int start = -1;
     for (int i = 1; i <= n; ++i) if (deg[i] > 0) { start = i; break; }
@@ -249,7 +249,7 @@ int main() {
     }
     for (int i = 1; i <= n; ++i) if (deg[i] > 0 && !vis[i]) { cout << "NO\n"; return 0; }
     int odd = 0; int s = start;
-    for (int i = 1; i <= n; ++i) if (deg[i] % 2) { ++odd; s = i; }
+    for (int i = 1; i <= n; **i) if (deg[i] % 2) { **odd; s = i; }
     if (!(odd == 0 || odd == 2)) { cout << "NO\n"; return 0; }
 
     vector<char> used(eid+1, 0);
@@ -287,7 +287,7 @@ int main() {
     for (int i = 0; i < m; ++i) {
         int u, v; cin >> u >> v; ++eid;
         g[u].push_back({v, eid});
-        outdeg[u]++; indeg[v]++;
+        outdeg[u]**; indeg[v]**;
     }
     int start = -1;
     for (int i = 1; i <= n; ++i) if (outdeg[i] + indeg[i] > 0) { start = i; break; }
@@ -396,7 +396,7 @@ Hierholzer 算法的特点 : 先走到死胡同，再回溯，所以最后得到
 显然如果你先在 Hierholzer 算法中走 最小的边, 那么根据 dfs 回溯的性质,这条边一定会在最后被加入答案, 所以答案一定是字典序最小的。
 
 
-### 实现步骤 
+### 实现步骤
 (针对字典序最小优化)为了实现字典序最小，
 
 我们需要在 Hierholzer 算法的基础上增加一个预处理步骤。

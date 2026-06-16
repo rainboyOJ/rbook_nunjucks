@@ -8,7 +8,7 @@
 
 ## 题目
 
-<%- include("./problem.md") _%>
+@include_md("./problem.md")
 
 ## 小朋友法
 
@@ -28,7 +28,7 @@
 
 
 ```cpp
-<%- include("./01_seq.cpp")%>
+@include-code(./01_seq.cpp, cpp)
 ```
 
 但是针对题目的n是变化的,所以不能使用for
@@ -75,4 +75,4 @@
 
 ## 练习题目
 
-<%- include("./practice.md")%>
+@include_md("./practice.md")

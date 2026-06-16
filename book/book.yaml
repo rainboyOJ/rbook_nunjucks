@@ -1,6 +1,6 @@
-title: 我的算法书 
+title: 我的算法书
 author: rainboy
-description: 这是一本关于算法的书 
+description: 这是一本关于算法的书
 
 github_repository: https://github.com/rainboyOJ/rbook_nunjucks
 pcs-link: https://pcs2.roj.ac.cn
@@ -11,6 +11,224 @@ glob:
   - math/4-6初等数论初步/*.md
   - problem_sets/[!_]*.md
   - math/group_theory/!(_*|index).md
+  # Rbook_ejs_old migration begin
+  - ReadingNotes/preface.md
+  - ReadingNotes/近世代数/chapter_1.md
+  - ReadingNotes/近世代数/preface.md
+  - algorithm/binary_search/index.md
+  - algorithm/discrete/start.md
+  - algorithm/dsu_on_tree/index.md
+  - appendix/software/cgdb/index.md
+  - appendix/software/neovim/index.md
+  - appendix/software/online.md
+  - appendix/software/other/index.md
+  - appendix/software/pure-ftpd/index.md
+  - appendix/software/vscode/bak.md
+  - appendix/software/vscode/index.md
+  - appendix/software/vscode/plugin.md
+  - appendix/common_words/index.md
+  - appendix/cpp工具.md
+  - appendix/math/short-story/什么情况下改变任意一个操作数的位置不影响结果.md
+  - appendix/math/short-story/负负得正.md
+  - appendix/math/数学小故事-根号是无理数.md
+  - appendix/noilinux2.0的安装.md
+  - appendix/program_environment/noilinux2.0/index.md
+  - appendix/program_environment/noilinux2.0/myos.md
+  - appendix/program_environment/noilinux2.0/noilinux2.0.md
+  - appendix/program_environment/noilinux2.0/webchat.md
+  - appendix/program_environment/noilinux2.0/推荐笔记本.md
+  - appendix/program_environment/readme.md
+  - appendix/program_environment/wsl/index.md
+  - appendix/python/index.md
+  - appendix/shellScripts/compare/index.md
+  - appendix/shellScripts/compile/index.md
+  - appendix/shellScripts/funny_command/index.md
+  - appendix/shellScripts/usefull/index.md
+  - appendix/shellScripts/utils/index.md
+  - appendix/template/index.md
+  - appendix/tricks/stepofSolve/index.md
+  - appendix/tricks/template/index.md
+  - appendix/ubuntu2204系统的安装.md
+  - appendix/创建模板库.md
+  - appendix/常用数学公式.md
+  - appendix/有用的资料.md
+  - appendix/软件.md
+  - base/bigNumber/add.md
+  - base/bigNumber/div.md
+  - base/bigNumber/index.md
+  - base/bigNumber/mul.md
+  - base/bigNumber/sub.md
+  - base/binary_jump/index.md
+  - base/binary_jump/倍增思想.md
+  - base/binary_split/index.md
+  - base/number_dis/start.md
+  - base/rearrangement_inequality/index.md
+  - base/tri-search/index.md
+  - base/two-pointer/index.md
+  - base/two-pointer/p1_sum_eq_pair.md
+  - base/zero_number/index.md
+  - base/zero_number/practice.md
+  - base/zero_number/problem.md
+  - base/zero_number/teach_plan.md
+  - classical_problem/point2point_problem/index.md
+  - data_structure/binary_search_tree/index.md
+  - data_structure/block_data/blocklist/index.md
+  - data_structure/block_data/decompose/index.md
+  - data_structure/dance_linking/start.md
+  - data_structure/disjoint_set/index.md
+  - data_structure/disjoint_set/种类并查集.md
+  - data_structure/heap/index.md
+  - data_structure/monotonic_queue/index.md
+  - data_structure/monotonic_queue/最大子序和.md
+  - data_structure/monotonic_queue/滑动窗口.md
+  - data_structure/monotonic_stack/index.md
+  - data_structure/monotonic_stack/luogu5788.md
+  - data_structure/monotonic_stack/roj3032.md
+  - data_structure/queue/index.md
+  - data_structure/segment_tree/other.md
+  - data_structure/segment_tree/preface/index.md
+  - data_structure/segment_tree/scanline/index.md
+  - data_structure/segment_tree/sgt_first_lt/index.md
+  - data_structure/segment_tree/sgt_merge/index.md
+  - data_structure/segment_tree/sgt_persistent/1.md
+  - data_structure/segment_tree/sgt_persistent/index.md
+  - data_structure/segment_tree/sgt_weights/index.md
+  - data_structure/segment_tree/sgt_zkw/index.md
+  - data_structure/segment_tree/update_one/index.md
+  - data_structure/segment_tree/update_range/index.md
+  - data_structure/splay/index.md
+  - data_structure/split_chunk/start.md
+  - data_structure/stack/index.md
+  - data_structure/treap/index.md
+  - dynamic_programming/Quadrangle_Inequality_Optimization/index.md
+  - dynamic_programming/Quadrangle_Inequality_Optimization/poetG/index.md
+  - dynamic_programming/Quadrangle_Inequality_Optimization/stone_merge/index.md
+  - dynamic_programming/binary_state/index.md
+  - dynamic_programming/decision_mono/index.md
+  - dynamic_programming/intro/index.md
+  - dynamic_programming/knapsack/01knapsack/index.md
+  - dynamic_programming/knapsack/01knapsack/practice.md
+  - dynamic_programming/knapsack/01knapsack/problem.md
+  - dynamic_programming/knapsack/01knapsack/teach_plan.md
+  - dynamic_programming/knapsack/exercises/整数划分/problem.md
+  - dynamic_programming/knapsack/full_knapsack/index.md
+  - dynamic_programming/knapsack/full_knapsack/problem.md
+  - dynamic_programming/knapsack/grouped_knapsack/index.md
+  - dynamic_programming/lcs/index.md
+  - dynamic_programming/lcs/practice.md
+  - dynamic_programming/lcs/todo.md
+  - dynamic_programming/lis/index.md
+  - dynamic_programming/lis/practice.md
+  - dynamic_programming/lis/problem.md
+  - dynamic_programming/number_pyramid/index.md
+  - dynamic_programming/number_pyramid/problem.md
+  - dynamic_programming/slope/index.md
+  - dynamic_programming/sparse_table/index.md
+  - dynamic_programming/sparse_table/problem.md
+  - graph/bellman-ford/index.md
+  - graph/dfs/index.md
+  - graph/mst/最小生成树.md
+  - graph/negative_circle/index.md
+  - graph/preface.md
+  - graph/save/index.md
+  - graph/spfa/index.md
+  - graph/tarjan/cut/start.md
+  - graph/tarjan/loop/start.md
+  - graph/traversal/index.md
+  - graph/traversal/practice.md
+  - graph/图论及其应用读书笔记/index.md
+  - greedy/delete_number/index.md
+  - greedy/index.md
+  - greedy/均分纸牌/index.md
+  - introducation/index.md
+  - math/binary/index.md
+  - math/combinatorics/Inclusion–exclusion_principle.md
+  - math/combinatorics/TODO.md
+  - math/combinatorics/catalan_number/index.md
+  - math/combinatorics/catalan_number/reference.md
+  - math/combinatorics/combinatorics/history.md
+  - math/combinatorics/combinatorics/index.md
+  - math/combinatorics/combinatorics/teach_plan.md
+  - math/combinatorics/generating_function/index.md
+  - math/combinatorics/lucas/index.md
+  - math/combinatorics/practice.md
+  - math/combinatorics/rule_of_product/index.md
+  - math/combinatorics/rule_of_sum/index.md
+  - math/combinatorics/teach_plan.md
+  - math/combinatorics/tricks/index.md
+  - math/combinatorics/tricks/隔板法.md
+  - math/combinatorics/模板题目.md
+  - math/inclusion-exclusion/index.md
+  - math/logarithm/index.md
+  - math/numberTheory/book_note/index.md
+  - math/numberTheory/divisible/index.md
+  - math/numberTheory/exgcd/index.md
+  - math/numberTheory/gcd/index.md
+  - math/numberTheory/index.md
+  - math/numberTheory/prime/index.md
+  - math/numberTheory/remainder/index.md
+  - math/numberTheory/欧其里德定理及推论.md
+  - math/numberTheory/约数/index.md
+  - math/number_base/index.md
+  - math/quick_pow/index.md
+  - math/set/index.md
+  - math/一一映射.md
+  - math/排序不等式.md
+  - mind_theory/index.md
+  - other/treeLayout/index.md
+  - preface.md
+  - problem_list/algo_advanced/index.md
+  - problem_list/luogu_junior/index.md
+  - problem_list/luogu_newbee/index.md
+  - problem_list/noip_csp_junior/index.md
+  - problem_list/noip_csp_senior/index.md
+  - problem_list/super_total/index.md
+  - recursion/add_to_n/index.md
+  - recursion/add_to_n/problem.md
+  - recursion/add_to_n/teach_plan.md
+  - recursion/binary_search/history.md
+  - recursion/binary_search/index.md
+  - recursion/binary_search/model.md
+  - recursion/binary_search/problem.md
+  - recursion/binary_search/proof.md
+  - recursion/binary_search/summary.md
+  - recursion/binary_search/teach_plan.md
+  - recursion/binary_search/区间划分最值问题.md
+  - recursion/binary_search/可二分性定区间问题.md
+  - recursion/binary_search/有序集上的操作.md
+  - recursion/combination.md
+  - recursion/div_number/index.md
+  - recursion/dynamic_loop/index.md
+  - recursion/dynamic_loop/teach_plan.md
+  - recursion/fibonacci/index.md
+  - recursion/fibonacci/problem.md
+  - recursion/hanoi/index.md
+  - recursion/practice.md
+  - recursion/preface/index.md
+  - recursion/print_to_n/index.md
+  - recursion/print_to_n/problem.md
+  - recursion/print_to_n/teach_plain.md
+  - search/dfs/index.md
+  - sort/quicksort/index.md
+  - sort/quicksort/old.md
+  - string/Boyer-Moore/index.md
+  - string/brute-force/index.md
+  - string/index.md
+  - string/kmp/index.md
+  - string/minimal-string/index.md
+  - string/trie/index.md
+  - teach_plan.md
+  - tree/diameter/index.md
+  - tree/diff_on_tree/index.md
+  - tree/jump-lca/index.md
+  - tree/spanning-tree/index.md
+  - tricks/fraction_class.md
+  - tricks/quick_swap_two_range.md
+  - utils/log.md
+  - utils/random/index.md
+  - utils/random_graph/index.md
+  - utils/template/index.md
+  # Rbook_ejs_old migration end
 
 chapters:
   - title: 基础
@@ -18,6 +236,12 @@ chapters:
     sections:
       - title: 快速排序
         path: quicksort/index.md
+      - title: 前缀和
+        path: presum/index.md
+      - title: 差分
+        path: differential/index.md
+      - title: 离散化
+        path: discrete/index.md
       - title: 双指针
         path: double_point/index.md
       - title: 二分查找
@@ -68,7 +292,7 @@ chapters:
         path: BIT
       - title: 线段树
         path: segment-tree
-      - title: 栈 
+      - title: 栈
         path: stack
         sections:
           - title: 表达式求值

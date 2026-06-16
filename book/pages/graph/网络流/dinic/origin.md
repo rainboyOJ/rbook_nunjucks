@@ -30,7 +30,7 @@ $Dinic$算法是一种最短增广路算法,其它的还有$SAP$,$ISAP$等.
 ```viz-dot
 digraph G {
     splines=ortho;
-    
+
     node[shape=box];
     x[shape=point];
     a[label="初始容量网络",shape="Mdiamond"];
@@ -43,7 +43,7 @@ digraph G {
 
     a->b->c->d->e;
     e->f[style="invis"];
-    
+
     {
         rank=same;
         x,d,y;
@@ -73,7 +73,7 @@ digraph G {
     node[shape="circle"];
     { rank=same; 1,3; }
     { rank=same; 2,4; }
-    { rank=same; 5,6; } 
+    { rank=same; 5,6; }
 
     1[xlabel=< <TABLE BORDER="0" CELLBORDER="1"><TR><TD>0</TD></TR></TABLE>>]
 
@@ -102,7 +102,7 @@ digraph G {
     { rank=same; 1,3; }
     { rank=same; 2,4; }
 
-    { rank=same; 5,6; } 
+    { rank=same; 5,6; }
 
 
     1[xlabel=< <TABLE BORDER="0" CELLBORDER="1"><TR><TD>0</TD></TR></TABLE>>]
@@ -261,13 +261,13 @@ digraph G {
     v2->S[headlabel=0,labelangle=-10];
     v4->v2[headlabel=0,labelangle=-10];
     T->v4[headlabel=0,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -319,13 +319,13 @@ digraph G {
     v2->S[headlabel=0,labelangle=-10];
     v4->v2[headlabel=0,labelangle=-10];
     T->v4[headlabel=0,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -375,13 +375,13 @@ digraph G {
     v2->S[headlabel=0,labelangle=-10];
     v4->v2[headlabel=0,labelangle=-10];
     T->v4[headlabel=0,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -435,13 +435,13 @@ digraph G {
     v2->S[headlabel=4,labelangle=-10];
     v4->v2[headlabel=4,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -492,13 +492,13 @@ digraph G {
     v2->S[headlabel=4,labelangle=-10];
     v4->v2[headlabel=4,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -549,13 +549,13 @@ digraph G {
     v2->S[headlabel=4,labelangle=-10];
     v4->v2[headlabel=4,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -606,13 +606,13 @@ digraph G {
     v2->S[headlabel=10,labelangle=-10];
     v4->v2[headlabel=10,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -809,14 +809,14 @@ bool bfs(){ //给各个点分层
     queue<int> q;
     dep[s] = 1; //起点的 层
     q.push(s);
-    
+
     while(q.empty() == false){
         int now = q.front(); q.pop();
         int i;
         for(i=head[now];i!=-1;i=e[i].next){
             int v = e[i].v;
             //v没有访问过 且 容量可通行
-            if(dep[v] == -1 && e[i].cap >0){ 
+            if(dep[v] == -1 && e[i].cap >0){
                 dep[v] = dep[now] +1;
                 q.push(v);
             }
@@ -843,14 +843,14 @@ int dfs(int u,int low){
 
         }
     }
-    
+
     return 0; //从u点到不了汇点
 }
 
 int dinic(){
     int tmp  = 0;
     while( bfs()){ //分层
-        int f ; 
+        int f ;
         while( f  = dfs(s,0x7f7f7f7f)){ //多次dfs,直到找不到路
             tmp +=f;
         }
@@ -860,7 +860,7 @@ int dinic(){
 
 
 int main(){
-    
+
     scanf("%d%d",&n,&m);
     scanf("%d%d",&s,&t);
     int t1,t2,t3;
@@ -890,7 +890,7 @@ int main(){
 当我们将当前图的所有增广路都找到后，再次bfs分层，当前图的层次会发生变化，然后我们在从顶点1开始去找，所以我们每次bfs，都要清一下数组cur。
 
 ```viz-dot
-<%- include("dot/dinic_current_edge.dot") %>
+@include-code(../dot/dinic_current_edge.dot, dot)
 ```
 
 修改代码风格 todo
@@ -913,7 +913,7 @@ int dfs(int u,int low){
         ...
 
     }
-    
+
     return 0; //从u点到不了汇点
 }
 
@@ -982,14 +982,14 @@ bool bfs(){ //给各个点分层
     queue<int> q;
     dep[s] = 1; //起点的 层
     q.push(s);
-    
+
     while(q.empty() == false){
         int now = q.front(); q.pop();
         int i;
         for(i=head[now];i!=-1;i=e[i].next){
             int v = e[i].v;
             //v没有访问过 且 容量可通行
-            if(dep[v] == -1 && e[i].cap >0){ 
+            if(dep[v] == -1 && e[i].cap >0){
                 dep[v] = dep[now] +1;
                 q.push(v);
             }
@@ -1017,14 +1017,14 @@ int dfs(int u,int low){
 
         }
     }
-    
+
     return 0; //从u点到不了汇点
 }
 
 int dinic(){
     int tmp  = 0;
     while( bfs()){ //分层
-        int f ; 
+        int f ;
         while( f  = dfs(s,0x7f7f7f7f)){ //多次dfs,直到找不到路
             tmp +=f;
         }
@@ -1034,7 +1034,7 @@ int dinic(){
 
 
 int main(){
-    
+
     scanf("%d%d",&n,&m);
     scanf("%d%d",&s,&t);
     int t1,t2,t3;
@@ -1074,7 +1074,7 @@ POJ3281  拆点
 
 建图如下,注意:所有的边的容量为1
 ```viz-dot
-digraph { 
+digraph {
     rankdir = LR
     node [shape=circle,fixedsize=true,height=1];
     edge [samehead=n,sametail=n];
@@ -1122,7 +1122,7 @@ digraph {
 但这样产生了新的问题,如下图:
 
 ```viz-dot
-digraph { 
+digraph {
     rankdir = LR
     node [shape=circle,fixedsize=true,height=1];
     edge [samehead=n,sametail=n];
@@ -1144,7 +1144,7 @@ digraph {
 这种情况下**牛1**可以吃多份食物与饮料.为了解决这个问题,我们使用下面的建图的方式,**牛1->牛1'**,这可以**保证流经每头牛身上的流量最多为1**
 
 ```viz-dot
-digraph { 
+digraph {
     rankdir = LR
     node [shape=circle,fixedsize=true,height=1];
     edge [samehead=n,sametail=n];
@@ -1208,7 +1208,7 @@ digraph {
 
 <!-- template start -->
 ```c
-/* 
+/*
  * poj 3281 / luogu P2891
  * 解法3: 多路增广+当前弧优化 Dinic,可以通过 luogu
  * */
@@ -1256,10 +1256,10 @@ void init(){
     T = f+d+2*n+1;
     S = 0;
 
-    
+
     for (i=1;i<=n;i++){
         scanf("%d%d",&tf,&td);
-        
+
         /* 编号
          * S 0 T 1+2*n+f+d
          * f 1->f
@@ -1311,7 +1311,7 @@ bool bfs(){ //分层操作
     q.push(0);
 
     while( !q.empty()){
-        
+
         int u = q.front(); q.pop();
         int i;
         for(i=head[u];i!=-1;i = e[i].next){
@@ -1375,5 +1375,5 @@ int main(){
 ## 引用/资料
 
  - [Dinic算法详解及实现](https://www.cnblogs.com/LUO77/p/6115057.html)
- - [](http://cnblogs.com/SYCstudio/p/7260613.html) 
+ - [](http://cnblogs.com/SYCstudio/p/7260613.html)
  - [](https://blog.csdn.net/u012914220/article/details/23865829)

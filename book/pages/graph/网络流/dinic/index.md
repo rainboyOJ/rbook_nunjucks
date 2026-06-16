@@ -33,7 +33,7 @@ Dinic 算法的核心循环如下：
 digraph G {
     rankdir=TB;
     node[shape=box, style="rounded,filled", fillcolor="#f9f9f9"];
-    
+
     start [label="开始", shape=ellipse, fillcolor="#e1f5fe"];
     init  [label="初始化最大流 = 0
 构造初始残余网络"];
@@ -68,7 +68,7 @@ digraph G {
     node[shape="circle"];
     { rank=same; 1,3; }
     { rank=same; 2,4; }
-    { rank=same; 5,6; } 
+    { rank=same; 5,6; }
 
     1[xlabel=< <TABLE BORDER="0" CELLBORDER="1"><TR><TD>0</TD></TR></TABLE>>]
 
@@ -97,7 +97,7 @@ digraph G {
     { rank=same; 1,3; }
     { rank=same; 2,4; }
 
-    { rank=same; 5,6; } 
+    { rank=same; 5,6; }
 
 
     1[xlabel=< <TABLE BORDER="0" CELLBORDER="1"><TR><TD>0</TD></TR></TABLE>>]
@@ -297,13 +297,13 @@ digraph G {
     v2->S[headlabel=0,labelangle=-10];
     v4->v2[headlabel=0,labelangle=-10];
     T->v4[headlabel=0,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -357,13 +357,13 @@ digraph G {
     v2->S[headlabel=0,labelangle=-10];
     v4->v2[headlabel=0,labelangle=-10];
     T->v4[headlabel=0,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -413,13 +413,13 @@ digraph G {
     v2->S[headlabel=0,labelangle=-10];
     v4->v2[headlabel=0,labelangle=-10];
     T->v4[headlabel=0,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -472,13 +472,13 @@ digraph G {
     v2->S[headlabel=4,labelangle=-10];
     v4->v2[headlabel=4,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -531,13 +531,13 @@ digraph G {
     v2->S[headlabel=4,labelangle=-10];
     v4->v2[headlabel=4,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -588,13 +588,13 @@ digraph G {
     v2->S[headlabel=4,labelangle=-10];
     v4->v2[headlabel=4,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -645,13 +645,13 @@ digraph G {
     v2->S[headlabel=10,labelangle=-10];
     v4->v2[headlabel=10,labelangle=-10];
     T->v4[headlabel=4,labelangle=-10];
-    
-    
-    
+
+
+
     S[xlabel=<<font color="blue">[0]</font>>];
     v1[xlabel=<<font color="blue">[1]</font>>];
     v2[xlabel=<<font color="blue">[1]</font>>];
-    
+
     v3[xlabel=<<font color="blue">[2]</font>>];
     v4[xlabel=<<font color="blue">[2]</font>>];
 
@@ -817,7 +817,7 @@ digraph G {
 > **注意**：`cur` 数组必须在每一轮 BFS 重新分层后重置为 `head`。
 
 ```viz-dot
-<%- include("dot/dinic_current_edge.dot") %>
+@include-code(../dot/dinic_current_edge.dot, dot)
 ```
 
 ## Dinic 算法模板 (C++)
@@ -878,7 +878,7 @@ bool bfs() {
 // DFS 多路增广
 long long dfs(int u, long long limit) {
     if (u == t || limit == 0) return limit;
-    
+
     long long flow = 0;
     for (int i = cur[u]; i != -1; i = e[i].next) {
         cur[u] = i; // 更新当前弧
@@ -918,7 +918,7 @@ int main() {
         cin >> u >> v >> w;
         addEdge(u, v, w);
     }
-    
+
     cout << dinic() << endl;
     return 0;
 }
@@ -938,7 +938,7 @@ int main() {
 
 建图如下，注意：所有的边的容量为 1。
 ```viz-dot
-digraph { 
+digraph {
     rankdir = LR
     node [shape=circle,fixedsize=true,height=1];
     edge [samehead=n,sametail=n];
@@ -986,7 +986,7 @@ digraph {
 但这样产生了新的问题，如下图：
 
 ```viz-dot
-digraph { 
+digraph {
     rankdir = LR
     node [shape=circle,fixedsize=true,height=1];
     edge [samehead=n,sametail=n];
@@ -1008,7 +1008,7 @@ digraph {
 这种情况下**牛 1** 可以吃多份食物与饮料。为了解决这个问题，我们使用下面的建图方式：**牛 1 -> 牛 1'**，这可以**保证流经每头牛身上的流量最多为 1**。
 
 ```viz-dot
-digraph { 
+digraph {
     rankdir = LR
     node [shape=circle,fixedsize=true,height=1];
     edge [samehead=n,sametail=n];

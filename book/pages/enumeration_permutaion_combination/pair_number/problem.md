@@ -9,13 +9,13 @@
 
 
 ```plaintext
-<%- include("./in.txt") _%>
+@include-code(./in.txt, text)
 ```
 
 ## 输出样例
 
 ```plaintext
-<%- include("./out.txt") _%>
+@include-code(./out.txt, text)
 ```
 
 ## 数据范围

@@ -7,8 +7,8 @@ status: TODO
 
 ## 题目
 
-<%- include("./problem.md") _%>
+@include_md("./problem.md")
 
 ## 解析
 
-<%- include("./full_permutation.md") _%>
+@include_md("./full_permutation.md")

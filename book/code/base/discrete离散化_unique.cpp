@@ -1,63 +1,67 @@
-/**  
-* 步骤1：加入数据
-*   for (int x : nums) d.add(x);
-* 步骤2：构建
-*   d.build();
-* 步骤3：使用
-*   去重后大小: :  d.size() 
-*   for (int x : nums) cout << x << " -> " << d.get(x) << endl;
-*/
+#include <bits/stdc++.h>
+using namespace std;
+
 struct Discrete {
-    std::vector<int> xs;
+    vector<int> xs;
 
-    inline void clear() { xs.clear(); }
+    void clear() {
+        xs.clear();
+    }
 
-    // 1. 添加元素
-    void add(int x) { xs.push_back(x); }
+    void add(int x) {
+        xs.push_back(x);
+    }
 
-    // 2. 构建：排序并去重
     void build() {
-        std::sort(xs.begin(), xs.end());
+        sort(xs.begin(), xs.end());
         xs.erase(unique(xs.begin(), xs.end()), xs.end());
     }
 
-    // 3. 查询 x 映射后的值 (默认从 1 开始)
-    // 如果找不到，返回的数值可能会超出范围，具体视 lower_bound 行为而定
-    int get(int x) {
-        return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin() + 1;
+    // 返回 x 离散化后的 1 下标编号。
+    int get(int x) const {
+        return lower_bound(xs.begin(), xs.end(), x) - xs.begin() + 1;
     }
-    //  可能得找不到对应的值, 返回-1
-    int get_maybe(int x) {
-        // 直接使用 lower_bound 查找迭代器
-        auto it = std::lower_bound(xs.begin(), xs.end(), x);
-        
-        // 1. 检查是否到达末尾 (所有数都比 x 小)
-        // 2. 检查找到的值是否严格等于 x (lower_bound 只是找 >= 的)
-        if (it == xs.end() || *it != x) {
-            return -1;
-        }
-        
-        // 转换为 1-based 下标返回
+
+    // 找不到时返回 -1，适合查询不确定是否出现过的值。
+    int get_maybe(int x) const {
+        auto it = lower_bound(xs.begin(), xs.end(), x);
+        if (it == xs.end() || *it != x) return -1;
         return it - xs.begin() + 1;
     }
 
-    // 3.2 查询 x 映射后的最大的值 (从 1 开始)
-    int get_max() {
-        return xs.size();
-    }
-    
-    // 3.1 查询 x 映射后的值 (从 0 开始)
-    int get_zero(int x) {
-        return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin();
-    }
-
-    // 4. 反向查询：根据离散化后的值 k 找回 原值 (k 从 1 开始)
-    int origin(int k) {
+    // 根据 1 下标编号找回原值。
+    int origin(int k) const {
         return xs[k - 1];
     }
-    
-    // 获取去重后的元素总数
-    int size() {
-        return xs.size();
+
+    int size() const {
+        return (int)xs.size();
     }
-} disc;
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    vector<int> a(n);
+    Discrete disc;
+
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        disc.add(a[i]);
+    }
+
+    disc.build();
+
+    cout << disc.size() << '\n';
+    for (int i = 0; i < n; i++) {
+        if (i > 0) cout << ' ';
+        cout << disc.get(a[i]);
+    }
+    cout << '\n';
+
+    return 0;
+}

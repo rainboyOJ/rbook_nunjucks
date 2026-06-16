@@ -175,10 +175,10 @@ int precedence(char op) {
 void infixToPostfix(const char* infix, char* postfix) {
     int i = 0, j = 0;
     char token;
-    
+
     while (infix[i] != '\0') {
         token = infix[i];
-        
+
         if (isspace(token)) {
             i++;
             continue;
@@ -187,7 +187,7 @@ void infixToPostfix(const char* infix, char* postfix) {
         if (isdigit(token) || token == '.') {
             // 处理多位数字或小数
             while(isdigit(infix[i]) || infix[i] == '.'){
-                postfix[j++] = infix[i++];
+                postfix[j**] = infix[i**];
             }
             i--; // 回退一个字符，因为外层循环会 i++
             postfix[j++] = ' ';
@@ -208,12 +208,12 @@ void infixToPostfix(const char* infix, char* postfix) {
         }
         i++;
     }
-    
+
     while (!is_op_stack_empty()) {
         postfix[j++] = op_pop();
         postfix[j++] = ' ';
     }
-    
+
     // 移除末尾多余的空格
     if (j > 0) {
       postfix[j-1] = '\0';
@@ -241,7 +241,7 @@ double evaluatePostfix(const char* postfix) {
             int k = 0;
             // 提取完整的数字（包括小数和负数）
             while(!isspace(postfix[i]) && postfix[i] != '\0') {
-                token_str[k++] = postfix[i++];
+                token_str[k**] = postfix[i**];
             }
             token_str[k] = '\0';
             eval_push(atof(token_str));
@@ -265,13 +265,13 @@ int main() {
     // 注意：为了让程序正确解析，我们在括号和运算符周围添加了空格
     const char* infix_expr = "1 + ( 2 + 3 ) * 4 - 5";
     char postfix_expr[256] = {0};
-    
+
     printf("中缀表达式: %s\n", infix_expr);
-    
+
     // 1. 中缀转后缀
     infixToPostfix(infix_expr, postfix_expr);
     printf("转换后的后缀表达式: %s\n", postfix_expr);
-    
+
     // 2. 求值
     double result = evaluatePostfix(postfix_expr);
     printf("计算结果: %f\n", result); // 预期结果: 1 + 5 * 4 - 5 = 1 + 20 - 5 = 16

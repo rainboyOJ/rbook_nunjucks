@@ -95,7 +95,7 @@ $$
 
 ```cpp
 // 存储每个数字对应的最高位是第几位
-int  highbit[maxn]; 
+int  highbit[maxn];
 void init_highbit() {
     highbit[0] = -1;
     for(int i = 1; i <= n; i++) {
@@ -113,7 +113,7 @@ int log2(int n) {
 由对数运算法则 $\log_2(x/2) = \log_2(x) - \log_2(2) = \log_2(x) - 1$，且向下取整函数满足性质 $\lfloor y - 1 \rfloor = \lfloor y \rfloor - 1$，移项即得证。
 
 ```cpp
-int log_table[MAXN]; 
+int log_table[MAXN];
 
 // 预处理对数表，用于O(1)计算log2
 void precompute_log(int n) {
@@ -216,9 +216,9 @@ void build_st(const vector<int>& arr) {
 
     // 递推构建
     // 枚举区间长度 2^j
-    for (int j = 1; (1 << j) <= n; j++) { 
+    for (int j = 1; (1 << j) <= n; j++) {
         // 枚举 区间的开头
-        for (int i = 0; i + (1 << j) <= n; i++) { 
+        for (int i = 0; i + (1 << j) <= n; i++) {
             st[i][j] = max(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
         }
     }
@@ -295,7 +295,7 @@ Query [2, 2]: 4
 
 ## 经典例题
 
-<%- include("./经典例题.md") %>
+@include_md("./经典例题.md")
 
 ## 参考
 

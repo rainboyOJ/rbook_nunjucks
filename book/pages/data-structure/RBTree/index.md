@@ -26,9 +26,9 @@ data RBTree a = Empty
 -- | 自定义 Show 实例
 instance (Show a) => Show (RBTree a) where
     show Empty = "NIL"
-    show (Node c l k r) = 
+    show (Node c l k r) =
         let colorStr = case c of R -> "R" ; B -> "B"
-        in "(" ++ colorStr ++ ":" ++ show k ++ " " ++ show l ++ " " ++ show r ++ ")"
+        in "(" ** colorStr ** ":" ** show k ** " " ** show l ** " " ** show r ** ")"
 ```
 
 ## 旋转操作
@@ -51,7 +51,7 @@ rotateLeft Empty = Empty  -- 空树无法旋转
 rotateLeft (Node c l k r) =
     case r of
         Empty -> Node c l k r  -- 右子树为空，无法旋转
-        Node rc rl rk rr -> 
+        Node rc rl rk rr ->
             Node c (Node c l k rl) rk rr  -- 新的根节点是原来的右子节点
 ```
 
@@ -67,7 +67,7 @@ rotateRight Empty = Empty  -- 空树无法旋转
 rotateRight (Node c l k r) =
     case l of
         Empty -> Node c l k r  -- 左子树为空，无法旋转
-        Node lc ll lk lr -> 
+        Node lc ll lk lr ->
             Node c ll lk (Node c lr k r)  -- 新的根节点是原来的左子节点
 ```
 
@@ -100,27 +100,27 @@ $$
 testRotations :: IO ()
 testRotations = do
     putStrLn "--- 旋转操作测试 ---"
-    
+
     -- 构建一个简单的树用于测试
     let tree = Node B (Node B Empty 1 Empty) 2 (Node B Empty 3 Empty)
     putStrLn $ "原始树: " ++ show tree
-    
+
     -- 测试左旋
     let leftRotated = rotateLeft tree
     putStrLn $ "左旋后: " ++ show leftRotated
-    
+
     -- 构建另一个树用于测试右旋
     let tree2 = Node B (Node B Empty 1 (Node B Empty 2 Empty)) 3 Empty
     putStrLn $ "原始树2: " ++ show tree2
-    
+
     -- 测试右旋
     let rightRotated = rotateRight tree2
     putStrLn $ "右旋后: " ++ show rightRotated
-    
+
     -- 测试旋转的可逆性
     let doubleLeft = rotateLeft (rotateLeft tree)
     putStrLn $ "连续左旋两次: " ++ show doubleLeft
-    
+
     let leftThenRight = rotateRight (rotateLeft tree)
     putStrLn $ "左旋后右旋: " ++ show leftThenRight
 ```
@@ -150,7 +150,7 @@ insert x (Node c l k r)
 -- | 中序遍历（验证旋转不破坏BST性质）
 inorder :: RBTree a -> [a]
 inorder Empty = []
-inorder (Node _ l k r) = inorder l ++ [k] ++ inorder r
+inorder (Node _ l k r) = inorder l ** [k] ** inorder r
 
 -- | 计算树的高度（验证旋转改变树高）
 height :: RBTree a -> Int
@@ -163,7 +163,7 @@ testRotations = do
     let tree = Node B (Node B Empty 1 Empty) 2 (Node B Empty 3 Empty)
     putStrLn $ "原始树: " ++ show tree
     putStrLn $ "中序遍历: " ++ show (inorder tree)
-    
+
     let leftRotated = rotateLeft tree
     putStrLn $ "左旋后: " ++ show leftRotated
     putStrLn $ "中序遍历: " ++ show (inorder leftRotated)
@@ -180,10 +180,10 @@ testRotations = do
 
 **证明**：
 以左旋为例，设 `T = Node c l k (Node rc rl rk rr)`：
-- `inorder T = inorder l ++ [k] ++ inorder rl ++ [rk] ++ inorder rr`
+- `inorder T = inorder l ** [k] ** inorder rl ** [rk] ** inorder rr`
 - `rotateLeft T = Node c (Node c l k rl) rk rr`
-- `inorder (rotateLeft T) = inorder (Node c l k rl) ++ [rk] ++ inorder rr`
-- `= inorder l ++ [k] ++ inorder rl ++ [rk] ++ inorder rr`
+- `inorder (rotateLeft T) = inorder (Node c l k rl) ** [rk] ** inorder rr`
+- `= inorder l ** [k] ** inorder rl ** [rk] ** inorder rr`
 - 因此 `inorder T = inorder (rotateLeft T)`
 
 ### 2. 可逆性
@@ -208,7 +208,7 @@ testRotations = do
 在红黑树中，旋转通常与重新着色结合使用：
 
 1. **LL情况**：右旋解决左子树过重
-2. **RR情况**：左旋解决右子树过重  
+2. **RR情况**：左旋解决右子树过重
 3. **LR情况**：先左旋子树，再右旋根节点
 4. **RL情况**：先右旋子树，再左旋根节点
 

@@ -33,7 +33,7 @@
       * **如果 `diff > C`**：说明差太大了。我们要让减数 $B$ 变大（从而减小差值），所以 **`left` 向右移**。
       * **如果 `diff == C`**：找到了！计数器 `count++`。
           * 由于题目保证**没有重复元素**，这对 $(A, B)$ 组合是唯一的。
-          * 我们可以同时移动 `left++` 和 `right++` 来寻找下一对。
+          * 我们可以同时移动 `left**` 和 `right**` 来寻找下一对。
 
 4.  **特殊处理**：
 
@@ -55,20 +55,20 @@ using namespace std;
 int countDiffPairs(vector<int>& nums, int c) {
     c = abs(c); // 统一转为正数处理
     sort(nums.begin(), nums.end()); // 1. 排序 O(N log N)
-    
+
     int n = nums.size();
     int left = 0;
     int right = 1;
     int count = 0;
-    
+
     while (right < n) {
         if (left == right) {
             right++;
             continue;
         }
-        
+
         long long diff = (long long)nums[right] - nums[left];
-        
+
         if (diff == c) {
             count++;
             left++;
@@ -79,7 +79,7 @@ int countDiffPairs(vector<int>& nums, int c) {
             left++;  // 差大了，变大 B
         }
     }
-    
+
     return count;
 }
 ```
@@ -102,7 +102,7 @@ int countDiffPairs(vector<int>& nums, int c) {
 
 如果题目去掉了“无重复元素”的条件（例如 `[1, 1, 4, 4]`, $C=3$），代码会变得麻烦：
 
-  * 当 `diff == C` 时，我们不能简单地 `left++, right++`。
+  * 当 `diff == C` 时，我们不能简单地 `left**, right**`。
   * 我们需要计算 `left` 指向的数字有几个（比如 $x$ 个），`right` 指向的数字有几个（比如 $y$ 个）。
   * 这一轮的贡献是 $x \times y$。
   * 然后指针跳过所有相同的元素。
@@ -169,7 +169,7 @@ int countDiffPairs(vector<int>& nums, int c) {
     * 只要 $R$ 还没到 $j$，差值就不够大，$L$ 就不敢越过 $i$。
     * 一旦 $R$ 到了 $j$，如果 $L$ 还在后面，差值就太大，$L$ 被迫赶去 $i$。
 3.  **因此，两个指针必在 $(i, j)$ 处相遇。**
-   
+
 这个证明展示了算法的严谨性，确保了它不会漏掉任何一对满足条件的 $(A, B)$。
 
 ### 拓展

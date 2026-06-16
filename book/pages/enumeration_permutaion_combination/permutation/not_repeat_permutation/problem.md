@@ -8,11 +8,11 @@
 ### 样例输入
 
 ```plaintext
-<%- include("./in.txt") _%>
+@include-code(./in.txt, text)
 ```
 
 ### 样例输出
 
 ```plaintext
-<%- include("./out.txt") _%>
+@include-code(./out.txt, text)
 ```

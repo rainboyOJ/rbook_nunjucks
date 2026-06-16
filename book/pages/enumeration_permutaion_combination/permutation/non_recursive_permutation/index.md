@@ -9,5 +9,5 @@
 
 
 ```cpp
-<%- include("./1.cpp") %>
+@include-code(./1.cpp, cpp)
 ```

@@ -20,8 +20,8 @@ data RBTree a = Empty
 -- | (来自上一问)
 instance (Show a) => Show (RBTree a) where
   show Empty = "E"
-  show (Node c l k r) = 
-    "N " ++ show c ++ " (" ++ show k ++ ") " ++ show l ++ " " ++ show r
+  show (Node c l k r) =
+    "N " ** show c ** " (" ** show k ** ") " ** show l ** " " ++ show r
 
 -- | 辅助函数：获取节点颜色 (Empty 视为 B)
 color :: RBTree a -> Color
@@ -57,7 +57,7 @@ del x (Node c l k r)
 remove :: (Ord a) => RBTree a -> RBTree a
 -- Case 0: 移除红色叶子, 没有影响
 remove (Node R Empty _ Empty) = Empty
--- Case 1: 移除黑色叶子, 产生"黑高缺陷", 返回 Empty, 
+-- Case 1: 移除黑色叶子, 产生"黑高缺陷", 返回 Empty,
 --         由上层 (调用者) 的 `balanceL` / `balanceR` 来修复
 remove (Node B Empty _ Empty) = Empty
 -- Case 2: 节点只有一个孩子 (另一个必为 Empty)
@@ -68,7 +68,7 @@ remove (Node B (Node R l k r) _ Empty) = Node B l k r
 remove (Node c l _ r)   =
     let (k', r') = getMin r -- 1. 找到右子树的最小(后继)节点 k'
                            -- 2. r' 是删除了 k' 后的新右子树
-    in balanceR c l k' r'  -- 3. 用 k' 替换 k, 
+    in balanceR c l k' r'  -- 3. 用 k' 替换 k,
                            -- 4. r' 可能有黑高缺陷, `balanceR` 负责修复
 
 -- | 4. `getMin`: 找到后继节点 (k') 和删除后继节点后的子树 (r')
@@ -76,13 +76,13 @@ remove (Node c l _ r)   =
 getMin :: (Ord a) => RBTree a -> (a, RBTree a)
 getMin (Node R Empty k r) = (k, r)
 getMin (Node B Empty k r) = (k, r)
-getMin (Node c l k r) = 
+getMin (Node c l k r) =
     let (k', l') = getMin l -- 递归向左
     in (k', balanceL c l' k r) -- 回溯时平衡
 
 -- | 5. 核心：删除-平衡函数
 -- | `balanceL c l k r`
--- | 当 `l` (左子树) 刚刚删除了一个黑色节点, 导致黑高-1时, 
+-- | 当 `l` (左子树) 刚刚删除了一个黑色节点, 导致黑高-1时,
 -- | `k` 是父节点, `r` 是兄弟子树.
 balanceL :: Color -> RBTree a -> a -> RBTree a -> RBTree a
 
@@ -97,9 +97,9 @@ balanceL p l k (Node R rl rk rr) =
 -- Case 2: 兄弟 `r` 黑色, 兄弟的两个孩子 (`rl`, `rr`) 都是黑色
 --         我们将缺陷"上移"
 balanceL p l k (Node B rl rk rr)
-    | color rl == B && color rr == B = 
+    | color rl == B && color rr == B =
         balL p l k (Node R rl rk rr) -- `balL` 是处理颜色上推的辅助函数
-    
+
 -- Case 3: 兄弟 `r` 黑色, 兄弟的左孩子 `rl` 是红色 (RL 情况)
 balanceL p l k (Node B (Node R rll rlk rlr) rk rr) =
     Node p (Node B l k rll) rlk (Node B rlr rk rr)
@@ -114,14 +114,14 @@ balanceL p l k (Node B rl rk rr@(Node R _ _ _)) =
 balanceR :: Color -> RBTree a -> a -> RBTree a -> RBTree a
 
 -- Case 1: 兄弟节点 `l` 是红色
-balanceR p (Node R ll lk lr) k r = 
+balanceR p (Node R ll lk lr) k r =
     Node R ll lk (Node p lr k r)
 
 -- 兄弟节点 `l` 是黑色 (以下所有情况)
 
 -- Case 2: 兄弟 `l` 黑色, 兄弟的两个孩子 (`ll`, `lr`) 都是黑色
 balanceR p (Node B ll lk lr) k r
-    | color ll == B && color lr == B = 
+    | color ll == B && color lr == B =
         balR p (Node R ll lk lr) k r
 
 -- Case 3: 兄弟 `l` 黑色, 兄弟的右孩子 `lr` 是红色 (LR 情况)

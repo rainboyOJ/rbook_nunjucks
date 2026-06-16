@@ -1,0 +1,10 @@
+{
+    "title":"二分查找",
+    "file":"index.md",
+    "id":"binary_search",
+    "copy" :[
+        "./1.svg"
+    ],
+    "pre": ["binary_split"]
+    "history":"history.md"
+}

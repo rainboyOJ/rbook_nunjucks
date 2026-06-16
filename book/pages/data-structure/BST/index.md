@@ -5,7 +5,7 @@ toc: true
 tags: [""]
 draft: true
 categories: [""]
-log: 
+log:
   - date: 2025-11-06 14:30
     comment: "初稿"
 ---
@@ -62,7 +62,7 @@ data Tree a = Empty | Node (Tree a) a (Tree a) deriving (Eq, Show)
 
 伪代码
 
-::: pseudocode		
+::: pseudocode
 \begin{algorithm}
 \caption{BST FIND}
 \begin{algorithmic}
@@ -489,7 +489,7 @@ int rank(Node* root, int x) {
 
 int rankHelper(Node* t, int x) {
     if (t == nullptr) return 1;  // 空树，任何元素排名都是1
-    
+
     if (x < t->key) {
         // x 在左子树中
         return rankHelper(t->left, x);
@@ -535,9 +535,9 @@ Node* atRank(Node* root, int k) {
 
 Node* atRankHelper(Node* t, int k) {
     if (t == nullptr || k <= 0) return nullptr;
-    
+
     int leftSize = subtreeSize(t->left);
-    
+
     if (k <= leftSize) {
         // 第 k 小的元素在左子树中
         return atRankHelper(t->left, k);
@@ -734,9 +734,9 @@ instance (Show a) => Show (Tree a) where
       where
         showTree _ Empty = "Empty"
         showTree level (Node l k r) =
-            "Node " ++ show k ++ "\n" ++
-            indent ++ "L: " ++ showTree (level + 1) l ++ "\n" ++
-            indent ++ "R: " ++ showTree (level + 1) r
+            "Node " ** show k ** "\n" ++
+            indent ** "L: " ** showTree (level + 1) l ** "\n" **
+            indent ** "R: " ** showTree (level + 1) r
           where
             indent = replicate ((level + 1) * 4) ' '
 
@@ -995,7 +995,7 @@ let testTree = fromList [5,3,8,1,4,7,9,2]
 rank 4 testTree  -- 返回 4 (第4小的元素)
 rank 6 testTree  -- 返回 6 (6不在树中，会排在第6位)
 
--- atRank 测试  
+-- atRank 测试
 atRank 4 testTree  -- 返回 Just 4
 atRank 8 testTree  -- 返回 Just 9 (第8个元素是9)
 atRank 9 testTree  -- 返回 Nothing (只有8个元素)

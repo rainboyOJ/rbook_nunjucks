@@ -16,7 +16,7 @@ categories: [""]
 ## 教学目标
 
 - 公式$\sum a(i)$,$a(i)$:以$i$为结点的值是什么
-- 本质++不重不漏++集合分类问题
+- 本质**不重不漏**集合分类问题
 
 
 ## 题目: 黑白气球
@@ -40,12 +40,12 @@ categories: [""]
 ```
 代码
 
-@include-code(./bloon, cpp)
+@include-code(./bloon.cpp, cpp)
 
 
 ## 解释
 
-本质这是一个++不重不漏++的集合分类问题
+本质这是一个**不重不漏**的集合分类问题
 
 先给每个气球进行编号
 
@@ -79,9 +79,9 @@ categories: [""]
 
 ### 集合分类
 
-如果我们可以把集合$B$++不重不漏++的分成多个子集合$b_i$,那么答案就是$\sum |b_i|$
+如果我们可以把集合$B$**不重不漏**的分成多个子集合$b_i$,那么答案就是$\sum |b_i|$
 
-显然按对数的结尾的数字,可以把集合$B$++不重不漏++的分成多个子集$b_i$.$b_i$表示结尾为$i$的元素形成的集合.例如$b_3 = \{(1,3)\}$.
+显然按对数的结尾的数字,可以把集合$B$**不重不漏**的分成多个子集$b_i$.$b_i$表示结尾为$i$的元素形成的集合.例如$b_3 = \{(1,3)\}$.
 
 证明:
 
@@ -135,7 +135,7 @@ categories: [""]
 
 ## 练习题目
 
-1.  noiopenjudge  ch0201-6184 找和为K的两个元素 
+1.  noiopenjudge  ch0201-6184 找和为K的两个元素
 2.  luogu P1311 [NOIP2011 提高组] 选择客栈  
 
 
@@ -292,14 +292,14 @@ long long ans = 0;
 for(int i = 0; i < n; i++) {
     cin >> a[i];
     int target = k - a[i]; // 我们需要的另一半
-    
+
     // 1. 先去桶里查，看之前有没有出现过 target
     if(cnt.count(target)) {
-        ans += cnt[target]; 
+        ans += cnt[target];
     }
-    
+
     // 2. 把当前数字放入桶中，供后面的人配对
-    cnt[a[i]]++; 
+    cnt[a[i]]++;
 }
 cout << ans << endl;
 ```
@@ -342,7 +342,7 @@ for(int i = 0; i < n; i++) {
     cin >> x;
     int rem = x % k;          // 当前数的余数
     int need = (k - rem) % k; // 需要的另一半余数
-    
+
     ans += cnt[need]; // 加上之前满足条件的个数
     cnt[rem]++;       // 记录当前余数
 }
@@ -449,7 +449,7 @@ for(int j = 0; j < n; j++) {
     // 当 j=k+1 时，距离 j 超过 k 的是 j-k-1 = 0 号元素
     if (j > k) {
         int expired_index = j - k - 1;
-        cnt[a[expired_index]]--; 
+        cnt[a[expired_index]]--;
     }
 
     // 2. 统计 (桶里剩下的都是距离 <= K 的)
@@ -548,16 +548,16 @@ for(int i = 0; i < n; i++) {
     while(!q.empty() && a[q.back()] <= a[i]) {
         q.pop_back();
     }
-    
+
     // 2. 入队
     q.push_back(i);
-    
+
     // 3. 出队：维护窗口时效性 (把过期的踢走)
     // 队头是最大的，但如果队头的下标离 i 太远(> k-1)，就过期了
     if(q.front() <= i - k) {
         q.pop_front();
     }
-    
+
     // 4. 获取答案
     // 窗口形成后 (i >= k-1)，队头就是当前窗口 [i-k+1, i] 的最大值
     if(i >= k - 1) {
