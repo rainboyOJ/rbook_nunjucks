@@ -26,9 +26,9 @@
 | `book/pages/base/presum/index.md` | `verified` | `/code/base/presum.cpp` | 已有高质量教程 |
 | `book/pages/base/differential/index.md` | `verified` | `/code/base/differential.cpp`、`/code/base/differential_2d.cpp` | 已有高质量教程 |
 | `book/pages/base/discrete/index.md` | `verified` | `/code/base/discrete离散化_unique.cpp` | 已有高质量教程 |
-| `book/pages/base/binary_jump/index.md` | `raw-migrated` | 待确认 | 需要清理旧交互演示占位 |
-| `book/pages/base/two-pointer/index.md` | `raw-migrated` | 待确认 | 需要补“应用分类详解” |
-| `book/pages/math/quick_pow/index.md` | `raw-migrated` | `/code/math/快速幂_quick_pow.cpp` | 需要清理 `old-rbook-placeholder` |
+| `book/pages/base/binary_jump/index.md` | `rewritten` | `/code/base/binary_jump.cpp` | 已按高质量教程结构重写 |
+| `book/pages/base/two-pointer/index.md` | `archived` | 使用正式 `base/double_point` | 旧目录保留为归档入口 |
+| `book/pages/math/quick_pow/index.md` | `rewritten` | `/code/math/快速幂_quick_pow.cpp` | 已按高质量教程结构重写 |
 | `book/pages/math/number_base/index.md` | `rewritten` | `/code/math/base_conversion/bin2dec.cpp`、`/code/math/base_conversion/dec2bin.cpp` | 已按高质量教程结构重写 |
 | `book/pages/math/numberTheory/gcd/index.md` | `rewritten` | `/code/math/numberTheory/gcd.cpp` | 已按高质量教程结构重写 |
 | `book/pages/graph/traversal/index.md` | `raw-migrated` | 待确认 | 需要补教程结构 |

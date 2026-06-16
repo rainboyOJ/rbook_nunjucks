@@ -1,18 +1,25 @@
-// ==========================================
-// 模板 : 快速幂 (Modular Exponentiation)
-// 计算 (base^exp) % mod
-// 时间复杂度: O(log exp)
-// ==========================================
-ll quick_pow(ll base, ll exp, ll mod) {
-    ll res = 1;
-    base %= mod; // 防止 base 初始值就大于 mod
+#include <bits/stdc++.h>
+using namespace std;
 
-    for( ; exp  ; exp >= 1) {
-        // 是1就乘
-        if (exp & 1) res = (res * base) % mod;
-        
-        // base 自乘
-        base = (base * base) % mod;
+using ll = long long;
+
+// 计算 base^exp mod mod，要求 mod > 0。
+ll quick_pow(ll base, ll exp, ll mod) {
+    ll ans = 1 % mod;
+    base %= mod;
+
+    while (exp > 0) {
+        if (exp & 1) ans = ans * base % mod;
+        base = base * base % mod;
+        exp >>= 1;
     }
-    return res;
+
+    return ans;
+}
+
+int main() {
+    ll base, exp, mod;
+    cin >> base >> exp >> mod;
+    cout << quick_pow(base, exp, mod) << "\n";
+    return 0;
 }
