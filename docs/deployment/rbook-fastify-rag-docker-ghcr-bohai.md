@@ -32,9 +32,9 @@ packages/rbook-search/src/searchIndex.js
 
 职责：
 
-- 从 `apps/algorithm-book/book.yaml` 的 `chapters` 收集目录可见页面。
-- 从 `apps/algorithm-book/book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
-- 默认补充扫描 `apps/algorithm-book/book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
+- 从 `content/algorithm-book/book.yaml` 的 `chapters` 收集目录可见页面。
+- 从 `content/algorithm-book/book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
+- 默认补充扫描 `content/algorithm-book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
 - 读取 Markdown，处理 `@include_md("...")`。
 - 解析 front matter。
 - 按标题把文档切成 chunk。

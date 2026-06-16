@@ -5,6 +5,12 @@ VITE_RBOOK_WEB_URL="https://rbook2.roj.ac.cn/"
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 export RBOOK_APP_DIR="${RBOOK_APP_DIR:-apps/algorithm-book}"
+export RBOOK_CONTENT_DIR="${RBOOK_CONTENT_DIR:-content/algorithm-book}"
+if [[ "$RBOOK_CONTENT_DIR" = /* ]]; then
+  CONTENT_DIR="$RBOOK_CONTENT_DIR"
+else
+  CONTENT_DIR="$REPO_ROOT/$RBOOK_CONTENT_DIR"
+fi
 
 cd "$REPO_ROOT"
 
@@ -21,11 +27,11 @@ npx sass --load-path=packages/rbook-markdown/src/markdown-it/assets "$APP_DIR/ma
 
 ## 把 book/目录下的 所有的 图片文件(png,jpg,svg )等等, 按照原路径复制到 dist/ 目录下
 # 使用 find 命令查找所有图片文件并复制到 dist 目录，保持目录结构
-python3 build_all_dot_file.py "$APP_DIR/book" || echo "Warning: dot file build failed; continuing"
+python3 build_all_dot_file.py "$CONTENT_DIR/book" || echo "Warning: dot file build failed; continuing"
 mkdir -p "$APP_DIR/dist"
-find "$APP_DIR/book/" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.svg" -o -iname "*.ico" -o -iname "*.webp" \) | while read file; do
+find "$CONTENT_DIR/book/" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.svg" -o -iname "*.ico" -o -iname "*.webp" \) | while read file; do
   # 计算相对于 book/ 目录的路径
-  relative_path=${file#"$APP_DIR/book/"}
+  relative_path=${file#"$CONTENT_DIR/book/"}
   # 创建目标目录
   mkdir -p "$APP_DIR/dist/$(dirname "$relative_path")"
   # 复制文件

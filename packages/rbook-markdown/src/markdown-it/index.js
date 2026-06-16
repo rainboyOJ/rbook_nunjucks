@@ -63,7 +63,7 @@ function findProjectRoot(startDir) {
     while (currentDir && currentDir !== dirname(currentDir)) {
         if (
             fs.existsSync(path.join(currentDir, 'package.json')) &&
-            fs.existsSync(path.join(currentDir, 'code'))
+            fs.existsSync(path.join(currentDir, 'content/algorithm-book'))
         ) {
             return currentDir;
         }
@@ -75,7 +75,7 @@ function findProjectRoot(startDir) {
 const project_root = findProjectRoot(__dirname);
 const content_root = process.env.RBOOK_CONTENT_DIR
     ? resolve(process.env.RBOOK_CONTENT_DIR)
-    : '';
+    : path.join(project_root, 'content/algorithm-book');
 const app_root = process.env.RBOOK_APP_DIR
     ? resolve(project_root, process.env.RBOOK_APP_DIR)
     : path.join(project_root, 'apps/algorithm-book');

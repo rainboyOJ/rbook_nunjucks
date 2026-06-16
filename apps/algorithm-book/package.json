@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "bash build.sh",
-    "build:index": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-search/dist/buildIndex.js",
+    "build:index": "RBOOK_APP_DIR=apps/algorithm-book RBOOK_CONTENT_DIR=content/algorithm-book node ../../packages/rbook-search/dist/buildIndex.js",
     "build:all": "npm run build && npm run build:index",
-    "build:runtime": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-server/dist/buildRuntime.js",
-    "start:runtime": "npm run build:runtime && RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-server/dist/serve.js",
-    "serve": "RBOOK_APP_DIR=apps/algorithm-book node ../../packages/rbook-server/dist/serve.js",
+    "build:runtime": "RBOOK_APP_DIR=apps/algorithm-book RBOOK_CONTENT_DIR=content/algorithm-book node ../../packages/rbook-server/dist/buildRuntime.js",
+    "start:runtime": "npm run build:runtime && RBOOK_APP_DIR=apps/algorithm-book RBOOK_CONTENT_DIR=content/algorithm-book node ../../packages/rbook-server/dist/serve.js",
+    "serve": "RBOOK_APP_DIR=apps/algorithm-book RBOOK_CONTENT_DIR=content/algorithm-book node ../../packages/rbook-server/dist/serve.js",
     "dev": "npm run serve"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 ---
 name: rbook-article-writer
-description: 在 rbook 算法电子书项目中编写、扩写或修改算法文章时必须使用这个 skill。用户要求写算法教程、完善草稿、整理题解、补充模板代码、修改 apps/algorithm-book/book 下文章、生成 code_template 元数据时都应触发。这个 skill 强制规定：核心算法代码、模板代码、可复用竞赛代码必须放在仓库根目录 code/ 下，并在 Markdown 中用 @include-code 引用。
+description: 在 rbook 算法电子书项目中编写、扩写或修改算法文章时必须使用这个 skill。用户要求写算法教程、完善草稿、整理题解、补充模板代码、修改 content/algorithm-book/book 下文章、生成 code_template 元数据时都应触发。这个 skill 强制规定：核心算法代码、模板代码、可复用竞赛代码必须放在 content/algorithm-book/code/ 下，并在 Markdown 中用 @include-code 引用。
 ---
 
 # RBook 算法文章写作 Skill
@@ -9,8 +9,8 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 
 最重要的项目约束：
 
-- 文章在 `apps/algorithm-book/book/` 下。
-- 核心代码、模板代码、可复用竞赛代码在仓库根目录 `code/` 下。
+- 文章在 `content/algorithm-book/book/` 下。
+- 核心代码、模板代码、可复用竞赛代码在 `content/algorithm-book/code/` 下。
 - 文章中通过 `@include-code(/code/xxx.cpp, cpp)` 引用代码。
 - 不要把完整可复用模板只塞在 Markdown 正文里。
 
@@ -27,27 +27,27 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 还要阅读项目内相近文章：
 
 - 优先看同目录或同主题文章。
-- 简洁证明风格可以参考 `apps/algorithm-book/book/graph/center_of_tree/index.md`。
+- 简洁证明风格可以参考 `content/algorithm-book/book/graph/center_of_tree/index.md`。
 - `code_template` 的 front matter 写法可以参考树状数组、快速排序、BCC、SCC 等已有文章。
 
 ## 工作流程
 
 1. 确定目标文章路径。
    - 用户给了草稿时，不要直接覆盖草稿，除非用户明确要求。
-   - 默认把成品写到 `apps/algorithm-book/book/<topic>/index.md`。
+   - 默认把成品写到 `content/algorithm-book/book/<topic>/index.md`。
    - 如果目标文章已经存在，保留有价值内容，在原文件上改进。
 
 2. 收集项目上下文。
-   - 在 `apps/algorithm-book/book/` 里搜索相关讲解。
-   - 在 `code/` 里搜索已有代码，避免重复创建模板。
-   - 需要把文章加入目录时，再检查 `apps/algorithm-book/book.yaml`。
+   - 在 `content/algorithm-book/book/` 里搜索相关讲解。
+   - 在 `content/algorithm-book/code/` 里搜索已有代码，避免重复创建模板。
+   - 需要把文章加入目录时，再检查 `content/algorithm-book/book.yaml`。
 
-3. 判断哪些代码必须进入 `code/`。
-   - 核心算法实现必须进入 `code/`。
-   - 可复用竞赛模板必须进入 `code/`。
-   - 完整可运行 C++ 程序如果能作为模板或典型实现，也必须进入 `code/`。
-   - 文章本地的 `apps/algorithm-book/book/.../code/` 只适合非常小、不可复用的一次性演示。
-   - 如果草稿中有完整模板代码，或文章本地 code 目录中有可复用模板，应移动或复制到合适的根目录 `code/` 路径，然后更新文章引用。
+3. 判断哪些代码必须进入 `content/algorithm-book/code/`。
+   - 核心算法实现必须进入 `content/algorithm-book/code/`。
+   - 可复用竞赛模板必须进入 `content/algorithm-book/code/`。
+   - 完整可运行 C++ 程序如果能作为模板或典型实现，也必须进入 `content/algorithm-book/code/`。
+   - 文章本地的 `content/algorithm-book/book/.../code/` 只适合非常小、不可复用的一次性演示。
+   - 如果草稿中有完整模板代码，或文章本地 code 目录中有可复用模板，应移动或复制到合适的 `content/algorithm-book/code/` 路径，然后更新文章引用。
 
 4. 写文章。
    - 默认使用中文。
@@ -72,8 +72,8 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
    - 对文章/代码改动，优先运行：
      ```bash
      npm run build:packages
-     RBOOK_CONTENT_DIR=/home/rainboy/mycode/rbook_nunjucks/apps/algorithm-book \
-       RBOOK_CODE_DIR=/home/rainboy/mycode/rbook_nunjucks/code \
+     RBOOK_CONTENT_DIR=/home/rainboy/mycode/rbook_nunjucks/content/algorithm-book \
+       RBOOK_CODE_DIR=/home/rainboy/mycode/rbook_nunjucks/content/algorithm-book/code \
        RBOOK_RUNTIME_DIR=/tmp/rbook-runtime-check \
        npm run build:runtime
      ```
@@ -128,7 +128,7 @@ code_template:
 
 ## 代码放置规则
 
-根据主题选择根目录 `code/` 下的位置：
+根据主题选择 `content/algorithm-book/code/` 下的位置。文章引用仍然使用 `/code/...`，这是内容根内 `code/` 目录的 Web 路径：
 
 - 基础算法：`code/base/`
 - 数据结构：`code/data-struture/`，保留项目中已有拼写
@@ -235,7 +235,7 @@ code_template:
 
 - 成品文章没有误覆盖草稿文件，除非用户明确要求。
 - 可复用模板代码没有只存在于 Markdown 中。
-- 核心代码、模板代码已经放到仓库根目录 `code/`。
+- 核心代码、模板代码已经放到 `content/algorithm-book/code/`。
 - `@include-code` 引用路径存在。
 - `code_template` 中的路径和真实代码文件一致。
 - `toc: true` 的文章包含 `[[TOC]]`。

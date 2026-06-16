@@ -7,12 +7,13 @@ export const __dirname = path.dirname(__filename);
 export const rootDir = path.resolve(__dirname, '../../..');
 export const workdir = rootDir;
 export const defaultAppDir = path.join(rootDir, 'apps/algorithm-book');
+export const defaultContentDir = path.join(rootDir, 'content/algorithm-book');
 export const appDir = process.env.RBOOK_APP_DIR
   ? path.resolve(rootDir, process.env.RBOOK_APP_DIR)
   : defaultAppDir;
 export const contentDir = process.env.RBOOK_CONTENT_DIR
   ? path.resolve(process.env.RBOOK_CONTENT_DIR)
-  : '';
+  : defaultContentDir;
 export const runtimeDir = process.env.RBOOK_RUNTIME_DIR
   ? path.resolve(process.env.RBOOK_RUNTIME_DIR)
   : '';
@@ -21,9 +22,7 @@ export const bookDir = contentDir
   : path.join(appDir, 'book');
 export const codeTemplateDir = process.env.RBOOK_CODE_DIR
   ? path.resolve(process.env.RBOOK_CODE_DIR)
-  : contentDir
-    ? path.join(contentDir, 'code')
-    : path.join(rootDir, 'code');
+  : path.join(contentDir, 'code');
 export const themeDir = path.join(appDir, 'theme');
 export const publicDir = path.join(appDir, 'public');
 export const distDir = runtimeDir

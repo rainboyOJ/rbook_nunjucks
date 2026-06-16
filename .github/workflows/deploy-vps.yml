@@ -89,8 +89,7 @@ jobs:
 
           git -C "$VPS_REPO_DIR" sparse-checkout init --cone
           git -C "$VPS_REPO_DIR" sparse-checkout set \
-            apps/algorithm-book \
-            code
+            content/algorithm-book
           git -C "$VPS_REPO_DIR" fetch --depth=1 origin "$VPS_REPO_BRANCH"
           git -C "$VPS_REPO_DIR" reset --hard "origin/$VPS_REPO_BRANCH"
 
@@ -105,9 +104,7 @@ jobs:
             -e NODE_ENV=production \
             -e RBOOK_CONTENT_DIR=/content \
             -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
-            -v "$VPS_REPO_DIR/apps/algorithm-book/book:/content/book:ro" \
-            -v "$VPS_REPO_DIR/apps/algorithm-book/book.yaml:/content/book.yaml:ro" \
-            -v "$VPS_REPO_DIR/code:/content/code:ro" \
+            -v "$VPS_REPO_DIR/content/algorithm-book:/content:ro" \
             "$IMAGE" \
             npm run build:runtime
 
@@ -122,9 +119,7 @@ jobs:
             -e RBOOK_ADMIN_TOKEN="$RBOOK_ADMIN_TOKEN" \
             -e RBOOK_CONTENT_DIR=/content \
             -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
-            -v "$VPS_REPO_DIR/apps/algorithm-book/book:/content/book:ro" \
-            -v "$VPS_REPO_DIR/apps/algorithm-book/book.yaml:/content/book.yaml:ro" \
-            -v "$VPS_REPO_DIR/code:/content/code:ro" \
+            -v "$VPS_REPO_DIR/content/algorithm-book:/content:ro" \
             "$IMAGE"
 
           docker image prune -f

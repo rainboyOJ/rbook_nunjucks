@@ -41,27 +41,41 @@ node bin/rbook.js serve
 ## 项目结构
 
 ```
-├── bin/rbook.js          # 命令行入口
+├── content/
+│   └── algorithm-book/
+│       ├── book/                 # 算法电子书文章 Markdown
+│       ├── book.yaml             # 目录、书站元信息和页面 glob 配置
+│       └── code/                 # 可复用算法模板代码，文章用 /code/... 引用
 ├── apps/
 │   └── algorithm-book/
-│       ├── book/                 # 书籍内容
-│       ├── theme/                # 主题模板
-│       ├── public/               # 静态资源
-│       ├── markdown-style/       # Markdown 样式
-│       ├── book.yaml             # 书站配置
-│       ├── dist/                 # 构建输出目录
-│       └── .search/index.json    # 搜索索引
+│       ├── theme/                # Pug 主题模板和主题资源
+│       ├── public/               # favicon、站点 manifest 等静态资源
+│       ├── markdown-style/       # Markdown 页面样式
+│       ├── third_part/           # 当前书站运行时使用的交互组件
+│       ├── dist/                 # 本地构建输出目录，已忽略
+│       └── .search/index.json    # 本地搜索索引，已忽略
 ├── packages/
-│   ├── rbook-core/       # 静态站构建核心
-│   ├── rbook-search/     # 搜索索引和查询
-│   ├── rbook-server/     # Fastify 静态站 + API
-│   └── rbook-cli/        # CLI 入口
-└── bin/rbook.js          # 命令行入口
+│   ├── rbook-core/               # 书籍配置、路径、构建核心
+│   ├── rbook-markdown/           # Markdown 渲染插件
+│   ├── rbook-search/             # 搜索索引和查询
+│   ├── rbook-server/             # Fastify 静态站 + HTTP API
+│   └── rbook-cli/                # CLI 入口
+├── skills/                       # 给本地 agent 使用的项目 skill
+├── docs/                         # 开发和部署文档
+├── third_part/                   # 历史可视化 demo/实验资源，非当前运行时内容
+└── bin/rbook.js                  # 命令行入口
 ```
+
+目录边界：
+
+- `content/algorithm-book` 是电子书内容根。文章、目录配置和模板代码都在这里。
+- `apps/algorithm-book` 是这本书的网站外壳。它负责主题、样式、公开静态资源和运行时交互组件。
+- `packages/*` 是通用 rbook 引擎代码。其他书站也应优先复用这里的能力。
+- `content/algorithm-book/code` 中的文件在文章里仍然用 `/code/...` 引用，例如 `@include-code(/code/graph/scc.cpp, cpp)`。
 
 ## 配置说明
 
-编辑 `apps/algorithm-book/book.yaml` 文件配置书籍信息：
+编辑 `content/algorithm-book/book.yaml` 文件配置书籍信息：
 
 ```yaml
 title: 我的书
@@ -104,9 +118,9 @@ function example() {
 
 ### 页面类型
 
-- **首页**: `apps/algorithm-book/book/index.md` → `/`
-- **关于页面**: `apps/algorithm-book/book/about.md` → `/about.html`
-- **章节页面**: `apps/algorithm-book/book/{章节}/index.md` → `/{章节}/`
+- **首页**: `content/algorithm-book/book/index.md` → `/`
+- **关于页面**: `content/algorithm-book/book/about.md` → `/about.html`
+- **章节页面**: `content/algorithm-book/book/{章节}/index.md` → `/{章节}/`
 
 ## 模板系统
 
