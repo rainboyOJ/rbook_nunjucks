@@ -117,6 +117,7 @@
 | Wave 4D-19 | `algorithm/binary_search` | 已验证：旧二分查找迁移入口改为归档页，指向正式 `base/binary_search` 教程 |
 | Wave 4D-20 | `base/rearrangement_inequality` | 已验证：重写排序不等式教程，新增前缀和的前缀和最小化正式模板 |
 | Wave 4D-21 | `data_structure/splay` | 已验证：重写 Splay 伸展树教程，新增普通平衡树六操作正式模板 |
+| Wave 4D-22 | `dynamic_programming/slope` | 已验证：重写斜率优化 DP 教程，新增玩具装箱单调队列凸包模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
