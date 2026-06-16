@@ -8,5 +8,5 @@ https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine
 ## 随机数
 
 ```cpp
-@include-code(./random_int.cpp, cpp)
+@include-code(/code/utils/random.cpp, cpp)
 ```

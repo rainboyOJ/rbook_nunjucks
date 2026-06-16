@@ -5,14 +5,16 @@
 ::: fold
 
 ```cpp
-@include-code(./src/random_graph.cpp, cpp)
+@include-code(/code/template/random_graph.cpp, cpp)
 ```
 :::
+
+## 随机有向图
 
 ::: fold
 
 ```cpp
-@include-code(./src/random2.cpp, cpp)
+@include-code(/code/template/random_digraph.cpp, cpp)
 ```
 :::
 
@@ -21,13 +23,6 @@
 ::: fold
 
 ```cpp
-@include-code(./src/random_dag.cpp, cpp)
-```
-:::
-
-::: fold
-
-```cpp
-@include-code(./src/random_dag_old.cpp, cpp)
+@include-code(/code/template/random_dag.cpp, cpp)
 ```
 :::
