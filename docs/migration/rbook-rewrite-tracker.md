@@ -99,6 +99,7 @@
 | Wave 4D-1 | `base/bigNumber/add`、`base/zero_number`、`tricks/fraction_class`、`math/集合` | 已验证：高精度加法、正负抵消、分数类、集合最大两数和模板迁入 `book/code/` 正式目录，页面按教程结构重写，清理旧页面局部模板 |
 | Wave 4D-2 | `base/binary_search`、`base/number_dis`、`algorithm/discrete/start` | 已验证：二分查找、数字距离模板迁入 `/code/base/`，正式离散化旧入口改为归档页，清理页面局部模板 |
 | Wave 4D-3 | `base/double_point/寻找区间和`、`A-B=C数对`、`同向双指针 (滑动窗口)` | 已验证：区间和、最短满足区间、差值数对模板迁入 `/code/base/double_pointer/`，重复滑动窗口旧页改为归档入口，清理旧页面局部模板 |
+| Wave 4D-4 | `sort/quicksort` | 已验证：快速排序教程改为正式结构，复用 `/code/base/quick_sort_tranditional.cpp` 和 `/code/base/quick_sort_3way_part.cpp`，旧页改归档，清理页面局部模板和对拍产物 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
