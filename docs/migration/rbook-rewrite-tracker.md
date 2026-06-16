@@ -102,6 +102,7 @@
 | Wave 4D-4 | `sort/quicksort` | 已验证：快速排序教程改为正式结构，复用 `/code/base/quick_sort_tranditional.cpp` 和 `/code/base/quick_sort_3way_part.cpp`，旧页改归档，清理页面局部模板和对拍产物 |
 | Wave 4D-5 | `utils/template`、`appendix/template`、`utils/random`、`utils/random_graph` | 已验证：通用模板、随机数、随机图生成代码改为引用 `/code/template/` 与 `/code/utils/` 正式模板，清理页面局部 C++ |
 | Wave 4D-6 | `data_structure/treap`、`dynamic_programming/knapsack/grouped_knapsack`、`dynamic_programming/number_pyramid`、`graph/topsort`、`string/manacher` | 已验证：新增旋转 Treap 正式教程和 `/code/data-struture/treap.cpp`，清理已由正式模板替代的页面局部 C++，Manacher 正文改为引用 `/code/string/manacher.cpp` |
+| Wave 4D-7 | `graph/网络流/dinic` | 已验证：新增 `/code/graph/dinic.cpp`，Dinic 正文改为引用正式模板，清理页面局部 `dinic_cf_template.cpp` |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
