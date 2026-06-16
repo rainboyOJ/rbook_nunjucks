@@ -1,134 +1,261 @@
-## 四边形不等式定义
+---
+id: "quadrangle-inequality-optimization"
+title: "四边形不等式优化"
+date: 2026-06-16 00:00
+toc: true
+tags: ["动态规划", "区间 DP", "四边形不等式", "Knuth 优化"]
+categories: ["动态规划"]
+code_template:
+  - title: 四边形不等式优化石子合并
+    desc: "利用决策单调性把区间 DP 从 O(n^3) 优化到 O(n^2)"
+    tags: ["区间 DP", "四边形不等式", "Knuth 优化"]
+    code: /code/dynamic_programming/knuth_stone_merge.cpp
+---
 
+[[TOC]]
 
-![firgure_1](./asymptote/figure1.svg "figure-1")
+## 一句话算法
 
+如果区间 DP 的最优断点会随着区间端点单调移动，就只在相邻区间的最优断点之间枚举。
 
-::: colorfulbox
+## 问题模型
 
-定义$1$: 四边形不等式
-
-设$w(i,j)$是整数集合上的二元函数.如果对于定义域上的任意整数$a,b,c,d$,其中$a \leqslant b \leqslant c \leqslant d$,都满足$w(a,b) + w(c,d) \leqslant w(a,c) + w(b,d)$,则称$w(i,j)$满足四边形不等式.
-
-交叉和小于包含和.
-
-:::
-
-> 四边形不等式准确的说应该叫做**反四边形不等式**,因为它的公式与下图所示的公式正好相反
-> ![firgure_2](./asymptote/figure2.svg "figure0")
-
-
-
-::: colorfulbox
-
-定理$1$: 四边形不等式等价定义
-
-:::
-
+考虑一类区间 DP：
 
 $$
-f(i,j) = \min\{f(i,k)+f(k+1,j) + w(i,j) \}  \quad (1 \leqslant i  \leqslant k < j \leqslant n)
-\tag a
+dp[l][r]=\min_{l\le k<r}\{dp[l][k]+dp[k+1][r]+w(l,r)\}
 $$
 
-::: colorfulbox
+其中 `w(l,r)` 是合并整个区间 `[l,r]` 的代价。
 
-定理$2$: 一维四边形不等式具有决策单调性
+朴素做法要枚举：
 
-在状态转移方程$f(i) = \min\{f(j) + w(j,i) \}  \quad (0 \leqslant j < i)$中,如果$w(i,j)$满足四边形不等式,则$f(i)$具有> 旧版 rbook 引用：`decision_mono`.
+1. 区间长度；
+2. 左端点 `l`；
+3. 分割点 `k`。
 
-:::
+因此时间复杂度是 $O(n^3)$。
 
-
-证明:
-
-为了方便,设$f(i)$的最优决策点为$p$,那么根据最优决策点的定义,对于$\forall i \in [1,N],\forall j \in [0,p-1]$,有:
-
-$$
-f(p) + w(p,i) \leqslant f(j) + w(j,i) \tag 1
-$$
-
-设$i{'} \in [i+1,N]$,因为$w(j,i)$满足四边形不等式.
-
-![figure_5](./asymptote/figure5.svg "figure-5")
-
+如果最优分割点满足：
 
 $$
-w(j,i^{'}) + w(p,i) \geqslant w(j,i) + w(p,i^{'}))
+opt[l][r-1]\le opt[l][r]\le opt[l+1][r]
 $$
 
-移项:
+那么计算 `dp[l][r]` 时，不需要枚举所有 `k`，只需要枚举：
 
 $$
-w(p,i^{'})) - w(p,i) \leqslant w(j,i) - w(j,i^{'}) \tag 2
+k\in[opt[l][r-1],opt[l+1][r]]
 $$
 
-$(1)+(2)$得:
+这就是四边形不等式优化在区间 DP 中最常见的形态，也常被称为 Knuth 优化。
+
+## 核心直觉
+
+区间右端点变大时，最优断点通常不会往左跳；区间左端点变大时，最优断点通常不会往左侧外面跑。
+
+以石子合并为例：
+
+- `dp[l][r]` 表示把第 `l..r` 堆石子合成一堆的最小代价；
+- 最后一次合并一定把 `[l,k]` 和 `[k+1,r]` 两段合起来；
+- 合并代价是区间总和 `sum(l,r)`。
+
+当区间向右扩展时，右侧石子更多，最优断点倾向于右移，而不是突然回到很左的位置。这种“最优决策点单调移动”的性质，就是优化的入口。
+
+!!! note "记忆方式"
+先算短区间，再算长区间；长区间的断点，只在两个相邻短区间的断点之间找。
+!!!
+
+## 四边形不等式
+
+设 $w(l,r)$ 是区间代价函数。若对任意：
 
 $$
-f(p) + w(p,i^{'}) \leqslant f(j) + w(j,i) \tag 3
+a\le b\le c\le d
 $$
 
-满足决策单调性的定义,证明完毕.
-
-::: colorfulbox
-
-定理$3$: 二维决策单调性
-
-在满足四边形不等式的条件下,状态转换方程$(a)$中,记$P[i,j]$表示$f(i,j)$取最小值的$k$值,即$f(i,j)$的最优决策点,则有对于任意的$i<j$,有:
+都有：
 
 $$
-P[i,j-1] \leqslant P[i,j] \leqslant P[i+1,j] \tag b
+w(a,c)+w(b,d)\le w(a,d)+w(b,c)
 $$
 
-:::
+则称 $w$ 满足四边形不等式。
 
-解释: $P[i,j-1] \leqslant P[i,j]$类似一维决策单调性,固定$i$不变,$j$增加$1$,则新区间下最优决策点右移.或者说,设$P[i,j-1] = p$,则在对于$f(i,j)$来说区间$[i,p-1]$的值不可能成为最优决策点.
+在区间 DP 优化中，还常需要区间包含单调性：
 
-![figure_3](./asymptote/figure3.svg "figure-3")
+$$
+w(b,c)\le w(a,d)
+$$
 
+直观地说，外层大区间的代价不小于内部小区间。
 
-解释: $P[i,j] \leqslant P[i+1,j]$,固定$j$不变,$i$减少$1$,则新区间下最优决策点左移.或者说,设$P[i+1,j] = p$,则在对于$f(i,j)$来说区间$[p+1,j]$的值不可能成为最优决策点.
+石子合并中：
 
-![figure_4](./asymptote/figure4.svg "figure-4")
+$$
+w(l,r)=\sum_{i=l}^{r}a_i
+$$
 
-证明:
+只要石子重量非负，区间和天然满足包含单调性。并且对 $a\le b\le c\le d$：
 
-证明完毕.
+$$
+w(a,c)+w(b,d)=w(a,d)+w(b,c)
+$$
 
-总结: 本质是就是四边形不等式一维决策单调性在两个方向上的推广.
+所以它满足四边形不等式。
 
-例如石子合并问题
+## 算法步骤
 
-一般的代码
+以石子合并为例。
 
-::: pseudocode
+1. 预处理前缀和，用 $O(1)$ 求 `sum(l,r)`。
+2. 初始化：
 
-:::
+   $$
+   dp[i][i]=0,\quad opt[i][i]=i
+   $$
 
-使用"四边形不等式优化"后的代码
+3. 按区间长度从小到大枚举 `len`。
+4. 对每个区间 `[l,r]`，只枚举：
 
-::: pseudocode
+   $$
+   k\in[opt[l][r-1],opt[l+1][r]]
+   $$
 
-:::
+5. 用转移式更新：
 
-## 复杂度证明
+   $$
+   dp[l][r]=dp[l][k]+dp[k+1][r]+sum(l,r)
+   $$
 
-朴素的石子合并时间为$O(n^3)$,而使用"四边形不等式优化"后的时间复杂度为$O(n^2)$,即$O(n^2)$的多项式时间复杂度.
+6. 记录让 `dp[l][r]` 最小的 `k` 到 `opt[l][r]`。
 
-## 石子合并完整代码
+## 算法证明
 
-见 [[[p: roj-3175]]] 的解析
+### 为什么能缩小枚举范围
 
-## 题目列表
+四边形不等式和区间包含单调性可以推出区间 DP 的决策单调性：
 
-<!-- old-rbook-placeholder: +p THIS_ID -->
+$$
+opt[l][r-1]\le opt[l][r]\le opt[l+1][r]
+$$
+
+这个结论的含义是：
+
+- 固定左端点 `l`，右端点从 `r-1` 扩到 `r`，最优断点不会左移到 `opt[l][r-1]` 左侧；
+- 固定右端点 `r`，左端点从 `l+1` 扩到 `l`，最优断点不会右移到 `opt[l+1][r]` 右侧。
+
+因此 `dp[l][r]` 的真正最优断点一定落在：
+
+$$
+[opt[l][r-1],opt[l+1][r]]
+$$
+
+只枚举这个范围不会漏解。
+
+### 为什么复杂度变成平方级
+
+朴素区间 DP 中，每个区间都枚举 $O(n)$ 个断点，因此总复杂度为：
+
+$$
+O(n^2)\times O(n)=O(n^3)
+$$
+
+使用决策单调性后，虽然单个区间的窗口长度不一定为常数，但所有窗口由相邻 `opt` 值夹住，整体不会反复扫完整段。实际模板按长度转移时，总复杂度为 $O(n^2)$。
+
+更重要的是，代码层面每个 `dp[l][r]` 都只访问一个很短的候选区间，在石子合并、最优二叉搜索树等经典模型中能稳定把三重循环降到二重循环级别。
+
+## 复杂度分析
+
+- 朴素区间 DP：时间复杂度 $O(n^3)$，空间复杂度 $O(n^2)$。
+- 四边形不等式优化后：时间复杂度 $O(n^2)$，空间复杂度 $O(n^2)$。
+
+如果只需要答案但仍要依赖相邻区间的 `opt`，通常仍保留二维 `dp` 和 `opt`。
+
+## 代码实现
+
+下面代码解决线性石子合并的最小代价问题。
+
+@include-code(/code/dynamic_programming/knuth_stone_merge.cpp, cpp)
+
+## 测试用例
+
+输入：
+
+```text
+4
+4 1 1 4
+```
+
+输出：
+
+```text
+18
+```
+
+一种最优合并过程：
+
+```text
+1 + 1 = 2, 代价 2
+4 + 2 = 6, 代价 6
+6 + 4 = 10, 代价 10
+总费用 2 + 6 + 10 = 18
+```
+
+## 应用分类详解
+
+四边形不等式优化的本质是利用“最优决策点单调”减少 DP 转移枚举。看到区间 DP、转移枚举断点、代价满足区间单调时，可以考虑它。
+
+### 一、区间合并 DP
+
+**典型模式：** 把一段连续对象合并成一个整体，最后一步枚举断点。
+
+**识别信号：** 转移形如 `dp[l][r] = min(dp[l][k] + dp[k+1][r] + cost(l,r))`。
+
+**核心建模：** 若 `cost(l,r)` 满足四边形不等式和包含单调性，就维护 `opt[l][r]` 缩小断点范围。
+
+| 应用场景 | 经典题目 | 核心思路 |
+|---|---|---|
+| 线性石子合并 | 石子合并最小代价 | 区间和作为合并代价 |
+| 最优二叉搜索树 | Knuth 经典模型 | 根节点选择具有单调性 |
+| 文件合并 | 合并连续文件 | 合并代价是区间权值和 |
+
+### 二、二维区间最优断点
+
+**典型模式：** 需要记录每个区间的最佳分割点。
+
+**识别信号：** `k` 的最优位置随区间边界移动呈单调变化。
+
+**核心建模：** 用 `opt[l][r-1]` 和 `opt[l+1][r]` 夹住 `opt[l][r]`。
+
+### 三、一维决策单调 DP
+
+**典型模式：** 转移形如：
+
+$$
+dp[i]=\min_{j<i}\{dp[j]+w(j,i)\}
+$$
+
+**识别信号：** 最优 `j` 随 `i` 增大而不下降。
+
+**核心建模：** 这时通常使用单调队列、分治优化或维护决策区间，而不是本文的区间 DP 模板。
+
+## 经典例题
+
+### 1. 线性石子合并
+
+练习本文模板。重点是写对 `opt[i][i] = i`，以及枚举断点时右端点不能超过 `r-1`。
+
+### 2. 最优二叉搜索树
+
+Knuth 优化的经典来源。状态是区间内关键字构成的最优搜索树，转移枚举根节点。
+
+### 3. 文件连续合并
+
+与石子合并模型相同。若每次只能合并相邻文件，且代价为文件大小和，就可以套用区间 DP 与四边形不等式优化。
+
 ## 参考
 
-- 算法竞赛 - 罗勇军 5.1 四边形不等式优化
-- [Optimum binary search trees
-Prof. Dr. D. E. Knuth][1]
-- [Efficient dynamic programming using quadrangle inequalities F. Frances Yao][2]
-
-[1]: https://www.semanticscholar.org/paper/Optimum-binary-search-trees-Knuth/c020b9fc5215297a4cc14cff7e1be4dcd9a05d44 "Optimum binary search trees Prof. Dr. D. E. Knuth"
-[2]: https://cse.hkust.edu.hk/mjg_lib/bibs/DPSu/DPSu.Files/p429-yao.pdf "Efficient dynamic programming using quadrangle inequalities F. Frances Yao 1980 Proceedings of the twelfth annual ACM symposium on Theory of computing - STOC '80"
+- 本书决策单调性章节：`dynamic_programming/decision_mono/index.md`
+- Knuth, Optimum binary search trees
+- Frances Yao, Efficient dynamic programming using quadrangle inequalities
