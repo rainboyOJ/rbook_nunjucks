@@ -119,6 +119,7 @@
 | Wave 4D-21 | `data_structure/splay` | 已验证：重写 Splay 伸展树教程，新增普通平衡树六操作正式模板 |
 | Wave 4D-22 | `dynamic_programming/slope` | 已验证：重写斜率优化 DP 教程，新增玩具装箱单调队列凸包模板 |
 | Wave 4D-23 | `dynamic_programming/多重背包` | 已验证：重写多重背包入口教程，新增二进制拆分正式模板 |
+| Wave 4D-24 | `graph/MST` | 已验证：重写最小生成树主教程，修正 Kruskal 模板为独立可运行版本 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
