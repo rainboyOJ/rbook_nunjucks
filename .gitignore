@@ -117,3 +117,5 @@ temp/
 
 third_part/code_template_filter/public
 apps/algorithm-book/third_part/code_template_filter/public
+tmp/
+codex_resume
