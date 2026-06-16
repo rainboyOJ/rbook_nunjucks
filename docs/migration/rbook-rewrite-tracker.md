@@ -94,6 +94,7 @@
 | Wave 4B-3 | `data_structure/segment_tree/scanline`、`sgt_persistent` | 已验证：扫描线面积并、可持久化数组模板迁入 `/code/data-struture/segment_tree/`，两篇页面按教程结构重写，清理旧页面局部模板 |
 | Wave 4B-4 | `data_structure/block_data/decompose` | 已验证：分块区间加区间和取模模板迁入 `/code/data-struture/block/`，页面按教程结构重写，清理旧页面局部模板 |
 | Wave 4C-1 | `graph/negative_circle` | 已验证：SPFA 判负环模板迁入 `/code/graph/spfa_negative_cycle.cpp`，页面按教程结构重写，旧空模板删除 |
+| Wave 4C-2 | `graph/pseudotree` | 已验证：基环树删叶找环模板迁入 `/code/graph/pseudotree_cycle_nodes.cpp`，页面按教程结构重写，清理旧页面局部模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
