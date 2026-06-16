@@ -1,3 +1,14 @@
 id: full_knapsack
 title: 完全背包
 file: index.md
+code_template:
+  - title: 完全背包二维写法
+    tags:
+      - dynamic_programming
+      - knapsack
+    code: /code/dynamic_programming/knapsack/complete_2d.cpp
+  - title: 完全背包一维写法
+    tags:
+      - dynamic_programming
+      - knapsack
+    code: /code/dynamic_programming/knapsack/complete_1d.cpp
