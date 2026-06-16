@@ -126,6 +126,7 @@
 | Wave 4D-28 | `math/numberTheory/remainder` | 已验证：重写余数、同余与取模教程，新增 C++ 规范化取模正式模板 |
 | Wave 4D-29 | `dynamic_programming/Quadrangle_Inequality_Optimization` | 已验证：重写四边形不等式优化教程，新增 Knuth 优化石子合并正式模板 |
 | Wave 4D-30 | `tricks/quick_swap_two_range` | 已验证：重写三次翻转交换相邻区间技巧，新增正式模板 |
+| Wave 4D-31 | `math/logarithm` | 已验证：重写对数基础教程，修正标准记法并补齐算法复杂度推论 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
