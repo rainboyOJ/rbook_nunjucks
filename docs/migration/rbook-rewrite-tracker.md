@@ -121,6 +121,7 @@
 | Wave 4D-23 | `dynamic_programming/多重背包` | 已验证：重写多重背包入口教程，新增二进制拆分正式模板 |
 | Wave 4D-24 | `graph/MST` | 已验证：重写最小生成树主教程，修正 Kruskal 模板为独立可运行版本 |
 | Wave 4D-25 | `dynamic_programming/sos` | 已验证：重写 SOS DP 教程，新增子集和与超集和正式模板 |
+| Wave 4D-26 | `math/numberTheory/prime` | 已验证：重写素数判定与素数筛教程，新增试除法与线性筛正式模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
