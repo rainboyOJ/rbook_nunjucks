@@ -1,7 +1,17 @@
 
+---
+id: "multiset-permutation-template-archive"
+title: "重复元素全排列旧模板"
+date: 2026-06-16 00:00
+toc: false
+tags: ["排列", "归档"]
+categories: ["枚举"]
+---
 
-核心: **把想同的数放到同一个箱子里,每个位置只从每个箱子取一个,可以避免重复**
+本页为旧入口归档。
 
-```cpp
-@include-code(./not_repeat_permutation.cpp, cpp)
-```
+重复元素全排列的正式教程见：[重复元素的全排列](./index.md)。
+
+模板代码已整理到：
+
+@include-code(/code/base/enumerate/multiset_permutation.cpp, cpp)
