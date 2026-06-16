@@ -81,6 +81,7 @@
 | Wave 3A-1 | `data_structure/stack`、`data_structure/queue`、`data_structure/binary_search_tree` | 已验证：正式教程迁移到 `data-structure/stack`、`data-structure/queue`、`data-structure/BST`，旧路径改为归档入口，复用 `/code/data-struture/stack.cpp`、`queue.cpp`、`bst.cpp` |
 | Wave 3A-2 | `tree/jump-lca`、`tree-algo/jump-lca` | 已验证：新增正式教程 `tree-algo/jump-lca`，旧 `tree/jump-lca` 改为归档入口，局部 `template.cpp` 迁入 `/code/tree/jump_lca.cpp` |
 | Wave 3B | `enumeration_permutaion_combination`、`recursion`、`search` | 统一枚举/递归/搜索模板，避免相互引用旧 rbook 名称 |
+| Wave 3B-1 | `recursion/dynamic_loop`、`recursion/combination.md`、`enumeration_permutaion_combination/permutation/full_permutation`、`subset_enum` | 已验证：重写多重循环、组合、全排列、子集枚举基础教程，新增 `/code/base/enumerate/subset_binary.cpp`，清理对应页面局部模板和生成产物 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令

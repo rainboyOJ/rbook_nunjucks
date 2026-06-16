@@ -1,8 +1,20 @@
+---
+id: "full-permutation-old-solution"
+title: "全排列旧解析归档"
+date: 2026-06-16 00:00
+toc: true
+tags: ["排列", "归档"]
+categories: ["枚举"]
+---
 
-核心: 有$n$个位置,每一次从$n$个数里未选的数里选一个
+[[TOC]]
 
-时间复杂度:$n!$
+## 说明
 
-```cpp
-@include-code(./full_permutation.cpp, cpp)
-```
+本文是旧全排列解析页的归档入口。
+
+正式教程已经迁移到：[全排列](./index.md)。
+
+可复用模板已经归位到：
+
+@include-code(/code/base/enumerate/permutation.cpp, cpp)
