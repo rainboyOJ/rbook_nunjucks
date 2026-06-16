@@ -87,6 +87,7 @@ jobs:
             git -C "$VPS_REPO_DIR" remote add origin "$VPS_REPO_URL"
           fi
 
+          git -C "$VPS_REPO_DIR" remote set-url origin "$VPS_REPO_URL"
           git -C "$VPS_REPO_DIR" sparse-checkout init --cone
           git -C "$VPS_REPO_DIR" sparse-checkout set \
             book
