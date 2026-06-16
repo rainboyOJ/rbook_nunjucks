@@ -7,6 +7,6 @@
         "tags":[ "graph" ],
         "desc":"拓扑排序的实现,需要队列,linklist",
         //代码所在的路径
-        "code":"./topsort.cpp"
+        "code":"/code/graph/topsort-dag.cpp"
     }]
 }

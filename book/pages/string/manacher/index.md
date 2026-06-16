@@ -92,91 +92,9 @@ build(s):
 
 ## 代码实现
 
-下面给出不使用 `std::string` 的竞赛风格实现（C 风格字符串，固定缓冲）。代码放在 `code/string/manacher.cpp`，并在这里给出完整实现：
+下面给出不使用 `std::string` 的竞赛风格实现（C 风格字符串，固定缓冲）。
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-constexpr int MAXN = 110000;            // 原始字符串最大长度
-
-// Manacher 模板（不使用 std::string）
-struct Manacher {
-    static const int SZ = MAXN * 2 + 5; // 变换后最大长度
-    char t[SZ];    // 变换后的字符串：^ # a # b # ... # $
-    int p[SZ];     // 半径数组（在 t 上的扩展长度）
-    int m = 0;     // t 的实际长度（含终止符）
-
-    // 构造变换串并计算 p[]
-    // 输入：C 风格字符串 s（以 '\0' 结尾）
-    void build(const char *s) {
-        int n = (int)strlen(s);
-        int k = 0;
-        t[k++] = '^';   // 左哨兵，防止越界
-        t[k++] = '#';
-        for (int i = 0; i < n; ++i) {
-            t[k++] = s[i];
-            t[k++] = '#';
-        }
-        t[k++] = '$';   // 右哨兵
-        t[k] = '\0';
-        m = k;
-
-        // 初始化半径数组
-        for (int i = 0; i < m; ++i) p[i] = 0;
-
-        // Manacher 主循环
-        int center = 0, right = 0;
-        for (int i = 1; i < m - 1; ++i) {
-            int mirror = 2 * center - i;
-            if (i < right) p[i] = min(right - i, p[mirror]);
-            else p[i] = 0;
-
-            // 暴力扩展：安全因为有哨兵
-            while (t[i + 1 + p[i]] == t[i - 1 - p[i]]) ++p[i];
-
-            // 更新中心与右边界
-            if (i + p[i] > right) {
-                center = i;
-                right = i + p[i];
-            }
-        }
-    }
-
-    // 获取最长回文子串，返回长度；通过引用参数 l,r 返回原串上的左闭右闭索引（0-based）
-    int longest(int &l, int &r) const {
-        int best_len = 0, best_center = 0;
-        for (int i = 1; i < m - 1; ++i) {
-            if (p[i] > best_len) {
-                best_len = p[i];
-                best_center = i;
-            }
-        }
-        if (best_len == 0) { l = 0; r = -1; return 0; }
-        // 将 t 中的位置映射回原串的索引
-        l = (best_center - best_len) / 2;
-        r = l + best_len - 1;
-        return best_len;
-    }
-};
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    static char s[MAXN + 5];
-    if (scanf("%s", s) != 1) return 0;   // 读取一个单词
-
-    Manacher man;
-    man.build(s);
-
-    int L, R;
-    int len = man.longest(L, R);
-    printf("%d\n", len);
-    if (len > 0) printf("%.*s\n", len, s + L);
-    return 0;
-}
-```
+@include-code(/code/string/manacher.cpp, cpp)
 
 代码注释和实现符合竞赛风格：固定缓冲、快速 IO、清晰接口 `build` 与 `longest`，便于直接在比赛中使用或按需裁剪。
 
@@ -227,5 +145,5 @@ anana
 ## 题目
 
 - [[problem: luogu,P3805]]
-- ❤️ 理解manacher算法,可以用出的单调队列优化,进一步可以进行线性DP [[problem: luogu,P4555]]
+- 理解 Manacher 算法后，可以继续练习回文半径与线性 DP 结合的题目：[[problem: luogu,P4555]]
 - [[problem: luogu,P1659]]
