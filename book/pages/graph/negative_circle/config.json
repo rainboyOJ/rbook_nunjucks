@@ -11,7 +11,7 @@
         "tags":[ "graph" ],
         "desc":"spfa找负环",
         //代码所在的路径
-        "code":"./spfa_1.cpp"
+        "code":"/code/graph/spfa_negative_cycle.cpp"
     }]
 
 }
