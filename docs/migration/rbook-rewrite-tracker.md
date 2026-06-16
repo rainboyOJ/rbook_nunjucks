@@ -133,6 +133,7 @@
 | Wave 4D-35 | `enumeration_permutaion_combination/permutation/类循环排列` | 已验证：重写类循环排列教程，复用递归多重循环正式模板 |
 | Wave 4D-36 | `classical_problem/point2point_problem` | 已验证：重写点对问题模式识别入口，指向正式配对问题与树状数组教程 |
 | Wave 4D-37 | `dynamic_programming/number_pyramid/problem` | 已验证：补齐数字三角形练习页，引用正式 DP 模板 |
+| Wave 4D-38 | `dynamic_programming/lis/problem` | 已验证：补齐最长上升子序列练习页，引用 O(n^2) 与二分优化模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
