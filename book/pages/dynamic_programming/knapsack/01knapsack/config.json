@@ -2,5 +2,22 @@
     "id":"01knapsack",
     "title":"01背包",
     "file":"index.md",
-    "pre":["number_pyramid"]
+    "pre":["number_pyramid"],
+    "code_template":[
+        {
+            "title":"01 背包二维写法",
+            "tags":["dynamic_programming","knapsack"],
+            "code":"/code/dynamic_programming/knapsack/zero_one_2d.cpp"
+        },
+        {
+            "title":"01 背包一维写法",
+            "tags":["dynamic_programming","knapsack"],
+            "code":"/code/dynamic_programming/knapsack/zero_one_1d.cpp"
+        },
+        {
+            "title":"01 背包恰好装满",
+            "tags":["dynamic_programming","knapsack"],
+            "code":"/code/dynamic_programming/knapsack/zero_one_exact_fill.cpp"
+        }
+    ]
 }
