@@ -26,14 +26,14 @@
 | `book/pages/base/presum/index.md` | `verified` | `/code/base/presum.cpp` | 已有高质量教程 |
 | `book/pages/base/differential/index.md` | `verified` | `/code/base/differential.cpp`、`/code/base/differential_2d.cpp` | 已有高质量教程 |
 | `book/pages/base/discrete/index.md` | `verified` | `/code/base/discrete离散化_unique.cpp` | 已有高质量教程 |
-| `book/pages/base/binary_jump/index.md` | `rewritten` | `/code/base/binary_jump.cpp` | 已按高质量教程结构重写 |
+| `book/pages/base/binary_jump/index.md` | `verified` | `/code/base/binary_jump.cpp` | 已按高质量教程结构重写，旧 `倍增思想.md` 保留为归档入口 |
 | `book/pages/base/two-pointer/index.md` | `archived` | 使用正式 `base/double_point` | 旧目录保留为归档入口 |
-| `book/pages/math/quick_pow/index.md` | `rewritten` | `/code/math/快速幂_quick_pow.cpp` | 已按高质量教程结构重写 |
-| `book/pages/math/number_base/index.md` | `rewritten` | `/code/math/base_conversion/bin2dec.cpp`、`/code/math/base_conversion/dec2bin.cpp` | 已按高质量教程结构重写 |
-| `book/pages/math/numberTheory/gcd/index.md` | `rewritten` | `/code/math/numberTheory/gcd.cpp` | 已按高质量教程结构重写 |
-| `book/pages/graph/traversal/index.md` | `rewritten` | `/code/graph/dfs_traversal.cpp`、`/code/graph/connected_components.cpp` | 已按高质量教程结构重写 |
-| `book/pages/string/brute-force/index.md` | `rewritten` | `/code/string/brute_force_match.cpp` | 已按高质量教程结构重写 |
-| `book/pages/string/kmp/index.md` | `rewritten` | `/code/string/kmp.cpp` | 已补前缀函数、证明和应用分类 |
+| `book/pages/math/quick_pow/index.md` | `verified` | `/code/math/快速幂_quick_pow.cpp` | 已按高质量教程结构重写，旧局部模板已删除 |
+| `book/pages/math/number_base/index.md` | `verified` | `/code/math/base_conversion/bin2dec.cpp`、`/code/math/base_conversion/dec2bin.cpp` | 已按高质量教程结构重写 |
+| `book/pages/math/numberTheory/gcd/index.md` | `verified` | `/code/math/numberTheory/gcd.cpp` | 已按高质量教程结构重写 |
+| `book/pages/graph/traversal/index.md` | `verified` | `/code/graph/dfs_traversal.cpp`、`/code/graph/connected_components.cpp` | 已按高质量教程结构重写，`graph/dfs` 保留为归档入口 |
+| `book/pages/string/brute-force/index.md` | `verified` | `/code/string/brute_force_match.cpp` | 已按高质量教程结构重写，旧局部模板已删除 |
+| `book/pages/string/kmp/index.md` | `verified` | `/code/string/kmp.cpp` | 已补前缀函数、证明和应用分类 |
 
 ## Legacy 引用清理
 
@@ -48,14 +48,26 @@
 | `book/pages/recursion/dynamic_loop/index.md` | `/code/legacy/enumerate/递归实现多重循环.cpp` | `/code/base/enumerate/dynamic_loop.cpp` | `code-normalized` |
 | `book/pages/math/numberTheory/gcd/index.md` | `/code/legacy/math/numberTheory/gcd.cpp` | `/code/math/numberTheory/gcd.cpp` | `code-normalized` |
 
+## 已完成提交记录
+
+| 提交 | 阶段 |
+|---|---|
+| `7f91951` | 重写进制转换和 gcd 教程 |
+| `1f7bfa3` | 重写快速幂和倍增跳跃教程 |
+| `c26cfdf` | 重写字符串朴素匹配和 KMP 教程 |
+| `4ca99cd` | 重写图遍历教程 |
+| `64fa0f0` | 清理已迁入 `book/code/` 的旧页面局部模板 |
+
 ## 后续批次
 
 | 批次 | 范围 | 处理策略 |
 |---|---|---|
-| Wave 2 | 背包、LCS、LIS、数字三角形、斜率优化、四边形不等式优化 | 按专题成组重写，统一 DP 状态定义、转移、证明和模板 |
-| Wave 2 | 线段树、单调队列、单调栈、并查集 | 把文章局部模板迁入 `book/code/data-struture/` |
-| Wave 2 | 组合数学、递归与搜索 | 合并旧 `enumerate` 模板，避免重复题单堆叠 |
-| Wave 3 | `data_structure`/`data-structure`、`tree`/`tree-algo` 等重复目录 | 逐主题决定合并、重定向或归档 |
+| Wave 2A | `dynamic_programming/knapsack/01knapsack`、`full_knapsack`、`grouped_knapsack` | 统一背包问题模型、状态定义、转移方向和模板路径 |
+| Wave 2B | `dynamic_programming/lcs`、`lis`、`number_pyramid` | 按“状态表示、转移来源、边界、滚动优化”重写 DP 入门线 |
+| Wave 2C | `data_structure/monotonic_queue`、`monotonic_stack`、`heap`、`disjoint_set` | 把页面局部模板迁入 `book/code/data-struture/`，清理旧题单式正文 |
+| Wave 2D | `base/sparse_table`、`dynamic_programming/sparse_table` | 合并重复 ST 表内容，保留一个正式教程，另一个归档 |
+| Wave 3A | `data_structure`/`data-structure`、`tree`/`tree-algo` 重复目录 | 逐主题决定合并、重定向或归档 |
+| Wave 3B | `enumeration_permutaion_combination`、`recursion`、`search` | 统一枚举/递归/搜索模板，避免相互引用旧 rbook 名称 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
