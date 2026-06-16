@@ -135,6 +135,7 @@
 | Wave 4D-37 | `dynamic_programming/number_pyramid/problem` | 已验证：补齐数字三角形练习页，引用正式 DP 模板 |
 | Wave 4D-38 | `dynamic_programming/lis/problem` | 已验证：补齐最长上升子序列练习页，引用 O(n^2) 与二分优化模板 |
 | Wave 4D-39 | `dynamic_programming/knapsack/exercises/整数划分/problem` | 已验证：重写整数划分练习页，新增完全背包计数正式模板 |
+| Wave 4D-40 | `math/set` | 已验证：重写集合基础教程，补齐集合关系、运算、恒等式、证明和应用分类 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
