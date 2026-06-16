@@ -85,6 +85,7 @@
 | Wave 3B-2 | `recursion/print_to_n`、`fibonacci`、`hanoi`、`div_number` | 已验证：新增 `/code/base/recursion/*.cpp` 递归基础模板，重写递归前进回溯、斐波那契、汉诺塔、整数划分教程，清理页面局部模板 |
 | Wave 3B-3 | `recursion/add_to_n`、`recursion/binary_search`、`enumeration_permutaion_combination/01_sequence` | 已验证：新增递归求和模板，重写递归求和与 01 序列教程，`recursion/binary_search` 改为归档入口，清理对应页面局部模板 |
 | Wave 3B-4 | `enumeration_permutaion_combination/permutation/not_repeat_permutation`、`non_recursive_permutation` | 已验证：新增 `/code/base/enumerate/multiset_permutation.cpp`、`next_permutation_manual.cpp`，重写重复元素排列和字典序非递归排列教程，清理页面局部旧模板和生成产物 |
+| Wave 3B-5 | `enumeration_permutaion_combination/stack_seq` | 已验证：新增 `/code/base/enumerate/stack_output_count.cpp`，重写出栈序列计数教程，清理页面局部暴力代码、演示代码和生成产物 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
