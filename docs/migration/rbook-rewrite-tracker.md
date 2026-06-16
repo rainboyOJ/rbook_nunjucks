@@ -113,6 +113,7 @@
 | Wave 4D-15 | `string/trie`、`string/minimal-string`、`base/tri-search` | 已验证：新增 Trie 与浮点三分正式模板，重写 Trie 与三分教程，英文最小表示法旧入口改为归档页并清理最小表示法模板 |
 | Wave 4D-16 | `base/binary_split`、`dynamic_programming/binary_state` | 已验证：重写二分拆分思想与状态压缩 DP 入门教程，新增 bitmask DP 最短 Hamilton 路径正式模板 |
 | Wave 4D-17 | `algorithm/dsu_on_tree` | 已验证：重写树上启发式合并教程，新增子树颜色众数统计正式模板 |
+| Wave 4D-18 | `graph/bellman-ford`、`graph/floyed` | 已验证：重写 Bellman-Ford 与 Floyd 最短路教程，新增/修正两个正式最短路模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
