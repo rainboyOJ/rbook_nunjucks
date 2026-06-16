@@ -87,6 +87,7 @@
 | Wave 3B-4 | `enumeration_permutaion_combination/permutation/not_repeat_permutation`、`non_recursive_permutation` | 已验证：新增 `/code/base/enumerate/multiset_permutation.cpp`、`next_permutation_manual.cpp`，重写重复元素排列和字典序非递归排列教程，清理页面局部旧模板和生成产物 |
 | Wave 3B-5 | `enumeration_permutaion_combination/stack_seq` | 已验证：新增 `/code/base/enumerate/stack_output_count.cpp`，重写出栈序列计数教程，清理页面局部暴力代码、演示代码和生成产物 |
 | Wave 3B-6 | `enumeration_permutaion_combination/ball_and_box` | 已验证：新增 `/code/math/combinatorics/stirling_second_*.cpp`，重写球盒模型总览和第二类 Stirling 数教程，旧 `index_old` 改归档，清理页面局部代码 |
+| Wave 3B-7 | `enumeration_permutaion_combination/pair_number` | 已验证：新增 `/code/base/pair_count/*.cpp`，重写配对问题教程，覆盖属性、Two Sum、同余、距离限制和单调队列最值模型，清理旧局部代码与草稿 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
