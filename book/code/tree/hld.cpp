@@ -1,208 +1,208 @@
-// luogu P3384 【模板】重链剖分 / 树链剖分
-#include <iostream>
-#include <cstdio>
-#include <map>
-#include <cstring>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-#define MAXN 100005
+struct SegmentTree {
+    vector<long long> sum;
+    vector<long long> lazy;
+    int mod = 1;
 
-struct Edge{
-    int u,v,w,next;
-}e[MAXN << 2];
-
-int n,m,r,p;
-int cnt_idx = 0;
-map<int,int>op1;
-map<int,int>op2;
-int data[MAXN];
-
-
-int head[MAXN];
-int edge_cnt = 0;
-
-
-void inline _init() {
-    edge_cnt = 0;
-    memset(head,-1,sizeof(head));
-}
-
-void addedge(int u,int v) {
-    edge_cnt++;
-    e[edge_cnt].u = u;
-    e[edge_cnt].v = v;
-    e[edge_cnt].next = head[u];
-    head[u] = edge_cnt;
-}
-
-int st[MAXN << 2] = {0};
-int flag[MAXN << 2] = {0};
-
-inline int lson(int cur) {
-    return cur << 1;
-}
-
-inline int rson(int cur) {
-    return (cur << 1) | 1;
-}
-
-inline void push_up(int cur) {
-    st[cur] = (st[lson(cur)] + st[rson(cur)]) % p;
-}
-
-void push_down(int cur,int m) {
-    if(flag[cur]) {
-        flag[lson(cur)] += flag[cur];
-        flag[rson(cur)] += flag[cur];
-        st[lson(cur)] += flag[cur] * (m - (m >> 1)) % p;
-        st[rson(cur)] += flag[cur] * (m >> 1) % p;
-        flag[cur] = 0;
+    SegmentTree(int n = 0, int mod_value = 1) {
+        init(n, mod_value);
     }
-}
 
-void update(int l1,int r1,int l,int r,int cur,int val) {
-    if(l1 <= l && r1 >= r) {
-        flag[cur] += val;
-        st[cur] += (r - l + 1) * val;
-        return;
+    void init(int n, int mod_value) {
+        mod = mod_value;
+        sum.assign(n * 4 + 5, 0);
+        lazy.assign(n * 4 + 5, 0);
     }
-    push_down(cur,(r - l + 1));
-    int mid = (l + r) >> 1;
-    if(l1 <= mid) update(l1,r1,l,mid,lson(cur),val);
-    if(r1 > mid) update(l1,r1,mid + 1,r,rson(cur),val);
-    push_up(cur);
-}
 
-int query(int l1,int r1,int l,int r,int cur) {
-    if(l1 <= l && r1 >= r) return st[cur];
-    int ret = 0;
-    push_down(cur,(r - l + 1));
-    int mid = (l + r) >> 1;
-    if(l1 <= mid) ret += query(l1,r1,l,mid,lson(cur)) % p;
-    if(r1 > mid) ret += query(l1,r1,mid + 1,r,rson(cur)) % p;
-    return ret % p;
-}
-
-int order = 0;
-
-void build(int l,int r,int cur) {
-    if(l == r) {
-        st[cur] = data[op2[++order]];
-        return;
+    void apply(int u, int l, int r, long long value) {
+        value %= mod;
+        sum[u] = (sum[u] + value * (r - l + 1)) % mod;
+        lazy[u] = (lazy[u] + value) % mod;
     }
-    int mid = (l + r) >> 1;
-    build(l,mid,lson(cur));
-    build(mid + 1,r,rson(cur));
-    push_up(cur);
-    return;
-}
 
-int son[MAXN],top[MAXN],dep[MAXN],fa[MAXN],size[MAXN];
+    void pushdown(int u, int l, int r) {
+        if (lazy[u] == 0 || l == r) return;
+        int mid = (l + r) >> 1;
+        apply(u << 1, l, mid, lazy[u]);
+        apply(u << 1 | 1, mid + 1, r, lazy[u]);
+        lazy[u] = 0;
+    }
 
-void DFS1(int u,int pre,int d) {
-    dep[u] = d;
-    fa[u] = pre;
-    size[u] = 1;
-    for(int i = head[u]; i != -1; i = e[i].next) {
-        int v = e[i].v;
-        if(v == pre) return;
-        DFS1(v,u,d + 1);
-        size[u] += size[v];
-        if(son[u] != -1 || size[v] > size[son[u]]) {
-            son[u] = v;
+    void build(int u, int l, int r, const vector<long long> &base) {
+        if (l == r) {
+            sum[u] = base[l] % mod;
+            return;
+        }
+        int mid = (l + r) >> 1;
+        build(u << 1, l, mid, base);
+        build(u << 1 | 1, mid + 1, r, base);
+        sum[u] = (sum[u << 1] + sum[u << 1 | 1]) % mod;
+    }
+
+    void range_add(int ql, int qr, long long value, int u, int l, int r) {
+        if (ql <= l && r <= qr) {
+            apply(u, l, r, value);
+            return;
+        }
+        pushdown(u, l, r);
+        int mid = (l + r) >> 1;
+        if (ql <= mid) range_add(ql, qr, value, u << 1, l, mid);
+        if (qr > mid) range_add(ql, qr, value, u << 1 | 1, mid + 1, r);
+        sum[u] = (sum[u << 1] + sum[u << 1 | 1]) % mod;
+    }
+
+    long long range_sum(int ql, int qr, int u, int l, int r) {
+        if (ql <= l && r <= qr) return sum[u];
+        pushdown(u, l, r);
+        int mid = (l + r) >> 1;
+        long long answer = 0;
+        if (ql <= mid) answer += range_sum(ql, qr, u << 1, l, mid);
+        if (qr > mid) answer += range_sum(ql, qr, u << 1 | 1, mid + 1, r);
+        return answer % mod;
+    }
+};
+
+struct HeavyLightDecomposition {
+    int n;
+    int root;
+    int mod;
+    int timer = 0;
+    vector<vector<int>> graph;
+    vector<int> parent, depth, subtree_size, heavy_son;
+    vector<int> top, dfn, node_at;
+    vector<long long> value, ordered_value;
+    SegmentTree seg;
+
+    HeavyLightDecomposition(int n, int root, int mod)
+        : n(n), root(root), mod(mod),
+          graph(n + 1),
+          parent(n + 1), depth(n + 1), subtree_size(n + 1),
+          heavy_son(n + 1, 0), top(n + 1), dfn(n + 1), node_at(n + 1),
+          value(n + 1), ordered_value(n + 1),
+          seg(n, mod) {}
+
+    void add_edge(int u, int v) {
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+
+    void dfs_size(int u, int father) {
+        parent[u] = father;
+        depth[u] = depth[father] + 1;
+        subtree_size[u] = 1;
+        heavy_son[u] = 0;
+
+        for (int v : graph[u]) {
+            if (v == father) continue;
+            dfs_size(v, u);
+            subtree_size[u] += subtree_size[v];
+            if (heavy_son[u] == 0 ||
+                subtree_size[v] > subtree_size[heavy_son[u]]) {
+                heavy_son[u] = v;
+            }
         }
     }
-}
 
-void DFS2(int u,int t) {
-    top[u] = t;
-    op1[u] = ++cnt_idx;
-    op2[cnt_idx] = u;
-    if(son[u] != -1) {
-        DFS2(son[u],t);
-    }
-    else return;
-    for(int i = head[u]; i != -1; i = e[i].next) {
-        int v = e[i].v;
-        if(v != son[u] && v != fa[u]) {
-            DFS2(v,v);
+    void dfs_decompose(int u, int chain_top) {
+        top[u] = chain_top;
+        dfn[u] = ++timer;
+        node_at[timer] = u;
+        ordered_value[timer] = value[u];
+
+        if (heavy_son[u] != 0) {
+            dfs_decompose(heavy_son[u], chain_top);
+        }
+
+        for (int v : graph[u]) {
+            if (v == parent[u] || v == heavy_son[u]) continue;
+            dfs_decompose(v, v);
         }
     }
-}
 
-int lca(int a,int b,int val,bool f) {
-    int f1 = top[a],f2 = top[b];
-    int sum = 0;
-    while(f1 != f2) {
-        if(dep[f1] < dep[f2]) {
-        	swap(f1,f2);
-            swap(a,b);
-		}
-        if(f) sum = (sum + query(op1[f1],op1[a],1,n,1)) % p;
-        else update(op1[f1],op1[a],1,n,1,val);
-        a = fa[f1];
-        f1 = top[a];
+    void build() {
+        dfs_size(root, 0);
+        dfs_decompose(root, root);
+        seg.build(1, 1, n, ordered_value);
     }
-    if(dep[a] > dep[b]) {
-        swap(a,b);
-    }
-    if(f) {
-        sum = (sum + query(op1[a],op1[b],1,n,1)) % p;
-    }
-    else {
-        update(op1[a],op1[b],1,n,1,val);
-    }
-    return sum;
-}
 
-void __init() {
-    memset(son,-1,sizeof(son));
-}
+    void path_add(int u, int v, long long delta) {
+        while (top[u] != top[v]) {
+            if (depth[top[u]] < depth[top[v]]) swap(u, v);
+            seg.range_add(dfn[top[u]], dfn[u], delta, 1, 1, n);
+            u = parent[top[u]];
+        }
+        if (depth[u] > depth[v]) swap(u, v);
+        seg.range_add(dfn[u], dfn[v], delta, 1, 1, n);
+    }
 
-void init() {
-    _init();
-    __init();
-    int i;
-    int t1,t2;
-    for(i = 1; i <= n; i++) {
-        scanf("%d",&data[i]);
+    long long path_sum(int u, int v) {
+        long long answer = 0;
+        while (top[u] != top[v]) {
+            if (depth[top[u]] < depth[top[v]]) swap(u, v);
+            answer += seg.range_sum(dfn[top[u]], dfn[u], 1, 1, n);
+            answer %= mod;
+            u = parent[top[u]];
+        }
+        if (depth[u] > depth[v]) swap(u, v);
+        answer += seg.range_sum(dfn[u], dfn[v], 1, 1, n);
+        return answer % mod;
     }
-    for(i = 1; i < n; i++) {
-        scanf("%d%d",&t1,&t2);
-        addedge(t1,t2);
-        addedge(t2,t1);
+
+    void subtree_add(int u, long long delta) {
+        seg.range_add(dfn[u], dfn[u] + subtree_size[u] - 1, delta, 1, 1, n);
     }
-    DFS1(r,r,1);
-    DFS2(r,r);
-    build(1,n,1);
-}
+
+    long long subtree_sum(int u) {
+        return seg.range_sum(dfn[u], dfn[u] + subtree_size[u] - 1, 1, 1, n);
+    }
+};
 
 int main() {
-    scanf("%d%d%d%d",&n,&m,&r,&p);
-    init();
-    int i;
-    int t1,t2,t3,t4;
-    for(int i = 1; i <= m; i++) {
-        scanf("%d",&t1);
-        if(t1 == 1) {
-            scanf("%d%d%d",&t2,&t3,&t4);
-            lca(t2,t3,t4,0);
-        }
-        if(t1 == 2) {
-            scanf("%d%d",&t2,&t3);
-            int ans = lca(t2,t3,0,1);
-            printf("%d\n",ans);
-        }
-        if(t1 == 3) {
-            scanf("%d%d",&t2,&t3);
-            update(op1[t2],op1[t2] + size[t2] - 1,1,n,1,t3);
-        }
-        if(t1 == 4) {
-            scanf("%d",&t2);
-            int ans = query(op1[t2],op1[t2] + size[t2] - 1,1,n,1);
-            printf("%d\n",ans);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m, root, mod;
+    cin >> n >> m >> root >> mod;
+
+    HeavyLightDecomposition hld(n, root, mod);
+    for (int i = 1; i <= n; i++) {
+        cin >> hld.value[i];
+        hld.value[i] %= mod;
+    }
+
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        hld.add_edge(u, v);
+    }
+
+    hld.build();
+
+    while (m--) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            int x, y;
+            long long z;
+            cin >> x >> y >> z;
+            hld.path_add(x, y, z);
+        } else if (op == 2) {
+            int x, y;
+            cin >> x >> y;
+            cout << hld.path_sum(x, y) << '\n';
+        } else if (op == 3) {
+            int x;
+            long long z;
+            cin >> x >> z;
+            hld.subtree_add(x, z);
+        } else {
+            int x;
+            cin >> x;
+            cout << hld.subtree_sum(x) << '\n';
         }
     }
+
     return 0;
 }

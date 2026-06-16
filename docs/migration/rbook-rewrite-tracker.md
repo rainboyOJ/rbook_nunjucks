@@ -104,6 +104,7 @@
 | Wave 4D-6 | `data_structure/treap`、`dynamic_programming/knapsack/grouped_knapsack`、`dynamic_programming/number_pyramid`、`graph/topsort`、`string/manacher` | 已验证：新增旋转 Treap 正式教程和 `/code/data-struture/treap.cpp`，清理已由正式模板替代的页面局部 C++，Manacher 正文改为引用 `/code/string/manacher.cpp` |
 | Wave 4D-7 | `graph/网络流/dinic` | 已验证：新增 `/code/graph/dinic.cpp`，Dinic 正文改为引用正式模板，清理页面局部 `dinic_cf_template.cpp` |
 | Wave 4D-8 | `data_structure/segment_tree/update_one` | 已验证：清理已由正式线段树模板替代的页面局部 `1.cpp`、`2.cpp`；保留 `check1.cpp`、`*gen_dot.cpp` 等对拍/图示生成资源 |
+| Wave 4D-9 | `data-structure/fhq-treap`、`tree-algo/hld` | 已验证：补齐 FHQ Treap 与树链剖分正式教程结构，重写 `/code/tree/hld.cpp` 修复旧模板 DFS 与重儿子选择风险 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
