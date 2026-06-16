@@ -105,5 +105,18 @@ ulimit -v 131072
 是一个很有用的脚本
 
 ```sh
-TODO
+g++ -std=c++17 -O2 std.cpp -o std
+g++ -std=c++17 -O2 force.cpp -o force
+g++ -std=c++17 -O2 rand.cpp -o rand
+
+while true; do
+    ./rand > in
+    timeout 2s ./std < in > out
+    timeout 2s ./force < in > ans
+    if ! diff -b out ans; then
+        echo "Wrong Answer"
+        break
+    fi
+    echo "Accepted"
+done
 ```

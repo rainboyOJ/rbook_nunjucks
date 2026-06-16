@@ -53,7 +53,11 @@
 
 可以使用这个脚本,
 
-TODO : 添加timeout.
+脚本中可以给程序加上 `timeout`，避免错误程序死循环。例如：
+
+```bash
+timeout 2s ./1.out < "$input_file" > user.out
+```
 
 ```bash
 @include-code(./check.sh, bash)

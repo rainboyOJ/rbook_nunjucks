@@ -175,7 +175,15 @@ Window Terminal是微软开发的新的一代windows的终端
 
 ## 编写代码
 
-TODO
+建议把代码放在 WSL 的 Linux 文件系统中，例如：
+
+```text
+~/code/
+```
+
+不要长期在 `/mnt/c/...` 下编译大量 C++ 文件，性能和文件权限都更容易出问题。
+
+使用 VS Code 时，可以通过 Remote WSL 插件直接打开 Linux 目录。
 
 ## 如何传递文件
 

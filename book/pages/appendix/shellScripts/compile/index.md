@@ -75,7 +75,12 @@ b --help
 
 例如
 
-TODO
+```bash
+CXX=g++
+CXXFLAGS="-std=c++17 -O2 -Wall"
+INPUT=in
+OUTPUT=out
+```
 
 ## 使用例子
 
