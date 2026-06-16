@@ -97,6 +97,7 @@
 | Wave 4C-2 | `graph/pseudotree` | 已验证：基环树删叶找环模板迁入 `/code/graph/pseudotree_cycle_nodes.cpp`，页面按教程结构重写，清理旧页面局部模板 |
 | Wave 4C-3 | `graph/tarjan/cut`、`graph/tarjan/loop` | 已验证：旧 Tarjan 割点页改为引用 `/code/graph/cut_node.cpp`，找环页改为复用基环树找环模板，清理旧页面局部模板 |
 | Wave 4D-1 | `base/bigNumber/add`、`base/zero_number`、`tricks/fraction_class`、`math/集合` | 已验证：高精度加法、正负抵消、分数类、集合最大两数和模板迁入 `book/code/` 正式目录，页面按教程结构重写，清理旧页面局部模板 |
+| Wave 4D-2 | `base/binary_search`、`base/number_dis`、`algorithm/discrete/start` | 已验证：二分查找、数字距离模板迁入 `/code/base/`，正式离散化旧入口改为归档页，清理页面局部模板 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
