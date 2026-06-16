@@ -1,24 +1,71 @@
-const int maxn = 1e5+5;
-using ll = long long;
+#include <bits/stdc++.h>
+using namespace std;
 
-template<typename T,int N=maxn>
-struct Bit {
-    T c[N+5]; // 树状数组, 1-based
-    //Bit(){}
-    inline int lowbit(int x) { return x & -x;      } // lowbit
-    inline int fa(int p)     { return p+lowbit(p); } // update a[p] 时, 下一个要更新的节点
-    inline int left(int p)   { return p-lowbit(p); } // query a[1..p] 时, 下一个要求和的节点
+template <typename T>
+struct Fenwick {
+    int n = 0;
+    vector<T> tree;
 
-    // 单点更新 a[p] += v
-    void update(int p, T v){
-        for( ; p <= N; p = fa(p) ) c[p] += v;
+    Fenwick(int n = 0) {
+        init(n);
     }
 
-    // 查询前缀和 a[1..p]
-    T query(int p){ //前缀和
-        T sum=0;
-        for( ;p > 0 ; p = left(p)) sum+= c[p];
-        return sum;
+    void init(int size) {
+        n = size;
+        tree.assign(n + 1, 0);
+    }
+
+    int lowbit(int x) const {
+        return x & -x;
+    }
+
+    void add(int pos, T value) {
+        for (int i = pos; i <= n; i += lowbit(i)) {
+            tree[i] += value;
+        }
+    }
+
+    T prefix_sum(int pos) const {
+        T answer = 0;
+        for (int i = pos; i > 0; i -= lowbit(i)) {
+            answer += tree[i];
+        }
+        return answer;
+    }
+
+    T range_sum(int left, int right) const {
+        return prefix_sum(right) - prefix_sum(left - 1);
     }
 };
-Bit<ll> bit;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    Fenwick<long long> bit(n);
+    for (int i = 1; i <= n; i++) {
+        long long x;
+        cin >> x;
+        bit.add(i, x);
+    }
+
+    while (m--) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            int x;
+            long long k;
+            cin >> x >> k;
+            bit.add(x, k);
+        } else {
+            int l, r;
+            cin >> l >> r;
+            cout << bit.range_sum(l, r) << '\n';
+        }
+    }
+
+    return 0;
+}
