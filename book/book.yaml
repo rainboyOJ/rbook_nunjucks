@@ -253,6 +253,8 @@ chapters:
     sections:
       - title: dfs序
         path: dfs-order
+      - title: 倍增求 LCA
+        path: jump-lca
   - title: 第三章 动态规划
     path: dynamic_programming
     sections:
