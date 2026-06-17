@@ -159,6 +159,7 @@
 | Wave 4D-61 | `data_structure/monotonic_stack/luogu5788`、`roj3032` | 已验证：两篇单调栈题解页补齐算法步骤、证明、复杂度和应用分类 |
 | Wave 4D-62 | `math/向上取整` | 已验证：补齐整数向上取整的显式算法步骤，保持正整数除法模板引用 |
 | Wave 4D-63 | `math/集合` | 已验证：补齐集合最值与最大两数和页面的算法步骤和代码实现结构 |
+| Wave 4D-64 | `graph/MST` | 已验证：规范最小生成树主教程算法步骤标题，保持 Kruskal 模板引用 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
