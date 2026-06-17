@@ -112,11 +112,9 @@ $$
 
 标准数字三角形要求走到底层。若题目改成可以在任意层结束，状态定义和答案位置都要相应改变。
 
-## 参考代码
+## 参考代码位置
 
-正式模板见主教程：
-
-@include-code(/code/dynamic_programming/number_pyramid.cpp, cpp)
+正式模板由数字三角形主教程统一维护：`/code/dynamic_programming/number_pyramid.cpp`。
 
 ## 相关教程
 

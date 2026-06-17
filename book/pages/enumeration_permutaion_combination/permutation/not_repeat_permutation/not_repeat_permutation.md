@@ -12,6 +12,4 @@ categories: ["枚举"]
 
 重复元素全排列的正式教程见：[重复元素的全排列](./index.md)。
 
-模板代码已整理到：
-
-@include-code(/code/base/enumerate/multiset_permutation.cpp, cpp)
+模板代码已整理到正式教程：`/code/base/enumerate/multiset_permutation.cpp`。

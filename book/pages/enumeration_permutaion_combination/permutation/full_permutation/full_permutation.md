@@ -15,6 +15,4 @@ categories: ["枚举"]
 
 正式教程已经迁移到：[全排列](./index.md)。
 
-可复用模板已经归位到：
-
-@include-code(/code/base/enumerate/permutation.cpp, cpp)
+可复用模板已经归位到正式教程：`/code/base/enumerate/permutation.cpp`。

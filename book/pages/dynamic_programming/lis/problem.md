@@ -122,15 +122,12 @@ tail[len - 1] = 长度为 len 的上升子序列中，最小可能结尾
 
 `tail` 数组保存的是每个长度的最小结尾，不一定是一条真实的完整 LIS。若题目要求输出方案，需要额外记录前驱。
 
-## 参考代码
+## 参考代码位置
 
-### O(n^2) 做法
+正式模板由最长上升子序列主教程统一维护：
 
-@include-code(/code/dynamic_programming/lis_n2.cpp, cpp)
-
-### O(n log n) 做法
-
-@include-code(/code/dynamic_programming/lis_binary.cpp, cpp)
+- `/code/dynamic_programming/lis_n2.cpp`
+- `/code/dynamic_programming/lis_binary.cpp`
 
 ## 相关教程
 
