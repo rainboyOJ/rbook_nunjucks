@@ -1,144 +1,118 @@
-<script setup>
-import {inject,ref,computed} from 'vue'
-import { useToast } from "vue-toastification";
-  // import HelloWorld from './components/HelloWorld.vue'
-// import tableCell from './components/tableCell.vue'
+<script setup lang="ts">
+import { computed, inject, ref } from 'vue'
+import { useToast } from 'vue-toastification';
 import Fuse from 'fuse.js'
-import codeShow from './components/codeShow.vue'
+import CodeShow from './components/codeShow.vue'
 
-const template_array = inject('template_array')
-const search_text = ref("")
+interface CodeTemplate {
+  title?: string;
+  tags?: string[];
+  code: string;
+  desc?: string;
+  sh?: string;
+}
+
+const templates = inject<CodeTemplate[]>('template_array', [])
+const searchText = ref('')
 const toast = useToast()
 
-// 模态框相关状态
 const showCodeModal = ref(false)
 const modalTitle = ref('')
 const modalCode = ref('')
 const modalFilename = ref('')
 
-const FuseOptions = {
-	// isCaseSensitive: false,
-	// includeScore: false,
-	// shouldSort: true,
-	// includeMatches: false,
-	// findAllMatches: false,
-	// minMatchCharLength: 1,
-	// location: 0,
-	// threshold: 0.6,
-	// distance: 100,
-	// useExtendedSearch: false,
-	// ignoreLocation: false,
-	// ignoreFieldNorm: false,
-	// fieldNormWeight: 1,
-	keys: [
-		"title"
-	]
+const fuse = new Fuse(templates, {
+  keys: ['title', 'desc', 'tags']
+})
+
+function codeAssetUrl(codePath: string) {
+  const baseUrl = import.meta.env.DEV ? '/' : '/code_template/';
+  return baseUrl + codePath;
 }
 
-const fuse = new Fuse(template_array,FuseOptions)
-
-const tags_string = (tags) => {
-    return tags.join(",")
+function fileNameFromPath(codePath: string) {
+  return codePath.split('/').pop() || 'code.txt';
 }
 
-const fetch_code = (codeFileUrl) => {
-    const baseUrl = import.meta.env.DEV ? '/' : '/code_template/';
-    const fullUrl = baseUrl + codeFileUrl;
-    return fetch(fullUrl)
-    .then(response => {
-        if (response.ok) {
-            return response.text();
-        } else {
-            throw new Error('Failed to fetch the file');
-        }
-    })
-    .catch(error => {
-        toast.error(`Error fetching code: ${error.message}`);
-        return null;
-    });
+function tagsString(tags: string[] = []) {
+  return tags.join(',');
 }
 
-const view_code = (item) => {
-    modalTitle.value = item.title;
-    modalFilename.value = item.code.split('/').pop();
-    
-    fetch_code(item.code).then(code => {
-        if (code) {
-            modalCode.value = code;
-            showCodeModal.value = true;
-        }
-    }).catch(error => {
-        toast.error('获取代码失败: ' + error.message);
-    });
-}
+async function fetchCode(codeFileUrl: string) {
+  try {
+    const response = await fetch(codeAssetUrl(codeFileUrl));
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-const closeCodeModal = () => {
-    showCodeModal.value = false;
-    modalCode.value = '';
-    modalTitle.value = '';
-    modalFilename.value = '';
-}
-
-const download_code = (item) => {
-    const codeUrl = '/code_template/' + item.code;
-    const link = document.createElement('a');
-    link.href = codeUrl;
-    
-    const filename = item.code.split('/').pop();
-    link.setAttribute('download', filename || 'download');
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success(`开始下载 ${filename}`);
-}
-
-const copy_to_clipboard = (text, successMessage) => {
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast.success(successMessage);
-    }).catch(err => {
-      toast.error('无法复制: ' + err);
-    });
-  } else {
-    toast.error('浏览器不支持剪贴板API');
+    return await response.text();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    toast.error(`获取代码失败: ${message}`);
+    return null;
   }
-};
-
-const template_code_copy = (item) => {
-    let code_url = item.code
-    fetch_code(code_url).then( code=> {
-      console.log(code_url)
-      console.log(code)
-        if (code) {
-            copy_to_clipboard(code, '复制代码成功!');
-        }
-    })
 }
 
-const copy_shell = (item) => {
-    copy_to_clipboard(item.sh, '成功,请复制到终端里执行!');
+async function viewCode(item: CodeTemplate) {
+  const code = await fetchCode(item.code);
+  if (!code) return;
+
+  modalTitle.value = item.title || fileNameFromPath(item.code);
+  modalFilename.value = fileNameFromPath(item.code);
+  modalCode.value = code;
+  showCodeModal.value = true;
 }
 
-const search_func = () => {
-    console.log(search_text.value)
-    if(search_text.value.length == 0) {
-        toast.warning("请输入内容!")
-        return;
+function closeCodeModal() {
+  showCodeModal.value = false;
+  modalCode.value = '';
+  modalTitle.value = '';
+  modalFilename.value = '';
+}
+
+function downloadCode(item: CodeTemplate) {
+  const link = document.createElement('a');
+  const filename = fileNameFromPath(item.code);
+  link.href = codeAssetUrl(item.code);
+  link.setAttribute('download', filename);
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  toast.success(`开始下载 ${filename}`);
+}
+
+async function copyToClipboard(text: string, successMessage: string) {
+  try {
+    if (!navigator.clipboard || !window.isSecureContext) {
+      throw new Error('浏览器不支持剪贴板 API');
     }
-    toast.info("TODO,等待完成!")
-    let ret = fuse.search(search_text.value);
-    console.log(ret)
+
+    await navigator.clipboard.writeText(text);
+    toast.success(successMessage);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    toast.error(`无法复制: ${message}`);
+  }
 }
 
-const search_result = computed(
-    () =>{
-        if( search_text.value.length == 0)
-            return template_array
-        else
-            return fuse.search(search_text.value).map(r => r.item);
-    }
-)
+async function copyTemplateCode(item: CodeTemplate) {
+  const code = await fetchCode(item.code);
+  if (code) {
+    await copyToClipboard(code, '复制代码成功!');
+  }
+}
+
+async function copyShell(item: CodeTemplate) {
+  if (item.sh) {
+    await copyToClipboard(item.sh, '成功,请复制到终端里执行!');
+  }
+}
+
+const searchResult = computed(() => {
+  const keyword = searchText.value.trim();
+  return keyword ? fuse.search(keyword).map(result => result.item) : templates;
+})
 </script>
 
 <template>
@@ -147,13 +121,11 @@ const search_result = computed(
         <div class="search_box">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping">搜索</span>
-                <!-- <input @keydown.enter="search_func"  v-model="search_text" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping"> -->
-                <input  v-model="search_text" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping">
+                <input v-model="searchText" type="text" class="form-control" placeholder="请输入内容" aria-label="search" aria-describedby="addon-wrapping">
             </div>
         </div>
 
         <div class="">
-            <!-- <tableCell :cell="d.item || d" v-for="d in search_result"/> -->
              <!-- table -->
             <table class="table table-striped table-hover">
                 <thead>
@@ -166,17 +138,17 @@ const search_result = computed(
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(d,index) in search_result">
+                    <tr v-for="(d,index) in searchResult" :key="d.code">
                         <th scope="row">{{index+1}}</th>
                         <td>{{d.title}}</td>
                         <td style="max-width: 300px;">{{d.desc || "" }}</td>
-                        <td>{{ tags_string(d.tags)}}</td>
+                        <td>{{ tagsString(d.tags)}}</td>
                         <td>
                           <div class="btn-group">
-                            <button @click="view_code(d)" class="">查看</button>
-                            <button @click="download_code(d)" class="">下载</button>
-                            <button @click="template_code_copy(d)" class="">复制</button>
-                            <button @click="copy_shell(d)" class="" v-show="d.sh">命令</button>
+                            <button @click="viewCode(d)" class="">查看</button>
+                            <button @click="downloadCode(d)" class="">下载</button>
+                            <button @click="copyTemplateCode(d)" class="">复制</button>
+                            <button @click="copyShell(d)" class="" v-show="d.sh">命令</button>
                           </div>
                         </td>
                     </tr>
@@ -185,7 +157,7 @@ const search_result = computed(
         </div>
         
         <!-- 代码查看模态框 -->
-        <codeShow 
+        <CodeShow 
             :isVisible="showCodeModal"
             :title="modalTitle"
             :code="modalCode"
