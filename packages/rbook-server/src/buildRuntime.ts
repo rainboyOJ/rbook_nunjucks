@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { spawnSync } from 'child_process';
 import rbook from '@rbook/core';
 import {
   appDir,
@@ -10,6 +9,8 @@ import {
   runtimeDir
 } from '@rbook/core/paths';
 import { buildSearchIndex } from '@rbook/search/buildIndex';
+import { hasCommand, runCommand } from './runtimeBuild/commands.js';
+import { copyIfExists, walkFiles } from './runtimeBuild/files.js';
 
 const assetExtensions = new Set([
   '.avif',
@@ -33,80 +34,38 @@ function resetRuntimeDir() {
   fs.mkdirSync(runtimeDir, { recursive: true });
 }
 
-function copyIfExists(src: string, dest: string) {
-  if (!fs.existsSync(src)) return;
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.cpSync(src, dest, { recursive: true });
-}
-
 function copyBookAssets() {
   if (!fs.existsSync(bookDir)) {
     throw new Error(`book directory not found: ${bookDir}`);
   }
 
-  const walk = (dir: string) => {
-    for (const entry of fs.readdirSync(dir)) {
-      const source = path.join(dir, entry);
-      const stat = fs.statSync(source);
-      if (stat.isDirectory()) {
-        walk(source);
-        continue;
-      }
+  for (const source of walkFiles(bookDir)) {
+    if (!assetExtensions.has(path.extname(source).toLowerCase())) continue;
 
-      if (!stat.isFile()) continue;
-      if (!assetExtensions.has(path.extname(entry).toLowerCase())) continue;
-
-      const relativePath = path.relative(bookDir, source);
-      copyIfExists(source, path.join(distDir, relativePath));
-    }
-  };
-
-  walk(bookDir);
+    const relativePath = path.relative(bookDir, source);
+    copyIfExists(source, path.join(distDir, relativePath));
+  }
 }
 
 function compileDotFiles() {
   if (!fs.existsSync(bookDir)) return;
 
-  const dotVersion = spawnSync('dot', ['-V'], {
-    stdio: 'ignore'
-  });
-  if (dotVersion.error) {
+  if (!hasCommand('dot', ['-V'])) {
     console.warn('[runtime] dot command not found; skipping .dot svg generation');
     return;
   }
 
-  const walk = (dir: string) => {
-    for (const entry of fs.readdirSync(dir)) {
-      const source = path.join(dir, entry);
-      const stat = fs.statSync(source);
-      if (stat.isDirectory()) {
-        walk(source);
-        continue;
-      }
+  for (const source of walkFiles(bookDir)) {
+    if (path.extname(source).toLowerCase() !== '.dot') continue;
 
-      if (!stat.isFile() || path.extname(entry).toLowerCase() !== '.dot') {
-        continue;
-      }
+    const relativePath = path.relative(bookDir, source).replace(/\.dot$/i, '.svg');
+    const outputPath = path.join(distDir, relativePath);
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 
-      const relativePath = path.relative(bookDir, source).replace(/\.dot$/i, '.svg');
-      const outputPath = path.join(distDir, relativePath);
-      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-
-      const result = spawnSync('dot', ['-Tsvg', source, '-o', outputPath], {
-        stdio: 'inherit'
-      });
-
-      if (result.error) {
-        throw result.error;
-      }
-
-      if (result.status !== 0) {
-        throw new Error(`dot build failed for ${source} with status ${result.status}`);
-      }
-    }
-  };
-
-  walk(bookDir);
+    runCommand('dot', ['-Tsvg', source, '-o', outputPath], {
+      label: `dot build for ${source}`
+    });
+  }
 }
 
 function compileMarkdownCss() {
@@ -114,23 +73,15 @@ function compileMarkdownCss() {
   if (!fs.existsSync(scssPath)) return;
 
   fs.mkdirSync(distDir, { recursive: true });
-  const result = spawnSync('npx', [
+  runCommand('npx', [
     'sass',
     '--load-path=packages/rbook-markdown/src/markdown-it/assets',
     scssPath,
     path.join(distDir, 'markdown.css')
   ], {
     cwd: path.resolve(appDir, '..'),
-    stdio: 'inherit'
+    label: 'markdown css build'
   });
-
-  if (result.error) {
-    throw result.error;
-  }
-
-  if (result.status !== 0) {
-    throw new Error(`markdown css build failed with status ${result.status}`);
-  }
 }
 
 function copyStaticAssets() {
@@ -146,7 +97,7 @@ function buildCodeTemplateApp() {
   const configPath = path.join(appDir, 'widgets/code_template_filter/vite.config.ts');
   if (!fs.existsSync(configPath)) return;
 
-  const result = spawnSync('npx', [
+  runCommand('npx', [
     'vite',
     'build',
     '--config',
@@ -155,16 +106,8 @@ function buildCodeTemplateApp() {
     '/code_template/'
   ], {
     cwd: path.resolve(appDir, '..'),
-    stdio: 'inherit'
+    label: 'code template build'
   });
-
-  if (result.error) {
-    throw result.error;
-  }
-
-  if (result.status !== 0) {
-    throw new Error(`code template build failed with status ${result.status}`);
-  }
 }
 
 export function buildRuntime() {
