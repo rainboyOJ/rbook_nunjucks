@@ -15,9 +15,7 @@ categories: ["数据结构"]
 
 正式教程已经迁移到：[二叉搜索树](../../data-structure/BST/index.md)。
 
-可复用模板已经归位到：
-
-@include-code(/code/data-struture/bst.cpp, cpp)
+可复用模板已经归位到正式教程和 `/code/data-struture/bst.cpp`。
 
 ## 旧文要点
 
