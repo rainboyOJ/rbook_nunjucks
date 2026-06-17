@@ -1,12 +1,13 @@
 {
-    "file":"index.md",
-    "title":"拓扑排序",
-    "id":"topsort",
-    "code_template" : [{
-        "title": "拓扑排序 topsort",
-        "tags":[ "graph" ],
-        "desc":"拓扑排序的实现,需要队列,linklist",
-        //代码所在的路径
-        "code":"/code/graph/topsort-dag.cpp"
-    }]
+  "file": "index.md",
+  "title": "拓扑排序",
+  "id": "topsort",
+  "code_template": [
+    {
+      "title": "拓扑排序",
+      "tags": ["graph", "topsort", "DAG"],
+      "desc": "Kahn 算法求 DAG 的一个拓扑序，并检测有向环",
+      "code": "/code/graph/topsort-dag.cpp"
+    }
+  ]
 }

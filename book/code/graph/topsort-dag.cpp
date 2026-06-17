@@ -1,26 +1,66 @@
-struct TopSort {
-    int in_degree[maxn];
-    std::queue<int> q; //队列
-    std::vector<int> sorted;
-    
-    void topsort(int n){
-        for(int i = 1;i <= n ;++i ) // i: 1->n
-        {
-            if( in_degree[i] == 0) q.push(i);
-        }
+#include <bits/stdc++.h>
+using namespace std;
 
-        while( !q.empty() )
-        {
-            int u = q.front();
-            sorted.push_back(u);
-            q.pop();
-            for(int i = e.h[u] ; ~i;i = e[i].next){
-                int v = e[i].v;
-                in_degree[v]--;
-                if( in_degree[v] == 0) q.push(v);
-            }
-        }
+struct TopologicalSort {
+    int n;
+    vector<vector<int>> graph;
+    vector<int> indeg;
+
+    explicit TopologicalSort(int n) : n(n), graph(n + 1), indeg(n + 1, 0) {}
+
+    void add_edge(int u, int v) {
+        graph[u].push_back(v);
+        indeg[v]++;
     }
 
-} topsort;
+    vector<int> kahn() {
+        queue<int> q;
+        vector<int> deg = indeg;
+        vector<int> order;
 
+        for (int i = 1; i <= n; i++) {
+            if (deg[i] == 0) q.push(i);
+        }
+
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            order.push_back(u);
+
+            for (int v : graph[u]) {
+                deg[v]--;
+                if (deg[v] == 0) q.push(v);
+            }
+        }
+
+        return order;
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    TopologicalSort solver(n);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        solver.add_edge(u, v);
+    }
+
+    vector<int> order = solver.kahn();
+    if ((int)order.size() != n) {
+        cout << "Cycle\n";
+        return 0;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (i) cout << ' ';
+        cout << order[i];
+    }
+    cout << '\n';
+    return 0;
+}

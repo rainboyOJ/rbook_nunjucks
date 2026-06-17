@@ -166,6 +166,7 @@
 | Wave 4D-68 | `graph/Hungarian` | 已验证：重写匈牙利算法教程，正式模板补全为可运行 C++17 程序，页面改为引用 `/code/graph/hungarian.cpp` |
 | Wave 4D-69 | `graph/spfa/dfs-spfa负环存在判定` | 已验证：重复 DFS-SPFA 旧稿改为归档入口，指向正式负环教程，删除未引用且不完整的 DFS-SPFA 代码片段 |
 | Wave 4D-70 | `graph/dfs` | 已验证：旧 DFS 入口移除重复模板引用和旧 config code_template，保留指向正式图遍历教程的归档页 |
+| Wave 4D-71 | `graph/topsort` | 已验证：重写拓扑排序教程，修正 Kahn 模板为独立可运行程序，补齐 DAG DP、唯一序和字典序应用分类 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
