@@ -39,19 +39,19 @@
 
 ### 待办
 
-- [ ] 在 `deploy-vps.yml` 容器启动后轮询 `/api/health`。
-- [ ] 在 `content-deploy.yml` 容器启动后轮询 `/api/health`。
-- [ ] 健康检查要求 HTTP 200。
-- [ ] 健康检查要求 `ok=true`。
-- [ ] 健康检查要求 `stats.errors=0`。
-- [ ] 给容器预编译和启动留出合理等待时间，避免短暂 `502` 导致误判。
-- [ ] 失败时输出容器日志，便于排查。
+- [x] 在 `deploy-vps.yml` 容器启动后轮询 `/api/health`。
+- [x] 在 `content-deploy.yml` 容器启动后轮询 `/api/health`。
+- [x] 健康检查要求 HTTP 200。
+- [x] 健康检查要求 `ok=true`。
+- [x] 健康检查要求 `stats.errors=0`。
+- [x] 给容器预编译和启动留出合理等待时间，避免短暂 `502` 导致误判。
+- [x] 失败时输出容器日志，便于排查。
 
 ### 验收标准
 
-- 部署完成后，线上 `/api/health` 已经可访问。
-- 如果运行时构建失败、搜索索引错误、服务没启动，workflow 必须失败。
-- 部署失败时能从 Actions 日志中看到关键错误。
+- [x] 部署完成后，线上 `/api/health` 已经可访问。
+- [x] 如果运行时构建失败、搜索索引错误、服务没启动，workflow 必须失败。
+- [x] 部署失败时能从 Actions 日志中看到关键错误。
 
 ## 3. workflow 去重
 

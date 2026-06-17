@@ -95,6 +95,49 @@ jobs:
             "CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' VPS_REPO_URL='$VPS_REPO_URL' FALLBACK_IMAGE='$FALLBACK_IMAGE' bash -se" <<'REMOTE'
           set -euo pipefail
 
+          wait_for_health() {
+            local health_url="http://127.0.0.1:${HOST_PORT}/api/health"
+            local response=""
+
+            echo "Waiting for $health_url"
+            for attempt in $(seq 1 60); do
+              if response="$(curl -fsS --max-time 5 "$health_url" 2>/tmp/rbook-health-error.log)"; then
+                if printf '%s' "$response" | docker exec -i "$CONTAINER_NAME" node -e '
+                  let body = "";
+                  process.stdin.on("data", (chunk) => {
+                    body += chunk;
+                  });
+                  process.stdin.on("end", () => {
+                    const health = JSON.parse(body);
+                    if (health.ok !== true) {
+                      throw new Error("health.ok is not true");
+                    }
+                    if (!health.stats || health.stats.errors !== 0) {
+                      throw new Error(`health.stats.errors is ${health.stats?.errors}`);
+                    }
+                  });
+                ' >/dev/null 2>/tmp/rbook-health-parse-error.log; then
+                  echo "Health check passed"
+                  return 0
+                fi
+              fi
+
+              echo "Health check attempt ${attempt}/60 failed; retrying in 5s"
+              sleep 5
+            done
+
+            echo "Health check failed"
+            echo "Last curl error:"
+            cat /tmp/rbook-health-error.log 2>/dev/null || true
+            echo "Last health response:"
+            printf '%s\n' "$response"
+            echo "Last parse error:"
+            cat /tmp/rbook-health-parse-error.log 2>/dev/null || true
+            echo "Container logs:"
+            docker logs --tail 200 "$CONTAINER_NAME" || true
+            return 1
+          }
+
           if [ ! -d "$VPS_REPO_DIR/.git" ]; then
             echo "Initializing sparse content repo in $VPS_REPO_DIR"
             rm -rf "$VPS_REPO_DIR"
@@ -145,4 +188,5 @@ jobs:
             "$IMAGE"
 
           docker ps --filter "name=$CONTAINER_NAME"
+          wait_for_health
           REMOTE
