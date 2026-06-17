@@ -23,6 +23,26 @@
   - `npm run build:runtime`
   - Fastify inject smoke test
 
+## 本轮完成记录
+
+- `0be48f3 docs: add code optimization plan`
+  - 写入本文档，明确后续优化阶段、验证命令和提交点。
+- `6f238f0 refactor: simplify code template loader`
+  - 精简代码模板页面的数据加载器，删除旧 ZIP 和图节点代码。
+- `15bdacf refactor: clarify code template book catalog`
+  - 用 `bookCatalog.ts` 替代历史命名的 `fake_rbook.ts`。
+- `21e43ef refactor: make runtime build pipeline readable`
+  - 提取运行时构建中的命令执行和文件遍历 helper。
+- `0f6756a refactor: improve rbook core readability`
+  - 整理 `@rbook/core` 构建器类型、命名和资源复制入口。
+- `059cdfb refactor: tidy code template UI state`
+  - 整理代码模板前端组件状态、搜索、下载和复制逻辑。
+
+本轮各阶段均已通过：
+
+- `npm run typecheck`
+- `RBOOK_CONTENT_DIR=/home/rainboy/mycode/rbook_nunjucks/book RBOOK_CODE_DIR=/home/rainboy/mycode/rbook_nunjucks/book/code RBOOK_RUNTIME_DIR=/tmp/rbook-runtime-check npm run build:runtime`
+
 ## 执行计划
 
 ### 阶段 1：整理代码模板页面的数据加载器
