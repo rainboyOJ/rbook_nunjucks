@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { bookDir } from '@rbook/core/paths';
-import { buildHref } from '../http/query.js';
 import {
   getLanguageFromPath,
   normalizeCodeUrl,
@@ -27,22 +26,21 @@ function getPageDescription(page: any) {
   return String(frontMatter.description || frontMatter.desc || page.excerpt || '').trim();
 }
 
-function createCitation(page: any, baseUrl: string) {
+function createCitation(page: any) {
   return {
     title: page.title,
     path: page.path,
-    url: page.url,
-    href: buildHref(baseUrl, page.url)
+    url: page.url
   };
 }
 
-function getCodeTemplates(page: any, baseUrl: string, includeContent = false) {
+function getCodeTemplates(page: any, includeContent = false) {
   const frontMatter = asRecord(page.frontMatter);
   const templates = Array.isArray(frontMatter.code_template) ? frontMatter.code_template : [];
 
   return templates
     .map((template: any) => {
-      const code = readCodePayload(template?.code, baseUrl, includeContent);
+      const code = readCodePayload(template?.code, includeContent);
       if (!code) return null;
       return {
         source: 'frontMatter',
@@ -52,7 +50,6 @@ function getCodeTemplates(page: any, baseUrl: string, includeContent = false) {
         ...template,
         code: code.path,
         codeUrl: code.url,
-        codeHref: code.href,
         language: code.language,
         ...(includeContent ? { content: code.content } : {})
       };
@@ -81,7 +78,7 @@ function resolveIncludedCode(rawCodePath: string, pagePath: string) {
   };
 }
 
-function getIncludedCode(pagePath: string, markdown: string, baseUrl: string, includeContent = false) {
+function getIncludedCode(pagePath: string, markdown: string, includeContent = false) {
   const included = [];
   const seen = new Set<string>();
 
@@ -97,7 +94,6 @@ function getIncludedCode(pagePath: string, markdown: string, baseUrl: string, in
       path: resolved.path,
       code: rawCodePath,
       codeUrl: resolved.url,
-      codeHref: resolved.url ? buildHref(baseUrl, resolved.url) : null,
       language: language || getLanguageFromPath(rawCodePath)
     };
 
@@ -115,12 +111,11 @@ function getIncludedCode(pagePath: string, markdown: string, baseUrl: string, in
   return included;
 }
 
-export function createAiCatalogItem(page: any, baseUrl: string) {
+export function createAiCatalogItem(page: any) {
   const frontMatter = asRecord(page.frontMatter);
   return {
     path: page.path,
     url: page.url,
-    href: buildHref(baseUrl, page.url),
     title: page.title,
     description: getPageDescription(page),
     excerpt: page.excerpt || '',
@@ -130,12 +125,12 @@ export function createAiCatalogItem(page: any, baseUrl: string) {
     navTrail: page.navTrail || [],
     visible: page.visible,
     source: page.source,
-    codeTemplates: getCodeTemplates(page, baseUrl, false),
-    citation: createCitation(page, baseUrl)
+    codeTemplates: getCodeTemplates(page, false),
+    citation: createCitation(page)
   };
 }
 
-export function createAiPageContext(page: any, baseUrl: string, options: {
+export function createAiPageContext(page: any, options: {
   includeCode?: boolean;
   includeHtml?: boolean;
 } = {}) {
@@ -143,7 +138,6 @@ export function createAiPageContext(page: any, baseUrl: string, options: {
   const article: Record<string, unknown> = {
     path: payload.path,
     url: payload.url,
-    href: buildHref(baseUrl, payload.url),
     title: payload.title,
     description: getPageDescription(payload),
     excerpt: payload.excerpt,
@@ -157,14 +151,14 @@ export function createAiPageContext(page: any, baseUrl: string, options: {
     markdown: payload.markdown,
     text: payload.text,
     chunks: payload.chunks,
-    citation: createCitation(payload, baseUrl)
+    citation: createCitation(payload)
   };
 
   if (options.includeHtml) article.html = payload.html;
 
   return {
     article,
-    codeTemplates: getCodeTemplates(payload, baseUrl, Boolean(options.includeCode)),
-    includedCode: getIncludedCode(payload.path, page.markdown || payload.markdown || '', baseUrl, Boolean(options.includeCode))
+    codeTemplates: getCodeTemplates(payload, Boolean(options.includeCode)),
+    includedCode: getIncludedCode(payload.path, page.markdown || payload.markdown || '', Boolean(options.includeCode))
   };
 }

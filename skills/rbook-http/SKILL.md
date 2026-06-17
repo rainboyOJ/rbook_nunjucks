@@ -50,7 +50,7 @@ curl "$BASE_URL/api/health"
 1. 用 `/api/chunks/search` 搜索关键词。
 2. 根据结果中的 `path`、`title`、`heading` 选择相关页面。
 3. 用 `/api/page?path=...` 或 `/api/ai/page-context?path=...` 读取完整上下文。
-4. 回答时说明信息来自哪篇文章；需要可点击引用时使用 `url` 或 `citation.href`。
+4. 回答时说明信息来自哪篇文章；需要可点击引用时用 `BASE_URL + url` 拼接。
 
 示例：
 
@@ -71,7 +71,7 @@ curl -G \
 3. 调用 `/api/ai/page-context?path=<article>&includeCode=true` 获取完整文章、引用信息、模板代码和正文 `@include-code` 代码。
 4. 如果只需要某份模板代码，调用 `/api/ai/code?path=/code/...`。
 5. 写 C++ 代码时优先模仿 `codeTemplates[].content` 的结构、变量命名、注释密度和竞赛风格。
-6. 写题解时说明使用了哪些本项目文章，并使用 `citation.href` 生成可点击引用。
+6. 写题解时说明使用了哪些本项目文章，并使用 `BASE_URL + citation.url` 生成可点击引用。
 7. 不使用本 API 查询题目数据。
 
 题解引用格式示例：
@@ -207,7 +207,6 @@ GET /api/ai/catalog?scope=all
 
 - `path`
 - `url`
-- `href`
 - `title`
 - `description`
 - `excerpt`
@@ -248,6 +247,8 @@ GET /api/ai/page-context?path=graph/bcc/index.md&includeCode=true&includeHtml=tr
 
 `codeTemplates` 来自文章头部元数据里的 `code_template`，生成 OJ 代码时优先参考它。`includedCode` 来自正文 `@include-code(...)`，常用于解释性代码片段。
 
+注意：AI 专用接口只返回相对路径，不返回 `href`、`codeHref` 这类绝对链接。需要可点击链接时，由调用方用当前 `BASE_URL` 拼接 `url` 或 `codeUrl`。
+
 推荐写法：
 
 ```bash
@@ -267,7 +268,6 @@ GET /api/ai/code?path=/code/graph/v-bcc.cpp
 
 - `path`
 - `url`
-- `href`
 - `language`
 - `content`
 
@@ -290,7 +290,7 @@ curl -G \
 - 如果结果来自片段搜索，说明它是搜索到的片段；如果结果来自完整页面，按文章结构回答。
 - 写 OJ 题解时，说明使用了哪些 rbook 文章或模板代码。
 - 写 C++ 代码时，优先参考 `codeTemplates[].content` 的风格。
-- 需要引用链接时，优先使用 `citation.href`。
+- 需要引用链接时，用当前 `BASE_URL` 拼接 `article.url` 或 `citation.url`。
 - 如果 API 没找到相关内容，应如实说明没有在 rbook 中找到，而不是硬凑答案。
 
 ## 禁止事项

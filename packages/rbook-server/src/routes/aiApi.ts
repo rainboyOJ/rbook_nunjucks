@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { getIndexPayload, getPage } from '@rbook/search';
-import { getBaseUrl, getQuery } from '../http/query.js';
+import { getQuery } from '../http/query.js';
 import { readCodePayload } from '../services/codeService.js';
 import {
   createAiCatalogItem,
@@ -12,7 +12,6 @@ export async function registerAiApiRoutes(app: FastifyInstance) {
     const index = getIndexPayload();
     const query = getQuery(request);
     const scope = query.scope === 'all' ? 'all' : 'visible';
-    const baseUrl = getBaseUrl(request);
     const pages = scope === 'all'
       ? index.pages
       : index.pages.filter((page: any) => page.visible);
@@ -21,7 +20,7 @@ export async function registerAiApiRoutes(app: FastifyInstance) {
       generatedAt: index.generatedAt,
       scope,
       total: pages.length,
-      articles: pages.map((page: any) => createAiCatalogItem(page, baseUrl))
+      articles: pages.map((page: any) => createAiCatalogItem(page))
     };
   });
 
@@ -41,7 +40,7 @@ export async function registerAiApiRoutes(app: FastifyInstance) {
 
     return {
       generatedAt: getIndexPayload().generatedAt,
-      ...createAiPageContext(page, getBaseUrl(request), {
+      ...createAiPageContext(page, {
         includeCode: query.includeCode === 'true',
         includeHtml: query.includeHtml === 'true'
       })
@@ -56,7 +55,7 @@ export async function registerAiApiRoutes(app: FastifyInstance) {
       return { error: 'missing query parameter: path' };
     }
 
-    const code = readCodePayload(codePath, getBaseUrl(request), true);
+    const code = readCodePayload(codePath, true);
     if (!code) {
       reply.code(400);
       return { error: 'invalid code path; expected a /code/... path inside book/code' };

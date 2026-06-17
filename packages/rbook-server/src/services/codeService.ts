@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { codeTemplateDir } from '@rbook/core/paths';
-import { buildHref } from '../http/query.js';
 
 export function normalizeCodeUrl(codePath: string | undefined) {
   if (!codePath || typeof codePath !== 'string') return null;
@@ -37,14 +36,13 @@ export function resolveCodeFile(codePath: string | undefined) {
   };
 }
 
-export function readCodePayload(codePath: string | undefined, baseUrl: string, includeContent = false) {
+export function readCodePayload(codePath: string | undefined, includeContent = false) {
   const resolved = resolveCodeFile(codePath);
   if (!resolved) return null;
 
   const payload: Record<string, unknown> = {
     path: resolved.path,
     url: resolved.url,
-    href: buildHref(baseUrl, resolved.url),
     language: getLanguageFromPath(resolved.path)
   };
 
