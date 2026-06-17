@@ -78,17 +78,17 @@
 
 ### 待办
 
-- [ ] 确认 `site/widgets/code_template_filter/src/components/tableCell.vue` 是否仍被引用。
-- [ ] 如果未使用，删除 `tableCell.vue`。
-- [ ] 检查 `site/widgets/code_template_filter/app.js` 是否仍参与构建。
-- [ ] 删除代码模板页面中不再使用的旧 UI 逻辑。
-- [ ] 清理残留 TODO、旧硬编码链接和调试输出。
+- [x] 确认 `site/widgets/code_template_filter/src/components/tableCell.vue` 是否仍被引用。
+- [x] 如果未使用，删除 `tableCell.vue`。
+- [x] 检查 `site/widgets/code_template_filter/app.js` 是否仍参与构建。
+- [x] 删除代码模板页面中不再使用的旧 UI 逻辑。
+- [x] 清理残留 TODO、旧硬编码链接和调试输出。
 
 ### 验收标准
 
-- `rg` 不再找到无效旧组件引用。
-- 代码模板页面仍能构建并正常访问。
-- 前端目录里不再保留明显废弃的交互代码。
+- [x] `rg` 不再找到无效旧组件引用。
+- [x] 代码模板页面仍能构建并正常访问。
+- [x] 前端目录里不再保留明显废弃的交互代码。
 
 ## 5. 清理旧依赖
 
