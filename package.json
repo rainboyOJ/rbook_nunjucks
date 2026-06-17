@@ -21,6 +21,7 @@
     "serve": "npm run start:runtime",
     "serve:dev": "npm run serve",
     "dev": "npm run serve",
+    "test:api": "node scripts/test-ai-api-contract.mjs",
     "typecheck": "npm run build:packages && tsc -p site/widgets/code_template_filter"
   },
   "dependencies": {

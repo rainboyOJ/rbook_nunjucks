@@ -22,6 +22,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run runtime and API checks
+        env:
+          RBOOK_CONTENT_DIR: ${{ github.workspace }}/book
+          RBOOK_CODE_DIR: ${{ github.workspace }}/book/code
+          RBOOK_RUNTIME_DIR: /tmp/rbook-runtime-check
+          RBOOK_TEST_STATIC_DIR: /tmp/rbook-runtime-check/dist
+        run: |
+          npm run typecheck
+          npm run build:runtime
+          npm run test:api
+
       - name: Set image metadata
         id: meta
         run: |

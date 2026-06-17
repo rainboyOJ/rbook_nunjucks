@@ -17,21 +17,21 @@
 
 ### 待办
 
-- [ ] 新增 AI API 集成测试脚本。
-- [ ] 覆盖 `/api/ai/catalog`。
-- [ ] 覆盖 `/api/ai/page-context?includeCode=true`。
-- [ ] 覆盖 `/api/ai/code?path=/code/...`。
-- [ ] 断言 AI API 不返回 `href`、`codeHref` 这类由服务端拼接的绝对链接。
-- [ ] 断言响应体不包含 `127.0.0.1`。
-- [ ] 断言 `url`、`codeUrl`、`path` 等相对字段存在。
-- [ ] 断言非法代码路径，例如 `../package.json`，会被拒绝。
-- [ ] 将测试接入 `npm run typecheck` 或新增独立 `npm run test:api`。
+- [x] 新增 AI API 集成测试脚本。
+- [x] 覆盖 `/api/ai/catalog`。
+- [x] 覆盖 `/api/ai/page-context?includeCode=true`。
+- [x] 覆盖 `/api/ai/code?path=/code/...`。
+- [x] 断言 AI API 不返回 `href`、`codeHref` 这类由服务端拼接的绝对链接。
+- [x] 断言响应体不包含 `127.0.0.1`。
+- [x] 断言 `url`、`codeUrl`、`path` 等相对字段存在。
+- [x] 断言非法代码路径，例如 `../package.json`，会被拒绝。
+- [x] 将测试接入 `npm run typecheck` 或新增独立 `npm run test:api`。
 
 ### 验收标准
 
-- 本地运行测试可以稳定通过。
-- CI 中可以自动发现 AI API 字段结构错误。
-- `/api/ai/catalog`、`/api/ai/page-context`、`/api/ai/code` 的字段契约有测试保护。
+- [x] 本地运行测试可以稳定通过。
+- [x] CI 中可以自动发现 AI API 字段结构错误。
+- [x] `/api/ai/catalog`、`/api/ai/page-context`、`/api/ai/code` 的字段契约有测试保护。
 
 ## 2. 部署后健康检查
 
