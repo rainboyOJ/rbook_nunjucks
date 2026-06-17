@@ -161,6 +161,7 @@
 | Wave 4D-63 | `math/集合` | 已验证：补齐集合最值与最大两数和页面的算法步骤和代码实现结构 |
 | Wave 4D-64 | `graph/MST` | 已验证：规范最小生成树主教程算法步骤标题，保持 Kruskal 模板引用 |
 | Wave 4D-65 | `dynamic_programming/sparse_table` | 已验证：旧 ST 表目录入口改为纯归档说明，移除重复 code_template 和模板引用 |
+| Wave 4D-66 | `data_structure/queue`、`data_structure/stack` | 已验证：旧路径归档页移除重复模板引用，保留正式教程链接和旧题单 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令

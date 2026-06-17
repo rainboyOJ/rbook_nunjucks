@@ -15,9 +15,7 @@ categories: ["数据结构"]
 
 正式教程已经迁移到：[队列](../../data-structure/queue/index.md)。
 
-旧文中的可复用模板已经归位到：
-
-@include-code(/code/data-struture/queue.cpp, cpp)
+旧文中的可复用模板已经归位到正式教程和 `/code/data-struture/queue.cpp`。
 
 ## 旧题单
 
