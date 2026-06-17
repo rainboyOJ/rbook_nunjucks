@@ -157,6 +157,7 @@
 | Wave 4D-59 | `dynamic_programming/knapsack/exercises/整数划分/problem` | 已验证：补齐整数划分练习页的核心直觉和算法步骤，保持完全背包计数模板引用 |
 | Wave 4D-60 | `data_structure/monotonic_queue/滑动窗口`、`最大子序和` | 已验证：两篇单调队列专题页补齐算法步骤、证明、复杂度和应用分类 |
 | Wave 4D-61 | `data_structure/monotonic_stack/luogu5788`、`roj3032` | 已验证：两篇单调栈题解页补齐算法步骤、证明、复杂度和应用分类 |
+| Wave 4D-62 | `math/向上取整` | 已验证：补齐整数向上取整的显式算法步骤，保持正整数除法模板引用 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
