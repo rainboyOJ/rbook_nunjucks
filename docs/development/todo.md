@@ -96,18 +96,18 @@
 
 ### 待办
 
-- [ ] 扫描 `package.json` 中未使用的依赖。
-- [ ] 重点检查 `archiver`、`ejs`、`vite-plugin-ejs` 等历史依赖是否仍需要。
-- [ ] 区分运行时依赖和开发依赖。
-- [ ] 删除确认无用的依赖。
-- [ ] 更新 `package-lock.json`。
-- [ ] 重新运行 typecheck 和 runtime build。
+- [x] 扫描 `package.json` 中未使用的依赖。
+- [x] 重点检查 `archiver`、`ejs`、`vite-plugin-ejs` 等历史依赖是否仍需要。
+- [x] 区分运行时依赖和开发依赖。
+- [x] 删除确认无用的依赖。
+- [x] 更新 `package-lock.json`。
+- [x] 重新运行 typecheck 和 runtime build。
 
 ### 验收标准
 
-- 删除依赖后项目仍可构建。
-- Docker 构建不缺包。
-- 代码模板页、Markdown 渲染、API 服务不受影响。
+- [x] 删除依赖后项目仍可构建。
+- [x] Docker 构建不缺包。
+- [x] 代码模板页、Markdown 渲染、API 服务不受影响。
 
 ## 6. 文档和 skill 与 API 契约同步
 
