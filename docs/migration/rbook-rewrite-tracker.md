@@ -154,6 +154,7 @@
 | Wave 4D-56 | `dynamic_programming/数位DP` | 已验证：数位 DP 页面补齐 code_template、教程结构、证明、测试用例、应用分类和经典例题 |
 | Wave 4D-57 | `graph/Eulerian-path` | 已验证：新增无向/有向欧拉路正式模板，页面去除不可编译内联代码并补齐教程结构和应用分类 |
 | Wave 4D-58 | `data_structure/disjoint_set/种类并查集` | 已验证：补齐种类并查集应用分类，覆盖二分图在线判定、敌对分组和带权/离线约束 |
+| Wave 4D-59 | `dynamic_programming/knapsack/exercises/整数划分/problem` | 已验证：补齐整数划分练习页的核心直觉和算法步骤，保持完全背包计数模板引用 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
