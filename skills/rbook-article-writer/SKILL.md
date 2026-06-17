@@ -40,7 +40,9 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 2. 收集项目上下文。
    - 在 `book/pages/` 里搜索相关讲解。
    - 在 `book/code/` 里搜索已有代码，避免重复创建模板。
-   - 需要把文章加入目录时，再检查 `book/book.yaml`。
+   - 检查 `book/book.yaml`，确认目标文章是否应该进入首页目录和导航。
+   - 新增或重写正式算法教程时，默认必须同步 `book/book.yaml` 的 `chapters`，让文章出现在首页目录中。
+   - 只有归档页、草稿页、练习页、题单页、内部参考页，才可以只放在 `glob` 或依赖 `all` 索引；这种情况要在最终说明中写明“不加入目录”的理由。
 
 3. 判断哪些代码必须进入 `book/code/`。
    - 核心算法实现必须进入 `book/code/`。
@@ -155,6 +157,24 @@ code_template:
     desc: "单点修改,区间查询"
     tags: ["树状数组", "区间信息"]
     code: /code/data-struture/BIT/bit.cpp
+```
+
+## 目录同步规则
+
+`book/book.yaml` 决定首页目录和 `/api/toc`、`/api/nav` 的可见导航树。`glob` 只表示“额外渲染但不在目录展示”，不能替代正式教程入口。
+
+修改文章时按下面规则处理：
+
+- 新增正式算法教程：必须把文章加入 `book/book.yaml` 的合适 `chapters` 位置。
+- 重写旧文为正式教程：如果旧文原来只在 `glob` 或 `all` 中，必须补进 `chapters`。
+- 移动文章路径：必须同步更新 `book/book.yaml` 中对应路径。
+- 新增 `code_template` 的文章：默认视为正式教程，除非它明确是练习页、归档页或内部参考页。
+- 不加入目录时：最终回复必须说明原因，例如“这是归档入口，不作为主线教程展示”。
+
+完成前至少检查：
+
+```bash
+node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readFileSync('book/book.yaml','utf8'));console.log('book.yaml ok')"
 ```
 
 ## 应用分类详解怎么写
