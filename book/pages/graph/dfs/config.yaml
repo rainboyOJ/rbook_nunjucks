@@ -1,9 +1,3 @@
 id: graph_dfs
 title: dfs遍历图
 file: "index.md"
-code_template:
-  -
-    title: "dfs遍历图"
-    tags:
-      - graph
-    code: /code/graph/dfs_traversal.cpp
