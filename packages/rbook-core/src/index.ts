@@ -32,6 +32,7 @@ interface BookConfig {
 
 type RenderData = Record<string, unknown>;
 
+// 这些旧导出被部分历史代码使用，暂时保留。新代码应优先从 paths.ts 读取路径。
 export const __workdir = rootDir;
 export const __bookdir = bookDir;
 export const __code_template_dir = codeTemplateDir;
@@ -80,6 +81,7 @@ class rbook {
         defaultTemplateType: string | null = null,
         data: RenderData = {}
     ) {
+        // 文章构建的最小单元：Markdown -> front matter/layout -> Pug 模板 -> HTML 文件。
         const fullPath = path.join(bookDir, filePath);
         if (!fs.existsSync(fullPath)) {
             console.error(`✗ 文件不存在: ${filePath}`);
@@ -105,6 +107,7 @@ class rbook {
     checkMarkdownFile(basePath: string, relativePath: string) {
         const fullPath = path.join(bookDir, basePath, relativePath);
 
+        // book.yaml 中的 path 支持三种写法：目录、完整 .md 文件、或省略 .md 后缀。
         if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
             const indexPath = path.join(fullPath, 'index.md');
             return fs.existsSync(indexPath)
@@ -150,6 +153,7 @@ class rbook {
         console.log('开始构建...');
 
         try {
+            // 主构建只处理 book.yaml 目录树：首页、菜单和公共资源都依赖这批文章。
             ensureDir(distDir);
             this.config.menuHtml = this.renderMenu();
 
@@ -173,6 +177,7 @@ class rbook {
         const chapterFiles = this.AllMarkdownFiles;
         console.log('===== render glob md file =====');
 
+        // glob 文章通常是补充资料或迁移旧文，不进入首页目录，但仍然需要生成 HTML。
         for (const pattern of this.config.glob) {
             const mdFiles = globSync(pattern, {
                 cwd: bookDir,

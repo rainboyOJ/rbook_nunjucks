@@ -12,6 +12,7 @@ interface CodeTemplate {
   sh?: string;
 }
 
+// template_array 由 load_data.ts 在 Vite 构建阶段注入，前端只负责搜索和展示。
 const templates = inject<CodeTemplate[]>('template_array', [])
 const searchText = ref('')
 const toast = useToast()
@@ -26,6 +27,7 @@ const fuse = new Fuse(templates, {
 })
 
 function codeAssetUrl(codePath: string) {
+  // 开发环境由 Vite 根路径提供 public 文件；生产环境挂载在 /code_template/ 下。
   const baseUrl = import.meta.env.DEV ? '/' : '/code_template/';
   return baseUrl + codePath;
 }

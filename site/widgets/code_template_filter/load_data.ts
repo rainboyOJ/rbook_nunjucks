@@ -12,6 +12,10 @@ import {
   collectMarkdownFiles
 } from './bookCatalog.js';
 
+// 这个 Vite 插件在构建代码模板页面前运行：
+// 1. 扫描所有文章 front matter 中的 code_template；
+// 2. 把模板代码复制到当前 widget 的 public 目录；
+// 3. 注入前端需要的 template_array 全局变量。
 interface CodeTemplate {
   title?: string;
   tags?: string[];
@@ -33,6 +37,7 @@ interface TemplateRecord extends CodeTemplate {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const template_array: TemplateRecord[] = [];
 
+// 这里只读取 front matter，不渲染 Markdown。代码模板页只关心文章声明了哪些模板代码。
 function readFrontMatter(mdPath: string): ArticleFrontMatter {
   try {
     const rawMarkdown = fs.readFileSync(mdPath, 'utf8');
@@ -50,14 +55,17 @@ function getArticleTemplates(frontMatter: ArticleFrontMatter): CodeTemplate[] {
 }
 
 function resolveTemplateCodePath(mdPath: string, template: CodeTemplate) {
+  // /code/... 是本项目模板代码的绝对约定路径，实际文件在 book/code 目录下。
   if (path.isAbsolute(template.code)) {
     return path.join(__code_template_dir, template.code.replace(/^\/code\/?/, ''));
   }
 
+  // 相对路径按“声明它的文章所在目录”解析，方便局部文章引用局部代码。
   return path.join(path.dirname(mdPath), template.code);
 }
 
 function toPublicCodePath(codePath: string) {
+  // book/code 下的代码发布成 /code_template/code/...，这样 URL 与文章里的 /code/... 约定接近。
   if (codePath.startsWith(__code_template_dir)) {
     return path.join('code', path.relative(__code_template_dir, codePath));
   }
