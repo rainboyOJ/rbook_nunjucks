@@ -148,6 +148,7 @@
 | Wave 4D-50 | `string/最小表示法/草稿`、`Books/todo_图论与算法_程龚`、配对问题草稿归档 | 已验证：草稿和书单待办页改为归档入口，清理剩余已跟踪 TODO/对话稿噪声 |
 | Wave 4D-51 | `math/numberTheory/book_note` | 已验证：数论读书笔记页面局部 Python 演示迁入 `/code/math/numberTheory/` 正式目录，清理页面局部脚本 |
 | Wave 4D-52 | `base/bigNumber`、`base/two-pointer`、`dynamic_programming/knapsack/01knapsack` | 已验证：清理未被正文引用、已由正式模板替代的页面局部演示脚本和坏 Haskell 草稿 |
+| Wave 4D-53 | `string/进制hash` | 已验证：字符串哈希模板改为独立可运行代码，页面去除内联大段 C++ 并补齐教程结构和应用分类 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
