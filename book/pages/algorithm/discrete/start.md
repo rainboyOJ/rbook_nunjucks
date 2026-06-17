@@ -15,9 +15,7 @@ categories: ["基础算法"]
 
 [离散化](/base/discrete/)
 
-正式模板代码位于：
-
-@include-code(/code/base/discrete离散化_unique.cpp, cpp)
+正式模板代码由正式教程的 `code_template` 统一暴露：`/code/base/discrete离散化_unique.cpp`。
 
 ## 迁移说明
 
