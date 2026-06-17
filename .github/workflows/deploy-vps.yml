@@ -32,6 +32,9 @@ jobs:
     environment: bohai
     timeout-minutes: 15
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set image metadata
         id: meta
         run: |
@@ -69,6 +72,16 @@ jobs:
           VPS_REPO_BRANCH: ${{ env.VPS_REPO_BRANCH }}
           VPS_REPO_URL: ${{ env.VPS_REPO_URL }}
         run: |
+          REMOTE_SCRIPT="/tmp/rbook-deploy-vps-${GITHUB_SHA}.sh"
+          scp \
+            -P "$VPS_SSH_PORT" \
+            -i ~/.ssh/deploy_key \
+            -o ServerAliveInterval=30 \
+            -o ServerAliveCountMax=10 \
+            -o TCPKeepAlive=yes \
+            scripts/deploy-vps.sh \
+            "$VPS_USER@$VPS_HOST:$REMOTE_SCRIPT"
+
           ssh \
             -p "$VPS_SSH_PORT" \
             -i ~/.ssh/deploy_key \
@@ -76,97 +89,4 @@ jobs:
             -o ServerAliveCountMax=10 \
             -o TCPKeepAlive=yes \
             "$VPS_USER@$VPS_HOST" \
-            "IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' VPS_REPO_URL='$VPS_REPO_URL' bash -se" <<'REMOTE'
-          set -euo pipefail
-
-          wait_for_health() {
-            local health_url="http://127.0.0.1:${HOST_PORT}/api/health"
-            local response=""
-
-            echo "Waiting for $health_url"
-            for attempt in $(seq 1 60); do
-              if response="$(curl -fsS --max-time 5 "$health_url" 2>/tmp/rbook-health-error.log)"; then
-                if printf '%s' "$response" | docker exec -i "$CONTAINER_NAME" node -e '
-                  let body = "";
-                  process.stdin.on("data", (chunk) => {
-                    body += chunk;
-                  });
-                  process.stdin.on("end", () => {
-                    const health = JSON.parse(body);
-                    if (health.ok !== true) {
-                      throw new Error("health.ok is not true");
-                    }
-                    if (!health.stats || health.stats.errors !== 0) {
-                      throw new Error(`health.stats.errors is ${health.stats?.errors}`);
-                    }
-                  });
-                ' >/dev/null 2>/tmp/rbook-health-parse-error.log; then
-                  echo "Health check passed"
-                  return 0
-                fi
-              fi
-
-              echo "Health check attempt ${attempt}/60 failed; retrying in 5s"
-              sleep 5
-            done
-
-            echo "Health check failed"
-            echo "Last curl error:"
-            cat /tmp/rbook-health-error.log 2>/dev/null || true
-            echo "Last health response:"
-            printf '%s\n' "$response"
-            echo "Last parse error:"
-            cat /tmp/rbook-health-parse-error.log 2>/dev/null || true
-            echo "Container logs:"
-            docker logs --tail 200 "$CONTAINER_NAME" || true
-            return 1
-          }
-
-          if [ ! -d "$VPS_REPO_DIR/.git" ]; then
-            echo "Initializing sparse content repo in $VPS_REPO_DIR"
-            rm -rf "$VPS_REPO_DIR"
-            mkdir -p "$VPS_REPO_DIR"
-            git -C "$VPS_REPO_DIR" init
-            git -C "$VPS_REPO_DIR" remote add origin "$VPS_REPO_URL"
-          fi
-
-          git -C "$VPS_REPO_DIR" remote set-url origin "$VPS_REPO_URL"
-          git -C "$VPS_REPO_DIR" sparse-checkout init --cone
-          git -C "$VPS_REPO_DIR" sparse-checkout set \
-            book
-          git -C "$VPS_REPO_DIR" fetch --depth=1 origin "$VPS_REPO_BRANCH"
-          git -C "$VPS_REPO_DIR" reset --hard "origin/$VPS_REPO_BRANCH"
-
-          echo "Pulling $IMAGE"
-          timeout 10m docker pull --quiet "$IMAGE"
-          echo "Pulled $IMAGE"
-
-          TEST_NAME="${CONTAINER_NAME}-deploy-test"
-          docker rm -f "$TEST_NAME" >/dev/null 2>&1 || true
-          docker run --rm \
-            --name "$TEST_NAME" \
-            -e NODE_ENV=production \
-            -e RBOOK_CONTENT_DIR=/content \
-            -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
-            -v "$VPS_REPO_DIR/book:/content:ro" \
-            "$IMAGE" \
-            npm run build:runtime
-
-          docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
-          docker run -d \
-            --name "$CONTAINER_NAME" \
-            --restart unless-stopped \
-            -p "${HOST_PORT}:${CONTAINER_PORT}" \
-            -e NODE_ENV=production \
-            -e HOST=0.0.0.0 \
-            -e PORT="$CONTAINER_PORT" \
-            -e RBOOK_ADMIN_TOKEN="$RBOOK_ADMIN_TOKEN" \
-            -e RBOOK_CONTENT_DIR=/content \
-            -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
-            -v "$VPS_REPO_DIR/book:/content:ro" \
-            "$IMAGE"
-
-          docker image prune -f
-          docker ps --filter "name=$CONTAINER_NAME"
-          wait_for_health
-          REMOTE
+            "DEPLOY_MODE='image' IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' VPS_REPO_URL='$VPS_REPO_URL' bash '$REMOTE_SCRIPT'"
