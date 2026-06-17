@@ -4,6 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import { globSync } from 'glob';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { appDir, bookDir, codeTemplateDir, configPath, themeDir } from '@rbook/core/paths';
@@ -82,7 +83,19 @@ class rbook {
         if (!this.config || !this.config.chapters) {
             return [];
         }
-        return this.getAllMarkdownFiles(this.config.chapters);
+        const files = new Set(this.getAllMarkdownFiles(this.config.chapters));
+
+        for (const pattern of this.config.glob || []) {
+            for (const mdfile of globSync(pattern, {
+                cwd: __bookdir,
+                nodir: true,
+                ignore: ['node_modules/**']
+            })) {
+                if (mdfile.endsWith('.md')) files.add(mdfile);
+            }
+        }
+
+        return [...files];
     }
 
 
