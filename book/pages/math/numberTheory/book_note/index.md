@@ -388,9 +388,7 @@ ac \equiv bc \pmod{n} &\Leftrightarrow n \mid c(b-a)  \\
 
 写一下代码求一下。这个脚本读入一个素数 $m$，枚举 $1 \le a < m$，观察 $a^m \equiv a \pmod m$。
 
-```python
-@include-code(/code/math/numberTheory/fermat_little_theorem_demo.py, python)
-```
+演示脚本位置：`/code/math/numberTheory/fermat_little_theorem_demo.py`。
 
 
 ::: colorfulbox

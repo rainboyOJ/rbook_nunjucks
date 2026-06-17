@@ -68,7 +68,7 @@ $$
 - 比较复杂度：$O(1)$。
 - 空间复杂度：$O(1)$。
 
-## 模板
+## 代码实现
 
 @include-code(/code/utils/fraction.cpp, cpp)
 

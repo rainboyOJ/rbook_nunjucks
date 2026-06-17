@@ -1,137 +1,191 @@
-/**
- * Author by Rainboy blog: https://rainboylv.com github : https://github.com/rainboylvx
- * rbook: -> https://rbook.roj.ac.cn  https://rbook2.roj.ac.cn
- * date: 2026-01-06 09:20:33
- */
 #include <bits/stdc++.h>
-#include <iomanip>
-#include <ios>
 using namespace std;
-typedef  long long ll;
-typedef  unsigned long long ull;
 
-const int maxn = 2e6+5;
-const int maxe = 4e6+5;
-const int mod = 1e9+7;
+const long long INF = (1LL << 62);
+const long long NEG = -(1LL << 60);
 
-int n,m,F;
-int a[maxn];
-
-//oisnip_begin最小生成树mst_kruskal.cpp
-// 定义边的结构体
 struct Edge {
     int u, v;
-    long long c;
-    long long t;
-    double val = 0; // c_i + x * t_i , 排序用
-    // 重载 < 运算符，方便 std::sort 直接排序
+    long long w;
+    int id;
+    bool used = false;
+
     bool operator<(const Edge& other) const {
-        return val < other.val;
+        return w < other.w;
     }
 };
-std::vector<Edge> edges; // 存储所有边
 
-// Kruskal 算法封装结构体
-struct KruskalAlgorithm {
-    struct DSU {
-        std::vector<int> fa;
-        // 初始化并查集
-        void init(int n) {
-            fa.resize(n + 1);
-            std::iota(fa.begin(), fa.end(), 0); // 赋值 0, 1, 2... n
-        }
-        int find(int x) {
-            return x == fa[x] ? x : fa[x] = find(fa[x]); // 路径压缩
-        }
-        bool merge(int x, int y) {
-            int fx = find(x), fy = find(y);
-            if (fx == fy) return false; // 已经在同一个集合
-            fa[fx] = fy;
-            return true;
-        }
-    } dsu;
+struct DSU {
+    vector<int> fa;
 
-    int n; // 点的数量
+    explicit DSU(int n = 0) { init(n); }
 
-    // 初始化：清空边，设定点数
-    void init(int _n) {
-        n = _n;
-        edges.clear();
-        dsu.init(n);
+    void init(int n) {
+        fa.resize(n + 1);
+        iota(fa.begin(), fa.end(), 0);
     }
 
-    // 加边函数：心智负担低，不用操心数组下标
-    void add_edge(int u, int v, long long c,ll t) {
-        edges.push_back({u, v, c,t});
+    int find(int x) {
+        return x == fa[x] ? x : fa[x] = find(fa[x]);
     }
 
-    // 执行算法
-    // 返回值：最小生成树的权值和。如果无法连通，返回 -1
-    double solve() {
-        // 1. 排序：贪心的基础
-        std::sort(edges.begin(), edges.end());
-        
-        // 2. 重新初始化并查集状态（防止多次调用 solve 出错）
-        dsu.init(n);
+    bool merge(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if (a == b) return false;
+        fa[a] = b;
+        return true;
+    }
+};
 
-        double ans = 0; // 权值和，注意开 long long
-        int cnt = 0;       // 记录选了多少条边
+struct StrictSecondMST {
+    int n, lg;
+    vector<Edge> edges;
+    vector<vector<pair<int, long long>>> tree;
+    vector<int> depth;
+    vector<vector<int>> up;
+    vector<vector<long long>> mx1, mx2;
 
-        for (const auto& e : edges) {
-            if (dsu.merge(e.u, e.v)) { // 如果不在同一集合，合并
-                ans += e.val;
-                cnt++;
-                // 如果需要输出选中的边，可以在这里打印
-                // cout << e.u << " " << e.v << " " << e.w << endl;
+    explicit StrictSecondMST(int n) : n(n) {
+        lg = 1;
+        while ((1 << lg) <= n) lg++;
+        tree.assign(n + 1, {});
+        depth.assign(n + 1, 0);
+        up.assign(lg, vector<int>(n + 1, 0));
+        mx1.assign(lg, vector<long long>(n + 1, NEG));
+        mx2.assign(lg, vector<long long>(n + 1, NEG));
+    }
+
+    void add_edge(int u, int v, long long w, int id) {
+        edges.push_back({u, v, w, id, false});
+    }
+
+    void add_value(long long x, long long& a, long long& b) {
+        if (x == NEG) return;
+        if (x > a) {
+            if (x != a) b = a;
+            a = x;
+        } else if (x < a && x > b) {
+            b = x;
+        }
+    }
+
+    pair<long long, long long> merge_pair(pair<long long, long long> x,
+                                          pair<long long, long long> y) {
+        long long a = NEG, b = NEG;
+        add_value(x.first, a, b);
+        add_value(x.second, a, b);
+        add_value(y.first, a, b);
+        add_value(y.second, a, b);
+        return {a, b};
+    }
+
+    void dfs(int u, int fa) {
+        for (auto [v, w] : tree[u]) {
+            if (v == fa) continue;
+            depth[v] = depth[u] + 1;
+            up[0][v] = u;
+            mx1[0][v] = w;
+            dfs(v, u);
+        }
+    }
+
+    void build_lca() {
+        depth[1] = 1;
+        dfs(1, 0);
+
+        for (int k = 1; k < lg; k++) {
+            for (int u = 1; u <= n; u++) {
+                int mid = up[k - 1][u];
+                up[k][u] = up[k - 1][mid];
+                auto merged = merge_pair({mx1[k - 1][u], mx2[k - 1][u]},
+                                         {mx1[k - 1][mid], mx2[k - 1][mid]});
+                mx1[k][u] = merged.first;
+                mx2[k][u] = merged.second;
             }
-            if (cnt == n - 1) break; // 优化：选够了边就退出
+        }
+    }
+
+    pair<long long, long long> path_max_two(int a, int b) {
+        pair<long long, long long> ans = {NEG, NEG};
+
+        if (depth[a] < depth[b]) swap(a, b);
+        int diff = depth[a] - depth[b];
+        for (int k = 0; k < lg; k++) {
+            if (diff >> k & 1) {
+                ans = merge_pair(ans, {mx1[k][a], mx2[k][a]});
+                a = up[k][a];
+            }
         }
 
-        // 3. 连通性检查：如果选的边数少于 n-1，说明图不连通
-        if (cnt < n - 1) return -1;
-        
+        if (a == b) return ans;
+
+        for (int k = lg - 1; k >= 0; k--) {
+            if (up[k][a] != up[k][b]) {
+                ans = merge_pair(ans, {mx1[k][a], mx2[k][a]});
+                ans = merge_pair(ans, {mx1[k][b], mx2[k][b]});
+                a = up[k][a];
+                b = up[k][b];
+            }
+        }
+
+        ans = merge_pair(ans, {mx1[0][a], mx2[0][a]});
+        ans = merge_pair(ans, {mx1[0][b], mx2[0][b]});
         return ans;
     }
-} kruskal;
-//oisnip_end
 
-bool check(double x) {
-    for( auto & e : edges) {
-        e.val = e.c + x * e.t;
+    long long solve() {
+        sort(edges.begin(), edges.end());
+        DSU dsu(n);
+
+        long long mst = 0;
+        int cnt = 0;
+        for (auto& e : edges) {
+            if (!dsu.merge(e.u, e.v)) continue;
+            e.used = true;
+            mst += e.w;
+            cnt++;
+            tree[e.u].push_back({e.v, e.w});
+            tree[e.v].push_back({e.u, e.w});
+        }
+
+        if (cnt != n - 1) return -1;
+
+        build_lca();
+
+        long long ans = INF;
+        for (const auto& e : edges) {
+            if (e.used) continue;
+            auto [largest, second_largest] = path_max_two(e.u, e.v);
+
+            long long removed = NEG;
+            if (largest < e.w) removed = largest;
+            else if (second_largest < e.w) removed = second_largest;
+
+            if (removed != NEG) {
+                ans = min(ans, mst + e.w - removed);
+            }
+        }
+
+        return ans == INF ? -1 : ans;
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    StrictSecondMST solver(n);
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        long long w;
+        cin >> u >> v >> w;
+        solver.add_edge(u, v, w, i);
     }
 
-    double ans = kruskal.solve();
-    return F >= ans;
-
-}
-
-void init(){
-    std::cin >> n >> m >> F;
-    kruskal.init(n);
-    for(int i = 1;i <= m ;++i ) // i: 1->m
-    {
-        int u,v,c,t;
-        std::cin >> u >> v >> c >> t;
-        kruskal.add_edge(u,v,c,t);
-    }
-
-
-}
-
-signed main () {
-    ios::sync_with_stdio(false); cin.tie(0);
-
-    init();
-    double l = 0, r = F;
-
-    for(int i = 0 ;i< 100;i++) {
-        double mid = (l+r) / 2;
-        if( check(mid) )
-            l = mid; // 可行
-        else
-            r = mid;
-    }
-    std::cout << fixed << setprecision(4) << l << "\n";
-    
+    cout << solver.solve() << '\n';
     return 0;
 }
