@@ -126,6 +126,7 @@ glob:
   - dynamic_programming/sparse_table/problem.md
   - graph/bellman-ford/index.md
   - graph/dfs/index.md
+  - graph/MST/index.md
   - graph/mst/最小生成树.md
   - graph/negative_circle/index.md
   - graph/preface.md
@@ -444,7 +445,7 @@ chapters:
       - title: 树的中心
         path: center_of_tree
       - title: 最小生成树
-        path: MST
+        path: mst/最小生成树.md
       - title: 严格次小生成树
         path: MST/严格次小生成树/index.md
       - title: 基环树
