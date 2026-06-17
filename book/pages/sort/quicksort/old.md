@@ -15,10 +15,9 @@ categories: ["基础算法", "排序"]
 
 [快速排序](./index.md)
 
-正式模板代码位于：
+正式模板由正式教程统一暴露：
 
-@include-code(/code/base/quick_sort_tranditional.cpp, cpp)
-
-@include-code(/code/base/quick_sort_3way_part.cpp, cpp)
+- `/code/base/quick_sort_tranditional.cpp`
+- `/code/base/quick_sort_3way_part.cpp`
 
 旧页面局部模板已经清理，后续维护请修改正式教程和 `book/code/base/` 下的模板。

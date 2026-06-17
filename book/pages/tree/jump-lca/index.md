@@ -15,6 +15,4 @@ categories: ["树上算法"]
 
 正式教程已经迁移到：[倍增求 LCA](../../tree-algo/jump-lca/index.md)。
 
-旧文中的可复用模板已经归位到：
-
-@include-code(/code/tree/jump_lca.cpp, cpp)
+旧文中的可复用模板已经归位到正式教程：`/code/tree/jump_lca.cpp`。

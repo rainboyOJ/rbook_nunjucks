@@ -15,9 +15,7 @@ categories: ["基础算法"]
 
 正式教程已经迁移到：[二分查找](../../base/binary_search/index.md)。
 
-可复用模板已经归位到：
-
-@include-code(/code/base/binary_search.cpp, cpp)
+可复用模板已经归位到正式教程：`/code/base/binary_search.cpp`。
 
 ## 旧文要点
 
