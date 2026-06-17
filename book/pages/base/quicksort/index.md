@@ -1,66 +1,23 @@
 ---
-id: "quick_sort"
-title: "快速排序"
+id: "quick-sort-legacy-base"
+title: "快速排序旧入口"
 date: 2025-12-31 22:40
 toc: true
-tags: [""]
-categories: [""]
-code_template:
-  - title: 3路快排
-    desc: "容易记忆"
-    tags: ["快速排序","分治"]
-    code: /code/base/quick_sort_3way_part.cpp
-  - title: 传统快排
-    desc: "不容容易记忆"
-    tags: ["快速排序","分治"]
-    code: /code/base/quick_sort_tranditional.cpp
+tags: ["快速排序", "归档"]
+categories: ["基础算法"]
 ---
 
 [[TOC]]
 
+## 归档说明
 
+这一页是旧目录 `base/quicksort` 下的快速排序入口。正式教程已经迁移到：
 
+[快速排序](../../sort/quicksort/index.md)
 
+正式教程统一维护：
 
-## 
-这绝对是你在**处理含有大量重复元素**（比如只有 0, 1, 2 组成的数组，或者全是 5 的数组）时最快、最好记的排序模板。
+- 双路快速排序模板：`/code/base/quick_sort_tranditional.cpp`
+- 三路快速排序模板：`/code/base/quick_sort_3way_part.cpp`
 
-它不需要像传统快排那样担心“指针错车”，也不需要处理恶心的边界。
-
-### 🧠 核心逻辑：荷兰国旗问题 (Dutch National Flag)
-
-把数组切成三段，就像排列一面三色国旗：
-
-1. **左边 `[l, lt-1]`**：严格小于 Key
-2. **中间 `[lt, gt]`**：严格等于 Key (**不用再递归这里了！**)
-3. **右边 `[gt+1, r]`**：严格大于 Key
-
-记忆点: 在一趟排序的过程中 
-
-- `[lt , i-1]` 这部分永远`=key`
-- `[1,lt-1]` ,这部分 永远`< key`
-- `[i,gt]` ,这部分是未扫描的部分
-- `[gt+1,n]`, 这部分永远 `> key`
-
-## 动画
-
-[一趟3路快排 动画](/animate_single_html/quick_sort/index.html)
-
-## 模板代码
-
-@include-code(code/base/quick_sort_3way_part.cpp, cpp)
-
-
-
-## 传统快排
-
-@include-code(code/base/quick_sort_tranditional.cpp, cpp)
-
-
-基本思想
-
-如何把保证两个`quick_sort` 不要陷入死循环
-
-## 题目
-
-- [[problem: luogu,P1923]]
+本页不再维护正文和模板引用，避免同一个排序算法出现两套内容。
