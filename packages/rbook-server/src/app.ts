@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import Markdown from '@rbook/markdown';
-import { bookDir, configPath, distDir } from '@rbook/core/paths';
+import { bookDir, codeTemplateDir, configPath, distDir } from '@rbook/core/paths';
 import {
   getIndexPayload,
   getPage,
@@ -89,6 +89,27 @@ const apiEndpointDocs: ApiEndpointDoc[] = [
     example: 'curl -G --data-urlencode "q=数位DP 状态 记忆化" --data-urlencode "limit=8" --data-urlencode "textLength=900" "$BASE_URL/api/chunks/search"'
   },
   {
+    method: 'GET',
+    path: '/api/ai/catalog',
+    description: '返回 AI 友好的正式文章目录，包含文章链接、摘要、标签和 code_template 元数据。',
+    query: 'scope=visible|all 可选，默认 visible',
+    example: 'curl "$BASE_URL/api/ai/catalog"'
+  },
+  {
+    method: 'GET',
+    path: '/api/ai/page-context',
+    description: '返回 AI 解题所需的单页上下文，可包含完整文章、引用信息、模板代码和正文 include-code 代码。',
+    query: 'path 必填；includeCode=true 可选；includeHtml=true 可选',
+    example: 'curl "$BASE_URL/api/ai/page-context?path=graph/bcc/index.md&includeCode=true"'
+  },
+  {
+    method: 'GET',
+    path: '/api/ai/code',
+    description: '按 /code/... 路径读取模板代码内容，只允许访问本项目 book/code 下的文件。',
+    query: 'path 必填，例如 /code/graph/v-bcc.cpp',
+    example: 'curl "$BASE_URL/api/ai/code?path=/code/graph/v-bcc.cpp"'
+  },
+  {
     method: 'POST',
     path: '/api/admin/reindex',
     description: '重建搜索索引。',
@@ -140,6 +161,191 @@ function getBaseUrl(request: FastifyRequest) {
     ? protocolHeader[0]
     : protocolHeader || request.protocol;
   return `${protocol}://${request.headers.host || '127.0.0.1:3000'}`;
+}
+
+function buildHref(baseUrl: string, url: string | null | undefined) {
+  if (!url) return null;
+  return new URL(url, baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`).toString();
+}
+
+function asRecord(value: unknown): Record<string, any> {
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, any>
+    : {};
+}
+
+function asStringArray(value: unknown) {
+  return Array.isArray(value)
+    ? value.filter((item) => typeof item === 'string')
+    : [];
+}
+
+function getPageDescription(page: any) {
+  const frontMatter = asRecord(page.frontMatter);
+  return String(frontMatter.description || frontMatter.desc || page.excerpt || '').trim();
+}
+
+function createCitation(page: any, baseUrl: string) {
+  return {
+    title: page.title,
+    path: page.path,
+    url: page.url,
+    href: buildHref(baseUrl, page.url)
+  };
+}
+
+function normalizeCodeUrl(codePath: string | undefined) {
+  if (!codePath || typeof codePath !== 'string') return null;
+  const trimmed = codePath.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith('/code/')) return trimmed.replace(/\\/g, '/');
+  if (trimmed.startsWith('code/')) return `/${trimmed.replace(/\\/g, '/')}`;
+  return null;
+}
+
+function resolveCodeFile(codePath: string | undefined) {
+  const codeUrl = normalizeCodeUrl(codePath);
+  if (!codeUrl) return null;
+
+  const relativePath = codeUrl.replace(/^\/code\/?/, '');
+  const absolutePath = path.resolve(codeTemplateDir, relativePath);
+  const codeRoot = path.resolve(codeTemplateDir);
+  const relativeToRoot = path.relative(codeRoot, absolutePath);
+
+  if (relativeToRoot.startsWith('..') || path.isAbsolute(relativeToRoot)) return null;
+
+  return {
+    path: codeUrl,
+    url: codeUrl,
+    absolutePath
+  };
+}
+
+function getLanguageFromPath(filePath: string) {
+  const ext = path.extname(filePath).replace(/^\./, '');
+  return ext || 'text';
+}
+
+function readCodePayload(codePath: string | undefined, baseUrl: string, includeContent = false) {
+  const resolved = resolveCodeFile(codePath);
+  if (!resolved) return null;
+
+  const payload: Record<string, unknown> = {
+    path: resolved.path,
+    url: resolved.url,
+    href: buildHref(baseUrl, resolved.url),
+    language: getLanguageFromPath(resolved.path)
+  };
+
+  if (includeContent) {
+    if (fs.existsSync(resolved.absolutePath)) {
+      payload.content = fs.readFileSync(resolved.absolutePath, 'utf8');
+    } else {
+      payload.error = `code file not found: ${resolved.path}`;
+    }
+  }
+
+  return payload;
+}
+
+function getCodeTemplates(page: any, baseUrl: string, includeContent = false) {
+  const frontMatter = asRecord(page.frontMatter);
+  const templates = Array.isArray(frontMatter.code_template) ? frontMatter.code_template : [];
+
+  return templates
+    .map((template: any) => {
+      const code = readCodePayload(template?.code, baseUrl, includeContent);
+      if (!code) return null;
+      return {
+        source: 'frontMatter',
+        title: template.title || '',
+        desc: template.desc || '',
+        tags: asStringArray(template.tags),
+        ...template,
+        code: code.path,
+        codeUrl: code.url,
+        codeHref: code.href,
+        language: code.language,
+        ...(includeContent ? { content: code.content } : {})
+      };
+    })
+    .filter(Boolean);
+}
+
+const includeCodeRegex = /^@include-code\(([^,)]+)(?:,\s*([^)]+))?\s*\)/gm;
+
+function resolveIncludedCode(rawCodePath: string, pagePath: string) {
+  const codeUrl = normalizeCodeUrl(rawCodePath);
+  if (codeUrl) {
+    const resolved = resolveCodeFile(codeUrl);
+    return resolved ? { ...resolved, url: codeUrl } : null;
+  }
+
+  const fullPath = path.resolve(bookDir, path.dirname(pagePath), rawCodePath.trim());
+  const bookRoot = path.resolve(bookDir);
+  const relativeToBook = path.relative(bookRoot, fullPath);
+  if (relativeToBook.startsWith('..') || path.isAbsolute(relativeToBook)) return null;
+
+  return {
+    path: rawCodePath.trim(),
+    url: null,
+    absolutePath: fullPath
+  };
+}
+
+function getIncludedCode(pagePath: string, markdown: string, baseUrl: string, includeContent = false) {
+  const included = [];
+  const seen = new Set<string>();
+
+  for (const match of markdown.matchAll(includeCodeRegex)) {
+    const rawCodePath = match[1].trim();
+    const language = (match[2] || '').trim();
+    const resolved = resolveIncludedCode(rawCodePath, pagePath);
+    if (!resolved || seen.has(resolved.absolutePath)) continue;
+    seen.add(resolved.absolutePath);
+
+    const payload: Record<string, unknown> = {
+      source: 'include-code',
+      path: resolved.path,
+      code: rawCodePath,
+      codeUrl: resolved.url,
+      codeHref: resolved.url ? buildHref(baseUrl, resolved.url) : null,
+      language: language || getLanguageFromPath(rawCodePath)
+    };
+
+    if (includeContent) {
+      if (fs.existsSync(resolved.absolutePath)) {
+        payload.content = fs.readFileSync(resolved.absolutePath, 'utf8');
+      } else {
+        payload.error = `code file not found: ${rawCodePath}`;
+      }
+    }
+
+    included.push(payload);
+  }
+
+  return included;
+}
+
+function createAiCatalogItem(page: any, baseUrl: string) {
+  const frontMatter = asRecord(page.frontMatter);
+  return {
+    path: page.path,
+    url: page.url,
+    href: buildHref(baseUrl, page.url),
+    title: page.title,
+    description: getPageDescription(page),
+    excerpt: page.excerpt || '',
+    tags: asStringArray(frontMatter.tags),
+    categories: asStringArray(frontMatter.categories),
+    headings: page.headings || [],
+    navTrail: page.navTrail || [],
+    visible: page.visible,
+    source: page.source,
+    codeTemplates: getCodeTemplates(page, baseUrl, false),
+    citation: createCitation(page, baseUrl)
+  };
 }
 
 function renderApiDocsPage(baseUrl: string) {
@@ -301,8 +507,10 @@ function renderApiDocsPage(baseUrl: string) {
     <section>
       <h2>推荐调用流程</h2>
       <ul>
-        <li>不知道页面路径时，先用 <code>/api/chunks/search</code> 或 <code>/api/search</code> 搜索。</li>
-        <li>确定页面后，用 <code>/api/page?path=...</code> 获取完整 Markdown、纯文本、HTML 和 headings。</li>
+        <li>AI 解题或生成题解时，先用 <code>/api/ai/catalog</code> 获取正式文章和模板目录。</li>
+        <li>确定页面后，用 <code>/api/ai/page-context?path=...&amp;includeCode=true</code> 获取完整文章和模板代码。</li>
+        <li>只需要模板代码时，用 <code>/api/ai/code?path=/code/...</code> 读取代码内容。</li>
+        <li>普通搜索仍可使用 <code>/api/chunks/search</code> 或 <code>/api/search</code>。</li>
         <li>本项目不提供题目数据查询；题目数据已经拆到独立服务。</li>
       </ul>
     </section>
@@ -488,6 +696,93 @@ export async function createApp(options: CreateAppOptions = {}) {
       textLength: Number(query.textLength || 900),
       includeText: query.includeText !== 'false'
     });
+  });
+
+  app.get('/api/ai/catalog', async (request) => {
+    const index = getIndexPayload();
+    const query = getQuery(request);
+    const scope = query.scope === 'all' ? 'all' : 'visible';
+    const baseUrl = getBaseUrl(request);
+    const pages = scope === 'all'
+      ? index.pages
+      : index.pages.filter((page: any) => page.visible);
+
+    return {
+      generatedAt: index.generatedAt,
+      scope,
+      total: pages.length,
+      articles: pages.map((page: any) => createAiCatalogItem(page, baseUrl))
+    };
+  });
+
+  app.get('/api/ai/page-context', async (request, reply) => {
+    const query = getQuery(request);
+    const pagePath = query.path;
+    if (!pagePath) {
+      reply.code(400);
+      return { error: 'missing query parameter: path' };
+    }
+
+    const page = getPage(pagePath);
+    if (!page) {
+      reply.code(404);
+      return { error: 'page not found' };
+    }
+
+    const baseUrl = getBaseUrl(request);
+    const includeCode = query.includeCode === 'true';
+    const includeHtml = query.includeHtml === 'true';
+    const payload = createPagePayload(page);
+    const article: Record<string, unknown> = {
+      path: payload.path,
+      url: payload.url,
+      href: buildHref(baseUrl, payload.url),
+      title: payload.title,
+      description: getPageDescription(payload),
+      excerpt: payload.excerpt,
+      visible: payload.visible,
+      source: payload.source,
+      navTrail: payload.navTrail || [],
+      tags: asStringArray(payload.frontMatter?.tags),
+      categories: asStringArray(payload.frontMatter?.categories),
+      frontMatter: payload.frontMatter,
+      headings: payload.headings,
+      markdown: payload.markdown,
+      text: payload.text,
+      chunks: payload.chunks,
+      citation: createCitation(payload, baseUrl)
+    };
+
+    if (includeHtml) article.html = payload.html;
+
+    return {
+      generatedAt: getIndexPayload().generatedAt,
+      article,
+      codeTemplates: getCodeTemplates(payload, baseUrl, includeCode),
+      includedCode: getIncludedCode(payload.path, page.markdown || payload.markdown || '', baseUrl, includeCode)
+    };
+  });
+
+  app.get('/api/ai/code', async (request, reply) => {
+    const query = getQuery(request);
+    const codePath = query.path || query.code;
+    if (!codePath) {
+      reply.code(400);
+      return { error: 'missing query parameter: path' };
+    }
+
+    const code = readCodePayload(codePath, getBaseUrl(request), true);
+    if (!code) {
+      reply.code(400);
+      return { error: 'invalid code path; expected a /code/... path inside book/code' };
+    }
+
+    if (code.error) {
+      reply.code(404);
+      return { error: code.error };
+    }
+
+    return code;
   });
 
   app.post('/api/admin/reindex', async (request, reply) => {
