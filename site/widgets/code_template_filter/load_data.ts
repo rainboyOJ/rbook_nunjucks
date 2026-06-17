@@ -5,11 +5,12 @@ import matter from 'gray-matter';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import type { Plugin } from 'vite';
-import rbook, {
+import {
   __bookdir,
   __code_template_dir,
-  __workdir
-} from './fake_rbook.js';
+  __workdir,
+  collectMarkdownFiles
+} from './bookCatalog.js';
 
 interface CodeTemplate {
   title?: string;
@@ -90,9 +91,7 @@ function createTemplateRecord(
 async function loadTemplateRecords() {
   template_array.length = 0;
 
-  const book = new rbook();
-
-  for (const mdFile of book.AllMarkdownFiles) {
+  for (const mdFile of collectMarkdownFiles()) {
     const mdPath = path.join(__bookdir, mdFile);
     if (!fs.existsSync(mdPath)) continue;
 
