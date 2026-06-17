@@ -1,32 +1,24 @@
 ---
-id: "block"
-title: "分块算法"
+id: "block-legacy"
+title: "分块算法旧入口"
 date: 2025-12-01 09:17
 toc: true
-tags: ["block"]
-categories: [""]
-code_template:
-  - title: 分块算法
-    desc: "暴力区间查询"
-    tags: ["分块"]
-    code: "/code/data-struture/Block/block.cpp"
+tags: ["分块", "归档"]
+categories: ["数据结构"]
 ---
 
 [[TOC]]
 
-- [[problem: luogu,P3372]]
-- [[problem: hdu,5057]]
+## 归档说明
 
+这一页是旧目录 `data-structure/Block` 下的分块算法入口。正式教程已经迁移到：
 
-## 适用条件
+[分块思想](../../data_structure/block_data/decompose/index.md)
 
-- 区间最值
-- 区间求和
-- 带修改的全局第 K 大
-- 核心前提：信息的“局部性”与“可合并性”
-- 信息的独立性:只要维护的区间信息不影响其他区间，就可以用分块？
+正式模板由正式教程维护：`/code/data-struture/Block/range_add_range_sum_mod.cpp`。
 
+本页不再维护正文和模板引用，避免 `data-structure` 与 `data_structure` 两套目录重复。
 
-一句话记住分块：
+## 旧页要点
 
-当你发现一个区间问题暴力太慢，而线段树又太难写或者根本维护不了这种复杂信息时，想想分块，它很可能是那个“刚刚好”的解法。
+分块适合把区间操作拆成“散块暴力处理 + 整块快速处理”的问题。当线段树难以维护复杂信息，而暴力又太慢时，分块通常是一个实现成本较低的折中方案。
