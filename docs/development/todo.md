@@ -115,18 +115,18 @@
 
 ### 待办
 
-- [ ] 更新 `skills/rbook-http/SKILL.md`，确保只描述当前 AI API 字段。
-- [ ] 检查部署文档中是否残留旧 API 字段。
-- [ ] 检查 `/api` 文档页是否需要补充 AI API 相对路径说明。
-- [ ] 给 AI API 响应结构写一份简明 schema 文档。
-- [ ] 明确说明 AI API 不返回服务端拼接的绝对链接。
-- [ ] 明确说明调用方应使用 `BASE_URL + url` 或 `BASE_URL + codeUrl` 拼接链接。
+- [x] 更新 `skills/rbook-http/SKILL.md`，确保只描述当前 AI API 字段。
+- [x] 检查部署文档中是否残留旧 API 字段。
+- [x] 检查 `/api` 文档页是否需要补充 AI API 相对路径说明。
+- [x] 给 AI API 响应结构写一份简明 schema 文档。
+- [x] 明确说明 AI API 不返回服务端拼接的绝对链接。
+- [x] 明确说明调用方应使用 `BASE_URL + url` 或 `BASE_URL + codeUrl` 拼接链接。
 
 ### 验收标准
 
-- 文档中没有要求使用 `citation.href`、`codeHref` 等旧字段。
-- skill、API 文档页、代码返回结构一致。
-- 本地智能体可以只根据 skill 和 API 文档正确调用 rbook。
+- [x] 文档中没有要求使用 `citation.href`、`codeHref` 等旧字段。
+- [x] skill、API 文档页、代码返回结构一致。
+- [x] 本地智能体可以只根据 skill 和 API 文档正确调用 rbook。
 
 ## 推荐执行顺序
 

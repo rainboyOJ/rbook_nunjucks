@@ -245,6 +245,14 @@ export function renderApiDocsPage(baseUrl: string) {
     dd { margin: 0; min-width: 0; }
     ul { padding-left: 22px; }
     a { color: var(--accent); }
+    .schema-list {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 0;
+    }
+    .schema-list li {
+      margin-bottom: 4px;
+    }
     @media (max-width: 640px) {
       main { width: min(100% - 20px, 980px); padding-top: 26px; }
       .endpoint { padding: 14px; }
@@ -267,7 +275,19 @@ export function renderApiDocsPage(baseUrl: string) {
         <li>确定页面后，用 <code>/api/ai/page-context?path=...&amp;includeCode=true</code> 获取完整文章和模板代码。</li>
         <li>只需要模板代码时，用 <code>/api/ai/code?path=/code/...</code> 读取代码内容。</li>
         <li>普通搜索仍可使用 <code>/api/chunks/search</code> 或 <code>/api/search</code>。</li>
+        <li>AI 专用接口只返回相对路径。需要可点击链接时，用 <code>BASE_URL + url</code> 或 <code>BASE_URL + codeUrl</code> 拼接。</li>
         <li>本项目不提供题目数据查询；题目数据已经拆到独立服务。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>AI 字段契约</h2>
+      <ul class="schema-list">
+        <li>AI API 不返回服务端拼接的绝对链接，也不返回 <code>href</code>、<code>codeHref</code> 这类旧字段。</li>
+        <li><code>url</code>、<code>citation.url</code>、<code>codeUrl</code> 都是以 <code>/</code> 开头的站内相对路径。</li>
+        <li><code>/api/ai/catalog</code> 返回 <code>{ scope, total, generatedAt, articles }</code>，每个 article 包含 <code>path</code>、<code>url</code>、<code>title</code>、<code>description</code>、<code>codeTemplates</code>、<code>citation</code>。</li>
+        <li><code>/api/ai/page-context</code> 返回 <code>{ article, codeTemplates, includedCode }</code>；设置 <code>includeCode=true</code> 时模板和 include-code 会带 <code>content</code>。</li>
+        <li><code>/api/ai/code</code> 只接受 <code>/code/...</code> 或 <code>code/...</code>，返回 <code>{ path, url, language, content }</code>。</li>
       </ul>
     </section>
 

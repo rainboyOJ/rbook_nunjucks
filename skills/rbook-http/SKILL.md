@@ -41,6 +41,8 @@ curl "$BASE_URL/api/health"
 6. 不调用 problem 相关能力；题目服务已经拆分到独立项目，本项目 API 不负责题目数据。
 7. 对中文查询使用 `curl -G --data-urlencode`，避免 URL 编码问题。
 
+字段契约的项目内文档在 `docs/development/ai-api-schema.md`。当文档和实际响应不一致时，以实际 API 响应和契约测试为准。
+
 ## 常用场景
 
 ### 回答电子书里的知识点
@@ -219,6 +221,8 @@ GET /api/ai/catalog?scope=all
 - `codeTemplates`
 - `citation`
 
+其中 `citation` 只包含 `title`、`path`、`url`，没有 `href`。`codeTemplates[]` 中的模板代码链接字段是 `codeUrl`，它也是相对路径。
+
 选择 OJ 解题参考文章和代码模板时，先调用这个接口。
 
 ### AI 页面上下文
@@ -248,6 +252,13 @@ GET /api/ai/page-context?path=graph/bcc/index.md&includeCode=true&includeHtml=tr
 `codeTemplates` 来自文章头部元数据里的 `code_template`，生成 OJ 代码时优先参考它。`includedCode` 来自正文 `@include-code(...)`，常用于解释性代码片段。
 
 注意：AI 专用接口只返回相对路径，不返回 `href`、`codeHref` 这类绝对链接。需要可点击链接时，由调用方用当前 `BASE_URL` 拼接 `url` 或 `codeUrl`。
+
+字段约定：
+
+- `article.url` 和 `article.citation.url` 是文章页面相对链接。
+- `codeTemplates[].code` 和 `codeTemplates[].codeUrl` 都指向 `/code/...` 模板代码。
+- `includedCode[].codeUrl` 可能是 `null`；只有正文使用 `/code/...` 时才有可拼接链接。
+- `includeCode=true` 时，`codeTemplates[]` 和 `includedCode[]` 才包含 `content`。
 
 推荐写法：
 
