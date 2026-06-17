@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { globSync } from 'glob';
-import { renderTemplate } from './renderEngine.js';
 import markdown from '@rbook/markdown';
+import { renderTemplate } from './renderEngine.js';
 import {
     bookDir,
     codeTemplateDir,
@@ -15,237 +15,216 @@ import {
     themeDir
 } from './paths.js';
 
+interface BookChapter {
+    path?: string;
+    sections?: BookChapter[];
+    [key: string]: unknown;
+}
+
+interface BookConfig {
+    chapters?: BookChapter[];
+    glob?: string[];
+    currentYear?: number;
+    last_build_time?: string;
+    menuHtml?: string;
+    [key: string]: unknown;
+}
+
+type RenderData = Record<string, unknown>;
+
 export const __workdir = rootDir;
 export const __bookdir = bookDir;
 export const __code_template_dir = codeTemplateDir;
 export const __themedir = themeDir;
 
+function errorMessage(error: unknown) {
+    return error instanceof Error ? error.message : String(error);
+}
+
+function ensureDir(dir: string) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
+
 class rbook {
     name: string;
-    config: any;
+    config: BookConfig;
 
     constructor() {
         this.name = 'rbook';
         this.config = this.load_config();
         this.config.currentYear = new Date().getFullYear();
-        // this.config.last_build_time = new Date().toLocaleString();
-        this.config.last_build_time = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+        this.config.last_build_time = new Date().toLocaleString('zh-CN', {
+            timeZone: 'Asia/Shanghai'
+        });
     }
 
-    load_config(configPath = defaultConfigPath) {
+    load_config(configPath = defaultConfigPath): BookConfig {
         try {
             const configFile = path.isAbsolute(configPath) ? configPath : fromApp(configPath);
             if (!fs.existsSync(configFile)) {
                 throw new Error(`配置文件不存在: ${configPath}`);
             }
-            
+
             const content = fs.readFileSync(configFile, 'utf8');
-            return yaml.load(content);
+            return yaml.load(content) as BookConfig;
         } catch (error) {
-            throw new Error(`加载配置文件失败: ${error.message}`);
+            throw new Error(`加载配置文件失败: ${errorMessage(error)}`);
         }
     }
 
-    /**
-     * 
-     * @param {*} filePath 
-     * @param {*} outputPath 
-     * @param {*} defaultTemplateType 
-     * @param {*} data 渲染文件所需要的数据
-     * @returns 
-     */
-    buildMarkdownFile (filePath, outputPath, defaultTemplateType = null,data = {}) {
+    buildMarkdownFile(
+        filePath: string,
+        outputPath: string,
+        defaultTemplateType: string | null = null,
+        data: RenderData = {}
+    ) {
         const fullPath = path.join(bookDir, filePath);
-        if (fs.existsSync(fullPath)) {
-            // 确保输出目录存在
-            const fullOutputPath = path.isAbsolute(outputPath) ? outputPath : fromApp(outputPath);
-            const outputDir = path.dirname(fullOutputPath);
-            if (!fs.existsSync(outputDir)) {
-                fs.mkdirSync(outputDir, { recursive: true });
-            }
-
-            let md = new markdown(fullPath);
-
-            // 确定模板类型
-            const templateType = md.front_matter.layout || defaultTemplateType || 'page';
-            
-            // 使用Nunjucks渲染模板
-            const htmlContent = renderTemplate(themeDir, templateType, {...md.toJSON(), site: this.config, ...data});
-            
-            // 写入HTML文件
-            fs.writeFileSync(fullOutputPath, htmlContent);
-            console.log(`✓ 构建完成: ${filePath}`);
-            return true;
-        }
-        else {
+        if (!fs.existsSync(fullPath)) {
             console.error(`✗ 文件不存在: ${filePath}`);
+            return false;
         }
-        return false;
-    };
 
-    /**
-     * 检查给定路径的Markdown文件是否存在
-     * @param {string} basePath - 基础路径 (如 'chapter1')
-     * @param {string} relativePath - 相对于基础路径的路径 (如 'multiple-knapsack')
-     * @returns {string|null} - 找到的文件路径或null
-     */
-    checkMarkdownFile(basePath, relativePath) {
-        // 构建完整路径
-        const fullPath = path.join(bookDir, basePath, relativePath);
-        
-        // 首先检查是否是一个目录
-        if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
-            // 如果是目录，检查目录下的index.md文件
-            const indexPath = path.join(fullPath, 'index.md');
-            if (fs.existsSync(indexPath)) {
-                return path.join(basePath, relativePath, 'index.md');
-            }
-        } else if ( fullPath.endsWith('.md') && fs.existsSync(fullPath) ) {
-            return path.join(basePath, relativePath);
-        } else {
-            // 如果不是目录，检查同名的.md文件
-            const mdPath = fullPath + '.md';
-            if (fs.existsSync(mdPath)) {
-                return path.join(basePath, relativePath + '.md');
-            }
-        }
-        
-        return null;
+        const fullOutputPath = path.isAbsolute(outputPath) ? outputPath : fromApp(outputPath);
+        ensureDir(path.dirname(fullOutputPath));
+
+        const md = new markdown(fullPath);
+        const templateType = md.front_matter.layout || defaultTemplateType || 'page';
+        const htmlContent = renderTemplate(themeDir, templateType, {
+            ...md.toJSON(),
+            site: this.config,
+            ...data
+        });
+
+        fs.writeFileSync(fullOutputPath, htmlContent);
+        console.log(`✓ 构建完成: ${filePath}`);
+        return true;
     }
 
-    /**
-     * 递归获取章节中的所有Markdown文件
-     * @param {Array} chapters - 章节配置数组
-     * @param {string} basePath - 基础路径
-     * @returns {Array} - Markdown文件路径数组
-     */
-    getAllMarkdownFiles(chapters, basePath = '') {
-        const files = [];
-        
-        if (!chapters || !Array.isArray(chapters)) {
-            return files;
+    checkMarkdownFile(basePath: string, relativePath: string) {
+        const fullPath = path.join(bookDir, basePath, relativePath);
+
+        if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
+            const indexPath = path.join(fullPath, 'index.md');
+            return fs.existsSync(indexPath)
+                ? path.join(basePath, relativePath, 'index.md')
+                : null;
         }
-        
+
+        if (fullPath.endsWith('.md') && fs.existsSync(fullPath)) {
+            return path.join(basePath, relativePath);
+        }
+
+        const mdPath = `${fullPath}.md`;
+        return fs.existsSync(mdPath)
+            ? path.join(basePath, `${relativePath}.md`)
+            : null;
+    }
+
+    getAllMarkdownFiles(chapters: BookChapter[] = [], basePath = '') {
+        const files: string[] = [];
+
         for (const chapter of chapters) {
-            // 没有path的章节不处理
-            if( !chapter.path ) continue;
-            //if( chapter.type === 'info' ) continue; // info 是一个分割符,在目录中显示为 ---- ,起提示作用
-            // 如果有sections，说明不是叶节点，递归处理子章节
-            if (chapter.sections && Array.isArray(chapter.sections)) {
-                // 递归处理子章节
-                const subPath = basePath ? path.join(basePath, chapter.path) : chapter.path;
-                const subFiles = this.getAllMarkdownFiles(chapter.sections, subPath);
-                files.push(...subFiles);
-            } else {
-                // 叶节点，检查Markdown文件是否存在
-                const filePath = basePath ? path.join(basePath, chapter.path) : chapter.path;
-                const foundFile = this.checkMarkdownFile(basePath || '', chapter.path);
-                if (foundFile) {
-                    files.push(foundFile);
-                }
+            if (!chapter.path) continue;
+
+            if (Array.isArray(chapter.sections)) {
+                const childBasePath = basePath ? path.join(basePath, chapter.path) : chapter.path;
+                files.push(...this.getAllMarkdownFiles(chapter.sections, childBasePath));
+                continue;
             }
+
+            const foundFile = this.checkMarkdownFile(basePath, chapter.path);
+            if (foundFile) files.push(foundFile);
         }
-        
+
         return files;
     }
 
-    // 根据book.yaml chapters 获取所有Markdown文件
+    // 只返回 book.yaml 目录树中的文章；glob 文章由 build_glob 单独处理。
     get AllMarkdownFiles() {
-        if (!this.config || !this.config.chapters) {
-            return [];
-        }
         return this.getAllMarkdownFiles(this.config.chapters);
     }
 
     build() {
         console.log('开始构建...');
-        
-        try {
-            // 确保dist目录存在
-            const outputDir = distDir;
-            if (!fs.existsSync(outputDir)) {
-                fs.mkdirSync(outputDir, { recursive: true });
-            }
-            
-            // 加载配置
-            const config = this.config;
 
-            // 渲染菜单
+        try {
+            ensureDir(distDir);
             this.config.menuHtml = this.renderMenu();
-            
-            // 获取所有Markdown文件
-            const markdownFiles = this.AllMarkdownFiles;
-            // console.log('找到的Markdown文件:', markdownFiles);
-            
-            // 构建所有Markdown文件
-            for (const file of markdownFiles) {
+
+            for (const file of this.AllMarkdownFiles) {
                 const outputPath = path.join(distDir, file).replace(/\.md$/, '.html');
                 this.buildMarkdownFile(file, outputPath);
             }
 
-
-            // 构建首页
             this.renderIndex();
-
-            // 处理assets
-            this.deal_assets();
+            this.copyAssets();
 
             console.log('构建完成！');
         } catch (error) {
-            throw new Error(`构建失败: ${error.message}`);
+            throw new Error(`构建失败: ${errorMessage(error)}`);
         }
     }
 
     build_glob() {
-        if( !this.config.glob ) return;
-        let AllMarkdownFiles_in_chapters = this.AllMarkdownFiles;
-        console.log("===== render glob md file =====");
-        // console.log(AllMarkdownFiles_in_chapters)
-        for( const glob of this.config.glob ) {
-            const mdfiles = globSync(glob, { cwd: bookDir, ignore: 'node_modules/**' })
-            for( let file of mdfiles ) {
-                let mdfile = file;
-                if( AllMarkdownFiles_in_chapters.includes( mdfile ) ) continue;
-                let outputPath = path.join(distDir, file).replace(/\.md$/, '.html');
-                this.buildMarkdownFile(mdfile, outputPath);
+        if (!this.config.glob) return;
+
+        const chapterFiles = this.AllMarkdownFiles;
+        console.log('===== render glob md file =====');
+
+        for (const pattern of this.config.glob) {
+            const mdFiles = globSync(pattern, {
+                cwd: bookDir,
+                ignore: 'node_modules/**'
+            });
+
+            for (const mdFile of mdFiles) {
+                if (chapterFiles.includes(mdFile)) continue;
+
+                const outputPath = path.join(distDir, mdFile).replace(/\.md$/, '.html');
+                this.buildMarkdownFile(mdFile, outputPath);
             }
         }
     }
 
-    /**
-     * @return {string} 返回渲染后的菜单HTML
-     */
     renderMenu() {
-        const htmlContent = renderTemplate(themeDir, 'partials/menu', this.config);
-        return htmlContent
+        return renderTemplate(themeDir, 'partials/menu', this.config);
     }
 
     renderIndex() {
-        // 构建首页
-        if (this.buildMarkdownFile('index.md', path.join(distDir, 'index.html'), 'index', {site : this.config})) {
+        if (this.buildMarkdownFile('index.md', path.join(distDir, 'index.html'), 'index', {
+            site: this.config
+        })) {
             console.log('✓ 首页构建完成');
         }
     }
 
-    // 处理assets 
-    deal_assets() {
-        this.copy_dir(publicDir, distDir);
-        this.copy_dir(path.join(themeDir, 'assets'), path.join(distDir, 'assets'));
+    copyAssets() {
+        this.copyDir(publicDir, distDir);
+        this.copyDir(path.join(themeDir, 'assets'), path.join(distDir, 'assets'));
     }
 
-    copy_dir(src, dest) {
+    // 兼容旧调用名，新的代码优先使用 copyAssets。
+    deal_assets() {
+        this.copyAssets();
+    }
+
+    copyDir(src: string, dest: string) {
         const fullSrc = path.isAbsolute(src) ? src : fromApp(src);
         const fullDest = path.isAbsolute(dest) ? dest : fromApp(dest);
         if (!fs.existsSync(fullSrc)) {
             throw new Error(`源目录不存在: ${src}`);
         }
-        if (!fs.existsSync(fullDest)) {
-            fs.mkdirSync(fullDest, { recursive: true });
-        }
+
+        ensureDir(fullDest);
         fs.cpSync(fullSrc, fullDest, { recursive: true });
     }
 
-
+    // 兼容旧调用名，新的代码优先使用 copyDir。
+    copy_dir(src: string, dest: string) {
+        this.copyDir(src, dest);
+    }
 }
 
 export default rbook;
