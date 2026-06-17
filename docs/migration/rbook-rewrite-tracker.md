@@ -152,6 +152,7 @@
 | Wave 4D-54 | `string/manacher` | 已验证：Manacher 页面补齐问题模型、核心直觉和应用分类，统一为当前教程结构 |
 | Wave 4D-55 | `string/最小表示法` | 已验证：最小表示法页面补齐问题模型、核心直觉、应用分类和经典例题说明 |
 | Wave 4D-56 | `dynamic_programming/数位DP` | 已验证：数位 DP 页面补齐 code_template、教程结构、证明、测试用例、应用分类和经典例题 |
+| Wave 4D-57 | `graph/Eulerian-path` | 已验证：新增无向/有向欧拉路正式模板，页面去除不可编译内联代码并补齐教程结构和应用分类 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令

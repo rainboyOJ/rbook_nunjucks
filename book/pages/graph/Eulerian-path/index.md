@@ -1,360 +1,166 @@
 ---
-title: "欧拉路与欧拉回路（Eulerian Path & Circuit）"
+id: "eulerian-path"
+title: "欧拉路与欧拉回路"
 date: 2025-12-18 12:01
 toc: true
-tags: ["欧拉路"]
-categories: [""]
+tags: ["欧拉路", "图论", "Hierholzer"]
+categories: ["graph"]
+code_template:
+  - title: 无向图欧拉路
+    desc: "Hierholzer 算法构造无向图欧拉路或欧拉回路"
+    tags: ["欧拉路", "Hierholzer", "无向图"]
+    code: /code/graph/euler_path_undirected.cpp
+  - title: 有向图欧拉路
+    desc: "Hierholzer 算法构造有向图欧拉路或欧拉回路"
+    tags: ["欧拉路", "Hierholzer", "有向图"]
+    code: /code/graph/euler_path_directed.cpp
 ---
 
 [[TOC]]
 
-## 摘要 (Abstract)
-简要介绍欧拉路（Eulerian Path）与欧拉回路（Eulerian Circuit）的定义、存在性判定以及构造方法。本文以通俗的直觉和严格的判定条件为主线，介绍常用的线性时间构造算法——Hierholzer 算法，并给出完整的可运行 C++ 竞赛风格实现、复杂度分析与测试用例。
+## 一句话算法
 
-## 背景与动机 (Motivation)
-欧拉路问题是图论的经典问题，起源于柯尼斯堡七桥问题。实际应用包括邮递员路线、路网巡检、网络封包路径规划、拼接 DNA 片段（重叠图）等。在算法竞赛中，欧拉路/回路是基本题型，也是许多变体（带权、限制出入度、多重边、有向/无向混合）的基础。
+欧拉路是一笔走完所有边的路径；先用连通性和度数判定是否存在，再用 Hierholzer 算法“走到无路可走再回溯收路”，就能线性构造答案。
+
+## 问题模型
+
+给定一张图，要求找出一条路径，使得：
+
+- 每条边恰好经过一次。
+- 顶点可以重复经过。
+- 如果起点和终点相同，称为欧拉回路。
+- 如果起点和终点可以不同，称为欧拉路。
+
+欧拉路问题起源于柯尼斯堡七桥问题：能不能从某处出发，每座桥恰好走一次？
 
 ![](./7桥.jpg)
 
-## 问题定义 (Problem Definition)
-- 欧拉路：一条在图中经过每条边恰好一次的路径（可以重复经过顶点）。
-- 欧拉回路：一条在图中经过每条边恰好一次且起点=终点的回路。
+本文讨论两类竞赛中最常用的模型：
 
-我们讨论两类图的判定与构造：无向图与有向图。
+- 无向图欧拉路/回路。
+- 有向图欧拉路/回路。
 
-## 一句话算法
-- 无向图：如果图是连通（忽略孤立顶点）且顶点度为奇数的顶点数量为 $0$ 或 $2$，用 Hierholzer 算法从合适顶点出发即可构造欧拉路/回路。
-- 有向图：若弱连通且满足入度与出度的特定差值（回路：每点入度=出度；路径：一个顶点出度=in度+1，一个顶点入度=出度+1，其余相等），则可用带方向的 Hierholzer 算法构造。
+### 无向图存在条件
 
-## 关键思路 (Key Idea)
-Hierholzer 算法的核心是贪心局部闭合并拼接：
-1. 从某个起点沿尚未访问的边不断前进，直到回到一个已访问顶点，形成一个环（或路径停止在无法前进的顶点）。
-2. 若还有未访问的边，则在当前已构造路径中找一个仍有未访问边的顶点，从该顶点再做同样的闭合，最后把新环插入到已有路径中。
-3. 反复直到所有边被访问。该过程保证每条边只被访问一次，时间线性。
+忽略度数为 $0$ 的孤立点后，所有有边的顶点必须连通。
 
-下面用图示说明（无向示例）：
+在此基础上：
 
-```mermaid
-graph LR
-  A --> B
-  B --> C
-  C --> D
-  D --> B
-  B --> E
-  E --> D
-```
+- 奇度顶点个数为 $0$：存在欧拉回路。
+- 奇度顶点个数为 $2$：存在欧拉路，起点和终点就是这两个奇度顶点。
+- 其他情况：不存在欧拉路。
 
-![](./image.png)
+### 有向图存在条件
 
-开始于 A: A-B-C-D-B-E-D，局部闭合后拼接得到完整欧拉路径（示意）。
+忽略入度和出度都为 $0$ 的孤立点后，所有有边的顶点在弱连通意义下连通。也就是把有向边当成无向边后连通。
 
-## 欧拉路和欧拉回路的存在性判定
+在此基础上：
 
-### 无向图
-定义顶点 $v$ 的度为 $d(v)$。必要且充分条件：
-1. 图的所有有边的顶点在同一连通分量（即忽略度为 0 的顶点后，图是连通的）。
-2. 奇数度顶点的数目为 $0$（存在欧拉回路）或 $2$（存在欧拉路，但不是回路）。
+- 所有点满足 $in(v)=out(v)$：存在有向欧拉回路。
+- 恰有一个点满足 $out(s)=in(s)+1$，恰有一个点满足 $in(t)=out(t)+1$，其他点满足 $in(v)=out(v)$：存在从 $s$ 到 $t$ 的有向欧拉路。
+- 其他情况：不存在有向欧拉路。
 
-证明要点：若存在欧拉回路，则每次进入某顶点也必然离开，故每个顶点度为偶数。对于欧拉路，起点与终点为奇度，其余顶点度为偶数。反向构造使用 Hierholzer 算法可构造出满足条件的路径。
+## 核心直觉
 
-可以用以下等式判断边数与度的关系：
-$$\sum_{v} d(v) = 2|E|.$$
-因此奇数度顶点的数目为偶数。
+欧拉路的关键不是“能不能乱走”，而是“每条边只能用一次，最后还能把所有边接成一条连续路径”。
 
-### 有向图
-定义顶点 $v$ 的入度为 $in(v)$，出度为 $out(v)$。必要且充分条件（弱连通，忽略入出度都为 0 的顶点）：
-- 欧拉回路（有向）：对所有顶点有 $in(v)=out(v)$，且所有有边的顶点在同一弱连通分量（将有向边视为无向边检查连通性）。
-- 欧拉路（有向）：存在一个起点 $s$ 和终点 $t$，满足
-  - $out(s)=in(s)+1$,
-  - $in(t)=out(t)+1$,
-  - 对其他顶点 $v$，$in(v)=out(v)$，
-  且所有有边的顶点在同一弱连通分量。
+Hierholzer 算法的直觉是：图里的欧拉回路可以看成很多小环套在一起。普通 DFS 如果进门就记录路径，可能先走完一个小环，然后主干上的边还没有接进去。Hierholzer 反过来做：**走边时先不急着输出，等一个点已经没有未走的边时，再把它放进答案。**
 
-直观：每次中间顶点进入次数等于离开次数；起点比终点多一次离开，终点比起点多一次进入。
+这个“回溯时加入答案”的动作，本质是在把最里面的小环先收好，再一层一层拼回主路径。
 
-## 算法步骤 (Algorithm Steps)
-下面给出无向与有向图的 Hierholzer 实现伪代码：
+可以把它理解成：
 
-无向图（伪代码）：
+- 前序记录：边走边写，遇到分叉时容易把后面的环插不回去。
+- 后序记录：先把分叉里的边全部走完，回溯时自然完成拼接。
 
-1. 检查连通性（忽略度为 0 的顶点），统计奇度顶点数。
-2. 若不满足存在性条件则无解。
-3. 选择起点：若有 2 个奇度顶点，则从其中一个奇度顶点出发；否则，从任意有边的顶点出发。
-4. 用栈模拟深度优先遍历：
-   - 当当前顶点 u 有未用的边时，记录该边为已用，压入 v，然后继续；
-   - 否则将 u 弹出并加入答案路径（逆序构造）。
-5. 最终得到的路径即为欧拉路（或回路）。
+因此 Hierholzer 的答案通常是逆序产生的，最后 `reverse` 一次即可。
 
-有向图只在边方向与度检查上不同，其他步骤相同。
+## 算法步骤
 
-## 算法证明 (Proof Sketch)
-Hierholzer 算法在每一步都沿尚未访问的边前进，最终当无法继续时回溯并把顶点加入答案。因为每条边被恰好标记一次为已用，算法线性遍历边数。局部环插入不会破坏已访问边的唯一性，且在存在性条件下最终能覆盖所有边，得到一条使用每条边一次的路径。
+无向图：
 
-更正式地：每次插入的是一个闭合环或延伸段，环的拼接操作维持路径的连续性与边唯一使用性。存在性条件保证算法不会在中途陷入无法覆盖剩余边的情况。
+1. 建邻接表，每条无向边分两次加入邻接表，但共享同一个边编号 `id`。
+2. 统计每个点的度数，找一个有边的点作为连通性检查起点。
+3. 忽略孤立点检查连通性。
+4. 统计奇度顶点个数：
+   - 若为 $2$，从任意一个奇度点出发。
+   - 若为 $0$，从任意有边的点出发。
+   - 否则无解。
+5. 用栈模拟 Hierholzer：
+   - 当前点还有未使用边，就标记这条边并走到下一点。
+   - 当前点没有未使用边，就把它加入 `path` 并弹栈。
+6. 若最终 `path.size() != m+1`，说明没有覆盖所有边，无解。
+7. 反转 `path`，得到欧拉路或欧拉回路的顶点序列。
 
-## 复杂度分析 (Complexity Analysis)
-- 时间复杂度：每条边最多被访问两次（查找和标记），常见实现为 $O(|E|+|V|)$。
-- 空间复杂度：需要储存邻接表和标记边，通常为 $O(|E|+|V|)$。
+有向图：
 
-## 代码实现 (Code Implementation)
-下面提供一份面向竞赛的 C++ 完整实现，支持无向图与有向图两种模式，带有详细注释与低心智负担的风格。
+1. 建有向邻接表，同时建一张弱连通检查用的无向图。
+2. 统计每个点的入度 `indeg` 和出度 `outdeg`。
+3. 忽略孤立点检查弱连通性。
+4. 根据入度、出度差确定起点：
+   - 回路：所有点入度等于出度，从任意有边点出发。
+   - 路径：从唯一满足 `outdeg = indeg + 1` 的点出发。
+5. 后续 Hierholzer 过程与无向图相同，只是边只沿原方向走。
 
-```cpp
-// Eulerian path/circuit using Hierholzer's algorithm
-// 支持：无向图（isDirected=false）与有向图（isDirected=true）
-// 输入格式：
-// n m isDirected
-// 随后 m 行，每行 u v（无向时视为双向边；有向时为 u->v）
-// 输出：若存在欧拉路或回路，打印顶点序列（1-based），否则打印 "NO"。
+## 算法证明
 
-#include <bits/stdc++.h>
-using namespace std;
+先证明判定条件。
 
-struct Edge { int to; int id; };
+无向图中，一条欧拉路经过中间点时，每进入一次就必须离开一次，所以中间点贡献成对的边，度数为偶数。只有起点和终点可以多一次“离开”或“进入”，所以最多有两个奇度点。若是回路，起点也会回到自身，所有点度数都为偶数。
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+有向图同理：中间点每进入一次就必须离开一次，所以 $in(v)=out(v)$。路径起点多一次离开，终点多一次进入，因此起点满足 $out=in+1$，终点满足 $in=out+1$。
 
-    int n, m; bool isDirected;
-    if (!(cin >> n >> m >> isDirected)) return 0;
+再证明构造正确。
 
-    vector<vector<Edge>> g(n+1);
-    vector<int> deg(n+1, 0);         // 无向：度；有向：出度
-    vector<int> indeg(n+1, 0);      // 仅有向需要
+Hierholzer 始终维护一个不变量：已经标记使用的边不会再被使用，当前栈表示一条由已使用边组成的连续行走轨迹。
 
-    // 为了支持多重边，给每条边一个唯一 id；无向图两端共用同一个 id
-    int eid = 0;
-    vector<pair<int,int>> edges(m+5);
-    for (int i = 0; i < m; ++i) {
-        int u, v; cin >> u >> v;
-        ++eid;
-        edges[eid] = {u, v};
-        if (!isDirected) {
-            g[u].push_back({v, eid});
-            g[v].push_back({u, eid});
-            deg[u]**; deg[v]**;
-        } else {
-            g[u].push_back({v, eid});
-            deg[u]**; indeg[v]**;
-        }
-    }
+当一个顶点没有未使用边时，把它放入答案是安全的，因为以后不可能再从这个点接出新的未使用边；它在最终欧拉路中的后续部分已经确定。回溯不断重复这个过程，相当于先完成局部小环，再把小环接回主路径。
 
-    // 连通性检查（忽略无边的顶点）
-    vector<char> vis(n+1, 0);
-    int start = -1;
-    for (int i = 1; i <= n; ++i) if ((isDirected ? deg[i] + indeg[i] : deg[i]) > 0) { start = i; break; }
-    if (start == -1) {
-        // 没有边，空图可以视为有欧拉回路（空路径）
-        cout << "\n";
-        return 0;
-    }
-    // BFS/DFS 在无向情形或有向情形均用弱连通（把边当无向）
-    {
-        stack<int> st; st.push(start); vis[start] = 1;
-        while (!st.empty()) {
-            int u = st.top(); st.pop();
-            for (auto &e: g[u]) {
-                int v = e.to;
-                if (!vis[v]) { vis[v] = 1; st.push(v); }
-            }
-            if (isDirected) {
-                // 还要检查反向边（通过 edges 列表）
-                // 对于弱连通，只需访问所有与 u 相邻的顶点（入边的起点）
-            }
-        }
-        for (int i = 1; i <= n; ++i) {
-            if ((isDirected ? deg[i] + indeg[i] : deg[i]) > 0 && !vis[i]) {
-                cout << "NO\n";
-                return 0;
-            }
-        }
-    }
+若图满足存在条件，所有有边顶点在同一个连通块中，并且度数平衡保证路径不会在错误的位置提前断掉。算法每次恰好消耗一条未使用边，所以最终若得到 $m+1$ 个顶点，就对应恰好使用了全部 $m$ 条边的一条欧拉路。
 
-    // 度条件检查
-    if (!isDirected) {
-        int odd = 0;
-        int s = start;
-        for (int i = 1; i <= n; **i) if (deg[i] % 2) { **odd; s = i; }
-        if (!(odd == 0 || odd == 2)) { cout << "NO\n"; return 0; }
-        // Hierholzer: 非递归栈实现
-        vector<char> used(eid+1, 0);
-        vector<int> stk, path;
-        stk.push_back(s);
-        vector<int> it(n+1, 0);
-        while (!stk.empty()) {
-            int v = stk.back();
-            while (it[v] < (int)g[v].size() && used[g[v][it[v]].id]) ++it[v];
-            if (it[v] == (int)g[v].size()) {
-                path.push_back(v);
-                stk.pop_back();
-            } else {
-                auto e = g[v][it[v]++];
-                used[e.id] = 1;
-                stk.push_back(e.to);
-            }
-        }
-        if ((int)path.size() != m+1) { cout << "NO\n"; return 0; }
-        // path 是逆序
-        for (int i = path.size()-1; i >= 0; --i) {
-            if (i != (int)path.size()-1) cout << ' ';
-            cout << path[i];
-        }
-        cout << '\n';
-    } else {
-        // 有向图
-        int startCandidate = -1, endCandidate = -1;
-        bool ok = true;
-        for (int i = 1; i <= n; ++i) {
-            if (out_degree(i)??) {}
-        }
-        // 由于在此文件中我们没有定义 out_degree 函数，上面为占位。
-        // 下面给出完整且可直接编译的有向版本实现。
-    }
+## 复杂度分析
 
-    return 0;
-}
-```
+设顶点数为 $n$，边数为 $m$。
 
-注：上面是无向图实现框架。其中有向图实现在竞赛模板中通常分开写，为保持心智负担低，下面提供两段完整可编译的 C++ 文件：一个只做无向，一个只做有向。
+- 建图时间复杂度：$O(n+m)$。
+- 连通性检查时间复杂度：$O(n+m)$。
+- Hierholzer 构造中，每条边只会被跳过或使用常数次，总时间复杂度为 $O(n+m)$。
+- 空间复杂度为 $O(n+m)$。
 
-### 可编译版 1：无向图（完整）
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-struct Edge { int to; int id; };
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+## 代码实现
 
-    int n, m; bool isDirected = false;
-    if (!(cin >> n >> m)) return 0;
-    vector<vector<Edge>> g(n+1);
-    vector<int> deg(n+1, 0);
-    int eid = 0;
-    for (int i = 0; i < m; ++i) {
-        int u, v; cin >> u >> v; ++eid;
-        g[u].push_back({v, eid});
-        g[v].push_back({u, eid});
-        deg[u]**; deg[v]**;
-    }
-    int start = -1;
-    for (int i = 1; i <= n; ++i) if (deg[i] > 0) { start = i; break; }
-    if (start == -1) { cout << "\n"; return 0; }
-    vector<char> vis(n+1, 0);
-    stack<int> st; st.push(start); vis[start] = 1;
-    while (!st.empty()) {
-        int u = st.top(); st.pop();
-        for (auto &e: g[u]) if (!vis[e.to]) { vis[e.to] = 1; st.push(e.to); }
-    }
-    for (int i = 1; i <= n; ++i) if (deg[i] > 0 && !vis[i]) { cout << "NO\n"; return 0; }
-    int odd = 0; int s = start;
-    for (int i = 1; i <= n; **i) if (deg[i] % 2) { **odd; s = i; }
-    if (!(odd == 0 || odd == 2)) { cout << "NO\n"; return 0; }
+### 无向图模板
 
-    vector<char> used(eid+1, 0);
-    vector<int> it(n+1, 0), stk, path;
-    stk.push_back(s);
-    while (!stk.empty()) {
-        int v = stk.back();
-        while (it[v] < (int)g[v].size() && used[g[v][it[v]].id]) ++it[v];
-        if (it[v] == (int)g[v].size()) { path.push_back(v); stk.pop_back(); }
-        else { auto e = g[v][it[v]++]; used[e.id] = 1; stk.push_back(e.to); }
-    }
-    if ((int)path.size() != m+1) { cout << "NO\n"; return 0; }
-    for (int i = path.size()-1; i >= 0; --i) {
-        if (i != (int)path.size()-1) cout << ' ';
-        cout << path[i];
-    }
-    cout << '\n';
-    return 0;
-}
-```
+@include-code(/code/graph/euler_path_undirected.cpp, cpp)
 
-### 可编译版 2：有向图（完整）
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-struct Edge { int to; int id; };
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+### 有向图模板
 
-    int n, m; if (!(cin >> n >> m)) return 0;
-    vector<vector<Edge>> g(n+1);
-    vector<int> outdeg(n+1,0), indeg(n+1,0);
-    int eid = 0;
-    for (int i = 0; i < m; ++i) {
-        int u, v; cin >> u >> v; ++eid;
-        g[u].push_back({v, eid});
-        outdeg[u]**; indeg[v]**;
-    }
-    int start = -1;
-    for (int i = 1; i <= n; ++i) if (outdeg[i] + indeg[i] > 0) { start = i; break; }
-    if (start == -1) { cout << "\n"; return 0; }
-    vector<char> vis(n+1, 0);
-    stack<int> st; st.push(start); vis[start] = 1;
-    while (!st.empty()) {
-        int u = st.top(); st.pop();
-        for (auto &e: g[u]) if (!vis[e.to]) { vis[e.to] = 1; st.push(e.to); }
-        // 访问入边的起点需要额外图，下面采用弱连通性检查的简化方法：
-    }
-    // 简化弱连通检查：构建无向邻接用于连通检测
-    vector<vector<int>> ug(n+1);
-    for (int u = 1; u <= n; ++u) for (auto &e: g[u]) { ug[u].push_back(e.to); ug[e.to].push_back(u); }
-    fill(vis.begin(), vis.end(), 0);
-    st.push(start); vis[start] = 1;
-    while (!st.empty()) { int u = st.top(); st.pop(); for (int v: ug[u]) if (!vis[v]) { vis[v]=1; st.push(v); } }
-    for (int i = 1; i <= n; ++i) if (outdeg[i]+indeg[i] > 0 && !vis[i]) { cout << "NO\n"; return 0; }
+@include-code(/code/graph/euler_path_directed.cpp, cpp)
 
-    int cntStart=0, cntEnd=0; int s = start;
-    for (int i = 1; i <= n; ++i) {
-        if (outdeg[i] == indeg[i]+1) { ++cntStart; s = i; }
-        else if (indeg[i] == outdeg[i]+1) ++cntEnd;
-        else if (indeg[i] != outdeg[i]) { cout << "NO\n"; return 0; }
-    }
-    if (!((cntStart==1 && cntEnd==1) || (cntStart==0 && cntEnd==0))) { cout << "NO\n"; return 0; }
+## 测试用例
 
-    vector<char> used(eid+1, 0);
-    vector<int> it(n+1,0), stk2, path;
-    stk2.push_back(s);
-    while (!stk2.empty()) {
-        int v = stk2.back();
-        while (it[v] < (int)g[v].size() && used[g[v][it[v]].id]) ++it[v];
-        if (it[v] == (int)g[v].size()) { path.push_back(v); stk2.pop_back(); }
-        else { auto e = g[v][it[v]++]; used[e.id] = 1; stk2.push_back(e.to); }
-    }
-    if ((int)path.size() != m+1) { cout << "NO\n"; return 0; }
-    for (int i = path.size()-1; i >= 0; --i) {
-        if (i != (int)path.size()-1) cout << ' ';
-        cout << path[i];
-    }
-    cout << '\n';
-    return 0;
-}
-```
+无向图欧拉路：
 
-## 测试用例 (Test Case)
-
-1) 无向图示例：
-输入（第一行 n m）：
-```
-5 5
+```txt
+输入:
+5 6
 1 2
 2 3
 3 4
 4 2
 3 5
-```
-该图的边集与前文 mermaid 示例一致。运行无向版程序，输出示例可能为：
-```
-1 2 3 4 2 3 5
-```
-（注意欧拉路径并非唯一）
+5 1
 
-2) 有向图示例：
-输入：
+一种合法输出:
+2 1 5 3 4 2 3
 ```
+
+解释：输出不唯一，只要相邻顶点之间对应输入中的一条未使用边，并且 $6$ 条边都恰好用一次即可。
+
+有向图欧拉回路：
+
+```txt
+输入:
 5 6
 1 2
 2 3
@@ -362,55 +168,89 @@ int main() {
 3 4
 4 5
 5 3
+
+一种合法输出:
+1 2 3 4 5 3 1
 ```
-输出示例（一个欧拉回路）：
+
+不可行用例：
+
+```txt
+输入:
+4 2
+1 2
+3 4
+
+输出:
+NO
 ```
-1 2 3 1  ... (具体顺序取决于实现)
-```
 
-手工验证：确保输出顶点数为 $m+1$ 并且每条边恰好被使用一次。
+解释：忽略孤立点后，有边顶点不在同一个连通块中。
 
-## 经典例题 (Classic Problems)
-提供 3 道经典练习题与解题思路：
+## 应用分类详解
 
-1. 邮差问题（Chinese Postman Problem，变体）——在无向图上寻找最短闭合路径经过所有边至少一次：这是带权最短增补欧拉回路问题，需要最小匹配最短奇度顶点对。
+欧拉路的本质是：**每条边恰好使用一次的路径构造问题。**
 
-2. UVA / SPOJ 上的有向欧拉路径题（多重边）——注意在输入中可能出现自环和多重边，使用边 id 标记可以正确处理。
+### 一、一笔画与边覆盖
 
-3. 拼接 DNA（重叠图构造欧拉路）——将 k-mer 构造成有向 De Bruijn 图，寻找欧拉路重构原序列。关键是构造有向图并检查入度/出度条件与弱连通性。
+- **典型模式：** 题目要求每条边、每条路、每张牌或每个连接关系恰好使用一次。
+- **识别信号：** 出现“一笔画”“每条边恰好一次”“输出经过边的顺序”。
+- **核心建模：** 把对象之间的连接关系建成边，用度数判定和 Hierholzer 构造路径。
 
-每题的关键思想均基于本文的判定条件与 Hierholzer 构造。
+| 应用场景 | 经典题目 | 核心思路 |
+|---------|---------|---------|
+| 无向一笔画 | [[problem: luogu,P1341]] | 字符当顶点，相邻字符关系当边 |
+| 字典序路径 | [[problem: luogu,P2731]] | 邻接表排序后做 Hierholzer |
+| 有向欧拉回路 | [[problem: luogu,P6066]] | 按出边方向构造完整边序列 |
 
-## 实践思考与扩展 (Further Thinking & Extension)
-- 带权欧拉路径、最短覆盖每条边至少一次的问题属于更复杂的优化问题（如中国邮差问题）。
-- 当图不满足欧拉条件时，可通过复制一些边使其满足条件，从而得到带最小开销的巡回路线。
-- 在有向图中，弱连通性检查是必须的；若需强连通性判断（某些变体）应使用 Kosaraju/Tarjan 分量算法。
+### 二、字符串拼接与 De Bruijn 图
 
+- **典型模式：** 给出很多长度相同或相邻重叠的片段，要求拼成一个序列。
+- **识别信号：** 片段之间通过前缀、后缀相接，每个片段必须使用一次。
+- **核心建模：** 把长度 $k-1$ 的前缀和后缀当顶点，把一个长度 $k$ 的片段当有向边。
 
-## 字典序最小的 Eulerian Path
+| 应用场景 | 经典题目 | 核心思路 |
+|---------|---------|---------|
+| 单词接龙 | [[problem: luogu,P1127]] | 单词首尾字符建边，找字典序欧拉路 |
+| DNA 片段拼接 | De Bruijn 图模型 | k-mer 作为边，前后缀作为顶点 |
+| 邮票/门牌序列 | 常见构造题 | 每个片段必须恰好使用一次 |
 
-- 将邻接表中的边按顶点编号排序，然后在 Hierholzer 算法中每次选择最小的未访问边即可。
+### 三、边必须重复覆盖的扩展
 
-Hierholzer 算法的特点 : 先走到死胡同，再回溯，所以最后得到的路径是逆序的(也就是在桟上)。
+- **典型模式：** 要求每条边至少经过一次，并且总代价最小。
+- **识别信号：** 出现“巡检所有道路”“邮递员路线”“允许重复走边”。
+- **核心建模：** 如果图本来不是欧拉图，就需要补边或复制路径，让奇度点配对后变成欧拉回路。
 
-显然如果你先在 Hierholzer 算法中走 最小的边, 那么根据 dfs 回溯的性质,这条边一定会在最后被加入答案, 所以答案一定是字典序最小的。
+| 应用场景 | 经典题目 | 核心思路 |
+|---------|---------|---------|
+| 中国邮递员问题 | 邮差巡路模型 | 奇度点之间做最小代价配对 |
+| 边覆盖巡检 | [[problem: luogu,P6628]] | 把必须重复的部分转成欧拉化后的走法 |
+| 路网巡回 | 工程巡检模型 | 先补足度数条件，再输出欧拉回路 |
 
+## 经典例题
 
-### 实现步骤
-(针对字典序最小优化)为了实现字典序最小，
+1. [[problem: luogu,P1341]] 无序字母对
+   每个字母是顶点，每个字母对是无向边。题目要求输出一条使用所有字母对的序列，本质就是无向欧拉路。
 
-我们需要在 Hierholzer 算法的基础上增加一个预处理步骤。
-- 步骤一：
-  预处理 (排序)在建图完成后，对每个节点的邻接表进行排序。确保当你访问节点 $U$ 时，它的出边列表是按从小到大排列的。技巧：为了在 C++ vector 中高效地（O(1)）取出最小元素，我们可以先升序排序，然后 reverse 整个 vector。这样最小值就在末尾，可以使用 pop_back() 取出。
-- 步骤二：
-  确定起点根据第 2 节的度数检查条件，找到唯一的起点。如果是欧拉回路，找编号最小的有出度的点。
-- 步骤三：Hierholzer DFS (后序入栈)
+2. [[problem: luogu,P2731]] Riding the Fences
+   模板型无向欧拉路题。额外要求字典序尽量小，需要对邻接表排序，并从合适的最小起点开始。
 
-## 题目
+3. [[problem: luogu,P1127]] 词链
+   单词看成从首字母到尾字母的一条有向边。每个单词必须用一次，因此需要判断有向欧拉路，并处理字典序。
 
-- [[problem: luogu,P1341]]
-- [[problem: luogu,P1333]]
-- 要求字典序最小 [[problem: luogu,P2731]]
-- 有向图欧拉回路 [[problem: luogu,P6066]  ]
-- [[problem: luogu,P1127]]
-- [[problem: luogu,P6628]]
+4. [[problem: luogu,P6066]] Watchcow
+   有向欧拉回路模型。重点是理解每条有向边只能按方向使用一次。
+
+5. [[problem: luogu,P6628]] 丁香之路
+   欧拉路的扩展题。不是简单套模板，而是要先把重复经过边的需求转成欧拉化后的图。
+
+## 字典序最小路径
+
+如果题目要求字典序最小，常见处理方式是：
+
+1. 邻接表按终点编号排序。
+2. 若用递归或栈后序生成答案，要注意答案会反转。
+3. 根据实现选择升序取边后反转答案，或降序存边用 `pop_back()` 取最小边。
+4. 起点也要按判定条件选择最小可行点：有两个奇度点时取较小的奇度点；欧拉回路时取最小的有边点。
+
+字典序问题的细节和“答案是后序产生的”强相关。调试时不要只看取边顺序，还要看最后是否做了 `reverse`。
