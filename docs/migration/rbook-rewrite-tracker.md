@@ -163,6 +163,7 @@
 | Wave 4D-65 | `dynamic_programming/sparse_table` | 已验证：旧 ST 表目录入口改为纯归档说明，移除重复 code_template 和模板引用 |
 | Wave 4D-66 | `data_structure/queue`、`data_structure/stack` | 已验证：旧路径归档页移除重复模板引用，保留正式教程链接和旧题单 |
 | Wave 4D-67 | `data_structure/binary_search_tree` | 已验证：旧 BST 路径归档页移除重复模板引用，保留正式教程链接和旧文要点 |
+| Wave 4D-68 | `graph/Hungarian` | 已验证：重写匈牙利算法教程，正式模板补全为可运行 C++17 程序，页面改为引用 `/code/graph/hungarian.cpp` |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
