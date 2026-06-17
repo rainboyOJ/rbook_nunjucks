@@ -6,6 +6,7 @@ local paths = require("rbook.paths")
 local M = {}
 
 local function text_for_template(item)
+  -- text 是 snacks 的模糊搜索源；把标题、描述、tag、导航状态都放进去。
   local tags = table.concat(item.tags or {}, " ")
   local category = table.concat(item.categories or {}, "/")
   local nav = item.in_nav and "" or " 未加入导航"
@@ -20,6 +21,7 @@ local function text_for_template(item)
 end
 
 local function format_item(item)
+  -- format 只负责显示，不参与搜索。这里保持信息密度高，适合写题时快速扫列表。
   local ret = {}
   local category = table.concat(item.categories or {}, "/")
   ret[#ret + 1] = { "[" .. (category ~= "" and category or item.source) .. "] ", "Comment" }
@@ -34,6 +36,8 @@ local function format_item(item)
 end
 
 local function pick(items, title)
+  -- RbookCode 和 RbookCodeFiles 共用 picker 行为：
+  -- Enter 插入，C-o 打开代码，C-a 打开文章，C-y 复制，C-f 带折叠标记插入。
   local snacks = deps.snacks()
   if not snacks then
     return
@@ -92,6 +96,7 @@ local function pick(items, title)
 end
 
 function M.code()
+  -- 主入口：只展示文章声明过的正式 code_template。
   local data = catalog.get()
   if not data then
     return
@@ -108,6 +113,7 @@ function M.code()
 end
 
 function M.code_files()
+  -- 兜底入口：直接浏览 book/code 全部允许类型文件。
   local data = catalog.get()
   if not data then
     return
@@ -124,6 +130,7 @@ function M.code_files()
 end
 
 function M.articles()
+  -- 阅读/维护文章时使用，不插入代码，只打开源 Markdown。
   local data = catalog.get()
   if not data then
     return

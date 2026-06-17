@@ -4,6 +4,11 @@ local paths = require("rbook.paths")
 
 local M = {}
 
+-- scanner 是插件的数据入口：
+-- 1. 读取 book.yaml，得到导航和 glob；
+-- 2. 扫描 book/pages 的 front matter，抽取正式 code_template；
+-- 3. 扫描 book/code，作为 RbookCodeFiles 的兜底文件列表。
+
 local function read_file(path)
   local lines = vim.fn.readfile(path)
   if not lines then
@@ -13,6 +18,8 @@ local function read_file(path)
 end
 
 local function parse_front_matter(path, lyaml)
+  -- 只解析 Markdown 文件顶部的 front matter；正文不进入索引。
+  -- 这样搜索足够快，也能保持插件职责清楚：找模板，不做全文检索。
   local content = read_file(path)
   if not content or not content:match("^%-%-%-") then
     return nil
@@ -32,6 +39,7 @@ local function parse_front_matter(path, lyaml)
 end
 
 local function iter_files(root, predicate)
+  -- 使用 libuv 递归扫描，避免依赖外部 find/rg 命令。
   local result = {}
   if not paths.exists(root) then
     return result
@@ -75,6 +83,8 @@ local function list_contains(list, value)
 end
 
 local function join_book_path(base, path)
+  -- book.yaml 的章节 path 是相对父章节的。
+  -- 例如 graph 章节下的 mst/最小生成树.md，真实文章 route 是 graph/mst/最小生成树.md。
   if not path or path == "" or path == "." then
     return base
   end
@@ -95,6 +105,8 @@ local function path_is_page(path)
 end
 
 local function scan_nav_node(node, section, nav, base)
+  -- 把 book.yaml 的章节树压平成 path -> { title, section }。
+  -- 这个结果只用于给模板补充分类信息，以及 doctor 判断文章是否挂到首页。
   if type(node) ~= "table" then
     return
   end
@@ -149,6 +161,8 @@ local function scan_book_yaml(lyaml)
 end
 
 local function article_nav_key(article_path)
+  -- book.yaml 里常用目录路径表示 index.md 页面：
+  -- graph/save 等价于 graph/save/index.md。
   local rel = paths.article_route(article_path)
   if not rel then
     return nil
@@ -170,6 +184,8 @@ local function normalize_tags(value)
 end
 
 local function make_template(article_path, fm, item, nav, glob)
+  -- 一个 code_template 项最终会变成 picker 的一条记录。
+  -- 这里把文章信息、代码路径、导航状态都合并好，后续 UI 不再理解 YAML 结构。
   local code_abs = paths.resolve_code_path(item.code, article_path)
   local article_key = article_nav_key(article_path)
   local route = paths.article_route(article_path)
@@ -195,6 +211,8 @@ local function make_template(article_path, fm, item, nav, glob)
 end
 
 local function scan_templates(lyaml, nav, glob)
+  -- 正式模板只来自文章 front matter 的 code_template。
+  -- 这样主列表不会被 book/code 里的临时代码和旧代码淹没。
   local articles = {}
   local templates = {}
   local errors = {}
@@ -241,6 +259,8 @@ local function file_allowed(path)
 end
 
 local function scan_code_files()
+  -- 兜底列表：直接浏览 book/code 下允许扩展名的文件。
+  -- 它不代表“正式模板”，只是方便写题时临时查找。
   local files = iter_files(paths.code_root(), file_allowed)
   local result = {}
 
@@ -262,6 +282,8 @@ local function scan_code_files()
 end
 
 function M.scan()
+  -- 统一返回 catalog.lua 缓存需要的全部数据。
+  -- 缺依赖时返回 nil，让上层命令自然停止。
   local lyaml = deps.lyaml()
   if not lyaml then
     return nil

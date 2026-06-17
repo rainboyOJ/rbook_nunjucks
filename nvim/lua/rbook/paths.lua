@@ -10,6 +10,8 @@ local function normalize(path)
 end
 
 local function plugin_repo_root()
+  -- 本插件目录是 repo_root/nvim/lua/rbook，所以向上三层回到仓库根。
+  -- 用户显式传 repo_root 时不会走这个兜底逻辑。
   local source = debug.getinfo(1, "S").source:sub(2)
   local lua_file = vim.fs.normalize(source)
   return normalize(vim.fs.dirname(lua_file) .. "/../../..")
@@ -59,6 +61,8 @@ function M.resolve_code_path(code_path, article_path)
   end
 
   if code_path:match("^/code/") then
+    -- 文章 front matter 推荐写 /code/...，这是电子书里的 Web 路径。
+    -- 插件运行在本地，需要映射回 repo_root/book/code/...。
     return M.code_root() .. "/" .. code_path:gsub("^/code/", "")
   end
 
@@ -71,6 +75,7 @@ function M.resolve_code_path(code_path, article_path)
   end
 
   if article_path then
+    -- 兼容少量旧文章里的 ./template.cpp 之类相对路径。
     return M.join(vim.fs.dirname(article_path), code_path)
   end
 

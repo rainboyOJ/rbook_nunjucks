@@ -12,6 +12,9 @@ local function code_exists(item)
 end
 
 function M.run()
+  -- doctor 只检查插件复用代码所需的关系：
+  -- 文章 front matter、book.yaml 导航、book/code 文件是否能互相对上。
+  -- 不做 Markdown、LaTeX、静态构建、HTTP API 这类站点级检查。
   local data = catalog.refresh()
   if not data then
     return
@@ -43,6 +46,7 @@ function M.run()
   end
 
   local code_ref_count = {}
+  -- 每个正式模板都应该能解析到真实代码文件，并且文章最好挂到首页或 glob。
   for _, item in ipairs(data.templates) do
     if not code_exists(item) then
       errors = errors + 1
@@ -60,6 +64,7 @@ function M.run()
   end
 
   for file, count in pairs(code_ref_count) do
+    -- 多篇文章复用同一份模板并不一定错，所以这里只作为提醒。
     if count > 1 then
       warnings = warnings + 1
       add(lines, "WARN", "同一代码被多个模板引用: " .. paths.relative(file, paths.code_root()))

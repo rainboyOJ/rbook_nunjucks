@@ -3,6 +3,8 @@ if vim.g.loaded_rbook_nvim then
 end
 vim.g.loaded_rbook_nvim = true
 
+-- plugin/ 只注册用户命令，避免在 Neovim 启动时扫描仓库。
+-- 真正的索引构建发生在用户第一次执行 RbookCode/RbookDoctor 时。
 local function rbook()
   return require("rbook")
 end

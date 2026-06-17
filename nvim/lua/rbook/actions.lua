@@ -5,6 +5,7 @@ local paths = require("rbook.paths")
 local M = {}
 
 local function notify(message, level)
+  -- 有 snacks 时用它的通知样式；没有时退回 Neovim 原生 notify。
   local snacks = deps.snacks()
   if snacks and snacks.notify then
     snacks.notify(message, { level = level or vim.log.levels.INFO })
@@ -22,6 +23,7 @@ local function read_lines(path)
 end
 
 local function with_fold_markers(lines, item)
+  -- 折叠标记是可选动作，默认关闭，避免污染提交到 OJ 的代码。
   if not config.get().insert.fold_markers then
     return lines
   end
@@ -34,6 +36,7 @@ local function with_fold_markers(lines, item)
 end
 
 function M.insert_code(item, opts)
+  -- 插入策略固定为“当前光标行之前插入”，不替换当前行，避免误删用户代码。
   opts = opts or {}
   if not item or not item.code_path then
     notify("没有可插入的代码文件", vim.log.levels.ERROR)
@@ -62,6 +65,7 @@ function M.insert_code(item, opts)
 end
 
 function M.copy_code(item)
+  -- 同时写入系统剪贴板和默认寄存器，方便在 Neovim 内外复用。
   if not item or not item.code_path then
     notify("没有可复制的代码文件", vim.log.levels.ERROR)
     return

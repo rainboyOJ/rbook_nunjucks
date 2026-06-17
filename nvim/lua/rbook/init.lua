@@ -3,6 +3,7 @@ local config = require("rbook.config")
 local M = {}
 
 function M.setup(opts)
+  -- lazy.nvim 会把 opts 传进这里；命令注册放在 plugin/rbook.lua。
   config.setup(opts)
 end
 
