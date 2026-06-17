@@ -168,6 +168,7 @@
 | Wave 4D-70 | `graph/dfs` | 已验证：旧 DFS 入口移除重复模板引用和旧 config code_template，保留指向正式图遍历教程的归档页 |
 | Wave 4D-71 | `graph/topsort` | 已验证：重写拓扑排序教程，修正 Kahn 模板为独立可运行程序，补齐 DAG DP、唯一序和字典序应用分类 |
 | Wave 4D-72 | `algorithm/discrete/start` | 已验证：旧离散化入口移除重复 include-code，保留指向正式离散化教程的归档页 |
+| Wave 4D-73 | `base/binary_jump/倍增思想`、`base/double_point/同向双指针 (滑动窗口)` | 已验证：两个旧入口移除重复 include-code，模板统一由正式教程暴露 |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
