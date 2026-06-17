@@ -13,5 +13,6 @@ categories: [""]
 
 ## quickIO 模板
 
+模板文件位置：`/code/utils/quick_io.cpp`。
 
-@include-code(/code/utils/quick_io.cpp, cpp)
+本页只保留 quickIO 的附录入口，模板内容由 `book/code/utils/quick_io.cpp` 维护。

@@ -1,6 +1,19 @@
+---
+title: "竞赛代码模板"
+date: 2026-06-17 00:00
+toc: true
+tags: ["模板", "工具"]
+categories: ["附录"]
+---
 
-写代码使用的模板
+[[TOC]]
 
-```cpp
-@include-code(/code/template/template.cpp, cpp)
-```
+## 说明
+
+本页是通用竞赛代码模板的附录入口，不作为算法教程维护。
+
+模板文件位置：
+
+- `/code/template/template.cpp`
+
+后续如果要修改通用头文件、常用类型别名、输入输出设置，请直接修改上面的代码文件。

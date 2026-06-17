@@ -173,6 +173,7 @@
 | Wave 4D-75 | `data-structure/Block`、`data-structure/heap` | 已验证：旧横线目录入口改为归档页，移除重复 code_template 和模板引用，指向正式下划线目录教程 |
 | Wave 4D-76 | `sort/quicksort/old`、`recursion/binary_search`、`tree/jump-lca` | 已验证：三个旧归档入口移除重复 include-code，模板统一由正式教程暴露 |
 | Wave 4D-77 | `dynamic_programming/lis/problem`、`dynamic_programming/number_pyramid/problem`、排列旧解析页 | 已验证：练习页和排列归档页移除直接 include-code，模板统一由主教程暴露 |
+| Wave 4D-78 | `appendix/template`、`appendix/tricks/quickIO`、`utils/*` 工具页 | 已验证：工具页改为模板路径说明，移除会触发算法教程扫描的 include-code/code_template |
 | Wave 4 | appendix、problem_list、ReadingNotes、teach_plan | 只保留仍有维护价值的内容，过期内容归档 |
 
 ## 每批验收命令
