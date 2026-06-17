@@ -6,7 +6,8 @@ local function normalize(path)
   if not path or path == "" then
     return nil
   end
-  return vim.fs.normalize(vim.fn.fnamemodify(path, ":p"):gsub("/$", ""))
+  local normalized = vim.fn.fnamemodify(path, ":p"):gsub("/$", "")
+  return vim.fs.normalize(normalized)
 end
 
 local function plugin_repo_root()
@@ -48,7 +49,8 @@ end
 
 function M.relative(path, root)
   path = vim.fs.normalize(path)
-  root = vim.fs.normalize(root):gsub("/$", "")
+  root = vim.fs.normalize(root)
+  root = root:gsub("/$", "")
   if path:sub(1, #root + 1) == root .. "/" then
     return path:sub(#root + 2)
   end
