@@ -262,6 +262,17 @@ chapters:
         path: rearrangement_inequality/index.md
       - title: 正负抵消
         path: zero_number/index.md
+  - title: 贪心
+    path: greedy
+    sections:
+      - title: 贪心算法
+        path: index.md
+      - title: 双机器调度问题
+        path: johnson/index.md
+      - title: 删除数字
+        path: delete_number/index.md
+      - title: 均分纸牌
+        path: 均分纸牌/index.md
   - title: 树相关算法树
     path: .
     nolink: true
