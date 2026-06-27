@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 env:
-  FALLBACK_IMAGE: gh-proxy.org/docker/ghcr.io/rainboyoj/rbook_nunjucks:latest
+  FALLBACK_IMAGE: ghcr.nju.edu.cn/rainboyoj/rbook_nunjucks:latest
   CONTAINER_NAME: rbook
   CONTAINER_PORT: 3000
   HOST_PORT: 3000

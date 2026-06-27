@@ -17,7 +17,7 @@ on:
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository }}
-  PULL_PROXY_PREFIX: gh-proxy.org/docker
+  PULL_PROXY_PREFIX: ghcr.nju.edu.cn
   CONTAINER_NAME: rbook
   CONTAINER_PORT: 3000
   HOST_PORT: 3000
