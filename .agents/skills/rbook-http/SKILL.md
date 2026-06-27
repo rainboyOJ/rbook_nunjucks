@@ -31,6 +31,64 @@ curl "$BASE_URL/api/health"
 
 如果健康检查失败，不要继续臆测文章内容；应报告服务不可用，或按用户要求切换到线上地址再试。
 
+## 推荐工具
+
+本 skill 带有一组 Python 脚本，位于 `scripts/` 目录。优先使用这些脚本访问 API；它们会自动处理中文 URL 编码、JSON 解析、错误输出和常用字段裁剪。脚本不可用时，再按后文 curl 示例直接请求 API。
+
+所有脚本默认读取 `RBOOK_BASE_URL`，未设置时使用 `http://127.0.0.1:3000`。如果要访问线上部署，传 `--online`。
+
+### 健康检查
+
+```bash
+python skills/rbook-http/scripts/rbook_health.py --online --pretty
+```
+
+### 获取 AI 目录
+
+```bash
+python skills/rbook-http/scripts/rbook_catalog.py --scope visible --compact --pretty
+```
+
+常用参数：
+
+- `--scope visible|all`：默认只取首页可见文章。
+- `--compact`：只输出 agent 常用字段。
+- `--limit N`：限制输出文章数量。
+
+### 片段搜索
+
+```bash
+python skills/rbook-http/scripts/rbook_search.py "数位DP 状态 记忆化" --limit 8 --pretty
+```
+
+常用参数：
+
+- `--text-length N`：控制每条片段正文长度。
+- `--no-text`：只返回标题、路径、分数等元数据。
+- `--raw`：输出 API 原始响应。
+
+### 读取文章上下文
+
+```bash
+python skills/rbook-http/scripts/rbook_page_context.py graph/bcc/index.md --include-code --compact --pretty
+```
+
+常用参数：
+
+- `--include-code`：同时返回模板代码正文。
+- `--include-html`：包含渲染 HTML，只有用户需要 HTML 时使用。
+- `--compact`：只保留文章、引用和代码相关常用字段。
+
+### 读取模板代码
+
+```bash
+python skills/rbook-http/scripts/rbook_code.py /code/graph/v-bcc.cpp --content-only
+```
+
+常用参数：
+
+- `--content-only`：只输出代码正文，适合直接作为代码生成参考。
+
 ## 总体工作流
 
 1. 如果不知道精确文章路径，先搜索。
