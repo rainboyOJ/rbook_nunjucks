@@ -52,6 +52,7 @@ glob:
   - appendix/常用数学公式.md
   - appendix/有用的资料.md
   - appendix/软件.md
+  - appendix/opencode-oj-toolkit/index.md
   - base/bigNumber/add.md
   - base/bigNumber/div.md
   - base/bigNumber/index.md

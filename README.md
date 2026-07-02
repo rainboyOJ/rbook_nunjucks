@@ -195,6 +195,20 @@ npm run build
 
 - [各种脚本,配置](./dotfiles/readme.md)
 
+## OJ 学习工具箱
+
+本项目附带一套自包含的 OJ 学习工具包（`opencode/`），可为 opencode agent 提供 `/oj-*` 命令、OJ 学习 skill、以及 `oj` 命令行工具（创建题目、下载数据、编译运行、对拍）。
+
+### 安装到目标项目
+
+1. 将 `opencode/` 目录整体复制到 rbook 风格项目的 `.opencode/`：
+   ```
+   cp -r opencode/ <目标项目>/.opencode/
+   ```
+2. 给 CLI 加可执行权限、合并 `opencode.json`（详细步骤见 [`opencode/install-ai.md`](opencode/install-ai.md)）。
+3. 重启 opencode 即可。
+
+> `install-ai.md` 是给 **AI agent 读取的安装手册**，包含完整的白名单复制、`opencode.json` 合并、验证等逻辑。可将代理直接指向该文件执行安装。
 
 ## 许可证
 
