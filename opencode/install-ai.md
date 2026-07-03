@@ -6,7 +6,7 @@
 
 ## 何时使用
 
-当你要把“OpenCode OJ Student Toolkit”安装进某个 rbook 风格项目时读取本文件并按步骤执行。装完后目标项目会获得：`/oj-*` 命令、`oj-student-coach` 与 `oj-cpp-rbook-style` 两个 skill、以及自包含的 `oj` 命令行工具。
+当你要把“OpenCode OJ Student Toolkit”安装进某个 rbook 风格项目时读取本文件并按步骤执行。装完后目标项目会获得：`/oj-*` 命令、`oj-student-coach`、`oj-cpp-rbook-style`、`rbook-http` 三个 skill、以及自包含的 `oj` 命令行工具。
 
 ## 前置条件
 
@@ -129,7 +129,7 @@ PY
 
 3. **重启后确认**：
    - `/oj-new`、`/oj-fetch`、`/oj-status`、`/oj-run`、`/oj-sample`、`/oj-duipai`、`/oj-hint`、`/oj-brute`、`/oj-gen`、`/oj-review`、`/oj-reference`、`/oj-help` 等命令可用；
-   - `oj-student-coach`、`oj-cpp-rbook-style` 两个 skill 被识别。
+   - `oj-student-coach`、`oj-cpp-rbook-style`、`rbook-http` 三个 skill 被识别。
 
 ## 关键说明
 

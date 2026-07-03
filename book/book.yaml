@@ -52,7 +52,6 @@ glob:
   - appendix/常用数学公式.md
   - appendix/有用的资料.md
   - appendix/软件.md
-  - appendix/opencode-oj-toolkit/index.md
   - base/bigNumber/add.md
   - base/bigNumber/div.md
   - base/bigNumber/index.md
@@ -599,6 +598,8 @@ chapters:
         path: tricks/口诀.md
       - title: 题目模式识别📜
         path: tricks/题目模式识别.md
+      - title: opencode的使用
+        path: opencode-oj-toolkit/index.md
 
       - title: vscode
         type: info
