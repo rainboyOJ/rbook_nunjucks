@@ -50,6 +50,13 @@ cp "$SRC"/oj-tools/templates/*     "$DST"/oj-tools/templates/
 
 # 3. 让 oj 可执行
 chmod +x "$DST"/oj-tools/bin/oj
+
+# 4. 将 oj 加入 PATH（之后可以在任何目录直接运行 oj）
+#    避免重复添加
+line="export PATH=\"$DST/oj-tools/bin:\$PATH\""
+for rc in ~/.zshrc ~/.bashrc; do
+  grep -qxF "$line" "$rc" 2>/dev/null || echo "$line" >> "$rc"
+done
 ```
 
 **不要复制**以下文件（它们是开发产物或本手册本身）：
@@ -110,6 +117,11 @@ PY
    "$DST"/oj-tools/bin/oj --help
    ```
    应打印子命令列表（`new`/`fetch`/`status`/`run`/`sample`/`duipai`/`gen`）并以 0 退出。
+
+   若已完成步骤 4 的 PATH 配置，重新打开终端或执行 `source ~/.zshrc`（或 `~/.bashrc`）后可直接用：
+   ```bash
+   oj --help
+   ```
 
 2. **重启 opencode**：opencode 在启动时一次性加载配置，不热重载。安装完成后需退出并重新启动 opencode，它才会：
    - 发现新的 `.opencode/`（命令、skill、`AGENTS.md`）；
