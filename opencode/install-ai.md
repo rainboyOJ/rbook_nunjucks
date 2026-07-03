@@ -57,6 +57,14 @@ line="export PATH=\"$DST/oj-tools/bin:\$PATH\""
 for rc in ~/.zshrc ~/.bashrc; do
   grep -qxF "$line" "$rc" 2>/dev/null || echo "$line" >> "$rc"
 done
+
+# 5. 安装 rbook-http skill（可选，但推荐）
+#    该 skill 位于目标 rbook 项目的 .agents/skills/rbook-http/，需单独复制
+#    DST 的父目录即目标项目根
+PROJECT_ROOT="$(dirname "$DST")"
+if [ -d "$PROJECT_ROOT/.agents/skills/rbook-http" ]; then
+  cp -r "$PROJECT_ROOT/.agents/skills/rbook-http" "$DST/skills/"
+fi
 ```
 
 **不要复制**以下文件（它们是开发产物或本手册本身）：
