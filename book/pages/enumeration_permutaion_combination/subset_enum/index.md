@@ -136,9 +136,9 @@ for (int s = A;; s = (s - 1) & A) {
 ```
 
 !!! note "和普通二进制枚举的区别"
-    `for (mask = 0; mask < (1 << n); mask++)` 枚举全集的所有子集。
+`for (mask = 0; mask < (1 << n); mask++)` 枚举全集的所有子集。
 
-    `for (s = A; s; s = (s - 1) & A)` 枚举某个给定集合 `A` 的所有非空子集。
+`for (s = A; s; s = (s - 1) & A)` 枚举某个给定集合 `A` 的所有非空子集。
 !!!
 
 ## 算法证明
@@ -322,9 +322,9 @@ for (int mask = 0; mask < (1 << n); ++mask) {
 | SOS DP 暴力入口 | [SOS DP](../../dynamic_programming/sos/index.md) | 对每个 `mask` 枚举 `sub ⊆ mask`，再优化成 SOS DP |
 
 !!! note "P14360 brute 代码对应哪一种"
-    [[problem: luogu,P14360]] 的朴素代码是枚举所有 `mask`，即枚举所有木棍选择集合。
+[[problem: luogu,P14360]] 的朴素代码是枚举所有 `mask`，即枚举所有木棍选择集合。
 
-    如果某个状态转移需要“在当前集合 `mask` 中再选一个子集 `sub`”，才使用 `(sub - 1) & mask`。
+如果某个状态转移需要“在当前集合 `mask` 中再选一个子集 `sub`”，才使用 `(sub - 1) & mask`。
 !!!
 
 ## 经典例题
