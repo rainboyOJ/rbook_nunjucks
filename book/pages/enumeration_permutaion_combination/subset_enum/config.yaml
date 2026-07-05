@@ -10,3 +10,8 @@ code_template:
     tags: ['enum','binary']
     desc: 二进制子集枚举
     code: "/code/base/enumerate/subset_binary.cpp"
+  -
+    title: "固定集合的子集枚举 submask"
+    tags: ['enum','binary','submask']
+    desc: 使用 (sub - 1) & mask 枚举某个集合的所有非空子集
+    code: "/code/base/enumerate/submask.cpp"
