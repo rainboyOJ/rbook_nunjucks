@@ -46,32 +46,23 @@ echo ""
 echo "Installing tmux configuration..."
 create_symlink "$SCRIPT_DIR/tmux.conf" "$HOME_DIR/.tmux.conf"
 
-# 2. 安装 scripts 目录下的脚本
+# 2. 将 scripts 目录加入 PATH（无需符号链接）
 echo ""
-echo "Installing scripts..."
-BIN_DIR="$HOME_DIR/.local/bin"
-
-# 确保 ~/.local/bin 目录存在
-if [ ! -d "$BIN_DIR" ]; then
-    echo "Creating directory: $BIN_DIR"
-    mkdir -p "$BIN_DIR"
-fi
-
-# 遍历 scripts 目录下的所有文件
-for script in "$SCRIPT_DIR/scripts"/*; do
-    # 获取文件名
-    filename=$(basename "$script")
-    # 忽略 readme.md 文件
-    if [ "$filename" == "readme.md" ]; then
-        continue
-    fi
-
-    # 赋予可执行权限
-    chmod +x "$script"
-    # 在 ~/.local/bin 中创建链接，不带 .sh 后缀
-    create_symlink "$script" "$BIN_DIR/${filename%.sh}"
+echo "Installing scripts to PATH..."
+chmod +x "$SCRIPT_DIR"/scripts/*
+line="export PATH=\"$SCRIPT_DIR/scripts:\$PATH\""
+for rc in "$HOME_DIR/.zshrc" "$HOME_DIR/.bashrc"; do
+  if [ -f "$rc" ] && grep -qxF "$line" "$rc"; then
+    echo -e "${GREEN}Already in $rc. Skipping.${NC}"
+  elif [ -f "$rc" ]; then
+    echo "$line" >> "$rc"
+    echo -e "${GREEN}Appended to $rc${NC}"
+  fi
 done
 
 echo ""
 echo -e "${GREEN}Installation complete!${NC}"
-echo -e "Please make sure ${YELLOW}'$BIN_DIR'${NC} is in your shell's \$PATH."
+echo -e "重新打开终端或执行 ${YELLOW}source ~/.zshrc${NC} 即可直接使用脚本。"
+echo ""
+echo "可用脚本："
+ls "$SCRIPT_DIR/scripts/" | grep -v '^__pycache__$' | grep -v '^mylib$'

@@ -5,7 +5,15 @@ sudo apt install -y python3 fzf graphviz clangd curl
 
 # 配置
 
-## 添加到zshrc,bashrc
+## 一键安装（推荐）
+
+```bash
+./install.sh
+```
+
+自动将 `dotfiles/scripts` 加入 `~/.zshrc` 和 `~/.bashrc` 的 PATH、安装 tmux 配置。
+
+## 手动添加到 zshrc / bashrc
 
 ```bash
 export PATH=$PATH:<path-to-rbook_nunjucks>/dotfiles/scripts
