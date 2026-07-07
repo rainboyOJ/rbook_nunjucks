@@ -29,7 +29,7 @@ class TemplateEngine:
         
         # 获取项目根目录
         self.project_root = Path(__file__).parent.parent.parent
-        self.code_path = self.project_root / 'code'
+        self.code_path = self.project_root / 'book' / 'code'
     
     def set_var(self, key: str, value: str):
         """设置模板变量"""
