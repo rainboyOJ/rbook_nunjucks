@@ -118,3 +118,5 @@ temp/
 site/widgets/code_template_filter/public
 tmp/
 codex_resume
+
+Rbook_ejs_old/
