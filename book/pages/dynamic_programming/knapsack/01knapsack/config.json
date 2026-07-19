@@ -15,6 +15,11 @@
             "code":"/code/dynamic_programming/knapsack/zero_one_1d.cpp"
         },
         {
+            "title":"01 背包 Python 一维写法",
+            "tags":["dynamic_programming","knapsack","python"],
+            "code":"/code/dynamic_programming/knapsack/zero_one_1d.py"
+        },
+        {
             "title":"01 背包恰好装满",
             "tags":["dynamic_programming","knapsack"],
             "code":"/code/dynamic_programming/knapsack/zero_one_exact_fill.cpp"

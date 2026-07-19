@@ -14,6 +14,10 @@ code_template:
     desc: "容量倒序枚举，竞赛常用模板"
     tags: ["动态规划", "01背包", "空间优化"]
     code: /code/dynamic_programming/knapsack/zero_one_1d.cpp
+  - title: 01 背包 Python 一维写法
+    desc: "Python 版本的一维 01 背包模板"
+    tags: ["动态规划", "01背包", "Python"]
+    code: /code/dynamic_programming/knapsack/zero_one_1d.py
   - title: 01 背包恰好装满
     desc: "不可达状态初始化为负无穷"
     tags: ["动态规划", "恰好装满"]
@@ -179,6 +183,22 @@ for (int c = capacity; c >= weight; c--)
 倒序的原因是：第 $i$ 个物品只能选一次，更新 `dp[c]` 时必须使用上一轮物品留下的 `dp[c-weight]`，不能使用本轮刚更新出来的值。
 
 @include-code(/code/dynamic_programming/knapsack/zero_one_1d.cpp, cpp)
+
+### Python 一维写法
+
+Python 写法和 C++ 一维写法完全一致，核心仍然是容量倒序枚举：
+
+```python
+dp = [0] * (C + 1)
+
+for w, v in items:
+    for c in range(C, w - 1, -1):
+        dp[c] = max(dp[c], dp[c - w] + v)
+```
+
+完整可运行版本如下：
+
+@include-code(/code/dynamic_programming/knapsack/zero_one_1d.py, python)
 
 ### 恰好装满
 

@@ -73,9 +73,9 @@ def iter_pairs(n):
 
 def iter_intervals(n):
     """Yield all non-empty half-open intervals [left, right)."""
-    for left in range(n):
-        for right in range(left + 1, n + 1):
-            yield left, right
+    # Note: In 0-indexed arrays, generating half-open intervals [left, right)
+    # is mathematically identical to generating pairs (i, j) where i < j <= n.
+    yield from iter_pairs(n + 1)
 
 
 # ============================================================
@@ -96,18 +96,23 @@ def iter_subsets(a):
         yield from combinations(a, size)
 
 
-# Binary state of every position:
-# for state in product([0, 1], repeat=n):
-#     ...
-#
-# k states for every position:
-# for state in product(range(k), repeat=n):
-#     ...
+def iter_binary_states(n):
+    """Yield all binary states of length n as tuples."""
+    yield from product([0, 1], repeat=n)
+
+
+def iter_k_states(k, n):
+    """Yield all k-ary states of length n as tuples."""
+    yield from product(range(k), repeat=n)
 
 
 # ============================================================
 # 4. Permutations and combinations
 # ============================================================
+
+def iter_multisets(a, k):
+    """Yield all multisets (combinations with replacement) of size k."""
+    yield from combinations_with_replacement(a, k)
 
 # for order in permutations(a):
 #     ...
@@ -149,6 +154,9 @@ def unique_permutations(a):
 # 5. DFS / backtracking
 # ============================================================
 
+# Example:
+# >>> dfs_assignments([["a","b"], [1,2]])
+# [('a', 1), ('a', 2), ('b', 1), ('b', 2)]
 def dfs_assignments(options):
     """Return every sequence that chooses one value per position."""
     answer = []
@@ -160,7 +168,8 @@ def dfs_assignments(options):
             return
 
         for choice in options[position]:
-            # Put pruning based on path and choice here.
+            # Manually uncomment the next line when pruning is needed:
+            # if sum(path) + choice > SOME_LIMIT: continue
             path.append(choice)
             dfs(position + 1)
             path.pop()
@@ -173,6 +182,10 @@ def dfs_assignments(options):
 # 6. BFS shortest path in an implicit state graph
 # ============================================================
 
+# Example:
+# >>> def neighbors(x): return [y for y in (x-1, x+1) if 0 <= y <= 4]
+# >>> bfs_shortest(0, lambda x: x == 3, neighbors)
+# 3
 def bfs_shortest(start, is_goal, neighbors):
     """Return the minimum number of edges to a goal, or None."""
     queue = deque([start])
@@ -327,15 +340,22 @@ def _self_test():
     assert list(iter_subsets([])) == [()]
     assert list(iter_subsets([1, 2])) == [(), (1,), (2,), (1, 2)]
 
-    assert list(product([0, 1], repeat=2)) == [
+    assert list(iter_binary_states(2)) == [
         (0, 0),
         (0, 1),
         (1, 0),
         (1, 1),
     ]
+
+    assert list(iter_k_states(3, 2)) == [
+        (0, 0), (0, 1), (0, 2),
+        (1, 0), (1, 1), (1, 2),
+        (2, 0), (2, 1), (2, 2)
+    ]
+
     assert list(permutations([1, 2])) == [(1, 2), (2, 1)]
     assert list(combinations([1, 2, 3], 2)) == [(1, 2), (1, 3), (2, 3)]
-    assert list(combinations_with_replacement([1, 2], 2)) == [
+    assert list(iter_multisets([1, 2], 2)) == [
         (1, 1),
         (1, 2),
         (2, 2),
@@ -410,4 +430,3 @@ if __name__ == "__main__":
         _self_test()
     else:
         solve()
-

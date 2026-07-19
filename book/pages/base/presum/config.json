@@ -1,5 +1,17 @@
 {
     "id":"presum",
     "title":"前缀和",
-    "file":"index.md"
+    "file":"index.md",
+    "code_template":[
+        {
+            "title":"前缀和",
+            "tags":["prefix_sum","range_sum"],
+            "code":"/code/base/presum.cpp"
+        },
+        {
+            "title":"二维前缀和 Python",
+            "tags":["prefix_sum","matrix","python"],
+            "code":"/code/base/presum_2d.py"
+        }
+    ]
 }

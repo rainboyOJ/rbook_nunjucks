@@ -10,6 +10,10 @@ code_template:
     desc: "静态数组区间和查询"
     tags: ["前缀和", "区间和"]
     code: /code/base/presum.cpp
+  - title: 二维前缀和 Python
+    desc: "静态矩阵子矩形和查询"
+    tags: ["前缀和", "二维前缀和", "矩阵", "Python"]
+    code: /code/base/presum_2d.py
 ---
 
 [[TOC]]
@@ -96,7 +100,22 @@ $$
 
 ## 代码实现
 
+### 一维前缀和
+
 @include-code(/code/base/presum.cpp, cpp)
+
+### 二维前缀和 Python
+
+二维前缀和的查询公式来自容斥：
+
+$$
+sum(x_1,y_1,x_2,y_2)
+=s[x_2][y_2]-s[x_1-1][y_2]-s[x_2][y_1-1]+s[x_1-1][y_1-1]
+$$
+
+模板中坐标使用 $1$ 下标闭区间。
+
+@include-code(/code/base/presum_2d.py, python)
 
 ## 测试用例
 
@@ -161,6 +180,12 @@ $$
 **识别信号：** 题面出现“矩阵”“子矩形”“左上角/右下角”“多次询问面积内总和”。
 
 **核心建模：** `s[i][j]` 表示左上角 `(1,1)` 到 `(i,j)` 的矩形和。查询一个子矩形时，用大矩形减掉上方和左方，再把左上角被多减的部分加回来。
+
+如果题目要求在矩阵中寻找固定边长 `side` 的最大子方阵，可以枚举每个左上角 `(x,y)`，再用二维前缀和 $O(1)$ 求：
+
+```python
+total = rect_sum(prefix, x, y, x + side - 1, y + side - 1)
+```
 
 | 应用场景 | 经典题目 | 核心思路 |
 |---|---|---|
