@@ -6,6 +6,10 @@ aside.panel
     li
       a(href="javascript:void(0);" onclick="showMenuModal()")
         i.fa.fa-list
+    if printable_article
+      li
+        button.J_printArticle(type="button" title="打印文章" aria-label="打印文章")
+          i.fa.fa-print(aria-hidden="true")
   ul.panel-list
     li
       input#darkmode-auto.J_darkMode(type="radio" value="auto" name="darkmode" checked="")

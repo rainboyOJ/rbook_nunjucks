@@ -1,9 +1,13 @@
 extends layout.pug
 
+block layout_config
+  - printable_article = true
+
 block content
   article.chapter
     header.chapter-header
       h1= front_matter.title
+    include partials/print-source.pug
     .chapter-content
       != html_content
     include partials/toc.pug

@@ -17,16 +17,35 @@
         display: flex;
         font-size: 1.2rem;
 
-        label,a {
-            display: block;
+        label,a,button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             padding-inline-start: 8px;
             padding-inline-end: 8px;
+            min-width: 44px;
+            min-height: 44px;
             font-size: 18px;
+            line-height: 1;
+            color: inherit;
+            background: transparent;
             border:1px solid ;
             border-right:none;
             border-color: #565856e0;
             text-decoration: none;
+        }
+
+        button {
+            appearance: none;
+            font-family: inherit;
+        }
+
+        a:focus-visible,button:focus-visible {
+            position: relative;
+            z-index: 1;
+            outline: 2px solid #1677c8;
+            outline-offset: 2px;
         }
 
         input:checked + label {
@@ -34,17 +53,23 @@
         }
 
 
-        li:first-child label,li:first-child a {
+        li:first-child label,li:first-child a,li:first-child button {
             // border-left:1px solid ;
             border-radius: 8px 0 0 8px;
         }
 
-        li:last-child label,li:last-child a {
+        li:last-child label,li:last-child a,li:last-child button {
             border-right: 1px solid;
             border-color: #565856e0;
             border-radius: 0 8px 8px 0;
         }
     }
+}
+
+@media screen {
+  body.printable-article main {
+    padding-top: 72px;
+  }
 }
 
 /* Dark mode styles for checked radio */

@@ -117,6 +117,21 @@ function init_code_tab_switch() {
   });
 }
 
+function init_article_print() {
+  const printButton = document.querySelector('.J_printArticle');
+  if (!printButton || typeof window.print !== 'function') return;
+
+  const updateSourceUrl = () => {
+    document.querySelectorAll('.J_printSourceUrl').forEach(sourceUrl => {
+      sourceUrl.textContent = window.location.href;
+    });
+  };
+
+  updateSourceUrl();
+  window.addEventListener('beforeprint', updateSourceUrl);
+  printButton.addEventListener('click', () => window.print());
+}
+
 
 /**
  * 暗黑模式切换功能
@@ -125,6 +140,7 @@ function init_code_tab_switch() {
 document.addEventListener('DOMContentLoaded', function() {
   init_copy();
   init_code_tab_switch();
+  init_article_print();
   // 获取所有暗黑模式切换按钮
   const darkModeButtons = document.querySelectorAll('.J_darkMode');
   

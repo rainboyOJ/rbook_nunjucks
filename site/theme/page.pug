@@ -1,8 +1,12 @@
 extends layout.pug
 
+block layout_config
+  - printable_article = true
+
 block content
   article.page
     header.page-header
       h1= front_matter.title
+    include partials/print-source.pug
     .container
       include partials/markdown-body.pug

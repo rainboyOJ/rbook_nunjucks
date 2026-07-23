@@ -1,0 +1,220 @@
+.print-source {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm;
+  }
+
+  body.printable-article {
+    min-width: 0;
+    margin: 0;
+    color: #000 !important;
+    background: #fff !important;
+    font-family: serif;
+  }
+
+  body.printable-article .panel,
+  body.printable-article .modal-menu,
+  body.printable-article .table-of-contents,
+  body.printable-article .site-footer {
+    display: none !important;
+  }
+
+  body.printable-article main {
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  body.printable-article .page,
+  body.printable-article .chapter,
+  body.printable-article .container,
+  body.printable-article .markdown-body,
+  body.printable-article .chapter-content {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  body.printable-article .container {
+    padding: 0;
+  }
+
+  body.printable-article .markdown-body,
+  body.printable-article .chapter-content {
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+
+  body.printable-article .page-header,
+  body.printable-article .chapter-header {
+    margin: 0 0 2mm;
+    padding: 0;
+    color: #000 !important;
+    background: transparent !important;
+    break-after: avoid-page;
+    page-break-after: avoid;
+  }
+
+  body.printable-article .page-header h1,
+  body.printable-article .chapter-header h1 {
+    margin: 0;
+    padding: 0;
+    color: #000 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0;
+    box-shadow: none !important;
+    font-size: 20pt;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  body.printable-article .print-source {
+    display: block;
+    margin: 0 0 8mm;
+    color: #444;
+    font-family: sans-serif;
+    font-size: 8pt;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
+  body.printable-article .print-source-url::before {
+    content: " | ";
+  }
+
+  body.printable-article h1,
+  body.printable-article h2,
+  body.printable-article h3,
+  body.printable-article h4,
+  body.printable-article h5,
+  body.printable-article h6 {
+    color: #000 !important;
+    background: transparent !important;
+    break-after: avoid-page;
+    page-break-after: avoid;
+  }
+
+  body.printable-article p,
+  body.printable-article li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  body.printable-article a,
+  body.printable-article .markdown-body a {
+    color: #000 !important;
+    text-decoration: underline;
+    text-decoration-color: #777;
+  }
+
+  body.printable-article code {
+    color: #000 !important;
+    background: #eee !important;
+  }
+
+  body.printable-article img,
+  body.printable-article svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  body.printable-article img,
+  body.printable-article svg,
+  body.printable-article figure,
+  body.printable-article table,
+  body.printable-article blockquote,
+  body.printable-article .admonition {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  body.printable-article table {
+    width: 100% !important;
+    table-layout: auto !important;
+    font-size: 8.5pt;
+  }
+
+  body.printable-article th,
+  body.printable-article td {
+    padding: 1.5mm 2mm;
+    color: #000 !important;
+    background: #fff !important;
+    border-color: #777 !important;
+    overflow-wrap: anywhere;
+  }
+
+  body.printable-article pre,
+  body.printable-article pre[class*="language-"] {
+    max-width: 100%;
+    overflow: visible !important;
+    color: #000 !important;
+    background: #f5f5f5 !important;
+    border: 1px solid #bbb !important;
+    box-shadow: none !important;
+    break-inside: auto;
+    page-break-inside: auto;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  body.printable-article pre code,
+  body.printable-article code[class*="language-"] {
+    min-width: 0;
+    color: #000 !important;
+    background: transparent !important;
+    font-size: 8.5pt !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  body.printable-article .token {
+    color: #000 !important;
+    background: transparent !important;
+  }
+
+  body.printable-article .line-numbers-wrapper,
+  body.printable-article .zeroclipboard-container,
+  body.printable-article .code-tabs > ul {
+    display: none !important;
+  }
+
+  body.printable-article .code-info-header {
+    color: #000 !important;
+    background: #e8e8e8 !important;
+    border: 1px solid #bbb;
+    border-bottom: 0;
+    box-shadow: none !important;
+  }
+
+  body.printable-article .admonition,
+  body.printable-article .admonition-title,
+  body.printable-article .warning,
+  body.printable-article .error,
+  body.printable-article .info {
+    color: #000 !important;
+    background: #f7f7f7 !important;
+    border-color: #777 !important;
+    box-shadow: none !important;
+  }
+
+  body.printable-article iframe,
+  body.printable-article video,
+  body.printable-article audio,
+  body.printable-article object,
+  body.printable-article embed {
+    display: none !important;
+  }
+}
