@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { createApp } from '../packages/rbook-server/dist/app.js';
 
 const staticDir = process.env.RBOOK_TEST_STATIC_DIR || '/tmp/rbook-runtime-check/dist';
@@ -53,6 +54,32 @@ async function main() {
   const app = await createApp({ logger: false, staticDir });
 
   try {
+    const docsSource = fs.readFileSync(
+      new URL('../docs/api-usage.md', import.meta.url),
+      'utf8'
+    );
+    const docsHtmlResponse = await app.inject({
+      method: 'GET',
+      url: '/api',
+      headers: {
+        host: 'docs.example.test',
+        'x-forwarded-proto': 'https'
+      }
+    });
+    assert.equal(docsHtmlResponse.statusCode, 200, 'API docs HTML should return HTTP 200');
+    assert.match(docsHtmlResponse.headers['content-type'], /^text\/html/);
+    assert.equal(docsHtmlResponse.headers['cache-control'], 'no-store');
+    assert.ok(docsHtmlResponse.body.includes('<h1>Rbook HTTP API 使用指南</h1>'));
+    assert.ok(docsHtmlResponse.body.includes('https://docs.example.test/api/health'));
+    assert.equal(docsHtmlResponse.body.includes('$BASE_URL'), false);
+
+    const docsMarkdownResponse = await app.inject('/api/md');
+    assert.equal(docsMarkdownResponse.statusCode, 200, 'raw API docs should return HTTP 200');
+    assert.match(docsMarkdownResponse.headers['content-type'], /^text\/markdown/);
+    assert.equal(docsMarkdownResponse.headers['cache-control'], 'no-store');
+    assert.equal(docsMarkdownResponse.body, docsSource);
+    assert.ok(docsMarkdownResponse.body.includes('$BASE_URL'));
+
     const catalogResponse = await app.inject('/api/ai/catalog');
     assert.equal(catalogResponse.statusCode, 200, 'catalog should return HTTP 200');
     const catalog = parseJson(catalogResponse);

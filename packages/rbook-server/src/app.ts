@@ -2,7 +2,7 @@ import path from 'path';
 import fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import { distDir } from '@rbook/core/paths';
-import { renderApiDocsPage } from './docs/apiDocs.js';
+import { readApiDocsMarkdown, renderApiDocsPage } from './docs/apiDocs.js';
 import { getBaseUrl } from './http/query.js';
 import { registerAdminApiRoutes } from './routes/adminApi.js';
 import { registerAiApiRoutes } from './routes/aiApi.js';
@@ -21,8 +21,17 @@ export async function createApp(options: CreateAppOptions = {}) {
   });
 
   app.get('/api', async (request, reply) => {
-    reply.type('text/html; charset=utf-8');
+    reply
+      .type('text/html; charset=utf-8')
+      .header('Cache-Control', 'no-store');
     return renderApiDocsPage(getBaseUrl(request));
+  });
+
+  app.get('/api/md', async (_request, reply) => {
+    reply
+      .type('text/markdown; charset=utf-8')
+      .header('Cache-Control', 'no-store');
+    return readApiDocsMarkdown();
   });
 
   await registerPublicApiRoutes(app);

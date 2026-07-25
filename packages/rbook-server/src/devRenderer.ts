@@ -19,10 +19,13 @@ export interface DevResponse {
 
 const assetExtensions = new Set([
   '.avif',
+  '.css',
   '.gif',
   '.ico',
   '.jpeg',
   '.jpg',
+  '.js',
+  '.json',
   '.pdf',
   '.png',
   '.svg',

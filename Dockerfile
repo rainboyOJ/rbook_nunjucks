@@ -26,6 +26,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json tsconfig.base.json ./
 COPY bin ./bin
 COPY build_all_dot_file.py ./build_all_dot_file.py
+COPY docs ./docs
 COPY src/online_judge ./src/online_judge
 COPY packages ./packages
 COPY site/theme ./site/theme

@@ -1,0 +1,26 @@
+.api-docs-page {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.api-docs-shell {
+  width: min(960px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 36px 0 64px;
+}
+
+.api-docs-page .markdown-body {
+  max-width: none;
+  font-size: inherit;
+}
+
+.api-docs-page .markdown-body > h1:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .api-docs-shell {
+    width: min(100% - 20px, 960px);
+    padding-top: 24px;
+  }
+}
