@@ -227,10 +227,46 @@ glob:
   # Rbook_ejs_old migration end
 
 chapters:
+  - title: 待审核文章
+    path: .
+    nolink: true
+    sections:
+      - title: 112 个组合问题：1-3 章整理（新入口）
+        path: math/combinatorics/112_combinatorial_problems/1-3-chapter.md
+      - title: 补充-约数相关（新入口）
+        path: math/4-6初等数论初步/补充-约数相关.md
+      - title: 数论小题目（新入口）
+        path: math/4-6初等数论初步/小题目.md
+      - title: 同余与同余方程（新入口）
+        path: math/4-6初等数论初步/chapter2.md
+      - title: 初等数论初步：整除、公因数与素数（新入口）
+        path: math/4-6初等数论初步/chapter1.md
+      - title: 1 等价关系与集合的分类（新入口）
+        path: math/group_theory/1等价关系与集合的分类.md
+      - title: 1.2-群的概念（新入口）
+        path: math/group_theory/1.2-群的概念.md
+      - title: 点对问题（新入口）
+        path: classical_problem/point2point_problem/index.md
+      - title: 最小生成树（新入口）
+        path: graph/MST/index.md
+      - title: Tarjan 求割点（新入口）
+        path: graph/tarjan/cut/start.md
+      - title: 无向图找环（新入口）
+        path: graph/tarjan/loop/start.md
+      - title: 乘法原理（新入口）
+        path: math/combinatorics/rule_of_product/index.md
+      - title: 对数（新入口）
+        path: math/logarithm/index.md
+      - title: 欧几里得定理及推论（新入口）
+        path: math/numberTheory/欧其里德定理及推论.md
+      - title: 集合基础（新入口）
+        path: math/set/index.md
+      - title: 快速排序（新入口）
+        path: sort/quicksort/index.md
   - title: 基础
     path: base
     sections:
-      - title: 快速排序
+      - title: 快速排序（旧入口）
         path: quicksort/index.md
       - title: 高精度加法
         path: bigNumber/add.md
@@ -455,7 +491,7 @@ chapters:
         path: diameter_of_tree
       - title: 树的中心
         path: center_of_tree
-      - title: 最小生成树
+      - title: 最小生成树（现有入口）
         path: mst/最小生成树.md
       - title: 严格次小生成树
         path: MST/严格次小生成树/index.md
@@ -523,7 +559,7 @@ chapters:
         path: number_base/index.md
       - title: 二进制与位运算
         path: binary/index.md
-      - title: 集合
+      - title: 集合（现有入口）
         path: 集合.md
       - title: 反证法
         path: 反证法.md

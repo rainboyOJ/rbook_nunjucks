@@ -91,6 +91,14 @@ chapters:
         path: chapter2-2
 ```
 
+检查目录配置：
+
+```bash
+npm run check:nav
+```
+
+该命令会检查 `chapters` 中不存在的路径、缺失标题和重复路径，并列出 `glob` 中已渲染但未进入目录的文章。重复的 front matter `id` 会作为警告显示。
+
 ## 内容编写
 
 ### Markdown 文件格式

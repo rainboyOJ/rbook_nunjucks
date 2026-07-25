@@ -21,6 +21,7 @@
     "serve": "npm run start:runtime",
     "serve:dev": "npm run dev",
     "dev": "npm run build:packages && node packages/rbook-server/dist/dev.js",
+    "check:nav": "node scripts/check-book-nav.mjs",
     "test:api": "node scripts/test-ai-api-contract.mjs",
     "typecheck": "npm run build:packages && tsc -p site/widgets/code_template_filter"
   },

@@ -32,9 +32,10 @@ export const renderTemplate = function (theme_dir, layout_name, data) {
             pretty: true,
             menuLink(str) {
                 if (!str) return str;
-                if (str.endsWith('.md')) return str.replace('.md', '.html');
-                if (str.endsWith('/')) return str + 'index.html';
-                return str;
+                const link = path.posix.normalize(`/${str.replace(/^\/+/, '')}`);
+                if (link.endsWith('.md')) return link.replace(/\.md$/, '.html');
+                if (link.endsWith('/')) return link + 'index.html';
+                return link;
             },
             ...data
         });
