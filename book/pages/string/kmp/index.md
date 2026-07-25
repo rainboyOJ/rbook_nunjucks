@@ -672,19 +672,16 @@ Index:      0       1            j-1     j
 ![](./point2-how-to-kmp-back.drawio.svg)
 
 ```text
-            Mismatch happens at P[j]!
-            Already matched string is P[0 ... j-1] (length = j, end index = j-1)
-            
-            +-----------------------------------+
-            |   P[0]  P[1] ... P[j-2]  P[j-1]   |   Matched prefix (len = j)
-            +-----------------------------------+
-            |  Prefix  |        |  Suffix   |
-            +----------+        +-----------+
-                 ||                  ||
-             P[0 ... L-1]  ==  P[j-L ... j-1]       L = pi[j-1] (Longest border)
+Matched string: P[0 ... j-1] (end index = j-1)
+Border length : L = pi[j-1]
 
-     ==> Shrink matched length from j to L (which is pi[j-1])
-     ==> New length = L, so next char to compare is P[L] (i.e. j_new = pi[j-1])
++-----------------------+------------------------------+
+|  P[0 ... L-1] (Prefix)| ...  P[j-L ... j-1] (Suffix) |
++-----------------------+------------------------------+
+        ||                         ||
+   New Prefix                  Matched Suffix
+
+  ==> j_new = L = pi[j-1]
 ```
 
 ## 测试用例
