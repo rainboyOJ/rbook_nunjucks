@@ -19,8 +19,8 @@
     "build:runtime": "node packages/rbook-server/dist/buildRuntime.js",
     "start:runtime": "npm run build:runtime && node packages/rbook-server/dist/serve.js",
     "serve": "npm run start:runtime",
-    "serve:dev": "npm run serve",
-    "dev": "npm run serve",
+    "serve:dev": "npm run dev",
+    "dev": "npm run build:packages && node packages/rbook-server/dist/dev.js",
     "test:api": "node scripts/test-ai-api-contract.mjs",
     "typecheck": "npm run build:packages && tsc -p site/widgets/code_template_filter"
   },

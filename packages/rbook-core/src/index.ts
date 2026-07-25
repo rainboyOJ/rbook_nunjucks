@@ -82,14 +82,29 @@ class rbook {
         data: RenderData = {}
     ) {
         // 文章构建的最小单元：Markdown -> front matter/layout -> Pug 模板 -> HTML 文件。
-        const fullPath = path.join(bookDir, filePath);
-        if (!fs.existsSync(fullPath)) {
+        const htmlContent = this.renderMarkdownFile(filePath, defaultTemplateType, data);
+        if (htmlContent === null) {
             console.error(`✗ 文件不存在: ${filePath}`);
             return false;
         }
 
         const fullOutputPath = path.isAbsolute(outputPath) ? outputPath : fromApp(outputPath);
         ensureDir(path.dirname(fullOutputPath));
+        fs.writeFileSync(fullOutputPath, htmlContent);
+        console.log(`✓ 构建完成: ${filePath}`);
+        return true;
+    }
+
+    renderMarkdownFile(
+        filePath: string,
+        defaultTemplateType: string | null = null,
+        data: RenderData = {}
+    ): string | null {
+        // 开发服务器使用这个无写文件的路径按请求渲染单篇文章。
+        const fullPath = path.join(bookDir, filePath);
+        if (!fs.existsSync(fullPath)) {
+            return null;
+        }
 
         const md = new markdown(fullPath);
         const templateType = md.front_matter.layout || defaultTemplateType || 'page';
@@ -98,10 +113,7 @@ class rbook {
             site: this.config,
             ...data
         });
-
-        fs.writeFileSync(fullOutputPath, htmlContent);
-        console.log(`✓ 构建完成: ${filePath}`);
-        return true;
+        return htmlContent;
     }
 
     checkMarkdownFile(basePath: string, relativePath: string) {

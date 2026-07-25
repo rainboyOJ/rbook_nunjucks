@@ -34,7 +34,7 @@ function resetRuntimeDir() {
   fs.mkdirSync(runtimeDir, { recursive: true });
 }
 
-function copyBookAssets() {
+export function copyBookAssets() {
   if (!fs.existsSync(bookDir)) {
     throw new Error(`book directory not found: ${bookDir}`);
   }
@@ -47,7 +47,7 @@ function copyBookAssets() {
   }
 }
 
-function compileDotFiles() {
+export function compileDotFiles() {
   if (!fs.existsSync(bookDir)) return;
 
   if (!hasCommand('dot', ['-V'])) {
@@ -68,23 +68,35 @@ function compileDotFiles() {
   }
 }
 
-function compileMarkdownCss() {
+export function compileMarkdownCss(force = true) {
   const scssPath = path.join(appDir, 'markdown-style/markdown.scss');
-  if (!fs.existsSync(scssPath)) return;
+  if (!fs.existsSync(scssPath)) return false;
+
+  const cssPath = path.join(distDir, 'markdown.css');
+  if (!force && fs.existsSync(cssPath)) {
+    const cssMtime = fs.statSync(cssPath).mtimeMs;
+    const styleFiles = walkFiles(path.join(appDir, 'markdown-style'));
+    let newestStyleMtime = 0;
+    for (const source of styleFiles) {
+      newestStyleMtime = Math.max(newestStyleMtime, fs.statSync(source).mtimeMs);
+    }
+    if (newestStyleMtime <= cssMtime) return false;
+  }
 
   fs.mkdirSync(distDir, { recursive: true });
   runCommand('npx', [
     'sass',
     '--load-path=packages/rbook-markdown/src/markdown-it/assets',
     scssPath,
-    path.join(distDir, 'markdown.css')
+    cssPath
   ], {
     cwd: path.resolve(appDir, '..'),
     label: 'markdown css build'
   });
+  return true;
 }
 
-function copyStaticAssets() {
+export function copyStaticAssets() {
   copyIfExists(publicDir, distDir);
   copyIfExists(path.join(appDir, 'theme/assets'), path.join(distDir, 'assets'));
   copyIfExists(
@@ -93,7 +105,7 @@ function copyStaticAssets() {
   );
 }
 
-function buildCodeTemplateApp() {
+export function buildCodeTemplateApp() {
   const configPath = path.join(appDir, 'widgets/code_template_filter/vite.config.ts');
   if (!fs.existsSync(configPath)) return;
 
