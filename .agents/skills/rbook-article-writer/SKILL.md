@@ -57,7 +57,7 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
    - 不写废话，不写营销式开头。
    - 先讲问题模型，再讲直觉，再讲步骤、证明、代码。
    - 使用低心智负担的解释：类比可以用，但不能牺牲准确性。
-   - 可以使用 `!!! definition`、`!!! note` 等 admonition 语法强调关键概念。
+   - 可以使用 admonition 强调关键概念，但必须遵守下方“Admonition 规范”。
 
 5. 引用代码。
    - 推荐写法：
@@ -79,6 +79,33 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
        RBOOK_RUNTIME_DIR=/tmp/rbook-runtime-check \
        npm run build:runtime
      ```
+
+## Admonition 规范
+
+只能使用项目 Markdown 渲染器已经注册的类型，不得自行创造 `important`、`caution`、`hint` 等类型。
+
+- 通用类型：`note`、`abstract`、`info`、`tip`、`success`、`question`、`warning`、`failure`、`danger`、`bug`、`example`、`quote`。
+- 数学类型：`definition`、`theorem`、`corollary`、`lemma`、`proof`、`exercise`、`problem`。
+
+统一使用以下格式：类型和标题写在起始行，正文从下一行开始，结束标记单独占一行。
+
+```markdown
+!!! definition "树的定义"
+无环连通图。
+!!!
+```
+
+不要把标题放到正文中：
+
+```markdown
+<!-- 错误 -->
+!!! note
+"这是标题"
+正文内容。
+!!!
+```
+
+没有合适的专用类型时，普通强调使用 `note`，风险或易错点使用 `warning`。新增 admonition 类型前，必须先同步修改 Markdown 渲染器的类型白名单和 `site/markdown-style/admonition.scss` 样式。
 
 ## 推荐文章结构
 
