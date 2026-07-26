@@ -8,5 +8,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const outputPath = process.argv[2] ? path.resolve(process.argv[2]) : searchIndexPath;
   const payload = buildSearchIndex({ outputPath });
   console.log(`Search index written: ${outputPath}`);
-  console.log(`Pages: ${payload.stats.pages}, chunks: ${payload.stats.chunks}, errors: ${payload.stats.errors}`);
+  console.log(`Pages: ${payload.stats.pages}, codes: ${payload.stats.codes}, errors: ${payload.stats.errors}`);
 }

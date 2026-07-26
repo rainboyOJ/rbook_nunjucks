@@ -60,15 +60,35 @@ function apiUrl(pathname, query = {}) {
 }
 
 async function main() {
-  const [{ buildSearchIndex }, { createApp }] = await Promise.all([
+  const [{ buildSearchIndex }, { getIndexPayload }, { createApp }] = await Promise.all([
     import('../packages/rbook-search/dist/buildIndex.js'),
+    import('../packages/rbook-search/dist/searchIndex.js'),
     import('../packages/rbook-server/dist/app.js')
   ]);
 
   const builtIndex = buildSearchIndex();
   assert.equal(builtIndex.stats.errors, 0, 'isolated search index should build cleanly');
+  assert.equal(builtIndex.version, 3);
+  assert.equal(Object.hasOwn(builtIndex.stats, 'chunks'), false);
+  assert.equal(Object.hasOwn(builtIndex, 'chunks'), false);
+  assert.equal(Object.hasOwn(builtIndex, 'fuseIndex'), false);
+
+  const indexPath = path.join(runtimeDir, '.search/index.json');
+  fs.writeFileSync(indexPath, JSON.stringify({
+    ...builtIndex,
+    version: 2,
+    generatedAt: 'stale-index',
+    stats: { ...builtIndex.stats, chunks: 1 },
+    chunks: [{ id: 'stale-chunk' }],
+    fuseIndex: {}
+  }));
 
   const app = await createApp({ logger: false, staticDir });
+  const currentIndex = getIndexPayload();
+  assert.equal(currentIndex.version, 3, 'version 2 index should be rebuilt');
+  assert.equal(Object.hasOwn(currentIndex.stats, 'chunks'), false);
+  assert.equal(Object.hasOwn(currentIndex, 'chunks'), false);
+  assert.equal(Object.hasOwn(currentIndex, 'fuseIndex'), false);
 
   try {
     const docsSource = fs.readFileSync(path.join(rootDir, 'docs/api-usage.md'), 'utf8');
@@ -108,14 +128,14 @@ async function main() {
     const health = parseJson(healthResponse);
     assert.equal(health.ok, true);
     assert.equal(typeof health.generatedAt, 'string');
-    assert.deepEqual(health.stats, builtIndex.stats);
+    assert.deepEqual(health.stats, currentIndex.stats);
 
     const siteResponse = await app.inject('/api/site');
     assertApiResponse(siteResponse, 200);
     const site = parseJson(siteResponse);
     assert.equal(site.site.title, '我的算法书');
-    assert.deepEqual(site.stats, builtIndex.stats);
-    assert.equal(site.generatedAt, builtIndex.generatedAt);
+    assert.deepEqual(site.stats, currentIndex.stats);
+    assert.equal(site.generatedAt, currentIndex.generatedAt);
     assertNoLocalLeak(site, 'site response');
 
     const catalogResponse = await app.inject('/api/catalog?compact=true');
@@ -142,6 +162,7 @@ async function main() {
     assert.ok(page.html.length > 0);
     assert.equal(page.frontMatter.id, 'dsu-on-tree');
     assert.deepEqual(page.frontMatter.code_template, ['dsu-on-tree-color-count']);
+    assert.equal(Object.hasOwn(page, 'chunks'), false);
     assertPayloadUrls(page);
     assertNoLocalLeak(page, 'page response');
 
@@ -159,10 +180,10 @@ async function main() {
     const pagedPagesResponse = await app.inject('/api/pages?limit=2&offset=1');
     assertApiResponse(pagedPagesResponse, 200);
     const pagedPages = parseJson(pagedPagesResponse);
-    assert.equal(pagedPages.total, builtIndex.pages.length);
+    assert.equal(pagedPages.total, currentIndex.pages.length);
     assert.deepEqual(
       pagedPages.items.map((item) => item.id),
-      builtIndex.pages.slice(1, 3).map((item) => item.id)
+      currentIndex.pages.slice(1, 3).map((item) => item.id)
     );
 
     const codeResponse = await app.inject(
@@ -193,10 +214,10 @@ async function main() {
     const pagedCodesResponse = await app.inject('/api/codes?limit=2&offset=1');
     assertApiResponse(pagedCodesResponse, 200);
     const pagedCodes = parseJson(pagedCodesResponse);
-    assert.equal(pagedCodes.total, builtIndex.codes.length);
+    assert.equal(pagedCodes.total, currentIndex.codes.length);
     assert.deepEqual(
       pagedCodes.items.map((item) => item.id),
-      builtIndex.codes.slice(1, 3).map((item) => item.id)
+      currentIndex.codes.slice(1, 3).map((item) => item.id)
     );
 
     const tagsResponse = await app.inject('/api/tags');
@@ -218,7 +239,7 @@ async function main() {
     assertApiResponse(unknownResponse, 404);
     assert.equal(parseJson(unknownResponse).error, 'API_ROUTE_NOT_FOUND');
 
-    const legacyRoutes = ['/md', '/ai/catalog', '/ai/page-context', '/ai/code']
+    const legacyRoutes = ['/md', '/ai/catalog', '/ai/page-context', '/ai/code', '/chunks/search']
       .map((suffix) => `/api${suffix}`);
     for (const route of legacyRoutes) {
       const response = await app.inject(route);

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, ref } from 'vue'
 import { useToast } from 'vue-toastification';
-import Fuse from 'fuse.js'
 import CodeShow from './components/codeShow.vue'
 
 interface ArticleInfo {
@@ -29,10 +28,6 @@ const showCodeModal = ref(false)
 const modalTitle = ref('')
 const modalCode = ref('')
 const modalFilename = ref('')
-
-const fuse = new Fuse(templates, {
-  keys: ['title', 'desc', 'tags']
-})
 
 function codeAssetUrl(codePath: string) {
   // 开发环境由 Vite 根路径提供 public 文件；生产环境挂载在 /code_template/ 下。
@@ -120,8 +115,23 @@ async function copyShell(item: CodeTemplate) {
 }
 
 const searchResult = computed(() => {
-  const keyword = searchText.value.trim();
-  return keyword ? fuse.search(keyword).map(result => result.item) : templates;
+  const keywords = searchText.value
+    .trim()
+    .toLocaleLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (keywords.length === 0) return templates;
+
+  return templates.filter((item) => {
+    const searchable = [
+      item.id,
+      item.title,
+      item.desc,
+      item.code,
+      ...(item.tags || [])
+    ].filter(Boolean).join(' ').toLocaleLowerCase();
+    return keywords.every((keyword) => searchable.includes(keyword));
+  });
 })
 </script>
 

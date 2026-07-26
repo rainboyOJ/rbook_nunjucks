@@ -36,31 +36,9 @@ export interface PageDocument extends CollectedPage {
   headings: string[];
   text: string;
   excerpt: string;
-  chunks: SearchChunk[];
-}
-
-export interface SearchChunk {
-  id: string;
-  path: string;
-  url: string;
-  title: string;
-  heading: string;
-  headingLevel: number;
-  chunkIndex: number;
-  splitIndex: number;
-  text: string;
-  navTrail?: string[];
-  visible?: boolean;
-  source?: PageSource;
 }
 
 export interface BuildSearchIndexOptions extends CollectPagesOptions {
   outputPath?: string;
   write?: boolean;
-}
-
-export interface SearchOptions {
-  limit?: number | string;
-  textLength?: number | string;
-  includeText?: boolean;
 }

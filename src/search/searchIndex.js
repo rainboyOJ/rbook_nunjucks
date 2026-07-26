@@ -1,7 +1,5 @@
 export {
   getIndexPayload,
   getPage,
-  rebuildIndex,
-  searchChunks,
-  searchPages
+  rebuildIndex
 } from '@rbook/search';

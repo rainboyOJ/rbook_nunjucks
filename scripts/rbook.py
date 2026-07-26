@@ -80,6 +80,48 @@ def print_json(data, pretty=True):
         print(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
 
 
+def positive_int(value):
+    number = int(value)
+    if number < 1:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
+
+
+def find_pages(items, query, limit=20):
+    words = [word.casefold() for word in query.split() if word]
+    matches = []
+
+    for item in items:
+        page_id = str(item.get("id") or "").casefold()
+        title = str(item.get("title") or "").casefold()
+        description = str(item.get("description") or "").casefold()
+        tags = [str(tag).casefold() for tag in item.get("tags") or []]
+        score = 0
+
+        for word in words:
+            word_scores = []
+            if word in page_id:
+                word_scores.append(400 + (100 if word == page_id else 0))
+            if word in title:
+                word_scores.append(300 + (100 if word == title else 0))
+            if any(word in tag for tag in tags):
+                word_scores.append(200)
+            if word in description:
+                word_scores.append(100)
+            if not word_scores:
+                break
+            score += max(word_scores)
+        else:
+            matches.append((score, title, page_id, item))
+
+    matches.sort(key=lambda match: (-match[0], match[1], match[2]))
+    return {
+        "query": query,
+        "total": len(matches),
+        "items": [match[3] for match in matches[:limit]],
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="rbook HTTP API client")
     parser.add_argument("--baseurl", help="API base url")
@@ -93,6 +135,10 @@ def main():
 
     p_catalog = sub.add_parser("catalog")
     p_catalog.add_argument("--compact", action="store_true")
+
+    p_find = sub.add_parser("find")
+    p_find.add_argument("query")
+    p_find.add_argument("--limit", type=positive_int, default=20)
 
     p_pages = sub.add_parser("pages")
     p_pages.add_argument("--id")
@@ -126,6 +172,9 @@ def main():
         if args.compact:
             params["compact"] = "true"
         print_json(request_json(baseurl, "/api/catalog", params), pretty)
+    elif args.command == "find":
+        catalog = request_json(baseurl, "/api/catalog", {"compact": "true"})
+        print_json(find_pages(catalog.get("items") or [], args.query, args.limit), pretty)
     elif args.command == "pages":
         params = {}
         if args.id:

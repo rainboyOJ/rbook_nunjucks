@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import Fuse from 'fuse.js';
 import {
   loadCodeConfig,
   requireCodeId,
@@ -12,16 +11,9 @@ import {
 import { collectPages } from './collectPages.js';
 import { loadPageDocument } from './markdownText.js';
 import { searchDir, searchIndexPath } from './paths.js';
-import type { BuildSearchIndexOptions, PageDocument, SearchChunk } from './types.js';
+import type { BuildSearchIndexOptions, PageDocument } from './types.js';
 
-function createFuseData(documents: PageDocument[]): SearchChunk[] {
-  return documents.flatMap((doc) => doc.chunks.map((chunk) => ({
-    ...chunk,
-    navTrail: doc.navTrail || [],
-    visible: doc.visible,
-    source: doc.source
-  })));
-}
+export const SEARCH_INDEX_VERSION = 3;
 
 function asStringArray(value: unknown) {
   return Array.isArray(value)
@@ -90,21 +82,8 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}): any {
     }
   }
 
-  const chunks = createFuseData(documents);
-  const fuse = new Fuse(chunks, {
-    includeScore: true,
-    ignoreLocation: true,
-    threshold: 0.42,
-    keys: [
-      { name: 'title', weight: 0.32 },
-      { name: 'heading', weight: 0.28 },
-      { name: 'text', weight: 0.36 },
-      { name: 'path', weight: 0.04 }
-    ]
-  });
-
   const payload = {
-    version: 2,
+    version: SEARCH_INDEX_VERSION,
     generatedAt: new Date().toISOString(),
     site: {
       title: collected.site.title,
@@ -114,7 +93,6 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}): any {
     },
     stats: {
       pages: documents.length,
-      chunks: chunks.length,
       codes: codes.length,
       errors: errors.length
     },
@@ -132,8 +110,6 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}): any {
     })),
     codes,
     codeToArticles,
-    chunks,
-    fuseIndex: fuse.getIndex().toJSON(),
     errors
   };
 
@@ -149,5 +125,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const outputPath = process.argv[2] ? path.resolve(process.argv[2]) : searchIndexPath;
   const payload = buildSearchIndex({ outputPath });
   console.log(`Search index written: ${outputPath}`);
-  console.log(`Pages: ${payload.stats.pages}, chunks: ${payload.stats.chunks}, codes: ${payload.stats.codes}, errors: ${payload.stats.errors}`);
+  console.log(`Pages: ${payload.stats.pages}, codes: ${payload.stats.codes}, errors: ${payload.stats.errors}`);
 }

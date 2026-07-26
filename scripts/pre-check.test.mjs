@@ -14,7 +14,6 @@ function page(id, path = `${id}.md`, extraFrontMatter = {}) {
     headings: [],
     text: 'Test',
     excerpt: 'Test',
-    chunks: [],
     frontMatter: {
       id,
       title: `Page ${id}`,

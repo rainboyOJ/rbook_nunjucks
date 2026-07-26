@@ -16,7 +16,7 @@ https://typst.app/universe/
 }
 ```
 
-应该需要使用:https://www.fusejs.io/ 这个基于js的fuzzy search library
+搜索使用浏览器原生字符串匹配，按空白拆分多个关键词并使用 AND 语义。
 
 
 然后:在 每个config里添加 {
@@ -32,6 +32,5 @@ https://typst.app/universe/
 }]
 
 }
-
 
 

@@ -27,7 +27,7 @@
     "serve:dev": "npm run dev",
     "dev": "npm run build:packages && node packages/rbook-server/dist/dev.js",
     "check:nav": "node scripts/check-book-nav.mjs",
-    "test:api": "npm run build:packages && node scripts/test-api-contract.mjs",
+    "test:api": "npm run build:packages && node --test scripts/rbook-client.test.mjs && node scripts/test-api-contract.mjs",
     "test:code-template": "npm run build:packages && node --test scripts/load-code-config.test.mjs scripts/code-template-build.test.mjs",
     "test:validation": "npm run build:packages:compile && node --test scripts/id-contract.test.mjs scripts/pre-check.test.mjs",
     "test:build-gates": "npm run build:packages:compile && node --test --test-concurrency=1 scripts/build-gates.test.mjs",
@@ -36,7 +36,6 @@
   "dependencies": {
     "@fastify/static": "^9.1.3",
     "fastify": "^5.8.5",
-    "fuse.js": "^7.3.0",
     "glob": "^11.1.0",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",

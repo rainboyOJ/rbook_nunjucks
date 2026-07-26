@@ -9,7 +9,7 @@
 ```text
 Markdown 源文件
   -> 构建 site/dist/ 静态站
-  -> 构建 site/.search/index.json 本地搜索索引
+  -> 构建 site/.search/index.json 文章与代码元数据索引
   -> Fastify 同时服务静态站和 /api/*
   -> Docker 镜像推送到 GHCR
   -> GitHub Actions SSH 到 bohai
@@ -20,25 +20,26 @@ Markdown 源文件
 
 ## 修改点
 
-新增搜索索引模块：
+新增内容索引模块：
 
 ```text
-packages/rbook-search/src/paths.js
-packages/rbook-search/src/collectPages.js
-packages/rbook-search/src/markdownText.js
-packages/rbook-search/src/buildIndex.js
-packages/rbook-search/src/searchIndex.js
+packages/rbook-search/src/paths.ts
+packages/rbook-search/src/collectPages.ts
+packages/rbook-search/src/markdownText.ts
+packages/rbook-search/src/buildIndex.ts
+packages/rbook-search/src/searchIndex.ts
 ```
 
 职责：
 
 - 从 `book/book.yaml` 的 `chapters` 收集目录可见页面。
 - 从 `book/book.yaml` 的 `glob` 收集隐藏但需要渲染的页面。
-- 默认补充扫描 `book/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
+- 默认补充扫描 `book/pages/**/*.md`，但过滤草稿、备份、隐藏文件和 TODO。
 - 读取 Markdown，处理 `@include_md("...")`。
 - 解析 front matter。
-- 按标题把文档切成 chunk。
-- 使用 `Fuse.js` 构建本地全文检索索引。
+- 提取整篇文章的标题、摘要和元数据。
+- 汇总代码模板及文章与模板的双向关联。
+- 使用 schema version 3，读到旧版索引时自动重建。
 - 输出 `site/.search/index.json`。
 
 新增 Fastify 服务：
@@ -95,7 +96,7 @@ npm run dev           # 启动 Fastify 服务
 curl http://127.0.0.1:3000/api/health
 ```
 
-返回索引生成时间和页面/chunk 数量。
+返回索引生成时间以及文章、代码模板和错误数量。
 
 ### 站点信息
 
@@ -109,40 +110,37 @@ curl http://127.0.0.1:3000/api/site
 
 ```bash
 curl 'http://127.0.0.1:3000/api/pages'
-curl 'http://127.0.0.1:3000/api/pages?visible=true'
+curl -G --data-urlencode 'tag=图论' 'http://127.0.0.1:3000/api/pages'
 ```
 
-`visible=true` 只返回目录中可见的页面。
+列表支持标签筛选和分页。如果需要快速获取可见文章目录，使用 `/api/catalog?compact=true`。
 
-### 单页 Markdown
+### 整篇文章
 
 ```bash
-curl 'http://127.0.0.1:3000/api/page?path=base/binary_search/index.md'
+curl -G --data-urlencode 'id=binary-search' 'http://127.0.0.1:3000/api/pages'
 ```
 
-返回页面元信息、标题、URL、标题列表和原始 Markdown。
+返回文章元数据、标题列表、原始 Markdown、渲染后 HTML 和整篇纯文本。
 
-### 页面级搜索
+### 用客户端查找文章
 
 ```bash
-curl -G \
-  --data-urlencode 'q=二分答案' \
-  --data-urlencode 'limit=5' \
-  http://127.0.0.1:3000/api/search
+python3 scripts/rbook.py find "二分 答案" --limit 5
 ```
 
-适合 agent 先定位相关页面。
+该命令从精简目录中匹配文章 ID、标题、描述和标签。多个关键词使用 AND 语义；确定 ID 后再用 `pages --id` 读取整篇文章。
 
-### Chunk 级搜索
+### 代码模板
 
 ```bash
 curl -G \
-  --data-urlencode 'q=线段树' \
-  --data-urlencode 'limit=5' \
-  http://127.0.0.1:3000/api/chunks/search
+  --data-urlencode 'id=v-bcc' \
+  --data-urlencode 'includeContent=true' \
+  http://127.0.0.1:3000/api/codes
 ```
 
-适合 agent 直接获取 RAG 上下文。
+返回模板元数据、源码和引用它的文章。
 
 ### 重建索引
 
@@ -201,7 +199,7 @@ docker run --rm -p 3000:3000 rbook-nunjucks:local
 
 ```bash
 curl http://127.0.0.1:3000/api/health
-curl -G --data-urlencode 'q=二分答案' --data-urlencode 'limit=3' http://127.0.0.1:3000/api/search
+python3 scripts/rbook.py --baseurl http://127.0.0.1:3000 find "二分 答案" --limit 3
 ```
 
 ## GitHub Actions 部署
@@ -359,16 +357,10 @@ docker run -d \
 
 ## 设计取舍
 
-当前版本是轻量 RAG 查询层，不引入向量数据库：
+当前版本是轻量内容元数据查询层，不构建全文或向量索引：
 
 - 优点：部署简单，镜像自包含，bohai 不需要额外服务。
-- 优点：算法书内容关键词明确，Fuse 全文搜索第一阶段足够实用。
-- 限制：语义召回能力弱于 embedding/vector search。
+- 优点：agent 通过 `rbook.py find` 定位文章，再按稳定 ID 读取整篇内容，接口和调试路径更简单。
+- 限制：`find` 只查文章 ID、标题、描述和标签，不查正文。
 
-后续如果需要更强的语义检索，可以在现有 chunk 结构上追加：
-
-```text
-chunks -> embeddings -> sqlite-vec/lancedb/qdrant -> /api/semantic-search
-```
-
-现有 API 不需要推翻。
+后续如果重新需要语义检索，应作为独立功能设计其存储、索引和 API 契约，不在当前元数据索引中保留预设结构。

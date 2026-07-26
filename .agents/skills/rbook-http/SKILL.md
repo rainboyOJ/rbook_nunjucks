@@ -35,6 +35,14 @@ python3 scripts/rbook.py health
 python3 scripts/rbook.py catalog --compact
 ```
 
+### 按元数据查找文章
+```bash
+python3 scripts/rbook.py find "kmp 字符串"
+python3 scripts/rbook.py find "动态规划 背包" --limit 10
+```
+
+`find` 只匹配文章的 ID、标题、描述和标签。多个关键词采用 AND 语义；确定文章 ID 后，再用 `pages --id` 读取全文。
+
 ### 按 ID 查询文章详情
 ```bash
 python3 scripts/rbook.py pages --id binary-search

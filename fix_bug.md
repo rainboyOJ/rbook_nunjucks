@@ -8,6 +8,7 @@
 - P1-3 已完成：仓库内 `nvim/` 插件副本已删除；P1-4 已完成：API 文档、实现与合约测试已统一
 - P2-1 已完成：pre-check 已成为全部构建、索引和开发入口的强制门禁
 - P2-2 已完成：文章与代码模板统一采用严格字符串 ID 契约
+- 后续简化已完成：删除文章 chunks 和 Fuse 全文检索，改由 `rbook.py` 查找元数据并按 ID 读取整篇文章
 - 修复时必须保留当前 `book/book.yaml` 中的新旧导航入口，不借机调整文章目录结构
 
 ## 总体结论
@@ -101,7 +102,7 @@ title: 关于本书
 - [x] 使用 `fraction` 检查 `codeToArticles`，反向关联恢复到 `tricks-fraction-class`。
 - [x] 迁移脚本的普通文件、字段较多文件、ID 冲突文件、非目标文件四类测试全部通过。
 - [x] `npm run pre-check` 通过：`pages=432`、`codes=189`、`errors=0`；现存缺少 description/tags 的 warning 不属于 P1-1。
-- [x] `npm run build:packages` 和隔离目录中的 `npm run build:runtime` 通过；搜索索引生成 `pages=432`、`chunks=4385`、`errors=0`。
+- [x] `npm run build:packages` 和隔离目录中的 `npm run build:runtime` 通过；索引生成 `pages=432`、`codes=189`、`errors=0`。
 
 ## P1-2：网页代码模板加载了错误的 `code.yaml`
 
@@ -148,7 +149,7 @@ path.resolve(__workdir, 'book/code.yaml')
 - [x] core loader 单元测试 4/4、widget 端到端测试 7/7 通过，包含目录项和逃逸符号链接。
 - [x] 新增 `npm run test:code-template`，保证测试前先编译最新 packages。
 - [x] `npm run typecheck` 通过。
-- [x] 隔离目录中的 `npm run build:runtime` 通过；搜索索引 `pages=432`、`chunks=4385`、`errors=0`。
+- [x] 隔离目录中的 `npm run build:runtime` 通过；索引 `pages=432`、`codes=189`、`errors=0`。
 
 ## P1-3：删除仓库内已不再维护的 Neovim 插件
 
@@ -262,7 +263,7 @@ if type(item) == "table" and item.code then
 - [x] 缓存策略在实现、文档和测试中一致。
 - [x] 测试断言新接口的真实字段，不通过兼容层恢复已删除接口来迁就旧测试。
 - [x] `npm run typecheck` 通过。
-- [x] `npm run build:all` 通过：`pages=432`、`chunks=4385`、`codes=189`、`errors=0`。
+- [x] `npm run build:all` 通过：`pages=432`、`codes=189`、`errors=0`。
 
 ## P2-1：pre-check 没有接入真实构建入口
 
@@ -394,8 +395,8 @@ npm run test:api
 - [x] `rg -n '^---id:' book/pages` 无匹配。
 - [x] `npm run pre-check` 通过：`pages=432`、`codes=189`、`errors=0`、`warnings=666`。
 - [x] `npm run typecheck` 通过。
-- [x] `npm run build:all` 通过：`pages=432`、`chunks=4385`、`codes=189`、`errors=0`。
-- [x] `npm run build:runtime` 通过：`pages=432`、`chunks=4385`、`errors=0`。
+- [x] `npm run build:all` 通过：`pages=432`、`codes=189`、`errors=0`。
+- [x] `npm run build:runtime` 通过：`pages=432`、`codes=189`、`errors=0`。
 - [x] `npm run test:api` 通过。
 - [x] `npm run test:code-template` 通过，11/11。
 - [x] front matter 修复脚本测试 4/4、ID 与 pre-check 单元测试 10/10、构建门禁测试 4/4 通过。

@@ -1,117 +1,38 @@
 import fs from 'fs';
-import Fuse from 'fuse.js';
-import { buildSearchIndex } from './buildIndex.js';
+import { buildSearchIndex, SEARCH_INDEX_VERSION } from './buildIndex.js';
 import { bookDir, searchIndexPath } from './paths.js';
-import type { SearchOptions } from './types.js';
 
 let cachedPayload: any = null;
-let cachedFuse: Fuse<any> | null = null;
 
 function loadPayload({ rebuild = false }: { rebuild?: boolean } = {}) {
-  if (!rebuild && cachedPayload && cachedFuse) {
-    return { payload: cachedPayload, fuse: cachedFuse };
+  if (!rebuild && cachedPayload) {
+    return cachedPayload;
   }
 
   let payload;
   if (!rebuild && fs.existsSync(searchIndexPath)) {
     payload = JSON.parse(fs.readFileSync(searchIndexPath, 'utf8'));
+    if (payload.version !== SEARCH_INDEX_VERSION) {
+      payload = buildSearchIndex();
+    }
   } else {
     payload = buildSearchIndex();
   }
 
-  const fuse = new Fuse(payload.chunks, {
-    includeScore: true,
-    ignoreLocation: true,
-    threshold: 0.42,
-    keys: [
-      { name: 'title', weight: 0.32 },
-      { name: 'heading', weight: 0.28 },
-      { name: 'text', weight: 0.36 },
-      { name: 'path', weight: 0.04 }
-    ]
-  }, Fuse.parseIndex(payload.fuseIndex));
-
   cachedPayload = payload;
-  cachedFuse = fuse;
-  return { payload, fuse };
-}
-
-function limitText(text: string | undefined, length = 360) {
-  if (!text || text.length <= length) return text || '';
-  return `${text.slice(0, length).trim()}...`;
+  return payload;
 }
 
 export function getIndexPayload(options: { rebuild?: boolean } = {}) {
-  return loadPayload(options).payload;
+  return loadPayload(options);
 }
 
 export function rebuildIndex() {
-  return loadPayload({ rebuild: true }).payload;
-}
-
-export function searchChunks(query: string, options: SearchOptions = {}) {
-  const { payload, fuse } = loadPayload();
-  const limit = Math.min(Number(options.limit || 10), 50);
-  const includeText = options.includeText !== false;
-
-  if (!query || !query.trim()) {
-    return {
-      query: query || '',
-      total: 0,
-      results: []
-    };
-  }
-
-  const results = fuse.search(query.trim(), { limit }).map((result) => ({
-    score: result.score,
-    ...result.item,
-    text: includeText ? limitText(result.item.text, Number(options.textLength || 600)) : undefined
-  }));
-
-  return {
-    query,
-    generatedAt: payload.generatedAt,
-    total: results.length,
-    results
-  };
-}
-
-export function searchPages(query: string, options: SearchOptions = {}) {
-  const chunkResults = searchChunks(query, { ...options, limit: Math.min(Number(options.limit || 20) * 3, 80) });
-  const byPath = new Map();
-
-  for (const result of chunkResults.results) {
-    const old = byPath.get(result.path);
-    if (!old || result.score < old.score) {
-      byPath.set(result.path, result);
-    }
-  }
-
-  const pages = [...byPath.values()]
-    .sort((a, b) => a.score - b.score)
-    .slice(0, Math.min(Number(options.limit || 10), 50))
-    .map((result) => ({
-      score: result.score,
-      path: result.path,
-      url: result.url,
-      title: result.title,
-      heading: result.heading,
-      excerpt: result.text,
-      navTrail: result.navTrail,
-      visible: result.visible,
-      source: result.source
-    }));
-
-  return {
-    query,
-    generatedAt: chunkResults.generatedAt,
-    total: pages.length,
-    results: pages
-  };
+  return loadPayload({ rebuild: true });
 }
 
 export function getPage(path: string) {
-  const { payload } = loadPayload();
+  const payload = loadPayload();
   const page = payload.pages.find((item: any) => item.path === path);
   if (!page) return null;
 
@@ -123,7 +44,7 @@ export function getPage(path: string) {
 }
 
 export function getPageById(id: string) {
-  const { payload } = loadPayload();
+  const payload = loadPayload();
   const page = payload.pages.find((item: any) => item.id === id);
   if (!page) return null;
 
@@ -135,7 +56,7 @@ export function getPageById(id: string) {
 }
 
 export function getCodeById(id: string) {
-  const { payload } = loadPayload();
+  const payload = loadPayload();
   const codes = payload.codes || [];
   return codes.find((item: any) => item.id === id) || null;
 }

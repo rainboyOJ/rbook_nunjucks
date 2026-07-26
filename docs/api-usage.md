@@ -115,7 +115,6 @@ curl "$BASE_URL/api/health"
   "generatedAt": "2026-07-25T11:21:13.109Z",
   "stats": {
     "pages": 432,
-    "chunks": 4385,
     "codes": 189,
     "errors": 0
   }
@@ -142,7 +141,6 @@ curl "$BASE_URL/api/site"
   },
   "stats": {
     "pages": 432,
-    "chunks": 4385,
     "codes": 189,
     "errors": 0
   },
@@ -189,7 +187,7 @@ curl "$BASE_URL/api/catalog?compact=true"
 curl -G --data-urlencode "id=dsu-on-tree" "$BASE_URL/api/pages"
 ```
 
-响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`excerpt`、`markdown`、`html`、`text`、`chunks`、`visible`、`source` 和 `navTrail`。文章引用的模板 ID 位于 `frontMatter.code_template`。
+响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`excerpt`、`markdown`、`html`、`text`、`visible`、`source` 和 `navTrail`。文章引用的模板 ID 位于 `frontMatter.code_template`。
 
 ### `GET /api/pages`
 
@@ -308,8 +306,11 @@ curl -X POST \
 ```bash
 python3 scripts/rbook.py health
 python3 scripts/rbook.py catalog --compact
-python3 scripts/rbook.py page dsu-on-tree
+python3 scripts/rbook.py find "树上 启发式" --limit 10
+python3 scripts/rbook.py pages --id dsu-on-tree
 python3 scripts/rbook.py code dsu-on-tree-color-count --content
 ```
+
+`find` 只在文章 ID、标题、描述和标签中查找，多个关键词使用 AND 语义；它不切分或搜索文章正文。
 
 可用 `RBOOK_BASE_URL` 切换服务地址。

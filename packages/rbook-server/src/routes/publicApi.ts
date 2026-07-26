@@ -64,7 +64,6 @@ function fullPage(page: any) {
     markdown: payload.markdown,
     html: payload.html,
     text: payload.text,
-    chunks: payload.chunks,
     visible: payload.visible,
     source: payload.source,
     navTrail: payload.navTrail || []

@@ -76,7 +76,6 @@ export function createPagePayload(page: any) {
     excerpt: document.excerpt,
     markdown: rendered.md_content || page.markdown || '',
     html: rendered.html_content || '',
-    text: document.text || stripHtml(rendered.html_content || ''),
-    chunks: document.chunks
+    text: document.text || stripHtml(rendered.html_content || '')
   };
 }

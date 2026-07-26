@@ -142,7 +142,7 @@ export function buildRuntime() {
   buildCodeTemplateApp();
 
   const index = buildSearchIndex();
-  console.log(`[runtime] search pages=${index.stats.pages}, chunks=${index.stats.chunks}, errors=${index.stats.errors}`);
+  console.log(`[runtime] search pages=${index.stats.pages}, codes=${index.stats.codes}, errors=${index.stats.errors}`);
   if (index.stats.errors > 0) {
     throw new Error(`search index has ${index.stats.errors} page errors`);
   }

@@ -65,12 +65,7 @@ curl -G --data-urlencode "tag=图论,最短路" "$BASE_URL/api/pages"
   excerpt: string;
   markdown: string;         // 原始 Markdown 正文
   html: string;             // 渲染后的 HTML
-  text: string;             // 纯文本形式（供分块或检索使用）
-  chunks: Array<{
-    id: string;
-    heading: string;
-    text: string;
-  }>;
+  text: string;             // 整篇文章的纯文本形式
 }
 ```
 
