@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "记忆化", "斐波那契"]
 categories: ["递归"]
-code_template:
-  - title: 斐波那契普通递归
-    desc: "直接按定义递归计算斐波那契数"
-    tags: ["递归"]
-    code: /code/base/recursion/fibonacci_recursive.cpp
-  - title: 斐波那契记忆化
-    desc: "用数组保存已经算过的子问题"
-    tags: ["递归", "记忆化"]
-    code: /code/base/recursion/fibonacci_memo.cpp
+code_template: [fib-recursive, fib-memo]
 ---
 
 [[TOC]]

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["取模", "同余", "数论"]
 categories: ["数学", "数论"]
-code_template:
-  - title: 规范化取模
-    desc: "把 C++ 取余结果规范到 0..m-1"
-    tags: ["取模", "同余", "圆环"]
-    code: /code/math/numberTheory/normalize_mod.cpp
+code_template: [normalize-mod]
 ---
 
 [[TOC]]

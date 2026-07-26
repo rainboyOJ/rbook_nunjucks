@@ -1,3 +1,8 @@
+---
+id: data-structure-segment-tree-beats-gemi-1
+title: Gemi_吉司机线段树复杂度证明思路
+---
+
 ## 我的提问：
 
 ![所上传图片的预览图](https://lh3.googleusercontent.com/gg/AIJ2gl-zg2rnm4WTixhb7Q8ijNHXXNmrc1koq3wne5SpbZG3Kz75SexmH6MOuZuft0lH6N66Eu1GwaKvm57oHkG9UflS1VFa3qf8ZipLOaLJu9XOe3i0_SsffwX0TI73XUsF-ghGACgYj2YwVYt6wnrUF7h-wGvGPN_ssIxrwWEUOFulbjOcuNj2MZyQ58sM9pAn77CLXVNCQeQyBe7L6XKhnhh2JlGaFmaPwXWhNR1zsP4wgCfTM9j_8nlNWLILbIxj2csUqtm1mFXO8l1qiY1bc0OF5wQF-BgGHQ)
@@ -222,4 +227,3 @@ modify(lc, l, r, k), modify(rc, l, r, k); // 继续在子树内搜索
 （提示：想一想，区间加法会让“区间内不同数值的个数”变多吗？还是会有其他影响？）
 
 ---
-

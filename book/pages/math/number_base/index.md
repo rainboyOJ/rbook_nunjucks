@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["进制", "数学基础"]
 categories: ["数学"]
-code_template:
-  - title: 二进制转十进制
-    desc: "按位累加计算二进制字符串的十进制值"
-    tags: ["进制转换", "二进制"]
-    code: /code/math/base_conversion/bin2dec.cpp
-  - title: 十进制转二进制
-    desc: "短除法生成二进制字符串"
-    tags: ["进制转换", "二进制"]
-    code: /code/math/base_conversion/dec2bin.cpp
+code_template: [base-conversion-bin2dec, base-conversion-dec2bin]
 ---
 
 [[TOC]]

@@ -1,3 +1,8 @@
+---
+id: enumeration-permutaion-combination-pair-number-teach-plan
+title: teach_plan
+---
+
 ## 教学目标
 
 - 学会对数问题的公式: ``\sum s(i)``

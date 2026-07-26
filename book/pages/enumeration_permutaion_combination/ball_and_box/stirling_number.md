@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["组合数学", "Stirling 数", "动态规划", "枚举"]
 categories: ["组合数学"]
-code_template:
-  - title: 第二类 Stirling 数计数
-    desc: "统计 n 个不同元素划分成 m 个非空无标号集合的方案数"
-    tags: ["Stirling 数", "DP"]
-    code: /code/math/combinatorics/stirling_second_count.cpp
-  - title: 第二类 Stirling 数方案枚举
-    desc: "按新盒子出现顺序枚举集合划分，避免相同盒子的重复"
-    tags: ["Stirling 数", "DFS", "集合划分"]
-    code: /code/math/combinatorics/stirling_second_enumerate.cpp
+code_template: [stirling2-count, stirling2-enumerate]
 ---
 
 [[TOC]]

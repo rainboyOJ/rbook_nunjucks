@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["单调栈"]
 categories: ["数据结构"]
-code_template:
-  - title: 下一个更大元素
-    desc: "求每个位置右侧第一个更大元素的位置"
-    tags: ["单调栈"]
-    code: /code/data-struture/monotonic_stack_next_greater.cpp
+code_template: [mono-stack-next-greater]
 ---
 
 [[TOC]]

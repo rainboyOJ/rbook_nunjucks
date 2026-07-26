@@ -1,3 +1,8 @@
+---
+id: appendix-shellscripts-funny-command
+title: funny_command
+---
+
 
 ## 小火车
 

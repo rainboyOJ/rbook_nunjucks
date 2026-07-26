@@ -1,5 +1,5 @@
 ---
-id: "numberTheory"
+id: number-theory
 title: "数论"
 date: 2025-12-04 15:01
 toc: true

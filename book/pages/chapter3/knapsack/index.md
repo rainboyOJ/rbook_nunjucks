@@ -1,4 +1,5 @@
 ---
+id: chapter3-knapsack
 title: 背包问题
 ---
 

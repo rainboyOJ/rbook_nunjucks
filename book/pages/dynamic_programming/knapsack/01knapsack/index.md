@@ -5,23 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "01背包"]
 categories: ["动态规划"]
-code_template:
-  - title: 01 背包二维写法
-    desc: "保留完整状态表，适合教学和路径恢复"
-    tags: ["动态规划", "01背包"]
-    code: /code/dynamic_programming/knapsack/zero_one_2d.cpp
-  - title: 01 背包一维写法
-    desc: "容量倒序枚举，竞赛常用模板"
-    tags: ["动态规划", "01背包", "空间优化"]
-    code: /code/dynamic_programming/knapsack/zero_one_1d.cpp
-  - title: 01 背包 Python 一维写法
-    desc: "Python 版本的一维 01 背包模板"
-    tags: ["动态规划", "01背包", "Python"]
-    code: /code/dynamic_programming/knapsack/zero_one_1d.py
-  - title: 01 背包恰好装满
-    desc: "不可达状态初始化为负无穷"
-    tags: ["动态规划", "恰好装满"]
-    code: /code/dynamic_programming/knapsack/zero_one_exact_fill.cpp
+code_template: [knapsack-01-2d, knapsack-01-1d, knapsack-01-1d-1, knapsack-01-exact-fill]
 ---
 
 [[TOC]]

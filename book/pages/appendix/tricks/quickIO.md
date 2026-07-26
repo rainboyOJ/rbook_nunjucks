@@ -4,12 +4,8 @@ title: "quickIO"
 date: 2025-11-04 11:32
 toc: true
 tags: ["tricks","template"]
-code_template:
-  - title: 快速输入输出
-    desc: "使用 getchar/putchar 实现整数快读快写"
-    tags: ["输入输出", "快读", "工具"]
-    code: /code/utils/quick_io.cpp
 categories: ["附录", "工具"]
+code_template: [quick-io]
 ---
 
 [[TOC]]

@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "DFS", "BFS", "连通块"]
 categories: ["图论"]
-code_template:
-  - title: DFS 遍历图
-    desc: "从一个起点深度优先访问可达点"
-    tags: ["图论", "DFS"]
-    code: /code/graph/dfs_traversal.cpp
-  - title: 无向图连通块
-    desc: "用 DFS 标记无向图中的每个连通分量"
-    tags: ["图论", "连通块"]
-    code: /code/graph/connected_components.cpp
+code_template: [dfs-traversal, connected-components]
 ---
 
 [[TOC]]

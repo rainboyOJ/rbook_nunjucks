@@ -1,3 +1,8 @@
+---
+id: data-structure-segment-tree-sgt-zkw
+title: sgt_zkw
+---
+
 zkw线段树
 
 zkw线段树

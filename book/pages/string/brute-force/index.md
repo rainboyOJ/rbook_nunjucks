@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["字符串", "模式匹配", "暴力枚举"]
 categories: ["字符串"]
-code_template:
-  - title: 字符串朴素匹配
-    desc: "枚举每个起点，逐字符比较模式串"
-    tags: ["字符串", "暴力"]
-    code: /code/string/brute_force_match.cpp
+code_template: [brute-force-match]
 ---
 
 [[TOC]]

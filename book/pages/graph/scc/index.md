@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "强连通分量"]
 categories: ["图论"]
-code_template:
-  - title: 强连通分量 SCC
-    desc: "Tarjan 求有向图强连通分量"
-    tags: ["图论", "SCC"]
-    code: /code/graph/scc.cpp
+code_template: [scc]
 ---
 
 [[TOC]]

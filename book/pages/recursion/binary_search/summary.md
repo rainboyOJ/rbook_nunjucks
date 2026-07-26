@@ -1,3 +1,8 @@
+---
+id: recursion-binary-search-summary
+title: summary
+---
+
 ::: colorfulbox
 
 定义1 二分性

@@ -3,9 +3,13 @@ set -e
 
 VITE_RBOOK_WEB_URL="https://rbook2.roj.ac.cn/"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 export RBOOK_APP_DIR="${RBOOK_APP_DIR:-site}"
 export RBOOK_CONTENT_DIR="${RBOOK_CONTENT_DIR:-book}"
+if [[ "$RBOOK_APP_DIR" = /* ]]; then
+  APP_DIR="$RBOOK_APP_DIR"
+else
+  APP_DIR="$REPO_ROOT/$RBOOK_APP_DIR"
+fi
 if [[ "$RBOOK_CONTENT_DIR" = /* ]]; then
   CONTENT_DIR="$RBOOK_CONTENT_DIR"
 else

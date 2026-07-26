@@ -5,19 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["组合数学", "排列", "组合", "计数"]
 categories: ["数学", "组合数学"]
-code_template:
-  - title: 排列枚举
-    desc: "DFS 枚举输入序列的所有排列"
-    tags: ["排列", "DFS", "枚举"]
-    code: /code/base/enumerate/permutation.cpp
-  - title: 组合枚举
-    desc: "从 n 个元素中选 m 个，按下标递增枚举"
-    tags: ["组合", "DFS", "枚举"]
-    code: /code/base/enumerate/combination.cpp
-  - title: 多重集排列枚举
-    desc: "含重复元素时按计数枚举所有不同排列"
-    tags: ["多重集", "排列", "去重"]
-    code: /code/base/enumerate/multiset_permutation.cpp
+code_template: [permutation, combination, multiset-permutation]
 ---
 
 [[TOC]]

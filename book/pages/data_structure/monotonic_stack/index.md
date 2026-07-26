@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "单调栈"]
 categories: ["数据结构"]
-code_template:
-  - title: 下一个更大元素
-    desc: "求每个位置右侧第一个更大元素的位置"
-    tags: ["单调栈"]
-    code: /code/data-struture/monotonic_stack_next_greater.cpp
-  - title: 直方图最大矩形
-    desc: "单调栈求每根柱子作为最低高度时的最大矩形"
-    tags: ["单调栈", "直方图"]
-    code: /code/data-struture/monotonic_stack_largest_rectangle.cpp
+code_template: [mono-stack-next-greater, mono-stack-max-rect]
 ---
 
 [[TOC]]

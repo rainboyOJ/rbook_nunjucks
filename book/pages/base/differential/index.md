@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["差分", "前缀和", "区间修改"]
 categories: ["基础算法"]
-code_template:
-  - title: 一维差分
-    desc: "多次区间加，最后一次性还原数组"
-    tags: ["差分", "区间修改"]
-    code: /code/base/differential.cpp
-  - title: 二维差分
-    desc: "多次子矩形加，最后一次性还原矩阵"
-    tags: ["差分", "二维差分", "矩阵"]
-    code: /code/base/differential_2d.cpp
+code_template: [difference-1d, difference-2d]
 ---
 
 [[TOC]]

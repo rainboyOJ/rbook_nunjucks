@@ -1,3 +1,8 @@
+---
+id: graph-traversal-practice
+title: practice
+---
+
 
 - luogu
 - b3862

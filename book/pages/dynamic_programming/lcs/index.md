@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LCS", "线性 DP"]
 categories: ["动态规划"]
-code_template:
-  - title: 最长公共子序列
-    desc: "求两个序列的最长公共子序列长度"
-    tags: ["动态规划", "LCS"]
-    code: /code/dynamic_programming/lcs.cpp
-  - title: 最长公共子序列还原
-    desc: "在求长度后还原任意一个 LCS"
-    tags: ["动态规划", "路径还原"]
-    code: /code/dynamic_programming/lcs_restore.cpp
+code_template: [lcs, lcs-restore]
 ---
 
 [[TOC]]

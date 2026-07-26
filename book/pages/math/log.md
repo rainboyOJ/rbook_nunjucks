@@ -1,3 +1,8 @@
+---
+id: math-log
+title: log
+---
+
 # **对数：定义、核心性质与应用**
 
 ### **摘要 (Abstract)**

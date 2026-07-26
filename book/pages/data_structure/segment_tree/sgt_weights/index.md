@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["线段树", "权值线段树", "平衡树", "数据结构"]
 categories: ["数据结构", "线段树"]
-code_template:
-  - title: 动态开点权值线段树
-    desc: "维护值域上的出现次数，支持排名、第 k 小、前驱、后继"
-    tags: ["线段树", "权值线段树", "动态开点"]
-    code: /code/data-struture/segment_tree/weight_segment_tree.cpp
+code_template: [segtree-weight]
 ---
 
 [[TOC]]

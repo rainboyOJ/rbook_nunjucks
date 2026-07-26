@@ -1,3 +1,8 @@
+---
+id: recursion-print-to-n-problem
+title: problem
+---
+
 ### 描述
 
 读取一个数$n$,输出两行数

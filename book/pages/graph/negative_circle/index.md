@@ -5,11 +5,7 @@ date: 2026-06-16 18:25
 toc: true
 tags: ["负环", "SPFA", "Bellman-Ford", "最短路"]
 categories: ["图论"]
-code_template:
-  - title: SPFA 判负环
-    desc: "从超级源点思想出发，记录最短路边数判断负环"
-    tags: ["负环", "SPFA", "最短路"]
-    code: /code/graph/spfa_negative_cycle.cpp
+code_template: [spfa-negative-cycle]
 ---
 
 [[TOC]]

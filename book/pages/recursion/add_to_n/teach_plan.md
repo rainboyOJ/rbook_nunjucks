@@ -1,3 +1,8 @@
+---
+id: recursion-add-to-n-teach-plan
+title: teach_plan
+---
+
 - 什么是递归：自己调用自己
 - 怎么理解递归：
   - 先理解函数的运行，

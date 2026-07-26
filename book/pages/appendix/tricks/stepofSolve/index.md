@@ -1,3 +1,8 @@
+---
+id: appendix-tricks-stepofsolve
+title: stepofSolve
+---
+
 ## 写题目的步骤
 
 1. 仔细看题目1遍,看懂题目的表达意思

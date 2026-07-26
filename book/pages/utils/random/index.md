@@ -5,11 +5,7 @@ date: 2026-06-17 00:00
 toc: true
 tags: ["随机数", "工具"]
 categories: ["工具"]
-code_template:
-  - title: 随机数生成工具
-    desc: "使用 mt19937 生成随机整数，适合对拍数据生成"
-    tags: ["随机数", "对拍", "工具"]
-    code: /code/utils/random.cpp
+code_template: [random]
 ---
 
 [[TOC]]

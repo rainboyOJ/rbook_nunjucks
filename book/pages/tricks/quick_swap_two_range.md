@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["区间操作", "翻转", "技巧"]
 categories: ["基础技巧"]
-code_template:
-  - title: 三次翻转交换相邻区间
-    desc: "用 reverse 交换相邻半开区间 [l,m) 与 [m,r)"
-    tags: ["区间操作", "reverse"]
-    code: /code/base/swap_adjacent_ranges.cpp
+code_template: [swap-adjacent-ranges]
 ---
 
 [[TOC]]

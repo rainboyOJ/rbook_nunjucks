@@ -1,3 +1,8 @@
+---
+id: appendix-noilinux2-0
+title: noilinux2.0的安装
+---
+
 
 ## 下载
 

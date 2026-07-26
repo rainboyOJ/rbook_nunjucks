@@ -1,31 +1,11 @@
 ---
-id: "pair_number"
+id: pair-counting
 title: "配对问题"
 date: 2026-06-16 00:00
 toc: true
 tags: ["枚举", "配对", "哈希表", "滑动窗口", "单调队列"]
 categories: ["枚举", "基础算法"]
-code_template:
-  - title: 二值属性不同配对
-    desc: "固定右端点，统计左侧另一类元素数量"
-    tags: ["配对", "桶"]
-    code: /code/base/pair_count/different_binary_pairs.cpp
-  - title: Two Sum 配对计数
-    desc: "用哈希表统计满足 a[i]+a[j]=target 的对数"
-    tags: ["配对", "哈希表"]
-    code: /code/base/pair_count/two_sum_pairs.cpp
-  - title: 同余配对计数
-    desc: "按余数分类，统计和能被 mod 整除的对数"
-    tags: ["配对", "同余"]
-    code: /code/base/pair_count/mod_sum_pairs.cpp
-  - title: 距离限制相等配对
-    desc: "滑动窗口维护距离不超过 k 的历史元素"
-    tags: ["配对", "滑动窗口"]
-    code: /code/base/pair_count/distance_limited_equal_pairs.cpp
-  - title: 距离限制最大配对和
-    desc: "用单调队列维护窗口最大值"
-    tags: ["配对", "单调队列"]
-    code: /code/base/pair_count/window_max_pair_sum.cpp
+code_template: [pair-count-binary-diff, pair-count-two-sum-pairs, pair-count-mod-sum-pairs, pair-count-limited-distance, pair-count-window-max]
 ---
 
 [[TOC]]

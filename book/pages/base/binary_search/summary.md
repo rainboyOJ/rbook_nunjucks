@@ -1,3 +1,8 @@
+---
+id: base-binary-search-summary
+title: summary
+---
+
 !!! definition 定义1 二分性
 
 在一个序列$A = a_1,a_2,\cdots,a_n$上,有一个函数叫做$check(a_i)$,针对序列$A$形成的新的序列$B = b_1,b_2,\cdots,b_n$,其中$b_i = check(a_i) \in \{true,false\}$,且序列$b$的相同值的位置都是连续的,如下所示:

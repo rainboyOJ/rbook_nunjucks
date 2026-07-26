@@ -1,115 +1,144 @@
 import fs from 'fs';
 import path from 'path';
 import fse from 'fs-extra';
-import matter from 'gray-matter';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import type { Plugin } from 'vite';
 import {
-  __bookdir,
+  loadCodeConfig,
+  validateCodes,
+  type CodeTemplateItem
+} from '@rbook/core';
+import {
   __code_template_dir,
-  __workdir,
+  __bookdir,
   collectMarkdownFiles
 } from './bookCatalog.js';
+import matter from 'gray-matter';
 
-// 这个 Vite 插件在构建代码模板页面前运行：
-// 1. 扫描所有文章 front matter 中的 code_template；
-// 2. 把模板代码复制到当前 widget 的 public 目录；
-// 3. 注入前端需要的 template_array 全局变量。
+interface ArticleInfo {
+  id: string;
+  title: string;
+  url: string;
+}
+
 interface CodeTemplate {
+  id: string;
   title?: string;
   tags?: string[];
   code: string;
   desc?: string;
-  sh?: string;
+  language?: string;
+  articles?: ArticleInfo[];
   [key: string]: unknown;
 }
 
-type ArticleFrontMatter = Record<string, unknown> & {
-  code_template?: CodeTemplate[];
-};
-
-interface TemplateRecord extends CodeTemplate {
-  front_matter: ArticleFrontMatter;
-  md_path: string;
-}
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const template_array: TemplateRecord[] = [];
+const template_array: CodeTemplate[] = [];
 
-// 这里只读取 front matter，不渲染 Markdown。代码模板页只关心文章声明了哪些模板代码。
-function readFrontMatter(mdPath: string): ArticleFrontMatter {
-  try {
-    const rawMarkdown = fs.readFileSync(mdPath, 'utf8');
-    return matter(rawMarkdown).data as ArticleFrontMatter;
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`解析 Markdown front matter 失败: ${mdPath}\n${message}`);
+function loadCodeYaml(): CodeTemplateItem[] {
+  const config = loadCodeConfig({ strict: true });
+  const errors = validateCodes(config.codes).filter((item) => item.level === 'ERROR');
+  if (errors.length > 0) {
+    const details = errors
+      .map((item) => `${item.filePath}: ${item.message}`)
+      .join('\n');
+    throw new Error(`invalid code template configuration:\n${details}`);
   }
+  return config.codes;
 }
 
-function getArticleTemplates(frontMatter: ArticleFrontMatter): CodeTemplate[] {
-  return Array.isArray(frontMatter.code_template)
-    ? frontMatter.code_template.filter((item): item is CodeTemplate => typeof item?.code === 'string')
-    : [];
+function pathEscapesRoot(relativePath: string) {
+  return relativePath === '..'
+    || relativePath.startsWith(`..${path.sep}`)
+    || path.isAbsolute(relativePath);
 }
 
-function resolveTemplateCodePath(mdPath: string, template: CodeTemplate) {
-  // /code/... 是本项目模板代码的绝对约定路径，实际文件在 book/code 目录下。
-  if (path.isAbsolute(template.code)) {
-    return path.join(__code_template_dir, template.code.replace(/^\/code\/?/, ''));
-  }
-
-  // 相对路径按“声明它的文章所在目录”解析，方便局部文章引用局部代码。
-  return path.join(path.dirname(mdPath), template.code);
-}
-
-function toPublicCodePath(codePath: string) {
-  // book/code 下的代码发布成 /code_template/code/...，这样 URL 与文章里的 /code/... 约定接近。
-  if (codePath.startsWith(__code_template_dir)) {
-    return path.join('code', path.relative(__code_template_dir, codePath));
+function copyTemplateCode(codePath: string) {
+  if (typeof codePath !== 'string' || codePath.length === 0) {
+    throw new Error('code template path must be a non-empty string');
   }
 
-  return path.relative(__workdir, codePath);
-}
+  const codeRoot = path.resolve(__code_template_dir);
+  const sourcePath = path.resolve(codeRoot, codePath);
+  const relativePath = path.relative(codeRoot, sourcePath);
+  if (!relativePath || pathEscapesRoot(relativePath)) {
+    throw new Error(`code template path escapes book/code: ${codePath}`);
+  }
+  if (!fs.existsSync(sourcePath) || !fs.statSync(sourcePath).isFile()) {
+    throw new Error(`code template file does not exist: ${sourcePath}`);
+  }
 
-function copyTemplateCode(codePath: string, publicCodePath: string) {
-  const targetPath = path.join(__dirname, 'public', publicCodePath);
-  fse.copySync(codePath, targetPath);
-}
+  const realCodeRoot = fs.realpathSync(codeRoot);
+  const realSourcePath = fs.realpathSync(sourcePath);
+  const realRelativePath = path.relative(realCodeRoot, realSourcePath);
+  if (!realRelativePath || pathEscapesRoot(realRelativePath)) {
+    throw new Error(`code template path resolves outside book/code: ${codePath}`);
+  }
 
-function createTemplateRecord(
-  mdPath: string,
-  frontMatter: ArticleFrontMatter,
-  template: CodeTemplate
-): TemplateRecord {
-  const codePath = resolveTemplateCodePath(mdPath, template);
-  const publicCodePath = toPublicCodePath(codePath);
+  const publicCodePath = path.posix.join(
+    'code',
+    relativePath.split(path.sep).join('/')
+  );
+  const publicRoot = path.resolve(__dirname, 'public');
+  const targetPath = path.resolve(publicRoot, ...publicCodePath.split('/'));
+  const targetRelativePath = path.relative(publicRoot, targetPath);
+  if (!targetRelativePath || pathEscapesRoot(targetRelativePath)) {
+    throw new Error(`invalid public code path: ${publicCodePath}`);
+  }
 
-  copyTemplateCode(codePath, publicCodePath);
-
-  return {
-    ...template,
-    code: publicCodePath,
-    front_matter: frontMatter,
-    md_path: mdPath
-  };
+  fse.copySync(realSourcePath, targetPath);
+  return publicCodePath;
 }
 
 async function loadTemplateRecords() {
   template_array.length = 0;
+  const rawCodes = loadCodeYaml();
+
+  // 构建映射：codeId -> 引用该 code 的文章
+  const codeToArticles: Record<string, ArticleInfo[]> = {};
+  for (const c of rawCodes) {
+    codeToArticles[c.id] = [];
+  }
 
   for (const mdFile of collectMarkdownFiles()) {
     const mdPath = path.join(__bookdir, mdFile);
     if (!fs.existsSync(mdPath)) continue;
+    try {
+      const raw = fs.readFileSync(mdPath, 'utf8');
+      const fm = matter(raw).data as any;
+      if (!fm) continue;
+      const refs = Array.isArray(fm.code_template) ? fm.code_template : [];
+      const articleId = fm.id || '';
+      const articleTitle = fm.title || mdFile;
+      const articleUrl = '/' + mdFile.replace(/\.md$/, '.html').replace(/\\/g, '/');
 
-    const frontMatter = readFrontMatter(mdPath);
-    const templates = getArticleTemplates(frontMatter);
-    if (templates.length === 0) continue;
-
-    for (const template of templates) {
-      template_array.push(createTemplateRecord(mdPath, frontMatter, template));
+      for (const refId of refs) {
+        if (typeof refId === 'string' && codeToArticles[refId]) {
+          codeToArticles[refId].push({
+            id: articleId,
+            title: articleTitle,
+            url: articleUrl
+          });
+        }
+      }
+    } catch {
+      // 忽略读取错误
     }
+  }
+
+  for (const item of rawCodes) {
+    const publicCodePath = copyTemplateCode(item.path);
+
+    template_array.push({
+      id: item.id,
+      title: item.description || item.id,
+      desc: item.description || '',
+      tags: Array.isArray(item.tags) ? item.tags : [],
+      code: publicCodePath,
+      language: item.language || 'cpp',
+      articles: codeToArticles[item.id] || []
+    });
   }
 }
 

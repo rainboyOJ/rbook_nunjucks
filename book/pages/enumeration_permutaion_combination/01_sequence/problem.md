@@ -1,3 +1,8 @@
+---
+id: enumeration-permutaion-combination-01-sequence-problem
+title: problem
+---
+
 ### 题目描述
 
 有一个盒子,盒子有两种数字,``0``和``1``每种数字有无限个,

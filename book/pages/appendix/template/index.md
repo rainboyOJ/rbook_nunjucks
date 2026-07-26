@@ -5,11 +5,7 @@ date: 2026-06-17 00:00
 toc: true
 tags: ["模板", "工具"]
 categories: ["附录"]
-code_template:
-  - title: 竞赛代码模板
-    desc: "通用 C++ 竞赛代码骨架，包含调试宏和 quickIO 引用"
-    tags: ["模板", "C++", "工具"]
-    code: /code/template/template.cpp
+code_template: [template-template]
 ---
 
 [[TOC]]

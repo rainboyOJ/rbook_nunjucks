@@ -1,5 +1,5 @@
 ---
-id: "tree_dp"
+id: tree-dp
 title: "树形DP"
 date: 2026-01-05 20:42
 toc: true

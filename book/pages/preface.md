@@ -1,4 +1,5 @@
 ---
+id: preface
 title: 序
 date: 2026-06-16 00:00
 toc: true

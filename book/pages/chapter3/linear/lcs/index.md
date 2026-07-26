@@ -1,4 +1,5 @@
 ---
+id: chapter3-linear-lcs
 title: 最长公共子序列(LCS)
 ---
 

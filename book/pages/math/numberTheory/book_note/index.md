@@ -1,3 +1,8 @@
+---
+id: math-numbertheory-book-note
+title: book_note
+---
+
 ## 说明
 
 1. 人民教育出版社 A版: 数学选修 4-6 初等数论初步

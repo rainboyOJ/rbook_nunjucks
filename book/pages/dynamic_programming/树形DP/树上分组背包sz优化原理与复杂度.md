@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-dp-sz
+title: 树上分组背包sz优化原理与复杂度
+---
+
 ### 2. sz 优化原理与复杂度 (Optimized Complexity)
 
 加上 `sz` 优化后，代码变成了这样：

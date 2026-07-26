@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-practice
+title: practice
+---
+
 - P7157 「dWoi R1」Physics Problem
 - P2181
 

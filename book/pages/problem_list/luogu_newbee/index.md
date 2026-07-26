@@ -1,3 +1,8 @@
+---
+id: problem-list-luogu-newbee
+title: luogu_newbee
+---
+
 [[TOC]]
 
 ## 洛谷入门

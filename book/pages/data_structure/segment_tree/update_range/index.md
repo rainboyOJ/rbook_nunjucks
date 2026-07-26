@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "懒标记"]
 categories: ["数据结构"]
-code_template:
-  - title: 线段树：区间赋值区间和
-    desc: "支持区间赋值和区间和查询"
-    tags: ["线段树", "区间修改", "懒标记"]
-    code: /code/data-struture/segment_tree/range_assign_range_sum.cpp
+code_template: [segtree-range-assign]
 ---
 
 [[TOC]]

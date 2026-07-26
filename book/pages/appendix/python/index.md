@@ -1,4 +1,5 @@
 ---
+id: appendix-python
 title: 有用的python
 date: 2026-06-16 00:00
 toc: true

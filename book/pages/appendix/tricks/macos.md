@@ -1,4 +1,5 @@
 ---
+id: appendix-tricks-macos
 title: "解决 macOS 中 Clang 编译器缺少 `bits/stdc++.h` 的问题"
 date: 2025-11-04 21:13
 toc: true

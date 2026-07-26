@@ -1,3 +1,8 @@
+---
+id: graph-preface
+title: preface
+---
+
 # 图的相关算法
 
 1. 图的含义

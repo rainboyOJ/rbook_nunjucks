@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-intro
+title: intro
+---
+
 
 ## 解DP的一般步骤
 

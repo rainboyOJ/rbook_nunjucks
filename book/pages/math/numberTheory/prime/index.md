@@ -5,19 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["素数", "数论", "筛法"]
 categories: ["数学", "数论"]
-code_template:
-  - title: 试除法判定素数
-    desc: "单次判断一个整数是否为素数"
-    tags: ["素数", "试除法"]
-    code: /code/math/numberTheory/is_prime_trial_division.cpp
-  - title: 埃氏筛
-    desc: "筛出 1..n 中所有素数"
-    tags: ["素数", "筛法"]
-    code: /code/math/eprime.cpp
-  - title: 线性筛
-    desc: "让每个合数只被最小质因子筛一次"
-    tags: ["素数", "欧拉筛", "线性筛"]
-    code: /code/math/numberTheory/linear_sieve.cpp
+code_template: [is-prime-trial-division, eprime, linear-sieve]
 ---
 
 [[TOC]]

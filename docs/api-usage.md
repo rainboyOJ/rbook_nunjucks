@@ -1,509 +1,315 @@
 # Rbook HTTP API 使用指南
 
-本文档介绍如何使用 rbook HTTP API 查询算法电子书内容。
+Rbook HTTP API 提供算法电子书目录、文章内容、代码模板和标签统计。所有读取接口都返回当前搜索索引中的数据。
 
-在线查看：[HTML 文档](/api) | [原始 Markdown](/api/md)
+HTML 文档：[当前页面](/api)；Markdown 原文：[/api/help?format=md](/api/help?format=md)。
 
 ## 快速开始
 
-### 1. 设置服务地址
+先设置服务地址：
 
 ```bash
 export BASE_URL="${RBOOK_BASE_URL:-http://127.0.0.1:3000}"
 ```
 
-HTML 文档会把 `$BASE_URL` 自动替换为当前请求的服务地址；`/api/md` 返回的原始 Markdown 保留变量写法。
+HTML 文档会把 `$BASE_URL` 替换为当前请求的协议和主机；Markdown 原文保留 `$BASE_URL`，便于直接运行示例。
 
-### 2. 启动服务器
+启动开发服务器：
 
 ```bash
-# 开发模式（文章按 URL 实时渲染）
 npm run dev
-
-# 生产模式
-npm run build:all
-npm run serve
 ```
 
-默认地址：`$BASE_URL`
-
-### 3. 查看 API 文档
-
-浏览器访问：`$BASE_URL/api`
-
-### 4. 健康检查
+检查服务和索引：
 
 ```bash
 curl "$BASE_URL/api/health"
 ```
 
-返回：
+## 公共约定
+
+### 响应格式
+
+除 `/api` 和 `/api/help` 文档接口外，公共接口返回 JSON。时间字段 `generatedAt` 使用 ISO 8601 格式。
+
+响应中的 `url` 是以 `/` 开头的站内根相对路径，不包含部署域名。客户端需要时可用 `BASE_URL + url` 拼成完整地址。`path` 是相对于 `book/pages` 或 `book/code` 的内容路径，不会返回服务器的本机绝对路径。
+
+### 缓存策略
+
+`/api`、`/api/*` 的成功和错误响应统一包含：
+
+```http
+Cache-Control: no-store
+```
+
+这样开发模式下修改文章并重新请求时不会读到浏览器缓存。如果生产环境以后启用缓存，需要同时修改服务端策略、本文档和 API 合约测试。
+
+### 标签筛选
+
+`/api/pages` 和 `/api/codes` 接受 `tag` 参数。多个标签用逗号分隔，采用 OR 语义，只要条目包含任意一个标签就会匹配。
+
+```bash
+curl -G --data-urlencode "tag=树上算法,图论" "$BASE_URL/api/pages"
+```
+
+### 分页
+
+列表接口 `/api/pages` 和 `/api/codes` 支持：
+
+- `limit`：本页数量，默认 50，最大 50；非法值回退到默认值。
+- `offset`：从零开始的偏移量，默认 0；负数或非法值回退到 0。
+
+列表响应中的 `total` 是筛选后的总数，`items` 是当前页的数据。
+
+## 接口总览
+
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| `GET` | `/api` | 将本文档渲染成 HTML |
+| `GET` | `/api/help` | API HTML 文档或 Markdown 原文 |
+| `GET` | `/api/health` | 服务状态和索引统计 |
+| `GET` | `/api/site` | 站点元信息 |
+| `GET` | `/api/catalog` | 可见文章目录 |
+| `GET` | `/api/pages` | 文章详情、筛选和分页 |
+| `GET` | `/api/codes` | 代码模板详情、筛选和分页 |
+| `GET` | `/api/tags` | 文章与代码标签统计 |
+| `POST` | `/api/admin/reindex` | 重建搜索索引 |
+
+## 文档
+
+### `GET /api`
+
+返回由本 Markdown 文件渲染的 HTML。示例中的 `$BASE_URL` 会使用请求的 `Host` 和协议替换。
+
+```bash
+curl "$BASE_URL/api"
+```
+
+### `GET /api/help`
+
+不带参数时返回与 `/api` 相同内容的 HTML：
+
+```bash
+curl "$BASE_URL/api/help"
+```
+
+`format=md` 返回本文件未经替换的原始内容，响应类型为 `text/markdown`：
+
+```bash
+curl "$BASE_URL/api/help?format=md"
+```
+
+## 健康状态
+
+### `GET /api/health`
+
+```bash
+curl "$BASE_URL/api/health"
+```
+
+响应结构：
+
 ```json
 {
   "ok": true,
   "generatedAt": "2026-07-25T11:21:13.109Z",
   "stats": {
     "pages": 432,
-    "chunks": 4384,
+    "chunks": 4385,
+    "codes": 189,
     "errors": 0
   }
 }
 ```
 
----
+## 站点信息
 
-## API 分类
-
-### Public API (`/api/*`)
-通用查询接口，适合前端和通用客户端使用。
-
-### AI API (`/api/ai/*`)
-为 AI Agent 优化的接口，返回紧凑格式，只包含相对路径。
-
-### Admin API (`/api/admin/*`)
-管理接口，需要认证（需设置 `RBOOK_ADMIN_TOKEN`）。
-
----
-
-## 接口总览
-
-| 方法 | 路径 | 用途 |
-|---|---|---|
-| `GET` | `/api` | 返回由本文档渲染的 HTML |
-| `GET` | `/api/md` | 返回本文档的原始 Markdown |
-| `GET` | `/api/health` | 服务健康状态和索引统计 |
-| `GET` | `/api/site` | 站点元信息 |
-| `GET` | `/api/toc` | 电子书目录树 |
-| `GET` | `/api/nav` | 与 `/api/toc` 相同的导航树 |
-| `GET` | `/api/pages` | 页面元数据列表 |
-| `GET` | `/api/page` | 单篇文章的完整数据 |
-| `GET` | `/api/search` | 页面级全文搜索 |
-| `GET` | `/api/chunks/search` | 内容块级搜索 |
-| `GET` | `/api/ai/catalog` | AI 友好的文章和代码模板目录 |
-| `GET` | `/api/ai/page-context` | AI 解题所需的文章上下文 |
-| `GET` | `/api/ai/code` | 读取 `book/code` 下的模板代码 |
-| `POST` | `/api/admin/reindex` | 重建搜索索引，需要管理员认证 |
-
----
-
-## 常用接口
-
-### 1. 站点信息
-
-**获取站点元信息**
+### `GET /api/site`
 
 ```bash
 curl "$BASE_URL/api/site"
 ```
 
-返回站点配置、统计信息和索引生成时间。
+响应包含 `site`、`stats` 和 `generatedAt`：
 
-**获取目录树**
-
-```bash
-curl "$BASE_URL/api/toc"
-```
-
-返回完整的章节目录结构。
-
----
-
-### 2. 页面查询
-
-**列出所有页面**
-
-```bash
-# 所有页面
-curl "$BASE_URL/api/pages"
-
-# 只显示可见页面
-curl "$BASE_URL/api/pages?visible=true"
-```
-
-**获取单个页面详情**
-
-```bash
-curl -G --data-urlencode "path=graph/bcc/index.md" \
-  "$BASE_URL/api/page"
-```
-
-返回完整页面内容：
-- `frontMatter` - 元数据
-- `markdown` - Markdown 源码
-- `html` - 渲染后的 HTML
-- `text` - 纯文本（用于搜索）
-- `headings` - 标题列表
-- `chunks` - 文章分块
-
----
-
-### 3. 搜索
-
-**页面级搜索**
-
-适合先定位相关页面：
-
-```bash
-curl -G --data-urlencode "q=二分图" \
-  --data-urlencode "limit=5" \
-  "$BASE_URL/api/search"
-```
-
-**片段级搜索（推荐）**
-
-更精确，返回匹配的段落：
-
-```bash
-curl -G --data-urlencode "q=数位DP 状态 记忆化" \
-  --data-urlencode "limit=8" \
-  --data-urlencode "textLength=900" \
-  "$BASE_URL/api/chunks/search"
-```
-
-参数说明：
-- `q` - 必填，搜索关键词
-- `limit` - 可选，返回数量（最大 50，默认 10）
-- `textLength` - 可选，每个片段的文本长度（默认 900）
-- `includeText` - 可选，设为 `false` 不返回文本内容
-
----
-
-### 4. AI 专用接口
-
-#### 4.1 获取文章目录
-
-```bash
-# 只获取可见文章（默认）
-curl "$BASE_URL/api/ai/catalog"
-
-# 获取所有文章（包括隐藏页面）
-curl "$BASE_URL/api/ai/catalog?scope=all"
-```
-
-返回结构：
 ```json
 {
-  "scope": "visible",
-  "total": 123,
-  "generatedAt": "2026-07-25T11:21:13.109Z",
-  "articles": [
-    {
-      "path": "graph/bcc/index.md",
-      "url": "/graph/bcc/index.html",
-      "title": "点双连通分量",
-      "description": "...",
-      "tags": ["图论", "连通性"],
-      "categories": ["graph"],
-      "codeTemplates": [
-        {
-          "title": "点双连通分量模板",
-          "code": "/code/graph/v-bcc.cpp",
-          "codeUrl": "/code/graph/v-bcc.cpp",
-          "language": "cpp"
-        }
-      ],
-      "citation": {
-        "title": "点双连通分量",
-        "path": "graph/bcc/index.md",
-        "url": "/graph/bcc/index.html"
-      }
-    }
-  ]
-}
-```
-
-**重要**：`url` 和 `codeUrl` 都是相对路径，需要自己拼接：
-```javascript
-const fullUrl = BASE_URL + article.url;
-const codeFullUrl = BASE_URL + template.codeUrl;
-```
-
-#### 4.2 获取页面上下文
-
-```bash
-# 基本用法
-curl -G --data-urlencode "path=graph/bcc/index.md" \
-  "$BASE_URL/api/ai/page-context"
-
-# 包含代码模板正文
-curl -G --data-urlencode "path=graph/bcc/index.md" \
-  --data-urlencode "includeCode=true" \
-  "$BASE_URL/api/ai/page-context"
-
-# 同时包含 HTML
-curl -G --data-urlencode "path=graph/bcc/index.md" \
-  --data-urlencode "includeCode=true" \
-  --data-urlencode "includeHtml=true" \
-  "$BASE_URL/api/ai/page-context"
-```
-
-返回结构：
-```json
-{
-  "generatedAt": "2026-07-25T11:21:13.109Z",
-  "article": {
-    "path": "graph/bcc/index.md",
-    "url": "/graph/bcc/index.html",
-    "title": "点双连通分量",
-    "markdown": "# 点双连通分量\n\n...",
-    "text": "点双连通分量 ...",
-    "html": "<h1>点双连通分量</h1>...",
-    "frontMatter": { ... },
-    "headings": [ ... ],
-    "citation": { ... }
+  "site": {
+    "title": "我的算法书",
+    "author": "rainboy",
+    "description": "这是一本关于算法的书",
+    "github_repository": "https://github.com/rainboyOJ/rbook_nunjucks"
   },
-  "codeTemplates": [
+  "stats": {
+    "pages": 432,
+    "chunks": 4385,
+    "codes": 189,
+    "errors": 0
+  },
+  "generatedAt": "2026-07-25T11:21:13.109Z"
+}
+```
+
+## 文章目录
+
+### `GET /api/catalog`
+
+目录只包含 `visible !== false` 的文章。默认响应还包含 `headings`、`navTrail`、`codeTemplates`、`visible` 和 `source`。
+
+使用 `compact=true` 只返回适合快速浏览的字段：
+
+```bash
+curl "$BASE_URL/api/catalog?compact=true"
+```
+
+```json
+{
+  "generatedAt": "2026-07-25T11:21:13.109Z",
+  "total": 123,
+  "items": [
     {
-      "source": "frontMatter",
-      "title": "点双连通分量模板",
-      "code": "/code/graph/v-bcc.cpp",
-      "codeUrl": "/code/graph/v-bcc.cpp",
-      "language": "cpp",
-      "content": "#include <bits/stdc++.h>\n..."
-    }
-  ],
-  "includedCode": [
-    {
-      "source": "include-code",
-      "path": "bcc-example.cpp",
-      "code": "bcc-example.cpp",
-      "codeUrl": null,
-      "language": "cpp",
-      "content": "// 示例代码\n..."
+      "id": "dsu-on-tree",
+      "title": "树上启发式合并",
+      "description": "...",
+      "tags": ["树上算法", "启发式合并", "DSU on tree"],
+      "path": "algorithm/dsu_on_tree/index.md",
+      "url": "/algorithm/dsu_on_tree/index.html"
     }
   ]
 }
 ```
 
-**字段说明**：
-- `codeTemplates` - 来自 frontMatter 的 `code_template`，通常是 `/code/...` 下的模板代码
-- `includedCode` - 来自正文中的 `@include-code(...)`，可能是相对路径
-- `includeCode=true` 时才返回 `content` 字段
+## 文章
 
-#### 4.3 读取代码模板
+### `GET /api/pages?id=<id>`
+
+按稳定 ID 读取一篇文章：
 
 ```bash
-curl -G --data-urlencode "path=/code/graph/v-bcc.cpp" \
-  "$BASE_URL/api/ai/code"
+curl -G --data-urlencode "id=dsu-on-tree" "$BASE_URL/api/pages"
 ```
 
-返回：
+响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`excerpt`、`markdown`、`html`、`text`、`chunks`、`visible`、`source` 和 `navTrail`。文章引用的模板 ID 位于 `frontMatter.code_template`。
+
+### `GET /api/pages`
+
+不传 `id` 时返回文章列表，可使用标签和分页参数：
+
+```bash
+curl -G \
+  --data-urlencode "tag=树上算法" \
+  --data-urlencode "limit=20" \
+  --data-urlencode "offset=0" \
+  "$BASE_URL/api/pages"
+```
+
+每个列表项包含 `id`、`title`、`path`、`url`、`description`、`tags`、`visible`、`source`、`navTrail` 和 `codeTemplates`。
+
+## 代码模板
+
+### `GET /api/codes?id=<id>`
+
+按稳定 ID 读取模板元数据和引用该模板的文章：
+
+```bash
+curl -G --data-urlencode "id=dsu-on-tree-color-count" "$BASE_URL/api/codes"
+```
+
+响应字段包括 `id`、`path`、`url`、`description`、`language`、`tags`、`complexity`、`author`、`aliases` 和 `articles`。`articles` 中每项包含文章的 `id`、`title`、`path` 和根相对 `url`。
+
+传入 `includeContent=true` 可同时读取模板源码：
+
+```bash
+curl -G \
+  --data-urlencode "id=dsu-on-tree-color-count" \
+  --data-urlencode "includeContent=true" \
+  "$BASE_URL/api/codes"
+```
+
+响应会额外包含字符串字段 `content`。
+
+### `GET /api/codes`
+
+不传 `id` 时返回模板列表，支持 `tag`、`limit`、`offset` 和 `includeContent`：
+
+```bash
+curl -G \
+  --data-urlencode "tag=树形数据结构" \
+  --data-urlencode "limit=20" \
+  --data-urlencode "offset=0" \
+  "$BASE_URL/api/codes"
+```
+
+## 标签统计
+
+### `GET /api/tags`
+
+```bash
+curl "$BASE_URL/api/tags"
+```
+
+响应中的 `articleTags` 和 `codeTags` 均为 `{ tag, count }` 数组，按数量降序排列：
+
 ```json
 {
-  "path": "/code/graph/v-bcc.cpp",
-  "url": "/code/graph/v-bcc.cpp",
-  "language": "cpp",
-  "content": "#include <bits/stdc++.h>\n..."
+  "generatedAt": "2026-07-25T11:21:13.109Z",
+  "articleTags": [{ "tag": "图论", "count": 20 }],
+  "codeTags": [{ "tag": "图", "count": 12 }]
 }
 ```
 
-**安全限制**：
-- 只接受 `/code/...` 或 `code/...` 路径
-- 只能读取 `book/code/` 目录下的文件
-- 不允许 `../` 目录遍历
+## 管理接口
 
----
+### `POST /api/admin/reindex`
 
-## 使用 Python 脚本
-
-项目提供了 Python 客户端脚本（需要先安装 rbook-http skill）：
-
-### 健康检查
+重建搜索索引。设置了 `RBOOK_ADMIN_TOKEN` 时，需要通过 Bearer token 或 `x-rbook-token` 请求头认证。
 
 ```bash
-python .agents/skills/rbook-http/scripts/rbook_health.py --pretty
+curl -X POST \
+  -H "Authorization: Bearer $RBOOK_ADMIN_TOKEN" \
+  "$BASE_URL/api/admin/reindex"
 ```
 
-### 获取目录
+成功响应包含 `ok`、`generatedAt`、`stats` 和 `errors`。
+
+## 错误响应
+
+按 ID 查询不存在的资源会返回 HTTP 404 和稳定错误码：
+
+```json
+{
+  "error": "PAGE_NOT_FOUND",
+  "message": "page with id 'missing-page' not found"
+}
+```
+
+```json
+{
+  "error": "CODE_NOT_FOUND",
+  "message": "code with id 'missing-code' not found"
+}
+```
+
+模板元数据存在但源文件缺失时返回 `CODE_FILE_NOT_FOUND`。未注册的 `/api/*` 路由返回：
+
+```json
+{
+  "error": "API_ROUTE_NOT_FOUND",
+  "message": "api route not found"
+}
+```
+
+所有上述错误响应同样使用 `Cache-Control: no-store`。
+
+## Python 客户端
+
+仓库提供统一客户端 `scripts/rbook.py`：
 
 ```bash
-# 只获取可见文章
-python .agents/skills/rbook-http/scripts/rbook_catalog.py \
-  --scope visible --compact --pretty
-
-# 限制返回数量
-python .agents/skills/rbook-http/scripts/rbook_catalog.py \
-  --limit 10 --pretty
+python3 scripts/rbook.py health
+python3 scripts/rbook.py catalog --compact
+python3 scripts/rbook.py page dsu-on-tree
+python3 scripts/rbook.py code dsu-on-tree-color-count --content
 ```
 
-### 搜索
-
-```bash
-python .agents/skills/rbook-http/scripts/rbook_search.py \
-  "数位DP 状态 记忆化" --limit 8 --pretty
-```
-
-### 读取页面上下文
-
-```bash
-# 包含代码模板
-python .agents/skills/rbook-http/scripts/rbook_page_context.py \
-  graph/bcc/index.md --include-code --compact --pretty
-
-# 不包含代码（更快）
-python .agents/skills/rbook-http/scripts/rbook_page_context.py \
-  graph/bcc/index.md --compact --pretty
-```
-
-### 读取代码模板
-
-```bash
-# 只输出代码内容
-python .agents/skills/rbook-http/scripts/rbook_code.py \
-  /code/graph/v-bcc.cpp --content-only
-
-# 输出完整 JSON
-python .agents/skills/rbook-http/scripts/rbook_code.py \
-  /code/graph/v-bcc.cpp --pretty
-```
-
----
-
-## 推荐工作流
-
-### 场景 1：AI 解题
-
-1. **搜索相关文章**
-   ```bash
-   curl -G --data-urlencode "q=最短路径 Dijkstra" \
-     "$BASE_URL/api/chunks/search"
-   ```
-
-2. **获取文章上下文和代码模板**
-   ```bash
-   curl -G --data-urlencode "path=graph/shortest_path/dijkstra/index.md" \
-     --data-urlencode "includeCode=true" \
-     "$BASE_URL/api/ai/page-context"
-   ```
-
-3. **生成题解时引用文章**
-   ```markdown
-   本题使用了 [Dijkstra 算法]($BASE_URL/graph/shortest_path/dijkstra/index.html)。
-   ```
-
-### 场景 2：浏览电子书
-
-1. **获取目录**
-   ```bash
-   curl "$BASE_URL/api/toc"
-   ```
-
-2. **读取页面**
-   ```bash
-   curl -G --data-urlencode "path=graph/bcc/index.md" \
-     "$BASE_URL/api/page"
-   ```
-
-### 场景 3：代码模板管理
-
-1. **查看所有模板（通过目录）**
-   ```bash
-   curl "$BASE_URL/api/ai/catalog" | \
-     jq '.articles[].codeTemplates[]'
-   ```
-
-2. **读取特定模板**
-   ```bash
-   curl -G --data-urlencode "path=/code/graph/v-bcc.cpp" \
-     "$BASE_URL/api/ai/code"
-   ```
-
----
-
-## 常见问题
-
-### Q1: 如何处理中文路径？
-
-使用 `curl -G --data-urlencode`：
-
-```bash
-# ✅ 正确
-curl -G --data-urlencode "path=动态规划/背包/index.md" \
-  "$BASE_URL/api/page"
-
-# ❌ 错误
-curl "$BASE_URL/api/page?path=动态规划/背包/index.md"
-```
-
-或者手动 URL 编码：
-```bash
-curl "$BASE_URL/api/page?path=%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E8%83%8C%E5%8C%85/index.md"
-```
-
-### Q2: AI API 为什么不返回完整 URL？
-
-**设计原因**：
-- 服务器可能部署在不同域名
-- 客户端知道自己从哪个地址请求
-- 由客户端拼接更灵活
-
-**拼接方法**：
-```javascript
-const BASE_URL = process.env.RBOOK_BASE_URL || 'http://127.0.0.1:3000';
-const fullUrl = BASE_URL + article.url;
-```
-
-### Q3: 如何区分代码来源？
-
-查看 `source` 字段：
-- `source: "frontMatter"` - 来自 frontMatter 的 `code_template`，通常是 `/code/...` 模板
-- `source: "include-code"` - 来自正文 `@include-code(...)`，可能是相对路径
-
-### Q4: 搜索没有结果怎么办？
-
-1. 检查索引是否构建：
-   ```bash
-   curl "$BASE_URL/api/health"
-   ```
-
-2. 重建索引：
-   ```bash
-   npm run build:index
-   ```
-
-3. 或者使用 admin API（需要认证）：
-   ```bash
-   curl -X POST -H "Authorization: Bearer $RBOOK_ADMIN_TOKEN" \
-     "$BASE_URL/api/admin/reindex"
-   ```
-
-### Q5: 如何切换到线上部署？
-
-修改 `BASE_URL`：
-```bash
-export RBOOK_BASE_URL=https://rbook2.roj.ac.cn
-python .agents/skills/rbook-http/scripts/rbook_health.py --online
-```
-
-或者直接传 `--online` 参数（脚本会使用默认线上地址）。
-
----
-
-## 环境变量
-
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `HOST` | 服务器监听地址 | `0.0.0.0` |
-| `PORT` | 服务器端口 | `3000` |
-| `RBOOK_BASE_URL` | API 基础 URL | `http://127.0.0.1:3000` |
-| `RBOOK_ADMIN_TOKEN` | Admin API 认证令牌 | 未设置 |
-| `RBOOK_APP_DIR` | 站点资源目录 | `site` |
-| `RBOOK_CONTENT_DIR` | 书籍内容目录 | `book` |
-| `RBOOK_RUNTIME_DIR` | 运行时目录（开发模式） | `/tmp/rbook-dev-{pid}` |
-
----
-
-## 相关文档
-
-- [API 设计和实现](https://github.com/rainboyOJ/rbook_nunjucks/blob/main/how-to-learn-api.md) - 学习 API 内部实现
-- [AI API 字段契约](https://github.com/rainboyOJ/rbook_nunjucks/blob/main/docs/development/ai-api-schema.md) - 字段定义和约定
-- [rbook-http skill](https://github.com/rainboyOJ/rbook_nunjucks/blob/main/.agents/skills/rbook-http/SKILL.md) - AI Agent 使用指南
-- [项目结构](https://github.com/rainboyOJ/rbook_nunjucks/blob/main/docs/development/monorepo-structure.md) - monorepo 架构说明
-
----
-
-## 在线 API 文档
-
-启动服务器后访问：`$BASE_URL/api`
-
-文档自动显示当前服务器地址，所有示例可直接复制使用。
+可用 `RBOOK_BASE_URL` 切换服务地址。

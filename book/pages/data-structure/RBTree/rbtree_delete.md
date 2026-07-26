@@ -1,3 +1,8 @@
+---
+id: data-structure-rbtree-rbtree-delete
+title: rbtree_delete
+---
+
 实现红黑树的删除操作确实是它最复杂的部分，远比插入要精妙。它涉及多种情况，核心是处理“双重黑色”（Double Black）或“黑高缺陷”（Black-Deficient）的问题。
 
 当一个**黑色**节点被删除时，它所在的路径会比其他路径少一个黑色节点，这就违反了红黑树的属性 5 (黑高)。我们必须修复这个缺陷。

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "最大流"]
 categories: ["图论"]
-code_template:
-  - title: Edmonds-Karp 最大流
-    desc: "BFS 增广路最大流模板"
-    tags: ["网络流", "最大流"]
-    code: /code/graph/luogu-p3376-ek.cpp
+code_template: [maxflow-ek]
 ---
 
 [[TOC]]
@@ -80,7 +76,7 @@ Edmonds-Karp 使用 BFS 固定选择最短增广路，可以保证增广次数�
 
 ## 代码实现
 
-@include-code(/code/graph/luogu-p3376-ek.cpp, cpp)
+@include-code(maxflow-ek, cpp)
 
 ## 测试用例
 

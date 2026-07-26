@@ -1,4 +1,5 @@
 ---
+id: appendix-tricks-assert
 title: "C++ Assert 调试指南"
 date: 2025-10-17 
 toc: true

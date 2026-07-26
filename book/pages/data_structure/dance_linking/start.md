@@ -5,11 +5,7 @@ date: 2026-06-16 17:20
 toc: true
 tags: ["DLX", "舞蹈链", "精确覆盖", "搜索"]
 categories: ["数据结构"]
-code_template:
-  - title: DLX 精确覆盖模板
-    desc: "用十字循环链表维护 0/1 矩阵，搜索一组互不冲突的行覆盖所有列"
-    tags: ["DLX", "精确覆盖", "搜索剪枝"]
-    code: /code/data-struture/dlx/exact_cover.cpp
+code_template: [dlx-exact-cover]
 ---
 
 [[TOC]]

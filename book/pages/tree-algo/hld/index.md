@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["树", "树链剖分", "线段树"]
 categories: ["树上算法"]
-code_template:
-  - title: 树链剖分
-    desc: "路径修改/查询与子树修改/查询"
-    tags: ["树剖", "线段树"]
-    code: /code/tree/hld.cpp
+code_template: [hld]
 ---
 
 [[TOC]]

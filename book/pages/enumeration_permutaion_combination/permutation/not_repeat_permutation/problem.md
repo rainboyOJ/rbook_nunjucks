@@ -1,3 +1,8 @@
+---
+id: enumeration-permutaion-combination-permutation-not-repeat-permutation-problem
+title: problem
+---
+
 ### 题目描述
 
 有n个重复数字,数字可能重复,又有n个位置,每个位置都可以放一个数字,求

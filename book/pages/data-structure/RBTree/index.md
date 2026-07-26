@@ -1,4 +1,5 @@
 ---
+id: data-structure-rbtree-1
 title: "红黑树"
 date: 2025-11-08 09:31
 toc: true

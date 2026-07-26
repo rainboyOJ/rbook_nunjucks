@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "汉诺塔"]
 categories: ["递归"]
-code_template:
-  - title: 汉诺塔递归
-    desc: "把 n 个盘子从起始柱移动到目标柱"
-    tags: ["递归", "分治"]
-    code: /code/base/recursion/hanoi.cpp
+code_template: [hanoi]
 ---
 
 [[TOC]]

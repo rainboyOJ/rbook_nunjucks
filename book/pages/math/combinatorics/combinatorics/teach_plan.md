@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-combinatorics-teach-plan
+title: teach_plan
+---
+
 
 前期的知识学完后,
 

@@ -1,3 +1,8 @@
+---
+id: math-numbertheory-divisible
+title: divisible
+---
+
 
 ## 定义: 整除
 

@@ -1,3 +1,8 @@
+---
+id: data-structure-segment-tree-sgt-merge
+title: sgt_merge
+---
+
 雨天的尾巴
 
 

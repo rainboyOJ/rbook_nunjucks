@@ -1,3 +1,8 @@
+---
+id: data-structure-segment-tree-preface
+title: preface
+---
+
 ## 前言
 
 > 注意: 这个文章的你可以在 rbook_old.roj.ac.cn 上阅读老的版本，还没有迁移过来

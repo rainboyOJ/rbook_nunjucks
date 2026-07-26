@@ -1,3 +1,8 @@
+---
+id: appendix-shellscripts-usefull
+title: usefull
+---
+
 ## `diff`
 
 `diff`命令可以找到两个文件文件的不同点

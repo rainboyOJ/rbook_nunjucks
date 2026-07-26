@@ -5,11 +5,7 @@ date: 2026-06-16 19:05
 toc: true
 tags: ["Tarjan", "割点", "无向图连通性"]
 categories: ["图论"]
-code_template:
-  - title: Tarjan 割点
-    desc: "用 dfn/low 判断无向图割点"
-    tags: ["Tarjan", "割点"]
-    code: /code/graph/cut_node.cpp
+code_template: [cut-node]
 ---
 
 [[TOC]]

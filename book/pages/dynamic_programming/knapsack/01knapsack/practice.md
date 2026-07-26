@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-knapsack-01knapsack-practice
+title: practice
+---
+
 ## 练习题目
 
 - [[problem: luogu,P1048]] [NOIP2005 普及组] 采药 背包入门

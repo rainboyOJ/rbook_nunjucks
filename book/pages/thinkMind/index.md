@@ -1,3 +1,8 @@
+---
+id: thinkmind
+title: thinkMind
+---
+
 这里记录一下有些神奇的思想
 
 ## 整体数值偏移及后续

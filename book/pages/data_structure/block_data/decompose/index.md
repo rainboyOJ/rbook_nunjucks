@@ -5,11 +5,7 @@ date: 2026-06-16 18:05
 toc: true
 tags: ["分块", "根号分治", "区间信息"]
 categories: ["数据结构"]
-code_template:
-  - title: 分块区间加区间和
-    desc: "区间加，查询区间和对 c+1 取模，对应 LOJ 6280"
-    tags: ["分块", "区间加", "区间求和"]
-    code: /code/data-struture/Block/range_add_range_sum_mod.cpp
+code_template: [sqrt-range-add-sum]
 ---
 
 [[TOC]]

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "完全背包", "计数 DP", "整数划分"]
 categories: ["动态规划"]
-code_template:
-  - title: 整数划分
-    desc: "把整数划分转成完全背包计数"
-    tags: ["动态规划", "完全背包", "计数"]
-    code: /code/dynamic_programming/knapsack/integer_partition.cpp
+code_template: [knapsack-partition]
 ---
 
 [[TOC]]

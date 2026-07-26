@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["倍增", "二进制", "基础算法"]
 categories: ["基础算法"]
-code_template:
-  - title: 倍增跳跃
-    desc: "在线查找最后一个满足单调条件的位置"
-    tags: ["倍增", "单调性"]
-    code: /code/base/binary_jump.cpp
+code_template: [binary-jump]
 ---
 
 [[TOC]]

@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-rule-of-sum
+title: rule_of_sum
+---
+
 ## 分类加法计数原理
 
 有两个集合$A = \{a_1,a_2,a_3\},B=\{b_1,b_2\}$

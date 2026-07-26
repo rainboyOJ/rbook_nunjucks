@@ -1,4 +1,3 @@
-
 ---
 id: "multiset-permutation-template-archive"
 title: "重复元素全排列旧模板"

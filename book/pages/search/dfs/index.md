@@ -1,3 +1,8 @@
+---
+id: search-dfs
+title: dfs
+---
+
 ## 设计思路
 
 先通过三个题目来理解dfs

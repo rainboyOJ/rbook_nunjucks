@@ -1,5 +1,5 @@
 ---
-id: "problem_sets"
+id: problem-sets
 title: "题目单"
 date: 2025-12-05 11:37
 toc: true

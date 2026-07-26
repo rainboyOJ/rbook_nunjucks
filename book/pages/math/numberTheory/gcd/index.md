@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["最大公约数", "欧几里得算法", "数论"]
 categories: ["数学", "数论"]
-code_template:
-  - title: 最大公约数
-    desc: "欧几里得算法求 gcd"
-    tags: ["gcd", "欧几里得算法"]
-    code: /code/math/numberTheory/gcd.cpp
+code_template: [gcd]
 ---
 
 [[TOC]]

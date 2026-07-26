@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "区间 DP", "四边形不等式", "Knuth 优化"]
 categories: ["动态规划"]
-code_template:
-  - title: 四边形不等式优化石子合并
-    desc: "利用决策单调性把区间 DP 从 O(n^3) 优化到 O(n^2)"
-    tags: ["区间 DP", "四边形不等式", "Knuth 优化"]
-    code: /code/dynamic_programming/knuth_stone_merge.cpp
+code_template: [knuth-stone-merge]
 ---
 
 [[TOC]]

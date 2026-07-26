@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["排列", "字典序", "枚举"]
 categories: ["枚举"]
-code_template:
-  - title: 手写 next_permutation
-    desc: "按字典序从当前排列生成下一个排列"
-    tags: ["排列", "字典序"]
-    code: /code/base/enumerate/next_permutation_manual.cpp
+code_template: [next-permutation]
 ---
 
 [[TOC]]

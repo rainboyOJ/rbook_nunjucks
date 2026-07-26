@@ -38,6 +38,25 @@ export const __bookdir = bookDir;
 export const __code_template_dir = codeTemplateDir;
 export const __themedir = themeDir;
 
+export type {
+    CodeTemplateItem,
+    CodeConfig,
+    LoadCodeConfigOptions,
+    ValidationError,
+    PublicIdError,
+    PublicIdResult
+} from './validation.js';
+export {
+    PUBLIC_ID_PATTERN,
+    loadCodeConfig,
+    parsePublicId,
+    requireCodeId,
+    requirePageId,
+    validateCodes,
+    validatePages,
+    validateReferences
+} from './validation.js';
+
 function errorMessage(error: unknown) {
     return error instanceof Error ? error.message : String(error);
 }

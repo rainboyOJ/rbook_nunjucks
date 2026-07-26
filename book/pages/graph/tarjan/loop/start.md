@@ -5,11 +5,7 @@ date: 2026-06-16 19:10
 toc: true
 tags: ["找环", "基环树", "DFS", "图论"]
 categories: ["图论"]
-code_template:
-  - title: 基环树找环
-    desc: "不断删除度为 1 的点，剩余点就是环上点"
-    tags: ["基环树", "找环"]
-    code: /code/graph/pseudotree_cycle_nodes.cpp
+code_template: [pseudotree-cycle]
 ---
 
 [[TOC]]

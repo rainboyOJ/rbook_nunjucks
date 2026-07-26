@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-generating-function
+title: generating_function
+---
+
 
 ## 指数生成函数
 

@@ -5,11 +5,7 @@ date: 2025-12-18 10:01
 toc: true
 tags: ["图论", "拓扑排序", "DAG"]
 categories: ["图论"]
-code_template:
-  - title: 拓扑排序
-    desc: "Kahn 算法求 DAG 的一个拓扑序，并检测有向环"
-    tags: ["拓扑排序", "DAG", "有向图"]
-    code: /code/graph/topsort-dag.cpp
+code_template: [topsort-dag]
 ---
 
 [[TOC]]

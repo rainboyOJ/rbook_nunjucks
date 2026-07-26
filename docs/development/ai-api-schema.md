@@ -1,126 +1,136 @@
-# AI API 字段契约
+# Rbook HTTP API 字段契约（优化版）
 
-本文档描述 `/api/ai/*` 接口给本地智能体使用的稳定字段。AI API 只返回电子书文章、引用信息和模板代码，不提供题目数据，也不提供 chat 功能。
+本文档描述提供给本地智能体和前端客户端使用的最新稳定 HTTP API 字段契约。
 
-## 链接规则
+## 设计约定与规范
+1. **主键查询约定**：所有资源（文章、代码）都有全局唯一的 `id`，通过 `?id=<id>` 精确查询单资源；通过 `?tag=<tag1,tag2>` 筛选集合。
+2. **链接与地址**：API 不返回含域名或端口的绝对 URL。所有的 `url`、`path` 字段均为站内相对路径或相对根目录路径。客户端需通过 `BASE_URL + url` 拼接完整地址。
+3. **元数据集中管理**：代码模板信息由 `book/code.yaml` 集中管理；文章 frontMatter 中的 `code_template` 只存放对应模板的 ID 数组。
 
-- AI API 不返回服务端拼接的绝对链接。
-- 响应体中不应出现 `href`、`codeHref` 这类旧字段。
-- 响应体中不应出现 `127.0.0.1` 这类本地服务地址。
-- `url`、`codeUrl` 都是以 `/` 开头的站内相对路径。
-- 需要可点击链接时，由调用方使用 `BASE_URL + url` 或 `BASE_URL + codeUrl` 拼接。
+---
 
-## GET /api/ai/catalog
+## 1. GET /api/catalog
+返回文章目录与基本结构。支持使用 `?compact=true` 返回极简数据，优化 Token 消耗。
 
-返回文章目录：
+**请求示例**：
+```bash
+curl "$BASE_URL/api/catalog?compact=true"
+```
 
+**响应契约**：
 ```ts
 {
-  scope: 'visible' | 'all';
-  total: number;
   generatedAt: string;
-  articles: AiCatalogItem[];
+  total: number;
+  items: Array<{
+    id: string;               // 唯一文章标识符
+    title: string;            // 文章标题
+    description: string;      // 描述或摘要
+    tags: string[];           // 标签列表
+    path: string;             // Markdown 文件路径
+    url: string;              // HTML 页面相对链接
+    // compact=false 时包含：
+    headings?: string[];
+    navTrail?: string[];
+    codeTemplates?: string[]; // 关联的代码模板 ID 列表
+  }>;
 }
 ```
 
-`AiCatalogItem`：
+---
 
+## 2. GET /api/pages
+文章查询与筛选接口。
+
+**请求示例**：
+```bash
+# 精确获取单篇完整文章
+curl -G --data-urlencode "id=binary-search" "$BASE_URL/api/pages"
+# 按标签筛选列表
+curl -G --data-urlencode "tag=图论,最短路" "$BASE_URL/api/pages"
+```
+
+**响应契约（单资源 ?id=xxx）**：
 ```ts
 {
-  path: string;              // Markdown 路径，例如 utils/random/index.md
-  url: string;               // 页面相对链接，例如 /utils/random/index.html
+  id: string;
   title: string;
+  path: string;
+  url: string;
   description: string;
-  excerpt: string;
   tags: string[];
   categories: string[];
-  headings: unknown[];
-  navTrail: unknown[];
-  visible: boolean;
-  source: string;
-  codeTemplates: AiCodeTemplate[];
-  citation: {
-    title: string;
-    path: string;
-    url: string;
-  };
-}
-```
-
-## GET /api/ai/page-context
-
-返回单篇文章上下文：
-
-```ts
-{
-  article: {
-    path: string;
-    url: string;
-    title: string;
-    description: string;
-    excerpt: string;
-    visible: boolean;
-    source: string;
-    navTrail: unknown[];
-    tags: string[];
-    categories: string[];
-    frontMatter: Record<string, unknown>;
-    headings: unknown[];
-    markdown: string;
+  frontMatter: Record<string, unknown>;
+  headings: string[];
+  excerpt: string;
+  markdown: string;         // 原始 Markdown 正文
+  html: string;             // 渲染后的 HTML
+  text: string;             // 纯文本形式（供分块或检索使用）
+  chunks: Array<{
+    id: string;
+    heading: string;
     text: string;
-    html?: string;           // includeHtml=true 时返回
-    chunks: unknown[];
-    citation: {
-      title: string;
-      path: string;
-      url: string;
-    };
-  };
-  codeTemplates: AiCodeTemplate[];
-  includedCode: AiIncludedCode[];
+  }>;
 }
 ```
 
-`AiCodeTemplate`：
-
+**响应契约（列表查询）**：
 ```ts
 {
-  source: 'frontMatter';
-  title: string;
-  desc: string;
-  tags: string[];
-  code: string;              // /code/... 路径
-  codeUrl: string;           // /code/... 相对路径
-  language: string;
-  content?: string;          // includeCode=true 时返回
+  generatedAt: string;
+  total: number;
+  items: Array<{
+    id: string;
+    title: string;
+    path: string;
+    url: string;
+    description: string;
+    tags: string[];
+    codeTemplates: string[];
+  }>;
 }
 ```
 
-`AiIncludedCode`：
+---
 
+## 3. GET /api/codes
+代码模板集中管理与查询接口。支持双向关联展示。
+
+**请求示例**：
+```bash
+# 获取单个代码及完整源码
+curl -G --data-urlencode "id=v-bcc" --data-urlencode "includeContent=true" "$BASE_URL/api/codes"
+```
+
+**响应契约（单条/列表中的元素）**：
 ```ts
 {
-  source: 'include-code';
-  path: string;
-  code: string;              // 原始 @include-code 参数
-  codeUrl: string | null;    // /code/... 才有可拼接链接
-  language: string;
-  content?: string;          // includeCode=true 时返回
-  error?: string;
+  id: string;               // 唯一代码标识符
+  path: string;             // 文件路径，如 "graph/v-bcc.cpp"
+  url: string;              // 发布后的相对访问 URL，如 "/code/graph/v-bcc.cpp"
+  description: string;      // 功能描述
+  language: string;         // 代码语言，如 "cpp"
+  tags: string[];           // 算法标签
+  articles: Array<{         // 双向映射：引用该代码的所有文章
+    id: string;
+    title: string;
+    path: string;
+    url: string;
+  }>;
+  content?: string;         // 当 ?includeContent=true 时返回源码正文
 }
 ```
 
-## GET /api/ai/code
+---
 
-读取 `book/code/` 下单个模板代码：
+## 4. GET /api/tags
+标签统计分类统计与发现接口。
 
+**响应契约**：
 ```ts
 {
-  path: string;              // /code/... 路径
-  url: string;               // /code/... 相对路径
-  language: string;
-  content: string;
+  generatedAt: string;
+  articleTags: Array<{ tag: string; count: number }>;
+  codeTags: Array<{ tag: string; count: number }>;
 }
 ```
-
-`path` 只接受 `/code/...` 或 `code/...`，不能使用 `../` 读取任意文件。

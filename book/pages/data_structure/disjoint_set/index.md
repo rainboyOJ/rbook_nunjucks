@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "并查集", "DSU"]
 categories: ["数据结构"]
-code_template:
-  - title: 并查集
-    desc: "路径压缩与按大小合并，维护动态连通性"
-    tags: ["并查集", "DSU"]
-    code: /code/data-struture/dsu.cpp
-  - title: 种类并查集
-    desc: "用反集维护二元对立关系"
-    tags: ["并查集", "二分图"]
-    code: /code/data-struture/dsu_bipartite.cpp
+code_template: [dsu, dsu-bipartite]
 ---
 
 [[TOC]]

@@ -1,3 +1,8 @@
+---
+id: appendix-program-environment-noilinux2
+title: noilinux2.0
+---
+
 ## 笔记本选购
 
 @include_md("./推荐笔记本.md")

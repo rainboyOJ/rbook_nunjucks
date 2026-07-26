@@ -5,19 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["子集", "枚举", "DFS", "二进制", "状态压缩"]
 categories: ["枚举"]
-code_template:
-  - title: DFS 子集枚举
-    desc: "用递归按递增下标枚举所有子集"
-    tags: ["子集", "DFS"]
-    code: /code/base/enumerate/subset.cpp
-  - title: 二进制子集枚举
-    desc: "用 bitmask 表示选与不选"
-    tags: ["子集", "二进制"]
-    code: /code/base/enumerate/subset_binary.cpp
-  - title: 固定集合的子集枚举
-    desc: "用 (sub - 1) & mask 枚举某个集合的所有非空子集"
-    tags: ["子集", "二进制", "状态压缩"]
-    code: /code/base/enumerate/submask.cpp
+code_template: [subset, enumerate-subset-binary, submask]
 ---
 
 [[TOC]]

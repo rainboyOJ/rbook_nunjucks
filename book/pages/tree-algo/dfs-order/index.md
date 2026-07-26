@@ -5,11 +5,7 @@ date: 2025-12-03 14:35
 toc: true
 tags: ["树", "DFS 序", "子树"]
 categories: ["树上算法"]
-code_template:
-  - title: DFS 序
-    desc: "记录 in/out，把子树转成连续区间"
-    tags: ["DFS 序", "子树转区间"]
-    code: /code/tree/dfs-order.cpp
+code_template: [dfs-order]
 ---
 
 [[TOC]]

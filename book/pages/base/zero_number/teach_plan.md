@@ -1,3 +1,8 @@
+---
+id: base-zero-number-teach-plan
+title: teach_plan
+---
+
 ## 教学目标
 
 - 使学生学会这个题目的计算方法

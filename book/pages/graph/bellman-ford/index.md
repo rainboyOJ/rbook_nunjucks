@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最短路", "Bellman-Ford"]
 categories: ["图论"]
-code_template:
-  - title: Bellman-Ford
-    desc: "支持负边权的单源最短路与负环检测"
-    tags: ["最短路", "负权边"]
-    code: /code/graph/bellman_ford.cpp
+code_template: [bellman-ford]
 ---
 
 [[TOC]]

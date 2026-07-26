@@ -1,19 +1,11 @@
 ---
-id: "prefix_sum"
+id: prefix-sum
 title: "前缀和"
 date: 2026-06-16 00:00
 toc: true
 tags: ["前缀和", "区间查询", "基础算法"]
 categories: ["基础算法"]
-code_template:
-  - title: 前缀和
-    desc: "静态数组区间和查询"
-    tags: ["前缀和", "区间和"]
-    code: /code/base/presum.cpp
-  - title: 二维前缀和 Python
-    desc: "静态矩阵子矩形和查询"
-    tags: ["前缀和", "二维前缀和", "矩阵", "Python"]
-    code: /code/base/presum_2d.py
+code_template: [prefix-sum, prefix-sum-2d]
 ---
 
 [[TOC]]

@@ -1,3 +1,8 @@
+---
+id: appendix-shellscripts-compile
+title: compile
+---
+
 
 ## 说明
 

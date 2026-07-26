@@ -1,4 +1,5 @@
 ---
+id: chapter3-linear-lis
 title: 最长递增子序列(LIS)
 ---
 

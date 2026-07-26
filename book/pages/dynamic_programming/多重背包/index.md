@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "多重背包"]
 categories: ["动态规划"]
-code_template:
-  - title: 多重背包二进制拆分
-    desc: "把有限件物品拆成若干个 01 物品"
-    tags: ["动态规划", "多重背包", "二进制拆分"]
-    code: /code/dynamic_programming/knapsack/multiple_binary.cpp
+code_template: [knapsack-multiple-binary]
 ---
 
 [[TOC]]

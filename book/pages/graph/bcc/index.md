@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "双连通分量"]
 categories: ["图论"]
-code_template:
-  - title: v-BCC 点双连通分量
-    desc: "求无向图点双连通分量"
-    tags: ["无向图连通性", "点双"]
-    code: /code/graph/v-bcc.cpp
-  - title: e-BCC 边双连通分量
-    desc: "求无向图边双连通分量"
-    tags: ["无向图连通性", "边双"]
-    code: /code/graph/e-bcc.cpp
+code_template: [v-bcc, e-bcc]
 ---
 
 [[TOC]]

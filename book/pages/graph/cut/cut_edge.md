@@ -1,15 +1,11 @@
 ---
-id: "cut_edge"
+id: cut-edge
 title: "割边"
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "割边"]
 categories: ["图论"]
-code_template:
-  - title: 割边
-    desc: "无向图求割边"
-    tags: ["割边", "图论"]
-    code: /code/graph/cut_edge.cpp
+code_template: [cut-edge]
 ---
 
 [[TOC]]

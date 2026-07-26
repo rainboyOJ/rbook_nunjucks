@@ -1,4 +1,5 @@
 ---
+id: appendix-lldb-lldbpython
 title: "LLDB Python 脚本入门"
 date: 2025-10-17 08:02
 toc: true

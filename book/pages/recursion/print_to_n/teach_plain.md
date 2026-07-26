@@ -1,3 +1,8 @@
+---
+id: recursion-print-to-n-teach-plain
+title: teach_plain
+---
+
 ## 要求
 
 - 学生可以使用纸和笔来完成画图

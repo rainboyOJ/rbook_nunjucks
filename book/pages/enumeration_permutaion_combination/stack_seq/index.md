@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["栈", "动态规划", "Catalan 数", "枚举"]
 categories: ["枚举", "动态规划"]
-code_template:
-  - title: 出栈序列计数
-    desc: "用待入栈数量和栈内数量作为状态，记忆化统计出栈序列数量"
-    tags: ["栈", "DP", "Catalan"]
-    code: /code/base/enumerate/stack_output_count.cpp
+code_template: [enumerate-stack-output-count]
 ---
 
 [[TOC]]

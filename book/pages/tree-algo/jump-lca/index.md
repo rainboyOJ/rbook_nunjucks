@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["LCA", "倍增", "树上算法"]
 categories: ["树上算法"]
-code_template:
-  - title: 倍增 LCA
-    desc: "预处理 2^k 级祖先，支持树上最近公共祖先和距离查询"
-    tags: ["LCA", "倍增", "树"]
-    code: /code/tree/jump_lca.cpp
+code_template: [lca-binary-lifting]
 ---
 
 [[TOC]]

@@ -5,11 +5,7 @@ date: 2026-01-14 11:21
 toc: true
 tags: ["图论", "二分图", "匹配"]
 categories: ["图论"]
-code_template:
-  - title: 匈牙利算法
-    desc: "DFS 增广路求二分图最大匹配"
-    tags: ["二分图", "最大匹配", "增广路"]
-    code: /code/graph/hungarian.cpp
+code_template: [hungarian]
 ---
 
 [[TOC]]

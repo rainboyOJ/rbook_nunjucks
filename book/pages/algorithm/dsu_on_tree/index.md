@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["树上算法", "启发式合并", "DSU on tree"]
 categories: ["树上算法"]
-code_template:
-  - title: 树上启发式合并
-    desc: "统计每个子树中出现次数最多的颜色和"
-    tags: ["树上算法", "DSU on tree"]
-    code: /code/tree/dsu_on_tree_color_count.cpp
+code_template: [dsu-on-tree-color-count]
 ---
 
 [[TOC]]

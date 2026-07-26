@@ -1,3 +1,8 @@
+---
+id: mind-theory
+title: mind_theory
+---
+
 ## 缩小放大法
 
 - 先缩小数据范围

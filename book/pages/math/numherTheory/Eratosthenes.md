@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数学", "数论", "素数"]
 categories: ["数学"]
-code_template:
-  - title: 埃氏筛
-    desc: "筛出 1..n 中所有素数"
-    tags: ["数论", "素数", "筛法"]
-    code: /code/math/eprime.cpp
+code_template: [eprime]
 ---
 
 [[TOC]]

@@ -1,4 +1,5 @@
 ---
+id: appendix-ubuntu2204
 title: ubuntu2204系统的安装
 author: rainboy
 update_time : 2023-09-17

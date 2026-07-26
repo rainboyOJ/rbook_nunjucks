@@ -1,15 +1,11 @@
 ---
-id: "cut_node"
+id: cut-node
 title: "割点"
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "割点"]
 categories: ["图论"]
-code_template:
-  - title: 割点
-    desc: "求无向图的割点"
-    tags: ["割点", "图论"]
-    code: /code/graph/cut_node.cpp
+code_template: [cut-node]
 ---
 
 [[TOC]]

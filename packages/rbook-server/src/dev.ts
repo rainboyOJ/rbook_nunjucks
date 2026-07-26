@@ -8,13 +8,15 @@ const runtimeDir = process.env.RBOOK_RUNTIME_DIR
   : path.join(os.tmpdir(), `rbook-dev-${process.pid}`);
 process.env.RBOOK_RUNTIME_DIR = runtimeDir;
 
-const [{ createApp }, { distDir }, { compileMarkdownCss, copyStaticAssets, buildCodeTemplateApp }, { default: DevRenderer }] = await Promise.all([
+const [{ createApp }, { distDir }, { compileMarkdownCss, copyStaticAssets, buildCodeTemplateApp }, { default: DevRenderer }, { assertPreCheck }] = await Promise.all([
   import('./app.js'),
   import('@rbook/core/paths'),
   import('./buildRuntime.js'),
-  import('./devRenderer.js')
+  import('./devRenderer.js'),
+  import('@rbook/search/preCheck')
 ]);
 
+assertPreCheck();
 fs.rmSync(runtimeDir, { recursive: true, force: true });
 fs.mkdirSync(runtimeDir, { recursive: true });
 

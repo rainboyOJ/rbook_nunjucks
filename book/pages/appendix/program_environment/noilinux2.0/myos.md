@@ -1,3 +1,8 @@
+---
+id: appendix-program-environment-noilinux2-0-myos
+title: myos
+---
+
 
 rainboy修改于 ubuntu 22.04的系统
 

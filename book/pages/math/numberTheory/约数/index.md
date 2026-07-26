@@ -1,3 +1,8 @@
+---
+id: math-numbertheory-1
+title: 约数
+---
+
 
 等待整理
 https://blog.csdn.net/m0_51269961/article/details/124324703

@@ -1,4 +1,5 @@
 ---
+id: appendix-lldb-lldbinit
 title: "LLDB 个性化配置：.lldbinit 文件编写指南"
 date: 2025-10-16 23:21
 toc: true

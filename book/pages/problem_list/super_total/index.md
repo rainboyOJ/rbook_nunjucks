@@ -1,3 +1,8 @@
+---
+id: problem-list-super-total
+title: super_total
+---
+
 [[TOC]]
 
 ## 超级综合题单

@@ -5,11 +5,7 @@ date: 2026-06-16 17:45
 toc: true
 tags: ["可持久化线段树", "函数式线段树", "主席树"]
 categories: ["数据结构"]
-code_template:
-  - title: 可持久化数组
-    desc: "单点修改产生新版本，单点查询任意历史版本"
-    tags: ["可持久化线段树", "历史版本"]
-    code: /code/data-struture/segment_tree/persistent_array.cpp
+code_template: [segtree-persistent-array]
 ---
 
 [[TOC]]

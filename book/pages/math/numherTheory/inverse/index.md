@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数学", "数论", "逆元"]
 categories: ["数学"]
-code_template:
-  - title: 扩展欧几里得求逆元
-    desc: "求单个数在任意互质模数下的逆元"
-    tags: ["数论", "逆元", "exgcd"]
-    code: /code/math/inv_exgcd.cpp
-  - title: 线性求逆元
-    desc: "在线性时间内求 1..n 在质数模数下的逆元"
-    tags: ["数论", "逆元", "线性递推"]
-    code: /code/math/line_inv.cpp
+code_template: [inv-exgcd, line-inv]
 ---
 
 [[TOC]]

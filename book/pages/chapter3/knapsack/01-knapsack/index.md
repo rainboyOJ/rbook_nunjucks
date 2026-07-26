@@ -1,4 +1,5 @@
 ---
+id: chapter3-knapsack-01-knapsack
 title: 01背包
 ---
 

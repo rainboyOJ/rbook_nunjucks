@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-lis-practice
+title: practice
+---
+
 - [[problem: noiopenjudge,ch0206/1759]] 最长上升子序列
 - [[problem: noiopenjudge,ch0206/4982]] 怪盗基德的滑翔翼
 

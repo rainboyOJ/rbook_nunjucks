@@ -1,15 +1,11 @@
 ---
-id: "string_hash"
+id: string-hash
 title: "字符串哈希：进制哈希法"
 date: 2026-06-17 00:00
 toc: true
 tags: ["字符串", "哈希", "子串比较"]
 categories: ["字符串"]
-code_template:
-  - title: 字符串哈希
-    desc: "把字符串看成进制数，支持 O(1) 查询子串哈希"
-    tags: ["字符串", "哈希", "前缀"]
-    code: /code/string/hash.cpp
+code_template: [hash]
 ---
 
 [[TOC]]

@@ -1,3 +1,8 @@
+---
+id: appendix-software-other
+title: other
+---
+
 
 ## luogu题目快速跳转搜索书签
 

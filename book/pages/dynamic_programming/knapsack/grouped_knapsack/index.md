@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "分组背包"]
 categories: ["动态规划"]
-code_template:
-  - title: 分组背包
-    desc: "每组最多选一个物品的背包模板"
-    tags: ["动态规划", "分组背包"]
-    code: /code/dynamic_programming/knapsack/grouped.cpp
+code_template: [knapsack-grouped]
 ---
 
 [[TOC]]

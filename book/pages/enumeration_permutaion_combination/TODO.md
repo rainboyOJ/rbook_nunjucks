@@ -1,3 +1,8 @@
+---
+id: enumeration-permutaion-combination-todo
+title: TODO
+---
+
  - [ ] stl next_putation
 - [ ] 建暴力模板
 全排列next_permutation

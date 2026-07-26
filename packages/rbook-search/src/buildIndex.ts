@@ -1,6 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import Fuse from 'fuse.js';
+import {
+  loadCodeConfig,
+  requireCodeId,
+  requirePageId,
+  validateCodes,
+  validatePages,
+  validateReferences
+} from '@rbook/core';
 import { collectPages } from './collectPages.js';
 import { loadPageDocument } from './markdownText.js';
 import { searchDir, searchIndexPath } from './paths.js';
@@ -15,7 +23,13 @@ function createFuseData(documents: PageDocument[]): SearchChunk[] {
   })));
 }
 
-export function buildSearchIndex(options: BuildSearchIndexOptions = {}) {
+function asStringArray(value: unknown) {
+  return Array.isArray(value)
+    ? value.filter((item) => typeof item === 'string')
+    : [];
+}
+
+export function buildSearchIndex(options: BuildSearchIndexOptions = {}): any {
   const collected = collectPages(options);
   const documents: PageDocument[] = [];
   const errors: Array<{ path: string; message: string }> = [];
@@ -25,6 +39,54 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}) {
       documents.push(loadPageDocument(page));
     } catch (error) {
       errors.push({ path: page.path, message: error instanceof Error ? error.message : String(error) });
+    }
+  }
+
+  if (errors.length > 0) {
+    const details = errors.map((item) => `${item.path}: ${item.message}`).join('\n');
+    throw new Error(`search index page loading failed:\n${details}`);
+  }
+
+  const codeConfig = loadCodeConfig({ strict: true });
+  const validationErrors = [
+    ...validateCodes(codeConfig.codes),
+    ...validatePages(documents),
+    ...validateReferences(documents, codeConfig.codes)
+  ].filter((item) => item.level === 'ERROR');
+  if (validationErrors.length > 0) {
+    const details = validationErrors
+      .map((item) => `${item.filePath}: ${item.message}`)
+      .join('\n');
+    throw new Error(`search index validation failed:\n${details}`);
+  }
+
+  const codes = (codeConfig.codes || []).map((item) => ({
+    id: requireCodeId(item),
+    path: item.path,
+    url: `/code/${String(item.path || '').replace(/^\/?code\//, '')}`,
+    description: item.description || '',
+    language: item.language || path.extname(item.path || '').replace(/^\./, '') || 'text',
+    tags: asStringArray(item.tags),
+    complexity: item.complexity || '',
+    author: item.author || '',
+    aliases: asStringArray(item.aliases)
+  }));
+
+  const codeToArticles: Record<string, Array<{ id: string; title: string; path: string; url: string }>> = {};
+  for (const code of codes) {
+    codeToArticles[code.id] = [];
+  }
+
+  for (const doc of documents) {
+    const pageId = requirePageId(doc);
+    const refs = asStringArray((doc.frontMatter as Record<string, unknown> | undefined)?.code_template);
+    for (const codeId of refs) {
+      codeToArticles[codeId].push({
+        id: pageId,
+        title: doc.title,
+        path: doc.path,
+        url: doc.url
+      });
     }
   }
 
@@ -42,7 +104,7 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}) {
   });
 
   const payload = {
-    version: 1,
+    version: 2,
     generatedAt: new Date().toISOString(),
     site: {
       title: collected.site.title,
@@ -53,9 +115,11 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}) {
     stats: {
       pages: documents.length,
       chunks: chunks.length,
+      codes: codes.length,
       errors: errors.length
     },
     pages: documents.map((doc) => ({
+      id: requirePageId(doc),
       path: doc.path,
       url: doc.url,
       title: doc.title,
@@ -66,6 +130,8 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}) {
       excerpt: doc.excerpt,
       frontMatter: doc.frontMatter
     })),
+    codes,
+    codeToArticles,
     chunks,
     fuseIndex: fuse.getIndex().toJSON(),
     errors
@@ -83,5 +149,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const outputPath = process.argv[2] ? path.resolve(process.argv[2]) : searchIndexPath;
   const payload = buildSearchIndex({ outputPath });
   console.log(`Search index written: ${outputPath}`);
-  console.log(`Pages: ${payload.stats.pages}, chunks: ${payload.stats.chunks}, errors: ${payload.stats.errors}`);
+  console.log(`Pages: ${payload.stats.pages}, chunks: ${payload.stats.chunks}, codes: ${payload.stats.codes}, errors: ${payload.stats.errors}`);
 }

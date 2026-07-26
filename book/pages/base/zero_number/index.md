@@ -5,11 +5,7 @@ date: 2026-06-16 19:45
 toc: true
 tags: ["贪心", "等效模型"]
 categories: ["基础算法"]
-code_template:
-  - title: 正负抵消模型
-    desc: "分别统计正数总量和负数绝对值总量，答案取较大值"
-    tags: ["贪心", "数学建模"]
-    code: /code/base/zero_number/min_ops_balance_sum.cpp
+code_template: [balance-sum-min-ops]
 ---
 
 [[TOC]]

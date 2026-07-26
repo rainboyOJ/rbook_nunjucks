@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "递推", "调用栈"]
 categories: ["递归"]
-code_template:
-  - title: 递归求和
-    desc: "用 f(n)=n+f(n-1) 计算 1 到 n 的和"
-    tags: ["递归"]
-    code: /code/base/recursion/sum_to_n.cpp
-  - title: 尾递归求和
-    desc: "用参数保存已经累加的部分和"
-    tags: ["递归", "尾递归"]
-    code: /code/base/recursion/sum_to_n_tail.cpp
+code_template: [sum-n, sum-n-tail]
 ---
 
 [[TOC]]

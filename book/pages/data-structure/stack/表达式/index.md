@@ -1,4 +1,5 @@
 ---
+id: data-structure-stack
 title: "表达式求值"
 date: 2025-10-06 10:30
 draft: false

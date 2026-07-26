@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-catalan-number
+title: catalan_number
+---
+
 
 
 1. 得到一个2对括号的所有可能的排列,使用c++wade

@@ -1,3 +1,8 @@
+---
+id: data-structure-avl
+title: AVL
+---
+
 
 
 好的，我们来详细讲解 AVL 树。这是一种非常重要的自平衡二叉搜索树（BST）。

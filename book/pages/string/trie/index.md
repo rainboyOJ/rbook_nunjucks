@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["字符串", "Trie", "字典树"]
 categories: ["字符串"]
-code_template:
-  - title: Trie 字典树
-    desc: "支持字符串插入、完整查询和前缀计数"
-    tags: ["字符串", "Trie"]
-    code: /code/string/trie.cpp
+code_template: [trie]
 ---
 
 [[TOC]]

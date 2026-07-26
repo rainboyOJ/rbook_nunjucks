@@ -5,11 +5,7 @@ date: 2025-12-16 15:47
 toc: true
 tags: ["数论", "素数", "线性筛"]
 categories: ["数学", "数论"]
-code_template:
-  - title: 线性筛
-    desc: "每个合数只被最小质因子筛掉一次"
-    tags: ["素数", "线性筛", "欧拉筛"]
-    code: /code/math/numberTheory/linear_sieve.cpp
+code_template: [linear-sieve]
 ---
 
 [[TOC]]

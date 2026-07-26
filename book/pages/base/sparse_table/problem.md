@@ -1,3 +1,8 @@
+---
+id: base-sparse-table-problem
+title: problem
+---
+
 ### 问题描述
 
 有一个长度为$n( n \leqslant 10^5)$的整数序列,$a_1,a_2,\cdots,a_n$,现在有$Q( Q \leqslant 10^5)$个查询,每一个查询给出一个区间$[l,r]$,求出区间$[l,r]$中最大值.

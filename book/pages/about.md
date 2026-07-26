@@ -1,4 +1,5 @@
 ---
+id: about
 title: 关于本书
 ---
 

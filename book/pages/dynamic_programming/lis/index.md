@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LIS", "二分"]
 categories: ["动态规划"]
-code_template:
-  - title: 最长上升子序列 O(n^2)
-    desc: "以每个位置为结尾进行转移"
-    tags: ["动态规划", "LIS"]
-    code: /code/dynamic_programming/lis_n2.cpp
-  - title: 最长上升子序列 O(n log n)
-    desc: "用二分维护不同长度的最小结尾"
-    tags: ["动态规划", "二分", "LIS"]
-    code: /code/dynamic_programming/lis_binary.cpp
+code_template: [lis-n2, lis-binary]
 ---
 
 [[TOC]]

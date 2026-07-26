@@ -1,3 +1,8 @@
+---
+id: data-structure-segment-tree-beats-gemi
+title: Gemi_吉司机区间加法时间证明
+---
+
 # 吉司机线段树详解与实现
 
 **Exported:** 11/30/2025 9:17:44  

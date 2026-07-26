@@ -1,3 +1,8 @@
+---
+id: recursion-binary-search-problem
+title: problem
+---
+
 ### 问题描述
 
 有一个有序序列$a_1,a_2,a_3,\cdots ,a_n$, 问第一个大于$k$的元素与位置是哪里.

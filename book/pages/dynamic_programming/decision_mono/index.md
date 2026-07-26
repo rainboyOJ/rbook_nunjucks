@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-decision-mono
+title: decision_mono
+---
+
 
 [[TOC]]
 

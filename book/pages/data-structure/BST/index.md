@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["二叉搜索树", "BST", "数据结构"]
 categories: ["数据结构"]
-code_template:
-  - title: 二叉搜索树
-    desc: "支持查找、插入、前驱、后继和删除的基础 BST 模板"
-    tags: ["BST", "有序集合"]
-    code: /code/data-struture/bst.cpp
+code_template: [bst]
 ---
 
 [[TOC]]

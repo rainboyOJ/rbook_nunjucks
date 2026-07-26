@@ -1,3 +1,8 @@
+---
+id: data-structure-persistent-segment-tree
+title: persistent-segment-tree
+---
+
 可持久化线段树
 
 

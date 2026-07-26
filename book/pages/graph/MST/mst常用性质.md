@@ -1,3 +1,8 @@
+---
+id: graph-mst-mst
+title: mst常用性质
+---
+
 ## 用到的定理
 
 简单来说：

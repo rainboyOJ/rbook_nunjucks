@@ -1,3 +1,8 @@
+---
+id: data-structure-split-chunk-start
+title: start
+---
+
 ## 入门 : A Simple Problem with Integers
 
 疑问: 分块后,如何维护每个块的区间和信息呢?不仅可以得到整块的区间和,还可以得到块的局部和.

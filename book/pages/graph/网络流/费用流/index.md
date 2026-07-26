@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "费用流", "最小费用最大流"]
 categories: ["图论", "网络流"]
-code_template:
-  - title: 最小费用最大流
-    desc: "SPFA 在残量网络中找最短增广路"
-    tags: ["网络流", "费用流", "MCMF"]
-    code: /code/graph/min_cost_max_flow_spfa.cpp
+code_template: [mcmf-spfa]
 ---
 
 [[TOC]]

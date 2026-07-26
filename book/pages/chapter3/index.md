@@ -1,4 +1,5 @@
 ---
+id: chapter3
 title: 第三章 动态规划
 ---
 

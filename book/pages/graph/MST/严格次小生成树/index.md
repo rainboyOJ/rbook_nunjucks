@@ -1,15 +1,11 @@
 ---
-id: "sec_mst"
+id: second-mst
 title: "严格次小生成树"
 date: 2026-01-06 15:40
 toc: true
 tags: ["图论", "最小生成树", "倍增"]
 categories: ["图论"]
-code_template:
-  - title: 严格次小生成树
-    desc: "Kruskal 求 MST，枚举非树边换掉路径最大/次大边"
-    tags: ["严格次小生成树", "Kruskal", "倍增"]
-    code: /code/graph/严格次小生成树_sec_mst.cpp
+code_template: [second-mst]
 ---
 
 [[TOC]]

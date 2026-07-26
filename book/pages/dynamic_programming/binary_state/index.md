@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "状态压缩", "位运算"]
 categories: ["动态规划"]
-code_template:
-  - title: 状态压缩 DP：最短 Hamilton 路径
-    desc: "用 bitmask 表示已访问集合"
-    tags: ["状态压缩 DP", "bitmask"]
-    code: /code/dynamic_programming/bitmask_dp_tsp.cpp
+code_template: [bitmask-dp-tsp]
 ---
 
 [[TOC]]

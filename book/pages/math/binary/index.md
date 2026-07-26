@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["二进制", "位运算", "数学基础"]
 categories: ["数学"]
-code_template:
-  - title: 位运算常用函数
-    desc: "置位、清位、lowbit、popcount、最高位与子集枚举"
-    tags: ["二进制", "位运算", "bitmask"]
-    code: /code/math/bit_operations.cpp
+code_template: [bit-operations]
 ---
 
 [[TOC]]

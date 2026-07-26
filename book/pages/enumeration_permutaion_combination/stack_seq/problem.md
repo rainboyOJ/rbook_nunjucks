@@ -1,3 +1,8 @@
+---
+id: enumeration-permutaion-combination-stack-seq-problem
+title: problem
+---
+
 
 ### 题目背景 
 栈是计算机中经典的数据结构，简单的说，栈就是限制在一端进行插入删除操作的线性表。

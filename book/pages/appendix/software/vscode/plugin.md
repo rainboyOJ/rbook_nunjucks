@@ -1,3 +1,8 @@
+---
+id: appendix-software-vscode-plugin
+title: plugin
+---
+
 ## 常用的插件
 
 

@@ -1,3 +1,8 @@
+---
+id: math-numbertheory-exgcd
+title: exgcd
+---
+
 ## 存在性证明
 
 ## 解的通项公式

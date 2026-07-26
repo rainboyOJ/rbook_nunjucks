@@ -5,19 +5,7 @@ date: 2026-06-17 00:00
 toc: true
 tags: ["随机图", "对拍", "工具"]
 categories: ["工具"]
-code_template:
-  - title: 随机无向图生成
-    desc: "按概率生成简单无向图"
-    tags: ["随机图", "无向图", "对拍"]
-    code: /code/template/random_graph.cpp
-  - title: 随机有向图生成
-    desc: "按概率生成有向图"
-    tags: ["随机图", "有向图", "对拍"]
-    code: /code/template/random_digraph.cpp
-  - title: 随机 DAG 生成
-    desc: "按编号方向生成无环有向图"
-    tags: ["随机图", "DAG", "对拍"]
-    code: /code/template/random_dag.cpp
+code_template: [template-random-graph, template-random-digraph, template-random-dag]
 ---
 
 [[TOC]]

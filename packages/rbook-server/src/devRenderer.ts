@@ -183,6 +183,20 @@ export class DevRenderer {
       };
     }
 
+    // Check distDir for static SPA directories (e.g. /code_template/)
+    const distCandidate = inside(distDir, relativePath);
+    if (distCandidate && fs.existsSync(distCandidate)) {
+      if (fs.statSync(distCandidate).isFile()) {
+        return { statusCode: 200, contentType: contentType(distCandidate), body: fs.readFileSync(distCandidate) };
+      }
+      if (fs.statSync(distCandidate).isDirectory()) {
+        const indexPath = path.join(distCandidate, 'index.html');
+        if (fs.existsSync(indexPath) && fs.statSync(indexPath).isFile()) {
+          return { statusCode: 200, contentType: 'text/html; charset=utf-8', body: fs.readFileSync(indexPath) };
+        }
+      }
+    }
+
     if (baseDir !== bookDir || path.extname(candidate).toLowerCase() !== '.svg') return null;
     const dotPath = candidate.slice(0, -'.svg'.length) + '.dot';
     if (!fs.existsSync(dotPath) || !fs.statSync(dotPath).isFile()) return null;

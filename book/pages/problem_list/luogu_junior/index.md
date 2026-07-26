@@ -1,3 +1,8 @@
+---
+id: problem-list-luogu-junior
+title: luogu_junior
+---
+
 
 [[TOC]]
 

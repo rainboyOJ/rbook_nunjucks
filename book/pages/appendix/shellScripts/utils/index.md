@@ -1,3 +1,8 @@
+---
+id: appendix-shellscripts-utils
+title: utils
+---
+
 ## 说明
 
 这里是我平时写代码用到的脚本

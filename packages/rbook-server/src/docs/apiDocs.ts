@@ -10,14 +10,14 @@ export function readApiDocsMarkdown() {
     return fs.readFileSync(apiDocsMarkdownPath, 'utf8');
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`读取 API 文档失败: ${apiDocsMarkdownPath}: ${message}`);
+    throw new Error(`failed to read API documentation '${apiDocsMarkdownPath}': ${message}`);
   }
 }
 
 function normalizeBaseUrl(baseUrl: string) {
   const parsed = new URL(baseUrl);
   if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-    throw new Error(`不支持的 API 文档协议: ${parsed.protocol}`);
+    throw new Error(`unsupported API documentation protocol: ${parsed.protocol}`);
   }
   return parsed.origin;
 }

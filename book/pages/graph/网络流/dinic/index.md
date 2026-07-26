@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "最大流"]
 categories: ["图论"]
-code_template:
-  - title: Dinic 最大流
-    desc: "分层图 + 当前弧优化最大流模板"
-    tags: ["网络流", "最大流"]
-    code: /code/graph/dinic.cpp
+code_template: [dinic]
 ---
 
 [[TOC]]

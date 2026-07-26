@@ -5,15 +5,7 @@ date: 2026-06-16 21:20
 toc: true
 tags: ["双指针", "数对统计", "排序"]
 categories: ["基础算法"]
-code_template:
-  - title: 差值范围数对暴力
-    desc: "排序后二重循环统计差值在 [low, high] 的数对"
-    tags: ["暴力", "数对统计"]
-    code: /code/base/double_pointer/diff_pair_count_force.cpp
-  - title: 差值范围数对双指针
-    desc: "固定左端点，用两个右指针维护差值范围"
-    tags: ["双指针", "数对统计"]
-    code: /code/base/double_pointer/diff_pair_count_range.cpp
+code_template: [twoptr-diff-pair-brute, twoptr-diff-pair-range]
 ---
 
 [[TOC]]

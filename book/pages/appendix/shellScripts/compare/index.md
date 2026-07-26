@@ -1,3 +1,8 @@
+---
+id: appendix-shellscripts-compare
+title: compare
+---
+
 [[TOC]]
 
 ## 什么是对拍

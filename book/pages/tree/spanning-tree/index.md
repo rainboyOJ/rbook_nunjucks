@@ -1,3 +1,8 @@
+---
+id: tree-spanning-tree
+title: spanning-tree
+---
+
 基环树找环算法
 
 无向基环树

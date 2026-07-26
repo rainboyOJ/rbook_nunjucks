@@ -1,3 +1,8 @@
+---
+id: recursion-practice
+title: practice
+---
+
 ## 题目练习
 
 - [[problem: luogu,P1255]] 数楼梯 高精度

@@ -1,3 +1,8 @@
+---
+id: appendix-tricks-template
+title: template
+---
+
 
 暂时的模板,后面我会所有的代码整理成一个库 https://github.com:RainboyNoip/minilib
 

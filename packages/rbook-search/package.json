@@ -9,7 +9,8 @@
     "./buildIndex": "./dist/buildIndex.js",
     "./collectPages": "./dist/collectPages.js",
     "./markdownText": "./dist/markdownText.js",
-    "./paths": "./dist/paths.js"
+    "./paths": "./dist/paths.js",
+    "./preCheck": "./dist/preCheck.js"
   },
   "dependencies": {
     "@rbook/core": "file:../rbook-core"

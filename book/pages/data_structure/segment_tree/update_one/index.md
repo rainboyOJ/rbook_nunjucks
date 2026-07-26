@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "区间查询"]
 categories: ["数据结构"]
-code_template:
-  - title: 线段树：单点加区间和
-    desc: "支持单点加法和区间和查询"
-    tags: ["线段树", "单点修改", "区间查询"]
-    code: /code/data-struture/segment_tree/point_add_range_sum.cpp
+code_template: [segtree-point-add-range-sum]
 ---
 
 [[TOC]]

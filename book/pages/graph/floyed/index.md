@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最短路", "Floyd"]
 categories: ["图论"]
-code_template:
-  - title: Floyd 全源最短路
-    desc: "求任意两点之间的最短路"
-    tags: ["最短路", "Floyd"]
-    code: /code/graph/floyed.cpp
+code_template: [floyed]
 ---
 
 [[TOC]]

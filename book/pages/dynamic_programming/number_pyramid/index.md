@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "数字三角形", "线性 DP"]
 categories: ["动态规划"]
-code_template:
-  - title: 数字三角形
-    desc: "自底向上求最大路径和"
-    tags: ["动态规划", "数字三角形"]
-    code: /code/dynamic_programming/number_pyramid.cpp
+code_template: [number-pyramid]
 ---
 
 [[TOC]]

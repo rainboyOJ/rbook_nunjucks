@@ -1,3 +1,8 @@
+---
+id: recursion-binary-search-proof
+title: proof
+---
+
 开始证明:$\cal{Proof}.$
 
 使用归纳法,证明`bs_find(l,r,val)`代码的正确性

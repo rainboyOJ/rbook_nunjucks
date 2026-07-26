@@ -1,4 +1,5 @@
 ---
+id: index
 title: 欢迎来到Rbook
 layout: index
 ---

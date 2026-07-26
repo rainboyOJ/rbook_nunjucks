@@ -1,3 +1,8 @@
+---
+id: appendix-common-words
+title: common_words
+---
+
 以下是一些在 ACM/OI 编程中常用的单词以及它们的缩写
 
 | 中文              | 英文                      | 缩写         |

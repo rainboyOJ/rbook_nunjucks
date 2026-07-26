@@ -1,3 +1,8 @@
+---
+id: other
+title: 分数规划
+---
+
 
 - [[problem: poj,2976]] 通过这个题目来入门, 观看题目内的 _入门.md
 - luogu P1642 规划

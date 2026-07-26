@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["排序不等式", "贪心", "相邻交换"]
 categories: ["基础算法"]
-code_template:
-  - title: 前缀和的前缀和最小化
-    desc: "把序列升序排列，使所有前缀和之和最小"
-    tags: ["排序", "贪心", "排序不等式"]
-    code: /code/base/rearrangement_prefix_sum_min.cpp
+code_template: [rearrangement-prefix-sum-min]
 ---
 
 [[TOC]]

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "树", "树的直径"]
 categories: ["图论"]
-code_template:
-  - title: 树的直径
-    desc: "两次最远点搜索求带权树直径"
-    tags: ["树", "直径"]
-    code: /code/tree/tree_diameter.cpp
+code_template: [tree-diameter]
 ---
 
 [[TOC]]

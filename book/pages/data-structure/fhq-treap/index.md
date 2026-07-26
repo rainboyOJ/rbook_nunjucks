@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "FHQ Treap"]
 categories: ["数据结构"]
-code_template:
-  - title: FHQ Treap
-    desc: "按值分裂的无旋 Treap 模板"
-    tags: ["平衡树", "FHQ Treap"]
-    code: /code/data-struture/fhq-treap/fhq.cpp
+code_template: [fhq-treap]
 ---
 
 [[TOC]]

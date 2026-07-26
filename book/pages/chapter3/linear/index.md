@@ -1,4 +1,5 @@
 ---
+id: chapter3-linear
 title: 线性动态规划
 ---
 

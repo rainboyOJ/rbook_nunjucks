@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["组合", "枚举", "DFS"]
 categories: ["递归"]
-code_template:
-  - title: 组合枚举
-    desc: "从 n 个元素中按下标递增地选择 m 个元素"
-    tags: ["组合", "回溯"]
-    code: /code/base/enumerate/combination.cpp
+code_template: [combination]
 ---
 
 [[TOC]]

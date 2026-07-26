@@ -1,3 +1,8 @@
+---
+id: graph-mcmf
+title: MCMF例子解释
+---
+
 ## 基本思路
 
 ## 例子

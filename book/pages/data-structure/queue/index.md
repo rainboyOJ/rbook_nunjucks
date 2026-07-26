@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["队列", "数据结构"]
 categories: ["数据结构"]
-code_template:
-  - title: 队列
-    desc: "数组实现的基础队列模板"
-    tags: ["队列", "FIFO"]
-    code: /code/data-struture/queue.cpp
+code_template: [queue]
 ---
 
 [[TOC]]

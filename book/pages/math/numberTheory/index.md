@@ -1,3 +1,8 @@
+---
+id: math-numbertheory
+title: numberTheory
+---
+
 - 素数
   - 素数判断
     - 试除法: `for(int i = 2;i*i<=n;i++){ if( n % i == 0) return false;}`

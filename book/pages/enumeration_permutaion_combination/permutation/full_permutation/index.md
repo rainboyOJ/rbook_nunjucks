@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["排列", "DFS", "枚举"]
 categories: ["枚举"]
-code_template:
-  - title: 全排列
-    desc: "用 DFS 和 used 数组枚举输入序列的所有排列"
-    tags: ["排列", "回溯"]
-    code: /code/base/enumerate/permutation.cpp
+code_template: [permutation]
 ---
 
 [[TOC]]

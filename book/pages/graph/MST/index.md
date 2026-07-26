@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最小生成树", "Kruskal"]
 categories: ["图论"]
-code_template:
-  - title: Kruskal 最小生成树
-    desc: "按边权排序，使用并查集维护连通块"
-    tags: ["图论", "最小生成树", "Kruskal"]
-    code: /code/graph/最小生成树mst_kruskal.cpp
+code_template: [mst-kruskal]
 ---
 
 [[TOC]]

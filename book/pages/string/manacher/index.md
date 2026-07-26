@@ -5,11 +5,7 @@ date: 2026-06-17 00:00
 toc: true
 tags: ["字符串", "回文", "Manacher"]
 categories: ["字符串"]
-code_template:
-  - title: Manacher
-    desc: "线性时间求最长回文子串"
-    tags: ["字符串", "回文"]
-    code: /code/string/manacher.cpp
+code_template: [manacher]
 ---
 
 [[TOC]]

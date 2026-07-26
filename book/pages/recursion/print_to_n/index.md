@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "回溯", "调用栈"]
 categories: ["递归"]
-code_template:
-  - title: 递归打印 1 到 n
-    desc: "观察递归前进阶段和回溯阶段的最小例子"
-    tags: ["递归", "回溯"]
-    code: /code/base/recursion/print_to_n.cpp
+code_template: [print-n]
 ---
 
 [[TOC]]

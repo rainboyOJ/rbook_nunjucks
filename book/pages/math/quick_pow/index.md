@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["快速幂", "二进制", "数论"]
 categories: ["数学"]
-code_template:
-  - title: 快速幂
-    desc: "用二进制拆指数，O(log n) 计算幂取模"
-    tags: ["快速幂", "取模"]
-    code: /code/math/快速幂_quick_pow.cpp
+code_template: [quick-pow]
 ---
 
 [[TOC]]

@@ -1,4 +1,5 @@
 ---
+id: math-combinatorics-112-combinatorial-problems
 title: "112个组合问题"
 date: 2025-10-28 11:04
 toc: true

@@ -1,4 +1,5 @@
 ---
+id: appendix-lldb-lldb-display
 title: "在LLDB中实现GDB的display功能"
 date: 2025-10-16 23:19
 toc: true

@@ -1,3 +1,8 @@
+---
+id: graph-bcc-v-bcc
+title: 模拟练习v-bcc
+---
+
 ## Tarjan v-BCC 算法手动模拟练习
 
 这里有三个不同特征的无向图。请根据你提供的代码逻辑，手动模拟 `dfs` 过程、`stack` 的变化以及 `low/dfn` 的更新。

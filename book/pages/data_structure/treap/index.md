@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "Treap"]
 categories: ["数据结构"]
-code_template:
-  - title: Treap 普通平衡树
-    desc: "支持插入、删除、排名、第 k 小、前驱、后继"
-    tags: ["平衡树", "Treap"]
-    code: /code/data-struture/treap.cpp
+code_template: [treap]
 ---
 
 [[TOC]]

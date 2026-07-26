@@ -1,3 +1,8 @@
+---
+id: python-python
+title: python枚举
+---
+
 在 Codeforces 或其他编程竞赛中，**枚举（Enumeration）**是解决问题的基础思路之一。由于 Python 的执行速度相对较慢，高效地使用内置库和原生语法进行枚举显得尤为重要。
 
 这篇文章将为你总结 Python 中最强大的枚举工具 `itertools` 以及竞赛中常用的代码片段，帮助你更优雅地搞定“暴力搜索”类题目。

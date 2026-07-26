@@ -1,3 +1,8 @@
+---
+id: problem-list-algo-advanced
+title: algo_advanced
+---
+
 [[TOC]]
 
 ## 说明

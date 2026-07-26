@@ -1,3 +1,8 @@
+---
+id: base-bignumber
+title: bigNumber
+---
+
 [[TOC]]
 ## 前言
 

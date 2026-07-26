@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "完全背包"]
 categories: ["动态规划"]
-code_template:
-  - title: 完全背包二维写法
-    desc: "用 dp[i][c] 表示前 i 种物品容量 c 的最优值"
-    tags: ["动态规划", "完全背包"]
-    code: /code/dynamic_programming/knapsack/complete_2d.cpp
-  - title: 完全背包一维写法
-    desc: "容量正序枚举，允许当前物品重复使用"
-    tags: ["动态规划", "完全背包", "空间优化"]
-    code: /code/dynamic_programming/knapsack/complete_1d.cpp
+code_template: [knapsack-complete-2d, knapsack-complete-1d]
 ---
 
 [[TOC]]

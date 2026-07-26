@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-knapsack-full-knapsack-problem
+title: problem
+---
+
 ### 问题描述
 
 给定$n$种物品和一背包,**每种物品是无限的**。物品$i$的重量是$w_i$，其价值为$v_i$，背包的容量为$C$。问应如何选择装入背包的物品，使得装入背包中物品的总价值最大?

@@ -1,3 +1,8 @@
+---
+id: base-zero-number-problem
+title: problem
+---
+
 
 ### 问题描述
 

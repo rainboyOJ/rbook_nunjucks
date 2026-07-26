@@ -1,3 +1,8 @@
+---
+id: base-sparse-table-log
+title: 证明LOG转移
+---
+
 
 我们定义的 `Log[i]` 其实是 $\lfloor \log_2(i) \rfloor$，也就是 **$i$ 以 2 为底的对数，向下取整**。
 

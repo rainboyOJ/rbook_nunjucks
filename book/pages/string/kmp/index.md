@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["字符串", "KMP", "模式匹配"]
 categories: ["字符串"]
-code_template:
-  - title: KMP 字符串匹配
-    desc: "用前缀函数在线性时间找出模式串所有出现位置"
-    tags: ["字符串", "KMP"]
-    code: /code/string/kmp.cpp
+code_template: [kmp]
 ---
 
 [[TOC]]

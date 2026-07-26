@@ -1,3 +1,8 @@
+---
+id: tree-diameter-1
+title: diameter
+---
+
 [[TOC]]
 
 # 树的直径

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["线段树", "值域线段树", "区间最小值"]
 categories: ["数据结构", "线段树"]
-code_template:
-  - title: 值域线段树查第一个小于阈值的位置
-    desc: "在值域上维护每个值第一次出现的位置，回答第一个小于 x 的下标"
-    tags: ["线段树", "值域", "离散化"]
-    code: /code/data-struture/segment_tree/value_first_less.cpp
+code_template: [segtree-first-less]
 ---
 
 [[TOC]]

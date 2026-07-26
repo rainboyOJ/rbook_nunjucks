@@ -5,15 +5,7 @@ date: 2025-12-18 12:01
 toc: true
 tags: ["欧拉路", "图论", "Hierholzer"]
 categories: ["graph"]
-code_template:
-  - title: 无向图欧拉路
-    desc: "Hierholzer 算法构造无向图欧拉路或欧拉回路"
-    tags: ["欧拉路", "Hierholzer", "无向图"]
-    code: /code/graph/euler_path_undirected.cpp
-  - title: 有向图欧拉路
-    desc: "Hierholzer 算法构造有向图欧拉路或欧拉回路"
-    tags: ["欧拉路", "Hierholzer", "有向图"]
-    code: /code/graph/euler_path_directed.cpp
+code_template: [euler-path-undirected, euler-path-directed]
 ---
 
 [[TOC]]

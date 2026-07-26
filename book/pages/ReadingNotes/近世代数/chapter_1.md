@@ -1,3 +1,8 @@
+---
+id: readingnotes-chapter-1
+title: chapter_1
+---
+
 # 第一章 群
 
 ### 1.1 等价关系与集合的分类

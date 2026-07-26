@@ -4,12 +4,20 @@ import { useToast } from 'vue-toastification';
 import Fuse from 'fuse.js'
 import CodeShow from './components/codeShow.vue'
 
+interface ArticleInfo {
+  id: string;
+  title: string;
+  url: string;
+}
+
 interface CodeTemplate {
+  id?: string;
   title?: string;
   tags?: string[];
   code: string;
   desc?: string;
   sh?: string;
+  articles?: ArticleInfo[];
 }
 
 // template_array 由 load_data.ts 在 Vite 构建阶段注入，前端只负责搜索和展示。
@@ -136,6 +144,7 @@ const searchResult = computed(() => {
                         <th scope="col">标题</th>
                         <th scope="col">描述</th>
                         <th scope="col">标签</th>
+                        <th scope="col">关联文章</th>
                         <th scope="col">功能</th>
                     </tr>
                 </thead>
@@ -143,8 +152,16 @@ const searchResult = computed(() => {
                     <tr v-for="(d,index) in searchResult" :key="d.code">
                         <th scope="row">{{index+1}}</th>
                         <td>{{d.title}}</td>
-                        <td style="max-width: 300px;">{{d.desc || "" }}</td>
+                        <td style="max-width: 250px;">{{d.desc || "" }}</td>
                         <td>{{ tagsString(d.tags)}}</td>
+                        <td style="max-width: 200px;">
+                          <div v-if="d.articles && d.articles.length > 0">
+                            <div v-for="a in d.articles" :key="a.id" style="margin-bottom: 2px;">
+                              <a :href="a.url" target="_blank" style="color: #61afef; text-decoration: underline;">{{ a.title }}</a>
+                            </div>
+                          </div>
+                          <span v-else style="color: #5c6370;">-</span>
+                        </td>
                         <td>
                           <div class="btn-group">
                             <button @click="viewCode(d)" class="">查看</button>

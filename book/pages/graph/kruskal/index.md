@@ -1,4 +1,5 @@
 ---
+id: graph-kruskal
 title: "Kruskal"
 date: 2025-11-09 11:02
 toc: true

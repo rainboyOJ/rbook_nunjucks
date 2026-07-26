@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "斜率优化", "凸包优化", "单调队列"]
 categories: ["动态规划"]
-code_template:
-  - title: 玩具装箱斜率优化
-    desc: "单调队列维护下凸壳，优化一维二次式 DP"
-    tags: ["动态规划", "斜率优化", "凸包优化"]
-    code: /code/dynamic_programming/slope_toy_packing.cpp
+code_template: [slope-toy-packing]
 ---
 
 [[TOC]]

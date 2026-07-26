@@ -1,3 +1,8 @@
+---
+id: graph-dijkstra
+title: dijkstra
+---
+
 ## 题目
 
 - P4934: 最短路算法的灵活运用

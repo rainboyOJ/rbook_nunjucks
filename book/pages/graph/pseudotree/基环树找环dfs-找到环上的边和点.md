@@ -1,3 +1,8 @@
+---
+id: graph-pseudotree-dfs
+title: 基环树找环dfs-找到环上的边和点
+---
+
 
 ## 找到环上的所有的点
 

@@ -5,11 +5,7 @@ date: 2025-12-08 14:32
 toc: true
 tags: ["数学", "线性方程组", "高斯消元"]
 categories: ["数学"]
-code_template:
-  - title: 高斯消元
-    desc: "解实数域 n 元一次线性方程组"
-    tags: ["高斯消元", "线性方程组"]
-    code: /code/math/gaussian_elimination.cpp
+code_template: [gaussian-elimination]
 ---
 
 [[TOC]]

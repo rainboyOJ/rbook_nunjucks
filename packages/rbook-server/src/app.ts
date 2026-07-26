@@ -2,10 +2,9 @@ import path from 'path';
 import fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import { distDir } from '@rbook/core/paths';
-import { readApiDocsMarkdown, renderApiDocsPage } from './docs/apiDocs.js';
+import { renderApiDocsPage } from './docs/apiDocs.js';
 import { getBaseUrl } from './http/query.js';
 import { registerAdminApiRoutes } from './routes/adminApi.js';
-import { registerAiApiRoutes } from './routes/aiApi.js';
 import { registerPublicApiRoutes } from './routes/publicApi.js';
 import type { DevResponse, DevRenderer } from './devRenderer.js';
 
@@ -20,22 +19,19 @@ export async function createApp(options: CreateAppOptions = {}) {
     logger: options.logger ?? true
   });
 
+  app.addHook('onRequest', async (request, reply) => {
+    const url = request.url;
+    if (url === '/api' || url.startsWith('/api?') || url.startsWith('/api/')) {
+      reply.header('Cache-Control', 'no-store');
+    }
+  });
+
   app.get('/api', async (request, reply) => {
-    reply
-      .type('text/html; charset=utf-8')
-      .header('Cache-Control', 'no-store');
+    reply.type('text/html; charset=utf-8');
     return renderApiDocsPage(getBaseUrl(request));
   });
 
-  app.get('/api/md', async (_request, reply) => {
-    reply
-      .type('text/markdown; charset=utf-8')
-      .header('Cache-Control', 'no-store');
-    return readApiDocsMarkdown();
-  });
-
   await registerPublicApiRoutes(app);
-  await registerAiApiRoutes(app);
   await registerAdminApiRoutes(app);
 
   if (options.devRenderer) {
@@ -72,7 +68,7 @@ export async function createApp(options: CreateAppOptions = {}) {
 
   app.setNotFoundHandler((request, reply) => {
     if (request.url.startsWith('/api/')) {
-      reply.code(404).send({ error: 'api route not found' });
+      reply.code(404).send({ error: 'API_ROUTE_NOT_FOUND', message: 'api route not found' });
       return;
     }
     if (options.devRenderer) {

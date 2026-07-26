@@ -5,11 +5,7 @@ date: 2026-06-17 00:00
 toc: true
 tags: ["字符串", "循环同构", "集合最值"]
 categories: ["字符串"]
-code_template:
-  - title: 最小表示法
-    desc: "线性时间求循环同构串中字典序最小的起点"
-    tags: ["字符串", "循环同构"]
-    code: /code/string/minimal-string.cpp
+code_template: [minimal-string]
 ---
 
 [[TOC]]

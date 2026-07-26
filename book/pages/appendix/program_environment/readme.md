@@ -1,3 +1,8 @@
+---
+id: appendix-program-environment-readme
+title: readme
+---
+
 这里是一些编程环境配制,比如
 
 - noilinux 2.0 系统的安装

@@ -1,3 +1,8 @@
+---
+id: appendix-software-vscode-bak
+title: bak
+---
+
 ## 如何用vscode写c++代码
 
 思来想去,觉得还是NoiLinux2.0(ubuntu20.04)中自带的vscode最适合学生用来写代码

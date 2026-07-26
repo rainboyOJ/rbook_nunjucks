@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-teach-plan
+title: teach_plan
+---
+
 内容为
 
 1. 计数原理

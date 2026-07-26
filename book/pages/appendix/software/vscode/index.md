@@ -1,4 +1,5 @@
 ---
+id: appendix-software-vscode
 title : vscode的使用
 author: rainboy
 update_time : 2023-04-27

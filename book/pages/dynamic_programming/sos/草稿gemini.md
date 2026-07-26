@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-sos-gemini
+title: 草稿gemini
+---
+
 你好！很高兴你对 **SOS DP (Sum Over Subsets Dynamic Programming)** 感兴趣。既然你在 Codeforces 上刷题并且有离散数学基础，这会让你学得非常快。
 
 SOS DP 其实本质上就是 **高维前缀和（High-Dimensional Prefix Sums）**。

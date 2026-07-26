@@ -1,3 +1,8 @@
+---
+id: base-two-pointer-p1-sum-eq-pair
+title: p1_sum_eq_pair
+---
+
 ## sum equal pair
 
 ### 题目描述

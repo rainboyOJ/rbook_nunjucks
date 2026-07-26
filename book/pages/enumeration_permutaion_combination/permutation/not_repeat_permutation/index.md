@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["排列", "DFS", "回溯", "枚举"]
 categories: ["枚举"]
-code_template:
-  - title: 重复元素全排列
-    desc: "把相同元素压成计数桶，DFS 枚举所有不重复排列"
-    tags: ["排列", "回溯", "去重"]
-    code: /code/base/enumerate/multiset_permutation.cpp
+code_template: [multiset-permutation]
 ---
 
 [[TOC]]

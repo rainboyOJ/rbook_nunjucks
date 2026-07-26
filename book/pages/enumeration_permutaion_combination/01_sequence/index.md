@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["枚举", "递归", "01序列"]
 categories: ["枚举"]
-code_template:
-  - title: 多重循环枚举
-    desc: "令 m=2 时就是 01 序列枚举"
-    tags: ["枚举", "DFS"]
-    code: /code/base/enumerate/dynamic_loop.cpp
+code_template: [enumerate-dynamic-loop]
 ---
 
 [[TOC]]

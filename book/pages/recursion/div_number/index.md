@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "记忆化", "整数划分"]
 categories: ["递归"]
-code_template:
-  - title: 整数划分
-    desc: "用 f(n,m) 统计最大部件不超过 m 的划分方案数"
-    tags: ["递归", "记忆化"]
-    code: /code/base/recursion/integer_partition.cpp
+code_template: [integer-partition]
 ---
 
 [[TOC]]

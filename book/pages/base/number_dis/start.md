@@ -5,11 +5,7 @@ date: 2026-06-16 20:40
 toc: true
 tags: ["基础概念", "区间长度"]
 categories: ["基础算法"]
-code_template:
-  - title: 数字距离
-    desc: "计算 [i,j) 与 [i,j] 的长度，以及相对位置"
-    tags: ["区间", "下标"]
-    code: /code/base/number_distance.cpp
+code_template: [number-distance]
 ---
 
 [[TOC]]

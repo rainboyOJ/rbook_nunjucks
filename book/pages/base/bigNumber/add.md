@@ -1,4 +1,3 @@
-
 ---
 id: "big-number-add"
 title: "高精度加法"
@@ -6,11 +5,7 @@ date: 2026-06-16 19:35
 toc: true
 tags: ["高精度", "大整数", "模拟"]
 categories: ["基础算法"]
-code_template:
-  - title: 高精度加法
-    desc: "用字符串模拟两个非负整数相加"
-    tags: ["高精度", "模拟"]
-    code: /code/base/big_number/add_string.cpp
+code_template: [bignum-add]
 ---
 
 [[TOC]]

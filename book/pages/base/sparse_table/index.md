@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "ST 表", "RMQ", "倍增"]
 categories: ["基础算法"]
-code_template:
-  - title: ST 表
-    desc: "静态区间最大值查询"
-    tags: ["ST 表", "RMQ", "倍增"]
-    code: /code/base/sparse_table.cpp
+code_template: [st]
 ---
 
 [[TOC]]

@@ -1,5 +1,5 @@
 ---
-id: "one-loop-graph"
+id: pseudotree-spanning-tree
 title: "基环树（One-Loop-Graph）——找环与应用"
 date: 2025-12-19 20:00
 toc: true

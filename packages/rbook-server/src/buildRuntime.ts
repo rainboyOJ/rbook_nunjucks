@@ -9,6 +9,7 @@ import {
   runtimeDir
 } from '@rbook/core/paths';
 import { buildSearchIndex } from '@rbook/search/buildIndex';
+import { assertPreCheck } from '@rbook/search/preCheck';
 import { hasCommand, runCommand } from './runtimeBuild/commands.js';
 import { copyIfExists, walkFiles } from './runtimeBuild/files.js';
 
@@ -123,6 +124,8 @@ export function buildCodeTemplateApp() {
 }
 
 export function buildRuntime() {
+  assertPreCheck();
+
   console.log(`[runtime] appDir=${appDir}`);
   console.log(`[runtime] bookDir=${bookDir}`);
   console.log(`[runtime] distDir=${distDir}`);

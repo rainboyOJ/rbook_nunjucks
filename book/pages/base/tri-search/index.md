@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["基础算法", "三分", "函数极值"]
 categories: ["基础算法"]
-code_template:
-  - title: 浮点三分
-    desc: "在单峰函数上求最大值"
-    tags: ["三分", "函数极值"]
-    code: /code/base/ternary_search_double.cpp
+code_template: [ternary-search]
 ---
 
 [[TOC]]

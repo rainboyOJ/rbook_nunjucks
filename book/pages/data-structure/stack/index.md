@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["栈", "数据结构"]
 categories: ["数据结构"]
-code_template:
-  - title: 栈
-    desc: "数组实现的基础栈模板"
-    tags: ["栈", "LIFO"]
-    code: /code/data-struture/stack.cpp
+code_template: [stack]
 ---
 
 [[TOC]]

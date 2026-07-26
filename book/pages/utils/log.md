@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["调试", "工具函数"]
 categories: ["工具"]
-code_template:
-  - title: 调试输出工具
-    desc: "输出变量名和值，适合本地调试"
-    tags: ["调试", "工具"]
-    code: /code/utils/log.cpp
+code_template: [log]
 ---
 
 [[TOC]]

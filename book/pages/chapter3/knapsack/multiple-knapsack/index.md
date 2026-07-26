@@ -1,4 +1,5 @@
 ---
+id: chapter3-knapsack-multiple-knapsack
 title: 多重背包
 ---
 

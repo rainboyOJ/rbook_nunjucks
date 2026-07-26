@@ -1,4 +1,5 @@
 ---
+id: graph-center-of-tree
 title: "树的中心"
 date: 2025-10-09 22:31
 toc: true

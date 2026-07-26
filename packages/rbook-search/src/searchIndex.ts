@@ -112,7 +112,7 @@ export function searchPages(query: string, options: SearchOptions = {}) {
 
 export function getPage(path: string) {
   const { payload } = loadPayload();
-  const page = payload.pages.find((item) => item.path === path);
+  const page = payload.pages.find((item: any) => item.path === path);
   if (!page) return null;
 
   const fullPath = `${bookDir}/${page.path}`;
@@ -120,4 +120,22 @@ export function getPage(path: string) {
     ...page,
     markdown: fs.existsSync(fullPath) ? fs.readFileSync(fullPath, 'utf8') : ''
   };
+}
+
+export function getPageById(id: string) {
+  const { payload } = loadPayload();
+  const page = payload.pages.find((item: any) => item.id === id);
+  if (!page) return null;
+
+  const fullPath = `${bookDir}/${page.path}`;
+  return {
+    ...page,
+    markdown: fs.existsSync(fullPath) ? fs.readFileSync(fullPath, 'utf8') : ''
+  };
+}
+
+export function getCodeById(id: string) {
+  const { payload } = loadPayload();
+  const codes = payload.codes || [];
+  return codes.find((item: any) => item.id === id) || null;
 }

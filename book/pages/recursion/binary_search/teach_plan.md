@@ -1,3 +1,8 @@
+---
+id: recursion-binary-search-teach-plan
+title: teach_plan
+---
+
 
 ## 教学过程
 

@@ -5,15 +5,7 @@ date: 2026-05-31 10:30
 toc: true
 tags: ["数位DP", "动态规划"]
 categories: ["dp"]
-code_template:
-  - title: windy 数记忆化 DFS
-    desc: "递归数位 DP，处理上界限制和前导零"
-    tags: ["数位DP", "记忆化搜索", "windy数"]
-    code: /code/dynamic_programming/digit_dp/windy_dfs.cpp
-  - title: windy 数递推统计
-    desc: "预处理自由后缀规模，再按上界逐位统计"
-    tags: ["数位DP", "递推", "windy数"]
-    code: /code/dynamic_programming/digit_dp/windy_iter.cpp
+code_template: [digit-dp-windy-dfs, digit-dp-windy-iter]
 ---
 
 [[TOC]]

@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "单调队列", "滑动窗口"]
 categories: ["数据结构"]
-code_template:
-  - title: 滑动窗口最值
-    desc: "维护固定长度窗口的最小值和最大值"
-    tags: ["单调队列", "滑动窗口"]
-    code: /code/data-struture/monotonic_queue_sliding_window.cpp
-  - title: 最大子序和
-    desc: "前缀和加单调队列求长度不超过 m 的最大子段和"
-    tags: ["单调队列", "前缀和"]
-    code: /code/data-struture/monotonic_queue_max_subarray.cpp
+code_template: [mono-queue-sliding-window, mono-queue-max-sub]
 ---
 
 [[TOC]]

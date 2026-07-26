@@ -5,15 +5,7 @@ date: 2026-06-16 17:35
 toc: true
 tags: ["扫描线", "线段树", "矩形面积并"]
 categories: ["数据结构"]
-code_template:
-  - title: 扫描线矩形面积并
-    desc: "离散化 x 坐标，线段树维护当前被覆盖的横向长度"
-    tags: ["扫描线", "线段树", "离散化"]
-    code: /code/data-struture/segment_tree/scanline_area_discrete.cpp
-  - title: 扫描线教学版
-    desc: "坐标范围较小时的无离散化写法，便于理解覆盖次数"
-    tags: ["扫描线", "线段树"]
-    code: /code/data-struture/segment_tree/scanline_area_plain.cpp
+code_template: [segtree-scanline-discrete, segtree-scanline]
 ---
 
 [[TOC]]

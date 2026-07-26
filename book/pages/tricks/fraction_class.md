@@ -1,14 +1,11 @@
 ---
+id: tricks-fraction-class
 title: "分数类"
 date: 2026-06-16 19:50
 toc: true
 tags: ["分数", "精度", "比较"]
 categories: ["技巧"]
-code_template:
-  - title: 分数类
-    desc: "用分子分母精确表示有理数，避免浮点误差"
-    tags: ["分数", "有理数", "精度"]
-    code: /code/utils/fraction.cpp
+code_template: [fraction]
 ---
 
 [[TOC]]

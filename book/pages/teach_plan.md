@@ -1,3 +1,8 @@
+---
+id: teach-plan
+title: teach_plan
+---
+
 设计目的：
 
 通过一些基本的经典的递归的题目来入门递归

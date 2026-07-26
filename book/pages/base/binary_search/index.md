@@ -1,19 +1,11 @@
 ---
-id: "binary_search"
+id: binary-search
 title: "二分查找"
 date: 2026-06-16 20:30
 toc: true
 tags: ["二分查找", "单调性"]
 categories: ["基础算法"]
-code_template:
-  - title: 二分查找
-    desc: "在单调真假序列中查找第一个满足条件的位置"
-    tags: ["二分查找", "单调性"]
-    code: /code/base/binary_search.cpp
-  - title: 线性扫描对照
-    desc: "暴力查找第一个大于等于 x 的位置，用来对照二分"
-    tags: ["枚举", "二分查找"]
-    code: /code/base/binary_search_linear.cpp
+code_template: [binary-search, binary-search-linear]
 ---
 
 [[TOC]]

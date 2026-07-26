@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "状态压缩", "SOS DP"]
 categories: ["动态规划"]
-code_template:
-  - title: SOS DP 子集和
-    desc: "计算 F[mask] = sum_{sub ⊆ mask} A[sub]"
-    tags: ["动态规划", "状态压缩", "SOS DP"]
-    code: /code/dynamic_programming/sos/subset_sum.cpp
-  - title: SOS DP 超集和
-    desc: "计算 F[mask] = sum_{sup ⊇ mask} A[sup]"
-    tags: ["动态规划", "状态压缩", "SOS DP"]
-    code: /code/dynamic_programming/sos/superset_sum.cpp
+code_template: [sos-subset-sum, sos-superset-sum]
 ---
 
 [[TOC]]

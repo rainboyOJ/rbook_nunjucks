@@ -5,15 +5,7 @@ date: 2026-06-16 21:55
 toc: true
 tags: ["快速排序", "分治", "双指针"]
 categories: ["基础算法", "排序"]
-code_template:
-  - title: 双路快速排序
-    desc: "选中点为基准，用双指针完成原地划分"
-    tags: ["快速排序", "分治"]
-    code: /code/base/quick_sort_tranditional.cpp
-  - title: 三路快速排序
-    desc: "把区间分成小于、等于、大于基准三段，适合重复元素多的数据"
-    tags: ["快速排序", "三路划分"]
-    code: /code/base/quick_sort_3way_part.cpp
+code_template: [quicksort-tranditional, quicksort-3way-part]
 ---
 
 [[TOC]]

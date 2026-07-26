@@ -5,11 +5,7 @@ date: 2026-06-27 00:00
 toc: true
 tags: ["贪心", "Johnson 法则", "相邻交换", "调度"]
 categories: ["贪心"]
-code_template:
-  - title: 双机器调度 Johnson 法则
-    desc: "两台机器流水作业调度，输出最短完成时间和一种最优顺序"
-    tags: ["贪心", "Johnson", "相邻交换"]
-    code: /code/base/two_machine_johnson.cpp
+code_template: [two-machine-johnson]
 ---
 
 [[TOC]]

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["离散化", "排序", "二分"]
 categories: ["基础算法"]
-code_template:
-  - title: 离散化
-    desc: "排序去重后映射到连续编号"
-    tags: ["离散化", "二分"]
-    code: /code/base/discrete离散化_unique.cpp
+code_template: [discretize-stl]
 ---
 
 [[TOC]]

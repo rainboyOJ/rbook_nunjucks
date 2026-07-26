@@ -1,4 +1,5 @@
 ---
+id: appendix-lldb
 title: "LLDB C++ 调试指南"
 date: 2025-10-16 23:13
 toc: true

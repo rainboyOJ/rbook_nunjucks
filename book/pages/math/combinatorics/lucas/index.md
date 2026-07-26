@@ -1,3 +1,8 @@
+---
+id: math-combinatorics-lucas
+title: lucas
+---
+
 
 ## 证明
 

@@ -5,11 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "堆", "优先队列"]
 categories: ["数据结构"]
-code_template:
-  - title: 小根堆
-    desc: "二叉堆模板，支持插入、查询堆顶、弹出堆顶"
-    tags: ["数据结构", "heap"]
-    code: /code/data-struture/heap堆.cpp
+code_template: [heap]
 ---
 
 [[TOC]]

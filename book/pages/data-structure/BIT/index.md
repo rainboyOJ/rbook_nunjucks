@@ -5,15 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "树状数组", "前缀和"]
 categories: ["数据结构"]
-code_template:
-  - title: 树状数组：单点修改区间查询
-    desc: "维护动态前缀和，支持单点加和区间和查询"
-    tags: ["树状数组", "区间信息"]
-    code: /code/data-struture/BIT/bit.cpp
-  - title: 树状数组：区间修改单点查询
-    desc: "在差分数组上维护树状数组"
-    tags: ["树状数组", "差分"]
-    code: /code/data-struture/BIT/bit_区间修改_单点查询.cpp
+code_template: [fenwick, fenwick-tree-alt]
 ---
 
 [[TOC]]

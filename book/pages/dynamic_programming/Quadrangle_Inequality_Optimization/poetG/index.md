@@ -1,3 +1,8 @@
+---
+id: dynamic-programming-quadrangle-inequality-optimization-poetg
+title: poetG
+---
+
 
 证明:
 

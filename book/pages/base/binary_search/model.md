@@ -1,3 +1,8 @@
+---
+id: base-binary-search-model
+title: model
+---
+
 
 ## 经典模型
 
