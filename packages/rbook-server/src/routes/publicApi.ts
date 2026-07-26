@@ -60,12 +60,7 @@ function fullPage(page: any) {
     categories: asStringArray(payload.frontMatter?.categories),
     frontMatter: payload.frontMatter,
     headings: payload.headings,
-    excerpt: payload.excerpt,
     markdown: payload.markdown,
-    html: payload.html,
-    text: payload.text,
-    visible: payload.visible,
-    source: payload.source,
     navTrail: payload.navTrail || []
   };
 }

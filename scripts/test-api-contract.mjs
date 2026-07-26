@@ -158,11 +158,21 @@ async function main() {
     assertRelativeUrl(page.url, 'page URL');
     assert.equal(typeof page.markdown, 'string');
     assert.ok(page.markdown.length > 0);
-    assert.equal(typeof page.html, 'string');
-    assert.ok(page.html.length > 0);
     assert.equal(page.frontMatter.id, 'dsu-on-tree');
     assert.deepEqual(page.frontMatter.code_template, ['dsu-on-tree-color-count']);
-    assert.equal(Object.hasOwn(page, 'chunks'), false);
+    assert.deepEqual(Object.keys(page).sort(), [
+      'categories',
+      'description',
+      'frontMatter',
+      'headings',
+      'id',
+      'markdown',
+      'navTrail',
+      'path',
+      'tags',
+      'title',
+      'url'
+    ].sort());
     assertPayloadUrls(page);
     assertNoLocalLeak(page, 'page response');
 

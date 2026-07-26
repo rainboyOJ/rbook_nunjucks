@@ -23,22 +23,29 @@ export RBOOK_BASE_URL="https://rbook2.roj.ac.cn"
 ## 推荐统一命令行客户端（rbook.py）
 
 本项目提供了一个全能客户端 CLI 脚本 `scripts/rbook.py`，替代了原有繁杂的旧版 python 脚本。
-所有响应统一为 JSON 结构。
+列表命令默认输出字段精简的 TSV，适合人直接阅读，也能减少 agent 获取目录时的上下文占用。只有需要结构化数据时才在子命令末尾添加 `--json`。
 
 ### 健康检查
 ```bash
 python3 scripts/rbook.py health
+python3 scripts/rbook.py site
 ```
 
-### 获取精简目录
+`health` 和 `site` 默认输出 `key<TAB>value`；添加 `--json` 可获取 API 返回的完整对象。
+
+### 获取文章目录
 ```bash
-python3 scripts/rbook.py catalog --compact
+python3 scripts/rbook.py catalog
+python3 scripts/rbook.py catalog --json
 ```
+
+默认目录列为 `#`、`id`、`title`、`description`。列表 JSON 为 `{ "total": ..., "items": [...] }`，每个条目同样只保留 `id`、`title`、`description`。
 
 ### 按元数据查找文章
 ```bash
 python3 scripts/rbook.py find "kmp 字符串"
 python3 scripts/rbook.py find "动态规划 背包" --limit 10
+python3 scripts/rbook.py find "动态规划 背包" --limit 10 --json
 ```
 
 `find` 只匹配文章的 ID、标题、描述和标签。多个关键词采用 AND 语义；确定文章 ID 后，再用 `pages --id` 读取全文。
@@ -46,7 +53,10 @@ python3 scripts/rbook.py find "动态规划 背包" --limit 10
 ### 按 ID 查询文章详情
 ```bash
 python3 scripts/rbook.py pages --id binary-search
+python3 scripts/rbook.py pages --id binary-search --json
 ```
+
+默认直接输出完整 Markdown。添加 `--json` 时返回文章元数据、目录结构和 Markdown。服务端详情接口和客户端都不返回可由 Markdown 派生的 `html`、`text`、`excerpt`，也不返回内部索引字段 `visible`、`source`；服务端不会为详情响应执行 HTML 渲染，以减少耗时和上下文占用。
 
 ### 按标签筛选文章或代码
 ```bash
@@ -54,15 +64,30 @@ python3 scripts/rbook.py pages --tag 图论,双指针
 python3 scripts/rbook.py codes --tag 差分
 ```
 
+`pages` 和 `codes` 列表支持 `--limit` 与 `--offset`。`--id` 是详情模式，不能和 `--tag`、`--limit`、`--offset` 同时使用。
+
 ### 查看模板源码及其关联的文章
 ```bash
-python3 scripts/rbook.py code v-bcc --content
+python3 scripts/rbook.py codes --id v-bcc
+python3 scripts/rbook.py codes --id v-bcc --json
 ```
+
+代码列表默认列为 `#`、`id`、`title`、`language`；其中 `title` 来自模板的 `description`。详情模式默认直接输出完整源码，添加 `--json` 时返回包含关联文章和源码的完整对象。
 
 ### 统计所有文章标签与代码标签
 ```bash
 python3 scripts/rbook.py tags
+python3 scripts/rbook.py tags --json
 ```
+
+默认标签列为 `#`、`type`、`tag`、`count`，`type` 用于区分 `article` 和 `code`。
+
+### 推荐检索流程
+
+1. 用 `catalog` 或 `find` 的默认 TSV 定位文章 ID。
+2. 用 `pages --id <id>` 只读取目标文章的 Markdown。
+3. 用 `codes` 的默认 TSV 定位模板 ID，再用 `codes --id <id>` 读取源码。
+4. 只有程序确实需要元数据或关联关系时才添加 `--json`。
 
 ---
 

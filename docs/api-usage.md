@@ -187,7 +187,7 @@ curl "$BASE_URL/api/catalog?compact=true"
 curl -G --data-urlencode "id=dsu-on-tree" "$BASE_URL/api/pages"
 ```
 
-响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`excerpt`、`markdown`、`html`、`text`、`visible`、`source` 和 `navTrail`。文章引用的模板 ID 位于 `frontMatter.code_template`。
+响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`markdown` 和 `navTrail`。接口不返回可由 Markdown 派生的 `html`、`text`、`excerpt`，也不暴露内部索引字段 `visible`、`source`；处理详情请求时不会执行 HTML 渲染。文章引用的模板 ID 位于 `frontMatter.code_template`。
 
 ### `GET /api/pages`
 
@@ -305,12 +305,39 @@ curl -X POST \
 
 ```bash
 python3 scripts/rbook.py health
-python3 scripts/rbook.py catalog --compact
+python3 scripts/rbook.py site
+python3 scripts/rbook.py catalog
 python3 scripts/rbook.py find "树上 启发式" --limit 10
 python3 scripts/rbook.py pages --id dsu-on-tree
-python3 scripts/rbook.py code dsu-on-tree-color-count --content
+python3 scripts/rbook.py codes --id dsu-on-tree-color-count
+python3 scripts/rbook.py tags
 ```
 
-`find` 只在文章 ID、标题、描述和标签中查找，多个关键词使用 AND 语义；它不切分或搜索文章正文。
+列表命令默认输出 TSV。文章列表列为 `#`、`id`、`title`、`description`；代码列表列为 `#`、`id`、`title`、`language`；标签列表列为 `#`、`type`、`tag`、`count`。`#` 是当前输出的行号，每次从 1 开始。字段中的制表符、换行和连续空白会压缩成一个空格，确保每条记录只占一行。
+
+`find` 只在文章 ID、标题、描述和标签中查找，多个关键词使用 AND 语义；它不切分或搜索文章正文。`pages` 和 `codes` 的列表模式支持 `--tag`、`--limit`、`--offset`。
+
+详情模式默认直接返回可用原文：
+
+```bash
+# 完整 Markdown
+python3 scripts/rbook.py pages --id dsu-on-tree
+
+# 完整代码模板源码
+python3 scripts/rbook.py codes --id dsu-on-tree-color-count
+```
+
+在任意子命令末尾添加 `--json` 可切换为 JSON：
+
+```bash
+python3 scripts/rbook.py catalog --json
+python3 scripts/rbook.py find "树上 启发式" --limit 10 --json
+python3 scripts/rbook.py pages --id dsu-on-tree --json
+python3 scripts/rbook.py codes --id dsu-on-tree-color-count --json
+```
+
+列表 JSON 只包含 `total` 和精简后的 `items`，不包含行号。文章详情 JSON 与 `/api/pages?id=<id>` 使用相同的 11 个精简字段。代码详情 JSON 包含完整元数据与源码；`health`、`site`、`tags` 的 JSON 保留对应 API 的完整响应。
+
+`--id` 不能和 `--tag`、`--limit`、`--offset` 同时使用。错误默认以 `ERROR_CODE: message` 写入标准错误；JSON 模式则输出 `{ "error": "...", "message": "..." }`，并以非零状态码退出。
 
 可用 `RBOOK_BASE_URL` 切换服务地址。

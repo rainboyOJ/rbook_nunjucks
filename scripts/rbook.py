@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -10,6 +11,24 @@ from pathlib import Path
 
 
 DEFAULT_BASE_URL = "https://rbook2.roj.ac.cn"
+
+
+class RbookClientError(RuntimeError):
+    def __init__(self, code, message, exit_status=1):
+        super().__init__(message)
+        self.code = code
+        self.message = message
+        self.exit_status = exit_status
+
+
+class RbookArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+        payload = {"error": "ARGUMENT_ERROR", "message": message}
+        if "--json" in sys.argv[1:]:
+            print_json(payload, file=sys.stderr)
+        else:
+            print(f"ARGUMENT_ERROR: {message}", file=sys.stderr)
+        self.exit(2)
 
 
 def load_config_baseurl():
@@ -55,35 +74,70 @@ def request_json(baseurl, path, params=None):
     url = f"{baseurl}{path}"
     if query:
         url = f"{url}?{query}"
-    req = urllib.request.Request(url, headers={"Accept": "application/json"})
+    request = urllib.request.Request(url, headers={"Accept": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            body = resp.read().decode("utf-8")
+        with urllib.request.urlopen(request, timeout=30) as response:
+            body = response.read().decode("utf-8")
             return json.loads(body)
     except urllib.error.HTTPError as exc:
         body = exc.read().decode("utf-8", errors="replace")
         try:
             data = json.loads(body)
         except Exception:
-            data = {"error": "HTTP_ERROR", "message": body}
-        print(json.dumps(data, ensure_ascii=False, indent=2), file=sys.stderr)
-        sys.exit(1)
+            data = {}
+        error = data.get("error") if isinstance(data, dict) else None
+        message = data.get("message") if isinstance(data, dict) else None
+        raise RbookClientError(
+            str(error or "HTTP_ERROR"),
+            str(message or f"HTTP {exc.code}: {body}"),
+        ) from exc
     except Exception as exc:
-        print(json.dumps({"error": "REQUEST_FAILED", "message": str(exc)}, ensure_ascii=False, indent=2), file=sys.stderr)
-        sys.exit(1)
+        raise RbookClientError("REQUEST_FAILED", str(exc)) from exc
 
 
-def print_json(data, pretty=True):
-    if pretty:
-        print(json.dumps(data, ensure_ascii=False, indent=2))
+def print_json(data, file=sys.stdout):
+    print(json.dumps(data, ensure_ascii=False, separators=(",", ":")), file=file)
+
+
+def normalize_tsv(value):
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    return re.sub(r"\s+", " ", str(value)).strip()
+
+
+def print_tsv(headers, rows):
+    print("\t".join(headers))
+    for row in rows:
+        print("\t".join(normalize_tsv(value) for value in row))
+
+
+def print_numbered_tsv(headers, items, fields):
+    rows = []
+    for number, item in enumerate(items, start=1):
+        rows.append([number, *(item.get(field) for field in fields)])
+    print_tsv(["#", *headers], rows)
+
+
+def print_error(error, json_output):
+    if json_output:
+        print_json({"error": error.code, "message": error.message}, file=sys.stderr)
     else:
-        print(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
+        print(f"{error.code}: {error.message}", file=sys.stderr)
 
 
 def positive_int(value):
     number = int(value)
     if number < 1:
         raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
+
+
+def nonnegative_int(value):
+    number = int(value)
+    if number < 0:
+        raise argparse.ArgumentTypeError("must be a non-negative integer")
     return number
 
 
@@ -122,59 +176,198 @@ def find_pages(items, query, limit=20):
     }
 
 
-def main():
-    parser = argparse.ArgumentParser(description="rbook HTTP API client")
+def page_summary(item):
+    return {
+        "id": item.get("id") or "",
+        "title": item.get("title") or "",
+        "description": item.get("description") or "",
+    }
+
+
+def page_detail(payload):
+    return {
+        "id": payload.get("id") or "",
+        "title": payload.get("title") or "",
+        "description": payload.get("description") or "",
+        "path": payload.get("path") or "",
+        "url": payload.get("url") or "",
+        "tags": payload.get("tags") or [],
+        "categories": payload.get("categories") or [],
+        "frontMatter": payload.get("frontMatter") or {},
+        "headings": payload.get("headings") or [],
+        "navTrail": payload.get("navTrail") or [],
+        "markdown": require_text(payload, "markdown"),
+    }
+
+
+def code_summary(item):
+    return {
+        "id": item.get("id") or "",
+        "title": item.get("title") or item.get("description") or "",
+        "language": item.get("language") or "",
+    }
+
+
+def project_list(payload, projector):
+    items = [projector(item) for item in payload.get("items") or []]
+    return {
+        "total": payload.get("total", len(items)),
+        "items": items,
+    }
+
+
+def print_page_list(payload, json_output):
+    projected = project_list(payload, page_summary)
+    if json_output:
+        print_json(projected)
+        return
+    print_numbered_tsv(
+        ["id", "title", "description"],
+        projected["items"],
+        ["id", "title", "description"],
+    )
+
+
+def print_code_list(payload, json_output):
+    projected = project_list(payload, code_summary)
+    if json_output:
+        print_json(projected)
+        return
+    print_numbered_tsv(
+        ["id", "title", "language"],
+        projected["items"],
+        ["id", "title", "language"],
+    )
+
+
+def print_health(payload):
+    stats = payload.get("stats") or {}
+    print_tsv(
+        ["key", "value"],
+        [
+            ["ok", payload.get("ok")],
+            ["generatedAt", payload.get("generatedAt")],
+            ["pages", stats.get("pages")],
+            ["codes", stats.get("codes")],
+            ["errors", stats.get("errors")],
+        ],
+    )
+
+
+def print_site(payload):
+    site = payload.get("site") or {}
+    stats = payload.get("stats") or {}
+    print_tsv(
+        ["key", "value"],
+        [
+            ["title", site.get("title")],
+            ["author", site.get("author")],
+            ["description", site.get("description")],
+            ["github_repository", site.get("github_repository")],
+            ["pages", stats.get("pages")],
+            ["codes", stats.get("codes")],
+            ["errors", stats.get("errors")],
+            ["generatedAt", payload.get("generatedAt")],
+        ],
+    )
+
+
+def print_tags(payload):
+    items = [
+        *({"type": "article", **item} for item in payload.get("articleTags") or []),
+        *({"type": "code", **item} for item in payload.get("codeTags") or []),
+    ]
+    print_numbered_tsv(["type", "tag", "count"], items, ["type", "tag", "count"])
+
+
+def add_json_argument(parser):
+    parser.add_argument("--json", action="store_true", help="output JSON instead of TSV or raw content")
+
+
+def build_parser():
+    parser = RbookArgumentParser(description="rbook HTTP API client")
     parser.add_argument("--baseurl", help="API base url")
-    parser.add_argument("--pretty", action="store_true", default=True, help="pretty print JSON")
-    parser.add_argument("--compact-json", action="store_true", help="compact JSON output")
 
-    sub = parser.add_subparsers(dest="command", required=True)
+    subparsers = parser.add_subparsers(dest="command", required=True)
 
-    sub.add_parser("health")
-    sub.add_parser("site")
+    add_json_argument(subparsers.add_parser("health"))
+    add_json_argument(subparsers.add_parser("site"))
+    add_json_argument(subparsers.add_parser("catalog"))
 
-    p_catalog = sub.add_parser("catalog")
-    p_catalog.add_argument("--compact", action="store_true")
+    find_parser = subparsers.add_parser("find")
+    find_parser.add_argument("query")
+    find_parser.add_argument("--limit", type=positive_int, default=20)
+    add_json_argument(find_parser)
 
-    p_find = sub.add_parser("find")
-    p_find.add_argument("query")
-    p_find.add_argument("--limit", type=positive_int, default=20)
+    pages_parser = subparsers.add_parser("pages")
+    pages_parser.add_argument("--id")
+    pages_parser.add_argument("--tag")
+    pages_parser.add_argument("--limit", type=positive_int)
+    pages_parser.add_argument("--offset", type=nonnegative_int)
+    add_json_argument(pages_parser)
 
-    p_pages = sub.add_parser("pages")
-    p_pages.add_argument("--id")
-    p_pages.add_argument("--tag")
-    p_pages.add_argument("--limit", type=int)
-    p_pages.add_argument("--offset", type=int)
+    codes_parser = subparsers.add_parser("codes")
+    codes_parser.add_argument("--id")
+    codes_parser.add_argument("--tag")
+    codes_parser.add_argument("--limit", type=positive_int)
+    codes_parser.add_argument("--offset", type=nonnegative_int)
+    add_json_argument(codes_parser)
 
-    p_codes = sub.add_parser("codes")
-    p_codes.add_argument("--id")
-    p_codes.add_argument("--tag")
-    p_codes.add_argument("--content", action="store_true")
-    p_codes.add_argument("--limit", type=int)
-    p_codes.add_argument("--offset", type=int)
+    add_json_argument(subparsers.add_parser("tags"))
+    return parser
 
-    p_code = sub.add_parser("code")
-    p_code.add_argument("id")
-    p_code.add_argument("--content", action="store_true")
 
-    sub.add_parser("tags")
+def validate_detail_arguments(args):
+    if args.command not in {"pages", "codes"} or not args.id:
+        return
+    conflicts = [
+        option
+        for option, value in (
+            ("--tag", args.tag),
+            ("--limit", args.limit),
+            ("--offset", args.offset),
+        )
+        if value is not None
+    ]
+    if conflicts:
+        joined = ", ".join(conflicts)
+        raise RbookClientError(
+            "ARGUMENT_ERROR",
+            f"--id cannot be used with {joined}",
+            exit_status=2,
+        )
 
-    args = parser.parse_args()
+
+def require_text(payload, field):
+    value = payload.get(field)
+    if not isinstance(value, str):
+        raise RbookClientError("INVALID_RESPONSE", f"response field '{field}' is missing or invalid")
+    return value
+
+
+def execute(args):
+    validate_detail_arguments(args)
     baseurl = resolve_baseurl(args.baseurl)
-    pretty = not args.compact_json
 
     if args.command == "health":
-        print_json(request_json(baseurl, "/api/health"), pretty)
+        payload = request_json(baseurl, "/api/health")
+        if args.json:
+            print_json(payload)
+        else:
+            print_health(payload)
     elif args.command == "site":
-        print_json(request_json(baseurl, "/api/site"), pretty)
+        payload = request_json(baseurl, "/api/site")
+        if args.json:
+            print_json(payload)
+        else:
+            print_site(payload)
     elif args.command == "catalog":
-        params = {}
-        if args.compact:
-            params["compact"] = "true"
-        print_json(request_json(baseurl, "/api/catalog", params), pretty)
+        payload = request_json(baseurl, "/api/catalog", {"compact": "true"})
+        print_page_list(payload, args.json)
     elif args.command == "find":
         catalog = request_json(baseurl, "/api/catalog", {"compact": "true"})
-        print_json(find_pages(catalog.get("items") or [], args.query, args.limit), pretty)
+        payload = find_pages(catalog.get("items") or [], args.query, args.limit)
+        print_page_list(payload, args.json)
     elif args.command == "pages":
         params = {}
         if args.id:
@@ -185,30 +378,51 @@ def main():
             params["limit"] = str(args.limit)
         if args.offset is not None:
             params["offset"] = str(args.offset)
-        print_json(request_json(baseurl, "/api/pages", params), pretty)
+        payload = request_json(baseurl, "/api/pages", params)
+        if args.id:
+            if args.json:
+                print_json(page_detail(payload))
+            else:
+                sys.stdout.write(require_text(payload, "markdown"))
+        else:
+            print_page_list(payload, args.json)
     elif args.command == "codes":
         params = {}
         if args.id:
             params["id"] = args.id
+            params["includeContent"] = "true"
         if args.tag:
             params["tag"] = args.tag
-        if args.content:
-            params["includeContent"] = "true"
         if args.limit is not None:
             params["limit"] = str(args.limit)
         if args.offset is not None:
             params["offset"] = str(args.offset)
-        print_json(request_json(baseurl, "/api/codes", params), pretty)
-    elif args.command == "code":
-        params = {"id": args.id}
-        if args.content:
-            params["includeContent"] = "true"
-        print_json(request_json(baseurl, "/api/codes", params), pretty)
+        payload = request_json(baseurl, "/api/codes", params)
+        if args.id:
+            if args.json:
+                print_json(payload)
+            else:
+                sys.stdout.write(require_text(payload, "content"))
+        else:
+            print_code_list(payload, args.json)
     elif args.command == "tags":
-        print_json(request_json(baseurl, "/api/tags"), pretty)
-    else:
-        parser.error(f"unknown command: {args.command}")
+        payload = request_json(baseurl, "/api/tags")
+        if args.json:
+            print_json(payload)
+        else:
+            print_tags(payload)
+
+
+def main(argv=None):
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    try:
+        execute(args)
+        return 0
+    except RbookClientError as error:
+        print_error(error, args.json)
+        return error.exit_status
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

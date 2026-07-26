@@ -9,19 +9,6 @@ export function loadBookConfig() {
   return (yaml.load(fs.readFileSync(configPath, 'utf8')) || {}) as Record<string, unknown>;
 }
 
-function stripHtml(html: string) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
 function buildTocNode(item: any, pagesByPath: Map<string, any>, basePath = '', trail: string[] = []) {
   if (!item || !item.title) return null;
 
@@ -64,8 +51,7 @@ export function buildToc(index: any) {
 export function createPagePayload(page: any) {
   const fullPath = path.join(bookDir, page.path);
   const document = loadPageDocument(page);
-  const renderer = new Markdown(fullPath);
-  const rendered = renderer.toJSON();
+  const markdown = new Markdown(fullPath);
 
   return {
     ...page,
@@ -74,8 +60,6 @@ export function createPagePayload(page: any) {
     frontMatter: document.frontMatter,
     headings: document.headings,
     excerpt: document.excerpt,
-    markdown: rendered.md_content || page.markdown || '',
-    html: rendered.html_content || '',
-    text: document.text || stripHtml(rendered.html_content || '')
+    markdown: markdown.md_content || page.markdown || ''
   };
 }
