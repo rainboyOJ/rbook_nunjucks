@@ -115,15 +115,15 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 ---
 id: "<short-id>"
 title: "<中文标题>"
+description: "<一句话说明文章解决的问题>"
 date: YYYY-MM-DD HH:mm
 toc: true
 tags: ["<算法名>"]
 categories: ["<分类>"]
 code_template:
-  - title: <模板名>
-    desc: "<简短说明>"
-    tags: ["<标签>"]
-    code: /code/<domain>/<file>.cpp
+  - <book/code.yaml 中的模板 ID>
+prerequisites:
+  - <直接前置文章 ID>
 ---
 
 [[TOC]]
@@ -153,7 +153,23 @@ code_template:
 ## 参考
 ```
 
-如果文章没有可复用代码，可以省略 `code_template` 和 `## 代码实现`。
+如果文章没有可复用代码，可以省略 `code_template` 和 `## 代码实现`。如果文章不要求读者先掌握其他章节，可以省略 `prerequisites`。
+
+## 前置关系规范
+
+`prerequisites` 只记录直接前置文章的字符串 ID。例如文章 B 需要先读文章 A：
+
+```yaml
+prerequisites:
+  - article-a
+```
+
+这会生成有向关系 `article-a -> article-b`。数组中的多个条目表示全部都需要掌握，不是任选其一。
+
+- 只记录直接前置，不手工补传递关系。例如 A 是 B 的前置、B 是 C 的前置时，C 不需要再列 A。
+- ID 可以指向已索引但未列入首页目录的文章。
+- ID 必须真实存在，不能引用当前文章自身，所有前置关系不能形成环；这些问题都会使 pre-check 失败。
+- 修改算法教程时应根据实际知识依赖判断是否需要该字段，不要为了让关系图更密而制造关系。
 
 ## 代码放置规则
 
@@ -180,10 +196,7 @@ code_template:
 
 ```yaml
 code_template:
-  - title: 树状数组
-    desc: "单点修改,区间查询"
-    tags: ["树状数组", "区间信息"]
-    code: /code/data-struture/BIT/bit.cpp
+  - fenwick-tree
 ```
 
 ## 目录同步规则
@@ -284,7 +297,8 @@ node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readF
 - 可复用模板代码没有只存在于 Markdown 中。
 - 核心代码、模板代码已经放到 `book/code/`。
 - `@include-code` 引用路径存在。
-- `code_template` 中的路径和真实代码文件一致。
+- `code_template` 中的 ID 已在 `book/code.yaml` 注册。
+- `prerequisites` 只包含真实存在的直接前置文章 ID，且没有自引用或依赖环。
 - `toc: true` 的文章包含 `[[TOC]]`。
 - “应用分类详解”按问题模型分类，而不是只堆题目。
 - 文章风格简洁、准确，和算法电子书一致。

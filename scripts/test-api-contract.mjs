@@ -144,12 +144,23 @@ async function main() {
     assert.ok(catalog.total > 0, 'catalog should contain visible pages');
     assert.equal(catalog.items.length, catalog.total);
     assert.equal(catalog.items.every((item) => Object.hasOwn(item, 'headings') === false), true);
+    assert.equal(catalog.items.every((item) => item.visible === true), true);
+    assert.equal(catalog.items.every((item) => Array.isArray(item.prerequisites)), true);
     const dsuCatalogPage = catalog.items.find((item) => item.id === 'dsu-on-tree');
     assert.ok(dsuCatalogPage, 'catalog should include dsu-on-tree');
     assert.equal(dsuCatalogPage.description, '');
     assertRelativeUrl(dsuCatalogPage.url, 'catalog page URL');
     assertPayloadUrls(catalog);
     assertNoLocalLeak(catalog, 'catalog response');
+
+    const fullCatalogResponse = await app.inject('/api/catalog?includeHidden=true');
+    assertApiResponse(fullCatalogResponse, 200);
+    const fullCatalog = parseJson(fullCatalogResponse);
+    assert.equal(fullCatalog.total, currentIndex.pages.length);
+    assert.ok(fullCatalog.total > catalog.total, 'full catalog should include unlisted pages');
+    assert.ok(fullCatalog.items.some((item) => item.visible === false));
+    const jumpLcaCatalogPage = fullCatalog.items.find((item) => item.id === 'jump-lca');
+    assert.deepEqual(jumpLcaCatalogPage?.prerequisites, ['binary-jump', 'dfs-order']);
 
     const pageResponse = await app.inject('/api/pages?id=dsu-on-tree');
     assertApiResponse(pageResponse, 200);

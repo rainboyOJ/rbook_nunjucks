@@ -71,7 +71,7 @@ curl -G --data-urlencode "tag=树上算法,图论" "$BASE_URL/api/pages"
 | `GET` | `/api/help` | API HTML 文档或 Markdown 原文 |
 | `GET` | `/api/health` | 服务状态和索引统计 |
 | `GET` | `/api/site` | 站点元信息 |
-| `GET` | `/api/catalog` | 可见文章目录 |
+| `GET` | `/api/catalog` | 文章目录；默认仅返回可见文章 |
 | `GET` | `/api/pages` | 文章详情、筛选和分页 |
 | `GET` | `/api/codes` | 代码模板详情、筛选和分页 |
 | `GET` | `/api/tags` | 文章与代码标签统计 |
@@ -155,7 +155,13 @@ curl "$BASE_URL/api/site"
 
 ### `GET /api/catalog`
 
-目录只包含 `visible !== false` 的文章。默认响应还包含 `headings`、`navTrail`、`codeTemplates`、`visible` 和 `source`。
+默认只返回 `visible !== false` 的目录文章。传入 `includeHidden=true` 时返回全部已索引文章，包括未列入首页目录的文章：
+
+```bash
+curl "$BASE_URL/api/catalog?includeHidden=true"
+```
+
+每个条目都包含 `prerequisites` 和 `visible`。`prerequisites` 是直接前置文章的 ID 数组；文章 B 声明 `prerequisites: [article-a]` 表示关系 `article-a -> B`。默认响应还包含 `headings`、`navTrail`、`codeTemplates` 和 `source`。
 
 使用 `compact=true` 只返回适合快速浏览的字段：
 
@@ -173,8 +179,10 @@ curl "$BASE_URL/api/catalog?compact=true"
       "title": "树上启发式合并",
       "description": "...",
       "tags": ["树上算法", "启发式合并", "DSU on tree"],
+      "prerequisites": [],
       "path": "algorithm/dsu_on_tree/index.md",
-      "url": "/algorithm/dsu_on_tree/index.html"
+      "url": "/algorithm/dsu_on_tree/index.html",
+      "visible": true
     }
   ]
 }

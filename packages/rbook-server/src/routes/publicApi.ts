@@ -47,8 +47,10 @@ function compactPage(page: any) {
     title: page.title,
     description: pageDescription(page),
     tags: asStringArray(page.frontMatter?.tags),
+    prerequisites: asStringArray(page.frontMatter?.prerequisites),
     path: page.path,
-    url: page.url
+    url: page.url,
+    visible: page.visible !== false
   };
 }
 
@@ -132,7 +134,10 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
     const index = getIndexPayload();
     const query = getQuery(request);
     const compact = query.compact === 'true';
-    const pages = (index.pages || []).filter((page: any) => page.visible !== false);
+    const includeHidden = query.includeHidden === 'true';
+    const pages = includeHidden
+      ? (index.pages || [])
+      : (index.pages || []).filter((page: any) => page.visible !== false);
     const items = compact
       ? pages.map(compactPage)
       : pages.map((page: any) => ({
@@ -140,7 +145,6 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
           headings: page.headings || [],
           navTrail: page.navTrail || [],
           codeTemplates: asStringArray(page.frontMatter?.code_template),
-          visible: page.visible,
           source: page.source
         }));
 

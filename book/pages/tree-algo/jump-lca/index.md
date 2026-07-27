@@ -7,6 +7,7 @@ toc: true
 tags: ["LCA", "倍增", "树上算法"]
 categories: ["树上算法"]
 code_template: [lca-binary-lifting]
+prerequisites: [binary-jump, dfs-order]
 ---
 
 [[TOC]]

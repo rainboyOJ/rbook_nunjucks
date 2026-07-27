@@ -33,7 +33,7 @@ compatibility: 需要 Python 3、可访问 rbook HTTP 服务；客户端只使�
 | `/api/health` | 服务和索引状态 | 无 |
 | `/api/help` | API 文档；`format=md` 返回 Markdown | `format=md` |
 | `/api/site` | 站点信息和统计 | 无 |
-| `/api/catalog` | 可见文章目录 | `compact=true` |
+| `/api/catalog` | 文章目录，默认仅可见文章 | `compact=true`、`includeHidden=true` |
 | `/api/pages` | 文章列表或单篇详情 | `id`、`tag`、`limit`、`offset` |
 | `/api/codes` | 模板列表或单个模板详情 | `id`、`tag`、`limit`、`offset`、`includeContent=true` |
 | `/api/tags` | 文章/代码标签计数 | 无 |
@@ -83,6 +83,8 @@ python3 scripts/rbook.py find "kmp 字符串" --json
 ```
 
 `catalog` 默认列为 `#`、`id`、`title`、`description`、`tags`。`find` 先读取 compact catalog，再在 ID、标题、description 和 tags 上做多关键词 AND 匹配；它不搜索文章正文。列表中的 tags 在 TSV/table 中以英文逗号连接，在 JSON 中保持字符串数组。
+
+`/api/catalog` 的每个条目都包含 `visible` 和 `prerequisites`。默认请求只返回 `visible=true` 的目录文章；需要分析全部索引文章或前置关系图时直接请求 `/api/catalog?includeHidden=true`。在文章 B 中声明 `prerequisites: [article-a]` 表示 `article-a -> B`，即 A 是 B 的直接前置；不要反向解释，也不要自行推断传递边。
 
 ### 文章详情
 

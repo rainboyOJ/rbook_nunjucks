@@ -111,6 +111,10 @@ export function copyStaticAssets() {
   copyIfExists(publicDir, distDir);
   copyIfExists(path.join(appDir, 'theme/assets'), path.join(distDir, 'assets'));
   copyIfExists(
+    path.resolve(appDir, '../node_modules/d3/dist/d3.min.js'),
+    path.join(distDir, 'assets/vendor/d3.min.js')
+  );
+  copyIfExists(
     path.join(appDir, 'widgets/animate_single_html'),
     path.join(distDir, 'animate_single_html')
   );

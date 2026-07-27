@@ -10,7 +10,7 @@
 ---
 
 ## 1. GET /api/catalog
-返回文章目录与基本结构。支持使用 `?compact=true` 返回极简数据，优化 Token 消耗。
+返回文章目录与基本结构。默认只返回目录可见文章；`?includeHidden=true` 返回全部已索引文章。支持使用 `?compact=true` 返回极简数据，优化 Token 消耗。
 
 **请求示例**：
 ```bash
@@ -27,8 +27,10 @@ curl "$BASE_URL/api/catalog?compact=true"
     title: string;            // 文章标题
     description: string;      // 描述或摘要
     tags: string[];           // 标签列表
+    prerequisites: string[];  // 直接前置文章 ID；A 出现在 B 中表示 A -> B
     path: string;             // Markdown 文件路径
     url: string;              // HTML 页面相对链接
+    visible: boolean;         // 是否列入首页目录
     // compact=false 时包含：
     headings?: string[];
     navTrail?: string[];
@@ -62,10 +64,8 @@ curl -G --data-urlencode "tag=图论,最短路" "$BASE_URL/api/pages"
   categories: string[];
   frontMatter: Record<string, unknown>;
   headings: string[];
-  excerpt: string;
-  markdown: string;         // 原始 Markdown 正文
-  html: string;             // 渲染后的 HTML
-  text: string;             // 整篇文章的纯文本形式
+  navTrail: string[];
+  markdown: string;         // 保留 frontmatter、展开 include 的完整 Markdown
 }
 ```
 

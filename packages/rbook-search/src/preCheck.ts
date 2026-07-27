@@ -163,9 +163,14 @@ export function validatePageDocument(
   const otherPages = allPages.filter((item) => item.path !== page.path);
   const pageIssues = validatePages([...otherPages, page])
     .filter((issue) => issue.filePath === page.path);
+  const referenceIssues = validateReferences(
+    [page],
+    codes,
+    [...otherPages, page]
+  ).filter((issue) => issue.filePath === page.path);
   return [
     ...pageIssues,
-    ...validateReferences([page], codes)
+    ...referenceIssues
   ];
 }
 

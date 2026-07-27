@@ -33,6 +33,11 @@ npx sass --load-path=packages/rbook-markdown/src/markdown-it/assets "$APP_DIR/ma
 # 使用 find 命令查找所有图片文件并复制到 dist 目录，保持目录结构
 python3 build_all_dot_file.py "$CONTENT_DIR/pages" || echo "Warning: dot file build failed; continuing"
 mkdir -p "$APP_DIR/dist"
+
+# 关系图使用本地 D3，部署产物不依赖 CDN。
+mkdir -p "$APP_DIR/dist/assets/vendor"
+cp "$REPO_ROOT/node_modules/d3/dist/d3.min.js" "$APP_DIR/dist/assets/vendor/d3.min.js"
+
 find "$CONTENT_DIR/pages/" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.svg" -o -iname "*.ico" -o -iname "*.webp" \) | while read file; do
   # 计算相对于 pages/ 目录的路径
   relative_path=${file#"$CONTENT_DIR/pages/"}

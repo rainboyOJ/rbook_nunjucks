@@ -400,7 +400,78 @@ export function validatePages(pages: any[]): ValidationError[] {
   return errors;
 }
 
-export function validateReferences(pages: any[], codes: CodeTemplateItem[]): ValidationError[] {
+function validPageIds(pages: any[]) {
+  const pagesById = new Map<string, any>();
+  for (const page of pages) {
+    const result = parsePublicId(pageIdValue(page));
+    if (result.ok && !pagesById.has(result.id)) {
+      pagesById.set(result.id, page);
+    }
+  }
+  return pagesById;
+}
+
+function prerequisiteCycles(pagesById: Map<string, any>) {
+  const graph = new Map<string, string[]>();
+  for (const [id, page] of pagesById) {
+    const value = page?.frontMatter?.prerequisites;
+    const refs = Array.isArray(value)
+      ? value.filter((item): item is string => (
+          typeof item === 'string'
+          && item !== id
+          && pagesById.has(item)
+        ))
+      : [];
+    graph.set(id, refs);
+  }
+
+  let nextIndex = 0;
+  const indices = new Map<string, number>();
+  const lowLinks = new Map<string, number>();
+  const stack: string[] = [];
+  const onStack = new Set<string>();
+  const cycles: string[][] = [];
+
+  const visit = (id: string) => {
+    indices.set(id, nextIndex);
+    lowLinks.set(id, nextIndex);
+    nextIndex += 1;
+    stack.push(id);
+    onStack.add(id);
+
+    for (const prerequisite of graph.get(id) || []) {
+      if (!indices.has(prerequisite)) {
+        visit(prerequisite);
+        lowLinks.set(id, Math.min(lowLinks.get(id)!, lowLinks.get(prerequisite)!));
+      } else if (onStack.has(prerequisite)) {
+        lowLinks.set(id, Math.min(lowLinks.get(id)!, indices.get(prerequisite)!));
+      }
+    }
+
+    if (lowLinks.get(id) !== indices.get(id)) return;
+    const component: string[] = [];
+    while (stack.length > 0) {
+      const member = stack.pop()!;
+      onStack.delete(member);
+      component.push(member);
+      if (member === id) break;
+    }
+    if (component.length > 1) {
+      cycles.push(component.sort((a, b) => a.localeCompare(b)));
+    }
+  };
+
+  for (const id of graph.keys()) {
+    if (!indices.has(id)) visit(id);
+  }
+  return cycles;
+}
+
+export function validateReferences(
+  pages: any[],
+  codes: CodeTemplateItem[],
+  allPages: any[] = pages
+): ValidationError[] {
   const errors: ValidationError[] = [];
   const validCodeIds = new Set(
     codes
@@ -413,6 +484,7 @@ export function validateReferences(pages: any[], codes: CodeTemplateItem[]): Val
       .filter((code) => typeof code?.id === 'string')
       .map((code) => [code.id, code])
   );
+  const pagesById = validPageIds(allPages);
 
   for (const page of pages) {
     const filePath = page.path || 'unknown';
@@ -426,25 +498,62 @@ export function validateReferences(pages: any[], codes: CodeTemplateItem[]): Val
           filePath,
           message: `'code_template' field must be an array of code IDs`
         });
-        continue;
-      }
+      } else {
+        for (const refId of codeTemplates) {
+          if (typeof refId !== 'string') {
+            errors.push({
+              level: 'ERROR',
+              filePath,
+              message: `'code_template' item must be a string ID, got ${typeof refId}`
+            });
+            continue;
+          }
 
-      for (const refId of codeTemplates) {
-        if (typeof refId !== 'string') {
-          errors.push({
-            level: 'ERROR',
-            filePath,
-            message: `'code_template' item must be a string ID, got ${typeof refId}`
-          });
-          continue;
+          if (!validCodeIds.has(refId)) {
+            errors.push({
+              level: 'ERROR',
+              filePath,
+              message: `referenced code_template ID '${refId}' is not registered in book/code.yaml`
+            });
+          }
         }
+      }
+    }
 
-        if (!validCodeIds.has(refId)) {
-          errors.push({
-            level: 'ERROR',
-            filePath,
-            message: `referenced code_template ID '${refId}' is not registered in book/code.yaml`
-          });
+    const prerequisites = fm.prerequisites;
+    if (prerequisites !== undefined && prerequisites !== null) {
+      if (!Array.isArray(prerequisites)) {
+        errors.push({
+          level: 'ERROR',
+          filePath,
+          message: `'prerequisites' field must be an array of article IDs`
+        });
+      } else {
+        const ownId = parsePublicId(pageIdValue(page));
+        for (const refId of prerequisites) {
+          if (typeof refId !== 'string') {
+            errors.push({
+              level: 'ERROR',
+              filePath,
+              message: `'prerequisites' item must be a string ID, got ${typeof refId}`
+            });
+            continue;
+          }
+          if (ownId.ok && refId === ownId.id) {
+            errors.push({
+              level: 'ERROR',
+              filePath,
+              message: `article '${ownId.id}' cannot list itself as a prerequisite`
+            });
+            continue;
+          }
+          if (!pagesById.has(refId)) {
+            errors.push({
+              level: 'ERROR',
+              filePath,
+              message: `referenced prerequisite article ID '${refId}' does not exist`
+            });
+          }
         }
       }
     }
@@ -465,6 +574,18 @@ export function validateReferences(pages: any[], codes: CodeTemplateItem[]): Val
           message: `@include-code '${match[1]}' failed: ${match[2]}`
         });
       }
+    }
+  }
+
+  for (const cycle of prerequisiteCycles(pagesById)) {
+    const message = `prerequisite cycle detected among article IDs: ${cycle.map((id) => `'${id}'`).join(', ')}`;
+    for (const id of cycle) {
+      const page = pagesById.get(id);
+      errors.push({
+        level: 'ERROR',
+        filePath: page?.path || 'unknown',
+        message
+      });
     }
   }
 

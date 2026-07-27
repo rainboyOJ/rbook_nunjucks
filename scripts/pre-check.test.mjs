@@ -4,7 +4,10 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { validateCodeDirectory } from '../packages/rbook-core/dist/validation.js';
-import { evaluatePreCheck } from '../packages/rbook-search/dist/preCheck.js';
+import {
+  evaluatePreCheck,
+  validatePageDocument
+} from '../packages/rbook-search/dist/preCheck.js';
 
 function codeDirectory(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'rbook-code-inventory-'));
@@ -67,6 +70,49 @@ test('duplicate IDs and unknown code references are errors', () => {
   ], []);
   assert.equal(referenceResult.ok, false);
   assert.ok(referenceResult.errors.some((item) => item.message.includes("'missing-code' is not registered")));
+});
+
+test('valid prerequisites resolve against article IDs', () => {
+  const result = evaluatePreCheck([
+    page('foundation'),
+    page('dependent', 'dependent.md', { prerequisites: ['foundation'] })
+  ], []);
+  assert.equal(result.ok, true);
+});
+
+test('prerequisites require a string ID array and existing articles', () => {
+  const result = evaluatePreCheck([
+    page('bad-shape', 'bad-shape.md', { prerequisites: 'foundation' }),
+    page('bad-items', 'bad-items.md', { prerequisites: [123, 'missing'] })
+  ], []);
+  const messages = result.errors.map((item) => item.message);
+  assert.ok(messages.some((message) => message.includes("'prerequisites' field must be an array")));
+  assert.ok(messages.some((message) => message.includes("item must be a string ID, got number")));
+  assert.ok(messages.some((message) => message.includes("'missing' does not exist")));
+});
+
+test('prerequisites reject self references and dependency cycles', () => {
+  const result = evaluatePreCheck([
+    page('self', 'self.md', { prerequisites: ['self'] }),
+    page('cycle-a', 'cycle-a.md', { prerequisites: ['cycle-b'] }),
+    page('cycle-b', 'cycle-b.md', { prerequisites: ['cycle-a'] })
+  ], []);
+  assert.ok(result.errors.some((item) => item.message.includes("'self' cannot list itself")));
+  const cycleIssues = result.errors.filter((item) => item.message.includes('prerequisite cycle detected'));
+  assert.deepEqual(cycleIssues.map((item) => item.filePath).sort(), ['cycle-a.md', 'cycle-b.md']);
+});
+
+test('single-page validation resolves prerequisites and cycles against the loaded catalog', () => {
+  const changed = page('cycle-a', 'cycle-a.md', { prerequisites: ['cycle-b'] });
+  const allPages = [
+    page('cycle-a', 'cycle-a.md'),
+    page('cycle-b', 'cycle-b.md', { prerequisites: ['cycle-a'] })
+  ];
+  const issues = validatePageDocument(changed, allPages, []);
+  assert.ok(issues.some((item) => (
+    item.filePath === 'cycle-a.md'
+      && item.message.includes('prerequisite cycle detected')
+  )));
 });
 
 test('include-code paths are checked, including legacy fenced placeholders', () => {

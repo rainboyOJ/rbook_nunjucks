@@ -6,8 +6,8 @@
     <meta name="color-scheme" content="dark">
     <title>rbook: 文章探索</title>
     <style>
-      :root{color-scheme:dark;--bg:#101418;--panel:#171d23;--raised:#1e262e;--border:#34414d;--text:#e7edf2;--muted:#98a6b3;--accent:#ffc857;--accent-strong:#ffe08a;--link:#79c7ff;--danger:#ff8e8e;--ok:#8de0a6}
-      *{box-sizing:border-box}body{background:var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;min-width:320px}button,input,select{font:inherit}.shell{margin:auto;max-width:1280px;padding:2rem 1.25rem 4rem}.topbar{align-items:center;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;padding-bottom:.8rem}.topbar a{color:var(--muted);padding:.35rem .55rem;text-decoration:none}.topbar a:hover,.topbar a[aria-current="page"]{color:var(--accent-strong)}h1{color:var(--accent-strong);font-size:2.2rem;margin:0}.lead{color:var(--muted);margin:.35rem 0 1.4rem}.filters{background:var(--panel);border:1px solid var(--border);display:grid;gap:.75rem;grid-template-columns:minmax(13rem,2fr) repeat(3,minmax(9rem,1fr));padding:1rem}.field{display:grid;gap:.3rem}.field label{color:var(--muted);font-size:.8rem}.field input,.field select{background:var(--raised);border:1px solid var(--border);color:var(--text);min-height:2.5rem;padding:.45rem .6rem;width:100%}.field input:focus,.field select:focus,.button:focus-visible{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:1px}.status{color:var(--muted);min-height:2rem;padding:.85rem 0}.status.error{color:var(--danger)}.result{display:grid;gap:.75rem;list-style:none;margin:0;padding:0}.article{background:var(--panel);border:1px solid var(--border);display:grid;gap:.7rem;padding:1rem}.article:hover{border-color:var(--accent)}.article-head{align-items:start;display:flex;gap:.75rem}.article-number{color:var(--accent);font-variant-numeric:tabular-nums;min-width:2.3rem}.article-title{color:var(--text);font-size:1.12rem;font-weight:700;overflow-wrap:anywhere}.article-id{color:var(--muted);font: .82rem ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}.description{color:var(--muted);margin:0;white-space:pre-wrap}.meta{display:flex;flex-wrap:wrap;gap:.4rem}.badge{border:1px solid var(--border);color:var(--accent-strong);font-size:.78rem;padding:.16rem .42rem}.crumb{color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:.5rem}.button{background:transparent;border:1px solid var(--accent);color:var(--accent-strong);cursor:pointer;display:inline-block;padding:.4rem .65rem;text-decoration:none}.button:hover{background:var(--accent);color:#17120a}.empty{border:1px dashed var(--border);color:var(--muted);padding:2rem;text-align:center}.empty .button{margin-top:.8rem}.footer-note{color:var(--muted);font-size:.8rem;margin-top:1.4rem}@media(max-width:850px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.field:first-child{grid-column:1/-1}}@media(max-width:560px){.shell{padding:1.25rem .85rem 3rem}.filters{grid-template-columns:1fr}.field:first-child{grid-column:auto}.article-head{gap:.45rem}.article-number{min-width:2rem}}
+      :root{color-scheme:dark;--bg:#101418;--panel:#171d23;--raised:#1e262e;--border:#34414d;--text:#e7edf2;--muted:#98a6b3;--accent:#ffc857;--accent-strong:#ffe08a;--link:#79c7ff;--danger:#ff8e8e}
+      *{box-sizing:border-box}body{background:var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;min-width:320px}button,input,select{font:inherit}.shell{margin:auto;max-width:1440px;padding:2rem 1.25rem 4rem}.topbar{align-items:center;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;padding-bottom:.8rem}.topbar a{color:var(--muted);padding:.35rem .55rem;text-decoration:none}.topbar a:hover,.topbar a[aria-current="page"]{color:var(--accent-strong)}h1{color:var(--accent-strong);font-size:2.2rem;margin:0 0 1.2rem}.filters{align-items:end;background:var(--panel);border:1px solid var(--border);display:grid;gap:.75rem;grid-template-columns:minmax(14rem,2fr) minmax(10rem,1fr) minmax(9rem,1fr) auto;padding:.85rem}.field{display:grid;gap:.25rem}.field label,.toggle{color:var(--muted);font-size:.8rem}.field input,.field select{background:var(--raised);border:1px solid var(--border);color:var(--text);height:2.35rem;padding:.4rem .55rem;width:100%}.field input:focus,.field select:focus,.sort-button:focus-visible,.icon-link:focus-visible,.clear:focus-visible{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:1px}.toggle{align-items:center;border:1px solid var(--border);display:flex;gap:.5rem;height:2.35rem;padding:0 .7rem;white-space:nowrap}.toggle input{accent-color:var(--accent);height:1rem;margin:0;width:1rem}.status{color:var(--muted);min-height:2rem;padding:.7rem 0}.status.error{color:var(--danger)}.table-wrap{border:1px solid var(--border);max-height:calc(100vh - 17rem);min-height:16rem;overflow:auto}.article-table{border-collapse:collapse;table-layout:fixed;width:100%}.article-table th{background:#202830;border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;font-weight:600;padding:.48rem .55rem;position:sticky;text-align:left;top:0;z-index:2}.article-table td{border-bottom:1px solid #29343e;height:3.45rem;padding:.38rem .55rem;vertical-align:middle}.article-table tbody tr:hover{background:#1b2229}.article-table tbody tr:last-child td{border-bottom:0}.col-number{font-variant-numeric:tabular-nums;text-align:right;width:3.4rem}.col-title{width:25%}.col-description{width:35%}.col-tags{width:22%}.col-count{text-align:center;width:5.5rem}.col-action{text-align:center;width:4.25rem}.sort-button{align-items:center;background:none;border:0;color:inherit;cursor:pointer;display:inline-flex;gap:.3rem;padding:0;text-align:left}.sort-button:hover{color:var(--accent-strong)}.sort-indicator{color:var(--accent);display:inline-block;min-width:.75rem}.article-link{color:var(--text);display:block;font-size:.93rem;font-weight:650;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.article-link:hover{color:var(--accent-strong);text-decoration:underline}.article-id{color:var(--muted);display:inline-block;font:.74rem ui-monospace,SFMono-Regular,Menlo,monospace;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;white-space:nowrap}.hidden-mark{border-left:1px solid var(--border);color:var(--accent);font-size:.7rem;margin-left:.4rem;padding-left:.4rem}.description{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tags{display:flex;gap:.3rem;min-width:0;overflow:hidden}.badge{border:1px solid var(--border);color:var(--accent-strong);font-size:.7rem;max-width:8rem;overflow:hidden;padding:.1rem .32rem;text-overflow:ellipsis;white-space:nowrap}.more-tags{color:var(--muted);font-size:.72rem;white-space:nowrap}.mobile-more{display:none}.template-count{color:var(--muted);font-variant-numeric:tabular-nums}.icon-link{align-items:center;border:1px solid transparent;color:var(--link);display:inline-flex;font-size:1.1rem;height:2rem;justify-content:center;text-decoration:none;width:2rem}.icon-link:hover{border-color:var(--link);background:var(--raised)}.empty{color:var(--muted);padding:3rem 1rem;text-align:center}.clear{background:transparent;border:1px solid var(--accent);color:var(--accent-strong);cursor:pointer;margin-left:.75rem;padding:.35rem .6rem}.clear:hover{background:var(--accent);color:#17120a}@media(max-width:840px){.filters{grid-template-columns:1fr 1fr}.field:first-child{grid-column:1/-1}.toggle{justify-content:center}}@media(max-width:639px){.shell{padding:1.2rem .7rem 3rem}h1{font-size:1.65rem;margin-bottom:.9rem}.filters{grid-template-columns:1fr}.field:first-child{grid-column:auto}.table-wrap{max-height:calc(100vh - 21rem)}.article-table{min-width:0}.col-number,.col-description,.col-count{display:none}.col-title{width:52%}.col-tags{width:36%}.col-action{width:3.5rem}.article-table th,.article-table td{padding:.35rem .4rem}.article-table td{height:3.7rem}.badge{max-width:5.3rem}.tags .badge:nth-of-type(n+3),.desktop-more{display:none}.mobile-more{display:inline}.hidden-mark{display:block;border:0;margin:0;padding:0}}
     </style>
   </head>
   <body>
@@ -16,119 +16,135 @@
         <a href="/">首页</a><a href="/explore" aria-current="page">文章探索</a><a href="/code_template">代码模板</a><a href="/tags">标签</a><a href="/relations">关系</a><a href="/practice">学习队列</a>
       </nav>
       <h1>文章探索</h1>
-      <p class="lead">按文章元数据查找内容。这里搜索 ID、标题、显式描述、标签和目录路径，不搜索正文。</p>
       <section class="filters" aria-label="文章筛选">
-        <div class="field"><label for="query">搜索元数据</label><input id="query" type="search" autocomplete="off" placeholder="例如：二分 树" /></div>
+        <div class="field"><label for="query">搜索元数据</label><input id="query" type="search" autocomplete="off" placeholder="ID、标题、描述、标签或路径"></div>
         <div class="field"><label for="tag">标签</label><select id="tag"><option value="">全部标签</option></select></div>
         <div class="field"><label for="has-code">代码模板</label><select id="has-code"><option value="">全部文章</option><option value="yes">有模板</option><option value="no">无模板</option></select></div>
-        <div class="field"><label for="sort">排序</label><select id="sort"><option value="catalog">目录顺序</option><option value="title">标题</option><option value="id">ID</option></select></div>
+        <label class="toggle" for="include-hidden"><input id="include-hidden" type="checkbox">包含未列入目录</label>
       </section>
       <div id="status" class="status" role="status" aria-live="polite">正在加载文章目录...</div>
-      <ol id="result" class="result" aria-live="polite"></ol>
-      <p class="footer-note">描述为空的文章会明确显示“未填写描述”，不会自动使用正文摘要。</p>
+      <div class="table-wrap">
+        <table class="article-table">
+          <thead><tr><th class="col-number" scope="col">#</th><th class="col-title" scope="col"><button class="sort-button" data-sort-key="title" type="button">标题 <span class="sort-indicator" aria-hidden="true"></span></button><span aria-hidden="true"> / </span><button class="sort-button" data-sort-key="id" type="button">ID <span class="sort-indicator" aria-hidden="true"></span></button></th><th class="col-description" scope="col">描述</th><th class="col-tags" scope="col">标签</th><th class="col-count" scope="col"><button class="sort-button" data-sort-key="templates" type="button">模板数 <span class="sort-indicator" aria-hidden="true"></span></button></th><th class="col-action" scope="col">操作</th></tr></thead>
+          <tbody id="result"></tbody>
+        </table>
+      </div>
     </main>
     <script>
       (() => {
-        const state = { items: [], loading: true, error: null };
+        const params = new URLSearchParams(location.search);
+        const state = { items: [], loading: true, error: null, sortKey: params.get('sort') || '', sortDirection: params.get('direction') === 'desc' ? 'desc' : 'asc' };
         const query = document.querySelector('#query');
         const tag = document.querySelector('#tag');
         const hasCode = document.querySelector('#has-code');
-        const sort = document.querySelector('#sort');
+        const includeHidden = document.querySelector('#include-hidden');
         const status = document.querySelector('#status');
         const result = document.querySelector('#result');
-        const params = new URLSearchParams(location.search);
         query.value = params.get('q') || '';
         tag.value = params.get('tag') || '';
         hasCode.value = params.get('code') || '';
-        sort.value = params.get('sort') || 'catalog';
+        includeHidden.checked = params.get('hidden') === '1';
 
-        function text(parent, value, className) {
-          const node = document.createElement('span');
-          if (className) node.className = className;
-          node.textContent = value == null ? '' : String(value);
-          parent.append(node);
-          return node;
-        }
+        function cell(row, className) { const node = document.createElement('td'); node.className = className; row.append(node); return node; }
         function normalize(value) { return String(value || '').toLocaleLowerCase(); }
+        function templateCount(item) { return Array.isArray(item.codeTemplates) ? item.codeTemplates.length : 0; }
+        function eligibleItems() { return state.items.filter((item) => includeHidden.checked || item.visible !== false); }
         function setUrl() {
           const next = new URLSearchParams();
           if (query.value.trim()) next.set('q', query.value.trim());
           if (tag.value) next.set('tag', tag.value);
           if (hasCode.value) next.set('code', hasCode.value);
-          if (sort.value !== 'catalog') next.set('sort', sort.value);
+          if (includeHidden.checked) next.set('hidden', '1');
+          if (state.sortKey) { next.set('sort', state.sortKey); next.set('direction', state.sortDirection); }
           history.replaceState(null, '', `${location.pathname}${next.toString() ? `?${next}` : ''}`);
         }
-        function searchable(item) {
-          return [item.id, item.title, item.description, item.path, ...(item.tags || []), ...(item.navTrail || [])].map(normalize).join(' ');
-        }
+        function searchable(item) { return [item.id, item.title, item.description, item.path, ...(item.tags || []), ...(item.navTrail || [])].map(normalize).join(' '); }
         function filtered() {
           const words = normalize(query.value).split(/\s+/).filter(Boolean);
-          const items = state.items.filter((item) => {
+          const items = eligibleItems().filter((item) => {
             if (tag.value && !(item.tags || []).includes(tag.value)) return false;
-            const hasTemplates = Array.isArray(item.codeTemplates) && item.codeTemplates.length > 0;
+            const hasTemplates = templateCount(item) > 0;
             if (hasCode.value === 'yes' && !hasTemplates) return false;
             if (hasCode.value === 'no' && hasTemplates) return false;
             const haystack = searchable(item);
             return words.every((word) => haystack.includes(word));
           });
+          if (!state.sortKey) return items;
+          const direction = state.sortDirection === 'desc' ? -1 : 1;
           return items.sort((a, b) => {
-            if (sort.value === 'title') return normalize(a.title).localeCompare(normalize(b.title), 'zh-CN');
-            if (sort.value === 'id') return normalize(a.id).localeCompare(normalize(b.id));
-            return state.items.indexOf(a) - state.items.indexOf(b);
+            if (state.sortKey === 'templates') return direction * (templateCount(a) - templateCount(b) || normalize(a.id).localeCompare(normalize(b.id)));
+            return direction * (normalize(a[state.sortKey]).localeCompare(normalize(b[state.sortKey]), 'zh-CN') || normalize(a.id).localeCompare(normalize(b.id)));
           });
         }
         function renderTags() {
           const selected = tag.value;
           tag.replaceChildren(new Option('全部标签', ''));
-          const tags = new Set(state.items.flatMap((item) => Array.isArray(item.tags) ? item.tags : []));
+          const tags = new Set(eligibleItems().flatMap((item) => Array.isArray(item.tags) ? item.tags : []));
           [...tags].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach((value) => tag.append(new Option(value, value)));
-          tag.value = selected;
+          tag.value = [...tag.options].some((option) => option.value === selected) ? selected : '';
+        }
+        function updateSortHeaders() {
+          document.querySelectorAll('.sort-button').forEach((button) => {
+            const active = button.dataset.sortKey === state.sortKey;
+            button.setAttribute('aria-pressed', String(active));
+            button.querySelector('.sort-indicator').textContent = active ? (state.sortDirection === 'asc' ? '↑' : '↓') : '↕';
+          });
         }
         function clearFilters() {
-          query.value = ''; tag.value = ''; hasCode.value = ''; sort.value = 'catalog'; setUrl(); render();
+          query.value = ''; tag.value = ''; hasCode.value = ''; includeHidden.checked = false; state.sortKey = ''; state.sortDirection = 'asc'; renderTags(); render();
+        }
+        function renderRow(item, index) {
+          const row = document.createElement('tr');
+          cell(row, 'col-number').textContent = String(index + 1);
+          const titleCell = cell(row, 'col-title');
+          const link = document.createElement('a'); link.className = 'article-link'; link.href = item.url || '#'; link.textContent = item.title || item.id || '未命名文章'; link.title = item.path || item.id || ''; titleCell.append(link);
+          const id = document.createElement('span'); id.className = 'article-id'; id.textContent = item.id || ''; titleCell.append(id);
+          if (item.visible === false) { const mark = document.createElement('span'); mark.className = 'hidden-mark'; mark.textContent = '未列入目录'; titleCell.append(mark); }
+          const description = cell(row, 'col-description'); description.className += ' description'; description.textContent = item.description || '未填写描述'; description.title = item.description || '未填写描述';
+          const tagsCell = cell(row, 'col-tags'); const tags = document.createElement('div'); tags.className = 'tags'; const values = Array.isArray(item.tags) ? item.tags : [];
+          values.slice(0, 3).forEach((value) => { const badge = document.createElement('span'); badge.className = 'badge'; badge.textContent = value; badge.title = value; tags.append(badge); });
+          if (values.length > 3) { const more = document.createElement('span'); more.className = 'more-tags desktop-more'; more.textContent = `+${values.length - 3}`; more.title = values.slice(3).join('、'); tags.append(more); }
+          if (values.length > 2) { const more = document.createElement('span'); more.className = 'more-tags mobile-more'; more.textContent = `+${values.length - 2}`; more.title = values.slice(2).join('、'); tags.append(more); }
+          tagsCell.append(tags);
+          const count = cell(row, 'col-count'); count.className += ' template-count'; count.textContent = String(templateCount(item));
+          const action = cell(row, 'col-action'); const inspect = document.createElement('a'); inspect.className = 'icon-link'; inspect.href = `/article_inspector?id=${encodeURIComponent(item.id || '')}`; inspect.textContent = 'ⓘ'; inspect.setAttribute('aria-label', `检查文章 ${item.title || item.id || ''}`); inspect.title = '检查文章'; action.append(inspect);
+          result.append(row);
         }
         function render() {
-          setUrl();
+          setUrl(); updateSortHeaders();
           if (state.loading) { status.textContent = '正在加载文章目录...'; return; }
           if (state.error) { status.textContent = `加载失败：${state.error}`; status.className = 'status error'; return; }
           status.className = 'status';
-          const items = filtered();
-          status.textContent = `显示 ${items.length} / ${state.items.length} 篇文章`;
+          const available = eligibleItems(); const items = filtered();
+          status.textContent = `显示 ${items.length} / ${available.length} 篇文章`;
           result.replaceChildren();
           if (!items.length) {
-            const empty = document.createElement('li'); empty.className = 'empty'; empty.textContent = '没有匹配的文章';
-            const clear = document.createElement('button'); clear.className = 'button'; clear.type = 'button'; clear.textContent = '清除筛选'; clear.addEventListener('click', clearFilters); empty.append(clear); result.append(empty); return;
+            const row = document.createElement('tr'); const empty = document.createElement('td'); empty.className = 'empty'; empty.colSpan = 6; empty.textContent = '没有匹配的文章'; const clear = document.createElement('button'); clear.className = 'clear'; clear.type = 'button'; clear.textContent = '清除筛选'; clear.addEventListener('click', clearFilters); empty.append(clear); row.append(empty); result.append(row); return;
           }
-          items.forEach((item, index) => {
-            const card = document.createElement('li'); card.className = 'article';
-            const head = document.createElement('div'); head.className = 'article-head'; text(head, String(index + 1).padStart(3, '0'), 'article-number'); text(head, item.title || item.id || '未命名文章', 'article-title'); card.append(head);
-            text(card, item.id || '', 'article-id');
-            const desc = document.createElement('p'); desc.className = 'description'; desc.textContent = item.description || '未填写描述'; card.append(desc);
-            const meta = document.createElement('div'); meta.className = 'meta';
-            (item.tags || []).forEach((value) => text(meta, value, 'badge'));
-            const templateCount = Array.isArray(item.codeTemplates) ? item.codeTemplates.length : 0;
-            text(meta, `${templateCount} 个代码模板`, 'badge'); card.append(meta);
-            const crumb = document.createElement('div'); crumb.className = 'crumb'; crumb.textContent = Array.isArray(item.navTrail) && item.navTrail.length ? item.navTrail.join(' / ') : (item.path || ''); card.append(crumb);
-            const actions = document.createElement('div'); actions.className = 'actions';
-            const open = document.createElement('a'); open.className = 'button'; open.href = item.url || '#'; open.textContent = '打开文章'; actions.append(open);
-            const inspect = document.createElement('a'); inspect.className = 'button'; inspect.href = `/article_inspector?id=${encodeURIComponent(item.id || '')}`; inspect.textContent = '检查文章'; actions.append(inspect);
-            card.append(actions); result.append(card);
-          });
+          items.forEach(renderRow);
         }
         async function load() {
           state.loading = true; render();
           try {
-            const response = await fetch('/api/catalog', { headers: { Accept: 'application/json' } });
+            const response = await fetch('/api/catalog?includeHidden=true', { headers: { Accept: 'application/json' } });
             const payload = await response.json();
             if (!response.ok) throw new Error(payload.message || `HTTP ${response.status}`);
-            state.items = Array.isArray(payload.items) ? payload.items.filter((item) => item.visible !== false) : [];
+            state.items = Array.isArray(payload.items) ? payload.items : [];
             renderTags(); state.loading = false; state.error = null; render();
           } catch (error) {
             state.loading = false; state.error = error instanceof Error ? error.message : String(error); render();
-            result.replaceChildren(); const retry = document.createElement('button'); retry.className = 'button'; retry.type = 'button'; retry.textContent = '重试'; retry.addEventListener('click', load); result.append(retry);
           }
         }
-        [query, tag, hasCode, sort].forEach((control) => control.addEventListener(control === query ? 'input' : 'change', render));
+        query.addEventListener('input', render);
+        tag.addEventListener('change', render);
+        hasCode.addEventListener('change', render);
+        includeHidden.addEventListener('change', () => { renderTags(); render(); });
+        document.querySelectorAll('.sort-button').forEach((button) => button.addEventListener('click', () => {
+          const key = button.dataset.sortKey;
+          if (state.sortKey === key) state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
+          else { state.sortKey = key; state.sortDirection = 'asc'; }
+          render();
+        }));
         load();
       })();
     </script>

@@ -45,6 +45,8 @@ site/widgets/
 
 页面通过同源公共 API 读取数据，运行时构建会按显式映射直接复制到对应的 `dist/` 目录。代码模板页按需请求模板源码；其他页面只在需要时请求文章详情或诊断数据。
 
+`/relations` 使用项目依赖中的 D3 运行力导图。`copyStaticAssets()` 和 `site/build.sh` 会把固定版本的 `node_modules/d3/dist/d3.min.js` 复制为 `/assets/vendor/d3.min.js`，页面不从 CDN 加载脚本，也不增加独立 widget 构建步骤。
+
 The shared path module is `@rbook/core/paths`. It defaults to `site` for app assets and `book` for book content. Override them with `RBOOK_APP_DIR` and `RBOOK_CONTENT_DIR`.
 
 ## Common Commands

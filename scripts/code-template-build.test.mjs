@@ -81,3 +81,17 @@ test('runtime build copies every static widget to its public directory', (t) => 
     assert.equal(fs.readFileSync(targetFile, 'utf8'), fs.readFileSync(sourceFile, 'utf8'), target);
   }
 });
+
+test('runtime static assets include the local D3 dependency', (t) => {
+  const runtimeDir = createTempDir(t);
+  const script = `import { copyStaticAssets } from ${JSON.stringify(pathToFileURL(buildRuntimePath).href)}; copyStaticAssets();`;
+  const result = spawnSync(process.execPath, ['--input-type=module', '--eval', script], {
+    cwd: root,
+    env: {...process.env, RBOOK_RUNTIME_DIR: runtimeDir},
+    encoding: 'utf8'
+  });
+  assert.equal(result.status, 0, `${result.stdout || ''}\n${result.stderr || ''}`);
+  const vendorPath = path.join(runtimeDir, 'dist/assets/vendor/d3.min.js');
+  assert.equal(fs.existsSync(vendorPath), true);
+  assert.ok(fs.statSync(vendorPath).size > 200_000);
+});

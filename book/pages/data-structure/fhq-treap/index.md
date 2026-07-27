@@ -6,6 +6,7 @@ toc: true
 tags: ["数据结构", "平衡树", "FHQ Treap"]
 categories: ["数据结构"]
 code_template: [fhq-treap]
+prerequisites: [bst]
 ---
 
 [[TOC]]
