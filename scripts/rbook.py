@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -126,6 +127,53 @@ def print_numbered_tsv(headers, items, fields):
     print_tsv(["#", *headers], rows)
 
 
+def display_width(value):
+    width = 0
+    for char in value:
+        if unicodedata.combining(char):
+            continue
+        width += 2 if unicodedata.east_asian_width(char) in {"W", "F"} else 1
+    return width
+
+
+def normalize_table(value):
+    return normalize_tsv(value).replace("|", "\\|")
+
+
+def print_table(headers, rows):
+    normalized_headers = [normalize_table(header) for header in headers]
+    normalized_rows = [
+        [normalize_table(value) for value in row]
+        for row in rows
+    ]
+    widths = [
+        max(display_width(row[index]) for row in [normalized_headers, *normalized_rows])
+        for index in range(len(normalized_headers))
+    ]
+
+    def render_row(row):
+        cells = [
+            f" {value}{' ' * (widths[index] - display_width(value))} "
+            for index, value in enumerate(row)
+        ]
+        return "|" + "|".join(cells) + "|"
+
+    border = "+" + "+".join("-" * (width + 2) for width in widths) + "+"
+    print(border)
+    print(render_row(normalized_headers))
+    print(border)
+    for row in normalized_rows:
+        print(render_row(row))
+    print(border)
+
+
+def print_numbered_table(headers, items, fields):
+    rows = []
+    for number, item in enumerate(items, start=1):
+        rows.append([number, *(item.get(field) for field in fields)])
+    print_table(["#", *headers], rows)
+
+
 def print_error(error, json_output):
     if json_output:
         print_json(
@@ -228,10 +276,17 @@ def project_list(payload, projector):
     }
 
 
-def print_page_list(payload, json_output):
+def print_page_list(payload, json_output, table=False):
     projected = project_list(payload, page_summary)
     if json_output:
         print_json(projected)
+        return
+    if table:
+        print_numbered_table(
+            ["id", "title", "description", "tags"],
+            projected["items"],
+            ["id", "title", "description", "tags"],
+        )
         return
     print_numbered_tsv(
         ["id", "title", "description", "tags"],
@@ -240,10 +295,17 @@ def print_page_list(payload, json_output):
     )
 
 
-def print_code_list(payload, json_output):
+def print_code_list(payload, json_output, table=False):
     projected = project_list(payload, code_summary)
     if json_output:
         print_json(projected)
+        return
+    if table:
+        print_numbered_table(
+            ["id", "title", "language", "tags"],
+            projected["items"],
+            ["id", "title", "language", "tags"],
+        )
         return
     print_numbered_tsv(
         ["id", "title", "language", "tags"],
@@ -284,16 +346,25 @@ def print_site(payload):
     )
 
 
-def print_tags(payload):
+def print_tags(payload, table=False):
     items = [
         *({"type": "article", **item} for item in payload.get("articleTags") or []),
         *({"type": "code", **item} for item in payload.get("codeTags") or []),
     ]
+    if table:
+        print_numbered_table(["type", "tag", "count"], items, ["type", "tag", "count"])
+        return
     print_numbered_tsv(["type", "tag", "count"], items, ["type", "tag", "count"])
 
 
 def add_json_argument(parser):
     parser.add_argument("--json", action="store_true", help="output JSON instead of TSV or raw content")
+
+
+def add_list_output_arguments(parser):
+    output_group = parser.add_mutually_exclusive_group()
+    output_group.add_argument("--json", action="store_true", help="output JSON")
+    output_group.add_argument("--table", action="store_true", help="output an ASCII table")
 
 
 def build_parser():
@@ -304,28 +375,28 @@ def build_parser():
 
     add_json_argument(subparsers.add_parser("health"))
     add_json_argument(subparsers.add_parser("site"))
-    add_json_argument(subparsers.add_parser("catalog"))
+    add_list_output_arguments(subparsers.add_parser("catalog"))
 
     find_parser = subparsers.add_parser("find")
     find_parser.add_argument("query")
     find_parser.add_argument("--limit", type=positive_int, default=20)
-    add_json_argument(find_parser)
+    add_list_output_arguments(find_parser)
 
     pages_parser = subparsers.add_parser("pages")
     pages_parser.add_argument("--id")
     pages_parser.add_argument("--tag")
     pages_parser.add_argument("--limit", type=positive_int)
     pages_parser.add_argument("--offset", type=nonnegative_int)
-    add_json_argument(pages_parser)
+    add_list_output_arguments(pages_parser)
 
     codes_parser = subparsers.add_parser("codes")
     codes_parser.add_argument("--id")
     codes_parser.add_argument("--tag")
     codes_parser.add_argument("--limit", type=positive_int)
     codes_parser.add_argument("--offset", type=nonnegative_int)
-    add_json_argument(codes_parser)
+    add_list_output_arguments(codes_parser)
 
-    add_json_argument(subparsers.add_parser("tags"))
+    add_list_output_arguments(subparsers.add_parser("tags"))
     return parser
 
 
@@ -338,6 +409,7 @@ def validate_detail_arguments(args):
             ("--tag", args.tag),
             ("--limit", args.limit),
             ("--offset", args.offset),
+            ("--table", "--table" if getattr(args, "table", False) else None),
         )
         if value is not None
     ]
@@ -375,11 +447,11 @@ def execute(args):
             print_site(payload)
     elif args.command == "catalog":
         payload = request_json(baseurl, "/api/catalog", {"compact": "true"})
-        print_page_list(payload, args.json)
+        print_page_list(payload, args.json, args.table)
     elif args.command == "find":
         catalog = request_json(baseurl, "/api/catalog", {"compact": "true"})
         payload = find_pages(catalog.get("items") or [], args.query, args.limit)
-        print_page_list(payload, args.json)
+        print_page_list(payload, args.json, args.table)
     elif args.command == "pages":
         params = {}
         if args.id:
@@ -397,7 +469,7 @@ def execute(args):
             else:
                 sys.stdout.write(require_text(payload, "markdown"))
         else:
-            print_page_list(payload, args.json)
+            print_page_list(payload, args.json, args.table)
     elif args.command == "codes":
         params = {}
         if args.id:
@@ -416,13 +488,13 @@ def execute(args):
             else:
                 sys.stdout.write(require_text(payload, "content"))
         else:
-            print_code_list(payload, args.json)
+            print_code_list(payload, args.json, args.table)
     elif args.command == "tags":
         payload = request_json(baseurl, "/api/tags")
         if args.json:
             print_json(payload)
         else:
-            print_tags(payload)
+            print_tags(payload, args.table)
 
 
 def main(argv=None):

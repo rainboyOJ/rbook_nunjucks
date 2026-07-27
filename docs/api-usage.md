@@ -317,6 +317,13 @@ python3 scripts/rbook.py tags
 
 列表命令默认输出 TSV。文章列表列为 `#`、`id`、`title`、`description`、`tags`；代码列表列为 `#`、`id`、`title`、`language`、`tags`；标签列表列为 `#`、`type`、`tag`、`count`。`#` 是当前输出的行号，每次从 1 开始。字段中的制表符、换行和连续空白会压缩成一个空格，确保每条记录只占一行；多个标签使用英文逗号连接。
 
+目录、搜索结果、文章列表、代码列表和标签列表也支持 `--table`，以 ASCII 表格输出相同字段，便于人类在终端中阅读。`--table` 与 `--json` 互斥；文章或代码使用 `--id` 请求详情时不能使用 `--table`：
+
+```bash
+python3 scripts/rbook.py codes --table
+python3 scripts/rbook.py pages --table --limit 10
+```
+
 `find` 只在文章 ID、标题、描述和标签中查找，多个关键词使用 AND 语义；它不切分或搜索文章正文。`pages` 和 `codes` 的列表模式支持 `--tag`、`--limit`、`--offset`。
 
 详情模式默认直接返回可用原文。文章 Markdown 包含 front matter，且 `@include-code` 已替换为对应源码：
@@ -342,6 +349,6 @@ python3 scripts/rbook.py codes --id dsu-on-tree-color-count --json
 
 列表 JSON 只包含 `total` 和精简后的 `items`，不包含行号。文章与代码列表项都包含 `tags` 字符串数组。文章详情 JSON 与 `/api/pages?id=<id>` 使用相同的 11 个精简字段。代码详情 JSON 包含完整元数据与源码；`health`、`site`、`tags` 的 JSON 保留对应 API 的完整响应。
 
-`--id` 不能和 `--tag`、`--limit`、`--offset` 同时使用。错误默认以 `ERROR_CODE: message` 写入标准错误；JSON 模式则输出 `{ "error": "...", "message": "..." }`，并以非零状态码退出。
+`--id` 不能和 `--tag`、`--limit`、`--offset`、`--table` 同时使用。错误默认以 `ERROR_CODE: message` 写入标准错误；JSON 模式则输出 `{ "error": "...", "message": "..." }`，并以非零状态码退出。
 
 可用 `RBOOK_BASE_URL` 切换服务地址。

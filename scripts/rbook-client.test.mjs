@@ -201,6 +201,29 @@ test('code lists map description to title and omit description', () => {
   });
 });
 
+test('code lists support an ASCII table format', () => {
+  const response = {
+    total: 1,
+    items: [{
+      id: 'binary-search',
+      description: '二分查找标准模板',
+      language: 'cpp',
+      tags: ['二分']
+    }]
+  };
+  const result = runClient(['codes', '--table'], {'/api/codes': response});
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(
+    result.stdout,
+    '+---+---------------+------------------+----------+------+\n' +
+      '| # | id            | title            | language | tags |\n' +
+      '+---+---------------+------------------+----------+------+\n' +
+      '| 1 | binary-search | 二分查找标准模板 | cpp      | 二分 |\n' +
+      '+---+---------------+------------------+----------+------+\n'
+  );
+});
+
 test('page and code details default to raw content', () => {
   const page = {
     id: 'kmp',
@@ -337,6 +360,7 @@ test('errors follow text and JSON output modes', () => {
 test('detail IDs reject list-only filters', () => {
   const textResult = runClient(['pages', '--id', 'kmp', '--tag', '字符串']);
   const jsonResult = runClient(['codes', '--id', 'binary-search', '--limit', '1', '--json']);
+  const tableResult = runClient(['codes', '--id', 'binary-search', '--table']);
 
   assert.equal(textResult.status, 2);
   assert.equal(textResult.stderr, 'ARGUMENT_ERROR: --id cannot be used with --tag\n');
@@ -345,6 +369,8 @@ test('detail IDs reject list-only filters', () => {
     error: 'ARGUMENT_ERROR',
     message: '--id cannot be used with --limit'
   });
+  assert.equal(tableResult.status, 2);
+  assert.equal(tableResult.stderr, 'ARGUMENT_ERROR: --id cannot be used with --table\n');
 });
 
 test('removed commands and options are no longer accepted', () => {
