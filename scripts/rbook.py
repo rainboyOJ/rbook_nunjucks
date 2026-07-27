@@ -214,7 +214,7 @@ def page_detail(payload):
 def code_summary(item):
     return {
         "id": item.get("id") or "",
-        "title": item.get("title") or item.get("description") or "",
+        "title": item.get("description") or "",
         "language": item.get("language") or "",
         "tags": item.get("tags") or [],
     }

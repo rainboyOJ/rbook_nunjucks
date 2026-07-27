@@ -183,6 +183,7 @@ test('code lists map description to title and omit description', () => {
     total: 1,
     items: [{
       id: 'binary-search',
+      title: '代码模板标题',
       description: '二分查找标准模板',
       language: 'cpp',
       tags: ['二分'],
