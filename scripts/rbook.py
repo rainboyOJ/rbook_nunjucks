@@ -25,7 +25,7 @@ class RbookArgumentParser(argparse.ArgumentParser):
     def error(self, message):
         payload = {"error": "ARGUMENT_ERROR", "message": message}
         if "--json" in sys.argv[1:]:
-            print_json(payload, file=sys.stderr)
+            print_json(payload, file=sys.stderr, pretty=False)
         else:
             print(f"ARGUMENT_ERROR: {message}", file=sys.stderr)
         self.exit(2)
@@ -95,13 +95,19 @@ def request_json(baseurl, path, params=None):
         raise RbookClientError("REQUEST_FAILED", str(exc)) from exc
 
 
-def print_json(data, file=sys.stdout):
-    print(json.dumps(data, ensure_ascii=False, separators=(",", ":")), file=file)
+def print_json(data, file=sys.stdout, pretty=True):
+    if pretty:
+        output = json.dumps(data, ensure_ascii=False, indent=2)
+    else:
+        output = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    print(output, file=file)
 
 
 def normalize_tsv(value):
     if value is None:
         return ""
+    if isinstance(value, (list, tuple)):
+        return ",".join(normalize_tsv(item) for item in value)
     if isinstance(value, bool):
         return "true" if value else "false"
     return re.sub(r"\s+", " ", str(value)).strip()
@@ -122,7 +128,11 @@ def print_numbered_tsv(headers, items, fields):
 
 def print_error(error, json_output):
     if json_output:
-        print_json({"error": error.code, "message": error.message}, file=sys.stderr)
+        print_json(
+            {"error": error.code, "message": error.message},
+            file=sys.stderr,
+            pretty=False,
+        )
     else:
         print(f"{error.code}: {error.message}", file=sys.stderr)
 
@@ -181,6 +191,7 @@ def page_summary(item):
         "id": item.get("id") or "",
         "title": item.get("title") or "",
         "description": item.get("description") or "",
+        "tags": item.get("tags") or [],
     }
 
 
@@ -205,6 +216,7 @@ def code_summary(item):
         "id": item.get("id") or "",
         "title": item.get("title") or item.get("description") or "",
         "language": item.get("language") or "",
+        "tags": item.get("tags") or [],
     }
 
 
@@ -222,9 +234,9 @@ def print_page_list(payload, json_output):
         print_json(projected)
         return
     print_numbered_tsv(
-        ["id", "title", "description"],
+        ["id", "title", "description", "tags"],
         projected["items"],
-        ["id", "title", "description"],
+        ["id", "title", "description", "tags"],
     )
 
 
@@ -234,9 +246,9 @@ def print_code_list(payload, json_output):
         print_json(projected)
         return
     print_numbered_tsv(
-        ["id", "title", "language"],
+        ["id", "title", "language", "tags"],
         projected["items"],
-        ["id", "title", "language"],
+        ["id", "title", "language", "tags"],
     )
 
 

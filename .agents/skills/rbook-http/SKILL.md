@@ -39,7 +39,7 @@ python3 scripts/rbook.py catalog
 python3 scripts/rbook.py catalog --json
 ```
 
-默认目录列为 `#`、`id`、`title`、`description`。列表 JSON 为 `{ "total": ..., "items": [...] }`，每个条目同样只保留 `id`、`title`、`description`。
+默认目录列为 `#`、`id`、`title`、`description`、`tags`。列表 JSON 为 `{ "total": ..., "items": [...] }`，每个条目同样只保留 `id`、`title`、`description`、`tags`。TSV 中多个标签使用英文逗号连接，JSON 中标签保持字符串数组。
 
 ### 按元数据查找文章
 ```bash
@@ -56,7 +56,7 @@ python3 scripts/rbook.py pages --id binary-search
 python3 scripts/rbook.py pages --id binary-search --json
 ```
 
-默认直接输出完整 Markdown。添加 `--json` 时返回文章元数据、目录结构和 Markdown。服务端详情接口和客户端都不返回可由 Markdown 派生的 `html`、`text`、`excerpt`，也不返回内部索引字段 `visible`、`source`；服务端不会为详情响应执行 HTML 渲染，以减少耗时和上下文占用。
+默认直接输出可独立阅读的完整 Markdown，其中保留 front matter，展开 `@include_md`，并将 `@include-code` 替换成带语言标记的 fenced code block。添加 `--json` 时返回文章元数据、目录结构和同一份完整 Markdown。服务端详情接口和客户端都不返回可由 Markdown 派生的 `html`、`text`、`excerpt`，也不返回内部索引字段 `visible`、`source`；服务端不会为详情响应执行 HTML 渲染，以减少耗时和上下文占用。
 
 ### 按标签筛选文章或代码
 ```bash
@@ -72,7 +72,7 @@ python3 scripts/rbook.py codes --id v-bcc
 python3 scripts/rbook.py codes --id v-bcc --json
 ```
 
-代码列表默认列为 `#`、`id`、`title`、`language`；其中 `title` 来自模板的 `description`。详情模式默认直接输出完整源码，添加 `--json` 时返回包含关联文章和源码的完整对象。
+代码列表默认列为 `#`、`id`、`title`、`language`、`tags`；其中 `title` 来自模板的 `description`。TSV 中多个标签使用英文逗号连接，JSON 中标签保持字符串数组。详情模式默认直接输出完整源码，添加 `--json` 时返回包含关联文章和源码的完整对象。
 
 ### 统计所有文章标签与代码标签
 ```bash

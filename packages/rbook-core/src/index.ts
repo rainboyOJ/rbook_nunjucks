@@ -4,10 +4,12 @@ import yaml from 'js-yaml';
 import { globSync } from 'glob';
 import markdown from '@rbook/markdown';
 import { renderTemplate } from './renderEngine.js';
+import { loadCodeConfig } from './validation.js';
 import {
     bookDir,
     codeTemplateDir,
     configPath as defaultConfigPath,
+    contentDir,
     distDir,
     publicDir,
     fromApp,
@@ -70,10 +72,14 @@ function ensureDir(dir: string) {
 class rbook {
     name: string;
     config: BookConfig;
+    codeTemplatesById: Map<string, Record<string, unknown>>;
 
     constructor() {
         this.name = 'rbook';
         this.config = this.load_config();
+        this.codeTemplatesById = new Map(
+            loadCodeConfig().codes.map((code) => [code.id, code])
+        );
         this.config.currentYear = new Date().getFullYear();
         this.config.last_build_time = new Date().toLocaleString('zh-CN', {
             timeZone: 'Asia/Shanghai'
@@ -125,7 +131,11 @@ class rbook {
             return null;
         }
 
-        const md = new markdown(fullPath);
+        const md = new markdown(fullPath, {
+            baseDir: contentDir,
+            codeDir: codeTemplateDir,
+            resolveCodeId: (id: string) => this.codeTemplatesById.get(id) || null
+        });
         const templateType = md.front_matter.layout || defaultTemplateType || 'page';
         const htmlContent = renderTemplate(themeDir, templateType, {
             ...md.toJSON(),

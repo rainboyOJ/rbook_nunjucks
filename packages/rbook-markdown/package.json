@@ -6,6 +6,7 @@
   "main": "./src/markdown.js",
   "exports": {
     ".": "./src/markdown.js",
+    "./include-code": "./src/include-code.js",
     "./markdown-it": "./src/markdown-it/index.js"
   }
 }

@@ -1,6 +1,7 @@
 ---
 id: "jump-lca"
 title: "倍增求 LCA"
+description: "通过倍增预处理祖先表，在 O(log n) 时间内查询两个节点的最近公共祖先。"
 date: 2026-06-16 00:00
 toc: true
 tags: ["LCA", "倍增", "树上算法"]

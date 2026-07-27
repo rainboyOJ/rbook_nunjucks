@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import Markdown from '@rbook/markdown';
-import { bookDir, configPath } from '@rbook/core/paths';
+import { expandIncludeCode } from '@rbook/markdown/include-code';
+import { bookDir, codeTemplateDir, configPath, contentDir } from '@rbook/core/paths';
 import { loadPageDocument } from '@rbook/search/markdownText';
 
 export function loadBookConfig() {
@@ -48,10 +49,17 @@ export function buildToc(index: any) {
     .filter(Boolean);
 }
 
-export function createPagePayload(page: any) {
+export function createPagePayload(page: any, codes: any[] = []) {
   const fullPath = path.join(bookDir, page.path);
   const document = loadPageDocument(page);
-  const markdown = new Markdown(fullPath);
+  const codesById = new Map(codes.map((code) => [code.id, code]));
+  const resolveCodeId = (id: string) => codesById.get(id) || null;
+  const markdown = new Markdown(fullPath, {
+    baseDir: contentDir,
+    codeDir: codeTemplateDir,
+    resolveCodeId
+  });
+  const source = markdown.source_content || page.markdown || markdown.md_content || '';
 
   return {
     ...page,
@@ -59,7 +67,11 @@ export function createPagePayload(page: any) {
     url: document.url,
     frontMatter: document.frontMatter,
     headings: document.headings,
-    excerpt: document.excerpt,
-    markdown: markdown.md_content || page.markdown || ''
+    markdown: expandIncludeCode(source, {
+      baseDir: contentDir,
+      codeDir: codeTemplateDir,
+      currentFilePath: fullPath,
+      resolveCodeId
+    })
   };
 }

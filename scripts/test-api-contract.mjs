@@ -146,6 +146,7 @@ async function main() {
     assert.equal(catalog.items.every((item) => Object.hasOwn(item, 'headings') === false), true);
     const dsuCatalogPage = catalog.items.find((item) => item.id === 'dsu-on-tree');
     assert.ok(dsuCatalogPage, 'catalog should include dsu-on-tree');
+    assert.equal(dsuCatalogPage.description, '');
     assertRelativeUrl(dsuCatalogPage.url, 'catalog page URL');
     assertPayloadUrls(catalog);
     assertNoLocalLeak(catalog, 'catalog response');
@@ -158,6 +159,10 @@ async function main() {
     assertRelativeUrl(page.url, 'page URL');
     assert.equal(typeof page.markdown, 'string');
     assert.ok(page.markdown.length > 0);
+    assert.match(page.markdown, /^---\nid: "dsu-on-tree"/);
+    assert.equal(page.markdown.includes('@include-code('), false);
+    assert.match(page.markdown, /```cpp\n#include <bits\/stdc\+\+\.h>/);
+    assert.equal(page.description, '');
     assert.equal(page.frontMatter.id, 'dsu-on-tree');
     assert.deepEqual(page.frontMatter.code_template, ['dsu-on-tree-color-count']);
     assert.deepEqual(Object.keys(page).sort(), [
@@ -176,6 +181,23 @@ async function main() {
     assertPayloadUrls(page);
     assertNoLocalLeak(page, 'page response');
 
+    const describedPageResponse = await app.inject('/api/pages?id=jump-lca');
+    assertApiResponse(describedPageResponse, 200);
+    const describedPage = parseJson(describedPageResponse);
+    assert.equal(
+      describedPage.description,
+      '通过倍增预处理祖先表，在 O(log n) 时间内查询两个节点的最近公共祖先。'
+    );
+    assert.match(describedPage.markdown, /^---\nid: "jump-lca"/);
+    assert.equal(describedPage.markdown.includes('@include-code('), false);
+    assert.match(describedPage.markdown, /```cpp\n#include <bits\/stdc\+\+\.h>/);
+
+    const codeIdPageResponse = await app.inject('/api/pages?id=ek');
+    assertApiResponse(codeIdPageResponse, 200);
+    const codeIdPage = parseJson(codeIdPageResponse);
+    assert.equal(codeIdPage.markdown.includes('@include-code(maxflow-ek, cpp)'), false);
+    assert.match(codeIdPage.markdown, /```cpp\n\/\*\*\n \* Author by Rainboy blog:/);
+
     const taggedPagesResponse = await app.inject(apiUrl('/api/pages', {
       tag: '树上算法',
       limit: '1',
@@ -186,6 +208,15 @@ async function main() {
     assert.ok(taggedPages.total >= 1);
     assert.equal(taggedPages.items.length, 1);
     assert.equal(taggedPages.items[0].tags.includes('树上算法'), true);
+
+    const dsuListResponse = await app.inject(apiUrl('/api/pages', {
+      tag: '树上算法',
+      limit: '50',
+      offset: '0'
+    }));
+    assertApiResponse(dsuListResponse, 200);
+    const dsuList = parseJson(dsuListResponse);
+    assert.equal(dsuList.items.find((item) => item.id === 'dsu-on-tree')?.description, '');
 
     const pagedPagesResponse = await app.inject('/api/pages?limit=2&offset=1');
     assertApiResponse(pagedPagesResponse, 200);

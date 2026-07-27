@@ -1,19 +1,23 @@
 import * as matter from 'gray-matter';
 // import markdownit from './markdownit.js';
 import markdownit from './markdown-it/index.js';
+import { expandIncludeCode } from './include-code.js';
 import fs from 'fs';
 import path from 'path';
 
 class Markdown {
-    constructor(md_path = '') {
+    constructor(md_path = '', options = {}) {
         this.name = 'rbook';
         this.front_matter = {};
+        this.source_content = '';
         this.md_content = '';
         this.html_content = undefined;
+        this.options = options;
         if( md_path && md_path.length > 0 ) {
             this.md_path = md_path; // md文件路径
             // let raw_md = fs.readFileSync(md_path, 'utf8');
             let raw_md = this.readfile(md_path);
+            this.source_content = raw_md;
 
             let result = this.matter(raw_md);
             this.front_matter = result.data;
@@ -90,7 +94,18 @@ class Markdown {
      * @returns {string} - HTML内容
      */
     toHTML(md_content) {
-        return markdownit.render(md_content, { filePath: this.md_path });
+        const content = this.options.baseDir
+            ? expandIncludeCode(md_content, {
+                baseDir: this.options.baseDir,
+                codeDir: this.options.codeDir,
+                currentFilePath: this.md_path,
+                resolveCodeId: this.options.resolveCodeId
+            })
+            : md_content;
+        return markdownit.render(content, {
+            filePath: this.md_path,
+            resolveCodeId: this.options.resolveCodeId
+        });
     }
 
     toJSON() {

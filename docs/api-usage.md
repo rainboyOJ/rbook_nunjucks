@@ -34,6 +34,8 @@ curl "$BASE_URL/api/health"
 
 响应中的 `url` 是以 `/` 开头的站内根相对路径，不包含部署域名。客户端需要时可用 `BASE_URL + url` 拼成完整地址。`path` 是相对于 `book/pages` 或 `book/code` 的内容路径，不会返回服务器的本机绝对路径。
 
+文章的 `description` 只读取 front matter 中显式填写的 `description`，并兼容旧字段 `desc`。缺失时返回空字符串，不会使用正文摘要自动填充；需要描述的重要文章应在 Markdown 中单独维护该元数据。
+
 ### 缓存策略
 
 `/api`、`/api/*` 的成功和错误响应统一包含：
@@ -187,7 +189,7 @@ curl "$BASE_URL/api/catalog?compact=true"
 curl -G --data-urlencode "id=dsu-on-tree" "$BASE_URL/api/pages"
 ```
 
-响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`markdown` 和 `navTrail`。接口不返回可由 Markdown 派生的 `html`、`text`、`excerpt`，也不暴露内部索引字段 `visible`、`source`；处理详情请求时不会执行 HTML 渲染。文章引用的模板 ID 位于 `frontMatter.code_template`。
+响应包含 `id`、`title`、`path`、`url`、`description`、`tags`、`categories`、`frontMatter`、`headings`、`markdown` 和 `navTrail`。`markdown` 是可独立阅读的完整文档：保留文章 front matter，展开 `@include_md`，并把 `@include-code` 替换成带语言标记的 fenced code block。代码引用支持相对于文章的路径、以 `/code/` 开头的内容路径，以及 `book/code.yaml` 中的模板 ID。接口不返回可由 Markdown 派生的 `html`、`text`、`excerpt`，也不暴露内部索引字段 `visible`、`source`；处理详情请求时不会执行 HTML 渲染。
 
 ### `GET /api/pages`
 
@@ -313,11 +315,11 @@ python3 scripts/rbook.py codes --id dsu-on-tree-color-count
 python3 scripts/rbook.py tags
 ```
 
-列表命令默认输出 TSV。文章列表列为 `#`、`id`、`title`、`description`；代码列表列为 `#`、`id`、`title`、`language`；标签列表列为 `#`、`type`、`tag`、`count`。`#` 是当前输出的行号，每次从 1 开始。字段中的制表符、换行和连续空白会压缩成一个空格，确保每条记录只占一行。
+列表命令默认输出 TSV。文章列表列为 `#`、`id`、`title`、`description`、`tags`；代码列表列为 `#`、`id`、`title`、`language`、`tags`；标签列表列为 `#`、`type`、`tag`、`count`。`#` 是当前输出的行号，每次从 1 开始。字段中的制表符、换行和连续空白会压缩成一个空格，确保每条记录只占一行；多个标签使用英文逗号连接。
 
 `find` 只在文章 ID、标题、描述和标签中查找，多个关键词使用 AND 语义；它不切分或搜索文章正文。`pages` 和 `codes` 的列表模式支持 `--tag`、`--limit`、`--offset`。
 
-详情模式默认直接返回可用原文：
+详情模式默认直接返回可用原文。文章 Markdown 包含 front matter，且 `@include-code` 已替换为对应源码：
 
 ```bash
 # 完整 Markdown
@@ -336,7 +338,9 @@ python3 scripts/rbook.py pages --id dsu-on-tree --json
 python3 scripts/rbook.py codes --id dsu-on-tree-color-count --json
 ```
 
-列表 JSON 只包含 `total` 和精简后的 `items`，不包含行号。文章详情 JSON 与 `/api/pages?id=<id>` 使用相同的 11 个精简字段。代码详情 JSON 包含完整元数据与源码；`health`、`site`、`tags` 的 JSON 保留对应 API 的完整响应。
+成功的 JSON 响应使用两个空格缩进，便于在终端中直接阅读。写入标准错误的 JSON 错误保持单行，方便日志工具处理。
+
+列表 JSON 只包含 `total` 和精简后的 `items`，不包含行号。文章与代码列表项都包含 `tags` 字符串数组。文章详情 JSON 与 `/api/pages?id=<id>` 使用相同的 11 个精简字段。代码详情 JSON 包含完整元数据与源码；`health`、`site`、`tags` 的 JSON 保留对应 API 的完整响应。
 
 `--id` 不能和 `--tag`、`--limit`、`--offset` 同时使用。错误默认以 `ERROR_CODE: message` 写入标准错误；JSON 模式则输出 `{ "error": "...", "message": "..." }`，并以非零状态码退出。
 

@@ -115,6 +115,7 @@ test('catalog defaults to numbered TSV with stable single-line fields', () => {
         id: 'kmp',
         title: 'KMP',
         description: '第一行\n第二行\t补充',
+        tags: ['字符串', '匹配算法'],
         path: 'string/kmp/index.md'
       },
       {
@@ -134,13 +135,13 @@ test('catalog defaults to numbered TSV with stable single-line fields', () => {
   assert.equal(result.status, 0, result.stderr);
   assert.equal(
     result.stdout,
-    '#\tid\ttitle\tdescription\n' +
-      '1\tkmp\tKMP\t第一行 第二行 补充\n' +
-      '2\tbinary-search\t二分查找\t有序集 上的查找\n'
+    '#\tid\ttitle\tdescription\ttags\n' +
+      '1\tkmp\tKMP\t第一行 第二行 补充\t字符串,匹配算法\n' +
+      '2\tbinary-search\t二分查找\t有序集 上的查找\t二分\n'
   );
 });
 
-test('article list JSON keeps only total and compact fields', () => {
+test('article list JSON is pretty printed and keeps only compact fields', () => {
   const response = {
     generatedAt: '2026-07-26T00:00:00.000Z',
     total: 1,
@@ -157,15 +158,15 @@ test('article list JSON keeps only total and compact fields', () => {
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout), {
     total: 1,
-    items: [{id: 'kmp', title: 'KMP', description: '字符串匹配'}]
+    items: [{id: 'kmp', title: 'KMP', description: '字符串匹配', tags: ['字符串']}]
   });
-  assert.equal(result.stdout.includes('\n  '), false);
+  assert.match(result.stdout, /^\{\n  "total": 1,\n  "items": \[/);
 });
 
 test('paged article TSV numbering restarts at one', () => {
   const response = {
     total: 100,
-    items: [{id: 'page-51', title: '第五十一篇', description: ''}]
+    items: [{id: 'page-51', title: '第五十一篇', description: '', tags: ['分页']}]
   };
   const result = runClient(
     ['pages', '--offset', '50', '--limit', '1'],
@@ -174,7 +175,7 @@ test('paged article TSV numbering restarts at one', () => {
   );
 
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /^#\tid\ttitle\tdescription\n1\tpage-51\t/);
+  assert.match(result.stdout, /^#\tid\ttitle\tdescription\ttags\n1\tpage-51\t第五十一篇\t\t分页\n$/);
 });
 
 test('code lists map description to title and omit description', () => {
@@ -192,10 +193,10 @@ test('code lists map description to title and omit description', () => {
   const json = runClient(['codes', '--json'], {'/api/codes': response});
 
   assert.equal(tsv.status, 0, tsv.stderr);
-  assert.equal(tsv.stdout, '#\tid\ttitle\tlanguage\n1\tbinary-search\t二分查找标准模板\tcpp\n');
+  assert.equal(tsv.stdout, '#\tid\ttitle\tlanguage\ttags\n1\tbinary-search\t二分查找标准模板\tcpp\t二分\n');
   assert.deepEqual(JSON.parse(json.stdout), {
     total: 1,
-    items: [{id: 'binary-search', title: '二分查找标准模板', language: 'cpp'}]
+    items: [{id: 'binary-search', title: '二分查找标准模板', language: 'cpp', tags: ['二分']}]
   });
 });
 
@@ -325,6 +326,7 @@ test('errors follow text and JSON output modes', () => {
   assert.equal(textResult.status, 1);
   assert.equal(textResult.stderr, "PAGE_NOT_FOUND: page with id 'missing' not found\n");
   assert.equal(jsonResult.status, 1);
+  assert.equal(jsonResult.stderr.trim().split('\n').length, 1);
   assert.deepEqual(JSON.parse(jsonResult.stderr), {
     error: 'PAGE_NOT_FOUND',
     message: "page with id 'missing' not found"

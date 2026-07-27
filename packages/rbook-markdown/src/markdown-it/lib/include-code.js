@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import { parseIncludeCodeDirective, readIncludedCode } from '../../include-code.js';
 
 /**
  * A markdown-it plugin to include code from files.
@@ -14,10 +13,8 @@ function includeCodePlugin(md,options = {}) {
     const pos = state.bMarks[startLine] + state.tShift[startLine];
     const max = state.eMarks[startLine];
 
-    // Check for the include syntax: @include-code(...)
-    const match = state.src.slice(pos, max).match(/^@include-code\(([^,)]+)(?:,\s*([^)]+))?\s*\)/);
-
-    if (!match) {
+    const directive = parseIncludeCodeDirective(state.src.slice(pos, max));
+    if (!directive) {
       return false;
     }
 
@@ -27,36 +24,17 @@ function includeCodePlugin(md,options = {}) {
       return true;
     }
 
-    const [fullMatch, rawFilePath, lang] = match;
-    const filePath = rawFilePath.trim();
-    let language = (lang || '').trim();
-    
-    // If no language is specified, use the file extension as default language
-    if (!language) {
-      const ext = path.extname(filePath).toLowerCase();
-      language = ext.substring(1); // Remove the dot from extension
-    }
-    let absolutePath;
-    if( filePath.startsWith('/') ) {
-      absolutePath = path.join(options.baseDir, filePath);
-    }
-    else {
-      // Resolve the absolute path of the file to be included.
-      // It's relative to the markdown file being processed.
-      let currentDir = path.dirname(state.env.filePath || '.');
-      absolutePath = path.resolve(currentDir, filePath);
-      if (!fs.existsSync(absolutePath) && filePath.startsWith('code/')) {
-        absolutePath = path.join(options.baseDir, filePath);
-      }
-    }
+    const included = readIncludedCode(directive.reference, {
+      baseDir: options.baseDir,
+      currentFilePath: state.env.filePath,
+      language: directive.language,
+      resolveCodeId: state.env.resolveCodeId || options.resolveCodeId
+    });
 
-    let content;
-    try {
-      content = fs.readFileSync(absolutePath, 'utf8');
-    } catch (e) {
+    if (included.error) {
       // If the file is not found, render an error message in the output.
       const errorToken = new state.Token('html_block', '', 0);
-      errorToken.content = `<div style="color: red; border: 1px solid red; padding: 10px;">[include-code] Error: Failed to read file <code>${filePath}</code>.<br>${e.message}</div>`;
+      errorToken.content = `<div style="color: red; border: 1px solid red; padding: 10px;">[include-code] Error: ${included.error}</div>`;
       state.tokens.push(errorToken);
       state.line = startLine + 1;
       return true;
@@ -65,8 +43,8 @@ function includeCodePlugin(md,options = {}) {
     // Create a 'fence' token to be rendered as a code block.
     // This reuses markdown-it's existing code block rendering.
     const token = new state.Token('fence', 'code', 0);
-    token.info = language; // The language for syntax highlighting
-    token.content = content.endsWith('\n') ? content : content + '\n';
+    token.info = included.language; // The language for syntax highlighting
+    token.content = included.content.endsWith('\n') ? included.content : included.content + '\n';
     token.markup = '```'; // The fence character
     token.map = [startLine, startLine + 1];
 

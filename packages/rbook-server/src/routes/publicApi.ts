@@ -37,25 +37,29 @@ function codeMatchesTags(code: any, tags: string[]) {
   return tags.some((tag) => codeTags.includes(tag));
 }
 
+function pageDescription(page: any) {
+  return String(page.frontMatter?.description || page.frontMatter?.desc || '');
+}
+
 function compactPage(page: any) {
   return {
     id: page.id,
     title: page.title,
-    description: String(page.frontMatter?.description || page.frontMatter?.desc || page.excerpt || ''),
+    description: pageDescription(page),
     tags: asStringArray(page.frontMatter?.tags),
     path: page.path,
     url: page.url
   };
 }
 
-function fullPage(page: any) {
-  const payload = createPagePayload(page);
+function fullPage(page: any, codes: any[]) {
+  const payload = createPagePayload(page, codes);
   return {
     id: page.id || payload.frontMatter?.id || '',
     title: payload.title,
     path: payload.path,
     url: payload.url,
-    description: String(payload.frontMatter?.description || payload.frontMatter?.desc || payload.excerpt || ''),
+    description: pageDescription(payload),
     tags: asStringArray(payload.frontMatter?.tags),
     categories: asStringArray(payload.frontMatter?.categories),
     frontMatter: payload.frontMatter,
@@ -161,7 +165,7 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
         reply.code(404);
         return { error: 'PAGE_NOT_FOUND', message: `page with id '${id}' not found` };
       }
-      return fullPage(page);
+      return fullPage(page, index.codes || []);
     }
 
     let pages = index.pages || [];
@@ -175,7 +179,7 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
       title: page.title,
       path: page.path,
       url: page.url,
-      description: String(page.frontMatter?.description || page.frontMatter?.desc || page.excerpt || ''),
+      description: pageDescription(page),
       tags: asStringArray(page.frontMatter?.tags),
       visible: page.visible,
       source: page.source,
