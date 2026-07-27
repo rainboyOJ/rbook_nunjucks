@@ -33,6 +33,8 @@ site/markdown-style/
 site/widgets/
 ```
 
+`site/widgets/code_template_filter/index.html` 是代码模板页面的唯一源码文件。页面通过同源 `/api/codes` 读取模板列表，按需请求模板源码；它不再使用 Vue、Vite 或独立的 TypeScript 构建项目。运行时构建会直接把该文件复制到 `dist/code_template/index.html`。
+
 The shared path module is `@rbook/core/paths`. It defaults to `site` for app assets and `book` for book content. Override them with `RBOOK_APP_DIR` and `RBOOK_CONTENT_DIR`.
 
 ## Common Commands

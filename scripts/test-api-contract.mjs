@@ -252,6 +252,12 @@ async function main() {
     assert.equal(taggedCodes.items.length, 1);
     assert.equal(taggedCodes.items[0].tags.includes('树形数据结构'), true);
 
+    const allCodesResponse = await app.inject('/api/codes');
+    assertApiResponse(allCodesResponse, 200);
+    const allCodes = parseJson(allCodesResponse);
+    assert.equal(allCodes.total, currentIndex.codes.length);
+    assert.equal(allCodes.items.length, currentIndex.codes.length);
+
     const pagedCodesResponse = await app.inject('/api/codes?limit=2&offset=1');
     assertApiResponse(pagedCodesResponse, 200);
     const pagedCodes = parseJson(pagedCodesResponse);

@@ -1,29 +1,665 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>rbook: 代码模板</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #101418;
+        --panel: #171d23;
+        --panel-raised: #1e262e;
+        --border: #34414d;
+        --text: #e7edf2;
+        --muted: #98a6b3;
+        --accent: #ffc857;
+        --accent-strong: #ffe08a;
+        --link: #79c7ff;
+        --danger: #ff8e8e;
+      }
 
+      * { box-sizing: border-box; }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-tomorrow.min.css" integrity="sha512-kSwGoyIkfz4+hMo5jkJngSByil9jxJPKbweYec/UgS+S1EgE45qm4Gea7Ks2oxQ7qiYyyZRn66A9df2lMtjIsw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-3/cdM9qaJ5lBlzRKqwhMw+ZcNCVonz66BO6HgJudG/P1azm9wFrru31SsBa4T4Ew1AOH8HfDXSWS6emWwPl42A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>rbook: code template</title>
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        min-width: 320px;
+      }
+
+      button, input { font: inherit; }
+
+      .page-shell {
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      .page-header {
+        align-items: end;
+        display: flex;
+        gap: 1.5rem;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+      }
+
+      h1 {
+        color: var(--accent-strong);
+        font-size: clamp(1.7rem, 4vw, 2.5rem);
+        letter-spacing: 0.04em;
+        margin: 0;
+      }
+
+      .page-meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0.45rem 0 0;
+      }
+
+      .search-box {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        display: flex;
+        margin-bottom: 1rem;
+        max-width: 720px;
+      }
+
+      .search-label {
+        align-items: center;
+        background: var(--panel-raised);
+        color: var(--accent-strong);
+        display: flex;
+        font-weight: 700;
+        padding: 0 1rem;
+        white-space: nowrap;
+      }
+
+      #search-input {
+        background: transparent;
+        border: 0;
+        color: var(--text);
+        min-width: 0;
+        outline: 0;
+        padding: 0.85rem 1rem;
+        width: 100%;
+      }
+
+      #search-input::placeholder { color: var(--muted); }
+
+      #search-input:focus { box-shadow: inset 0 0 0 2px var(--accent); }
+
+      #status {
+        color: var(--muted);
+        min-height: 1.5rem;
+      }
+
+      #status.error { color: var(--danger); }
+
+      #result {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .template-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        padding: 1rem;
+        transition: border-color 160ms ease, transform 160ms ease;
+      }
+
+      .template-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      .card-heading {
+        align-items: start;
+        display: flex;
+        gap: 0.7rem;
+      }
+
+      .card-number {
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+        min-width: 2rem;
+      }
+
+      .card-title {
+        color: var(--text);
+        font-size: 1.05rem;
+        line-height: 1.4;
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .card-id {
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.8rem;
+        margin: 0.45rem 0 0;
+        overflow-wrap: anywhere;
+      }
+
+      .card-details {
+        color: var(--muted);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin: 0.8rem 0;
+      }
+
+      .badge {
+        border: 1px solid var(--border);
+        color: var(--accent-strong);
+        font-size: 0.78rem;
+        padding: 0.2rem 0.45rem;
+      }
+
+      .article-list {
+        border-top: 1px solid var(--border);
+        display: grid;
+        gap: 0.3rem;
+        margin-top: auto;
+        padding-top: 0.75rem;
+      }
+
+      .article-list-label {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .article-list a {
+        color: var(--link);
+        overflow-wrap: anywhere;
+        text-decoration: none;
+      }
+
+      .article-list a:hover { text-decoration: underline; }
+
+      .article-empty { color: var(--muted); }
+
+      .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 1rem;
+      }
+
+      .action-button {
+        background: transparent;
+        border: 1px solid var(--accent);
+        color: var(--accent-strong);
+        cursor: pointer;
+        padding: 0.42rem 0.7rem;
+      }
+
+      .action-button:hover,
+      .action-button:focus-visible {
+        background: var(--accent);
+        color: #17120a;
+        outline: 0;
+      }
+
+      .empty-state {
+        background: var(--panel);
+        border: 1px dashed var(--border);
+        color: var(--muted);
+        grid-column: 1 / -1;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .modal-backdrop[hidden] { display: none; }
+
+      .modal-backdrop {
+        align-items: center;
+        background: rgb(0 0 0 / 78%);
+        display: flex;
+        inset: 0;
+        justify-content: center;
+        padding: 1rem;
+        position: fixed;
+        z-index: 10;
+      }
+
+      .modal {
+        background: var(--panel);
+        border: 1px solid var(--accent);
+        display: flex;
+        flex-direction: column;
+        max-height: 92vh;
+        max-width: 1100px;
+        width: 100%;
+      }
+
+      .modal-header,
+      .modal-actions {
+        align-items: center;
+        background: var(--panel-raised);
+        display: flex;
+        gap: 0.75rem;
+        justify-content: space-between;
+        padding: 0.8rem 1rem;
+      }
+
+      .modal-header { border-bottom: 1px solid var(--border); }
+
+      .modal-title {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .modal-close {
+        background: transparent;
+        border: 0;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.6rem;
+        line-height: 1;
+      }
+
+      .modal-close:hover { color: var(--accent-strong); }
+
+      .modal-actions {
+        border-top: 1px solid var(--border);
+        justify-content: start;
+      }
+
+      .modal-code {
+        margin: 0;
+        overflow: auto;
+        padding: 1rem;
+      }
+
+      .modal-code code { display: block; min-width: max-content; }
+
+      #toast-region {
+        bottom: 1rem;
+        display: grid;
+        gap: 0.5rem;
+        position: fixed;
+        right: 1rem;
+        z-index: 20;
+      }
+
+      .toast {
+        background: var(--panel-raised);
+        border: 1px solid var(--accent);
+        color: var(--text);
+        max-width: min(28rem, calc(100vw - 2rem));
+        padding: 0.65rem 0.85rem;
+      }
+
+      @media (max-width: 900px) {
+        #result { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 620px) {
+        .page-shell { padding: 1.5rem 1rem 3rem; }
+        .page-header { align-items: start; flex-direction: column; gap: 0.25rem; }
+        #result { grid-template-columns: 1fr; }
+        .search-box { max-width: none; }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js" integrity="sha512-UOoJElONeUNzQbbKQbjldDf9MwOHqxNz49NNJJ1d90yp+X9edsHyJoAs6O4K19CZGaIdjI5ohK+O2y5lBTW6uQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-javascript.min.js" integrity="sha512-2JyiA44hTqK2+T9Hb3vEPxwQ7e9OSbQjL5AYRzGGiBqCVgZaqjE6mTjfm6ZfjIy0gqGKQNL6ZqGm6QJ9ZGH9dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-typescript.min.js" integrity="sha512-wc6pBpq6bTJYh+GkQG2FkQ5QGhNm4hWcJjDP0Tm6cZqJjxwqJ/1eQjv2JmJfFkXq+gQqJY+QJhYfG8FgKfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-python.min.js" integrity="sha512-2JyiA44hTqK2+T9Hb3vEPxwQ7e9OSbQjL5AYRzGGiBqCVgZaqjE6mTjfm6ZfjIy0gqGKQNL6ZqGm6QJ9ZGH9dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-cpp.min.js" integrity="sha512-2JyiA44hTqK2+T9Hb3vEPxwQ7e9OSbQjL5AYRzGGiBqCVgZaqjE6mTjfm6ZfjIy0gqGKQNL6ZqGm6QJ9ZGH9dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-bash.min.js" integrity="sha512-2JyiA44hTqK2+T9Hb3vEPxwQ7e9OSbQjL5AYRzGGiBqCVgZaqjE6mTjfm6ZfjIy0gqGKQNL6ZqGm6QJ9ZGH9dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-vue.min.js" integrity="sha512-2JyiA44hTqK2+T9Hb3vEPxwQ7e9OSbQjL5AYRzGGiBqCVgZaqjE6mTjfm6ZfjIy0gqGKQNL6ZqGm6QJ9ZGH9dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-QTYXYEniHb1m0ZKtSyfpmw40uH9vPfV07vxsv/plIRMEiON4yOp2qoZiv/FTqFIOym4bdQ4+p9RtHaCMC0ApRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="module" src="./src/main.ts"></script>
+    <main class="page-shell">
+      <header class="page-header">
+        <div>
+          <h1>代码模板</h1>
+          <p class="page-meta">从 rbook 代码库中查找、复制和下载可复用模板</p>
+        </div>
+      </header>
+
+      <label class="search-box" for="search-input">
+        <span class="search-label">搜索</span>
+        <input id="search-input" type="search" autocomplete="off" placeholder="输入多个关键词，用空格分隔">
+      </label>
+
+      <div id="status" role="status" aria-live="polite">正在加载代码模板...</div>
+      <ul id="result" aria-live="polite"></ul>
+    </main>
+
+    <div id="modal-backdrop" class="modal-backdrop" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <header class="modal-header">
+          <h2 id="modal-title" class="modal-title">代码模板</h2>
+          <button id="modal-close" class="modal-close" type="button" aria-label="关闭">&times;</button>
+        </header>
+        <pre class="modal-code"><code id="modal-code" class="language-none"></code></pre>
+        <footer class="modal-actions">
+          <button class="action-button" type="button" data-modal-action="copy">复制代码</button>
+          <button class="action-button" type="button" data-modal-action="download">下载</button>
+        </footer>
+      </section>
+    </div>
+    <div id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-haskell.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-scss.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script>
+      (() => {
+        const state = {
+          templates: [],
+          selected: null,
+          selectedContent: '',
+          detailCache: new Map()
+        };
+
+        const result = document.querySelector('#result');
+        const searchInput = document.querySelector('#search-input');
+        const status = document.querySelector('#status');
+        const modalBackdrop = document.querySelector('#modal-backdrop');
+        const modalTitle = document.querySelector('#modal-title');
+        const modalCode = document.querySelector('#modal-code');
+        const toastRegion = document.querySelector('#toast-region');
+
+        function setStatus(message, isError = false) {
+          status.textContent = message;
+          status.classList.toggle('error', isError);
+        }
+
+        function showToast(message) {
+          const toast = document.createElement('div');
+          toast.className = 'toast';
+          toast.textContent = message;
+          toastRegion.append(toast);
+          window.setTimeout(() => toast.remove(), 2800);
+        }
+
+        async function requestJson(url) {
+          const response = await fetch(url, { headers: { Accept: 'application/json' } });
+          let payload = null;
+          try {
+            payload = await response.json();
+          } catch {
+            payload = null;
+          }
+          if (!response.ok) {
+            throw new Error(payload && payload.message ? payload.message : `HTTP ${response.status}`);
+          }
+          return payload || {};
+        }
+
+        async function loadTemplates() {
+          const firstPage = await requestJson('/api/codes');
+          const templates = Array.isArray(firstPage.items) ? [...firstPage.items] : [];
+          const total = Number.isFinite(Number(firstPage.total)) ? Number(firstPage.total) : templates.length;
+
+          // Older servers may still paginate the default response. Keep the page compatible with them.
+          while (templates.length < total) {
+            const nextPage = await requestJson(`/api/codes?limit=50&offset=${templates.length}`);
+            const nextItems = Array.isArray(nextPage.items) ? nextPage.items : [];
+            if (nextItems.length === 0) break;
+            templates.push(...nextItems);
+          }
+
+          state.templates = templates;
+          render();
+        }
+
+        function normalize(value) {
+          return String(value || '').toLocaleLowerCase();
+        }
+
+        function searchableText(item) {
+          return [
+            item.id,
+            item.description,
+            item.language,
+            ...(Array.isArray(item.tags) ? item.tags : [])
+          ].map(normalize).join(' ');
+        }
+
+        function filteredTemplates() {
+          const keywords = normalize(searchInput.value).split(/\s+/).filter(Boolean);
+          if (keywords.length === 0) return state.templates;
+          return state.templates.filter((item) => {
+            const text = searchableText(item);
+            return keywords.every((keyword) => text.includes(keyword));
+          });
+        }
+
+        function appendText(parent, text, className) {
+          const element = document.createElement('span');
+          if (className) element.className = className;
+          element.textContent = text;
+          parent.append(element);
+          return element;
+        }
+
+        function addButton(parent, label, action, id) {
+          const button = document.createElement('button');
+          button.className = 'action-button';
+          button.type = 'button';
+          button.dataset.action = action;
+          button.dataset.id = id;
+          button.textContent = label;
+          parent.append(button);
+        }
+
+        function renderArticles(parent, articles) {
+          const list = document.createElement('div');
+          list.className = 'article-list';
+          appendText(list, '关联文章', 'article-list-label');
+          if (!Array.isArray(articles) || articles.length === 0) {
+            appendText(list, '暂无', 'article-empty');
+            parent.append(list);
+            return;
+          }
+
+          for (const article of articles) {
+            const url = typeof article.url === 'string' && article.url.startsWith('/') ? article.url : '#';
+            const link = document.createElement('a');
+            link.href = url;
+            link.textContent = article.title || article.id || '未命名文章';
+            if (url !== '#') {
+              link.target = '_blank';
+              link.rel = 'noopener';
+            }
+            list.append(link);
+          }
+          parent.append(list);
+        }
+
+        function render() {
+          const items = filteredTemplates();
+          result.replaceChildren();
+          setStatus(`显示 ${items.length} / ${state.templates.length} 个模板`);
+
+          if (items.length === 0) {
+            const empty = document.createElement('li');
+            empty.className = 'empty-state';
+            empty.textContent = state.templates.length === 0 ? '没有可用的代码模板' : '没有匹配的代码模板';
+            result.append(empty);
+            return;
+          }
+
+          for (const [index, item] of items.entries()) {
+            const card = document.createElement('li');
+            card.className = 'template-card';
+
+            const heading = document.createElement('div');
+            heading.className = 'card-heading';
+            appendText(heading, String(index + 1).padStart(3, '0'), 'card-number');
+            appendText(heading, item.description || item.id || '未命名模板', 'card-title');
+            card.append(heading);
+            appendText(card, item.id || '', 'card-id');
+
+            const details = document.createElement('div');
+            details.className = 'card-details';
+            if (item.language) appendText(details, item.language, 'badge');
+            for (const tag of Array.isArray(item.tags) ? item.tags : []) appendText(details, tag, 'badge');
+            card.append(details);
+
+            renderArticles(card, item.articles);
+
+            const actions = document.createElement('div');
+            actions.className = 'card-actions';
+            addButton(actions, '查看', 'view', item.id);
+            addButton(actions, '复制', 'copy', item.id);
+            addButton(actions, '下载', 'download', item.id);
+            if (item.sh) addButton(actions, '命令', 'shell', item.id);
+            card.append(actions);
+            result.append(card);
+          }
+        }
+
+        function fileNameFromPath(filePath, fallback) {
+          const parts = String(filePath || '').split('/');
+          return parts[parts.length - 1] || `${fallback || 'code'}.txt`;
+        }
+
+        function prismLanguage(language) {
+          const value = normalize(language);
+          const aliases = {
+            'c++': 'cpp',
+            'cc': 'cpp',
+            'cxx': 'cpp',
+            'c#': 'csharp',
+            'cs': 'csharp',
+            'js': 'javascript',
+            'ts': 'typescript',
+            'py': 'python',
+            'rs': 'rust',
+            'sh': 'bash',
+            'shell': 'bash',
+            'hs': 'haskell',
+            'html': 'markup',
+            'vue': 'markup',
+            'md': 'markdown'
+          };
+          return aliases[value] || value || 'none';
+        }
+
+        async function loadCode(item) {
+          if (state.detailCache.has(item.id)) return state.detailCache.get(item.id);
+          const detail = await requestJson(`/api/codes?id=${encodeURIComponent(item.id)}&includeContent=true`);
+          if (typeof detail.content !== 'string') throw new Error('API 响应缺少代码内容');
+          state.detailCache.set(item.id, detail);
+          return detail;
+        }
+
+        function showModal(detail) {
+          state.selected = detail;
+          state.selectedContent = detail.content;
+          modalTitle.textContent = detail.description || detail.id || '代码模板';
+          modalCode.className = `language-${prismLanguage(detail.language)}`;
+          modalCode.textContent = detail.content;
+          modalBackdrop.hidden = false;
+          document.body.style.overflow = 'hidden';
+          if (window.Prism && prismLanguage(detail.language) !== 'none') {
+            window.Prism.highlightElement(modalCode);
+          }
+        }
+
+        function closeModal() {
+          modalBackdrop.hidden = true;
+          document.body.style.overflow = '';
+          state.selected = null;
+          state.selectedContent = '';
+          modalCode.textContent = '';
+        }
+
+        async function copyText(text, successMessage) {
+          try {
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(text);
+            } else {
+              const textarea = document.createElement('textarea');
+              textarea.value = text;
+              textarea.style.position = 'fixed';
+              textarea.style.opacity = '0';
+              document.body.append(textarea);
+              textarea.select();
+              if (!document.execCommand('copy')) throw new Error('浏览器拒绝复制');
+              textarea.remove();
+            }
+            showToast(successMessage);
+          } catch (error) {
+            showToast(`复制失败: ${error instanceof Error ? error.message : String(error)}`);
+          }
+        }
+
+        function downloadText(text, filename) {
+          const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.append(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          showToast(`开始下载 ${filename}`);
+        }
+
+        async function handleAction(action, id) {
+          const item = state.templates.find((template) => template.id === id);
+          if (!item) return;
+          try {
+            const detail = await loadCode(item);
+            const filename = fileNameFromPath(detail.path, detail.id);
+            if (action === 'view') showModal(detail);
+            if (action === 'copy') await copyText(detail.content, '代码已复制');
+            if (action === 'download') downloadText(detail.content, filename);
+            if (action === 'shell' && detail.sh) await copyText(detail.sh, '命令已复制');
+          } catch (error) {
+            showToast(`获取代码失败: ${error instanceof Error ? error.message : String(error)}`);
+          }
+        }
+
+        searchInput.addEventListener('input', render);
+        result.addEventListener('click', (event) => {
+          const button = event.target.closest('button[data-action]');
+          if (button) handleAction(button.dataset.action, button.dataset.id);
+        });
+        document.querySelector('#modal-close').addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', (event) => {
+          if (event.target === modalBackdrop) closeModal();
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !modalBackdrop.hidden) closeModal();
+        });
+        document.querySelector('[data-modal-action="copy"]').addEventListener('click', () => {
+          if (state.selected) copyText(state.selectedContent, '代码已复制');
+        });
+        document.querySelector('[data-modal-action="download"]').addEventListener('click', () => {
+          if (!state.selected) return;
+          downloadText(state.selectedContent, fileNameFromPath(state.selected.path, state.selected.id));
+        });
+
+        loadTemplates().catch((error) => {
+          setStatus(`加载失败: ${error instanceof Error ? error.message : String(error)}`, true);
+          result.replaceChildren();
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -58,7 +58,7 @@ curl -G --data-urlencode "tag=树上算法,图论" "$BASE_URL/api/pages"
 
 列表接口 `/api/pages` 和 `/api/codes` 支持：
 
-- `limit`：本页数量，默认 50，最大 50；非法值回退到默认值。
+- `limit`：本页数量。`/api/pages` 默认 50，`/api/codes` 未指定时返回全部模板；显式指定时最大 50，非法值回退到默认值。
 - `offset`：从零开始的偏移量，默认 0；负数或非法值回退到 0。
 
 列表响应中的 `total` 是筛选后的总数，`items` 是当前页的数据。
@@ -230,7 +230,7 @@ curl -G \
 
 ### `GET /api/codes`
 
-不传 `id` 时返回模板列表，支持 `tag`、`limit`、`offset` 和 `includeContent`：
+不传 `id` 时返回模板列表，支持 `tag`、`limit`、`offset` 和 `includeContent`。未指定 `limit` 时返回全部模板；如果需要分页，再显式传入 `limit`：
 
 ```bash
 curl -G \

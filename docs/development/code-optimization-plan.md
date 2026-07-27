@@ -116,21 +116,19 @@
 - 提交点：
   - `refactor: improve rbook core readability`
 
-### 阶段 5：整理代码模板前端组件
+### 阶段 5：代码模板页面单文件化
 
+- 状态：已完成。
 - 目标文件：
-  - `site/widgets/code_template_filter/src/App.vue`
-- 问题：
-  - 搜索、标签过滤、展示状态集中在单个组件里。
-  - 类型约束较弱。
-- 改法：
-  - 提取数据类型和计算逻辑。
-  - 保持界面行为不变，只改善阅读性。
+  - `site/widgets/code_template_filter/index.html`
+- 改动：
+  - 删除 Vue、Vite、TypeScript 子项目及构建期 YAML/Markdown 扫描器。
+  - 使用原生 JavaScript 通过同源 `/api/codes` 加载全部模板，按需请求源码。
+  - 保留搜索、关联文章、查看、复制、下载和 Prism 代码高亮。
 - 验证：
+  - `npm run test:code-template`
   - `npm run typecheck`
-  - `npm run build:runtime`
-- 提交点：
-  - `refactor: tidy code template UI state`
+  - `npm run build:all`
 
 ## 每步提交规则
 

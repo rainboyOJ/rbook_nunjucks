@@ -107,20 +107,13 @@ export function copyStaticAssets() {
 }
 
 export function buildCodeTemplateApp() {
-  const configPath = path.join(appDir, 'widgets/code_template_filter/vite.config.ts');
-  if (!fs.existsSync(configPath)) return;
+  const sourcePath = path.join(appDir, 'widgets/code_template_filter/index.html');
+  if (!fs.existsSync(sourcePath)) return;
 
-  runCommand('npx', [
-    'vite',
-    'build',
-    '--config',
-    configPath,
-    '--base',
-    '/code_template/'
-  ], {
-    cwd: path.resolve(appDir, '..'),
-    label: 'code template build'
-  });
+  const targetPath = path.join(distDir, 'code_template/index.html');
+  fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+  fs.copyFileSync(sourcePath, targetPath);
+  console.log(`[runtime] copied code template page to ${targetPath}`);
 }
 
 export function buildRuntime() {

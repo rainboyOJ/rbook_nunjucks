@@ -115,7 +115,6 @@ temp/
 ## clang debug symbols
 **/*.out.dSYM
 
-site/widgets/code_template_filter/public
 tmp/
 codex_resume
 

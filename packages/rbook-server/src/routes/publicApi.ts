@@ -200,7 +200,9 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
     const id = query.id;
     const tags = parseTags(query.tag);
     const includeContent = query.includeContent === 'true';
-    const limit = parseLimit(query.limit, 50);
+    // Code template catalogs are small enough to return in one response by default.
+    // Keep bounded pagination when callers explicitly provide `limit`.
+    const limit = query.limit === undefined ? null : parseLimit(query.limit, 50);
     const offset = parseOffset(query.offset);
     const codeToArticles = index.codeToArticles || {};
 
@@ -229,7 +231,8 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
     }
 
     const total = codes.length;
-    const items = codes.slice(offset, offset + limit).map((code: any) => {
+    const end = limit === null ? undefined : offset + limit;
+    const items = codes.slice(offset, end).map((code: any) => {
       const payload = withArticles(code, codeToArticles);
       if (includeContent) {
         payload.content = readCodeContent(code.path) || '';

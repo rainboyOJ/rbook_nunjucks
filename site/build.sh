@@ -45,8 +45,7 @@ done
 # 复制动画单页html
 cp -r "$APP_DIR/widgets/animate_single_html" "$APP_DIR/dist/animate_single_html"
 
-# # 编译代码模板过滤器
+# 复制代码模板过滤器单文件页面
 echo "=== 编译代码模板过滤器 ==="
-npx vite build \
-  --config "$APP_DIR/widgets/code_template_filter/vite.config.ts" \
-  --base /code_template/
+mkdir -p "$APP_DIR/dist/code_template"
+cp "$APP_DIR/widgets/code_template_filter/index.html" "$APP_DIR/dist/code_template/index.html"
