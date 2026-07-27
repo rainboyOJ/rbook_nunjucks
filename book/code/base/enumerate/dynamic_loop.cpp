@@ -1,29 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int maxn = 10 + 5;
+// 递归实现 n 层循环，每层都从 [0, m) 中选择一个值。
+// emit(path) 会收到一个长度为 n 的完整序列。
+template <class Emit>
+void enumerate_dynamic_loop(int n, int m, const Emit& emit) {
+    if (n < 0 || m < 0) return;
 
-int n, m;
-int path[maxn];
+    vector<int> path(n, 0);
 
-// dep 表示当前正在填写第 dep 个位置。
-// 每个位置都可以独立选择 0, 1, ..., m - 1。
-void dfs(int dep) {
-    if (dep > n) {
-        for (int i = 1; i <= n; ++i) {
-            cout << path[i] << (i == n ? '\n' : ' ');
+    auto dfs = [&](auto&& self, int dep) -> void {
+        if (dep == n) {
+            emit(path);
+            return;
         }
-        return;
-    }
 
-    for (int x = 0; x < m; ++x) {
-        path[dep] = x;
-        dfs(dep + 1);
-    }
-}
+        for (int x = 0; x < m; ++x) {
+            path[dep] = x;
+            self(self, dep + 1);
+        }
+    };
 
-int main() {
-    cin >> n >> m;
-    dfs(1);
-    return 0;
+    dfs(dfs, 0);
 }

@@ -1,31 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int maxn = 30 + 5;
+// 枚举所有 m 组合。
+// a 会按输入顺序被选择；如果希望字典序输出，调用前先对 a 排序。
+template <class T, class Emit>
+void enumerate_combinations(const vector<T>& a, int m, const Emit& emit) {
+    const int n = (int)a.size();
+    if (m < 0 || m > n) return;
 
-int n, m;
-int a[maxn], path[maxn];
+    vector<T> path;
+    path.reserve(m);
 
-// 从 n 个元素中选 m 个。
-// dep 表示当前要选第 dep 个数，last 表示上一次选择的位置。
-void dfs(int dep, int last) {
-    if (dep > m) {
-        for (int i = 1; i <= m; ++i) {
-            cout << path[i] << (i == m ? '\n' : ' ');
+    auto dfs = [&](auto&& self, int last) -> void {
+        if ((int)path.size() == m) {
+            emit(path);
+            return;
         }
-        return;
-    }
 
-    // 剩余位置不足时可以提前停止。
-    for (int i = last + 1; i <= n - (m - dep); ++i) {
-        path[dep] = a[i];
-        dfs(dep + 1, i);
-    }
-}
+        int need = m - (int)path.size();
+        for (int i = last + 1; i <= n - need; ++i) {
+            path.push_back(a[i]);
+            self(self, i);
+            path.pop_back();
+        }
+    };
 
-int main() {
-    cin >> n >> m;
-    for (int i = 1; i <= n; ++i) cin >> a[i];
-    dfs(1, 0);
-    return 0;
+    dfs(dfs, -1);
 }

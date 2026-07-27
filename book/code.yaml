@@ -23,12 +23,6 @@ codes:
     language: cpp
     tags: [基础算法, 二分]
 
-  - id: binary-search-linear
-    path: base/binary_search_linear.cpp
-    description: 线性域二分查找
-    language: cpp
-    tags: [基础算法, 二分]
-
   - id: difference-1d
     path: base/differential.cpp
     description: 一维差分数组

@@ -5,7 +5,7 @@ date: 2026-06-16 20:30
 toc: true
 tags: ["二分查找", "单调性"]
 categories: ["基础算法"]
-code_template: [binary-search, binary-search-linear]
+code_template: [binary-search]
 ---
 
 [[TOC]]
@@ -93,7 +93,7 @@ false false false true true true
 
 ### 暴力对照
 
-@include-code(/code/base/binary_search_linear.cpp, cpp)
+@include-code(./code/binary_search_linear.cpp, cpp)
 
 ### 二分模板
 
