@@ -124,10 +124,11 @@ tail[len - 1] = 长度为 len 的上升子序列中，最小可能结尾
 
 ## 参考代码位置
 
-正式模板由最长上升子序列主教程统一维护：
+可复用模板由最长上升子序列主教程统一维护：
 
-- `/code/dynamic_programming/lis_n2.cpp`
 - `/code/dynamic_programming/lis_binary.cpp`
+
+主教程中的 $O(n^2)$ 版本是讲解用代码，保存在文章目录下，不作为公共代码模板发布。
 
 ## 相关教程
 

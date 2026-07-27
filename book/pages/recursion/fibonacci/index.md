@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "记忆化", "斐波那契"]
 categories: ["递归"]
-code_template: [fib-recursive, fib-memo]
 ---
 
 [[TOC]]
@@ -87,11 +86,11 @@ F(n)
 
 ### 普通递归
 
-@include-code(/code/base/recursion/fibonacci_recursive.cpp, cpp)
+@include-code(./code/fibonacci_recursive.cpp, cpp)
 
 ### 记忆化递归
 
-@include-code(/code/base/recursion/fibonacci_memo.cpp, cpp)
+@include-code(./code/fibonacci_memo.cpp, cpp)
 
 ## 测试用例
 

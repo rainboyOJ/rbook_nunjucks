@@ -53,48 +53,6 @@ codes:
     language: cpp
     tags: [基础算法, 离散化]
 
-  - id: twoptr-diff-pair-brute
-    path: base/double_pointer/diff_pair_count_force.cpp
-    description: 差值数对计数（暴力解法）
-    language: cpp
-    tags: [基础算法, 双指针]
-
-  - id: twoptr-diff-pair-range
-    path: base/double_pointer/diff_pair_count_range.cpp
-    description: 差值数对计数（排序后双指针）
-    language: cpp
-    tags: [基础算法, 双指针]
-
-  - id: twoptr-min-len-subarray
-    path: base/double_pointer/min_len_subarray_geq.cpp
-    description: 长度最短且和不小于 S 的子数组（滑动窗口）
-    language: cpp
-    tags: [基础算法, 双指针, 滑动窗口]
-
-  - id: twoptr-min-len-brute
-    path: base/double_pointer/min_len_subarray_geq_force.cpp
-    description: 长度最短且和不小于 S 的子数组（暴力枚举）
-    language: cpp
-    tags: [基础算法, 枚举]
-
-  - id: twoptr-range-sum-positive
-    path: base/double_pointer/range_sum_equal_positive.cpp
-    description: 正整数序列中和等于 K 的区间（双指针）
-    language: cpp
-    tags: [基础算法, 双指针]
-
-  - id: twoptr-range-sum-brute
-    path: base/double_pointer/range_sum_equal_prefix_bruteforce.cpp
-    description: 区间和等于 K（前缀和暴力枚举）
-    language: cpp
-    tags: [基础算法, 前缀和, 枚举]
-
-  - id: twoptr-range-sum-fast
-    path: base/double_pointer/range_sum_equal_prefix_twopointer.cpp
-    description: 区间和等于 K（前缀和与双指针）
-    language: cpp
-    tags: [基础算法, 前缀和, 双指针]
-
   - id: combination
     path: base/enumerate/combination.cpp
     description: 组合数生成与枚举
@@ -125,12 +83,6 @@ codes:
     language: cpp
     tags: [基础算法, 枚举]
 
-  - id: enumerate-stack-output-count
-    path: base/enumerate/stack_output_count.cpp
-    description: stack_output_count 算法模板
-    language: cpp
-    tags: [基础算法, 枚举]
-
   - id: submask
     path: base/enumerate/submask.cpp
     description: submask 算法模板
@@ -148,42 +100,6 @@ codes:
     description: subset_binary 算法模板
     language: cpp
     tags: [基础算法, 枚举, 二分查找]
-
-  - id: number-distance
-    path: base/number_distance.cpp
-    description: number_distance 算法模板
-    language: cpp
-    tags: [基础算法]
-
-  - id: pair-count-binary-diff
-    path: base/pair_count/different_binary_pairs.cpp
-    description: different_binary_pairs 算法模板
-    language: cpp
-    tags: [基础算法, 二分查找, 差分]
-
-  - id: pair-count-limited-distance
-    path: base/pair_count/distance_limited_equal_pairs.cpp
-    description: distance_limited_equal_pairs 算法模板
-    language: cpp
-    tags: [基础算法]
-
-  - id: pair-count-mod-sum-pairs
-    path: base/pair_count/mod_sum_pairs.cpp
-    description: mod_sum_pairs 算法模板
-    language: cpp
-    tags: [基础算法]
-
-  - id: pair-count-two-sum-pairs
-    path: base/pair_count/two_sum_pairs.cpp
-    description: two_sum_pairs 算法模板
-    language: cpp
-    tags: [基础算法]
-
-  - id: pair-count-window-max
-    path: base/pair_count/window_max_pair_sum.cpp
-    description: window_max_pair_sum 算法模板
-    language: cpp
-    tags: [基础算法]
 
   - id: prefix-sum
     path: base/presum.cpp
@@ -209,54 +125,6 @@ codes:
     language: cpp
     tags: [基础算法, 排序]
 
-  - id: rearrangement-prefix-sum-min
-    path: base/rearrangement_prefix_sum_min.cpp
-    description: rearrangement_prefix_sum_min 算法模板
-    language: cpp
-    tags: [基础算法, 前缀和]
-
-  - id: fib-memo
-    path: base/recursion/fibonacci_memo.cpp
-    description: fibonacci_memo 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
-  - id: fib-recursive
-    path: base/recursion/fibonacci_recursive.cpp
-    description: fibonacci_recursive 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
-  - id: hanoi
-    path: base/recursion/hanoi.cpp
-    description: hanoi 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
-  - id: integer-partition
-    path: base/recursion/integer_partition.cpp
-    description: integer_partition 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
-  - id: print-n
-    path: base/recursion/print_to_n.cpp
-    description: print_to_n 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
-  - id: sum-n
-    path: base/recursion/sum_to_n.cpp
-    description: sum_to_n 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
-  - id: sum-n-tail
-    path: base/recursion/sum_to_n_tail.cpp
-    description: sum_to_n_tail 算法模板
-    language: cpp
-    tags: [基础算法, 递归与分治]
-
   - id: st
     path: base/sparse_table.cpp
     description: sparse_table 算法模板
@@ -280,18 +148,6 @@ codes:
     description: two_machine_johnson 算法模板
     language: cpp
     tags: [基础算法]
-
-  - id: balance-sum-min-ops
-    path: base/zero_number/min_ops_balance_sum.cpp
-    description: min_ops_balance_sum 算法模板
-    language: cpp
-    tags: [基础算法]
-
-  - id: avl-demo
-    path: data-struture/AVL/demo.cpp
-    description: demo 算法模板
-    language: cpp
-    tags: [数据结构]
 
   - id: fenwick
     path: data-struture/BIT/bit.cpp
@@ -322,24 +178,6 @@ codes:
     description: rbtree 算法模板
     language: cpp
     tags: [数据结构, 平衡树]
-
-  - id: rbtree-validata
-    path: data-struture/RBTree/rbtree_validata.cpp
-    description: rbtree_validata 算法模板
-    language: cpp
-    tags: [数据结构, 平衡树]
-
-  - id: rbtree-test-insert
-    path: data-struture/RBTree/test_insert.cpp
-    description: test_insert 算法模板
-    language: cpp
-    tags: [数据结构]
-
-  - id: rbtree-test-insert2
-    path: data-struture/RBTree/test_insert2.cpp
-    description: test_insert2 算法模板
-    language: cpp
-    tags: [数据结构]
 
   - id: bst
     path: data-struture/bst.cpp
@@ -509,39 +347,15 @@ codes:
     language: cpp
     tags: [动态规划, 树状数组]
 
-  - id: digit-dp-windy-dfs
-    path: dynamic_programming/digit_dp/windy_dfs.cpp
-    description: windy_dfs 算法模板
-    language: cpp
-    tags: [动态规划]
-
-  - id: digit-dp-windy-iter
-    path: dynamic_programming/digit_dp/windy_iter.cpp
-    description: windy_iter 算法模板
-    language: cpp
-    tags: [动态规划]
-
   - id: knapsack-complete-1d
     path: dynamic_programming/knapsack/complete_1d.cpp
     description: complete_1d 算法模板
     language: cpp
     tags: [动态规划]
 
-  - id: knapsack-complete-2d
-    path: dynamic_programming/knapsack/complete_2d.cpp
-    description: complete_2d 算法模板
-    language: cpp
-    tags: [动态规划]
-
   - id: knapsack-grouped
     path: dynamic_programming/knapsack/grouped.cpp
     description: grouped 算法模板
-    language: cpp
-    tags: [动态规划]
-
-  - id: knapsack-partition
-    path: dynamic_programming/knapsack/integer_partition.cpp
-    description: integer_partition 算法模板
     language: cpp
     tags: [动态规划]
 
@@ -561,12 +375,6 @@ codes:
     path: dynamic_programming/knapsack/zero_one_1d.py
     description: zero_one_1d 算法模板
     language: py
-    tags: [动态规划]
-
-  - id: knapsack-01-2d
-    path: dynamic_programming/knapsack/zero_one_2d.cpp
-    description: zero_one_2d 算法模板
-    language: cpp
     tags: [动态规划]
 
   - id: knapsack-01-exact-fill
@@ -598,24 +406,6 @@ codes:
     description: lis_binary 算法模板
     language: cpp
     tags: [动态规划, 二分查找]
-
-  - id: lis-n2
-    path: dynamic_programming/lis_n2.cpp
-    description: lis_n2 算法模板
-    language: cpp
-    tags: [动态规划]
-
-  - id: number-pyramid
-    path: dynamic_programming/number_pyramid.cpp
-    description: number_pyramid 算法模板
-    language: cpp
-    tags: [动态规划]
-
-  - id: slope-toy-packing
-    path: dynamic_programming/slope_toy_packing.cpp
-    description: slope_toy_packing 算法模板
-    language: cpp
-    tags: [动态规划]
 
   - id: sos-subset-sum
     path: dynamic_programming/sos/subset_sum.cpp
@@ -884,18 +674,6 @@ codes:
   - id: normalize-mod
     path: math/numberTheory/normalize_mod.cpp
     description: normalize_mod 算法模板
-    language: cpp
-    tags: [数学, 数学与数论]
-
-  - id: set-max-pair-sum-prefix
-    path: math/set/max_pair_sum_prefix.cpp
-    description: max_pair_sum_prefix 算法模板
-    language: cpp
-    tags: [数学, 数学与数论, 前缀和]
-
-  - id: set-max-pair-sum-top2
-    path: math/set/max_pair_sum_top2.cpp
-    description: max_pair_sum_top2 算法模板
     language: cpp
     tags: [数学, 数学与数论]
 

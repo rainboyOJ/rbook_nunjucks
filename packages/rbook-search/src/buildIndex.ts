@@ -4,6 +4,7 @@ import {
   loadCodeConfig,
   requireCodeId,
   requirePageId,
+  validateCodeDirectory,
   validateCodes,
   validatePages,
   validateReferences
@@ -127,6 +128,7 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}): any {
 
   const codeConfig = loadCodeConfig({ strict: true });
   const validationErrors = [
+    ...validateCodeDirectory(codeConfig.codes),
     ...validateCodes(codeConfig.codes),
     ...validatePages(documents),
     ...validateReferences(documents, codeConfig.codes)

@@ -5,7 +5,6 @@ date: 2026-06-16 20:40
 toc: true
 tags: ["基础概念", "区间长度"]
 categories: ["基础算法"]
-code_template: [number-distance]
 ---
 
 [[TOC]]
@@ -80,7 +79,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/base/number_distance.cpp, cpp)
+@include-code(./code/number_distance.cpp, cpp)
 
 ## 测试用例
 

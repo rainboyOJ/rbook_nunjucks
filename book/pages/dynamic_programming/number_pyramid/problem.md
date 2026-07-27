@@ -114,7 +114,9 @@ $$
 
 ## 参考代码位置
 
-正式模板由数字三角形主教程统一维护：`/code/dynamic_programming/number_pyramid.cpp`。
+主教程中的示例代码保存在文章目录下：
+`dynamic_programming/number_pyramid/code/number_pyramid.cpp`。
+它用于讲解数字三角形的状态转移，不作为公共代码模板发布。
 
 ## 相关教程
 

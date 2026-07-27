@@ -373,6 +373,24 @@ id: 123
 - [x] 数字代码模板 ID 以“代码 ID 必须是字符串”失败。
 - [x] ID 契约测试 6/6 通过，验证校验器和索引器使用同一规则。
 
+## 后续：模板与教学代码解耦
+
+### 处理决定
+
+`book/code/` 只保存可以被多篇文章复用、并通过 `book/code.yaml` 注册的模板。具体题目的完整程序、暴力对拍、演示代码、测试代码和用于讲解递推过程的慢速版本，移动到对应文章的 `book/pages/<article>/code/` 目录，并由文章使用相对 `@include-code` 引用。
+
+共享 Markdown 目录的文章使用 `book/pages/<topic>/code/<article-id>/` 保存教学代码。`book/code/readme.md` 是唯一允许不注册的说明文件；不为旧的 `/code/...` 教学路径保留兼容别名。
+
+### 预检查约束
+
+- `book/code.yaml` 中的每个路径必须解析到 `book/code/` 内的常规文件。
+- 同一个模板文件不能被多个 ID 注册。
+- `book/code/` 中除 `readme.md` 外的每个文件必须且只能注册一次。
+- `.out`、`.o`、`.dSYM` 等构建产物会让 pre-check 失败。
+- 11 个暂时无法明确归类的代码文件保留在原位置，待人工复核后再处理。
+
+本次迁移后，`book/code/` 包含 152 个注册模板和 1 个说明文件；真实 pre-check 结果为 `pages=432`、`codes=152`、`errors=0`。
+
 ## 回归验证清单
 
 全部修复完成后，至少执行：
@@ -393,13 +411,13 @@ npm run test:api
 ### 最终执行结果
 
 - [x] `rg -n '^---id:' book/pages` 无匹配。
-- [x] `npm run pre-check` 通过：`pages=432`、`codes=189`、`errors=0`、`warnings=666`。
+- [x] `npm run pre-check` 通过：`pages=432`、`codes=152`、`errors=0`、`warnings=665`。
 - [x] `npm run typecheck` 通过。
-- [x] `npm run build:all` 通过：`pages=432`、`codes=189`、`errors=0`。
-- [x] `npm run build:runtime` 通过：`pages=432`、`codes=189`、`errors=0`。
+- [x] `npm run build:all` 通过：`pages=432`、`codes=152`、`errors=0`。
+- [x] `npm run build:runtime` 通过：`pages=432`、`codes=152`、`errors=0`。
 - [x] `npm run test:api` 通过。
-- [x] `npm run test:code-template` 通过，11/11。
-- [x] front matter 修复脚本测试 4/4、ID 与 pre-check 单元测试 10/10、构建门禁测试 4/4 通过。
+- [x] `npm run test:code-template` 通过，6/6。
+- [x] front matter 修复脚本测试 4/4、ID 与 pre-check 单元测试 14/14、构建门禁测试 4/4 通过。
 - [x] 浏览器打开 `/code_template/`，搜索 `dsu_on_tree_color_count`；确认关联文章为“树上启发式合并”，链接为 `/algorithm/dsu_on_tree/index.html`，并成功打开包含 `struct DsuOnTree` 的 2982 字符源码。
 
 ## 非目标与风险控制

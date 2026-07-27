@@ -5,7 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LIS", "二分"]
 categories: ["动态规划"]
-code_template: [lis-n2, lis-binary]
+code_template: [lis-binary]
 ---
 
 [[TOC]]
@@ -222,7 +222,7 @@ $$
 
 $O(n^2)$ DP：
 
-@include-code(/code/dynamic_programming/lis_n2.cpp, cpp)
+@include-code(./code/lis_n2.cpp, cpp)
 
 $O(n \log n)$ 二分优化：
 

@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["枚举", "配对", "哈希表", "滑动窗口", "单调队列"]
 categories: ["枚举", "基础算法"]
-code_template: [pair-count-binary-diff, pair-count-two-sum-pairs, pair-count-mod-sum-pairs, pair-count-limited-distance, pair-count-window-max]
 ---
 
 [[TOC]]
@@ -93,23 +92,23 @@ $$
 
 ### 二值属性不同配对
 
-@include-code(/code/base/pair_count/different_binary_pairs.cpp, cpp)
+@include-code(./code/different_binary_pairs.cpp, cpp)
 
 ### Two Sum 配对计数
 
-@include-code(/code/base/pair_count/two_sum_pairs.cpp, cpp)
+@include-code(./code/two_sum_pairs.cpp, cpp)
 
 ### 同余配对计数
 
-@include-code(/code/base/pair_count/mod_sum_pairs.cpp, cpp)
+@include-code(./code/mod_sum_pairs.cpp, cpp)
 
 ### 距离限制相等配对
 
-@include-code(/code/base/pair_count/distance_limited_equal_pairs.cpp, cpp)
+@include-code(./code/distance_limited_equal_pairs.cpp, cpp)
 
 ### 距离限制最大配对和
 
-@include-code(/code/base/pair_count/window_max_pair_sum.cpp, cpp)
+@include-code(./code/window_max_pair_sum.cpp, cpp)
 
 ## 测试用例
 

@@ -5,7 +5,6 @@ date: 2026-06-16 19:45
 toc: true
 tags: ["贪心", "等效模型"]
 categories: ["基础算法"]
-code_template: [balance-sum-min-ops]
 ---
 
 [[TOC]]
@@ -65,7 +64,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/base/zero_number/min_ops_balance_sum.cpp, cpp)
+@include-code(./code/min_ops_balance_sum.cpp, cpp)
 
 ## 测试用例
 

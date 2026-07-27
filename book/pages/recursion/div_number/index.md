@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "记忆化", "整数划分"]
 categories: ["递归"]
-code_template: [integer-partition]
 ---
 
 [[TOC]]
@@ -110,7 +109,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/base/recursion/integer_partition.cpp, cpp)
+@include-code(./code/integer_partition.cpp, cpp)
 
 ## 测试用例
 

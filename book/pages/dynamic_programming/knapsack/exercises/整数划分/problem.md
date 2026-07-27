@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "完全背包", "计数 DP", "整数划分"]
 categories: ["动态规划"]
-code_template: [knapsack-partition]
 ---
 
 [[TOC]]
@@ -204,7 +203,7 @@ for (int x = 1; x <= n; ++x)
 
 ## 代码实现
 
-@include-code(/code/dynamic_programming/knapsack/integer_partition.cpp, cpp)
+@include-code(./code/integer_partition.cpp, cpp)
 
 ## 测试用例
 

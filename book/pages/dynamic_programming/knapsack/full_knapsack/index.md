@@ -5,7 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "完全背包"]
 categories: ["动态规划"]
-code_template: [knapsack-complete-2d, knapsack-complete-1d]
+code_template: [knapsack-complete-1d]
 ---
 
 [[TOC]]
@@ -146,7 +146,7 @@ $$
 
 ### 二维写法
 
-@include-code(/code/dynamic_programming/knapsack/complete_2d.cpp, cpp)
+@include-code(./code/complete_2d.cpp, cpp)
 
 ### 一维写法
 

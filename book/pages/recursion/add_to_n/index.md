@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "递推", "调用栈"]
 categories: ["递归"]
-code_template: [sum-n, sum-n-tail]
 ---
 
 [[TOC]]
@@ -95,11 +94,11 @@ $$
 
 ### 普通递归
 
-@include-code(/code/base/recursion/sum_to_n.cpp, cpp)
+@include-code(./code/sum_to_n.cpp, cpp)
 
 ### 尾递归
 
-@include-code(/code/base/recursion/sum_to_n_tail.cpp, cpp)
+@include-code(./code/sum_to_n_tail.cpp, cpp)
 
 ## 测试用例
 

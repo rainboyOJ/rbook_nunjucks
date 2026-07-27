@@ -48,6 +48,7 @@ export const __themedir = themeDir;
 export type {
     CodeTemplateItem,
     CodeConfig,
+    CodeDirectoryValidationOptions,
     LoadCodeConfigOptions,
     ValidationError,
     PublicIdError,
@@ -59,6 +60,7 @@ export {
     parsePublicId,
     requireCodeId,
     requirePageId,
+    validateCodeDirectory,
     validateCodes,
     validatePages,
     validateReferences

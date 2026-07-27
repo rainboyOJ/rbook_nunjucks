@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "斜率优化", "凸包优化", "单调队列"]
 categories: ["动态规划"]
-code_template: [slope-toy-packing]
 ---
 
 [[TOC]]
@@ -176,7 +175,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/dynamic_programming/slope_toy_packing.cpp, cpp)
+@include-code(./code/slope_toy_packing.cpp, cpp)
 
 ## 测试用例
 

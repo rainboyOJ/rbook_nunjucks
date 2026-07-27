@@ -5,7 +5,6 @@ date: 2026-06-16 21:20
 toc: true
 tags: ["双指针", "数对统计", "排序"]
 categories: ["基础算法"]
-code_template: [twoptr-diff-pair-brute, twoptr-diff-pair-range]
 ---
 
 [[TOC]]
@@ -93,11 +92,11 @@ $$
 
 ### 暴力对照
 
-@include-code(/code/base/double_pointer/diff_pair_count_force.cpp, cpp)
+@include-code(./code/diff-pair-count/diff_pair_count_force.cpp, cpp)
 
 ### 双指针优化
 
-@include-code(/code/base/double_pointer/diff_pair_count_range.cpp, cpp)
+@include-code(./code/diff-pair-count/diff_pair_count_range.cpp, cpp)
 
 ## 测试用例
 

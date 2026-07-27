@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["栈", "动态规划", "Catalan 数", "枚举"]
 categories: ["枚举", "动态规划"]
-code_template: [enumerate-stack-output-count]
 ---
 
 [[TOC]]
@@ -97,7 +96,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/base/enumerate/stack_output_count.cpp, cpp)
+@include-code(./code/stack_output_count.cpp, cpp)
 
 ## 测试用例
 

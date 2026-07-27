@@ -25,6 +25,12 @@ export interface LoadCodeConfigOptions {
   strict?: boolean;
 }
 
+export interface CodeDirectoryValidationOptions {
+  codeDir?: string;
+  configFilePath?: string;
+  allowedUnregisteredFiles?: string[];
+}
+
 export interface ValidationError {
   level: 'ERROR' | 'WARNING';
   filePath: string;
@@ -134,15 +140,18 @@ export function validateCodes(codes: CodeTemplateItem[]): ValidationError[] {
   const seenIds = new Set<string>();
 
   for (const item of codes) {
-    const itemPath = item.path || 'unknown';
-    const idResult = parsePublicId(item.id);
+    const record = item && typeof item === 'object' && !Array.isArray(item)
+      ? item as CodeTemplateItem
+      : {} as CodeTemplateItem;
+    const itemPath = typeof record.path === 'string' && record.path ? record.path : 'unknown';
+    const idResult = parsePublicId(record.id);
     if (idResult.ok === false) {
       errors.push({
         level: 'ERROR',
         filePath: `book/code.yaml`,
         message: idResult.error === 'empty'
           ? `code entry with path '${itemPath}' is missing required field 'id'`
-          : publicIdErrorMessage(idResult, 'code', item.id)
+          : publicIdErrorMessage(idResult, 'code', record.id)
       });
     } else if (seenIds.has(idResult.id)) {
       errors.push({
@@ -154,28 +163,172 @@ export function validateCodes(codes: CodeTemplateItem[]): ValidationError[] {
       seenIds.add(idResult.id);
     }
 
-    if (!item.path) {
+    if (typeof record.path !== 'string' || record.path.trim() === '') {
       errors.push({
         level: 'ERROR',
         filePath: `book/code.yaml`,
-        message: `code entry '${item.id}' is missing required field 'path'`
+        message: `code entry '${record.id}' is missing required field 'path'`
       });
     } else {
-      const fullPath = path.resolve(codeTemplateDir, item.path);
+      const fullPath = path.resolve(codeTemplateDir, record.path);
       if (!fs.existsSync(fullPath)) {
         errors.push({
           level: 'ERROR',
           filePath: `book/code.yaml`,
-          message: `code file '${item.path}' for id '${item.id}' does not exist on disk`
+          message: `code file '${record.path}' for id '${record.id}' does not exist on disk`
         });
       }
     }
 
-    if (!item.description) {
+    if (!record.description) {
       errors.push({
         level: 'WARNING',
         filePath: `book/code.yaml`,
-        message: `code entry '${item.id}' is missing field 'description'`
+        message: `code entry '${record.id}' is missing field 'description'`
+      });
+    }
+  }
+
+  return errors;
+}
+
+function pathIsInside(root: string, target: string) {
+  const relative = path.relative(root, target);
+  return relative !== '..' && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative);
+}
+
+function toCodeRelativePath(codeDir: string, filePath: string) {
+  return path.relative(codeDir, filePath).split(path.sep).join('/');
+}
+
+function isBuildArtifact(fileName: string) {
+  return fileName.endsWith('.dSYM')
+    || /\.(?:out|o|obj|a|so|dylib|dll|exe|pyc|pyo|class)$/.test(fileName)
+    || /^core(?:\.|$)/.test(fileName);
+}
+
+function collectCodeFiles(current: string): string[] {
+  const files: string[] = [];
+  for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+    const fullPath = path.join(current, entry.name);
+    const stat = fs.lstatSync(fullPath);
+    if (stat.isSymbolicLink()) {
+      files.push(fullPath);
+      continue;
+    }
+    if (stat.isDirectory()) {
+      if (isBuildArtifact(entry.name)) {
+        files.push(fullPath);
+        continue;
+      }
+      files.push(...collectCodeFiles(fullPath));
+    } else if (stat.isFile()) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
+/**
+ * Validate the inventory contract between book/code.yaml and book/code/.
+ * This is separate from validateCodes() so in-memory unit tests do not scan
+ * the real repository unexpectedly.
+ */
+export function validateCodeDirectory(
+  codes: CodeTemplateItem[],
+  options: CodeDirectoryValidationOptions = {}
+): ValidationError[] {
+  const codeDir = path.resolve(options.codeDir || codeTemplateDir);
+  const configFilePath = options.configFilePath || 'book/code.yaml';
+  const allowedUnregisteredFiles = new Set(
+    options.allowedUnregisteredFiles || ['readme.md']
+  );
+  const errors: ValidationError[] = [];
+
+  if (!fs.existsSync(codeDir)) {
+    errors.push({
+      level: 'ERROR',
+      filePath: configFilePath,
+      message: `code directory '${codeDir}' does not exist`
+    });
+    return errors;
+  }
+  if (!fs.statSync(codeDir).isDirectory()) {
+    errors.push({
+      level: 'ERROR',
+      filePath: configFilePath,
+      message: `code path '${codeDir}' is not a directory`
+    });
+    return errors;
+  }
+
+  const registeredPaths = new Map<string, string>();
+  for (const item of codes) {
+    if (typeof item?.path !== 'string' || item.path.trim() === '') continue;
+
+    const fullPath = path.resolve(codeDir, item.path);
+    const relativePath = toCodeRelativePath(codeDir, fullPath);
+    if (!pathIsInside(codeDir, fullPath)) {
+      errors.push({
+        level: 'ERROR',
+        filePath: configFilePath,
+        message: `code file '${item.path}' for id '${item.id}' is outside the code directory`
+      });
+      continue;
+    }
+    if (relativePath === 'readme.md') {
+      errors.push({
+        level: 'ERROR',
+        filePath: configFilePath,
+        message: `code file 'readme.md' is documentation and cannot be registered`
+      });
+    }
+
+    const previousId = registeredPaths.get(relativePath);
+    if (previousId) {
+      errors.push({
+        level: 'ERROR',
+        filePath: configFilePath,
+        message: `duplicate code path '${relativePath}' registered by '${previousId}' and '${item.id}'`
+      });
+    } else {
+      registeredPaths.set(relativePath, String(item.id));
+    }
+
+    let stat: fs.Stats;
+    try {
+      stat = fs.lstatSync(fullPath);
+    } catch {
+      // validateCodes() reports missing files with the metadata context.
+      continue;
+    }
+    if (!stat.isFile() || stat.isSymbolicLink()) {
+      errors.push({
+        level: 'ERROR',
+        filePath: configFilePath,
+        message: `code file '${item.path}' for id '${item.id}' must be a regular file`
+      });
+    }
+  }
+
+  for (const fullPath of collectCodeFiles(codeDir)) {
+    const relativePath = toCodeRelativePath(codeDir, fullPath);
+    const displayPath = `book/code/${relativePath}`;
+    if (isBuildArtifact(path.basename(fullPath))
+      || relativePath.split('/').some((part) => isBuildArtifact(part))) {
+      errors.push({
+        level: 'ERROR',
+        filePath: displayPath,
+        message: `build artifact '${relativePath}' is not allowed in book/code`
+      });
+      continue;
+    }
+    if (allowedUnregisteredFiles.has(relativePath)) continue;
+    if (!registeredPaths.has(relativePath)) {
+      errors.push({
+        level: 'ERROR',
+        filePath: displayPath,
+        message: `unregistered code file '${relativePath}' is not listed in ${configFilePath}`
       });
     }
   }

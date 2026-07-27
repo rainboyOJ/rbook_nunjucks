@@ -1,5 +1,6 @@
 import {
   loadCodeConfig,
+  validateCodeDirectory,
   validateCodes,
   validatePages,
   validateReferences,
@@ -98,8 +99,10 @@ export function runPreCheckContext(): PreCheckContext {
   }
 
   let codes: CodeTemplateItem[] = [];
+  let codeConfigLoaded = false;
   try {
     codes = loadCodeConfig({ strict: true }).codes;
+    codeConfigLoaded = true;
   } catch (error) {
     issues.push({
       level: 'ERROR',
@@ -109,7 +112,11 @@ export function runPreCheckContext(): PreCheckContext {
   }
 
   return {
-    result: evaluatePreCheck(pages, codes, issues),
+    result: evaluatePreCheck(
+      pages,
+      codes,
+      codeConfigLoaded ? [...issues, ...validateCodeDirectory(codes)] : issues
+    ),
     pages,
     codes,
     site

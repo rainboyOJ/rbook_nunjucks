@@ -5,7 +5,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "01背包"]
 categories: ["动态规划"]
-code_template: [knapsack-01-2d, knapsack-01-1d, knapsack-01-1d-1, knapsack-01-exact-fill]
+code_template: [knapsack-01-1d, knapsack-01-1d-1, knapsack-01-exact-fill]
 ---
 
 [[TOC]]
@@ -152,7 +152,7 @@ $$
 
 二维写法最容易理解，也方便之后恢复选了哪些物品。
 
-@include-code(/code/dynamic_programming/knapsack/zero_one_2d.cpp, cpp)
+@include-code(./code/zero_one_2d.cpp, cpp)
 
 ### 一维写法
 

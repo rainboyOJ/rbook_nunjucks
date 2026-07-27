@@ -5,7 +5,6 @@ date: 2026-05-31 10:30
 toc: true
 tags: ["数位DP", "动态规划"]
 categories: ["dp"]
-code_template: [digit-dp-windy-dfs, digit-dp-windy-iter]
 ---
 
 [[TOC]]
@@ -179,7 +178,7 @@ for (int cur = 0; cur <= up; ++cur) {
 
 ### 记忆化 DFS 模板
 
-@include-code(/code/dynamic_programming/digit_dp/windy_dfs.cpp, cpp)
+@include-code(./code/windy_dfs.cpp, cpp)
 
 这份写法是最通用的数位 DP 写法。以后遇到类似题目，通常只需要改两处：
 
@@ -223,7 +222,7 @@ $$
 
 这个思路本质上仍然在走数位搜索树，只是把“不贴上界的子树大小”提前算好了。
 
-@include-code(/code/dynamic_programming/digit_dp/windy_iter.cpp, cpp)
+@include-code(./code/windy_iter.cpp, cpp)
 
 两种写法的选择：
 

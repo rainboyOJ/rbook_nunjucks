@@ -1,6 +1,17 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
+import { validateCodeDirectory } from '../packages/rbook-core/dist/validation.js';
 import { evaluatePreCheck } from '../packages/rbook-search/dist/preCheck.js';
+
+function codeDirectory(t) {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'rbook-code-inventory-'));
+  fs.writeFileSync(path.join(directory, 'readme.md'), 'templates only\n');
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  return directory;
+}
 
 function page(id, path = `${id}.md`, extraFrontMatter = {}) {
   return {
@@ -76,4 +87,44 @@ test('the shared pre-check does not modify process.exitCode', () => {
   } finally {
     process.exitCode = previousExitCode;
   }
+});
+
+test('the code directory accepts exactly the registered template files', (t) => {
+  const directory = codeDirectory(t);
+  fs.writeFileSync(path.join(directory, 'sample.cpp'), '// template\n');
+
+  const errors = validateCodeDirectory([
+    { id: 'sample', path: 'sample.cpp', description: 'Sample' }
+  ], { codeDir: directory });
+  assert.deepEqual(errors, []);
+});
+
+test('the code directory rejects duplicate, unregistered, and build artifact files', (t) => {
+  const directory = codeDirectory(t);
+  fs.writeFileSync(path.join(directory, 'sample.cpp'), '// template\n');
+  fs.writeFileSync(path.join(directory, 'orphan.cpp'), '// not registered\n');
+  fs.writeFileSync(path.join(directory, 'debug.out'), 'binary\n');
+  fs.mkdirSync(path.join(directory, 'debug.dSYM'));
+
+  const errors = validateCodeDirectory([
+    { id: 'sample-a', path: 'sample.cpp', description: 'Sample A' },
+    { id: 'sample-b', path: 'sample.cpp', description: 'Sample B' }
+  ], { codeDir: directory });
+  const messages = errors.map((item) => item.message);
+  assert.ok(messages.some((message) => message.includes("duplicate code path 'sample.cpp'")));
+  assert.ok(messages.some((message) => message.includes("unregistered code file 'orphan.cpp'")));
+  assert.ok(messages.some((message) => message.includes("build artifact 'debug.out'")));
+  assert.ok(messages.some((message) => message.includes("build artifact 'debug.dSYM'")));
+});
+
+test('registered code paths must remain inside the code directory and be regular files', (t) => {
+  const directory = codeDirectory(t);
+  fs.mkdirSync(path.join(directory, 'nested.cpp'));
+  const errors = validateCodeDirectory([
+    { id: 'outside', path: '../outside.cpp', description: 'Outside' },
+    { id: 'directory', path: 'nested.cpp', description: 'Directory' }
+  ], { codeDir: directory });
+  const messages = errors.map((item) => item.message);
+  assert.ok(messages.some((message) => message.includes('outside the code directory')));
+  assert.ok(messages.some((message) => message.includes("'nested.cpp' for id 'directory' must be a regular file")));
 });

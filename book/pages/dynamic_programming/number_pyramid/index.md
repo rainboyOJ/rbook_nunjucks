@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "数字三角形", "线性 DP"]
 categories: ["动态规划"]
-code_template: [number-pyramid]
 ---
 
 [[TOC]]
@@ -139,7 +138,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/dynamic_programming/number_pyramid.cpp, cpp)
+@include-code(./code/number_pyramid.cpp, cpp)
 
 ## 测试用例
 

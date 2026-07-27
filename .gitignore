@@ -109,6 +109,7 @@ temp/
 # haskell compiled file
 *.hi 
 *.o
+*.out
 *.dyn_hi
 *.dyn_o
 

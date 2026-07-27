@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "回溯", "调用栈"]
 categories: ["递归"]
-code_template: [print-n]
 ---
 
 [[TOC]]
@@ -60,7 +59,7 @@ code_template: [print-n]
 
 ## 代码实现
 
-@include-code(/code/base/recursion/print_to_n.cpp, cpp)
+@include-code(./code/print_to_n.cpp, cpp)
 
 ## 测试用例
 

@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["排序不等式", "贪心", "相邻交换"]
 categories: ["基础算法"]
-code_template: [rearrangement-prefix-sum-min]
 ---
 
 [[TOC]]
@@ -132,7 +131,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/base/rearrangement_prefix_sum_min.cpp, cpp)
+@include-code(./code/rearrangement_prefix_sum_min.cpp, cpp)
 
 ## 测试用例
 

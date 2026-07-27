@@ -5,7 +5,6 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["递归", "汉诺塔"]
 categories: ["递归"]
-code_template: [hanoi]
 ---
 
 [[TOC]]
@@ -82,7 +81,7 @@ $$
 
 ## 代码实现
 
-@include-code(/code/base/recursion/hanoi.cpp, cpp)
+@include-code(./code/hanoi.cpp, cpp)
 
 ## 测试用例
 
