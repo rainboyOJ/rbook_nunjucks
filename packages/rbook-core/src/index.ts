@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import { globSync } from 'glob';
 import markdown from '@rbook/markdown';
 import { renderTemplate } from './renderEngine.js';
-import { loadCodeConfig } from './validation.js';
+import { loadCodeConfig, type CodeTemplateItem } from './validation.js';
 import {
     bookDir,
     codeTemplateDir,
@@ -33,6 +33,11 @@ interface BookConfig {
 }
 
 type RenderData = Record<string, unknown>;
+
+export interface RbookOptions {
+    config?: BookConfig;
+    codeTemplates?: CodeTemplateItem[];
+}
 
 // 这些旧导出被部分历史代码使用，暂时保留。新代码应优先从 paths.ts 读取路径。
 export const __workdir = rootDir;
@@ -74,11 +79,14 @@ class rbook {
     config: BookConfig;
     codeTemplatesById: Map<string, Record<string, unknown>>;
 
-    constructor() {
+    constructor(options: RbookOptions = {}) {
         this.name = 'rbook';
-        this.config = this.load_config();
+        this.config = options.config ? { ...options.config } : this.load_config();
+        const codeTemplates = options.codeTemplates === undefined
+            ? loadCodeConfig().codes
+            : options.codeTemplates;
         this.codeTemplatesById = new Map(
-            loadCodeConfig().codes.map((code) => [code.id, code])
+            codeTemplates.map((code) => [code.id, code])
         );
         this.config.currentYear = new Date().getFullYear();
         this.config.last_build_time = new Date().toLocaleString('zh-CN', {

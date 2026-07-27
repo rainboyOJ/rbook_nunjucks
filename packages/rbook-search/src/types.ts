@@ -33,6 +33,7 @@ export interface CollectedPage {
 export interface PageDocument extends CollectedPage {
   url: string;
   frontMatter: Record<string, unknown>;
+  sourceContent?: string;
   headings: string[];
   text: string;
   excerpt: string;

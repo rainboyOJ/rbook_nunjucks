@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
+import { expandIncludeCode } from '@rbook/markdown/include-code';
 import { codeTemplateDir, contentDir } from './paths.js';
 
 export interface CodeTemplateItem {
@@ -254,6 +255,11 @@ export function validateReferences(pages: any[], codes: CodeTemplateItem[]): Val
       .filter((result): result is Extract<PublicIdResult, { ok: true }> => result.ok)
       .map((result) => result.id)
   );
+  const codesById = new Map(
+    codes
+      .filter((code) => typeof code?.id === 'string')
+      .map((code) => [code.id, code])
+  );
 
   for (const page of pages) {
     const filePath = page.path || 'unknown';
@@ -287,6 +293,24 @@ export function validateReferences(pages: any[], codes: CodeTemplateItem[]): Val
             message: `referenced code_template ID '${refId}' is not registered in book/code.yaml`
           });
         }
+      }
+    }
+
+    const source = page.sourceContent;
+    if (typeof source === 'string') {
+      const expanded = expandIncludeCode(source, {
+        baseDir: contentDir,
+        codeDir: codeTemplateDir,
+        currentFilePath: path.join(contentDir, 'pages', filePath),
+        resolveCodeId: (id) => codesById.get(id) || null
+      });
+      const includeErrors = /<!-- include-code error: ([\s\S]*?): (path is outside the content directory|referenced code was not found) -->/g;
+      for (const match of expanded.matchAll(includeErrors)) {
+        errors.push({
+          level: 'ERROR',
+          filePath,
+          message: `@include-code '${match[1]}' failed: ${match[2]}`
+        });
       }
     }
   }

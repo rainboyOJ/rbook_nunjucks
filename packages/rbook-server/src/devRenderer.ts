@@ -5,10 +5,15 @@ import rbook from '@rbook/core';
 import {
   appDir,
   bookDir,
-  configPath,
   distDir,
   publicDir
 } from '@rbook/core/paths';
+import {
+  assertPreCheckContext,
+  validatePageDocument,
+  type PreCheckContext
+} from '@rbook/search/preCheck';
+import { loadPageDocument } from '@rbook/search/markdownText';
 import { compileMarkdownCss } from './buildRuntime.js';
 
 export interface DevResponse {
@@ -98,22 +103,80 @@ interface DotCacheEntry {
   body: Buffer;
 }
 
+interface PageValidationCacheEntry {
+  mtimeMs: number;
+  errors: string[];
+}
+
 export class DevRenderer {
-  private book: rbook | null = null;
-  private configMtimeMs = -1;
+  private book: rbook;
+  private readonly pages: PreCheckContext['pages'];
+  private readonly pagesByPath: Map<string, PreCheckContext['pages'][number]>;
+  private readonly codes: PreCheckContext['codes'];
+  private readonly pageValidationCache = new Map<string, PageValidationCacheEntry>();
   private dotAvailable: boolean | null = null;
   private dotCache = new Map<string, DotCacheEntry>();
 
-  private refreshBook() {
-    const mtimeMs = fs.existsSync(configPath) ? fs.statSync(configPath).mtimeMs : -1;
-    if (!this.book || mtimeMs !== this.configMtimeMs) {
-      this.book = new rbook();
-      this.configMtimeMs = mtimeMs;
-    }
+  constructor(context?: PreCheckContext) {
+    const preCheck = context || assertPreCheckContext();
+    this.pages = preCheck.pages;
+    this.pagesByPath = new Map(preCheck.pages.map((page) => [page.path, page]));
+    this.codes = preCheck.codes;
+    this.book = new rbook({
+      config: preCheck.site,
+      codeTemplates: preCheck.codes
+    });
 
+    // The startup pre-check has already validated every page. Keep those
+    // mtimes so an unchanged page does not need to be parsed again.
+    for (const page of this.pages) {
+      const sourcePath = inside(bookDir, page.path);
+      if (!sourcePath || !fs.existsSync(sourcePath)) continue;
+      this.pageValidationCache.set(page.path, {
+        mtimeMs: fs.statSync(sourcePath).mtimeMs,
+        errors: []
+      });
+    }
+  }
+
+  private refreshBook() {
     // Render the menu each request so edits to menu.pug appear after refresh.
     (this.book.config as Record<string, unknown>).menuHtml = this.book.renderMenu();
     return this.book;
+  }
+
+  private validatePage(page: PreCheckContext['pages'][number], sourcePath: string) {
+    const mtimeMs = fs.statSync(sourcePath).mtimeMs;
+    const cached = this.pageValidationCache.get(page.path);
+    if (cached?.mtimeMs === mtimeMs) {
+      if (cached.errors.length > 0) {
+        throw new Error(`page pre-check failed for ${page.path}:\n${cached.errors.join('\n')}`);
+      }
+      return;
+    }
+
+    let document: PreCheckContext['pages'][number];
+    try {
+      document = loadPageDocument(page);
+    } catch (error) {
+      const message = `failed to load page: ${error instanceof Error ? error.message : String(error)}`;
+      this.pageValidationCache.set(page.path, { mtimeMs, errors: [message] });
+      throw new Error(`page pre-check failed for ${page.path}:\n${message}`);
+    }
+
+    const issues = validatePageDocument(document, this.pages, this.codes);
+    const errors = issues
+      .filter((issue) => issue.level === 'ERROR')
+      .map((issue) => `[${issue.level}] ${issue.filePath}: ${issue.message}`);
+    const warnings = issues.filter((issue) => issue.level === 'WARNING');
+    for (const warning of warnings) {
+      console.warn(`[${warning.level}] ${warning.filePath}: ${warning.message}`);
+    }
+
+    this.pageValidationCache.set(page.path, { mtimeMs, errors });
+    if (errors.length > 0) {
+      throw new Error(`page pre-check failed for ${page.path}:\n${errors.join('\n')}`);
+    }
   }
 
   private pageResponse(pathname: string): DevResponse | null {
@@ -128,6 +191,15 @@ export class DevRenderer {
       if (staticPath && fs.existsSync(staticPath) && fs.statSync(staticPath).isFile()) return null;
       return this.notFound(pathname, path.join(bookDir, page.relativePath));
     }
+
+    const indexedPage = this.pagesByPath.get(page.relativePath);
+    if (!indexedPage) {
+      // The development server only exposes pages accepted by the startup
+      // pre-check/index. Other files remain inaccessible as article routes.
+      return this.notFound(pathname, sourcePath);
+    }
+
+    this.validatePage(indexedPage, sourcePath);
 
     const html = book.renderMarkdownFile(page.relativePath, page.template);
     if (html === null) {

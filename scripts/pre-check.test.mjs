@@ -58,6 +58,14 @@ test('duplicate IDs and unknown code references are errors', () => {
   assert.ok(referenceResult.errors.some((item) => item.message.includes("'missing-code' is not registered")));
 });
 
+test('include-code paths are checked, including legacy fenced placeholders', () => {
+  const missingPath = page('missing-code-path', 'missing-code-path.md');
+  missingPath.sourceContent = '```cpp\n@include-code(./missing.cpp)\n```\n';
+  const result = evaluatePreCheck([missingPath], []);
+  assert.equal(result.ok, false);
+  assert.ok(result.errors.some((item) => item.message.includes("@include-code './missing.cpp' failed")));
+});
+
 test('the shared pre-check does not modify process.exitCode', () => {
   const previousExitCode = process.exitCode;
   process.exitCode = undefined;

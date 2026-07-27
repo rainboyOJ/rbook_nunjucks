@@ -61,6 +61,7 @@ export function loadPageDocument(page: CollectedPage): PageDocument {
     title,
     url: bookPathToUrl(page.path),
     frontMatter: parsed.data as Record<string, unknown>,
+    sourceContent: raw,
     headings,
     text,
     excerpt: text.slice(0, 240)

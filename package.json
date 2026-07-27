@@ -25,7 +25,7 @@
     "start:runtime": "npm run build:runtime && node packages/rbook-server/dist/serve.js",
     "serve": "npm run start:runtime",
     "serve:dev": "npm run dev",
-    "dev": "npm run build:packages && node packages/rbook-server/dist/dev.js",
+    "dev": "npm run build:packages:compile && node packages/rbook-server/dist/dev.js",
     "check:nav": "node scripts/check-book-nav.mjs",
     "test:api": "npm run build:packages && node --test scripts/include-code.test.mjs scripts/rbook-client.test.mjs && node scripts/test-api-contract.mjs",
     "test:code-template": "npm run build:packages && node --test scripts/load-code-config.test.mjs scripts/code-template-build.test.mjs",

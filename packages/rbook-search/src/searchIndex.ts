@@ -4,6 +4,11 @@ import { bookDir, searchIndexPath } from './paths.js';
 
 let cachedPayload: any = null;
 
+export function setIndexPayload(payload: any) {
+  cachedPayload = payload;
+  return cachedPayload;
+}
+
 function loadPayload({ rebuild = false }: { rebuild?: boolean } = {}) {
   if (!rebuild && cachedPayload) {
     return cachedPayload;

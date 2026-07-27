@@ -24,6 +24,13 @@ export interface PreCheckResult {
   ok: boolean;
 }
 
+export interface PreCheckContext {
+  result: PreCheckResult;
+  pages: PageDocument[];
+  codes: CodeTemplateItem[];
+  site: Record<string, unknown>;
+}
+
 function formatIssue(issue: ValidationError) {
   return `[${issue.level}] ${issue.filePath}: ${issue.message}`;
 }
@@ -55,20 +62,27 @@ export function evaluatePreCheck(
   };
 }
 
-export function runPreCheck(): PreCheckResult {
+export function runPreCheckContext(): PreCheckContext {
   const pages: PageDocument[] = [];
   const issues: ValidationError[] = [];
+  let site: Record<string, unknown> = {};
 
   let collected;
   try {
     collected = collectPages();
+    site = collected.site as Record<string, unknown>;
   } catch (error) {
     issues.push({
       level: 'ERROR',
       filePath: 'book/book.yaml',
       message: error instanceof Error ? error.message : String(error)
     });
-    return evaluatePreCheck(pages, [], issues);
+    return {
+      result: evaluatePreCheck(pages, [], issues),
+      pages,
+      codes: [],
+      site
+    };
   }
 
   for (const page of collected.pages) {
@@ -94,7 +108,16 @@ export function runPreCheck(): PreCheckResult {
     });
   }
 
-  return evaluatePreCheck(pages, codes, issues);
+  return {
+    result: evaluatePreCheck(pages, codes, issues),
+    pages,
+    codes,
+    site
+  };
+}
+
+export function runPreCheck(): PreCheckResult {
+  return runPreCheckContext().result;
 }
 
 export function reportPreCheck(result: PreCheckResult) {
@@ -112,6 +135,31 @@ export function assertPreCheck(): PreCheckResult {
     throw new Error(`pre-check failed with ${result.stats.errors} error(s)`);
   }
   return result;
+}
+
+export function assertPreCheckContext(): PreCheckContext {
+  const context = runPreCheckContext();
+  reportPreCheck(context.result);
+  if (!context.result.ok) {
+    throw new Error(`pre-check failed with ${context.result.stats.errors} error(s)`);
+  }
+  return context;
+}
+
+export function validatePageDocument(
+  page: PageDocument,
+  allPages: PageDocument[],
+  codes: CodeTemplateItem[]
+) {
+  // Only the changed Markdown file is read again; the other documents are
+  // metadata already loaded by the startup pre-check.
+  const otherPages = allPages.filter((item) => item.path !== page.path);
+  const pageIssues = validatePages([...otherPages, page])
+    .filter((issue) => issue.filePath === page.path);
+  return [
+    ...pageIssues,
+    ...validateReferences([page], codes)
+  ];
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

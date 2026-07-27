@@ -31,9 +31,9 @@ node bin/rbook.js build
 ### 启动开发服务器
 
 ```bash
+npm run dev
+# 或使用生产构建后的静态服务
 npm run serve
-# 或
-node bin/rbook.js serve
 ```
 
 访问 http://localhost:3000 查看效果
@@ -165,17 +165,13 @@ function example() {
 
 ### 内存懒渲染
 
-开发服务器采用内存缓存和懒渲染机制：
-- 配置和资源在启动时加载到内存
-- 页面按需渲染，只在请求时生成
-- 文件变化时智能清除缓存
-- 零磁盘IO，快速响应
+开发服务器的启动流程是：
 
-### 文件监听
-
-- **Markdown 变化**：只重新渲染受影响页面
-- **主题变化**：重新加载资源并清除所有缓存
-- **配置变化**：重新加载配置并清除所有缓存
+- 启动前完整执行一次 `pre-check`，读取并解析 Markdown，但不为所有文章生成 HTML。
+- 页面请求根据启动时的索引映射到对应的 `.md` 文件，只动态渲染当前请求的文章。
+- Markdown 文件修改后，下一次访问该 URL 时只重新检查这一篇，然后重新渲染；HTML 不做缓存，因此引用的代码文件修改也能在请求中体现。
+- 页面检查失败时返回开发错误页，服务器继续运行，方便继续修复文件。
+- 修改 `book/book.yaml` 或 `book/code.yaml` 等结构性配置后需要重启 `npm run dev`，以重新建立路由和代码模板索引。
 
 ## 部署
 
@@ -184,12 +180,6 @@ function example() {
 ```bash
 npm run build
 # 将 site/dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
-```
-
-## 作为neovim的插件: 代码片段
-
-```lua
-
 ```
 
 ## 技术栈

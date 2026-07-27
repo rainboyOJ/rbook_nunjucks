@@ -1,6 +1,6 @@
 # Rbook HTTP API 使用指南
 
-Rbook HTTP API 提供算法电子书目录、文章内容、代码模板和标签统计。所有读取接口都返回当前搜索索引中的数据。
+Rbook HTTP API 提供算法电子书目录、文章内容、代码模板和标签统计。目录、筛选和标签接口使用启动时的搜索索引；文章详情会按索引定位后重新读取当前 Markdown。
 
 HTML 文档：[当前页面](/api)；Markdown 原文：[/api/help?format=md](/api/help?format=md)。
 
