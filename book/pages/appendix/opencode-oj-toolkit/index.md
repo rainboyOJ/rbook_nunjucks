@@ -120,7 +120,7 @@ AI 不会跳过中间步骤直接给出完整优化代码。除非你明确进�
 
 **`oj-cpp-rbook-style`**：约束 C++ 代码风格——C++17、全局数组、清晰的 `for` 循环、有用的中文注释、避免 lambda/结构化绑定/复杂宏。
 
-**`rbook-http`**：通过 HTTP API 查询本 rbook 电子书内容（文章、代码模板、搜索），让 AI agent 能根据已有文章和模板代码回答问题或写 OJ 题解。安装时从 `.agents/skills/rbook-http/` 单独复制到 `.opencode/skills/`。
+**`rbook-http`**：通过 HTTP API 查询本 rbook 电子书内容（文章、代码模板、搜索），让 AI agent 能根据已有文章和模板代码回答问题或写 OJ 题解。安装时从 `skills/rbook-http/` 单独复制到 `.opencode/skills/`。
 
 这三个 skill 在 `.opencode/skills/` 下，可以被 `/oj-*` 命令和 AI 对话共同使用。
 

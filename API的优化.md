@@ -394,16 +394,16 @@ rbook tags
   - 内部复用 `scripts/rbook_client.py` 的逻辑（如有必要）
 
 - [ ] **3.2** 删除旧的 Python 脚本
-  - 删除 `.agents/skills/rbook-http/scripts/rbook_health.py`
-  - 删除 `.agents/skills/rbook-http/scripts/rbook_catalog.py`
-  - 删除 `.agents/skills/rbook-http/scripts/rbook_search.py`
-  - 删除 `.agents/skills/rbook-http/scripts/rbook_page_context.py`
-  - 删除 `.agents/skills/rbook-http/scripts/rbook_code.py`
+  - 删除 `skills/rbook-http/scripts/rbook_health.py`
+  - 删除 `skills/rbook-http/scripts/rbook_catalog.py`
+  - 删除 `skills/rbook-http/scripts/rbook_search.py`
+  - 删除 `skills/rbook-http/scripts/rbook_page_context.py`
+  - 删除 `skills/rbook-http/scripts/rbook_code.py`
   - 保留 `rbook_client.py`（如果 `rbook.py` 依赖它）
 
 - [ ] **3.3** 更新文档
   - 更新 `docs/api-usage.md`（API 使用指南）
-  - 更新 `.agents/skills/rbook-http/SKILL.md`（skill 文档）
+  - 更新 `skills/rbook-http/SKILL.md`（skill 文档）
   - 删除或更新 `how-to-learn-api.md`（如已过时）
   - 更新 AI API 字段契约（`docs/development/ai-api-schema.md`）
 
@@ -432,7 +432,7 @@ rbook tags
 - [ ] 旧的 Python 脚本已删除（`rbook_health.py`、`rbook_catalog.py` 等）
 - [ ] 文档已更新：
   - `docs/api-usage.md` 反映新 API
-  - `.agents/skills/rbook-http/SKILL.md` 使用新 API 和 `rbook.py` 示例
+  - `skills/rbook-http/SKILL.md` 使用新 API 和 `rbook.py` 示例
   - `docs/development/ai-api-schema.md` 反映新的字段契约
 - [ ] 前端代码模板页面显示"关联文章"列，点击可跳转
 - [ ] 端到端测试通过：

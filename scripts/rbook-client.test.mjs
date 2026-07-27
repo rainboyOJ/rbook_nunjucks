@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -6,7 +7,8 @@ import test from 'node:test';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const clientPath = path.join(rootDir, 'scripts/rbook.py');
-const skillClientPath = path.join(rootDir, '.agents/skills/rbook-http/scripts/rbook.py');
+const skillClientPath = path.join(rootDir, 'skills/rbook-http/scripts/rbook.py');
+const skillPath = path.join(rootDir, 'skills/rbook-http/SKILL.md');
 
 function runPython(args) {
   return spawnSync('python3', args, {
@@ -104,6 +106,15 @@ test('the skill entry delegates to the canonical client', () => {
   assert.equal(skill.status, 0, skill.stderr);
   assert.equal(skill.stdout, canonical.stdout);
   assert.match(skill.stdout, /\bfind\b/);
+});
+
+test('the migrated skill documents the current API and output modes', () => {
+  const skill = fs.readFileSync(skillPath, 'utf8');
+  assert.match(skill, /\/api\/pages/);
+  assert.match(skill, /\/api\/codes/);
+  assert.match(skill, /--table/);
+  assert.match(skill, /description/);
+  assert.doesNotMatch(skill, /\.agents\/skills\/rbook-http/);
 });
 
 test('catalog defaults to numbered TSV with stable single-line fields', () => {

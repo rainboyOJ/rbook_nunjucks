@@ -59,11 +59,11 @@ for rc in ~/.zshrc ~/.bashrc; do
 done
 
 # 5. 安装 rbook-http skill（可选，但推荐）
-#    该 skill 位于目标 rbook 项目的 .agents/skills/rbook-http/，需单独复制
+#    该 skill 位于目标 rbook 项目的 skills/rbook-http/，需单独复制
 #    DST 的父目录即目标项目根
 PROJECT_ROOT="$(dirname "$DST")"
-if [ -d "$PROJECT_ROOT/.agents/skills/rbook-http" ]; then
-  cp -r "$PROJECT_ROOT/.agents/skills/rbook-http" "$DST/skills/"
+if [ -d "$PROJECT_ROOT/skills/rbook-http" ]; then
+  cp -r "$PROJECT_ROOT/skills/rbook-http" "$DST/skills/"
 fi
 ```
 
