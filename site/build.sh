@@ -45,7 +45,19 @@ done
 # 复制动画单页html
 cp -r "$APP_DIR/widgets/animate_single_html" "$APP_DIR/dist/animate_single_html"
 
-# 复制代码模板过滤器单文件页面
-echo "=== 编译代码模板过滤器 ==="
-mkdir -p "$APP_DIR/dist/code_template"
-cp "$APP_DIR/widgets/code_template_filter/index.html" "$APP_DIR/dist/code_template/index.html"
+# 复制单文件 widgets
+echo "=== 编译 rbook widgets ==="
+declare -A RBOOK_WIDGETS=(
+  [code_template_filter]=code_template
+  [explore]=explore
+  [article_inspector]=article_inspector
+  [tags]=tags
+  [relations]=relations
+  [practice]=practice
+  [diagnostics]=diagnostics
+)
+for source in "${!RBOOK_WIDGETS[@]}"; do
+  target="${RBOOK_WIDGETS[$source]}"
+  mkdir -p "$APP_DIR/dist/$target"
+  cp "$APP_DIR/widgets/$source/index.html" "$APP_DIR/dist/$target/index.html"
+done

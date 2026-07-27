@@ -286,6 +286,34 @@ async function main() {
     assertApiResponse(unknownResponse, 404);
     assert.equal(parseJson(unknownResponse).error, 'API_ROUTE_NOT_FOUND');
 
+    const productionDiagnosticsResponse = await app.inject('/api/diagnostics');
+    assertApiResponse(productionDiagnosticsResponse, 404);
+    assert.equal(parseJson(productionDiagnosticsResponse).error, 'API_ROUTE_NOT_FOUND');
+
+    const devDiagnosticsPayload = {
+      mode: 'development',
+      generatedAt: '2026-07-27T00:00:00.000Z',
+      stats: { pages: 1, codes: 1, errors: 0, warnings: 1 },
+      issues: [{ level: 'WARNING', filePath: 'book/pages/example.md', message: 'missing tags', stage: 'startup' }]
+    };
+    const devApp = await createApp({
+      logger: false,
+      staticDir,
+      devRenderer: {
+        render: () => null,
+        notFound: () => ({ statusCode: 404, contentType: 'text/plain; charset=utf-8', body: 'not found' }),
+        error: () => ({ statusCode: 500, contentType: 'text/plain; charset=utf-8', body: 'error' }),
+        getDiagnostics: () => devDiagnosticsPayload
+      }
+    });
+    try {
+      const devDiagnosticsResponse = await devApp.inject('/api/diagnostics');
+      assertApiResponse(devDiagnosticsResponse, 200);
+      assert.deepEqual(parseJson(devDiagnosticsResponse), devDiagnosticsPayload);
+    } finally {
+      await devApp.close();
+    }
+
     const legacyRoutes = ['/md', '/ai/catalog', '/ai/page-context', '/ai/code', '/chunks/search']
       .map((suffix) => `/api${suffix}`);
     for (const route of legacyRoutes) {

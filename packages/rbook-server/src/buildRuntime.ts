@@ -25,6 +25,16 @@ const assetExtensions = new Set([
   '.webp'
 ]);
 
+export const staticWidgetApps = [
+  { source: 'code_template_filter', target: 'code_template' },
+  { source: 'explore', target: 'explore' },
+  { source: 'article_inspector', target: 'article_inspector' },
+  { source: 'tags', target: 'tags' },
+  { source: 'relations', target: 'relations' },
+  { source: 'practice', target: 'practice' },
+  { source: 'diagnostics', target: 'diagnostics' }
+] as const;
+
 function resetRuntimeDir() {
   if (!runtimeDir) {
     fs.rmSync(distDir, { recursive: true, force: true });
@@ -106,14 +116,24 @@ export function copyStaticAssets() {
   );
 }
 
-export function buildCodeTemplateApp() {
-  const sourcePath = path.join(appDir, 'widgets/code_template_filter/index.html');
+export function buildWidgetApp(source: string, target: string) {
+  const sourcePath = path.join(appDir, `widgets/${source}/index.html`);
   if (!fs.existsSync(sourcePath)) return;
 
-  const targetPath = path.join(distDir, 'code_template/index.html');
+  const targetPath = path.join(distDir, target, 'index.html');
   fs.mkdirSync(path.dirname(targetPath), { recursive: true });
   fs.copyFileSync(sourcePath, targetPath);
-  console.log(`[runtime] copied code template page to ${targetPath}`);
+  console.log(`[runtime] copied widget ${source} to ${targetPath}`);
+}
+
+export function buildStaticWidgetApps() {
+  for (const widget of staticWidgetApps) {
+    buildWidgetApp(widget.source, widget.target);
+  }
+}
+
+export function buildCodeTemplateApp() {
+  buildWidgetApp('code_template_filter', 'code_template');
 }
 
 export function buildRuntime() {
@@ -132,7 +152,7 @@ export function buildRuntime() {
   copyStaticAssets();
   copyBookAssets();
   compileDotFiles();
-  buildCodeTemplateApp();
+  buildStaticWidgetApps();
 
   const index = buildSearchIndex();
   console.log(`[runtime] search pages=${index.stats.pages}, codes=${index.stats.codes}, errors=${index.stats.errors}`);

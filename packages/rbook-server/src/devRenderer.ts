@@ -108,12 +108,42 @@ interface PageValidationCacheEntry {
   errors: string[];
 }
 
+export interface DiagnosticIssue {
+  level: 'ERROR' | 'WARNING';
+  filePath: string;
+  message: string;
+  stage: 'startup' | 'page' | 'render';
+}
+
+export interface DiagnosticsPayload {
+  mode: 'development';
+  generatedAt: string;
+  stats: {
+    pages: number;
+    codes: number;
+    errors: number;
+    warnings: number;
+  };
+  issues: DiagnosticIssue[];
+}
+
+function safeDiagnosticPath(filePath: string) {
+  const value = String(filePath || 'unknown').replaceAll('\\', '/');
+  if (!path.isAbsolute(value)) return value;
+
+  const relative = path.relative(process.cwd(), value).replaceAll('\\', '/');
+  return relative && !relative.startsWith('../') && relative !== '..'
+    ? relative
+    : '[external path]';
+}
+
 export class DevRenderer {
   private book: rbook;
   private readonly pages: PreCheckContext['pages'];
   private readonly pagesByPath: Map<string, PreCheckContext['pages'][number]>;
   private readonly codes: PreCheckContext['codes'];
   private readonly pageValidationCache = new Map<string, PageValidationCacheEntry>();
+  private readonly diagnostics = new Map<string, DiagnosticIssue>();
   private dotAvailable: boolean | null = null;
   private dotCache = new Map<string, DotCacheEntry>();
 
@@ -126,6 +156,10 @@ export class DevRenderer {
       config: preCheck.site,
       codeTemplates: preCheck.codes
     });
+
+    for (const warning of preCheck.result.warnings) {
+      this.recordDiagnostic(warning, 'startup');
+    }
 
     // The startup pre-check has already validated every page. Keep those
     // mtimes so an unchanged page does not need to be parsed again.
@@ -145,6 +179,48 @@ export class DevRenderer {
     return this.book;
   }
 
+  private recordDiagnostic(
+    issue: { level: 'ERROR' | 'WARNING'; filePath: string; message: string },
+    stage: DiagnosticIssue['stage']
+  ) {
+    const diagnostic: DiagnosticIssue = {
+      level: issue.level,
+      filePath: safeDiagnosticPath(issue.filePath),
+      message: String(issue.message),
+      stage
+    };
+    const key = `${stage}:${diagnostic.filePath}:${diagnostic.level}:${diagnostic.message}`;
+    this.diagnostics.set(key, diagnostic);
+  }
+
+  private clearPageDiagnostics(filePath: string) {
+    const safePath = safeDiagnosticPath(filePath);
+    for (const [key, issue] of this.diagnostics) {
+      if (issue.stage === 'page' && issue.filePath === safePath) {
+        this.diagnostics.delete(key);
+      }
+    }
+  }
+
+  getDiagnostics(): DiagnosticsPayload {
+    const issues = [...this.diagnostics.values()].sort((a, b) => {
+      return a.level.localeCompare(b.level)
+        || a.filePath.localeCompare(b.filePath)
+        || a.message.localeCompare(b.message);
+    });
+    return {
+      mode: 'development',
+      generatedAt: new Date().toISOString(),
+      stats: {
+        pages: this.pages.length,
+        codes: this.codes.length,
+        errors: issues.filter((issue) => issue.level === 'ERROR').length,
+        warnings: issues.filter((issue) => issue.level === 'WARNING').length
+      },
+      issues
+    };
+  }
+
   private validatePage(page: PreCheckContext['pages'][number], sourcePath: string) {
     const mtimeMs = fs.statSync(sourcePath).mtimeMs;
     const cached = this.pageValidationCache.get(page.path);
@@ -156,10 +232,12 @@ export class DevRenderer {
     }
 
     let document: PreCheckContext['pages'][number];
+    this.clearPageDiagnostics(page.path);
     try {
       document = loadPageDocument(page);
     } catch (error) {
       const message = `failed to load page: ${error instanceof Error ? error.message : String(error)}`;
+      this.recordDiagnostic({ level: 'ERROR', filePath: page.path, message }, 'page');
       this.pageValidationCache.set(page.path, { mtimeMs, errors: [message] });
       throw new Error(`page pre-check failed for ${page.path}:\n${message}`);
     }
@@ -169,6 +247,9 @@ export class DevRenderer {
       .filter((issue) => issue.level === 'ERROR')
       .map((issue) => `[${issue.level}] ${issue.filePath}: ${issue.message}`);
     const warnings = issues.filter((issue) => issue.level === 'WARNING');
+    for (const issue of issues) {
+      this.recordDiagnostic(issue, 'page');
+    }
     for (const warning of warnings) {
       console.warn(`[${warning.level}] ${warning.filePath}: ${warning.message}`);
     }
@@ -323,6 +404,11 @@ export class DevRenderer {
     const pathname = parsePath(requestUrl);
     const page = pathname ? pagePathForUrl(pathname) : null;
     const sourcePath = page ? path.join(bookDir, page.relativePath) : null;
+    this.recordDiagnostic({
+      level: 'ERROR',
+      filePath: page?.relativePath || requestUrl,
+      message: detail.split('\n', 1)[0]
+    }, 'render');
     const source = sourcePath ? `<p>源文件：<code>${escapeHtml(sourcePath)}</code></p>` : '';
     return {
       statusCode: 500,

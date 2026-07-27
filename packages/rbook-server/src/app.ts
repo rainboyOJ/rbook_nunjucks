@@ -6,12 +6,12 @@ import { renderApiDocsPage } from './docs/apiDocs.js';
 import { getBaseUrl } from './http/query.js';
 import { registerAdminApiRoutes } from './routes/adminApi.js';
 import { registerPublicApiRoutes } from './routes/publicApi.js';
-import type { DevResponse, DevRenderer } from './devRenderer.js';
+import type { DevResponse, DevRenderer, DiagnosticsPayload } from './devRenderer.js';
 
 interface CreateAppOptions {
   logger?: boolean;
   staticDir?: string;
-  devRenderer?: Pick<DevRenderer, 'render' | 'notFound' | 'error'>;
+  devRenderer?: Pick<DevRenderer, 'render' | 'notFound' | 'error' | 'getDiagnostics'>;
 }
 
 export async function createApp(options: CreateAppOptions = {}) {
@@ -35,6 +35,10 @@ export async function createApp(options: CreateAppOptions = {}) {
   await registerAdminApiRoutes(app);
 
   if (options.devRenderer) {
+    app.get('/api/diagnostics', async (): Promise<DiagnosticsPayload> => {
+      return options.devRenderer!.getDiagnostics();
+    });
+
     app.addHook('onRequest', async (request, reply) => {
       if (request.url === '/api' || request.url.startsWith('/api/')) return;
       if (request.method !== 'GET' && request.method !== 'HEAD') return;

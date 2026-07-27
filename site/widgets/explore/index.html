@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>rbook: 文章探索</title>
+    <style>
+      :root{color-scheme:dark;--bg:#101418;--panel:#171d23;--raised:#1e262e;--border:#34414d;--text:#e7edf2;--muted:#98a6b3;--accent:#ffc857;--accent-strong:#ffe08a;--link:#79c7ff;--danger:#ff8e8e;--ok:#8de0a6}
+      *{box-sizing:border-box}body{background:var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;min-width:320px}button,input,select{font:inherit}.shell{margin:auto;max-width:1280px;padding:2rem 1.25rem 4rem}.topbar{align-items:center;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;padding-bottom:.8rem}.topbar a{color:var(--muted);padding:.35rem .55rem;text-decoration:none}.topbar a:hover,.topbar a[aria-current="page"]{color:var(--accent-strong)}h1{color:var(--accent-strong);font-size:2.2rem;margin:0}.lead{color:var(--muted);margin:.35rem 0 1.4rem}.filters{background:var(--panel);border:1px solid var(--border);display:grid;gap:.75rem;grid-template-columns:minmax(13rem,2fr) repeat(3,minmax(9rem,1fr));padding:1rem}.field{display:grid;gap:.3rem}.field label{color:var(--muted);font-size:.8rem}.field input,.field select{background:var(--raised);border:1px solid var(--border);color:var(--text);min-height:2.5rem;padding:.45rem .6rem;width:100%}.field input:focus,.field select:focus,.button:focus-visible{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:1px}.status{color:var(--muted);min-height:2rem;padding:.85rem 0}.status.error{color:var(--danger)}.result{display:grid;gap:.75rem;list-style:none;margin:0;padding:0}.article{background:var(--panel);border:1px solid var(--border);display:grid;gap:.7rem;padding:1rem}.article:hover{border-color:var(--accent)}.article-head{align-items:start;display:flex;gap:.75rem}.article-number{color:var(--accent);font-variant-numeric:tabular-nums;min-width:2.3rem}.article-title{color:var(--text);font-size:1.12rem;font-weight:700;overflow-wrap:anywhere}.article-id{color:var(--muted);font: .82rem ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}.description{color:var(--muted);margin:0;white-space:pre-wrap}.meta{display:flex;flex-wrap:wrap;gap:.4rem}.badge{border:1px solid var(--border);color:var(--accent-strong);font-size:.78rem;padding:.16rem .42rem}.crumb{color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}.actions{display:flex;flex-wrap:wrap;gap:.5rem}.button{background:transparent;border:1px solid var(--accent);color:var(--accent-strong);cursor:pointer;display:inline-block;padding:.4rem .65rem;text-decoration:none}.button:hover{background:var(--accent);color:#17120a}.empty{border:1px dashed var(--border);color:var(--muted);padding:2rem;text-align:center}.empty .button{margin-top:.8rem}.footer-note{color:var(--muted);font-size:.8rem;margin-top:1.4rem}@media(max-width:850px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}.field:first-child{grid-column:1/-1}}@media(max-width:560px){.shell{padding:1.25rem .85rem 3rem}.filters{grid-template-columns:1fr}.field:first-child{grid-column:auto}.article-head{gap:.45rem}.article-number{min-width:2rem}}
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="topbar" aria-label="rbook 工具导航">
+        <a href="/">首页</a><a href="/explore" aria-current="page">文章探索</a><a href="/code_template">代码模板</a><a href="/tags">标签</a><a href="/relations">关系</a><a href="/practice">学习队列</a>
+      </nav>
+      <h1>文章探索</h1>
+      <p class="lead">按文章元数据查找内容。这里搜索 ID、标题、显式描述、标签和目录路径，不搜索正文。</p>
+      <section class="filters" aria-label="文章筛选">
+        <div class="field"><label for="query">搜索元数据</label><input id="query" type="search" autocomplete="off" placeholder="例如：二分 树" /></div>
+        <div class="field"><label for="tag">标签</label><select id="tag"><option value="">全部标签</option></select></div>
+        <div class="field"><label for="has-code">代码模板</label><select id="has-code"><option value="">全部文章</option><option value="yes">有模板</option><option value="no">无模板</option></select></div>
+        <div class="field"><label for="sort">排序</label><select id="sort"><option value="catalog">目录顺序</option><option value="title">标题</option><option value="id">ID</option></select></div>
+      </section>
+      <div id="status" class="status" role="status" aria-live="polite">正在加载文章目录...</div>
+      <ol id="result" class="result" aria-live="polite"></ol>
+      <p class="footer-note">描述为空的文章会明确显示“未填写描述”，不会自动使用正文摘要。</p>
+    </main>
+    <script>
+      (() => {
+        const state = { items: [], loading: true, error: null };
+        const query = document.querySelector('#query');
+        const tag = document.querySelector('#tag');
+        const hasCode = document.querySelector('#has-code');
+        const sort = document.querySelector('#sort');
+        const status = document.querySelector('#status');
+        const result = document.querySelector('#result');
+        const params = new URLSearchParams(location.search);
+        query.value = params.get('q') || '';
+        tag.value = params.get('tag') || '';
+        hasCode.value = params.get('code') || '';
+        sort.value = params.get('sort') || 'catalog';
+
+        function text(parent, value, className) {
+          const node = document.createElement('span');
+          if (className) node.className = className;
+          node.textContent = value == null ? '' : String(value);
+          parent.append(node);
+          return node;
+        }
+        function normalize(value) { return String(value || '').toLocaleLowerCase(); }
+        function setUrl() {
+          const next = new URLSearchParams();
+          if (query.value.trim()) next.set('q', query.value.trim());
+          if (tag.value) next.set('tag', tag.value);
+          if (hasCode.value) next.set('code', hasCode.value);
+          if (sort.value !== 'catalog') next.set('sort', sort.value);
+          history.replaceState(null, '', `${location.pathname}${next.toString() ? `?${next}` : ''}`);
+        }
+        function searchable(item) {
+          return [item.id, item.title, item.description, item.path, ...(item.tags || []), ...(item.navTrail || [])].map(normalize).join(' ');
+        }
+        function filtered() {
+          const words = normalize(query.value).split(/\s+/).filter(Boolean);
+          const items = state.items.filter((item) => {
+            if (tag.value && !(item.tags || []).includes(tag.value)) return false;
+            const hasTemplates = Array.isArray(item.codeTemplates) && item.codeTemplates.length > 0;
+            if (hasCode.value === 'yes' && !hasTemplates) return false;
+            if (hasCode.value === 'no' && hasTemplates) return false;
+            const haystack = searchable(item);
+            return words.every((word) => haystack.includes(word));
+          });
+          return items.sort((a, b) => {
+            if (sort.value === 'title') return normalize(a.title).localeCompare(normalize(b.title), 'zh-CN');
+            if (sort.value === 'id') return normalize(a.id).localeCompare(normalize(b.id));
+            return state.items.indexOf(a) - state.items.indexOf(b);
+          });
+        }
+        function renderTags() {
+          const selected = tag.value;
+          tag.replaceChildren(new Option('全部标签', ''));
+          const tags = new Set(state.items.flatMap((item) => Array.isArray(item.tags) ? item.tags : []));
+          [...tags].sort((a, b) => a.localeCompare(b, 'zh-CN')).forEach((value) => tag.append(new Option(value, value)));
+          tag.value = selected;
+        }
+        function clearFilters() {
+          query.value = ''; tag.value = ''; hasCode.value = ''; sort.value = 'catalog'; setUrl(); render();
+        }
+        function render() {
+          setUrl();
+          if (state.loading) { status.textContent = '正在加载文章目录...'; return; }
+          if (state.error) { status.textContent = `加载失败：${state.error}`; status.className = 'status error'; return; }
+          status.className = 'status';
+          const items = filtered();
+          status.textContent = `显示 ${items.length} / ${state.items.length} 篇文章`;
+          result.replaceChildren();
+          if (!items.length) {
+            const empty = document.createElement('li'); empty.className = 'empty'; empty.textContent = '没有匹配的文章';
+            const clear = document.createElement('button'); clear.className = 'button'; clear.type = 'button'; clear.textContent = '清除筛选'; clear.addEventListener('click', clearFilters); empty.append(clear); result.append(empty); return;
+          }
+          items.forEach((item, index) => {
+            const card = document.createElement('li'); card.className = 'article';
+            const head = document.createElement('div'); head.className = 'article-head'; text(head, String(index + 1).padStart(3, '0'), 'article-number'); text(head, item.title || item.id || '未命名文章', 'article-title'); card.append(head);
+            text(card, item.id || '', 'article-id');
+            const desc = document.createElement('p'); desc.className = 'description'; desc.textContent = item.description || '未填写描述'; card.append(desc);
+            const meta = document.createElement('div'); meta.className = 'meta';
+            (item.tags || []).forEach((value) => text(meta, value, 'badge'));
+            const templateCount = Array.isArray(item.codeTemplates) ? item.codeTemplates.length : 0;
+            text(meta, `${templateCount} 个代码模板`, 'badge'); card.append(meta);
+            const crumb = document.createElement('div'); crumb.className = 'crumb'; crumb.textContent = Array.isArray(item.navTrail) && item.navTrail.length ? item.navTrail.join(' / ') : (item.path || ''); card.append(crumb);
+            const actions = document.createElement('div'); actions.className = 'actions';
+            const open = document.createElement('a'); open.className = 'button'; open.href = item.url || '#'; open.textContent = '打开文章'; actions.append(open);
+            const inspect = document.createElement('a'); inspect.className = 'button'; inspect.href = `/article_inspector?id=${encodeURIComponent(item.id || '')}`; inspect.textContent = '检查文章'; actions.append(inspect);
+            card.append(actions); result.append(card);
+          });
+        }
+        async function load() {
+          state.loading = true; render();
+          try {
+            const response = await fetch('/api/catalog', { headers: { Accept: 'application/json' } });
+            const payload = await response.json();
+            if (!response.ok) throw new Error(payload.message || `HTTP ${response.status}`);
+            state.items = Array.isArray(payload.items) ? payload.items.filter((item) => item.visible !== false) : [];
+            renderTags(); state.loading = false; state.error = null; render();
+          } catch (error) {
+            state.loading = false; state.error = error instanceof Error ? error.message : String(error); render();
+            result.replaceChildren(); const retry = document.createElement('button'); retry.className = 'button'; retry.type = 'button'; retry.textContent = '重试'; retry.addEventListener('click', load); result.append(retry);
+          }
+        }
+        [query, tag, hasCode, sort].forEach((control) => control.addEventListener(control === query ? 'input' : 'change', render));
+        load();
+      })();
+    </script>
+  </body>
+</html>

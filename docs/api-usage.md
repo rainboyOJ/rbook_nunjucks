@@ -75,6 +75,7 @@ curl -G --data-urlencode "tag=树上算法,图论" "$BASE_URL/api/pages"
 | `GET` | `/api/pages` | 文章详情、筛选和分页 |
 | `GET` | `/api/codes` | 代码模板详情、筛选和分页 |
 | `GET` | `/api/tags` | 文章与代码标签统计 |
+| `GET` | `/api/diagnostics` | 开发服务器诊断信息（仅 dev） |
 | `POST` | `/api/admin/reindex` | 重建搜索索引 |
 
 ## 文档
@@ -257,6 +258,41 @@ curl "$BASE_URL/api/tags"
   "codeTags": [{ "tag": "图", "count": 12 }]
 }
 ```
+
+## 开发诊断
+
+### `GET /api/diagnostics`
+
+该接口只在 `npm run dev` 的开发服务器中注册。生产服务不会暴露它，访问生产地址会返回 `API_ROUTE_NOT_FOUND`。
+
+```bash
+curl "$BASE_URL/api/diagnostics"
+```
+
+响应只包含相对路径、级别、阶段和消息，不暴露服务器绝对路径或源码：
+
+```json
+{
+  "mode": "development",
+  "generatedAt": "2026-07-27T00:00:00.000Z",
+  "stats": {
+    "pages": 432,
+    "codes": 189,
+    "errors": 0,
+    "warnings": 1
+  },
+  "issues": [
+    {
+      "level": "WARNING",
+      "filePath": "book/pages/example.md",
+      "message": "missing tags",
+      "stage": "startup"
+    }
+  ]
+}
+```
+
+启动时的 fatal pre-check error 仍然会阻止开发服务器启动；诊断页面用于查看启动 warning，以及服务器运行后访问文章触发的单页校验和渲染问题。
 
 ## 管理接口
 

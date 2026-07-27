@@ -10,6 +10,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const widgetDir = path.join(root, 'site/widgets/code_template_filter');
 const sourcePath = path.join(widgetDir, 'index.html');
 const buildRuntimePath = path.join(root, 'packages/rbook-server/dist/buildRuntime.js');
+const widgetApps = [
+  ['code_template_filter', 'code_template'],
+  ['explore', 'explore'],
+  ['article_inspector', 'article_inspector'],
+  ['tags', 'tags'],
+  ['relations', 'relations'],
+  ['practice', 'practice'],
+  ['diagnostics', 'diagnostics']
+];
 
 function createTempDir(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'rbook-code-runtime-'));
@@ -45,4 +54,30 @@ test('runtime build copies the single widget file without Vite', (t) => {
   const result = runStaticCopy(t);
   assert.equal(result.status, 0, result.output);
   assert.equal(fs.readFileSync(result.outputPath, 'utf8'), fs.readFileSync(sourcePath, 'utf8'));
+});
+
+test('all widget sources are single HTML files', () => {
+  for (const [source] of widgetApps) {
+    const directory = path.join(root, 'site/widgets', source);
+    assert.deepEqual(fs.readdirSync(directory).sort(), ['index.html'], source);
+    const html = fs.readFileSync(path.join(directory, 'index.html'), 'utf8');
+    assert.match(html, /<!doctype html>/i, source);
+    assert.doesNotMatch(html, /https?:\/\/127\.0\.0\.1|https?:\/\/localhost/, source);
+  }
+});
+
+test('runtime build copies every static widget to its public directory', (t) => {
+  const runtimeDir = createTempDir(t);
+  const script = `import { buildStaticWidgetApps } from ${JSON.stringify(pathToFileURL(buildRuntimePath).href)}; buildStaticWidgetApps();`;
+  const result = spawnSync(process.execPath, ['--input-type=module', '--eval', script], {
+    cwd: root,
+    env: {...process.env, RBOOK_RUNTIME_DIR: runtimeDir},
+    encoding: 'utf8'
+  });
+  assert.equal(result.status, 0, `${result.stdout || ''}\n${result.stderr || ''}`);
+  for (const [source, target] of widgetApps) {
+    const sourceFile = path.join(root, 'site/widgets', source, 'index.html');
+    const targetFile = path.join(runtimeDir, 'dist', target, 'index.html');
+    assert.equal(fs.readFileSync(targetFile, 'utf8'), fs.readFileSync(sourceFile, 'utf8'), target);
+  }
 });
