@@ -6,31 +6,453 @@
     <meta name="color-scheme" content="dark">
     <title>rbook: 标签浏览</title>
     <style>
-      :root{color-scheme:dark;--bg:#101418;--panel:#171d23;--raised:#1e262e;--border:#34414d;--text:#e7edf2;--muted:#98a6b3;--accent:#ffc857;--accent-strong:#ffe08a;--link:#79c7ff;--danger:#ff8e8e}*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;min-width:320px}.shell{margin:auto;max-width:1280px;padding:2rem 1.25rem 4rem}.topbar{align-items:center;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem;padding-bottom:.8rem}.topbar a{color:var(--muted);padding:.35rem .55rem;text-decoration:none}.topbar a:hover,.topbar a[aria-current="page"]{color:var(--accent-strong)}h1{color:var(--accent-strong);font-size:2.2rem;margin:0}.lead{color:var(--muted);margin:.35rem 0 1.2rem}.controls{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem}.controls input,.controls select{background:var(--raised);border:1px solid var(--border);color:var(--text);min-height:2.5rem;padding:.45rem .6rem}.controls input{flex:1 1 16rem}.controls input:focus,.controls select:focus,.tag-button:focus-visible{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:1px}.status{color:var(--muted);min-height:2rem;padding:.5rem 0}.status.error{color:var(--danger)}.layout{display:grid;gap:1rem;grid-template-columns:minmax(18rem,.75fr) minmax(0,1.5fr)}.panel{background:var(--panel);border:1px solid var(--border);padding:1rem}.tag-table{border-collapse:collapse;width:100%}.tag-table th,.tag-table td{border-bottom:1px solid var(--border);padding:.55rem .4rem;text-align:left}.tag-table th{color:var(--muted);font-size:.8rem;font-weight:500}.tag-button{background:transparent;border:0;color:var(--link);cursor:pointer;padding:0;text-align:left}.tag-button:hover{text-decoration:underline}.bar{background:var(--raised);height:.45rem;min-width:5rem}.bar span{background:var(--accent);display:block;height:100%}.selected-title{color:var(--accent-strong);font-size:1.1rem;margin:0 0 .8rem}.items{display:grid;gap:.6rem;list-style:none;margin:0;padding:0}.item{border-bottom:1px solid var(--border);padding-bottom:.6rem}.item a{color:var(--link);font-weight:700;overflow-wrap:anywhere;text-decoration:none}.item a:hover{text-decoration:underline}.item small{color:var(--muted);display:block;overflow-wrap:anywhere}.badge{border:1px solid var(--border);color:var(--accent-strong);font-size:.76rem;margin-right:.35rem;padding:.12rem .35rem}.empty{color:var(--muted);padding:1.5rem;text-align:center}@media(max-width:760px){.layout{grid-template-columns:1fr}}@media(max-width:500px){.shell{padding:1.25rem .85rem 3rem}.controls input,.controls select{width:100%}}
+      :root {
+        color-scheme: dark;
+        --bg: #101418;
+        --panel: #171d23;
+        --raised: #1e262e;
+        --border: #34414d;
+        --text: #e7edf2;
+        --muted: #98a6b3;
+        --accent: #ffc857;
+        --accent-strong: #ffe08a;
+        --link: #79c7ff;
+        --danger: #ff8e8e;
+        --focus: #8dd8ff;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        margin: 0;
+        min-width: 320px;
+      }
+
+      button, input, select { font: inherit; }
+
+      .shell { margin: auto; max-width: 1280px; padding: 2rem 1.25rem 3rem; }
+
+      .topbar {
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        flex-wrap: wrap;
+        gap: .45rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: .8rem;
+      }
+
+      .topbar a { color: var(--muted); padding: .35rem .55rem; text-decoration: none; }
+      .topbar a:hover, .topbar a[aria-current="page"] { color: var(--accent-strong); }
+
+      h1 { color: var(--accent-strong); font-size: 2.2rem; margin: 0; }
+      .lead { color: var(--muted); margin: .35rem 0 1.2rem; }
+
+      .controls { display: flex; flex-wrap: wrap; gap: .7rem; margin-bottom: .75rem; }
+
+      .controls input, .controls select {
+        background: var(--raised);
+        border: 1px solid var(--border);
+        color: var(--text);
+        min-height: 2.5rem;
+        padding: .45rem .6rem;
+      }
+
+      .controls input { flex: 1 1 16rem; }
+      .controls input:focus, .controls select:focus, .tag-button:focus-visible, .detail-tab:focus-visible, .back-button:focus-visible {
+        border-color: var(--focus);
+        outline: 2px solid var(--focus);
+        outline-offset: 1px;
+      }
+
+      .status { color: var(--muted); min-height: 2rem; padding: .35rem 0 .6rem; }
+      .status.error { color: var(--danger); }
+
+      .workspace {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: minmax(20rem, .85fr) minmax(0, 1.55fr);
+        height: clamp(24rem, calc(100dvh - 22rem), 52rem);
+        min-height: 24rem;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .panel-heading {
+        align-items: baseline;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: .75rem;
+        justify-content: space-between;
+        padding: .85rem 1rem .7rem;
+      }
+
+      .panel-heading h2 { font-size: 1rem; margin: 0; }
+      .panel-heading small { color: var(--muted); }
+      .scroll-pane { flex: 1; min-height: 0; overflow: auto; }
+
+      .tag-table { border-collapse: collapse; width: 100%; }
+      .tag-table caption { height: 1px; overflow: hidden; position: absolute; width: 1px; }
+      .tag-table th, .tag-table td { border-bottom: 1px solid var(--border); padding: .58rem .65rem; text-align: left; }
+      .tag-table thead th { background: var(--panel); color: var(--muted); font-size: .78rem; font-weight: 500; position: sticky; top: 0; z-index: 1; }
+      .tag-table tbody tr:last-child td { border-bottom: 0; }
+      .tag-table tbody tr[aria-selected="true"] { background: rgba(255, 200, 87, .1); }
+      .tag-table tbody tr:hover { background: rgba(121, 199, 255, .06); }
+      .tag-table td:not(:first-child), .tag-table th:not(:first-child) { text-align: right; white-space: nowrap; }
+      .tag-table td:first-child { width: 100%; }
+
+      .tag-button {
+        background: transparent;
+        border: 0;
+        color: var(--link);
+        cursor: pointer;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        padding: 0;
+        text-align: left;
+      }
+
+      .tag-button:hover { text-decoration: underline; }
+      .count { color: var(--muted); font-variant-numeric: tabular-nums; }
+      .count.total { color: var(--accent-strong); font-weight: 700; }
+      .empty { color: var(--muted); padding: 1.5rem; text-align: center; }
+
+      .detail-panel { position: relative; }
+      .detail-header {
+        background: var(--panel);
+        border-bottom: 1px solid var(--border);
+        padding: .85rem 1rem .7rem;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .detail-heading { align-items: center; display: flex; gap: .75rem; justify-content: space-between; }
+      .selected-title { color: var(--accent-strong); font-size: 1.1rem; margin: 0; overflow-wrap: anywhere; }
+      .selected-count { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+      .detail-tabs { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+      .detail-tab {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        cursor: pointer;
+        padding: .35rem .55rem;
+      }
+
+      .detail-tab:hover, .detail-tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent-strong); }
+      .back-button { background: transparent; border: 1px solid var(--border); color: var(--link); cursor: pointer; display: none; padding: .35rem .55rem; }
+      .detail-content { flex: 1; min-height: 0; overflow: auto; padding: 1rem; }
+      .items { display: grid; gap: .7rem; list-style: none; margin: 0; padding: 0; }
+      .item { border-bottom: 1px solid var(--border); padding-bottom: .7rem; }
+      .item:last-child { border-bottom: 0; }
+      .item a { color: var(--link); font-weight: 700; overflow-wrap: anywhere; text-decoration: none; }
+      .item a:hover { text-decoration: underline; }
+      .item small { color: var(--muted); display: block; margin-top: .15rem; overflow-wrap: anywhere; }
+      .badges { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .35rem; }
+      .badge { border: 1px solid var(--border); color: var(--accent-strong); font-size: .76rem; padding: .12rem .35rem; }
+
+      @media (max-width: 760px) {
+        .shell { padding: 1.25rem .85rem 2.5rem; }
+        h1 { font-size: 1.8rem; }
+        .workspace { display: block; height: auto; min-height: 0; }
+        .workspace .tag-panel, .workspace .detail-panel { display: none; }
+        .workspace:not(.mobile-detail) .tag-panel, .workspace.mobile-detail .detail-panel { display: flex; min-height: 28rem; }
+        .workspace.mobile-detail .detail-panel { min-height: 0; }
+        .workspace.mobile-detail .back-button { display: inline-block; }
+        .workspace.mobile-detail .detail-content { min-height: 24rem; overflow: visible; }
+        .workspace:not(.mobile-detail) .tag-panel .scroll-pane { max-height: 65vh; }
+        .tag-table th, .tag-table td { padding-left: .5rem; padding-right: .5rem; }
+        .tag-table th:nth-child(2), .tag-table td:nth-child(2), .tag-table th:nth-child(3), .tag-table td:nth-child(3) { display: none; }
+      }
+
+      @media (max-width: 500px) {
+        .controls input, .controls select { width: 100%; }
+        .detail-heading { align-items: flex-start; flex-direction: column; }
+        .detail-heading .back-button { order: -1; }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .tag-table tbody tr, .detail-tab { transition: background-color .15s ease, border-color .15s ease; }
+      }
     </style>
   </head>
   <body>
     <main class="shell">
       <nav class="topbar" aria-label="rbook 工具导航"><a href="/">首页</a><a href="/explore">文章探索</a><a href="/code_template">代码模板</a><a href="/tags" aria-current="page">标签</a><a href="/relations">关系</a><a href="/practice">学习队列</a></nav>
       <h1>标签浏览</h1>
-      <p class="lead">按数量浏览文章和代码模板标签。多个标签筛选遵循 API 的 OR 语义。</p>
-      <div class="controls"><input id="search" type="search" placeholder="搜索标签名称" autocomplete="off"><select id="type"><option value="all">全部类型</option><option value="article">文章</option><option value="code">代码模板</option></select><select id="order"><option value="count">按数量</option><option value="name">按名称</option></select></div>
+      <p class="lead">按标签查找文章和代码模板。选择标签后，右侧只显示对应内容。</p>
+      <div class="controls">
+        <input id="search" type="search" placeholder="搜索标签名称" autocomplete="off" aria-label="搜索标签名称">
+        <select id="type" aria-label="标签类型"><option value="all">全部类型</option><option value="article">文章</option><option value="code">代码模板</option></select>
+        <select id="order" aria-label="标签排序"><option value="count">按数量</option><option value="name">按名称</option></select>
+      </div>
       <div id="status" class="status" role="status" aria-live="polite">正在加载标签...</div>
-      <div class="layout"><section class="panel"><table class="tag-table"><thead><tr><th>类型</th><th>标签</th><th>数量</th><th>占比</th></tr></thead><tbody id="tag-list"></tbody></table></section><section class="panel" id="detail"><p class="empty">选择标签查看关联文章和模板。</p></section></div>
+      <div class="workspace" id="workspace">
+        <section class="panel tag-panel" aria-labelledby="tag-panel-title">
+          <div class="panel-heading"><h2 id="tag-panel-title">标签</h2><small id="tag-summary"></small></div>
+          <div class="scroll-pane" id="tag-scroll">
+            <table class="tag-table">
+              <caption>标签及其关联文章和代码模板数量</caption>
+              <thead><tr><th scope="col">标签</th><th scope="col">文章</th><th scope="col">代码</th><th scope="col">总数</th></tr></thead>
+              <tbody id="tag-list"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="panel detail-panel" id="detail" aria-labelledby="detail-title">
+          <div class="detail-header">
+            <div class="detail-heading">
+              <button id="back-button" class="back-button" type="button">返回标签列表</button>
+              <h2 id="detail-title" class="selected-title" tabindex="-1">选择一个标签</h2>
+              <span id="selected-count" class="selected-count"></span>
+            </div>
+            <div id="detail-tabs" class="detail-tabs" role="tablist" aria-label="关联内容类型"></div>
+          </div>
+          <div id="detail-content" class="detail-content"><p class="empty">选择标签查看关联文章和模板。</p></div>
+        </section>
+      </div>
     </main>
     <script>
       (() => {
-        const params = new URLSearchParams(location.search); const state = { articleTags: [], codeTags: [], pages: [], codes: [], selected: params.get('tag') || '', type: params.get('type') || 'all', order: 'count', search: params.get('q') || '' };
-        const search = document.querySelector('#search'); const type = document.querySelector('#type'); const order = document.querySelector('#order'); const status = document.querySelector('#status'); const tagList = document.querySelector('#tag-list'); const detail = document.querySelector('#detail');
-        search.value = state.search; type.value = state.type;
-        function text(parent, tag, value) { const element = document.createElement(tag); element.textContent = value == null ? '' : String(value); parent.append(element); return element; }
-        function setUrl() { const next = new URLSearchParams(); if (state.selected) next.set('tag', state.selected); if (state.type !== 'all') next.set('type', state.type); if (state.search) next.set('q', state.search); history.replaceState(null, '', `${location.pathname}${next.toString() ? `?${next}` : ''}`); }
-        function combinedTags() { return [...state.articleTags.map((item) => ({ ...item, type: 'article' })), ...state.codeTags.map((item) => ({ ...item, type: 'code' }))]; }
-        function visibleTags() { const needle = state.search.toLocaleLowerCase(); let items = combinedTags().filter((item) => (state.type === 'all' || item.type === state.type) && (!needle || item.tag.toLocaleLowerCase().includes(needle))); return items.sort((a, b) => state.order === 'name' ? a.tag.localeCompare(b.tag, 'zh-CN') || a.type.localeCompare(b.type) : b.count - a.count || a.tag.localeCompare(b.tag, 'zh-CN')); }
-        function renderList() { setUrl(); const items = visibleTags(); tagList.replaceChildren(); const max = Math.max(...items.map((item) => item.count), 1); items.forEach((item) => { const row = document.createElement('tr'); text(row, 'td', item.type === 'article' ? '文章' : '代码'); const name = document.createElement('td'); const button = text(name, 'button', item.tag); button.className = 'tag-button'; button.type = 'button'; button.addEventListener('click', () => { state.selected = item.tag; state.type = item.type; type.value = state.type; renderList(); renderDetail(); }); row.append(name); text(row, 'td', item.count); const barCell = document.createElement('td'); const bar = text(barCell, 'div', ''); bar.className = 'bar'; const fill = text(bar, 'span', ''); fill.style.width = `${Math.max(4, Math.round(item.count / max * 100))}%`; row.append(barCell); tagList.append(row); }); if (!items.length) { const row = document.createElement('tr'); const cell = text(row, 'td', '没有匹配的标签'); cell.colSpan = 4; cell.className = 'empty'; tagList.append(row); } status.textContent = `显示 ${items.length} 个标签；文章和代码标签分别统计。`; }
-        function renderDetail() { detail.replaceChildren(); if (!state.selected) { detail.append(text(detail, 'p', '选择标签查看关联文章和模板。')); detail.lastChild.className = 'empty'; return; } const title = text(detail, 'h2', `${state.type === 'code' ? '代码模板' : '文章'}：${state.selected}`); title.className = 'selected-title'; const list = text(detail, 'ul', ''); list.className = 'items'; const items = state.type === 'code' ? state.codes.filter((item) => (item.tags || []).includes(state.selected)) : state.pages.filter((item) => (item.tags || []).includes(state.selected)); items.forEach((item) => { const li = document.createElement('li'); li.className = 'item'; const href = state.type === 'code' ? `/api/codes?id=${encodeURIComponent(item.id || '')}` : (item.url || '#'); const a = text(li, 'a', state.type === 'code' ? (item.description || item.id) : (item.title || item.id)); a.href = href; if (state.type === 'code') a.target = '_blank'; const small = text(li, 'small', `${item.id || ''}${item.description && state.type === 'article' ? ` · ${item.description}` : ''}`); list.append(li); }); detail.append(list); if (!items.length) { list.replaceChildren(); list.append(text(list, 'li', '没有关联条目。')); list.lastChild.className = 'empty'; } }
-        async function load() { try { const responses = await Promise.all(['/api/tags', '/api/catalog', '/api/codes'].map((url) => fetch(url, { headers: { Accept: 'application/json' } }))); const payloads = await Promise.all(responses.map((response) => response.json())); const bad = responses.findIndex((response) => !response.ok); if (bad >= 0) throw new Error(payloads[bad].message || `HTTP ${responses[bad].status}`); state.articleTags = payloads[0].articleTags || []; state.codeTags = payloads[0].codeTags || []; state.pages = payloads[1].items || []; state.codes = payloads[2].items || []; renderList(); renderDetail(); } catch (error) { status.textContent = `加载失败：${error instanceof Error ? error.message : String(error)}`; status.className = 'status error'; } }
-        search.addEventListener('input', () => { state.search = search.value.trim(); renderList(); }); type.addEventListener('change', () => { state.type = type.value; renderList(); renderDetail(); }); order.addEventListener('change', () => { state.order = order.value; renderList(); }); load();
+        const params = new URLSearchParams(location.search);
+        const initialType = ['all', 'article', 'code'].includes(params.get('type')) ? params.get('type') : 'all';
+        const initialView = ['all', 'article', 'code'].includes(params.get('view')) ? params.get('view') : (initialType === 'all' ? 'all' : initialType);
+        const state = {
+          articleTags: [],
+          codeTags: [],
+          pages: [],
+          codes: [],
+          selected: params.get('tag') || '',
+          filterType: initialType,
+          detailType: initialView,
+          order: ['count', 'name'].includes(params.get('order')) ? params.get('order') : 'count',
+          search: params.get('q') || '',
+          mobileDetail: Boolean(params.get('tag')),
+          tagScrollTop: 0
+        };
+        const search = document.querySelector('#search');
+        const type = document.querySelector('#type');
+        const order = document.querySelector('#order');
+        const status = document.querySelector('#status');
+        const tagList = document.querySelector('#tag-list');
+        const tagScroll = document.querySelector('#tag-scroll');
+        const tagSummary = document.querySelector('#tag-summary');
+        const workspace = document.querySelector('#workspace');
+        const detailTitle = document.querySelector('#detail-title');
+        const selectedCount = document.querySelector('#selected-count');
+        const detailTabs = document.querySelector('#detail-tabs');
+        const detailContent = document.querySelector('#detail-content');
+        const backButton = document.querySelector('#back-button');
+
+        search.value = state.search;
+        type.value = state.filterType;
+        order.value = state.order;
+
+        function text(parent, tag, value) {
+          const element = document.createElement(tag);
+          element.textContent = value == null ? '' : String(value);
+          parent.append(element);
+          return element;
+        }
+
+        function setUrl() {
+          const next = new URLSearchParams();
+          if (state.selected) next.set('tag', state.selected);
+          if (state.filterType !== 'all') next.set('type', state.filterType);
+          if (state.detailType !== 'all' && state.selected) next.set('view', state.detailType);
+          if (state.order !== 'count') next.set('order', state.order);
+          if (state.search) next.set('q', state.search);
+          history.replaceState(null, '', `${location.pathname}${next.toString() ? `?${next}` : ''}`);
+        }
+
+        function count(value) {
+          const parsed = Number(value);
+          return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+        }
+
+        function combinedTags() {
+          const tags = new Map();
+          for (const item of state.articleTags) {
+            if (!item || !item.tag) continue;
+            const entry = tags.get(item.tag) || { tag: item.tag, articleCount: 0, codeCount: 0 };
+            entry.articleCount = count(item.count);
+            tags.set(item.tag, entry);
+          }
+          for (const item of state.codeTags) {
+            if (!item || !item.tag) continue;
+            const entry = tags.get(item.tag) || { tag: item.tag, articleCount: 0, codeCount: 0 };
+            entry.codeCount = count(item.count);
+            tags.set(item.tag, entry);
+          }
+          return [...tags.values()].map((item) => ({ ...item, total: item.articleCount + item.codeCount }));
+        }
+
+        function visibleTags() {
+          const needle = state.search.toLocaleLowerCase();
+          const items = combinedTags().filter((item) => {
+            const typeMatches = state.filterType === 'all' || (state.filterType === 'article' ? item.articleCount > 0 : item.codeCount > 0);
+            return typeMatches && (!needle || item.tag.toLocaleLowerCase().includes(needle));
+          });
+          return items.sort((a, b) => state.order === 'name' ? a.tag.localeCompare(b.tag, 'zh-CN') : b.total - a.total || a.tag.localeCompare(b.tag, 'zh-CN'));
+        }
+
+        function selectedTag() { return combinedTags().find((item) => item.tag === state.selected) || null; }
+
+        function renderList() {
+          setUrl();
+          const items = visibleTags();
+          tagList.replaceChildren();
+          for (const item of items) {
+            const row = document.createElement('tr');
+            row.setAttribute('aria-selected', item.tag === state.selected ? 'true' : 'false');
+            const name = document.createElement('td');
+            const button = text(name, 'button', item.tag);
+            button.className = 'tag-button';
+            button.type = 'button';
+            button.setAttribute('aria-label', `查看标签 ${item.tag}`);
+            button.addEventListener('click', () => selectTag(item.tag));
+            row.append(name);
+            text(row, 'td', item.articleCount).className = 'count';
+            text(row, 'td', item.codeCount).className = 'count';
+            text(row, 'td', item.total).className = 'count total';
+            tagList.append(row);
+          }
+          if (!items.length) {
+            const row = document.createElement('tr');
+            const cell = text(row, 'td', '没有匹配的标签');
+            cell.colSpan = 4;
+            cell.className = 'empty';
+            tagList.append(row);
+          }
+          const all = combinedTags();
+          tagSummary.textContent = `${items.length} / ${all.length} 个标签`;
+          status.textContent = `显示 ${items.length} 个标签；文章和代码模板已合并统计。`;
+        }
+
+        function renderDetailTabs(item) {
+          detailTabs.replaceChildren();
+          if (!item) return;
+          const options = [
+            ['all', '全部', item.total],
+            ['article', '文章', item.articleCount],
+            ['code', '代码模板', item.codeCount]
+          ];
+          for (const [value, label, amount] of options) {
+            const button = text(detailTabs, 'button', `${label} (${amount})`);
+            button.className = 'detail-tab';
+            button.type = 'button';
+            button.setAttribute('role', 'tab');
+            button.setAttribute('aria-selected', value === state.detailType ? 'true' : 'false');
+            button.disabled = amount === 0;
+            button.addEventListener('click', () => {
+              state.detailType = value;
+              renderDetail();
+            });
+          }
+        }
+
+        function renderDetail() {
+          const item = selectedTag();
+          detailContent.replaceChildren();
+          renderDetailTabs(item);
+          if (!item) {
+            detailTitle.textContent = '选择一个标签';
+            selectedCount.textContent = '';
+            const empty = text(detailContent, 'p', '选择标签查看关联文章和模板。');
+            empty.className = 'empty';
+            setUrl();
+            return;
+          }
+          detailTitle.textContent = item.tag;
+          selectedCount.textContent = `${item.total} 个关联条目`;
+          const list = text(detailContent, 'ul', '');
+          list.className = 'items';
+          const matches = [];
+          if (state.detailType !== 'code') matches.push(...state.pages.filter((page) => (page.tags || []).includes(item.tag)).map((page) => ({ ...page, kind: 'article' })));
+          if (state.detailType !== 'article') matches.push(...state.codes.filter((code) => (code.tags || []).includes(item.tag)).map((code) => ({ ...code, kind: 'code' })));
+          matches.sort((a, b) => a.kind.localeCompare(b.kind) || String(a.title || a.description || a.id).localeCompare(String(b.title || b.description || b.id), 'zh-CN'));
+          for (const entry of matches) {
+            const li = document.createElement('li');
+            li.className = 'item';
+            const href = entry.kind === 'code' ? `/api/codes?id=${encodeURIComponent(entry.id || '')}` : (entry.url || '#');
+            const label = entry.kind === 'code' ? (entry.description || entry.id) : (entry.title || entry.id);
+            const link = text(li, 'a', label);
+            link.href = href;
+            if (entry.kind === 'code') link.target = '_blank';
+            const meta = text(li, 'small', `${entry.kind === 'code' ? '代码模板' : '文章'} · ${entry.id || ''}${entry.description && entry.kind === 'article' ? ` · ${entry.description}` : ''}`);
+            const badges = text(li, 'div', '');
+            badges.className = 'badges';
+            for (const tag of Array.isArray(entry.tags) ? entry.tags : []) text(badges, 'span', tag).className = 'badge';
+            list.append(li);
+          }
+          if (!matches.length) {
+            list.append(text(list, 'li', '没有关联条目。'));
+            list.lastChild.className = 'empty';
+          }
+          setUrl();
+        }
+
+        function setMobileView(detail) {
+          state.mobileDetail = detail;
+          workspace.classList.toggle('mobile-detail', detail);
+          if (!detail) {
+            tagScroll.scrollTop = state.tagScrollTop;
+            const first = tagList.querySelector('.tag-button');
+            if (first) first.focus({ preventScroll: true });
+          } else {
+            detailContent.scrollTop = 0;
+            detailTitle.focus?.({ preventScroll: true });
+          }
+        }
+
+        function selectTag(tag) {
+          state.selected = tag;
+          if (state.filterType !== 'all') state.detailType = state.filterType;
+          state.tagScrollTop = tagScroll.scrollTop;
+          renderList();
+          renderDetail();
+          if (window.matchMedia('(max-width: 760px)').matches) setMobileView(true);
+        }
+
+        async function load() {
+          try {
+            const responses = await Promise.all(['/api/tags', '/api/catalog', '/api/codes'].map((url) => fetch(url, { headers: { Accept: 'application/json' } })));
+            const payloads = await Promise.all(responses.map((response) => response.json()));
+            const bad = responses.findIndex((response) => !response.ok);
+            if (bad >= 0) throw new Error(payloads[bad].message || `HTTP ${responses[bad].status}`);
+            state.articleTags = payloads[0].articleTags || [];
+            state.codeTags = payloads[0].codeTags || [];
+            state.pages = payloads[1].items || [];
+            state.codes = payloads[2].items || [];
+            renderList();
+            renderDetail();
+            workspace.classList.toggle('mobile-detail', state.mobileDetail && Boolean(state.selected));
+          } catch (error) {
+            status.textContent = `加载失败：${error instanceof Error ? error.message : String(error)}`;
+            status.className = 'status error';
+          }
+        }
+
+        search.addEventListener('input', () => { state.search = search.value.trim(); renderList(); });
+        type.addEventListener('change', () => {
+          state.filterType = type.value;
+          if (state.filterType !== 'all') state.detailType = state.filterType;
+          renderList();
+          renderDetail();
+        });
+        order.addEventListener('change', () => { state.order = order.value; renderList(); });
+        backButton.addEventListener('click', () => setMobileView(false));
+        tagScroll.addEventListener('scroll', () => { state.tagScrollTop = tagScroll.scrollTop; }, { passive: true });
+        load();
       })();
     </script>
   </body>
