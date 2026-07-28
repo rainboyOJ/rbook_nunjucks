@@ -89,6 +89,11 @@ async function main() {
   assert.equal(Object.hasOwn(currentIndex.stats, 'chunks'), false);
   assert.equal(Object.hasOwn(currentIndex, 'chunks'), false);
   assert.equal(Object.hasOwn(currentIndex, 'fuseIndex'), false);
+  const dsuIndexPage = currentIndex.pages.find((item) => item.id === 'dsu-on-tree');
+  assert.ok(dsuIndexPage, 'search index should include dsu-on-tree');
+  const dsuDescription = dsuIndexPage.frontMatter?.description;
+  assert.equal(typeof dsuDescription, 'string');
+  assert.ok(dsuDescription.trim().length > 0, 'dsu-on-tree should have an explicit description');
 
   try {
     const docsSource = fs.readFileSync(path.join(rootDir, 'docs/api-usage.md'), 'utf8');
@@ -148,7 +153,7 @@ async function main() {
     assert.equal(catalog.items.every((item) => Array.isArray(item.prerequisites)), true);
     const dsuCatalogPage = catalog.items.find((item) => item.id === 'dsu-on-tree');
     assert.ok(dsuCatalogPage, 'catalog should include dsu-on-tree');
-    assert.equal(dsuCatalogPage.description, '');
+    assert.equal(dsuCatalogPage.description, dsuDescription);
     assertRelativeUrl(dsuCatalogPage.url, 'catalog page URL');
     assertPayloadUrls(catalog);
     assertNoLocalLeak(catalog, 'catalog response');
@@ -170,11 +175,12 @@ async function main() {
     assertRelativeUrl(page.url, 'page URL');
     assert.equal(typeof page.markdown, 'string');
     assert.ok(page.markdown.length > 0);
-    assert.match(page.markdown, /^---\nid: "dsu-on-tree"/);
+    assert.match(page.markdown, /^---\nid: ["']?dsu-on-tree["']?\n/);
     assert.equal(page.markdown.includes('@include-code('), false);
     assert.match(page.markdown, /```cpp\n#include <bits\/stdc\+\+\.h>/);
-    assert.equal(page.description, '');
+    assert.equal(page.description, dsuDescription);
     assert.equal(page.frontMatter.id, 'dsu-on-tree');
+    assert.equal(page.frontMatter.description, dsuDescription);
     assert.deepEqual(page.frontMatter.code_template, ['dsu-on-tree-color-count']);
     assert.deepEqual(Object.keys(page).sort(), [
       'categories',
@@ -227,7 +233,10 @@ async function main() {
     }));
     assertApiResponse(dsuListResponse, 200);
     const dsuList = parseJson(dsuListResponse);
-    assert.equal(dsuList.items.find((item) => item.id === 'dsu-on-tree')?.description, '');
+    assert.equal(
+      dsuList.items.find((item) => item.id === 'dsu-on-tree')?.description,
+      dsuDescription
+    );
 
     const pagedPagesResponse = await app.inject('/api/pages?limit=2&offset=1');
     assertApiResponse(pagedPagesResponse, 200);
