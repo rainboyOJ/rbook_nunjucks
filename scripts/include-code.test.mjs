@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { expandIncludeCode } from '@rbook/markdown/include-code';
+import { render } from '@rbook/markdown/markdown-it';
 
 test('include-code expands paths and template IDs into standalone Markdown', (t) => {
   const contentDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rbook-include-code-'));
@@ -71,4 +72,13 @@ test('include-code reports missing and unsafe references without leaking files',
   assert.match(expanded, /include-code error: \.\.\/\.\.\/\.\.\/secret\.txt: path is outside/);
   assert.match(expanded, /include-code error: missing-id: referenced code was not found/);
   assert.equal(expanded.includes(contentDir), false);
+});
+
+test('line-numbered code keeps internal blank lines but removes trailing blank lines', () => {
+  const html = render('```cpp\nint first;\n\nint second;\n\n\n```\n');
+  const lineNumbers = html.match(/class="line-number"/g) || [];
+
+  assert.equal(lineNumbers.length, 3);
+  assert.match(html, /int first/);
+  assert.match(html, /int second/);
 });

@@ -26,7 +26,8 @@ html {
                 text-align: right;
             }
             .line-numbers-wrapper,code {
-                font-size: 16px;
+                font-size: inherit;
+                line-height: inherit;
             }
         }
     }
@@ -395,4 +396,3 @@ iframe.bilibili_iframe {
         height: 220px;
     }
 }
-

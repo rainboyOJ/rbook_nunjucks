@@ -27,8 +27,11 @@ return `<div class="zeroclipboard-container">
 
 
 const lineNumbers = (rawCode,lang,rawlang) => {
-
-    const code = Prism.highlight(rawCode, Prism.languages[lang], lang)
+    const lines = String(rawCode).replace(/\r\n?/g, '\n').split('\n')
+    while (lines.length > 1 && lines[lines.length - 1].trim() === '') {
+        lines.pop()
+    }
+    const code = Prism.highlight(lines.join('\n'), Prism.languages[lang], lang)
     return lineNumber_template({code:code.split('\n'),lang,rawlang})
 
 }
