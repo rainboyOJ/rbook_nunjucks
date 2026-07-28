@@ -34,7 +34,8 @@ COPY site/public ./site/public
 COPY site/markdown-style ./site/markdown-style
 COPY site/widgets ./site/widgets
 
-RUN npm run build:packages
+# Content is mounted at runtime; CI and start:runtime run the content-aware pre-check.
+RUN npm run build:packages:compile
 
 EXPOSE 3000
 CMD ["npm", "run", "start:runtime"]
