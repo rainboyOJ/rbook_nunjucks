@@ -1,11 +1,18 @@
 ---
-id: "multiset-permutation"
-title: "重复元素的全排列"
-date: 2026-06-16 00:00
+id: multiset-permutation
+title: 重复元素的全排列
+date: '2026-06-16 00:00'
 toc: true
-tags: ["排列", "DFS", "回溯", "枚举"]
-categories: ["枚举"]
-code_template: [multiset-permutation]
+tags:
+  - 排列
+  - DFS
+  - 回溯
+  - 枚举
+categories:
+  - 枚举
+code_template:
+  - multiset-permutation
+description: 重复元素全排列就是“每种数只开一个桶”，每个位置从非空桶里取一个数。
 ---
 
 [[TOC]]

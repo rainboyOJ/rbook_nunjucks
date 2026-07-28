@@ -1,6 +1,7 @@
 ---
 id: "integer-partition-problem"
 title: "整数划分"
+description: 整数划分问题的原理与实现：完全背包思想计数 DP。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "完全背包", "计数 DP", "整数划分"]

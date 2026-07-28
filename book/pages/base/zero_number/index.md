@@ -1,6 +1,7 @@
 ---
 id: "zero-number"
 title: "把数列变成 0 的最少操作"
+description: 把数列变成 0 的最少操作：正负配对抵消模型，答案为 max(P,N)。
 date: 2026-06-16 19:45
 toc: true
 tags: ["贪心", "等效模型"]

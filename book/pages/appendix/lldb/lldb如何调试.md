@@ -1,10 +1,16 @@
 ---
 id: appendix-lldb-lldb
-title: "LLDB C++ 调试指南"
-date: 2025-10-16 23:13
+title: LLDB C++ 调试指南
+date: '2025-10-16 23:13'
 toc: true
-tags: ["C++", "LLDB", "调试", "编程竞赛"]
-categories: ["开发工具"]
+tags:
+  - C++
+  - LLDB
+  - 调试
+  - 编程竞赛
+categories:
+  - 开发工具
+description: LLDB调试器在C++竞赛中的常用命令与实战指南
 ---
 
 [[TOC]]

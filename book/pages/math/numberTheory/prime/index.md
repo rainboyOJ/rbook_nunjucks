@@ -1,11 +1,20 @@
 ---
-id: "prime"
-title: "素数判定与素数筛"
-date: 2026-06-16 00:00
+id: prime
+title: 素数判定与素数筛
+date: '2026-06-16 00:00'
 toc: true
-tags: ["素数", "数论", "筛法"]
-categories: ["数学", "数论"]
-code_template: [is-prime-trial-division, eprime, linear-sieve]
+tags:
+  - 素数
+  - 数论
+  - 筛法
+categories:
+  - 数学
+  - 数论
+code_template:
+  - is-prime-trial-division
+  - eprime
+  - linear-sieve
+description: 单个数用“不超过平方根的因子”判断，大范围素数用“把合数批量划掉”的筛法预处理。
 ---
 
 [[TOC]]

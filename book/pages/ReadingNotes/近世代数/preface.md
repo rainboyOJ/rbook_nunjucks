@@ -1,6 +1,10 @@
 ---
 id: readingnotes-preface-1
 title: preface
+description: preface
+tags:
+  - ReadingNotes
+  - 近世代数
 ---
 
 ## 资源

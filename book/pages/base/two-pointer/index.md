@@ -1,6 +1,7 @@
 ---
 id: "two-pointer-legacy"
 title: "双指针旧文归档"
+description: 双指针旧文归档页，正式教程已迁移至双指针算法目录。
 date: 2026-06-16 00:00
 toc: true
 tags: ["双指针", "归档"]

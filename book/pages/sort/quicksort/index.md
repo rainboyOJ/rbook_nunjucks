@@ -1,11 +1,19 @@
 ---
-id: "quick-sort"
-title: "快速排序"
-date: 2026-06-16 21:55
+id: quick-sort
+title: 快速排序
+date: '2026-06-16 21:55'
 toc: true
-tags: ["快速排序", "分治", "双指针"]
-categories: ["基础算法", "排序"]
-code_template: [quicksort-tranditional, quicksort-3way-part]
+tags:
+  - 快速排序
+  - 分治
+  - 双指针
+categories:
+  - 基础算法
+  - 排序
+code_template:
+  - quicksort-tranditional
+  - quicksort-3way-part
+description: 快速排序先用一个基准值把数组分成“小的在左、大的在右”，再递归排序左右两边。
 ---
 
 [[TOC]]

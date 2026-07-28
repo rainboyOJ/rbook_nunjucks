@@ -1,6 +1,7 @@
 ---
 id: "queue-archive"
 title: "队列（旧路径归档）"
+description: 队列的旧路径归档页，基础数据结构讲解。
 date: 2026-06-16 00:00
 toc: true
 tags: ["队列", "数据结构", "归档"]

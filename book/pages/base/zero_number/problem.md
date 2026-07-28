@@ -1,6 +1,8 @@
 ---
 id: base-zero-number-problem
 title: problem
+description: 数列归零问题的题目描述：通过加减操作使所有数变成 0，求最少操作次数。
+tags: ["贪心", "等效模型", "基础算法"]
 ---
 
 

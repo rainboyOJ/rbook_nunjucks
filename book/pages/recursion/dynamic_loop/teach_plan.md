@@ -1,6 +1,10 @@
 ---
 id: recursion-dynamic-loop-teach-plan
 title: teach_plan
+description: teach_plan
+tags:
+  - 枚举
+  - 递归
 ---
 
 

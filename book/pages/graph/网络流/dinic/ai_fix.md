@@ -1,6 +1,7 @@
 ---
 id: "dinic-fix-archive"
 title: "Dinic 修改建议归档"
+description: Dinic 最大流算法的修改建议归档。
 date: 2026-06-16 00:00
 toc: true
 tags: ["归档", "网络流", "Dinic"]

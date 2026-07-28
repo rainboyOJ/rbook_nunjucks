@@ -1,6 +1,14 @@
 ---
 id: math-combinatorics-catalan-number
 title: catalan_number
+description: 卡特兰数的枚举定义与括号匹配问题
+tags:
+  - Catalan数
+  - 排列
+  - 排序
+  - 栈
+  - 组合
+  - 递归
 ---
 
 

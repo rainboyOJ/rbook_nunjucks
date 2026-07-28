@@ -1,3 +1,12 @@
+---
+description: Algorithm and data structure study notes
+tags:
+  - DFS
+  - 栈
+  - 树的直径
+  - 递归
+  - 配对
+---
 # 树直径算法改进建议
 
 ## 原始代码问题分析

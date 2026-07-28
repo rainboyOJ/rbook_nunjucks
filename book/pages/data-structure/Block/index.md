@@ -1,6 +1,7 @@
 ---
 id: "block-legacy"
 title: "分块算法旧入口"
+description: 分块算法的旧入口归档页，正式教程已迁移。
 date: 2025-12-01 09:17
 toc: true
 tags: ["分块", "归档"]

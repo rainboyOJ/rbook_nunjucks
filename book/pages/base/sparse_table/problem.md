@@ -1,6 +1,8 @@
 ---
 id: base-sparse-table-problem
 title: problem
+description: ST 表模板题描述：静态区间最大值查询，O(1) 回答每个询问。
+tags: ["ST 表", "RMQ", "基础算法"]
 ---
 
 ### 问题描述

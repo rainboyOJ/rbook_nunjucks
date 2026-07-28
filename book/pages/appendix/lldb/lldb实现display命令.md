@@ -1,10 +1,15 @@
 ---
 id: appendix-lldb-lldb-display
-title: "在LLDB中实现GDB的display功能"
-date: 2025-10-16 23:19
+title: 在LLDB中实现GDB的display功能
+date: '2025-10-16 23:19'
 toc: true
-tags: ["LLDB", "GDB", "调试"]
-categories: ["开发工具"]
+tags:
+  - LLDB
+  - GDB
+  - 调试
+categories:
+  - 开发工具
+description: 在LLDB中用stop-hook实现GDB的display自动显示
 ---
 
 [[TOC]]

@@ -1,6 +1,11 @@
 ---
 id: appendix-shellscripts-compare
 title: compare
+description: 对拍脚本与数据检查脚本的使用指南
+tags:
+  - 脚本
+  - 对拍
+  - Shell
 ---
 
 [[TOC]]

@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-decision-mono
 title: decision_mono
+description: 决策单调性优化的原理与应用：四边形不等式与分治优化。
+tags: ["动态规划", "决策单调性", "优化"]
 ---
 
 

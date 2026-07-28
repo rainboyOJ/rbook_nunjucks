@@ -1,6 +1,7 @@
 ---
 id: "lis-problem"
 title: "最长上升子序列练习"
+description: 最长上升子序列的练习题目，含多种变形。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LIS", "练习"]

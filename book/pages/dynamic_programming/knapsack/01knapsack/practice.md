@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-knapsack-01knapsack-practice
 title: practice
+description: 01 背包的练习题目：采药、干草出售、小A点菜。
+tags: ["动态规划", "背包", "01背包", "练习题"]
 ---
 
 ## 练习题目

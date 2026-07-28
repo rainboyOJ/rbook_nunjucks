@@ -1,6 +1,11 @@
 ---
 id: math-combinatorics-combinatorics-teach-plan
 title: teach_plan
+description: 组合数学教学计划与学习路线
+tags:
+  - 动态规划
+  - 排列
+  - 组合
 ---
 
 

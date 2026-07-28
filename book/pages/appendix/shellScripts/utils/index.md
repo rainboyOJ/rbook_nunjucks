@@ -1,6 +1,11 @@
 ---
 id: appendix-shellscripts-utils
 title: utils
+description: 洛谷题目样例下载等实用脚本工具
+tags:
+  - 脚本
+  - 工具
+  - 洛谷
 ---
 
 ## 说明

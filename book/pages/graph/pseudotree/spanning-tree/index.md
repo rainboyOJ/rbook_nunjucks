@@ -1,6 +1,7 @@
 ---
 id: pseudotree-spanning-tree
 title: "基环树（One-Loop-Graph）——找环与应用"
+description: 基环树（一环图）的找环方法与相关应用。
 date: 2025-12-19 20:00
 toc: true
 tags: ["图论", "找环", "基环树"]

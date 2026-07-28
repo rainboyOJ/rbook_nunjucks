@@ -1,6 +1,7 @@
 ---
 id: "treap"
 title: "Treap：带旋转的普通平衡树"
+description: Treap 平衡树的原理与实现：带旋转的普通平衡树。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "Treap"]

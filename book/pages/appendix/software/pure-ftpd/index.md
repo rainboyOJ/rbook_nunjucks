@@ -1,6 +1,11 @@
 ---
 id: appendix-software-pure-ftpd
 title: pure-ftpd
+description: Pure-FTPd在局域网中传输文件的配置方法
+tags:
+  - FTP
+  - Pure-FTPd
+  - 文件传输
 ---
 
 

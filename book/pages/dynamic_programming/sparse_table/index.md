@@ -1,6 +1,7 @@
 ---
 id: "sparse-table-dp-archive"
 title: "ST 表归档"
+description: ST 表在动态规划中的归档页。
 date: 2026-06-16 00:00
 toc: true
 tags: ["归档", "ST 表", "RMQ"]

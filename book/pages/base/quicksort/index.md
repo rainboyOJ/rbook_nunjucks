@@ -1,6 +1,7 @@
 ---
 id: "quick-sort-legacy-base"
 title: "快速排序旧入口"
+description: 快速排序的旧入口归档页，正式教程已迁移至排序算法目录。
 date: 2025-12-31 22:40
 toc: true
 tags: ["快速排序", "归档"]

@@ -1,11 +1,17 @@
 ---
-id: "dynamic-loop"
-title: "递归实现多重循环"
-date: 2026-06-16 00:00
+id: dynamic-loop
+title: 递归实现多重循环
+date: '2026-06-16 00:00'
 toc: true
-tags: ["递归", "枚举", "DFS"]
-categories: ["递归"]
-code_template: [enumerate-dynamic-loop]
+tags:
+  - 递归
+  - 枚举
+  - DFS
+categories:
+  - 递归
+code_template:
+  - enumerate-dynamic-loop
+description: 递归实现多重循环，就是把“第几层循环”变成 DFS 的参数。
 ---
 
 [[TOC]]

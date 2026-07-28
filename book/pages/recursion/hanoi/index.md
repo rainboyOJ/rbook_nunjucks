@@ -1,10 +1,14 @@
 ---
-id: "recursion-hanoi"
-title: "汉诺塔"
-date: 2026-06-16 00:00
+id: recursion-hanoi
+title: 汉诺塔
+date: '2026-06-16 00:00'
 toc: true
-tags: ["递归", "汉诺塔"]
-categories: ["递归"]
+tags:
+  - 递归
+  - 汉诺塔
+categories:
+  - 递归
+description: 汉诺塔先把上面 `n-1` 个盘子挪开，再移动最大盘，最后把 `n-1` 个盘子挪回来。
 ---
 
 [[TOC]]

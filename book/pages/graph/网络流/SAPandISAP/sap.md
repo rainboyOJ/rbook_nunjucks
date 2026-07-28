@@ -1,10 +1,12 @@
 ---
 id: graph-sapandisap-sap
 title: sap算法
+description: SAP 最短增广路算法的原理与实现。
 date: 2019-02-10 00:07
 update: 2019-02-10 00:07
 author: Rainboy
 cover: https://i.loli.net/2019/02/10/5c5efa9cb1665.gif
+tags: ["网络流", "最大流", "SAP", "图论"]
 ---
 
 ## sap算法

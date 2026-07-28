@@ -1,6 +1,7 @@
 ---
 id: "sgt-update-range"
 title: "线段树：区间赋值与区间查询"
+description: 线段树区间赋值与区间查询的原理与实现：懒标记延迟下传。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "懒标记"]

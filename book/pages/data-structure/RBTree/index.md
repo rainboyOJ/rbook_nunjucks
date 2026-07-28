@@ -1,9 +1,10 @@
 ---
 id: data-structure-rbtree-1
 title: "红黑树"
+description: 红黑树的原理与实现：自平衡二叉搜索树的完整实现。
 date: 2025-11-08 09:31
 toc: true
-tags: [""]
+tags: ["红黑树", "平衡树", "数据结构"]
 categories: [""]
 ---
 

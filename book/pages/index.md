@@ -2,6 +2,9 @@
 id: index
 title: 欢迎来到Rbook
 layout: index
+description: 欢迎来到Rbook
+tags:
+  - 算法
 ---
 
 这是一本关于算法的书籍，旨在帮助读者理解计算机科学中的核心概念。

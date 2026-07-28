@@ -1,6 +1,9 @@
 ---
 id: dynamic-programming-lcs-todo
 title: todo
+description: todo
+tags:
+  - 动态规划
 ---
 
 - [ ] 缺少大量的数据,暴力生成,然后分析的过程

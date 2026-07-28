@@ -1,6 +1,7 @@
 ---
 id: "weight-segment-tree"
 title: "权值线段树"
+description: 权值线段树的原理与实现：按值域维护元素个数，查询第 K 小与排名。
 date: 2026-06-16 00:00
 toc: true
 tags: ["线段树", "权值线段树", "平衡树", "数据结构"]

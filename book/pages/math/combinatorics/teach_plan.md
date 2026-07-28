@@ -1,6 +1,10 @@
 ---
 id: math-combinatorics-teach-plan
 title: teach_plan
+description: 组合数学教学计划与内容大纲
+tags:
+  - 排列
+  - 组合
 ---
 
 内容为

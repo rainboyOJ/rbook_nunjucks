@@ -1,10 +1,15 @@
 ---
-id: "jump-lca-archive"
-title: "倍增求 LCA（旧路径归档）"
-date: 2026-06-16 00:00
+id: jump-lca-archive
+title: 倍增求 LCA（旧路径归档）
+date: '2026-06-16 00:00'
 toc: true
-tags: ["LCA", "倍增", "归档"]
-categories: ["树上算法"]
+tags:
+  - LCA
+  - 倍增
+  - 归档
+categories:
+  - 树上算法
+description: 倍增求 LCA（旧路径归档）
 ---
 
 [[TOC]]

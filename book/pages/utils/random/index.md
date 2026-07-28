@@ -1,11 +1,16 @@
 ---
-id: "random-tool"
-title: "随机数生成工具"
-date: 2026-06-17 00:00
+id: random-tool
+title: 随机数生成工具
+date: '2026-06-17 00:00'
 toc: true
-tags: ["随机数", "工具"]
-categories: ["工具"]
-code_template: [random]
+tags:
+  - 随机数
+  - 工具
+categories:
+  - 工具
+code_template:
+  - random
+description: 随机数生成工具
 ---
 
 [[TOC]]

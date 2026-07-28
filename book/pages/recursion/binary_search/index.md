@@ -1,10 +1,15 @@
 ---
-id: "binary-search-recursion-archive"
-title: "二分查找（旧路径归档）"
-date: 2026-06-16 00:00
+id: binary-search-recursion-archive
+title: 二分查找（旧路径归档）
+date: '2026-06-16 00:00'
 toc: true
-tags: ["二分查找", "递归", "归档"]
-categories: ["基础算法"]
+tags:
+  - 二分查找
+  - 递归
+  - 归档
+categories:
+  - 基础算法
+description: 二分查找（旧路径归档）
 ---
 
 [[TOC]]

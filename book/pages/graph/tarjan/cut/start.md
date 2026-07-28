@@ -1,6 +1,7 @@
 ---
 id: "tarjan-cut-node"
 title: "Tarjan 求割点"
+description: Tarjan 算法求割点的原理与实现：无向图连通性判定。
 date: 2026-06-16 19:05
 toc: true
 tags: ["Tarjan", "割点", "无向图连通性"]

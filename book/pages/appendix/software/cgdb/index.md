@@ -1,6 +1,11 @@
 ---
 id: appendix-software-cgdb
 title: cgdb
+description: CGDB调试器的安装与配置指南
+tags:
+  - CGDB
+  - 调试
+  - GDB
 ---
 
 

@@ -1,6 +1,7 @@
 ---
 id: "mst"
 title: "最小生成树"
+description: 最小生成树的原理与实现：Kruskal 算法、切分性质与相关应用。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最小生成树", "Kruskal"]

@@ -1,6 +1,7 @@
 ---
 id: "heap-legacy"
 title: "堆旧入口"
+description: 堆的旧入口归档页，正式教程已迁移。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "堆", "归档"]

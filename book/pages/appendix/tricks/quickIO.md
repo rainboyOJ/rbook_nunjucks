@@ -1,11 +1,17 @@
 ---
-id: "quick-io"
-title: "quickIO"
-date: 2025-11-04 11:32
+id: quick-io
+title: quickIO
+date: '2025-11-04 11:32'
 toc: true
-tags: ["tricks","template"]
-categories: ["附录", "工具"]
-code_template: [quick-io]
+tags:
+  - tricks
+  - template
+categories:
+  - 附录
+  - 工具
+code_template:
+  - quick-io
+description: 手写快速整数输入输出模板的使用说明
 ---
 
 [[TOC]]

@@ -1,10 +1,17 @@
 ---
-id: "elementary-number-theory-chapter1"
-title: "初等数论初步：整除、公因数与素数"
-date: 2026-06-16 00:00
+id: elementary-number-theory-chapter1
+title: 初等数论初步：整除、公因数与素数
+date: '2026-06-16 00:00'
 toc: true
-tags: ["初等数论", "整除", "最大公约数", "素数"]
-categories: ["数学", "数论"]
+tags:
+  - 初等数论
+  - 整除
+  - 最大公约数
+  - 素数
+categories:
+  - 数学
+  - 数论
+description: 初等数论第一章的主线是：用整除描述因子关系，用最大公约数整理共同因子，用素数分解建立整数的唯一结构。
 ---
 
 [[TOC]]

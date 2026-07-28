@@ -1,6 +1,7 @@
 ---
 id: "topsort"
 title: "拓扑排序"
+description: 拓扑排序的原理与实现：DAG 的线性排序，Kahn 算法与 DFS 方法。
 date: 2025-12-18 10:01
 toc: true
 tags: ["图论", "拓扑排序", "DAG"]

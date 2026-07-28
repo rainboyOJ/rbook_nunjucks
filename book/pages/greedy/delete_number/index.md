@@ -1,6 +1,10 @@
 ---
 id: greedy-delete-number
 title: delete_number
+description: delete_number
+tags:
+  - 删数问题
+  - 贪心
 ---
 
 有一个数字,现在问删除 k 个数字之后，使这个数字变得最小,如何删？

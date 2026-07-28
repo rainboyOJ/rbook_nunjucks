@@ -1,11 +1,17 @@
 ---
-id: "next-permutation-manual"
-title: "非递归生成排列"
-date: 2026-06-16 00:00
+id: next-permutation-manual
+title: 非递归生成排列
+date: '2026-06-16 00:00'
 toc: true
-tags: ["排列", "字典序", "枚举"]
-categories: ["枚举"]
-code_template: [next-permutation]
+tags:
+  - 排列
+  - 字典序
+  - 枚举
+categories:
+  - 枚举
+code_template:
+  - next-permutation
+description: '`next_permutation` 就是把当前排列变成“刚好比它大一点”的下一个排列。'
 ---
 
 [[TOC]]

@@ -1,11 +1,17 @@
 ---
-id: "binary-bit-operations"
-title: "二进制与位运算"
-date: 2026-06-16 00:00
+id: binary-bit-operations
+title: 二进制与位运算
+date: '2026-06-16 00:00'
 toc: true
-tags: ["二进制", "位运算", "数学基础"]
-categories: ["数学"]
-code_template: [bit-operations]
+tags:
+  - 二进制
+  - 位运算
+  - 数学基础
+categories:
+  - 数学
+code_template:
+  - bit-operations
+description: 位运算就是把整数看成一排 `0/1` 开关，用很少的操作直接检查、打开、关闭或枚举这些开关。
 ---
 
 [[TOC]]

@@ -1,6 +1,24 @@
 ---
 id: problem-list-algo-advanced
 title: algo_advanced
+description: algo_advanced
+tags:
+  - DFS
+  - LCA
+  - Trie
+  - 二分查找
+  - 动态规划
+  - 哈希
+  - 基环树
+  - 字符串
+  - 差分
+  - 排序
+  - 栈
+  - 树的直径
+  - 线段树
+  - 组合
+  - 贪心
+  - 递归
 ---
 
 [[TOC]]

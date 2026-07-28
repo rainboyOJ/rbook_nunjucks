@@ -1,6 +1,7 @@
 ---
 id: "queue"
 title: "队列"
+description: 队列的原理与实现：先进先出的基础数据结构。
 date: 2026-06-16 00:00
 toc: true
 tags: ["队列", "数据结构"]

@@ -1,6 +1,7 @@
 ---
 id: "dinic"
 title: "Dinic 最大流算法"
+description: Dinic 最大流算法的原理与实现：分层图、多路增广、当前弧优化。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "最大流"]

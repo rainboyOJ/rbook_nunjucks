@@ -1,6 +1,26 @@
 ---
 id: appendix-tricks-prompt
 title: 题目模式识别prompt
+description: 算法竞赛模式识别Prompt模板与触发器清单
+tags:
+  - 模式识别
+  - Prompt
+  - 技巧
+  - Stirling数
+  - Trie
+  - 二分查找
+  - 动态规划
+  - 哈希
+  - 基环树
+  - 字符串
+  - 差分
+  - 排列
+  - 排序
+  - 栈
+  - 树链剖分
+  - 线段树
+  - 组合
+  - 贪心
 ---
 
 每做一道好题，不要只写代码，要在笔记本上记下它的“特征”**：

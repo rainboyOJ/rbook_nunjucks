@@ -1,11 +1,18 @@
 ---
-id: "linear-sieve"
-title: "线性筛"
-date: 2025-12-16 15:47
+id: linear-sieve
+title: 线性筛
+date: '2025-12-16 15:47'
 toc: true
-tags: ["数论", "素数", "线性筛"]
-categories: ["数学", "数论"]
-code_template: [linear-sieve]
+tags:
+  - 数论
+  - 素数
+  - 线性筛
+categories:
+  - 数学
+  - 数论
+code_template:
+  - linear-sieve
+description: 线性筛用“最小质因子”筛合数，保证每个合数只被标记一次。
 ---
 
 [[TOC]]

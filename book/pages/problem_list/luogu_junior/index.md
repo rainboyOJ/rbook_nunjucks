@@ -1,6 +1,17 @@
 ---
 id: problem-list-luogu-junior
 title: luogu_junior
+description: luogu_junior
+tags:
+  - DFS
+  - 二分查找
+  - 动态规划
+  - 字符串
+  - 排序
+  - 栈
+  - 记忆化
+  - 贪心
+  - 递归
 ---
 
 

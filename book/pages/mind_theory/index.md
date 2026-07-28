@@ -1,6 +1,9 @@
 ---
 id: mind-theory
 title: mind_theory
+description: mind_theory
+tags:
+  - mind theory
 ---
 
 ## 缩小放大法

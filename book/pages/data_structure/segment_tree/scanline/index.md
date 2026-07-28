@@ -1,6 +1,7 @@
 ---
 id: "segment-tree-scanline"
 title: "扫描线与矩形面积并"
+description: 扫描线与矩形面积并问题的原理与实现：线段树维护区间覆盖长度。
 date: 2026-06-16 17:35
 toc: true
 tags: ["扫描线", "线段树", "矩形面积并"]

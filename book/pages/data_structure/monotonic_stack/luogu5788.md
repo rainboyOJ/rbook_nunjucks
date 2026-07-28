@@ -1,6 +1,7 @@
 ---
 id: "monotonic-stack-luogu5788"
 title: "下一个更大元素"
+description: 下一个更大元素问题的单调栈解法：Luogu P5788 模板题。
 date: 2026-06-16 00:00
 toc: true
 tags: ["单调栈"]

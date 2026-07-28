@@ -1,6 +1,10 @@
 ---
 id: recursion-binary-search-problem
 title: problem
+description: problem
+tags:
+  - 二分查找
+  - 递归
 ---
 
 ### 问题描述

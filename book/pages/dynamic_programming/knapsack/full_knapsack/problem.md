@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-knapsack-full-knapsack-problem
 title: problem
+description: 完全背包问题的题目描述与输入输出格式，每种物品无限取用。
+tags: ["动态规划", "背包", "完全背包"]
 ---
 
 ### 问题描述

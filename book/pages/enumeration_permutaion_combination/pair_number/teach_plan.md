@@ -1,6 +1,12 @@
 ---
 id: enumeration-permutaion-combination-pair-number-teach-plan
 title: teach_plan
+description: teach_plan
+tags:
+  - 二分查找
+  - 枚举
+  - 组合
+  - 配对
 ---
 
 ## 教学目标

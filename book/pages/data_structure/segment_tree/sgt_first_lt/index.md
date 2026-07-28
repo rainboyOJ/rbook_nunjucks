@@ -1,6 +1,7 @@
 ---
 id: "sgt-value-first-less"
 title: "值域线段树：查找第一个小于阈值的位置"
+description: 值域线段树查找第一个小于阈值的位置：线段树上二分。
 date: 2026-06-16 00:00
 toc: true
 tags: ["线段树", "值域线段树", "区间最小值"]

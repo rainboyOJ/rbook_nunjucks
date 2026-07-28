@@ -2,8 +2,14 @@
 id: appendix-ubuntu2204
 title: ubuntu2204系统的安装
 author: rainboy
-update_time : 2023-09-17
+update_time: 2023-09-17T00:00:00.000Z
 toc: true
+description: Ubuntu 22.04系统安装与开发环境配置
+tags:
+  - Ubuntu
+  - Linux
+  - 安装
+  - 环境配置
 ---
 
 ## 安装ubuntu22.04

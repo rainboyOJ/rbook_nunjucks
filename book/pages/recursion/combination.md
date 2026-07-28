@@ -1,11 +1,17 @@
 ---
-id: "combination-enum"
-title: "组合枚举"
-date: 2026-06-16 00:00
+id: combination-enum
+title: 组合枚举
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合", "枚举", "DFS"]
-categories: ["递归"]
-code_template: [combination]
+tags:
+  - 组合
+  - 枚举
+  - DFS
+categories:
+  - 递归
+code_template:
+  - combination
+description: 组合枚举只关心选了哪些元素，不关心这些元素被选中的先后顺序。
 ---
 
 [[TOC]]

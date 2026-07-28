@@ -1,6 +1,8 @@
 ---
 id: base-binary-search-problem
 title: problem
+description: 二分查找的模板题描述：在有序序列中查询第一个大于等于给定值的位置。
+tags: ["二分查找", "基础算法"]
 ---
 
 ### 问题描述

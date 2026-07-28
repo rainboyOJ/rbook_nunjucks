@@ -1,6 +1,11 @@
 ---
 id: appendix-noilinux2-0
 title: noilinux2.0的安装
+description: NOILinux 2.0系统的下载安装与输入法配置
+tags:
+  - NOILinux
+  - Linux
+  - 安装
 ---
 
 

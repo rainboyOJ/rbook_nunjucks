@@ -1,6 +1,7 @@
 ---
 id: "bipartite-matching-with-network-flow"
 title: "网络流求解二分图匹配"
+description: 网络流求解二分图最大匹配的建模方法：源点连左部、右部连汇点、中间边容量为 1。
 date: 2025-12-25 15:30
 toc: true
 tags: ["算法", "图论", "网络流", "二分图匹配"]

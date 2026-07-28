@@ -1,6 +1,8 @@
 ---
 id: base-binary-search-teach-plan
 title: teach_plan
+description: 二分查找的教学计划与课堂目标，从线性扫描到二分查找的渐进教学过程。
+tags: ["二分查找", "基础算法", "教学"]
 ---
 
 

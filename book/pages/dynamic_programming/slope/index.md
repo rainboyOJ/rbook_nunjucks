@@ -1,6 +1,7 @@
 ---
 id: "dp-slope-optimization"
 title: "斜率优化 DP"
+description: 斜率优化 DP 的原理与实现：凸壳维护与单调队列优化。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "斜率优化", "凸包优化", "单调队列"]

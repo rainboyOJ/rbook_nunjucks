@@ -1,6 +1,12 @@
 ---
 id: appendix-program-environment-wsl
 title: wsl
+description: Windows WSL的安装配置与使用指南
+tags:
+  - WSL
+  - Windows
+  - Linux
+  - 环境配置
 ---
 
 

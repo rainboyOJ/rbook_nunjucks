@@ -1,11 +1,17 @@
 ---
-id: "number-base"
-title: "进制转换"
-date: 2026-06-16 00:00
+id: number-base
+title: 进制转换
+date: '2026-06-16 00:00'
 toc: true
-tags: ["进制", "数学基础"]
-categories: ["数学"]
-code_template: [base-conversion-bin2dec, base-conversion-dec2bin]
+tags:
+  - 进制
+  - 数学基础
+categories:
+  - 数学
+code_template:
+  - base-conversion-bin2dec
+  - base-conversion-dec2bin
+description: 进制转换就是反复回答两个问题：每一位的权值是多少，以及当前最低位是多少。
 ---
 
 [[TOC]]

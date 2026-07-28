@@ -1,6 +1,11 @@
 ---
 id: enumeration-permutaion-combination-01-sequence-problem
 title: problem
+description: problem
+tags:
+  - 01序列
+  - 枚举
+  - 组合
 ---
 
 ### 题目描述

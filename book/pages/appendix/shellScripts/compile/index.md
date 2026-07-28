@@ -1,6 +1,12 @@
 ---
 id: appendix-shellscripts-compile
 title: compile
+description: 自动编译运行C++代码的Shell脚本使用说明
+tags:
+  - 脚本
+  - 编译
+  - Shell
+  - C++
 ---
 
 

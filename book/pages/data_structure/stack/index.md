@@ -1,6 +1,7 @@
 ---
 id: "stack-archive"
 title: "栈（旧路径归档）"
+description: 栈的旧路径归档页，基础数据结构讲解。
 date: 2026-06-16 00:00
 toc: true
 tags: ["栈", "数据结构", "归档"]

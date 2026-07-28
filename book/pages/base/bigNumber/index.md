@@ -1,6 +1,8 @@
 ---
 id: base-bignumber
 title: bigNumber
+description: 高精度算法（大数运算）的入口页面，涵盖高精度加法、减法、乘法、除法的实现。
+tags: ["高精度", "大整数", "基础算法"]
 ---
 
 [[TOC]]

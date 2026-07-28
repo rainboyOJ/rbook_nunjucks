@@ -1,6 +1,8 @@
 ---
 id: data-structure-persistent-segment-tree
 title: persistent-segment-tree
+description: 可持久化线段树的实现要点：记录两个 SGT 的同步位置。
+tags: ["可持久化线段树", "主席树", "数据结构"]
 ---
 
 可持久化线段树

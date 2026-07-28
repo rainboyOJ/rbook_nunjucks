@@ -1,10 +1,16 @@
 ---
-id: "ball-and-box-practice"
-title: "球盒模型练习"
-date: 2026-06-16 00:00
+id: ball-and-box-practice
+title: 球盒模型练习
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合数学", "球盒模型", "练习"]
-categories: ["组合数学", "枚举"]
+tags:
+  - 组合数学
+  - 球盒模型
+  - 练习
+categories:
+  - 组合数学
+  - 枚举
+description: 练球盒模型时，不要先背题号；先把每道题归到“球是否相同、盒是否相同、盒是否为空”。
 ---
 
 [[TOC]]

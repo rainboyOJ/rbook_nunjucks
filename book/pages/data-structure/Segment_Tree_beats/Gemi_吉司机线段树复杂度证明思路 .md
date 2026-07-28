@@ -1,6 +1,8 @@
 ---
 id: data-structure-segment-tree-beats-gemi-1
 title: Gemi_吉司机线段树复杂度证明思路
+description: 吉司机线段树的时间复杂度证明思路讲解。
+tags: ["吉司机线段树", "Segment Tree Beats", "数据结构"]
 ---
 
 ## 我的提问：

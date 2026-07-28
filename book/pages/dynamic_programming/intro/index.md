@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-intro
 title: intro
+description: 动态规划入门：解题步骤与基础知识讲解。
+tags: ["动态规划", "入门"]
 ---
 
 

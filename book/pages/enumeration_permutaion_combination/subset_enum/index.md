@@ -1,11 +1,21 @@
 ---
-id: "subset-enum"
-title: "子集枚举"
-date: 2026-06-16 00:00
+id: subset-enum
+title: 子集枚举
+date: '2026-06-16 00:00'
 toc: true
-tags: ["子集", "枚举", "DFS", "二进制", "状态压缩"]
-categories: ["枚举"]
-code_template: [subset, enumerate-subset-binary, submask]
+tags:
+  - 子集
+  - 枚举
+  - DFS
+  - 二进制
+  - 状态压缩
+categories:
+  - 枚举
+code_template:
+  - subset
+  - enumerate-subset-binary
+  - submask
+description: 普通子集枚举是对每个元素决定“选”还是“不选”；固定集合的子集枚举是从 `sub = mask` 开始，每次用 `(sub - 1) & mask` 跳到下一个子集。
 ---
 
 [[TOC]]

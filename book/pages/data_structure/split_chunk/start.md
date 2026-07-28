@@ -1,6 +1,8 @@
 ---
 id: data-structure-split-chunk-start
 title: start
+description: 分块算法的入门教程：A Simple Problem with Integers 的块状数组实现。
+tags: ["分块", "数据结构"]
 ---
 
 ## 入门 : A Simple Problem with Integers

@@ -1,6 +1,11 @@
 ---
 id: appendix-software-vscode-plugin
 title: plugin
+description: VS Code常用插件推荐与用途说明
+tags:
+  - VS Code
+  - 插件
+  - 编辑器
 ---
 
 ## 常用的插件

@@ -1,11 +1,17 @@
 ---
-id: "zero-one-sequence"
-title: "01 序列枚举"
-date: 2026-06-16 00:00
+id: zero-one-sequence
+title: 01 序列枚举
+date: '2026-06-16 00:00'
 toc: true
-tags: ["枚举", "递归", "01序列"]
-categories: ["枚举"]
-code_template: [enumerate-dynamic-loop]
+tags:
+  - 枚举
+  - 递归
+  - 01序列
+categories:
+  - 枚举
+code_template:
+  - enumerate-dynamic-loop
+description: 01 序列枚举就是每个位置只在 `0` 和 `1` 中选一个，本质是对布尔格（Boolean Lattice）的深度优先遍历。
 ---
 
 [[TOC]]

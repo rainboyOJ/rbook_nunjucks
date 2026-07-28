@@ -1,11 +1,17 @@
 ---
-id: "hld"
-title: "树链剖分"
-date: 2026-06-16 00:00
+id: hld
+title: 树链剖分
+date: '2026-06-16 00:00'
 toc: true
-tags: ["树", "树链剖分", "线段树"]
-categories: ["树上算法"]
-code_template: [hld]
+tags:
+  - 树
+  - 树链剖分
+  - 线段树
+categories:
+  - 树上算法
+code_template:
+  - hld
+description: 树链剖分先让重儿子连续编号，把树上路径拆成 $O(\log n)$ 段数组区间，再交给线段树处理。
 ---
 
 [[TOC]]

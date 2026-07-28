@@ -1,6 +1,7 @@
 ---
 id: cut-edge
 title: "割边"
+description: 割边（桥）的判定与实现：Tarjan 算法求无向图中删除后使图不连通的边。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "割边"]

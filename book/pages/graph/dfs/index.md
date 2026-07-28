@@ -1,6 +1,7 @@
 ---
 id: "graph-dfs-legacy"
 title: "DFS 遍历图旧文归档"
+description: DFS 遍历图的旧文归档页。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "DFS", "归档"]

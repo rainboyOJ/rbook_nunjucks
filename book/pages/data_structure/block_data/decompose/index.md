@@ -1,6 +1,7 @@
 ---
 id: "sqrt-decomposition"
 title: "分块思想"
+description: 分块思想的原理与实现：根号分治、区间信息维护。
 date: 2026-06-16 18:05
 toc: true
 tags: ["分块", "根号分治", "区间信息"]

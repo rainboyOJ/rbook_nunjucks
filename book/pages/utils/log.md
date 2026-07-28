@@ -1,11 +1,16 @@
 ---
-id: "debug-log"
-title: "调试输出工具"
-date: 2026-06-16 00:00
+id: debug-log
+title: 调试输出工具
+date: '2026-06-16 00:00'
 toc: true
-tags: ["调试", "工具函数"]
-categories: ["工具"]
-code_template: [log]
+tags:
+  - 调试
+  - 工具函数
+categories:
+  - 工具
+code_template:
+  - log
+description: 调试输出工具
 ---
 
 [[TOC]]

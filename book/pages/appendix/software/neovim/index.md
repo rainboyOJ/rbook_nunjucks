@@ -1,6 +1,11 @@
 ---
 id: appendix-software-neovim
 title: neovim
+description: Neovim编辑器特性介绍与安装配置
+tags:
+  - Neovim
+  - 编辑器
+  - Vim
 ---
 
 ## Neovim 简介

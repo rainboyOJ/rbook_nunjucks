@@ -1,6 +1,12 @@
 ---
 id: appendix-software-vscode-bak
 title: bak
+description: VS Code写C++代码的配置与快捷键指南
+tags:
+  - VS Code
+  - 编辑器
+  - C++
+  - 快捷键
 ---
 
 ## 如何用vscode写c++代码

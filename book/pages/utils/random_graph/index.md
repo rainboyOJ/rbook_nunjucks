@@ -1,11 +1,19 @@
 ---
-id: "random-graph-tool"
-title: "随机图生成工具"
-date: 2026-06-17 00:00
+id: random-graph-tool
+title: 随机图生成工具
+date: '2026-06-17 00:00'
 toc: true
-tags: ["随机图", "对拍", "工具"]
-categories: ["工具"]
-code_template: [template-random-graph, template-random-digraph, template-random-dag]
+tags:
+  - 随机图
+  - 对拍
+  - 工具
+categories:
+  - 工具
+code_template:
+  - template-random-graph
+  - template-random-digraph
+  - template-random-dag
+description: 随机图生成工具
 ---
 
 [[TOC]]

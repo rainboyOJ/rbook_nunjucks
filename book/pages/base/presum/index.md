@@ -1,6 +1,7 @@
 ---
 id: prefix-sum
 title: "前缀和"
+description: 前缀和的原理与实现：预处理 O(n)，单次区间查询 O(1)，支持一维和二维。
 date: 2026-06-16 00:00
 toc: true
 tags: ["前缀和", "区间查询", "基础算法"]

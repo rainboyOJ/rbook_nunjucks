@@ -1,6 +1,9 @@
 ---
 id: recursion-print-to-n-teach-plain
 title: teach_plain
+description: teach_plain
+tags:
+  - 递归
 ---
 
 ## 要求

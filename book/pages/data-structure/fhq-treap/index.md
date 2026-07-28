@@ -1,6 +1,7 @@
 ---
 id: "fhq-treap"
 title: "FHQ Treap：用分裂与合并维护有序集合"
+description: FHQ Treap（无旋 Treap）的原理与实现：分裂与合并操作维护有序集合。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "FHQ Treap"]

@@ -1,11 +1,21 @@
 ---
-id: "combinatorics-basic-counting"
-title: "排列与组合"
-date: 2026-06-16 00:00
+id: combinatorics-basic-counting
+title: 排列与组合
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合数学", "排列", "组合", "计数"]
-categories: ["数学", "组合数学"]
-code_template: [permutation, combination, multiset-permutation]
+tags:
+  - 组合数学
+  - 排列
+  - 组合
+  - 计数
+categories:
+  - 数学
+  - 组合数学
+code_template:
+  - permutation
+  - combination
+  - multiset-permutation
+description: 排列组合计数先问两件事：顺序算不算不同，元素能不能重复使用。
 ---
 
 [[TOC]]

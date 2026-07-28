@@ -1,11 +1,17 @@
 ---
-id: "string-brute-force"
-title: "字符串朴素匹配"
-date: 2026-06-16 00:00
+id: string-brute-force
+title: 字符串朴素匹配
+date: '2026-06-16 00:00'
 toc: true
-tags: ["字符串", "模式匹配", "暴力枚举"]
-categories: ["字符串"]
-code_template: [brute-force-match]
+tags:
+  - 字符串
+  - 模式匹配
+  - 暴力枚举
+categories:
+  - 字符串
+code_template:
+  - brute-force-match
+description: 朴素匹配就是枚举主串中的每个起点，然后从左到右尝试把模式串完整贴上去。
 ---
 
 [[TOC]]

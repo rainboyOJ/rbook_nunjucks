@@ -1,10 +1,13 @@
 ---
 id: chapter3-optimization-slide-window
-title: "滑动窗口"
-date: 2025-10-30 14:19
+title: 滑动窗口
+date: '2025-10-30 14:19'
 toc: true
-tags: [""]
-categories: [""]
+tags:
+  - ''
+categories:
+  - ''
+description: 滑动窗口
 ---
 
 [[TOC]]

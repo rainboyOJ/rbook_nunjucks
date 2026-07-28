@@ -1,6 +1,7 @@
 ---
 id: "monotonic-stack"
 title: "单调栈"
+description: 单调栈的原理与实现：下一个更大元素、直方图最大矩形。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "单调栈"]

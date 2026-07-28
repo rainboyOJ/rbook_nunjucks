@@ -1,6 +1,7 @@
 ---
 id: "lis"
 title: "最长上升子序列"
+description: 最长上升子序列（LIS）的原理与实现：O(n²) DP 与 O(n log n) 二分优化。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LIS", "二分"]

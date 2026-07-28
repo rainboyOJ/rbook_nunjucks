@@ -1,6 +1,9 @@
 ---
 id: math-inclusion-exclusion
 title: inclusion-exclusion
+description: 容斥原理求不具有任一性质的元素个数
+tags:
+  - 子集枚举
 ---
 
 ## 容斥原理

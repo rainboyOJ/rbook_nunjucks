@@ -1,6 +1,8 @@
 ---
 id: base-two-pointer-p1-sum-eq-pair
 title: p1_sum_eq_pair
+description: 有序序列中双指针查找和为目标值的两个数，利用单调性缩小区间。
+tags: ["双指针", "两数之和", "基础算法"]
 ---
 
 ## sum equal pair

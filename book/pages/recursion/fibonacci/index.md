@@ -1,10 +1,15 @@
 ---
-id: "recursion-fibonacci"
-title: "递归与记忆化：斐波那契数列"
-date: 2026-06-16 00:00
+id: recursion-fibonacci
+title: 递归与记忆化：斐波那契数列
+date: '2026-06-16 00:00'
 toc: true
-tags: ["递归", "记忆化", "斐波那契"]
-categories: ["递归"]
+tags:
+  - 递归
+  - 记忆化
+  - 斐波那契
+categories:
+  - 递归
+description: 递归把一个问题拆成更小的同类问题，记忆化把算过的子问题存起来避免重复计算。
 ---
 
 [[TOC]]

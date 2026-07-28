@@ -1,11 +1,18 @@
 ---
-id: "remainder"
-title: "余数、同余与取模"
-date: 2026-06-16 00:00
+id: remainder
+title: 余数、同余与取模
+date: '2026-06-16 00:00'
 toc: true
-tags: ["取模", "同余", "数论"]
-categories: ["数学", "数论"]
-code_template: [normalize-mod]
+tags:
+  - 取模
+  - 同余
+  - 数论
+categories:
+  - 数学
+  - 数论
+code_template:
+  - normalize-mod
+description: 取模就是把整数放到长度为 $m$ 的圆环上，只关心它最后停在哪个位置。
 ---
 
 [[TOC]]

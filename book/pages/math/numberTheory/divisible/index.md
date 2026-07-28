@@ -1,6 +1,11 @@
 ---
 id: math-numbertheory-divisible
 title: divisible
+description: 整除定义与C++中除法运算的数学理解
+tags:
+  - divisible
+  - math
+  - numberTheory
 ---
 
 

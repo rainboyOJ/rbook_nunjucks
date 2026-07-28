@@ -1,6 +1,7 @@
 ---
 id: "differential"
 title: "差分"
+description: 差分数组的原理与实现：把区间整体修改变成边界两个点的修改，最后用前缀和还原原数组。
 date: 2026-06-16 00:00
 toc: true
 tags: ["差分", "前缀和", "区间修改"]

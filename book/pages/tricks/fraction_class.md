@@ -1,11 +1,17 @@
 ---
 id: tricks-fraction-class
-title: "分数类"
-date: 2026-06-16 19:50
+title: 分数类
+date: '2026-06-16 19:50'
 toc: true
-tags: ["分数", "精度", "比较"]
-categories: ["技巧"]
-code_template: [fraction]
+tags:
+  - 分数
+  - 精度
+  - 比较
+categories:
+  - 技巧
+code_template:
+  - fraction
+description: 分数类用“分子/分母”保存有理数，比较时交叉相乘，避免 `double` 精度误差。
 ---
 
 [[TOC]]

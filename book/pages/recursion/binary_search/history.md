@@ -1,6 +1,10 @@
 ---
 id: recursion-binary-search-history
 title: history
+description: history
+tags:
+  - 二分查找
+  - 递归
 ---
 
 - 2023-12-17 开始写

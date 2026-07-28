@@ -1,6 +1,7 @@
 ---
 id: "disjoint-set"
 title: "并查集"
+description: 并查集的原理与实现：路径压缩、按秩合并、种类并查集。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "并查集", "DSU"]

@@ -1,6 +1,7 @@
 ---
 id: "negative-circle"
 title: "负环判定"
+description: 负环判定的原理与实现：SPFA 与 Bellman-Ford 检测负环。
 date: 2026-06-16 18:25
 toc: true
 tags: ["负环", "SPFA", "Bellman-Ford", "最短路"]

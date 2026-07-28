@@ -1,10 +1,16 @@
 ---
-id: "set-basic"
-title: "集合基础"
-date: 2026-06-16 00:00
+id: set-basic
+title: 集合基础
+date: '2026-06-16 00:00'
 toc: true
-tags: ["数学", "集合", "离散数学", "建模"]
-categories: ["数学"]
+tags:
+  - 数学
+  - 集合
+  - 离散数学
+  - 建模
+categories:
+  - 数学
+description: 集合就是“只关心元素在不在里面”的对象；做计数、去重、分类讨论时，先把方案看成集合，再考虑集合之间的关系。
 ---
 
 [[TOC]]

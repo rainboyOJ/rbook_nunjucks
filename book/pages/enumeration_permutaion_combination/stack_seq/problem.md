@@ -1,6 +1,11 @@
 ---
 id: enumeration-permutaion-combination-stack-seq-problem
 title: problem
+description: problem
+tags:
+  - 枚举
+  - 栈
+  - 组合
 ---
 
 

@@ -1,10 +1,15 @@
 ---
 id: appendix-lldb-lldbpython
-title: "LLDB Python 脚本入门"
-date: 2025-10-17 08:02
+title: LLDB Python 脚本入门
+date: '2025-10-17 08:02'
 toc: true
-tags: ["lldb", "python", "debug"]
-categories: ["debug"]
+tags:
+  - lldb
+  - python
+  - debug
+categories:
+  - debug
+description: LLDB Python脚本编程入门与自定义命令开发
 ---
 
 [[TOC]]

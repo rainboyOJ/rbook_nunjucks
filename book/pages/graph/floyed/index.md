@@ -1,6 +1,7 @@
 ---
 id: "floyd"
 title: "Floyd 全源最短路"
+description: Floyd 全源最短路径算法的原理与实现：O(n³) 求任意两点间最短路。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最短路", "Floyd"]

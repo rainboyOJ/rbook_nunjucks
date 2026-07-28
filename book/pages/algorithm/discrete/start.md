@@ -1,10 +1,14 @@
 ---
-id: "algorithm-discrete-archive"
-title: "离散化旧页"
-date: 2026-06-16 20:45
+id: algorithm-discrete-archive
+title: 离散化旧页
+date: '2026-06-16 20:45'
 toc: true
-tags: ["离散化", "归档"]
-categories: ["基础算法"]
+tags:
+  - 离散化
+  - 归档
+categories:
+  - 基础算法
+description: 离散化旧页
 ---
 
 [[TOC]]

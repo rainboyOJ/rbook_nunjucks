@@ -1,6 +1,11 @@
 ---
 id: math-numbertheory-exgcd
 title: exgcd
+description: 扩展欧几里得算法解不定方程
+tags:
+  - exgcd
+  - math
+  - numberTheory
 ---
 
 ## 存在性证明

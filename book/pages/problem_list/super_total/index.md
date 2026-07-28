@@ -1,6 +1,12 @@
 ---
 id: problem-list-super-total
 title: super_total
+description: super_total
+tags:
+  - DFS
+  - LCA
+  - 排列
+  - 树的直径
 ---
 
 [[TOC]]

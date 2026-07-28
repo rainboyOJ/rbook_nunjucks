@@ -1,6 +1,7 @@
 ---
 id: "bellman-ford"
 title: "Bellman-Ford 最短路"
+description: Bellman-Ford 最短路径算法的原理与实现：处理负权边，检测负环。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最短路", "Bellman-Ford"]

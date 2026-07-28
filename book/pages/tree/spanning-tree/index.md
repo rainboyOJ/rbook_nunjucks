@@ -1,6 +1,12 @@
 ---
 id: tree-spanning-tree
 title: spanning-tree
+description: spanning-tree
+tags:
+  - DFS
+  - 回溯
+  - 基环树
+  - 树
 ---
 
 基环树找环算法

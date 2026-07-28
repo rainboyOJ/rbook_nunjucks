@@ -1,6 +1,13 @@
 ---
 id: enumeration-permutaion-combination-todo
 title: TODO
+description: TODO
+tags:
+  - DFS
+  - 子集枚举
+  - 排列
+  - 枚举
+  - 组合
 ---
 
  - [ ] stl next_putation

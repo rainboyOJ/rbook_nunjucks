@@ -1,6 +1,7 @@
 ---
 id: "dinic-origin-archive"
 title: "Dinic 旧稿归档"
+description: Dinic 算法旧稿归档页。
 date: 2026-06-16 00:00
 toc: true
 tags: ["归档", "网络流", "Dinic"]

@@ -1,6 +1,11 @@
 ---
 id: appendix-program-environment-noilinux2-0-webchat
 title: webchat
+description: 在Linux下安装微信的多种方法
+tags:
+  - 微信
+  - Linux
+  - 软件
 ---
 
 

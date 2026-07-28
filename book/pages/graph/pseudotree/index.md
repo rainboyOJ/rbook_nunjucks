@@ -1,6 +1,7 @@
 ---
 id: "one-loop-graph"
 title: "基环树入门"
+description: 基环树入门：找环方法与基环树上的经典问题。
 date: 2026-06-16 18:45
 toc: true
 tags: ["基环树", "找环", "图论"]

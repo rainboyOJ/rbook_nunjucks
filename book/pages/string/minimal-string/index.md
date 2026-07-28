@@ -1,10 +1,14 @@
 ---
-id: "minimal-string-archive"
-title: "最小表示法：旧入口"
-date: 2026-06-16 00:00
+id: minimal-string-archive
+title: 最小表示法：旧入口
+date: '2026-06-16 00:00'
 toc: true
-tags: ["字符串", "归档"]
-categories: ["字符串"]
+tags:
+  - 字符串
+  - 归档
+categories:
+  - 字符串
+description: 最小表示法：旧入口
 ---
 
 [[TOC]]

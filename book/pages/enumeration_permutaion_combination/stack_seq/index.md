@@ -1,10 +1,17 @@
 ---
-id: "stack-output-sequence"
-title: "出栈序列计数"
-date: 2026-06-16 00:00
+id: stack-output-sequence
+title: 出栈序列计数
+date: '2026-06-16 00:00'
 toc: true
-tags: ["栈", "动态规划", "Catalan 数", "枚举"]
-categories: ["枚举", "动态规划"]
+tags:
+  - 栈
+  - 动态规划
+  - Catalan 数
+  - 枚举
+categories:
+  - 枚举
+  - 动态规划
+description: 出栈序列计数就是数合法的 `push/pop` 操作序列：任意前缀里 `pop` 不能比 `push` 多。
 ---
 
 [[TOC]]

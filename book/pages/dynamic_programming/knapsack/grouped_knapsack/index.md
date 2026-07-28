@@ -1,6 +1,7 @@
 ---
 id: "grouped-knapsack"
 title: "分组背包"
+description: 分组背包问题的原理与实现：每组最多选一个物品。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "分组背包"]

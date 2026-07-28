@@ -1,10 +1,15 @@
 ---
-id: "group-theory"
-title: "近世代数 群论"
-date: 2025-12-06 08:26
+id: group-theory
+title: 近世代数 群论
+date: '2025-12-06 08:26'
 toc: true
-tags: ["群论","数学","书"]
-categories: ["书"]
+tags:
+  - 群论
+  - 数学
+  - 书
+categories:
+  - 书
+description: 近世代数群论笔记目录与章节索引
 ---
 
 [[TOC]]

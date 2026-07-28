@@ -1,6 +1,7 @@
 ---
 id: "ek"
 title: "Edmonds-Karp 最大流算法"
+description: Edmonds-Karp 最大流算法的原理与实现：BFS 找增广路。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "最大流"]

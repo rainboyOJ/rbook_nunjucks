@@ -1,6 +1,7 @@
 ---
 id: "tarjan-loop"
 title: "无向图找环"
+description: 无向图找环的 Tarjan 方法：DFS 找环算法实现。
 date: 2026-06-16 19:10
 toc: true
 tags: ["找环", "基环树", "DFS", "图论"]

@@ -1,6 +1,11 @@
 ---
 id: other-treelayout
 title: treeLayout
+description: treeLayout
+tags:
+  - DFS
+  - 动态规划
+  - 递归
 ---
 
 ## 背景

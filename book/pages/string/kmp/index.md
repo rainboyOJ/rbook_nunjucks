@@ -1,11 +1,17 @@
 ---
-id: "kmp"
-title: "KMP 字符串匹配：从上帝视角到 pi 数组的本质"
-date: 2026-06-16 00:00
+id: kmp
+title: KMP 字符串匹配：从上帝视角到 pi 数组的本质
+date: '2026-06-16 00:00'
 toc: true
-tags: ["字符串", "KMP", "模式匹配"]
-categories: ["字符串"]
-code_template: [kmp]
+tags:
+  - 字符串
+  - KMP
+  - 模式匹配
+categories:
+  - 字符串
+code_template:
+  - kmp
+description: KMP 在失配时不回头重比主串，而是利用模式串自己的相同前后缀，直接跳到下一个可能匹配长度。
 ---
 
 [[TOC]]

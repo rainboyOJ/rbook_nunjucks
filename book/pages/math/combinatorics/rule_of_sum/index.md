@@ -1,6 +1,11 @@
 ---
 id: math-combinatorics-rule-of-sum
 title: rule_of_sum
+description: 加法原理：分类计数的核心方法
+tags:
+  - combinatorics
+  - math
+  - rule of sum
 ---
 
 ## 分类加法计数原理

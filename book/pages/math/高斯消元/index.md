@@ -1,11 +1,17 @@
 ---
-id: "gaussian-elimination"
-title: "高斯消元"
-date: 2025-12-08 14:32
+id: gaussian-elimination
+title: 高斯消元
+date: '2025-12-08 14:32'
 toc: true
-tags: ["数学", "线性方程组", "高斯消元"]
-categories: ["数学"]
-code_template: [gaussian-elimination]
+tags:
+  - 数学
+  - 线性方程组
+  - 高斯消元
+categories:
+  - 数学
+code_template:
+  - gaussian-elimination
+description: 高斯消元就是用一行方程消掉其它行的同一列未知数，把方程组化成容易读答案的阶梯形。
 ---
 
 [[TOC]]

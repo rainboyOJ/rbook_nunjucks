@@ -1,6 +1,10 @@
 ---
 id: math-combinatorics-generating-function
 title: generating_function
+description: 生成函数的概念与多重集排列应用
+tags:
+  - 排列
+  - 组合
 ---
 
 

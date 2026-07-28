@@ -1,6 +1,7 @@
 ---
 id: "full-knapsack"
 title: "完全背包"
+description: 完全背包问题的原理与实现：每种物品无限取用，一维正序枚举。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "完全背包"]

@@ -1,6 +1,7 @@
 ---
 id: "digit-dp"
 title: "数位DP"
+description: 数位 DP 的原理与实现：按位统计的数字动态规划。
 date: 2026-05-31 10:30
 toc: true
 tags: ["数位DP", "动态规划"]

@@ -1,6 +1,7 @@
 ---
 id: "bst"
 title: "二叉搜索树"
+description: 二叉搜索树的原理与实现：插入、查找、删除操作。
 date: 2026-06-16 00:00
 toc: true
 tags: ["二叉搜索树", "BST", "数据结构"]

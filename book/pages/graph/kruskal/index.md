@@ -1,6 +1,7 @@
 ---
 id: graph-kruskal
 title: "Kruskal"
+description: Kruskal 最小生成树算法的原理与实现：贪心选边，并查集维护连通性。
 date: 2025-11-09 11:02
 toc: true
 tags: ["MST"]

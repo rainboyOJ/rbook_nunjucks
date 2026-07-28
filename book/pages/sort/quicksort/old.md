@@ -1,10 +1,15 @@
 ---
-id: "quick-sort-old"
-title: "快速排序旧页"
-date: 2026-06-16 22:00
+id: quick-sort-old
+title: 快速排序旧页
+date: '2026-06-16 22:00'
 toc: true
-tags: ["快速排序", "归档"]
-categories: ["基础算法", "排序"]
+tags:
+  - 快速排序
+  - 归档
+categories:
+  - 基础算法
+  - 排序
+description: 快速排序旧页
 ---
 
 [[TOC]]

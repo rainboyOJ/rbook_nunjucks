@@ -1,6 +1,11 @@
 ---
 id: appendix-tricks-template
 title: template
+description: 竞赛代码模板结构与使用说明
+tags:
+  - 模板
+  - 代码
+  - 技巧
 ---
 
 

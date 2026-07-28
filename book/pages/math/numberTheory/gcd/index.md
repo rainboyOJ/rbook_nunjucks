@@ -1,11 +1,18 @@
 ---
-id: "gcd"
-title: "最大公约数"
-date: 2026-06-16 00:00
+id: gcd
+title: 最大公约数
+date: '2026-06-16 00:00'
 toc: true
-tags: ["最大公约数", "欧几里得算法", "数论"]
-categories: ["数学", "数论"]
-code_template: [gcd]
+tags:
+  - 最大公约数
+  - 欧几里得算法
+  - 数论
+categories:
+  - 数学
+  - 数论
+code_template:
+  - gcd
+description: 辗转相除法不断把“大问题”换成“除数和余数”的小问题，直到余数为 $0$，最后的非零数就是最大公约数。
 ---
 
 [[TOC]]

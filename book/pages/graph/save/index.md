@@ -1,6 +1,7 @@
 ---
 id: "graph-save"
 title: "图的存储：链式前向星"
+description: 图的存储方式：链式前向星（邻接表）的原理与实现。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "邻接表"]

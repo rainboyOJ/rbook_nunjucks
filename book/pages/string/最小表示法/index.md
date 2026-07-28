@@ -1,11 +1,17 @@
 ---
-id: "minimal-string"
-title: "最小表示法"
-date: 2026-06-17 00:00
+id: minimal-string
+title: 最小表示法
+date: '2026-06-17 00:00'
 toc: true
-tags: ["字符串", "循环同构", "集合最值"]
-categories: ["字符串"]
-code_template: [minimal-string]
+tags:
+  - 字符串
+  - 循环同构
+  - 集合最值
+categories:
+  - 字符串
+code_template:
+  - minimal-string
+description: 最小表示法让两个起点互相比赛，一旦第 $k$ 位分出胜负，就一次淘汰输家起点后面连续 $k+1$ 个不可能答案。
 ---
 
 [[TOC]]

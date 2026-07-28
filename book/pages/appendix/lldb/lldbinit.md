@@ -1,10 +1,16 @@
 ---
 id: appendix-lldb-lldbinit
-title: "LLDB 个性化配置：.lldbinit 文件编写指南"
-date: 2025-10-16 23:21
+title: LLDB 个性化配置：.lldbinit 文件编写指南
+date: '2025-10-16 23:21'
 toc: true
-tags: ["LLDB", "调试", "开发工具", "C++"]
-categories: ["开发工具"]
+tags:
+  - LLDB
+  - 调试
+  - 开发工具
+  - C++
+categories:
+  - 开发工具
+description: LLDB个性化配置文件.lldbinit的编写与使用指南
 ---
 
 [[TOC]]

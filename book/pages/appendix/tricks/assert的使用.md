@@ -1,10 +1,17 @@
 ---
 id: appendix-tricks-assert
-title: "C++ Assert 调试指南"
-date: 2025-10-17 
+title: C++ Assert 调试指南
+date: 2025-10-17T00:00:00.000Z
 toc: true
-tags: ["C++", "assert", "调试", "编程竞赛", "Codeforces"]
-categories: ["编程技巧"]
+tags:
+  - C++
+  - assert
+  - 调试
+  - 编程竞赛
+  - Codeforces
+categories:
+  - 编程技巧
+description: C++中assert断言的调试使用指南
 ---
 
 [[TOC]]

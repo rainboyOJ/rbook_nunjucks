@@ -1,10 +1,14 @@
 ---
-id: "multiset-permutation-template-archive"
-title: "重复元素全排列旧模板"
-date: 2026-06-16 00:00
+id: multiset-permutation-template-archive
+title: 重复元素全排列旧模板
+date: '2026-06-16 00:00'
 toc: false
-tags: ["排列", "归档"]
-categories: ["枚举"]
+tags:
+  - 排列
+  - 归档
+categories:
+  - 枚举
+description: 重复元素全排列旧模板
 ---
 
 本页为旧入口归档。

@@ -1,8 +1,14 @@
 ---
 id: preface
 title: 序
-date: 2026-06-16 00:00
+date: '2026-06-16 00:00'
 toc: true
+description: Algorithm and data structure study notes
+tags:
+  - 排列
+  - 枚举
+  - 线段树
+  - 组合
 ---
 
 # 序

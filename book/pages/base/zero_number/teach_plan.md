@@ -1,6 +1,8 @@
 ---
 id: base-zero-number-teach-plan
 title: teach_plan
+description: 数列归零问题的教学计划与目标，培养简化思想与分类讨论能力。
+tags: ["贪心", "等效模型", "教学", "基础算法"]
 ---
 
 ## 教学目标

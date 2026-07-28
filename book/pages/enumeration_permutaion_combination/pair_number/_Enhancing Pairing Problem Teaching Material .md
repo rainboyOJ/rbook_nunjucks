@@ -1,10 +1,14 @@
 ---
-id: "pair-number-draft-archive"
-title: "配对问题草稿归档"
-date: 2026-06-16 00:00
+id: pair-number-draft-archive
+title: 配对问题草稿归档
+date: '2026-06-16 00:00'
 toc: false
-tags: ["配对", "归档"]
-categories: ["枚举"]
+tags:
+  - 配对
+  - 归档
+categories:
+  - 枚举
+description: 配对问题草稿归档
 ---
 
 本页为旧对话稿归档。

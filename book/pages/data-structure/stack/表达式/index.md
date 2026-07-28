@@ -1,6 +1,7 @@
 ---
 id: data-structure-stack
 title: "表达式求值"
+description: 表达式求值的原理与实现：栈在中缀、后缀表达式中的应用。
 date: 2025-10-06 10:30
 draft: false
 toc: true

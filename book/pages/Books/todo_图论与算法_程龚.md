@@ -1,10 +1,15 @@
 ---
-id: "graph-algorithm-book-note-archive"
-title: "图论与算法读书笔记归档"
-date: 2026-06-16 00:00
+id: graph-algorithm-book-note-archive
+title: 图论与算法读书笔记归档
+date: '2026-06-16 00:00'
 toc: false
-tags: ["图论", "读书笔记", "归档"]
-categories: ["读书笔记"]
+tags:
+  - 图论
+  - 读书笔记
+  - 归档
+categories:
+  - 读书笔记
+description: 图论与算法读书笔记归档
 ---
 
 本页是《图论与算法》旧读书笔记入口。

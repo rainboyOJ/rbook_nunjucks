@@ -1,10 +1,15 @@
 ---
-id: "integer-partition"
-title: "整数划分"
-date: 2026-06-16 00:00
+id: integer-partition
+title: 整数划分
+date: '2026-06-16 00:00'
 toc: true
-tags: ["递归", "记忆化", "整数划分"]
-categories: ["递归"]
+tags:
+  - 递归
+  - 记忆化
+  - 整数划分
+categories:
+  - 递归
+description: 整数划分用“是否使用至少一个 `m`”把问题分成两类。
 ---
 
 [[TOC]]

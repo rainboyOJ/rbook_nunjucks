@@ -1,10 +1,14 @@
 ---
-id: "full-permutation-old-solution"
-title: "全排列旧解析归档"
-date: 2026-06-16 00:00
+id: full-permutation-old-solution
+title: 全排列旧解析归档
+date: '2026-06-16 00:00'
 toc: true
-tags: ["排列", "归档"]
-categories: ["枚举"]
+tags:
+  - 排列
+  - 归档
+categories:
+  - 枚举
+description: 全排列旧解析归档
 ---
 
 [[TOC]]

@@ -1,6 +1,7 @@
 ---
 id: "number-pyramid"
 title: "数字三角形"
+description: 数字三角形（数塔）问题的原理与实现：动态规划入门经典。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "数字三角形", "线性 DP"]

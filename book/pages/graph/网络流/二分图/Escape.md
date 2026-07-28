@@ -1,9 +1,11 @@
 ---
 id: graph-escape
 title: Escape
+description: HDU 3605 Escape 题解：用最大流解决多人多星球移民问题，二进制优化建图。
 date: 2019-02-21 15:05
 update: 2019-02-21 15:05
 author: Rainboy
+tags: ["网络流", "最大流", "二分图", "图论"]
 ---
 
 ## 题目

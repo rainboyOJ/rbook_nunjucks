@@ -1,6 +1,13 @@
 ---
 id: recursion-practice
 title: practice
+description: practice
+tags:
+  - 字符串
+  - 排列
+  - 栈
+  - 组合
+  - 递归
 ---
 
 ## 题目练习

@@ -1,6 +1,8 @@
 ---
 id: data-structure-avl
 title: AVL
+description: AVL 自平衡二叉搜索树的原理与实现：平衡因子与旋转操作。
+tags: ["AVL", "平衡树", "数据结构"]
 ---
 
 

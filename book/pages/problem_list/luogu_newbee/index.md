@@ -1,6 +1,10 @@
 ---
 id: problem-list-luogu-newbee
 title: luogu_newbee
+description: luogu_newbee
+tags:
+  - 字符串
+  - 递归
 ---
 
 [[TOC]]

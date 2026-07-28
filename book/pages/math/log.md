@@ -1,6 +1,9 @@
 ---
 id: math-log
 title: log
+description: 对数定义、核心性质与算法复杂度分析
+tags:
+  - 二分查找
 ---
 
 # **对数：定义、核心性质与应用**

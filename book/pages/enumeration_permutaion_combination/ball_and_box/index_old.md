@@ -1,10 +1,14 @@
 ---
-id: "ball-and-box-old"
-title: "球盒模型旧稿归档"
-date: 2026-06-16 00:00
+id: ball-and-box-old
+title: 球盒模型旧稿归档
+date: '2026-06-16 00:00'
 toc: false
-tags: ["组合数学", "归档"]
-categories: ["组合数学"]
+tags:
+  - 组合数学
+  - 归档
+categories:
+  - 组合数学
+description: 球盒模型旧稿归档
 ---
 
 本页为旧稿归档。

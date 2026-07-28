@@ -1,10 +1,13 @@
 ---
 id: number-theory
-title: "数论"
-date: 2025-12-04 15:01
+title: 数论
+date: '2025-12-04 15:01'
 toc: true
-tags: [""]
-categories: [""]
+tags:
+  - ''
+categories:
+  - ''
+description: 数论知识目录：素数、同余、逆元等
 ---
 
 [[TOC]]

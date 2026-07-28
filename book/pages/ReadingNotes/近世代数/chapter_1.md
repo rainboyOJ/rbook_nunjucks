@@ -1,6 +1,9 @@
 ---
 id: readingnotes-chapter-1
 title: chapter_1
+description: chapter_1
+tags:
+  - 子集枚举
 ---
 
 # 第一章 群

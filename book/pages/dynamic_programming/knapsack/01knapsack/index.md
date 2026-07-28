@@ -1,6 +1,7 @@
 ---
 id: "01knapsack"
 title: "01 背包"
+description: 01 背包问题的原理与实现：一维数组优化与恰好装满模型。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "01背包"]

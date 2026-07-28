@@ -1,11 +1,17 @@
 ---
-id: "manacher"
-title: "Manacher：线性时间最长回文子串"
-date: 2026-06-17 00:00
+id: manacher
+title: Manacher：线性时间最长回文子串
+date: '2026-06-17 00:00'
 toc: true
-tags: ["字符串", "回文", "Manacher"]
-categories: ["字符串"]
-code_template: [manacher]
+tags:
+  - 字符串
+  - 回文
+  - Manacher
+categories:
+  - 字符串
+code_template:
+  - manacher
+description: Manacher 把奇偶回文统一成一种形式，并用“镜像半径”跳过已经证明相等的部分，只在右边界外继续扩展。
 ---
 
 [[TOC]]

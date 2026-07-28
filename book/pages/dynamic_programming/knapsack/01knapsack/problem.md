@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-knapsack-01knapsack-problem
 title: problem
+description: 01 背包问题的题目描述与输入输出格式。
+tags: ["动态规划", "背包", "01背包"]
 ---
 
 ### 问题描述

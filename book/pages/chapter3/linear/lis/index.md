@@ -1,6 +1,9 @@
 ---
 id: chapter3-linear-lis
 title: 最长递增子序列(LIS)
+description: 最长递增子序列(LIS)
+tags:
+  - 动态规划
 ---
 
 # 最长递增子序列(LIS)

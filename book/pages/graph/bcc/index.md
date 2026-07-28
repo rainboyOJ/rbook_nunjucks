@@ -1,6 +1,7 @@
 ---
 id: "bcc"
 title: "双连通分量：点双与边双"
+description: 双连通分量（点双与边双）的原理与实现：Tarjan 算法求割点、割边与双连通分量。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "双连通分量"]

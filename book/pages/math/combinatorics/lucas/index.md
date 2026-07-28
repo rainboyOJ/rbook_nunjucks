@@ -1,6 +1,11 @@
 ---
 id: math-combinatorics-lucas
 title: lucas
+description: Lucas定理证明及组合数取模应用
+tags:
+  - combinatorics
+  - lucas
+  - math
 ---
 
 

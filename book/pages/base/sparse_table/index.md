@@ -1,6 +1,7 @@
 ---
 id: "sparse-table"
 title: "ST 表"
+description: ST 表的原理与实现：预处理所有 2^k 长度区间，O(1) 查询静态区间最值。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "ST 表", "RMQ", "倍增"]

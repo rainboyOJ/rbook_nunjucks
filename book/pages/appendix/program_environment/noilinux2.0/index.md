@@ -1,6 +1,11 @@
 ---
 id: appendix-program-environment-noilinux2
 title: noilinux2.0
+description: NOILinux 2.0系统安装与配置索引页
+tags:
+  - NOILinux
+  - Linux
+  - 环境配置
 ---
 
 ## 笔记本选购

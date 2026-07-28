@@ -1,6 +1,8 @@
 ---
 id: graph-bcc-v-bcc
 title: 模拟练习v-bcc
+description: Tarjan 点双连通分量算法的手动模拟练习，通过三个不同特征的图加深理解。
+tags: ["图论", "Tarjan", "双连通分量", "点双连通分量"]
 ---
 
 ## Tarjan v-BCC 算法手动模拟练习

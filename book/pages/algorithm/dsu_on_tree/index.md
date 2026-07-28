@@ -1,11 +1,17 @@
 ---
-id: "dsu-on-tree"
-title: "树上启发式合并"
-date: 2026-06-16 00:00
+id: dsu-on-tree
+title: 树上启发式合并
+date: '2026-06-16 00:00'
 toc: true
-tags: ["树上算法", "启发式合并", "DSU on tree"]
-categories: ["树上算法"]
-code_template: [dsu-on-tree-color-count]
+tags:
+  - 树上算法
+  - 启发式合并
+  - DSU on tree
+categories:
+  - 树上算法
+code_template:
+  - dsu-on-tree-color-count
+description: 树上启发式合并保留重儿子的统计结果，只把轻儿子的贡献重新加入，从而避免反复清空大块信息。
 ---
 
 [[TOC]]

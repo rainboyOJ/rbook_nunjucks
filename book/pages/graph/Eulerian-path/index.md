@@ -1,6 +1,7 @@
 ---
 id: "eulerian-path"
 title: "欧拉路与欧拉回路"
+description: 欧拉路与欧拉回路的判定与构造：Hierholzer 算法的原理与实现。
 date: 2025-12-18 12:01
 toc: true
 tags: ["欧拉路", "图论", "Hierholzer"]

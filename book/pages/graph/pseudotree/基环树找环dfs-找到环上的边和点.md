@@ -1,6 +1,8 @@
 ---
 id: graph-pseudotree-dfs
 title: 基环树找环dfs-找到环上的边和点
+description: 基环树找环的 DFS 方法：找到环上的所有边和点，思维压力低。
+tags: ["基环树", "找环", "DFS", "图论"]
 ---
 
 

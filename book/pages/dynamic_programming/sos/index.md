@@ -1,6 +1,7 @@
 ---
 id: "sos-dp"
 title: "SOS DP：子集和动态规划"
+description: SOS DP（子集和动态规划）的原理与实现：快速求子集与超集和。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "状态压缩", "SOS DP"]

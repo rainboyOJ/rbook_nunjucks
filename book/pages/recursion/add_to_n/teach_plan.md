@@ -1,6 +1,9 @@
 ---
 id: recursion-add-to-n-teach-plan
 title: teach_plan
+description: teach_plan
+tags:
+  - 递归
 ---
 
 - 什么是递归：自己调用自己

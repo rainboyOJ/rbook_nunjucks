@@ -1,10 +1,15 @@
 ---
-id: "div-block"
-title: "整除分块"
-date: 2025-11-24 15:30
+id: div-block
+title: 整除分块
+date: '2025-11-24 15:30'
 toc: true
-tags: ["算法", "数论", "整除分块"]
-categories: [""]
+tags:
+  - 算法
+  - 数论
+  - 整除分块
+categories:
+  - ''
+description: '将 $1..n$ 分成若干段 $[l,r]$，使得在每段内 $\left\lfloor\dfrac{n}{i}\right\rfloor$ 恒为常数 $k$，直接按段累加 $k\times (r-l+1)$。'
 ---
 
 [[TOC]]

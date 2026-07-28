@@ -1,6 +1,13 @@
 ---
 id: search-dfs
 title: dfs
+description: Algorithm and data structure study notes
+tags:
+  - DFS
+  - 动态规划
+  - 回溯
+  - 栈
+  - 递归
 ---
 
 ## 设计思路

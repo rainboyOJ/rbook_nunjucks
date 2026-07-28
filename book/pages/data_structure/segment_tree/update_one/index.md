@@ -1,6 +1,7 @@
 ---
 id: "sgt-update-one"
 title: "线段树：单点修改与区间查询"
+description: 线段树单点修改与区间查询的原理与实现（基础线段树）。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "区间查询"]

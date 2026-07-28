@@ -1,6 +1,11 @@
 ---
 id: appendix-program-environment-readme
 title: readme
+description: 编程环境配置汇总，包括系统安装与软件推荐
+tags:
+  - 环境配置
+  - Linux
+  - 编程
 ---
 
 这里是一些编程环境配制,比如

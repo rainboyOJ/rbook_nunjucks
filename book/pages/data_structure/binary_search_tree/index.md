@@ -1,6 +1,7 @@
 ---
 id: "binary-search-tree-archive"
 title: "二叉搜索树（旧路径归档）"
+description: 二叉搜索树的旧路径归档页，正式教程已迁移至 BST 目录。
 date: 2026-06-16 00:00
 toc: true
 tags: ["二叉搜索树", "BST", "归档"]

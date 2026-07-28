@@ -1,11 +1,17 @@
 ---
-id: "trie"
-title: "Trie 字典树"
-date: 2026-06-16 00:00
+id: trie
+title: Trie 字典树
+date: '2026-06-16 00:00'
 toc: true
-tags: ["字符串", "Trie", "字典树"]
-categories: ["字符串"]
-code_template: [trie]
+tags:
+  - 字符串
+  - Trie
+  - 字典树
+categories:
+  - 字符串
+code_template:
+  - trie
+description: Trie 把字符串的公共前缀压到同一条树路径上，让查找和前缀统计只和字符串长度有关。
 ---
 
 [[TOC]]

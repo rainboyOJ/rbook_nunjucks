@@ -1,10 +1,15 @@
 ---
-id: "logarithm"
-title: "对数"
-date: 2026-06-16 00:00
+id: logarithm
+title: 对数
+date: '2026-06-16 00:00'
 toc: true
-tags: ["对数", "数学基础", "复杂度"]
-categories: ["数学"]
+tags:
+  - 对数
+  - 数学基础
+  - 复杂度
+categories:
+  - 数学
+description: 对数回答的是：底数要乘多少次，才能得到目标数。
 ---
 
 [[TOC]]

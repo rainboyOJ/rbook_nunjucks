@@ -1,6 +1,12 @@
 ---
 id: appendix-software-other
 title: other
+description: 视频播放器、终端分享等开发辅助工具
+tags:
+  - 工具
+  - 软件
+  - VLC
+  - ttyd
 ---
 
 

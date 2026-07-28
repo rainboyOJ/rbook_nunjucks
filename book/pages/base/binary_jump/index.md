@@ -1,6 +1,7 @@
 ---
 id: "binary-jump"
 title: "倍增跳跃"
+description: 倍增跳跃算法的原理与实现：从大步到小步试探，在 O(log n) 时间内找到单调位置上的最后一个可行点。
 date: 2026-06-16 00:00
 toc: true
 tags: ["倍增", "二进制", "基础算法"]

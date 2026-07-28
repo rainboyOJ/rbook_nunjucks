@@ -1,6 +1,7 @@
 ---
 id: "bitmask-dp"
 title: "状态压缩 DP"
+description: 状态压缩 DP 的原理与实现：位运算表示状态，TSP 问题。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "状态压缩", "位运算"]

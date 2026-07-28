@@ -1,6 +1,8 @@
 ---
 id: data-structure-segment-tree-sgt-merge
 title: sgt_merge
+description: 线段树合并的原理与应用：雨天的尾巴等经典问题。
+tags: ["线段树", "线段树合并", "数据结构"]
 ---
 
 雨天的尾巴

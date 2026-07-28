@@ -1,6 +1,8 @@
 ---
 id: graph-mst-mst
 title: mst常用性质
+description: 最小生成树的常用性质总结：切分性质、回路性质与相关推论。
+tags: ["MST", "最小生成树", "图论"]
 ---
 
 ## 用到的定理

@@ -1,10 +1,17 @@
 ---
-id: "point-to-point-problem"
-title: "点对问题"
-date: 2026-06-16 00:00
+id: point-to-point-problem
+title: 点对问题
+date: '2026-06-16 00:00'
 toc: true
-tags: ["经典问题", "点对", "配对", "计数"]
-categories: ["经典问题", "基础算法"]
+tags:
+  - 经典问题
+  - 点对
+  - 配对
+  - 计数
+categories:
+  - 经典问题
+  - 基础算法
+description: 点对问题的核心是：固定一个端点，把另一个端点能提供的信息快速查出来。
 ---
 
 [[TOC]]

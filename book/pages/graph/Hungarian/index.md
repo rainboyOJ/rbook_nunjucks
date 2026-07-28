@@ -1,6 +1,7 @@
 ---
 id: "hungarian"
 title: "匈牙利算法"
+description: 匈牙利算法的原理与实现：求解二分图最大匹配的增广路方法。
 date: 2026-01-14 11:21
 toc: true
 tags: ["图论", "二分图", "匹配"]

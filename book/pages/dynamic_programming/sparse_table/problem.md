@@ -1,6 +1,7 @@
 ---
 id: "sparse-table-problem-archive"
 title: "ST 表问题归档"
+description: ST 表问题的归档页。
 date: 2026-06-16 00:00
 toc: true
 tags: ["归档", "ST 表"]

@@ -1,6 +1,9 @@
 ---
 id: about
 title: 关于本书
+description: 关于本书
+tags:
+  - 栈
 ---
 
 # 关于本书

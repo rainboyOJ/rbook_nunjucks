@@ -1,10 +1,12 @@
 ---
 id: graph
 title: 网络流总述
+description: 网络流的总述与核心概念讲解，涵盖最大流、费用流、最小割等模型。
 date: 2019-01-27 23:43
 update: 2019-01-27 23:43
 author: Rainboy
 cover: https://ww1.sinaimg.cn/large/007i4MEmgy1fzlkne3j5lg30qg0bk41z.gif
+tags: ["网络流", "最大流", "费用流", "图论"]
 ---
 
 <p style="text-align: center;font-size:35px">网络流</p>

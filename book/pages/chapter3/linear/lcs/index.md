@@ -1,6 +1,9 @@
 ---
 id: chapter3-linear-lcs
 title: 最长公共子序列(LCS)
+description: 最长公共子序列(LCS)
+tags:
+  - 动态规划
 ---
 
 # 最长公共子序列(LCS)

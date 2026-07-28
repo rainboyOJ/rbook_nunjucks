@@ -1,10 +1,15 @@
 ---
-id: "crt"
-title: "中国剩余定理 (Chinese Remainder Theorem)"
-date: 2025-12-15 08:44
+id: crt
+title: 中国剩余定理 (Chinese Remainder Theorem)
+date: '2025-12-15 08:44'
 toc: true
-tags: ["数论", "同余", "模运算"]
-categories: ["数学"]
+tags:
+  - 数论
+  - 同余
+  - 模运算
+categories:
+  - 数学
+description: '**模数累乘为总模，部分模积求逆元，各项累加构造解。**'
 ---
 
 [[TOC]]

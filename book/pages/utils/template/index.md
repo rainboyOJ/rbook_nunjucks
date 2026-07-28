@@ -1,10 +1,14 @@
 ---
-id: "utils-template-entry"
-title: "代码模板工具入口"
-date: 2026-06-17 00:00
+id: utils-template-entry
+title: 代码模板工具入口
+date: '2026-06-17 00:00'
 toc: true
-tags: ["模板", "工具"]
-categories: ["工具"]
+tags:
+  - 模板
+  - 工具
+categories:
+  - 工具
+description: 代码模板工具入口
 ---
 
 [[TOC]]

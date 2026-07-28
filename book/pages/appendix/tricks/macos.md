@@ -1,10 +1,18 @@
 ---
 id: appendix-tricks-macos
-title: "解决 macOS 中 Clang 编译器缺少 `bits/stdc++.h` 的问题"
-date: 2025-11-04 21:13
+title: 解决 macOS 中 Clang 编译器缺少 `bits/stdc++.h` 的问题
+date: '2025-11-04 21:13'
 toc: true
-tags: ["C**", "macOS", "Clang", "bits/stdc**.h", "Compiler"]
-categories: ["Programming", "C++"]
+tags:
+  - C**
+  - macOS
+  - Clang
+  - bits/stdc**.h
+  - Compiler
+categories:
+  - Programming
+  - C++
+description: 解决macOS Clang缺少bits/stdc++.h头文件问题
 ---
 
 ## 问题背景

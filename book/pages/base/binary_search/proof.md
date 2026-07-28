@@ -1,6 +1,8 @@
 ---
 id: base-binary-search-proof
 title: proof
+description: 二分查找算法的正确性证明，使用归纳法验证二分查找的边界处理。
+tags: ["二分查找", "基础算法"]
 ---
 
 开始证明:$\cal{Proof}.$

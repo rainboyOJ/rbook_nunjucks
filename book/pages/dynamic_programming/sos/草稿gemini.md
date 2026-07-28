@@ -1,6 +1,11 @@
 ---
 id: dynamic-programming-sos-gemini
 title: 草稿gemini
+description: 既然你懂离散数学，我们可以把 N 个比特看作 N 维空间（Hypercube，超立方体）。
+tags:
+  - 动态规划
+  - 子集枚举
+  - 枚举
 ---
 
 你好！很高兴你对 **SOS DP (Sum Over Subsets Dynamic Programming)** 感兴趣。既然你在 Codeforces 上刷题并且有离散数学基础，这会让你学得非常快。

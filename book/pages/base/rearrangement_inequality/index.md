@@ -1,6 +1,7 @@
 ---
 id: "rearrangement-inequality"
 title: "排序不等式"
+description: 排序不等式原理与证明：两个序列同向排序时乘积和最大，反向排序时乘积和最小。
 date: 2026-06-16 00:00
 toc: true
 tags: ["排序不等式", "贪心", "相邻交换"]

@@ -1,6 +1,13 @@
 ---
 id: python-python
 title: python枚举
+description: python枚举
+tags:
+  - 子集枚举
+  - 字符串
+  - 排列
+  - 枚举
+  - 组合
 ---
 
 在 Codeforces 或其他编程竞赛中，**枚举（Enumeration）**是解决问题的基础思路之一。由于 Python 的执行速度相对较慢，高效地使用内置库和原生语法进行枚举显得尤为重要。

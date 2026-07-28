@@ -1,6 +1,8 @@
 ---
 id: base-sparse-table-log
 title: 证明LOG转移
+description: ST 表中 Log 数组递推公式的证明：二进制视角与代数推导两种方法。
+tags: ["ST 表", "RMQ", "基础算法"]
 ---
 
 

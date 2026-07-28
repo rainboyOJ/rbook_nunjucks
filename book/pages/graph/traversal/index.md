@@ -1,6 +1,7 @@
 ---
 id: "graph-traversal"
 title: "图的遍历"
+description: 图的遍历方法：DFS 深度优先遍历与 BFS 广度优先遍历，连通块统计。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "DFS", "BFS", "连通块"]

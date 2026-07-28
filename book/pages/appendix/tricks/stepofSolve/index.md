@@ -1,6 +1,11 @@
 ---
 id: appendix-tricks-stepofsolve
 title: stepofSolve
+description: 算法竞赛写题步骤与学习方法指南
+tags:
+  - 解题
+  - 方法
+  - 技巧
 ---
 
 ## 写题目的步骤

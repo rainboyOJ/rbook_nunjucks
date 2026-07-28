@@ -1,6 +1,11 @@
 ---
 id: enumeration-permutaion-combination-pair-number-problem
 title: problem
+description: problem
+tags:
+  - 枚举
+  - 组合
+  - 配对
 ---
 
 ## 题目

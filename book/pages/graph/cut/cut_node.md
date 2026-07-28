@@ -1,6 +1,7 @@
 ---
 id: cut-node
 title: "割点"
+description: 割点的判定与实现：Tarjan 算法求无向图中删除后使图不连通的节点。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "割点"]

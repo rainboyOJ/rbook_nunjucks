@@ -1,6 +1,8 @@
 ---
 id: appendix-common-words
 title: common_words
+description: ACM/OI编程中常用英文单词及缩写表
+tags: ["词汇", "OI", "编程"]
 ---
 
 以下是一些在 ACM/OI 编程中常用的单词以及它们的缩写

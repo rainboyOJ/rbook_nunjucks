@@ -1,6 +1,8 @@
 ---
 id: graph-traversal-practice
 title: practice
+description: 图的遍历练习题：B3862、P3916、P2661。
+tags: ["图论", "DFS", "BFS", "练习题"]
 ---
 
 

@@ -1,6 +1,7 @@
 ---
 id: "dfs-spfa-neg-cirlce"
 title: "DFS-SPFA 判负环旧稿"
+description: DFS-SPFA 判负环的旧稿归档页。
 date: 2026-01-07 14:52
 toc: true
 tags: ["SPFA", "负环", "归档"]

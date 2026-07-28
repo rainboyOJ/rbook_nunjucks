@@ -1,8 +1,15 @@
 ---
 id: appendix-python
 title: 有用的python
-date: 2026-06-16 00:00
+date: '2026-06-16 00:00'
 toc: true
+description: Python在算法竞赛中的实用技巧
+tags:
+  - Python
+  - 算法竞赛
+  - 工具
+  - 枚举
+  - 组合
 ---
 
 ## 说明

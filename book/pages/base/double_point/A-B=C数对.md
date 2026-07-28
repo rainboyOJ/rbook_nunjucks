@@ -1,6 +1,7 @@
 ---
 id: "diff-pair-count"
 title: "A-B=C 数对"
+description: 排序后双指针统计差值在指定范围内的数对数量，利用单调性 O(n) 扫描。
 date: 2026-06-16 21:20
 toc: true
 tags: ["双指针", "数对统计", "排序"]

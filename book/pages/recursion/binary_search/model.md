@@ -1,6 +1,10 @@
 ---
 id: recursion-binary-search-model
 title: model
+description: model
+tags:
+  - 二分查找
+  - 递归
 ---
 
 

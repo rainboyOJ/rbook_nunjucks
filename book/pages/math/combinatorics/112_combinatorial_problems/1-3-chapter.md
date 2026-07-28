@@ -1,10 +1,17 @@
 ---
-id: "combinatorics-112-chapter-1-3"
-title: "112 个组合问题：1-3 章整理"
-date: 2026-06-16 00:00
+id: combinatorics-112-chapter-1-3
+title: 112 个组合问题：1-3 章整理
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合数学", "读书笔记", "排列组合", "球盒模型"]
-categories: ["数学", "组合数学"]
+tags:
+  - 组合数学
+  - 读书笔记
+  - 排列组合
+  - 球盒模型
+categories:
+  - 数学
+  - 组合数学
+description: 组合计数的第一步不是套公式，而是判断：对象是否有区别、位置是否有区别、是否允许重复、顺序是否重要。
 ---
 
 [[TOC]]

@@ -1,6 +1,7 @@
 ---
 id: "multiple-knapsack"
 title: "多重背包"
+description: 多重背包问题的原理与实现：二进制优化与单调队列优化。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "多重背包"]

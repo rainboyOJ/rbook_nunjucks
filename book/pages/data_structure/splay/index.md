@@ -1,6 +1,7 @@
 ---
 id: "splay"
 title: "Splay：伸展树"
+description: Splay 伸展树的原理与实现：旋转操作与区间维护。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "Splay"]

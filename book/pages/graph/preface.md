@@ -1,6 +1,8 @@
 ---
 id: graph-preface
 title: preface
+description: 图论算法前言：图的含义、存储方式与遍历方法概览。
+tags: ["图论", "基础"]
 ---
 
 # 图的相关算法

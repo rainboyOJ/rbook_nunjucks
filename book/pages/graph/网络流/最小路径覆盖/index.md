@@ -1,9 +1,11 @@
 ---
 id: graph-11
-title: 网络流解DAG最小路径覆盖:序
+title: "网络流解DAG最小路径覆盖:序"
+description: 网络流解 DAG 最小路径覆盖问题的建模思路与原理讲解。
 date: 2019-03-04 17:14
 update: 2019-03-04 17:14
 author: Rainboy
+tags: ["网络流", "最小路径覆盖", "DAG", "图论"]
 ---
 
 ## DAG的最小路径覆盖

@@ -1,11 +1,17 @@
 ---
-id: "dfs-order"
-title: "DFS 序"
-date: 2025-12-03 14:35
+id: dfs-order
+title: DFS 序
+date: '2025-12-03 14:35'
 toc: true
-tags: ["树", "DFS 序", "子树"]
-categories: ["树上算法"]
-code_template: [dfs-order]
+tags:
+  - 树
+  - DFS 序
+  - 子树
+categories:
+  - 树上算法
+code_template:
+  - dfs-order
+description: DFS 序记录每个点进入 DFS 的时间，使一棵子树变成数组上的一个连续区间。
 ---
 
 [[TOC]]

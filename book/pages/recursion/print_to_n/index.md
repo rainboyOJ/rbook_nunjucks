@@ -1,10 +1,15 @@
 ---
-id: "recursion-print-to-n"
-title: "递归的前进与回溯"
-date: 2026-06-16 00:00
+id: recursion-print-to-n
+title: 递归的前进与回溯
+date: '2026-06-16 00:00'
 toc: true
-tags: ["递归", "回溯", "调用栈"]
-categories: ["递归"]
+tags:
+  - 递归
+  - 回溯
+  - 调用栈
+categories:
+  - 递归
+description: 递归先一层一层向下调用，遇到边界后再一层一层返回。
 ---
 
 [[TOC]]

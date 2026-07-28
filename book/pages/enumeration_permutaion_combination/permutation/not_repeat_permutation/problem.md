@@ -1,6 +1,11 @@
 ---
 id: enumeration-permutaion-combination-permutation-not-repeat-permutation-problem
 title: problem
+description: problem
+tags:
+  - 排列
+  - 枚举
+  - 组合
 ---
 
 ### 题目描述

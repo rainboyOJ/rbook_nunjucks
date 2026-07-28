@@ -1,11 +1,17 @@
 ---
-id: "eratosthenes"
-title: "埃氏筛"
-date: 2026-06-16 00:00
+id: eratosthenes
+title: 埃氏筛
+date: '2026-06-16 00:00'
 toc: true
-tags: ["数学", "数论", "素数"]
-categories: ["数学"]
-code_template: [eprime]
+tags:
+  - 数学
+  - 数论
+  - 素数
+categories:
+  - 数学
+code_template:
+  - eprime
+description: 埃氏筛不逐个判断素数，而是从小素数开始，把它的倍数全部标成合数。
 ---
 
 [[TOC]]

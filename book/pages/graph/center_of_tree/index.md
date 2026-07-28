@@ -1,8 +1,10 @@
 ---
 id: graph-center-of-tree
 title: "树的中心"
+description: 树的中心问题：找到树中到所有节点距离之和最小的点，动态规划解法。
 date: 2025-10-09 22:31
 toc: true
+tags: ["树", "树形DP", "图论"]
 ---
 
 [[TOC]]

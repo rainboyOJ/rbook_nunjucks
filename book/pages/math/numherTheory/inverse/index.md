@@ -1,11 +1,18 @@
 ---
-id: "inverse"
-title: "模逆元"
-date: 2026-06-16 00:00
+id: inverse
+title: 模逆元
+date: '2026-06-16 00:00'
 toc: true
-tags: ["数学", "数论", "逆元"]
-categories: ["数学"]
-code_template: [inv-exgcd, line-inv]
+tags:
+  - 数学
+  - 数论
+  - 逆元
+categories:
+  - 数学
+code_template:
+  - inv-exgcd
+  - line-inv
+description: 模逆元就是模意义下的“倒数”，除以一个数可以改成乘它的逆元。
 ---
 
 [[TOC]]

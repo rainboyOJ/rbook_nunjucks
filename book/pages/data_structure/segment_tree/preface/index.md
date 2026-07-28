@@ -1,6 +1,8 @@
 ---
 id: data-structure-segment-tree-preface
 title: preface
+description: 线段树的前言与基础概念介绍，线段树的基本结构与操作。
+tags: ["线段树", "数据结构"]
 ---
 
 ## 前言

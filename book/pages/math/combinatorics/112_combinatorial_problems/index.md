@@ -1,10 +1,14 @@
 ---
 id: math-combinatorics-112-combinatorial-problems
-title: "112个组合问题"
-date: 2025-10-28 11:04
+title: 112个组合问题
+date: '2025-10-28 11:04'
 toc: true
-tags: ["组合数学","读书笔记"]
-categories: ["数学"]
+tags:
+  - 组合数学
+  - 读书笔记
+categories:
+  - 数学
+description: 《112个组合问题》读书笔记与章节索引
 ---
 
 [[TOC]]

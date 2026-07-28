@@ -1,6 +1,12 @@
 ---
 id: appendix-shellscripts-usefull
 title: usefull
+description: Linux常用命令diff、timeout、ulimit等使用技巧
+tags:
+  - Linux
+  - 命令
+  - Shell
+  - 工具
 ---
 
 ## `diff`

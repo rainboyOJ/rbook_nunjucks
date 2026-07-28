@@ -1,6 +1,10 @@
 ---
 id: string-boyer-moore
 title: Boyer-Moore
+description: Boyer-Moore
+tags:
+  - Boyer-Moore
+  - 字符串
 ---
 
 ## 参考

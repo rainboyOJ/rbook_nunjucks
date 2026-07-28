@@ -1,6 +1,10 @@
 ---
 id: recursion-binary-search-summary
 title: summary
+description: summary
+tags:
+  - 二分查找
+  - 递归
 ---
 
 ::: colorfulbox

@@ -1,6 +1,12 @@
 ---
 id: math-numbertheory-book-note
 title: book_note
+description: 初等数论参考书目与整除基础知识
+tags:
+  - 子集枚举
+  - 枚举
+  - 递归
+  - 配对
 ---
 
 ## 说明

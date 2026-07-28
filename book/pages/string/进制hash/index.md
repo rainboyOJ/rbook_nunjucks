@@ -1,11 +1,17 @@
 ---
 id: string-hash
-title: "字符串哈希：进制哈希法"
-date: 2026-06-17 00:00
+title: 字符串哈希：进制哈希法
+date: '2026-06-17 00:00'
 toc: true
-tags: ["字符串", "哈希", "子串比较"]
-categories: ["字符串"]
-code_template: [hash]
+tags:
+  - 字符串
+  - 哈希
+  - 子串比较
+categories:
+  - 字符串
+code_template:
+  - hash
+description: 把字符串看成一个 $P$ 进制大整数，预处理前缀哈希后，用“整段减去前缀”在 $O(1)$ 得到任意子串的哈希值。
 ---
 
 [[TOC]]

@@ -1,6 +1,9 @@
 ---
 id: readingnotes-preface
 title: preface
+description: preface
+tags:
+  - ReadingNotes
 ---
 
 随着写的代码的增多,我们认识到,本质上我们只是在用计算和代码两个工具和解决数学题目."吾生也有涯，而知也无涯。以有涯随无涯，殆已！"

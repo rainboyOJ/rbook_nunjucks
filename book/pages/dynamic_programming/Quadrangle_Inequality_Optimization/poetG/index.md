@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-quadrangle-inequality-optimization-poetg
 title: poetG
+description: 诗人小G问题的四边形不等式证明：val(i,j) 的凸性证明。
+tags: ["动态规划", "四边形不等式", "优化"]
 ---
 
 

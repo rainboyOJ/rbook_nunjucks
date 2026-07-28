@@ -1,10 +1,15 @@
 ---
-id: "recursion-sum-to-n"
-title: "递归求 1 到 n 的和"
-date: 2026-06-16 00:00
+id: recursion-sum-to-n
+title: 递归求 1 到 n 的和
+date: '2026-06-16 00:00'
 toc: true
-tags: ["递归", "递推", "调用栈"]
-categories: ["递归"]
+tags:
+  - 递归
+  - 递推
+  - 调用栈
+categories:
+  - 递归
+description: 递归求和把 `1+2+...+n` 拆成 `n + (1+2+...+(n-1))`。
 ---
 
 [[TOC]]

@@ -1,6 +1,8 @@
 ---
 id: appendix-cpp
 title: cpp工具
+description: C++在线编译器、参考手册等工具汇总
+tags: ["C++", "工具", "编译器"]
 ---
 
 

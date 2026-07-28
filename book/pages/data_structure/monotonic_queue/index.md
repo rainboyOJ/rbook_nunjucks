@@ -1,6 +1,7 @@
 ---
 id: "monotonic-queue"
 title: "单调队列"
+description: 单调队列的原理与实现：维护区间最值，滑动窗口与最大子序和。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "单调队列", "滑动窗口"]

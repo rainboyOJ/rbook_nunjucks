@@ -1,11 +1,19 @@
 ---
-id: "stirling-second-kind"
-title: "第二类 Stirling 数"
-date: 2026-06-16 00:00
+id: stirling-second-kind
+title: 第二类 Stirling 数
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合数学", "Stirling 数", "动态规划", "枚举"]
-categories: ["组合数学"]
-code_template: [stirling2-count, stirling2-enumerate]
+tags:
+  - 组合数学
+  - Stirling 数
+  - 动态规划
+  - 枚举
+categories:
+  - 组合数学
+code_template:
+  - stirling2-count
+  - stirling2-enumerate
+description: '第二类 Stirling 数 $S(n,m)$ 数的是：把 `n` 个不同元素分成 `m` 个非空无标号集合的方案数。'
 ---
 
 [[TOC]]

@@ -1,6 +1,9 @@
 ---
 id: math-numbertheory
 title: numberTheory
+description: 数论知识目录：素数、筛法、同余等
+tags:
+  - 组合
 ---
 
 - 素数

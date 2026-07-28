@@ -1,10 +1,16 @@
 ---
-id: "rule-of-product"
-title: "乘法原理"
-date: 2026-06-16 00:00
+id: rule-of-product
+title: 乘法原理
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合数学", "乘法原理", "计数"]
-categories: ["数学", "组合数学"]
+tags:
+  - 组合数学
+  - 乘法原理
+  - 计数
+categories:
+  - 数学
+  - 组合数学
+description: 乘法原理处理的是“分步骤完成一件事”：每一步有多少种选择，总方案数就把每一步的选择数乘起来。
 ---
 
 [[TOC]]

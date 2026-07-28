@@ -1,11 +1,18 @@
 ---
-id: "two-machine-johnson"
-title: "双机器调度问题（贪心）"
-date: 2026-06-27 00:00
+id: two-machine-johnson
+title: 双机器调度问题（贪心）
+date: '2026-06-27 00:00'
 toc: true
-tags: ["贪心", "Johnson 法则", "相邻交换", "调度"]
-categories: ["贪心"]
-code_template: [two-machine-johnson]
+tags:
+  - 贪心
+  - Johnson 法则
+  - 相邻交换
+  - 调度
+categories:
+  - 贪心
+code_template:
+  - two-machine-johnson
+description: 先把“第一台快、第二台慢”的作业放前面，再把“第一台慢、第二台快”的作业放后面，让第二台机器尽量少等待。
 ---
 
 [[TOC]]

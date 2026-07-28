@@ -1,6 +1,12 @@
 ---
 id: tree-diameter-1
 title: diameter
+description: diameter
+tags:
+  - DFS
+  - 动态规划
+  - 树
+  - 树的直径
 ---
 
 [[TOC]]

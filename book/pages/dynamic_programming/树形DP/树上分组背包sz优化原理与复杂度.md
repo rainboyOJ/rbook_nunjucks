@@ -1,6 +1,8 @@
 ---
 id: dynamic-programming-dp-sz
 title: 树上分组背包sz优化原理与复杂度
+description: 树上分组背包的 sz 优化原理与时间复杂度分析。
+tags: ["动态规划", "树形DP", "背包", "sz优化"]
 ---
 
 ### 2. sz 优化原理与复杂度 (Optimized Complexity)

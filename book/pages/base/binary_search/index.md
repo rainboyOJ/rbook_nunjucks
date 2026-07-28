@@ -1,6 +1,7 @@
 ---
 id: binary-search
 title: "二分查找"
+description: 二分查找的原理与实现：在有序序列中每次丢掉一半候选，O(log n) 时间找到第一个满足条件的位置。
 date: 2026-06-16 20:30
 toc: true
 tags: ["二分查找", "单调性"]

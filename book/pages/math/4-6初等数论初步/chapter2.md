@@ -1,10 +1,13 @@
 ---
-id: "numberthory-chapter2"
-title: "同余与同余方程"
-date: 2025-12-04 16:09
+id: numberthory-chapter2
+title: 同余与同余方程
+date: '2025-12-04 16:09'
 toc: true
-tags: ["数论"]
-categories: [""]
+tags:
+  - 数论
+categories:
+  - ''
+description: 有了这些“类”，我们就可以直接对它们进行加法和乘法运算。这不再是普通数字的运算，而是集合与集合之间的运算。
 ---
 
 [[TOC]]

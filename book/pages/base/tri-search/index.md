@@ -1,6 +1,7 @@
 ---
 id: "ternary-search"
 title: "三分法"
+description: 三分法在单峰函数上同时试两个中点，每次丢掉一定不含最优点的一侧，求函数极值。
 date: 2026-06-16 00:00
 toc: true
 tags: ["基础算法", "三分", "函数极值"]

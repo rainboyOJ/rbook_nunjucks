@@ -1,11 +1,16 @@
 ---
-id: "contest-code-template"
-title: "竞赛代码模板"
-date: 2026-06-17 00:00
+id: contest-code-template
+title: 竞赛代码模板
+date: '2026-06-17 00:00'
 toc: true
-tags: ["模板", "工具"]
-categories: ["附录"]
-code_template: [template-template]
+tags:
+  - 模板
+  - 工具
+categories:
+  - 附录
+code_template:
+  - template-template
+description: 算法竞赛通用代码模板的结构与使用方法
 ---
 
 [[TOC]]

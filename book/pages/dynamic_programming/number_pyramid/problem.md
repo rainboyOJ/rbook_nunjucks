@@ -1,6 +1,7 @@
 ---
 id: "number-pyramid-problem"
 title: "数字三角形练习"
+description: 数字三角形的练习题目。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "数字三角形", "练习"]

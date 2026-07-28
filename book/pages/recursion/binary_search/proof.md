@@ -1,6 +1,10 @@
 ---
 id: recursion-binary-search-proof
 title: proof
+description: proof
+tags:
+  - 二分查找
+  - 递归
 ---
 
 开始证明:$\cal{Proof}.$

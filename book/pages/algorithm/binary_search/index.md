@@ -1,10 +1,14 @@
 ---
-id: "binary-search-archive"
-title: "二分查找：旧入口"
-date: 2026-06-16 00:00
+id: binary-search-archive
+title: 二分查找：旧入口
+date: '2026-06-16 00:00'
 toc: true
-tags: ["基础算法", "归档"]
-categories: ["基础算法"]
+tags:
+  - 基础算法
+  - 归档
+categories:
+  - 基础算法
+description: 二分查找：旧入口
 ---
 
 [[TOC]]

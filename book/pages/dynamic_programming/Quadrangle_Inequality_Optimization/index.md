@@ -1,6 +1,7 @@
 ---
 id: "quadrangle-inequality-optimization"
 title: "四边形不等式优化"
+description: 四边形不等式优化的原理与实现：区间 DP 的 Knuth 优化。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "区间 DP", "四边形不等式", "Knuth 优化"]

@@ -1,9 +1,10 @@
 ---
 id: "01pack"
 title: "01背包"
+description: 01 背包问题的原理与实现：动态规划入门经典模型。
 date: 2026-01-06 16:54
 toc: true
-tags: [""]
+tags: ["动态规划", "背包", "01背包"]
 categories: [""]
 ---
 

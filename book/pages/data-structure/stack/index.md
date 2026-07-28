@@ -1,6 +1,7 @@
 ---
 id: "stack"
 title: "栈"
+description: 栈的原理与实现：后进先出的基础数据结构，括号匹配与表达式求值。
 date: 2026-06-16 00:00
 toc: true
 tags: ["栈", "数据结构"]

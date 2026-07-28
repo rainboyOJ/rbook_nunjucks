@@ -1,10 +1,17 @@
 ---
-id: "ball-and-box"
-title: "球盒模型"
-date: 2026-06-16 00:00
+id: ball-and-box
+title: 球盒模型
+date: '2026-06-16 00:00'
 toc: true
-tags: ["组合数学", "排列", "组合", "Stirling 数"]
-categories: ["组合数学", "枚举"]
+tags:
+  - 组合数学
+  - 排列
+  - 组合
+  - Stirling 数
+categories:
+  - 组合数学
+  - 枚举
+description: 球盒模型先问四件事：球是否相同、盒是否相同、盒是否允许为空、每盒容量是否受限。
 ---
 
 [[TOC]]

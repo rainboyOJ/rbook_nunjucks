@@ -1,11 +1,17 @@
 ---
-id: "quick-swap-two-range"
-title: "快速交换相邻两段区间"
-date: 2026-06-16 00:00
+id: quick-swap-two-range
+title: 快速交换相邻两段区间
+date: '2026-06-16 00:00'
 toc: true
-tags: ["区间操作", "翻转", "技巧"]
-categories: ["基础技巧"]
-code_template: [swap-adjacent-ranges]
+tags:
+  - 区间操作
+  - 翻转
+  - 技巧
+categories:
+  - 基础技巧
+code_template:
+  - swap-adjacent-ranges
+description: 要交换相邻两段区间，先分别翻转两段，再整体翻转一次。
 ---
 
 [[TOC]]

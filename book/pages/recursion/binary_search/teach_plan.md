@@ -1,6 +1,11 @@
 ---
 id: recursion-binary-search-teach-plan
 title: teach_plan
+description: teach_plan
+tags:
+  - 二分查找
+  - 排序
+  - 递归
 ---
 
 

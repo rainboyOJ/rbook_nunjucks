@@ -1,11 +1,17 @@
 ---
-id: "quick-pow"
-title: "快速幂"
-date: 2026-06-16 00:00
+id: quick-pow
+title: 快速幂
+date: '2026-06-16 00:00'
 toc: true
-tags: ["快速幂", "二进制", "数论"]
-categories: ["数学"]
-code_template: [quick-pow]
+tags:
+  - 快速幂
+  - 二进制
+  - 数论
+categories:
+  - 数学
+code_template:
+  - quick-pow
+description: 快速幂把指数拆成二进制：当前位是 `1` 就乘进答案，底数每轮自乘一次。
 ---
 
 [[TOC]]

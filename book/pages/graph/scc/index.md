@@ -1,6 +1,7 @@
 ---
 id: "scc"
 title: "强连通分量"
+description: 强连通分量的原理与实现：Tarjan 算法求有向图的强连通分量与缩点。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "强连通分量"]

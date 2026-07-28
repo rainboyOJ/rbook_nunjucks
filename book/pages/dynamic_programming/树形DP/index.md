@@ -1,9 +1,10 @@
 ---
 id: tree-dp
 title: "树形DP"
+description: 树形 DP 的原理与实现：树上动态规划经典模型。
 date: 2026-01-05 20:42
 toc: true
-tags: ["dp"]
+tags: ["动态规划", "树形DP"]
 categories: [""]
 ---
 

@@ -1,6 +1,7 @@
 ---
 id: "persistent-segment-tree"
 title: "可持久化线段树"
+description: 可持久化线段树（主席树）的原理与实现：历史版本查询与区间第 K 小。
 date: 2026-06-16 17:45
 toc: true
 tags: ["可持久化线段树", "函数式线段树", "主席树"]

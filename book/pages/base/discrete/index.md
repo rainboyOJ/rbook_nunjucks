@@ -1,6 +1,7 @@
 ---
 id: "discretization"
 title: "离散化"
+description: 离散化的原理与实现：保留大小关系，把很大的值域压缩成连续的小编号。
 date: 2026-06-16 00:00
 toc: true
 tags: ["离散化", "排序", "二分"]

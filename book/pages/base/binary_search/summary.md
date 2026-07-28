@@ -1,6 +1,8 @@
 ---
 id: base-binary-search-summary
 title: summary
+description: 二分查找的数学基础：二分性的形式化定义、等价描述与相关推论。
+tags: ["二分查找", "基础算法"]
 ---
 
 !!! definition 定义1 二分性

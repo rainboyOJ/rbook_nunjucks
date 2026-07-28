@@ -1,6 +1,17 @@
 ---
 id: thinkmind
 title: thinkMind
+description: thinkMind
+tags:
+  - LCA
+  - 二分查找
+  - 动态规划
+  - 子集枚举
+  - 差分
+  - 排序
+  - 枚举
+  - 贪心
+  - 递归
 ---
 
 这里记录一下有些神奇的思想

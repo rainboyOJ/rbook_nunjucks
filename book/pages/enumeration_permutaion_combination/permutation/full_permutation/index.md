@@ -1,11 +1,17 @@
 ---
-id: "full-permutation"
-title: "全排列"
-date: 2026-06-16 00:00
+id: full-permutation
+title: 全排列
+date: '2026-06-16 00:00'
 toc: true
-tags: ["排列", "DFS", "枚举"]
-categories: ["枚举"]
-code_template: [permutation]
+tags:
+  - 排列
+  - DFS
+  - 枚举
+categories:
+  - 枚举
+code_template:
+  - permutation
+description: 全排列就是每个位置选择一个还没用过的元素，直到所有位置都填满。
 ---
 
 [[TOC]]

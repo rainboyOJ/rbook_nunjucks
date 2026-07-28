@@ -1,10 +1,16 @@
 ---
-id: "opencode-oj-toolkit"
-title: "OpenCode OJ 学习工具箱"
-date: 2026-07-02 21:00
+id: opencode-oj-toolkit
+title: OpenCode OJ 学习工具箱
+date: '2026-07-02 21:00'
 toc: true
-tags: ["工具", "OJ", "opencode", "工作流"]
-categories: ["附录"]
+tags:
+  - 工具
+  - OJ
+  - opencode
+  - 工作流
+categories:
+  - 附录
+description: OpenCode OJ学习工具箱的命令与工作流说明
 ---
 
 [[TOC]]

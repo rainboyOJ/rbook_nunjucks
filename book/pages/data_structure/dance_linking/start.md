@@ -1,6 +1,7 @@
 ---
 id: "dance-linking"
 title: "舞蹈链 DLX"
+description: 舞蹈链 DLX 的原理与实现：精确覆盖问题的算法。
 date: 2026-06-16 17:20
 toc: true
 tags: ["DLX", "舞蹈链", "精确覆盖", "搜索"]

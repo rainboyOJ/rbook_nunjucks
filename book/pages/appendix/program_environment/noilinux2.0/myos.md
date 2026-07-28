@@ -1,6 +1,11 @@
 ---
 id: appendix-program-environment-noilinux2-0-myos
 title: myos
+description: 个人Ubuntu系统环境差异记录
+tags:
+  - Linux
+  - 系统
+  - 配置
 ---
 
 

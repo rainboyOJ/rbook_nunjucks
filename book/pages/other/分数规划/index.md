@@ -1,6 +1,10 @@
 ---
 id: other
 title: 分数规划
+description: 分数规划
+tags:
+  - other
+  - 分数规划
 ---
 
 

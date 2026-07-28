@@ -1,6 +1,11 @@
 ---
 id: math-numbertheory-1
 title: 约数
+description: 约数相关知识整理与参考链接
+tags:
+  - math
+  - numberTheory
+  - 约数
 ---
 
 

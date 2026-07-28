@@ -1,6 +1,7 @@
 ---
 id: "number-distance"
 title: "数字距离"
+description: 数字距离的公式化处理：半开区间与闭区间的长度计算，边界语义统一。
 date: 2026-06-16 20:40
 toc: true
 tags: ["基础概念", "区间长度"]

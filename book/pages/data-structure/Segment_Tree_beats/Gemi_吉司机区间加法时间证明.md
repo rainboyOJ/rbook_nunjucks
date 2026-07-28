@@ -1,6 +1,8 @@
 ---
 id: data-structure-segment-tree-beats-gemi
 title: Gemi_吉司机区间加法时间证明
+description: 吉司机线段树区间加法的时间复杂度证明与实现详解。
+tags: ["吉司机线段树", "Segment Tree Beats", "数据结构"]
 ---
 
 # 吉司机线段树详解与实现

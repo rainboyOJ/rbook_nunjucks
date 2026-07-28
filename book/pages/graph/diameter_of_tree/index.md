@@ -1,6 +1,7 @@
 ---
 id: "tree-diameter"
 title: "树的直径"
+description: 树的直径的原理与实现：两次 DFS 或树形 DP 求树中最长路径。
 date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "树", "树的直径"]

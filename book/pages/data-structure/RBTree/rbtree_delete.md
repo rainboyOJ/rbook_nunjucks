@@ -1,6 +1,8 @@
 ---
 id: data-structure-rbtree-rbtree-delete
 title: rbtree_delete
+description: 红黑树删除操作的详细实现与双黑缺陷修复讲解。
+tags: ["红黑树", "平衡树", "数据结构"]
 ---
 
 实现红黑树的删除操作确实是它最复杂的部分，远比插入要精妙。它涉及多种情况，核心是处理“双重黑色”（Double Black）或“黑高缺陷”（Black-Deficient）的问题。

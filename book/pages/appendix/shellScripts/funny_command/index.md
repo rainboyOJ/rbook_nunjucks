@@ -1,6 +1,11 @@
 ---
 id: appendix-shellscripts-funny-command
 title: funny_command
+description: Linux中好玩有趣的命令行工具合集
+tags:
+  - Linux
+  - 命令
+  - 趣味
 ---
 
 

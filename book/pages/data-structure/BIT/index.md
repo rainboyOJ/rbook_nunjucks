@@ -1,6 +1,7 @@
 ---
 id: "bit"
 title: "树状数组"
+description: 树状数组（Fenwick Tree）的原理与实现：单点修改、区间查询、逆序对。
 date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "树状数组", "前缀和"]

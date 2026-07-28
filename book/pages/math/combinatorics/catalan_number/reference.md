@@ -1,6 +1,13 @@
 ---
 id: math-combinatorics-catalan-number-reference
 title: reference
+description: 卡特兰数学习资料与参考链接汇总
+tags:
+  - Catalan数
+  - 排列
+  - 排序
+  - 组合
+  - 递归
 ---
 
 - [组合排序题目汇总(排列组合、卡特兰数和递归思想)_abcdefg七人站队,要求a必须在b-CSDN博客](https://blog.csdn.net/gaoyueace/article/details/90437368)

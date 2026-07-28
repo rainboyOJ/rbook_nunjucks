@@ -1,6 +1,7 @@
 ---
 id: "lcs"
 title: "最长公共子序列"
+description: 最长公共子序列（LCS）的原理与实现：二维 DP 与路径还原。
 date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LCS", "线性 DP"]
