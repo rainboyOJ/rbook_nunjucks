@@ -20,6 +20,24 @@ sudo apt install -y python3 nodejs npm graphviz
 npm install
 ```
 
+### 启用 push 检查
+
+Git 不会自动同步 `.git/hooks`，本项目把 hook 放在版本库内。新克隆项目并安装依赖后执行一次：
+
+```bash
+npm run setup:hooks
+```
+
+之后每次 push（纯删除远程分支或 tag 除外）都会执行：
+
+```bash
+npm run check:push
+```
+
+它会检查工作区空白错误，并运行完整的 `pre-check`。任意检查失败都会阻止 push；依赖缺失时也会失败，不会由 hook 自动安装依赖。检查针对当前工作区，因此未提交的 Markdown 错误也可能阻止 push。
+
+本地 hook 可以使用 `git push --no-verify` 绕过，但这不是远程安全边界。主分支的最终约束仍由 GitHub Actions 和分支保护负责。
+
 ### 构建静态网站
 
 ```bash

@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+zero_sha=0000000000000000000000000000000000000000
+saw_ref=false
+has_update=false
+
+# Git sends one line per ref: local-ref local-sha remote-ref remote-sha.
+# A delete has a zero local SHA and does not change project contents.
+while IFS=' ' read -r local_ref local_sha remote_ref remote_sha; do
+  [ -n "$local_ref" ] || continue
+  saw_ref=true
+  if [ "$local_sha" != "$zero_sha" ]; then
+    has_update=true
+  fi
+done
+
+if [ "$saw_ref" = false ] || [ "$has_update" = false ]; then
+  exit 0
+fi
+
+printf '\n[pre-push] Running workspace checks before push...\n'
+if ! npm run check:push; then
+  printf '\n[pre-push] Push blocked: checks failed. Fix the errors and try again.\n' >&2
+  printf '[pre-push] To intentionally bypass local checks, use: git push --no-verify\n' >&2
+  exit 1
+fi
+
+printf '[pre-push] Checks passed. Continuing push.\n'
