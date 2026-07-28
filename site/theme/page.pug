@@ -4,9 +4,9 @@ block layout_config
   - printable_article = true
 
 block content
-  article.page
-    header.page-header
-      h1= front_matter.title
+  article.page.reading-page(data-page-id=front_matter.id || "")
+    include partials/article-header.pug
     include partials/print-source.pug
-    .container
+    .container.reading-content
       include partials/markdown-body.pug
+    include partials/article-footer.pug

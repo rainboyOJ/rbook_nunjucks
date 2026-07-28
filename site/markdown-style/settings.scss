@@ -1,72 +1,92 @@
 @use "font.scss" as font;
 
 :root {
-  /* == 字体设置 == */
+  color-scheme: light;
 
-  /* 基准字体 */
-  /* 备选：Times, "Times New Roman" */
-  --base-Latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times;
-  --base-Chinese-font: #{font.$font_lxgw};
-  --base-Header-font: #{font.$font_hei};
+  --base-Latin-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --base-Chinese-font: #{font.$font_hei};
+  --base-Header-font: var(--base-Latin-font), var(--base-Chinese-font);
   --base-font: var(--base-Latin-font), var(--base-Chinese-font);
+  --base-font-size: 17px;
+  --quote-font: var(--base-font);
+  --quote-font-size: 1em;
+  --code-font: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+    "Courier New", monospace;
 
-  /* 基准字体大小 */
-  --base-font-size: 16px;
+  --page-background: #f7f8fa;
+  --surface-background: #ffffff;
+  --surface-subtle: #f1f3f5;
+  --surface-raised: #ffffff;
+  --text-primary: #202327;
+  --text-secondary: #5f6872;
+  --text-tertiary: #7b858f;
+  --border-color: #dfe3e7;
+  --border-strong: #c8ced4;
+  --link-color: #1f62ad;
+  --link-hover-color: #174d89;
+  --focus-color: #1473c9;
+  --code-background: #171a1f;
+  --code-header-background: #23272e;
+  --code-text: #e8edf2;
+  --selection-background: #cfe5fb;
+  --overlay-background: rgba(24, 28, 33, 0.42);
 
-  /* 引言字体 */
-  --quote-font: "Latin Modern Roman", "Latin Modern Roman 10", Times,
-    "Times New Roman",#{font.$font_hei};
+  /* Legacy names remain mapped for older homepage and plugin styles. */
+  --font-color-light: var(--text-primary);
+  --font-color-dark: #e4e8ec;
+  --link-color-light: var(--link-color);
+  --link-hover-color-light: var(--link-hover-color);
+  --link-color-dark: #8ec5ff;
+  --link-hover-color-dark: #b9dcff;
+  --body-background-color-light: var(--page-background);
+  --body-background-color-dark: #17191c;
+  --container-background-color-light: var(--page-background);
+  --container-background-color-dark: #17191c;
+  --fence-backgroud-color-light: var(--surface-subtle);
+  --fence-backgroud-color-dark: #24282d;
+}
 
-  /* em单位为一个正文字符（--base-font-size）大小，
-  例如，如果您设置 --base-font-size 为 9.5pt，那么 1.05em = 1.05*9.5pt ≈ 10pt。下面的标题字体等设置也遵循该规则。
-  这样，您就可以仅通过调整基准字体大小，而动态对其他元素大小做出调整。
-  当然，您也可以直接设置以pt或px为单位的数值，将元素的大小固定下来，如 --quote-font-size: 10pt; */
-  --quote-font-size: 1.05em;
+[data-darkmode="dark"] {
+  color-scheme: dark;
+  --page-background: #17191c;
+  --surface-background: #1d2024;
+  --surface-subtle: #24282d;
+  --surface-raised: #22262a;
+  --text-primary: #e4e8ec;
+  --text-secondary: #aeb6bf;
+  --text-tertiary: #8e98a2;
+  --border-color: #343a40;
+  --border-strong: #4a525b;
+  --link-color: #8ec5ff;
+  --link-hover-color: #b9dcff;
+  --focus-color: #76b9f3;
+  --code-background: #111317;
+  --code-header-background: #20242a;
+  --code-text: #e8edf2;
+  --selection-background: #244d72;
+  --overlay-background: rgba(0, 0, 0, 0.62);
+}
 
-  /* 代码字体（代码中的中文会调用 ui-font） */
-  /* "Courier New" 从 Windows 3.1 起成为 Windows 官方提供的字体 */
-  /* "Consolas" 从 Windows Vista 起成为 Windows 官方提供的字体 */
-  --code-font: "Latin Modern Mono", "Latin Modern Mono 10", "Consolas", "Courier New";
-
-
-  /* 目录字体 */
-  /* 默认调用 base-font */
-  --toc-font: "";
-  /* 默认调用 base-font-size */
-  --toc-font-size: "";
-
-  /* == 控制设置 == */
-  /* 目录中是否显示一级标题 */
-  --toc-show-title: none;
-
-  /* == 颜色设置 == */
-  /* 超链接颜色 */
-  --link-color-light: #2E67D3;
-  --link-hover-color-light: #2E67D3;
-  --link-color-dark: gold;
-  --link-hover-color-dark: rgb(121, 108, 34);
-
-  /* 字体颜色 */
-
-  --font-color-light: black;
-  --font-color-dark: #ccc;
-
-  // table-of-contents
-  --table-of-conents-font-size: 1.58rem;
-  --table-of-contents-font-size-active: 1.8rem;
-
-  // --body-background-color-light: white;
-  // --body-background-color-dark: #1e1e1e;
-
-  --body-background-color-light: #ccc;
-  --body-background-color-dark: hsl(0deg, 0%, 24%);
-
-  --container-background-color-light: #ccc;
-  --container-background-color-dark: #1e1e1e;
-
-
-  // -- fence
-  --fence-backgroud-color-light: #f8f8f8;
-  --fence-backgroud-color-dark: #2d2d2d;
-  
+@media (prefers-color-scheme: dark) {
+  [data-darkmode="auto"] {
+    color-scheme: dark;
+    --page-background: #17191c;
+    --surface-background: #1d2024;
+    --surface-subtle: #24282d;
+    --surface-raised: #22262a;
+    --text-primary: #e4e8ec;
+    --text-secondary: #aeb6bf;
+    --text-tertiary: #8e98a2;
+    --border-color: #343a40;
+    --border-strong: #4a525b;
+    --link-color: #8ec5ff;
+    --link-hover-color: #b9dcff;
+    --focus-color: #76b9f3;
+    --code-background: #111317;
+    --code-header-background: #20242a;
+    --code-text: #e8edf2;
+    --selection-background: #244d72;
+    --overlay-background: rgba(0, 0, 0, 0.62);
+  }
 }

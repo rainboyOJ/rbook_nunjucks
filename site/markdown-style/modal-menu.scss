@@ -1,79 +1,112 @@
-// modal-menu 弹窗样式
 .modal-menu {
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.modal-menu[hidden] {
+  display: none;
 }
 
 .modal-menu-mask {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(44, 62, 80, 0.35);
+  inset: 0;
+  background: var(--overlay-background);
   backdrop-filter: blur(2px);
 }
 
 .modal-menu-content {
   position: relative;
-  min-width: 320px;
-  max-width:  800px;
-  margin: 0 auto;
-  max-height: 80vh;
-  background: var(--container-background-color-light);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px hsla(0,0%,0%,0.18);
-  padding: 2rem 2.5rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(760px, 100%);
+  max-height: min(82vh, 760px);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  background: var(--surface-background);
+  box-shadow: 0 24px 70px rgba(12, 17, 22, 0.28);
+  overflow: hidden;
 }
 
-.modal-menu-content h2 {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 1.2rem;
-  color: #222;
+.modal-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 0 12px 0 22px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-menu-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 18px;
+  line-height: 1.4;
 }
 
 .modal-menu-close {
-  position: absolute;
-  right: 1.2rem;
-  top: 1.2rem;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  background: transparent;
+  font-size: 18px;
   cursor: pointer;
-  transition: color 0.2s;
 }
+
 .modal-menu-close:hover {
-  color: #3498db;
+  color: var(--text-primary);
+  background: var(--surface-subtle);
 }
 
-[data-darkmode="dark"] .modal-menu-content {
-  background: var(--container-background-color-dark);
-  color: #e3e8ee;
-}
-[data-darkmode="dark"] .modal-menu-content h2 {
-  color: #e3e8ee;
-}
-[data-darkmode="dark"] .modal-menu-mask {
-  background: rgba(44, 62, 80, 0.65);
+.modal-menu-scroll {
+  min-height: 0;
+  padding: 18px 22px 28px;
+  overflow: auto;
 }
 
-@media (max-width: 600px) {
+.modal-menu .chapter-list {
+  font-size: 14px;
+}
+
+.modal-menu .chapter-list li,
+.modal-menu .chapter-list ul li {
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.modal-menu .chapter-list a {
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+.modal-menu .chapter-list a:hover,
+.modal-menu .chapter-list a[aria-current="page"] {
+  color: var(--link-color);
+}
+
+@media (max-width: 639px) {
+  .modal-menu {
+    align-items: stretch;
+    padding: 0;
+  }
+
   .modal-menu-content {
-    min-width: 0;
-    width: 96vw;
-    padding: 1rem 0.5rem;
+    width: 100%;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .modal-menu-scroll {
+    padding-inline: 16px;
   }
 }

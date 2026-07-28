@@ -19,6 +19,10 @@
   body.printable-article .panel,
   body.printable-article .modal-menu,
   body.printable-article .table-of-contents,
+  body.printable-article .toc-backdrop,
+  body.printable-article .article-footer,
+  body.printable-article .article-mobile-toc,
+  body.printable-article .article-lightbox,
   body.printable-article .site-footer {
     display: none !important;
   }
@@ -61,6 +65,7 @@
     background: transparent !important;
     break-after: avoid-page;
     page-break-after: avoid;
+    width: 100%;
   }
 
   body.printable-article .page-header h1,
@@ -75,6 +80,19 @@
     font-size: 20pt;
     line-height: 1.25;
     letter-spacing: 0;
+    text-align: center;
+  }
+
+  body.printable-article .article-breadcrumb,
+  body.printable-article .article-tags,
+  body.printable-article .article-prerequisites {
+    display: none !important;
+  }
+
+  body.printable-article .article-description {
+    margin: 2mm auto 0;
+    color: #444 !important;
+    font-size: 10pt;
     text-align: center;
   }
 
@@ -143,6 +161,12 @@
     width: 100% !important;
     table-layout: auto !important;
     font-size: 8.5pt;
+  }
+
+  body.printable-article .table-scroll {
+    margin: 0 0 5mm;
+    border: 0;
+    overflow: visible;
   }
 
   body.printable-article th,

@@ -1,0 +1,29 @@
+- const article_description = typeof front_matter.description === 'string' ? front_matter.description.trim() : ''
+- const article_tags = Array.isArray(front_matter.tags) ? front_matter.tags.filter(Boolean) : []
+- const article_categories = Array.isArray(front_matter.categories) ? front_matter.categories.filter(Boolean) : []
+- const article_prerequisites = Array.isArray(front_matter.prerequisites) ? front_matter.prerequisites.filter(Boolean) : []
+
+header.page-header.article-header
+  nav.article-breadcrumb(aria-label="面包屑")
+    a(href="/")= site.title
+    if article_categories.length
+      i.fa.fa-angle-right(aria-hidden="true")
+      span= article_categories[0]
+  h1= front_matter.title
+  if article_description
+    p.article-description= article_description
+  if article_tags.length
+    ul.article-tags(aria-label="文章标签")
+      each tag in article_tags
+        li= tag
+  if article_prerequisites.length
+    .article-prerequisites
+      span.article-meta-label 前置知识
+      ul
+        each prerequisite in article_prerequisites
+          li
+            a.J_prerequisiteLink(href=`/relations?id=${encodeURIComponent(prerequisite)}` data-prerequisite-id=prerequisite)= prerequisite
+  button.article-mobile-toc.J_tocToggle(type="button" aria-controls="article-toc" aria-expanded="false")
+    i.fa.fa-list-ul(aria-hidden="true")
+    span 本页目录
+    i.fa.fa-angle-right.article-mobile-toc-arrow(aria-hidden="true")

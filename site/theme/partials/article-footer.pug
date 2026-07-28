@@ -1,0 +1,16 @@
+footer.article-footer
+  nav.article-pagination(aria-label="文章导航")
+    a.article-page-link.article-page-previous.J_previousArticle(hidden)
+      i.fa.fa-arrow-left(aria-hidden="true")
+      span
+        small 上一篇
+        strong.J_previousArticleTitle
+    a.article-page-link.article-page-next.J_nextArticle(hidden)
+      span
+        small 下一篇
+        strong.J_nextArticleTitle
+      i.fa.fa-arrow-right(aria-hidden="true")
+  if front_matter.id
+    a.article-relations-link(href=`/relations?id=${encodeURIComponent(front_matter.id)}`)
+      i.fa.fa-share-alt(aria-hidden="true")
+      span 查看文章关系

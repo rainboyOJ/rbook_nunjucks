@@ -21,6 +21,7 @@
 @use "pseudocode.min.css";
 
 @use "markdown-body-img.scss";
+@use "article.scss";
 @use "print.scss";
 
 // @import "./dark.scss";
@@ -29,66 +30,39 @@
 // https://stackoverflow.com/a/30279590
 // The syntax is the same as now - @import "your/path/to/the/file", without an extension after the file name. This will import your file directly. If you append *.css at the end, it will translate into the css rule @import url(...).
 
-html,body {
-    font-size:62.5%;
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 body {
-    color : var(--font-color-light);
-    background-color: var(--body-background-color-light);
+  min-width: 320px;
+  color: var(--text-primary);
+  background: var(--page-background);
+  font-family: var(--base-font);
+  font-size: 16px;
+  letter-spacing: 0;
 }
 
-@mixin dark-body-mode-styles {
-    color: var(--font-color-dark);
-    background-color: var(--body-background-color-dark);
+::selection {
+  background: var(--selection-background);
 }
 
-[data-darkmode="dark"] body {
-    @include dark-body-mode-styles;
+main:focus {
+  outline: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  [data-darkmode=auto]  body {
-    @include dark-body-mode-styles;
-  }
+body.modal-open {
+  overflow: hidden;
 }
 
-.markdown-body {
-    max-width:800px;
-    margin: 0 auto;
+:where(a, button, input, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
 }
 
-
-.markdown-body { 
-    h1,h2,h3,h4,h5,h6 {
-        font-weight: 800;
-        font-family: var(--base-Header-font);
-    }
-}
-
-
-// ---------- link style
-.markdown-body a {
-  color: var(--link-color-light);
-  &:hover {
-    color: var(--link-hover-color-light);
-  }
-}
-
-
-[data-darkmode="dark"] .markdown-body a  {
-  color: var(--link-color-dark);
-  &:hover {
-    color: var(--link-hover-color-dark);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  [data-darkmode="auto"] .markdown-body a {
-      color: var(--link-color-dark);
-  
-      &:hover {
-        color: var(--link-hover-color-dark);
-      }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

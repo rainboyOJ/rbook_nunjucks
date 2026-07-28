@@ -1,13 +1,9 @@
-#modal-menu.modal-menu(style="display:none;")
-  .modal-menu-mask(onclick="hideMenuModal()")
-  .modal-menu-content
-    button.modal-menu-close(onclick="hideMenuModal()") ×
-    h2 目录
-    != site.menuHtml
-script.
-  function showMenuModal() {
-    document.getElementById('modal-menu').style.display = 'block';
-  }
-  function hideMenuModal() {
-    document.getElementById('modal-menu').style.display = 'none';
-  }
+#modal-menu.modal-menu(hidden)
+  .modal-menu-mask(data-close-book-menu="")
+  .modal-menu-content(role="dialog" aria-modal="true" aria-labelledby="book-menu-title" tabindex="-1")
+    .modal-menu-header
+      h2#book-menu-title 全书目录
+      button.modal-menu-close.J_closeBookMenu(type="button" title="关闭目录" aria-label="关闭目录")
+        i.fa.fa-times(aria-hidden="true")
+    .modal-menu-scroll
+      != site.menuHtml
