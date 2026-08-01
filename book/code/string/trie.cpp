@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // 字典树 Trie 模板：插入字符串、判断是否存在、统计前缀出现次数
 // 模板参数：ALPHA 字符集大小，OFFSET 字符起点（如 'a'）
 // 节点维护 pass(经过次数) 和 end(单词结尾次数)
