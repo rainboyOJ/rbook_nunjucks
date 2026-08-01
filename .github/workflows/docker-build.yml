@@ -4,8 +4,19 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'book/**'
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.base.json'
+      - 'bin/**'
+      - 'src/online_judge/**'
+      - 'packages/**'
+      - 'site/theme/**'
+      - 'site/public/**'
+      - 'site/markdown-style/**'
+      - 'site/widgets/**'
+      - 'build_all_dot_file.py'
+      - 'Dockerfile'
   workflow_dispatch:
 
 permissions:

@@ -1,9 +1,10 @@
 import fs from 'fs';
+import path from 'path';
 import { render as renderMarkdown } from '@rbook/markdown/markdown-it';
-import { fromRoot, themeDir } from '@rbook/core/paths';
+import { docsDir, themeDir } from '@rbook/core/paths';
 import { renderTemplate } from '@rbook/core/renderEngine';
 
-export const apiDocsMarkdownPath = fromRoot('docs/api-usage.md');
+export const apiDocsMarkdownPath = path.join(docsDir, 'api-usage.md');
 
 export function readApiDocsMarkdown() {
   try {

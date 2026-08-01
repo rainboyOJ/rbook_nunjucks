@@ -25,7 +25,7 @@ init_content_repo() {
 
   git -C "$VPS_REPO_DIR" remote set-url origin "$VPS_REPO_URL"
   git -C "$VPS_REPO_DIR" sparse-checkout init --cone
-  git -C "$VPS_REPO_DIR" sparse-checkout set book
+  git -C "$VPS_REPO_DIR" sparse-checkout set book docs
   git -C "$VPS_REPO_DIR" fetch --depth=1 origin "$VPS_REPO_BRANCH"
   git -C "$VPS_REPO_DIR" reset --hard "origin/$VPS_REPO_BRANCH"
 }
@@ -81,7 +81,9 @@ restart_container() {
     -e RBOOK_ADMIN_TOKEN="$RBOOK_ADMIN_TOKEN" \
     -e RBOOK_CONTENT_DIR=/content \
     -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
+    -e RBOOK_DOCS_DIR=/docs \
     -v "$VPS_REPO_DIR/book:/content:ro" \
+    -v "$VPS_REPO_DIR/docs:/docs:ro" \
     "$IMAGE"
 
   if [ "$DEPLOY_MODE" = "image" ]; then

@@ -24,6 +24,9 @@ export const codeTemplateDir = process.env.RBOOK_CODE_DIR
   ? path.resolve(process.env.RBOOK_CODE_DIR)
   : path.join(contentDir, 'code');
 export const themeDir = path.join(appDir, 'theme');
+export const docsDir = process.env.RBOOK_DOCS_DIR
+  ? path.resolve(process.env.RBOOK_DOCS_DIR)
+  : fromRoot('docs');
 export const publicDir = path.join(appDir, 'public');
 export const distDir = runtimeDir
   ? path.join(runtimeDir, 'dist')
