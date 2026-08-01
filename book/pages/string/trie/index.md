@@ -95,9 +95,15 @@ root --a--> node --p--> node --p--> node
 - 查询前缀数量：$O(L)$。
 - 空间复杂度：$O(\text{所有字符串总长度} \times 26)$，数组版常数较大但速度稳定。
 
+## 代码模板
+
+竞赛中可直接复用的 Trie 结构体，支持插入、完整查询、前缀计数：
+
+@include-code(/code/string/trie.cpp, cpp)
+
 ## 代码实现
 
-模板输入格式：
+完整可运行程序。模板输入格式：
 
 ```text
 n q
@@ -110,7 +116,7 @@ q 个询问
 - `1 s`：判断完整字符串 `s` 是否出现；
 - `2 s`：统计前缀 `s` 出现次数。
 
-@include-code(/code/string/trie.cpp, cpp)
+@include-code(./code/trie_solution.cpp, cpp)
 
 ## 测试用例
 

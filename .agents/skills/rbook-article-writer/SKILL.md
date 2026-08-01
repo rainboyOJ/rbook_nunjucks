@@ -1,6 +1,6 @@
 ---
 name: rbook-article-writer
-description: 在 rbook 算法电子书项目中编写、扩写或修改算法文章时必须使用这个 skill。用户要求写算法教程、完善草稿、整理题解、补充模板代码、修改 book/pages 下文章、生成 code_template 元数据时都应触发。这个 skill 强制规定：核心算法代码、模板代码、可复用竞赛代码必须放在 book/code/ 下，并在 Markdown 中用 @include-code 引用。
+description: 在 rbook 算法电子书项目中编写、扩写或修改算法文章时必须使用这个 skill。用户要求写算法教程、完善草稿、整理题解、补充模板代码、修改 book/pages 下文章、生成 code_template 元数据时都应触发。这个 skill 强制规定：可复用代码模板放在 book/code/ 下，完整代码实现放在对应文章目录的 code/ 下，并在 Markdown 中用 @include-code 引用。
 ---
 
 # RBook 算法文章写作 Skill
@@ -10,8 +10,9 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 最重要的项目约束：
 
 - 文章在 `book/pages/` 下。
-- 核心代码、模板代码、可复用竞赛代码在 `book/code/` 下。
-- 文章中通过 `@include-code(/code/xxx.cpp, cpp)` 引用代码。
+- **可复用代码模板**在 `book/code/` 下。
+- **完整代码实现**（含 main 的可运行程序）放在对应文章目录的 `code/` 下，即 `book/pages/<topic>/code/`。
+- 文章中通过 `@include-code(/code/xxx.cpp, cpp)` 引用 `book/code/` 模板，通过 `@include-code(./code/xxx.cpp, cpp)` 引用文章本地实现。
 - 不要把完整可复用模板只塞在 Markdown 正文里。
 
 ## 必读上下文
@@ -44,12 +45,10 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
    - 新增或重写正式算法教程时，默认必须同步 `book/book.yaml` 的 `chapters`，让文章出现在首页目录中。
    - 只有归档页、草稿页、练习页、题单页、内部参考页，才可以只放在 `glob` 或依赖 `all` 索引；这种情况要在最终说明中写明“不加入目录”的理由。
 
-3. 判断哪些代码必须进入 `book/code/`。
-   - 核心算法实现必须进入 `book/code/`。
-   - 可复用竞赛模板必须进入 `book/code/`。
-   - 完整可运行 C++ 程序如果能作为模板或典型实现，也必须进入 `book/code/`。
-   - 文章本地的 `book/pages/.../code/` 只适合非常小、不可复用的一次性演示。
-   - 如果草稿中有完整模板代码，或文章本地 code 目录中有可复用模板，应移动或复制到合适的 `book/code/` 路径，然后更新文章引用。
+3. 判断代码放 `book/code/` 还是文章本地 `code/`。
+   - **可复用代码模板**必须进入 `book/code/`，这是给读者直接复制到竞赛用的结构体或函数（如 `Trie`、`first_true`）。
+   - **完整代码实现**（含 main、读入输出、能跑测试用例的完整程序）放在文章目录 `book/pages/<topic>/code/`。
+   - 文章本地 `book/pages/<topic>/code/` 存放该文章独有的完整实现；如果草稿中有可复用模板，应移入合适的 `book/code/` 路径，然后更新文章引用。
 
 4. 写文章。
    - 默认使用中文。
@@ -60,9 +59,13 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
    - 可以使用 admonition 强调关键概念，但必须遵守下方“Admonition 规范”。
 
 5. 引用代码。
-   - 推荐写法：
+   - 引用 `book/code/` 模板，推荐写法：
      ```markdown
      @include-code(/code/<domain>/<file>.cpp, cpp)
+     ```
+   - 引用文章本地完整实现，推荐写法：
+     ```markdown
+     @include-code(./code/<file>.cpp, cpp)
      ```
    - 已有文章也有 `@include-code(code/<domain>/<file>.cpp, cpp)`，可以兼容。
    - 不要在 Markdown 中粘贴整份可复用 C++ 模板。
@@ -140,9 +143,13 @@ prerequisites:
 
 ## 复杂度分析
 
-## 代码实现
+## 代码模板
 
 @include-code(/code/<domain>/<file>.cpp, cpp)
+
+## 代码实现
+
+@include-code(./code/<file>.cpp, cpp)
 
 ## 测试用例
 
@@ -153,7 +160,7 @@ prerequisites:
 ## 参考
 ```
 
-如果文章没有可复用代码，可以省略 `code_template` 和 `## 代码实现`。如果文章不要求读者先掌握其他章节，可以省略 `prerequisites`。
+如果文章没有可复用模板，可以省略 `code_template` 和 `## 代码模板`；如果文章没有完整实现，可以省略 `## 代码实现`。如果文章不要求读者先掌握其他章节，可以省略 `prerequisites`。
 
 ## 前置关系规范
 
@@ -173,7 +180,9 @@ prerequisites:
 
 ## 代码放置规则
 
-根据主题选择 `book/code/` 下的位置。文章引用仍然使用 `/code/...`，这是内容根内 `code/` 目录的 Web 路径：
+### book/code/：可复用代码模板
+
+按主题选择 `book/code/` 下的位置。文章引用仍然使用 `/code/...`，这是内容根内 `code/` 目录的 Web 路径：
 
 - 基础算法：`code/base/`
 - 数据结构：`code/data-struture/`，保留项目中已有拼写
@@ -184,13 +193,14 @@ prerequisites:
 - 通用模板：`code/template/`
 - 工具函数：`code/utils/`
 
-新增代码文件时：
+新增模板文件时：
 
 - 使用清晰文件名，并尽量贴合现有命名风格。
 - C++ 竞赛模板优先使用 `.cpp`。
 - 模板要完整、可读，适合竞赛时直接复制。
 - 注释解释不变量、边界、容易写错的位置。
 - 不要过度封装；优先写心智负担低的 `struct` 或函数。
+- 模板通常不含 `main`，以 `struct` 或函数形式给出，方便复制进题解。
 
 如果这份代码应出现在代码模板 UI 中，文章 front matter 中要增加 `code_template`：
 
@@ -198,6 +208,13 @@ prerequisites:
 code_template:
   - fenwick-tree
 ```
+
+### 文章本地 code/：完整代码实现
+
+- 位置：`book/pages/<topic>/code/`。
+- 内容：含 `main`、读入输出、能跑文章测试用例的完整程序。
+- 引用方式：`@include-code(./code/<file>.cpp, cpp)`。
+- 不需要在 `book/code.yaml` 注册，也不进代码模板 UI。
 
 ## 目录同步规则
 
@@ -295,8 +312,9 @@ node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readF
 
 - 成品文章没有误覆盖草稿文件，除非用户明确要求。
 - 可复用模板代码没有只存在于 Markdown 中。
-- 核心代码、模板代码已经放到 `book/code/`。
-- `@include-code` 引用路径存在。
+- 可复用代码模板已经放到 `book/code/`，且不含 main。
+- 完整代码实现已经放到文章目录 `book/pages/<topic>/code/`。
+- `@include-code` 引用路径存在（`/code/...` 指 `book/code/`，`./code/...` 指文章本地）。
 - `code_template` 中的 ID 已在 `book/code.yaml` 注册。
 - `prerequisites` 只包含真实存在的直接前置文章 ID，且没有自引用或依赖环。
 - `toc: true` 的文章包含 `[[TOC]]`。
