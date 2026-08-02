@@ -532,6 +532,31 @@ $$
 
 !!!
 
+#### 失配树图示：border 的递归包含
+
+用 4.1 节的 `"ababcabab"` 画失配树：节点 `k` 代表**长度为 `k` 的前缀**，它的父节点是 `pi[k-1]`。
+
+```mermaid
+flowchart TD
+    0(( )) --> 1(("a"))
+    0(( )) --> 2(("ab"))
+    0(( )) --> 5(("ababc"))
+    1(("a")) --> 3(("aba"))
+    1(("a")) --> 6(("ababca"))
+    2(("ab")) --> 4(("abab"))
+    2(("ab")) --> 7(("ababcab"))
+    3(("aba")) --> 8(("ababcaba"))
+    4(("abab")) --> 9(("ababcabab"))
+    classDef normal fill:#e2e8f0,stroke:#475569,stroke-width:2px,color:#0f172a;
+    classDef chain fill:#fef3c7,stroke:#b45309,stroke-width:3px,color:#1f2937;
+    class 1,3,5,6,7,8 normal;
+    class 0,2,4,9 chain;
+```
+
+高亮的 `"ababcabab" → "abab" → "ab" → ""` 是**整串的祖先链**：`"ababcabab"` 的最长 border 是 `"abab"`，`"abab"` 的 border 是 `"ab"`，`"ab"` 的 border 是空串。
+
+**沿父链向上走，就是在枚举当前前缀不断缩短的 border——border 的 border 还是 border。** 这就是失配回退的递归本质：`while` 循环里每跳一次，就是在树上走一条父边。
+
 ## 6. 复杂度和边界情况
 
 设文本串长度为 $n$，模式串长度为 $m$：
@@ -756,7 +781,7 @@ KMP 的本质是：在一个串中维护“当前后缀等于模式串前缀”�
 
 **识别信号：** 出现“最小循环节”“周期”“重复字符串”。
 
-**核心建模：** 设 $L = n - pi[n-1]$。如果 $n mod L = 0$，则 $L$ 是最小循环节长度。
+**核心建模：** 设 $L = n - pi[n-1]$。如果 $n \bmod L = 0$，则 $L$ 是最小循环节长度。
 
 | 应用场景 | 经典题目 | 核心思路 |
 |---|---|---|
