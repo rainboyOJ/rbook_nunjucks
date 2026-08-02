@@ -42,7 +42,15 @@ root --a--> node --p--> node --p--> node
 
 这条路径就表示前缀 `"app"`。
 
-多个字符串如果有相同前缀，就会共享这段路径。例如 `"app"`、`"apple"`、`"apply"` 都共享 `"app"`。
+多个字符串如果有相同前缀，就会共享这段路径。例如 `"app"`、`"apple"`、`"apply"` 共享 `"app"`：
+
+```mermaid
+graph TD
+    root((root)) --> a((a)) --> p1((p)) --> p2((p)) --> l((l)) --> e((e))
+    l --> y((y))
+```
+
+图里 `"apple"` 走 `l → e` 结束，`"apply"` 走 `l → y` 结束，`"app"` 在第三个 `p` 结束。
 
 ## 节点维护什么
 

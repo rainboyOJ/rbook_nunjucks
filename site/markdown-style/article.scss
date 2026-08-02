@@ -194,6 +194,10 @@
   tab-size: 4;
 }
 
+.reading-page .markdown-body > pre.mermaid {
+  text-align: center;
+}
+
 .reading-page .line-numbers-mode pre {
   display: flex;
 }
