@@ -39,12 +39,27 @@ const app = await createApp({
 });
 
 const host = process.env.HOST || '0.0.0.0';
-const port = Number(process.env.PORT || 3000);
+const startPort = Number(process.env.PORT || 3300);
+const maxPortAttempts = 20;
 
-try {
-  await app.listen({ host, port });
-  console.log(`[dev] listening on http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`);
-} catch (error) {
-  app.log.error(error);
+let port = startPort;
+for (; port < startPort + maxPortAttempts; port++) {
+  try {
+    await app.listen({ host, port });
+    break;
+  } catch (error) {
+    if (error?.code === 'EADDRINUSE') {
+      console.log(`[dev] port ${port} in use, trying ${port + 1}...`);
+      continue;
+    }
+    app.log.error(error);
+    process.exit(1);
+  }
+}
+
+if (port >= startPort + maxPortAttempts) {
+  console.error(`[dev] no free port found in ${startPort}..${startPort + maxPortAttempts - 1}`);
   process.exit(1);
 }
+
+console.log(`[dev] listening on http://${host === '0.0.0.0' ? 'localhost' : host}:${port}`);
