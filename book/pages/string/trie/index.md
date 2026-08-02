@@ -42,15 +42,26 @@ root --a--> node --p--> node --p--> node
 
 这条路径就表示前缀 `"app"`。
 
-多个字符串如果有相同前缀，就会共享这段路径。例如 `"app"`、`"apple"`、`"apply"` 共享 `"app"`：
+多个字符串如果有相同前缀，就会共享这段路径。把 `"app"`、`"apple"`、`"apply"`、`"apt"`、`"bat"` 插入后，Trie 如下：
 
 ```mermaid
-graph TD
-    root((root)) --> a((a)) --> p1((p)) --> p2((p)) --> l((l)) --> e((e))
-    l --> y((y))
+flowchart TD
+    root((root)) -->|a| a1(( ))
+    root -->|b| b1(( ))
+    a1 -->|p| ap(( ))
+    ap -->|p| app(( ))
+    ap -->|t| apt(( ))
+    app -->|l| appl(( ))
+    appl -->|e| apple(( ))
+    appl -->|y| apply(( ))
+    b1 -->|a| ba(( ))
+    ba -->|t| bat(( ))
+
+    classDef terminal fill:#dcfce7,stroke:#16a34a,stroke-width:3px;
+    class app,apt,apple,apply,bat terminal;
 ```
 
-图里 `"apple"` 走 `l → e` 结束，`"apply"` 走 `l → y` 结束，`"app"` 在第三个 `p` 结束。
+图中的圆点只表示节点，边上的标签才表示字符。绿色节点表示 `end > 0`：`"app"` 在第三个 `p` 后结束，但还能沿 `l` 继续走到 `"apple"` 和 `"apply"`；`"apt"` 则在第二个 `p` 后分出另一条路径。
 
 ## 节点维护什么
 
