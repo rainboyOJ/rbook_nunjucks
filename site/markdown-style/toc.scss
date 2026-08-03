@@ -12,7 +12,7 @@
   background: transparent;
   font-family: var(--base-font);
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.4;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
@@ -22,8 +22,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 38px;
-  margin-bottom: 6px;
+  min-height: 30px;
+  margin-bottom: 2px;
 }
 
 .article-toc-title {
@@ -46,42 +46,51 @@
   cursor: pointer;
 }
 
-.table-of-contents ol {
+.reading-page .markdown-body .table-of-contents ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.table-of-contents ol ol {
-  margin: 3px 0 5px 11px;
-  padding-left: 11px;
+.reading-page .markdown-body .table-of-contents ol ol {
+  margin: 2px 0 2px 10px;
+  padding-left: 10px;
   border-left: 1px solid var(--border-color);
 }
 
-.table-of-contents li {
-  margin: 1px 0;
+.reading-page .markdown-body .table-of-contents li {
+  margin: 0;
   list-style: none;
 }
 
-.table-of-contents a {
+.reading-page .markdown-body .table-of-contents a {
   display: block;
-  padding: 5px 7px;
-  border-radius: 4px;
+  padding: 2.5px 6px;
+  border-radius: 3px;
   color: var(--text-secondary);
+  line-height: 1.4;
   text-decoration: none;
   overflow-wrap: anywhere;
 }
 
-.table-of-contents a:hover {
+.reading-page .markdown-body .table-of-contents > ol > li > a {
+  font-weight: 600;
+}
+
+.reading-page .markdown-body .table-of-contents ol ol a {
+  font-weight: 400;
+}
+
+.reading-page .markdown-body .table-of-contents a:hover {
   color: var(--text-primary);
   background: var(--surface-subtle);
   text-decoration: none;
 }
 
-.table-of-contents a.active,
-.table-of-contents a[aria-current="location"] {
+.reading-page .markdown-body .table-of-contents a.active,
+.reading-page .markdown-body .table-of-contents a[aria-current="location"] {
   color: var(--link-color);
-  background: transparent;
+  background: color-mix(in srgb, var(--link-color) 9%, transparent);
   box-shadow: inset 2px 0 0 var(--link-color);
   font-size: inherit;
   font-weight: 650;
@@ -139,6 +148,13 @@
 
   .article-toc-close {
     display: flex;
+  }
+
+  .reading-page .markdown-body .table-of-contents a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 6px;
   }
 
   .toc-backdrop {
