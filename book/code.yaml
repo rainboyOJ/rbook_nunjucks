@@ -709,7 +709,7 @@ codes:
 
   - id: kmp
     path: string/kmp.cpp
-    description: kmp 算法模板
+    description: KMP 字符串匹配（1 下标虚拟视图）
     language: cpp
     tags: [字符串]
 
