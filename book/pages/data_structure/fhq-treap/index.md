@@ -209,5 +209,5 @@ FHQ Treap 的本质是：把动态有序结构拆成可拼接的两半。它适�
 
 ## 参考
 
-- 旧草稿：`book/pages/data-structure/fhq-treap/草稿.md`
-- 例题草稿：`book/pages/data-structure/fhq-treap/草稿-例题.md`
+- 旧草稿：`book/pages/data_structure/fhq-treap/草稿.md`
+- 例题草稿：`book/pages/data_structure/fhq-treap/草稿-例题.md`

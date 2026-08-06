@@ -12,7 +12,7 @@ categories: ["数据结构"]
 
 ## 归档说明
 
-这一页是旧目录 `data-structure/Block` 下的分块算法入口。正式教程已经迁移到：
+这一页是旧目录 `data_structure/Block` 下的分块算法入口。正式教程已经迁移到：
 
 [分块思想](../../data_structure/block_data/decompose/index.md)
 

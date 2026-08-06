@@ -409,5 +409,5 @@ for (int sub = mask; sub; sub = (sub - 1) & mask) {
 ## 参考
 
 - 本书进制转换章节：`math/number_base/index.md`
-- 本书树状数组章节：`data-structure/BIT/index.md`
+- 本书树状数组章节：`data_structure/BIT/index.md`
 - 本书状态压缩 DP 章节：`dynamic_programming/binary_state/index.md`

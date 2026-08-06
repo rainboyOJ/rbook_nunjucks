@@ -14,7 +14,7 @@ categories: ["数据结构"]
 
 本文是旧目录 `data_structure/binary_search_tree` 的归档入口。
 
-正式教程已经迁移到：[二叉搜索树](../../data-structure/BST/index.md)。
+正式教程已经迁移到：[二叉搜索树](../../data_structure/BST/index.md)。
 
 可复用模板已经归位到正式教程和 `/code/data-struture/bst.cpp`。
 

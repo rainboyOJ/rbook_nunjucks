@@ -11,7 +11,7 @@ const allowedSyntheticKeys = new Set(['id', 'title']);
 // These five marker IDs were early candidates that collide with existing pages.
 // The synthetic block contains the later, globally unique ID selected by migration.
 const resolvedIds = new Map([
-  ['data-structure/RBTree/index.md', 'data-structure-rbtree-1'],
+  ['data_structure/RBTree/index.md', 'data-structure-rbtree-1'],
   ['graph/网络流/最大权闭合子图/index.md', 'graph-7'],
   ['graph/网络流/最小点覆盖与最大点权独立集/index.md', 'graph-10'],
   ['graph/网络流/最小路径覆盖/index.md', 'graph-11'],

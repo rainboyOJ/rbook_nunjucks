@@ -57,7 +57,10 @@ function collectFromChapters(
   for (const item of chapters) {
     if (!item || !item.path) continue;
 
-    const nextTrail = item.type === 'info' ? trail : [...trail, item.title].filter(Boolean);
+    const displayTitle = item['english-title']
+      ? `[${item['english-title']}] ${item.title}`
+      : item.title;
+    const nextTrail = item.type === 'info' ? trail : [...trail, displayTitle].filter(Boolean);
 
     if (Array.isArray(item.sections) && item.sections.length > 0) {
       const subPath = basePath ? path.join(basePath, item.path) : item.path;
@@ -72,7 +75,7 @@ function collectFromChapters(
       source: 'chapters' as PageSource,
       visible: true,
       path: filePath,
-      title: item.title || '',
+      title: displayTitle,
       navTrail: nextTrail
     });
   }

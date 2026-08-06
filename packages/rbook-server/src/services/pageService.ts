@@ -14,7 +14,10 @@ function buildTocNode(item: any, pagesByPath: Map<string, any>, basePath = '', t
   if (!item || !item.title) return null;
 
   const type = item.type || 'page';
-  const nextTrail = type === 'info' ? trail : [...trail, item.title].filter(Boolean);
+  const displayTitle = item['english-title']
+    ? `[${item['english-title']}] ${item.title}`
+    : item.title;
+  const nextTrail = type === 'info' ? trail : [...trail, displayTitle].filter(Boolean);
   const rawPath = item.path ? path.posix.join(basePath, item.path) : '';
   const sections = Array.isArray(item.sections)
     ? item.sections
@@ -30,7 +33,7 @@ function buildTocNode(item: any, pagesByPath: Map<string, any>, basePath = '', t
   const page = candidates.map((candidate) => pagesByPath.get(candidate)).find(Boolean);
 
   return {
-    title: item.title,
+    title: displayTitle,
     type,
     path: page?.path || null,
     url: page?.url || null,

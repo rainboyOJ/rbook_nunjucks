@@ -122,7 +122,7 @@ $$
 
 树状数组统计逆序对可以参考：
 
-- `data-structure/BIT/index.md`
+- `data_structure/BIT/index.md`
 
 ## 测试用例
 
@@ -236,5 +236,5 @@ $$
 ## 参考
 
 - 本书配对问题章节：`enumeration_permutaion_combination/pair_number/index.md`
-- 本书树状数组章节：`data-structure/BIT/index.md`
+- 本书树状数组章节：`data_structure/BIT/index.md`
 - 本书双指针章节：`base/two-pointer/index.md`

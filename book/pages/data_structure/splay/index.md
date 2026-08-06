@@ -265,5 +265,5 @@ Splay 的本质是动态维护一棵可旋转的二叉搜索树。它适合“�
 
 ## 参考
 
-- 本书相关章节：`data-structure/BST`、`data_structure/treap`、`data-structure/fhq-treap`
+- 本书相关章节：`data_structure/BST`、`data_structure/treap`、`data_structure/fhq-treap`
 - [Splay Tree Datastructure](http://www.btechsmartclass.com/data_structures/splay-trees.html)

@@ -252,4 +252,4 @@ $$
 ## 参考
 
 - 本书线段树单点修改：`data_structure/segment_tree/update_one/index.md`
-- 本书树状数组：`data-structure/BIT/index.md`
+- 本书树状数组：`data_structure/BIT/index.md`
