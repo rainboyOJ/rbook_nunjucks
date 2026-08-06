@@ -67,7 +67,7 @@ export async function createApp(options: CreateAppOptions = {}) {
     root: path.resolve(options.staticDir || distDir),
     prefix: '/',
     index: ['index.html'],
-    decorateReply: false
+    decorateReply: true
   });
 
   app.setNotFoundHandler((request, reply) => {
