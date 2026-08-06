@@ -269,9 +269,10 @@ export class DevRenderer {
     const book = this.refreshBook();
     const sourcePath = inside(bookDir, page.relativePath);
     if (!sourcePath || !fs.existsSync(sourcePath) || !fs.statSync(sourcePath).isFile()) {
-      // Let static app pages such as /code_template and /code_template/index.html keep working.
-      const staticPath = inside(distDir, pathname.replace(/^\/+/, ''));
-      if (staticPath && fs.existsSync(staticPath)) return null;
+      // Asset URLs also match the directory-style page parser. Resolve them
+      // before reporting a missing article, so article-local images work in dev.
+      const asset = this.sourceAsset(pathname);
+      if (asset) return asset;
       return this.notFound(pathname, path.join(bookDir, page.relativePath));
     }
 

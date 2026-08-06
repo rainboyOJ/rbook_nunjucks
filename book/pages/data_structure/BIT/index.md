@@ -11,6 +11,8 @@ code_template: [fenwick, fenwick-tree-alt, fenwick-range-add-sum]
 
 [[TOC]]
 
+![](/data_structure/BIT/BITn7.png)
+
 ## 一句话算法
 
 树状数组把前缀和拆成若干个二进制长度的块，每次只跳过或更新这些关键块。
@@ -89,16 +91,26 @@ lowbit(i) = i & -i
 
 ### 前缀查询的具体拆分
 
-例如查询前缀 `1..12`：
+例如查询前缀 $1..12$，先看两个树节点的内容：
 
-```text
-tree[12] = a[9] + a[10] + a[11] + a[12]   (lowbit(12)=4)
-12 - lowbit(12) = 8
-tree[8]  = a[1] + ... + a[8]               (lowbit(8)=8)
-8 - lowbit(8) = 0
-```
+$$
+tree[12] = a_9 + a_{10} + a_{11} + a_{12}
+\quad (\operatorname{lowbit}(12) = 4)
+$$
 
-所以：`sum(1..12) = tree[12] + tree[8]`。查询过程每次减去当前下标的最低位 `1`，把前缀拆成互不重叠的二进制块。
+$$
+tree[8] = a_1 + a_2 + \cdots + a_8
+\quad (\operatorname{lowbit}(8) = 8)
+$$
+
+查询指针每次减去当前下标的 `lowbit`，一路向左跳到 $0$：
+
+$$
+12 \xrightarrow{-\operatorname{lowbit}(12)} 8
+\xrightarrow{-\operatorname{lowbit}(8)} 0
+$$
+
+所以：$sum(1..12) = tree[12] + tree[8]$。查询过程把前缀拆成互不重叠的二进制块。
 
 ## 为什么 `p + lowbit(p)` 是下一个更新位置
 
@@ -282,8 +294,6 @@ $$
 2. 如果完整区间越过了 `l`，只能取单点 `a[r]`，然后令 `r--`。
 
 这种变体通常适合尾部插入或满足特定单调更新条件的场景，不能不加限制地支持任意修改后的区间最值。
-
-![](./images/BITn7.png)
 
 特别注意：最值运算不可逆，所以不能像区间和那样使用 `query(r) - query(l-1)`。如果需要一般的静态区间最值，应优先考虑 ST 表；如果需要任意修改，应考虑线段树。
 
