@@ -497,6 +497,20 @@ chapters:
       - title: 树状数组
         english-title: BIT Fenwick Tree
         path: data_structure/BIT
+        type: info
+        sections:
+          - title: 单点修改与区间查询
+            english-title: Point Update and Range Query
+            path: index.md
+          - title: 区间修改与单点查询
+            english-title: Range Update and Point Query
+            path: range-add-point-query
+          - title: 区间修改与区间查询
+            english-title: Range Update and Range Query
+            path: range-add-range-query
+          - title: 前缀最值（选学）
+            english-title: Prefix Extremum (Optional)
+            path: prefix-extremum
       - title: 线段树
         english-title: Segment Tree
         type: info

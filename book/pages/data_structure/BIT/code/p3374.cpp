@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 单点加、前缀和、区间和。
-// 下标必须从 1 开始。
 template <typename T>
 struct Fenwick {
     int n = 0;
@@ -35,3 +33,35 @@ struct Fenwick {
         return prefix_sum(right) - prefix_sum(left - 1);
     }
 };
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    Fenwick<long long> bit(n);
+    for (int i = 1; i <= n; ++i) {
+        long long value;
+        cin >> value;
+        bit.add(i, value);
+    }
+
+    while (m--) {
+        int operation;
+        cin >> operation;
+        if (operation == 1) {
+            int pos;
+            long long value;
+            cin >> pos >> value;
+            bit.add(pos, value);
+        } else {
+            int left, right;
+            cin >> left >> right;
+            cout << bit.range_sum(left, right) << '\n';
+        }
+    }
+
+    return 0;
+}

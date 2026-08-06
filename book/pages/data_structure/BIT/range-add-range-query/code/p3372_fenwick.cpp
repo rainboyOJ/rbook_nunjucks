@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 双树状数组：区间加、区间和。
-// bit_diff 维护 b[i]，bit_weighted 维护 i * b[i]。
 template <typename T>
 struct RangeFenwick {
     int n = 0;
@@ -48,3 +46,32 @@ struct RangeFenwick {
         return prefix_sum(right) - prefix_sum(left - 1);
     }
 };
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    RangeFenwick<long long> bit(n);
+    for (int i = 1; i <= n; ++i) {
+        long long value;
+        cin >> value;
+        bit.range_add(i, i, value);
+    }
+
+    while (m--) {
+        int operation, left, right;
+        cin >> operation >> left >> right;
+        if (operation == 1) {
+            long long value;
+            cin >> value;
+            bit.range_add(left, right, value);
+        } else {
+            cout << bit.range_sum(left, right) << '\n';
+        }
+    }
+
+    return 0;
+}

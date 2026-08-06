@@ -145,21 +145,31 @@ codes:
 
   - id: fenwick
     path: data-struture/BIT/bit.cpp
-    description: bit 算法模板
+    description: 树状数组单点加与前缀和模板
     language: cpp
     tags: [数据结构, 树状数组]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
 
-  - id: fenwick-tree-alt
+  - id: fenwick-range-add-point-query
     path: data-struture/BIT/bit_区间修改_单点查询.cpp
-    description: bit_区间修改_单点查询 算法模板
+    description: 差分树状数组区间加与单点查询模板
     language: cpp
     tags: [数据结构, 树状数组]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
 
   - id: fenwick-range-add-sum
     path: data-struture/BIT/bit_区间修改_区间查询.cpp
-    description: bit_区间修改_区间查询 算法模板
+    description: 双树状数组区间加与区间和模板
     language: cpp
     tags: [数据结构, 树状数组]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
+
+  - id: fenwick-prefix-max
+    path: data-struture/BIT/bit_prefix_max.cpp
+    description: 树状数组单点 chmax 与前缀最大值模板
+    language: cpp
+    tags: [数据结构, 树状数组, 区间最值]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
 
   - id: sqrt-decomp
     path: data-struture/Block/block.cpp
