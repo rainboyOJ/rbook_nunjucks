@@ -15,7 +15,7 @@ function buildTocNode(item: any, pagesByPath: Map<string, any>, basePath = '', t
 
   const type = item.type || 'page';
   const displayTitle = item['english-title']
-    ? `[${item['english-title']}] ${item.title}`
+    ? `${item['english-title']} | ${item.title}`
     : item.title;
   const nextTrail = type === 'info' ? trail : [...trail, displayTitle].filter(Boolean);
   const rawPath = item.path ? path.posix.join(basePath, item.path) : '';

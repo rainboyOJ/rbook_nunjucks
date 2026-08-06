@@ -4,7 +4,7 @@ mixin renderList(items, parentPath)
     ul
       each item in items
         - const currentPath = parentPath + item.path
-        - const displayTitle = item['english-title'] ? `[${item['english-title']}] ${item.title}` : item.title
+        - const displayTitle = item['english-title'] ? `${item['english-title']} | ${item.title}` : item.title
         li
           if item.type && item.type == "info"
             a.menu-info(href="javascript:void(0);")

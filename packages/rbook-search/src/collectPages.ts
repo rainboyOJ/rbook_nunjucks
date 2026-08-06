@@ -58,7 +58,7 @@ function collectFromChapters(
     if (!item || !item.path) continue;
 
     const displayTitle = item['english-title']
-      ? `[${item['english-title']}] ${item.title}`
+      ? `${item['english-title']} | ${item.title}`
       : item.title;
     const nextTrail = item.type === 'info' ? trail : [...trail, displayTitle].filter(Boolean);
 
