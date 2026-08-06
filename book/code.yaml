@@ -155,6 +155,12 @@ codes:
     language: cpp
     tags: [数据结构, 树状数组]
 
+  - id: fenwick-range-add-sum
+    path: data-struture/BIT/bit_区间修改_区间查询.cpp
+    description: bit_区间修改_区间查询 算法模板
+    language: cpp
+    tags: [数据结构, 树状数组]
+
   - id: sqrt-decomp
     path: data-struture/Block/block.cpp
     description: block 算法模板

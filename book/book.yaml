@@ -496,20 +496,20 @@ chapters:
         path: data_structure/block_data/decompose/index.md
       - title: 树状数组
         english-title: BIT Fenwick Tree
-        path: data-structure/BIT
+        path: data_structure/BIT
       - title: 线段树
         english-title: Segment Tree
         type: info
       - title: 栈
         english-title: Stack
-        path: data-structure/stack
+        path: data_structure/stack
         sections:
           - title: 表达式求值
             english-title: Expression Evaluation
             path: 表达式
       - title: 队列
         english-title: Queue
-        path: data-structure/queue
+        path: data_structure/queue
       - title: 普通线段树
         english-title: Segment Tree Basic
         path: data_structure/segment_tree/update_one/index.md
@@ -548,14 +548,14 @@ chapters:
         path: data_structure/monotonic_stack/roj3032.md
       - title: 二叉搜索树
         english-title: Binary Search Tree
-        path: data-structure/BST
+        path: data_structure/BST
       - title: 红黑树
         english-title: Red-Black Tree
-        path: data-structure/RBTree
+        path: data_structure/RBTree
       - title: AVL
-        path: data-structure/AVL
+        path: data_structure/AVL
       - title: FHQ-Treap
-        path: data-structure/fhq-treap
+        path: data_structure/fhq-treap
       - title: 普通 Treap
         english-title: Treap
         path: data_structure/treap/index.md
