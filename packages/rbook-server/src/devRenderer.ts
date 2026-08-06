@@ -95,7 +95,9 @@ function pagePathForUrl(pathname: string) {
   if (relative.toLowerCase().endsWith('.html')) {
     return { relativePath: relative.slice(0, -'.html'.length) + '.md', template: null };
   }
-  return null;
+  // 目录式 URL（无 .html 后缀）：把 pathname 当作目录，尝试 xxx/index.md。
+  // 若该文件不存在，pageResponse 会回落到静态文件（如 /code_template 应用页）。
+  return { relativePath: relative.replace(/\/+$/, '') + '/index.md', template: null };
 }
 
 interface DotCacheEntry {
@@ -267,9 +269,9 @@ export class DevRenderer {
     const book = this.refreshBook();
     const sourcePath = inside(bookDir, page.relativePath);
     if (!sourcePath || !fs.existsSync(sourcePath) || !fs.statSync(sourcePath).isFile()) {
-      // Let static app pages such as /code_template/index.html keep working.
+      // Let static app pages such as /code_template and /code_template/index.html keep working.
       const staticPath = inside(distDir, pathname.replace(/^\/+/, ''));
-      if (staticPath && fs.existsSync(staticPath) && fs.statSync(staticPath).isFile()) return null;
+      if (staticPath && fs.existsSync(staticPath)) return null;
       return this.notFound(pathname, path.join(bookDir, page.relativePath));
     }
 
