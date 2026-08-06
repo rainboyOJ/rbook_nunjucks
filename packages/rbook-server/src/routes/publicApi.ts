@@ -45,6 +45,7 @@ function compactPage(page: any) {
   return {
     id: page.id,
     title: page.title,
+    menuTitle: page.menuTitle || null,
     description: pageDescription(page),
     tags: asStringArray(page.frontMatter?.tags),
     prerequisites: asStringArray(page.frontMatter?.prerequisites),

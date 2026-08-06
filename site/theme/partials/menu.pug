@@ -4,6 +4,7 @@ mixin renderList(items, parentPath)
     ul
       each item in items
         - const currentPath = parentPath + item.path
+        - const displayTitle = item['english-title'] ? `[${item['english-title']}] ${item.title}` : item.title
         li
           if item.type && item.type == "info"
             a.menu-info(href="javascript:void(0);")
@@ -11,13 +12,13 @@ mixin renderList(items, parentPath)
                 if item.icon
                   span.svg-icon
                     != item.icon
-                | #{item.title}
+                | #{displayTitle}
           else if item.nolink
             i.fa.fa-folder-open-o
-            a.menu-no-link(href="javascript:void(0);")= item.title
+            a.menu-no-link(href="javascript:void(0);")= displayTitle
           else
             i.fa.fa-file-text
-            a(href=menuLink(currentPath))= item.title
+            a(href=menuLink(currentPath))= displayTitle
           if item.sections
             +renderList(item.sections, currentPath + '/')
 

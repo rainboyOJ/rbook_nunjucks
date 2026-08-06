@@ -27,6 +27,7 @@ export interface CollectedPage {
   visible: boolean;
   path: string;
   title: string;
+  menuTitle?: string;
   navTrail: string[];
 }
 

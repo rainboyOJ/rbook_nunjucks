@@ -76,6 +76,7 @@ function collectFromChapters(
       visible: true,
       path: filePath,
       title: displayTitle,
+      menuTitle: displayTitle,
       navTrail: nextTrail
     });
   }

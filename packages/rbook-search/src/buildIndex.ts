@@ -79,6 +79,7 @@ function buildIndexPayload(
       path: doc.path,
       url: doc.url,
       title: doc.title,
+      menuTitle: doc.menuTitle || null,
       visible: doc.visible,
       source: doc.source,
       navTrail: doc.navTrail || [],

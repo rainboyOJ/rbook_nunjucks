@@ -224,6 +224,11 @@
     background: none;
 }
 
+// 文件图标与菜单标题之间留出间距。
+.chapter-list li > i.fa + a {
+    margin-left: 0.45rem;
+}
+
 [data-darkmode="dark"] .chapter-list li.folder:before {
     color: #666;
 }
