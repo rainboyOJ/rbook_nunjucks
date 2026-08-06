@@ -50,20 +50,62 @@ $$
 
 ## 核心转化
 
+> 如何使用差分数组$d$来求原数组的区间和$a$
+
 设原数组前缀和为：
 
+
 $$
-P(x)=\sum_{i=1}^{x}a_i
+Pre\_sum(x)=\sum_{i=1}^{x}a_i
 $$
 
 把 $a_i=\sum_{j=1}^{i}d_j$ 代入：
 
 $$
 \begin{aligned}
-P(x)
-&=\sum_{i=1}^{x}\sum_{j=1}^{i}d_j \\
-&=\sum_{j=1}^{x}(x-j+1)d_j \\
-&=(x+1)\sum_{j=1}^{x}d_j-\sum_{j=1}^{x}j\cdot d_j
+Pre\_sum(x)
+&=\sum_{i=1}^{x}a_i
+ =\sum_{i=1}^{x}\sum_{j=1}^{i}d_j
+\end{aligned}
+$$
+
+这一步写成展开形式更容易看清。对 $i=1$ 到 $x$ 逐行写出 $a_i$：
+
+$$ \begin{aligned}
+i=1&:\; a_1 = d_1 \\
+i=2&:\; a_2 = d_1 + d_2 \\
+i=3&:\; a_3 = d_1 + d_2 + d_3 \\
+&\;\;\vdots \\
+i=x&:\; a_x = d_1 + d_2 + d_3 + \cdots + d_x
+\end{aligned} $$
+
+把上面所有行加起来，就是 $Pre\_sum(x)$。
+
+每一纵列分别是 $d_1,\;d_2,\;\ldots,\;d_x$。**按列统计**：
+
+- $d_1$ 从第 $1$ 行出现到第 $x$ 行，共 $x$ 次；
+- $d_2$ 从第 $2$ 行出现到第 $x$ 行，共 $x-1$ 次；
+- 一般地，$d_j$ 从第 $j$ 行出现到第 $x$ 行，共 $x - j + 1$ 次。
+
+于是换序之后：
+
+$$
+Pre\_sum(x) = \sum_{j=1}^{x} (x-j+1)\,d_j
+$$
+
+再把系数拆开：
+
+$$
+(x-j+1)\,d_j = (x+1)\,d_j - j\cdot d_j
+$$
+
+代入并分离求和号：
+
+$$
+\begin{aligned}
+Pre\_sum(x)
+&= \sum_{j=1}^{x}\bigl[(x+1)d_j - j\cdot d_j\bigr]  \\[4pt]
+&= (x+1)\sum_{j=1}^{x} d_j \;-\; \sum_{j=1}^{x} j\cdot d_j
 \end{aligned}
 $$
 
