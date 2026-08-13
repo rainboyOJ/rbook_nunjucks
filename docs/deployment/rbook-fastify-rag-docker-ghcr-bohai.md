@@ -209,14 +209,23 @@ python3 scripts/rbook.py --baseurl http://127.0.0.1:3000 find "二分 答案" --
 ```text
 .github/workflows/docker-build.yml       # 网站代码变化时构建并推送 Docker 镜像
 .github/workflows/deploy-vps.yml         # Docker 镜像构建成功后部署到 VPS
-.github/workflows/content-deploy.yml     # 只有 book 内容变化时，VPS git pull 内容并重启容器
+.github/workflows/content-deploy.yml     # book/ 或 docs/ 内容变化时，VPS 拉取内容并重启容器
 ```
 
 触发条件：
 
-- `docker-build.yml`：push 到 `main`，但忽略 `book/**`。
+- `docker-build.yml`：push 到 `main`，但忽略 `book/**`、`docs/**`。
 - `deploy-vps.yml`：`docker-build.yml` 成功后触发，也可手动触发。
-- `content-deploy.yml`：`book/**` 变化时触发，也可手动触发。
+- `content-deploy.yml`：`book/**` 或 `docs/**` 变化时触发，也可手动触发。
+
+内容部署永不跳过：只要 push 命中了 `book/**` 或 `docs/**` 就会部署内容，
+即使同一提交还改了非内容文件（如 `.gitignore`）。网站代码文件是否触发镜像重建
+由 `docker-build.yml` 自己的 `paths` 决定，两个 workflow 互不依赖。
+
+并发安全：`content-deploy.yml` 和 `deploy-vps.yml` 最终都调用
+`scripts/deploy-vps.sh`，脚本开头用 `flock`（锁文件在 `VPS_REPO_DIR` 的父目录）
+串行化所有部署。混合提交（内容 + 代码同时改动）会触发两条部署链，
+后到者排队等待，避免两个部署并发操作同一个容器。
 
 流程：
 
@@ -227,14 +236,14 @@ python3 scripts/rbook.py --baseurl http://127.0.0.1:3000 find "二分 答案" --
   -> push ghcr.io/<owner>/<repo>:<sha>
   -> push ghcr.io/<owner>/<repo>:latest
   -> SSH 到 bohai
-  -> VPS sparse checkout book/
+  -> VPS sparse checkout book/ docs/
   -> docker pull gh-proxy.org/docker/ghcr.io/<owner>/<repo>:<sha>
   -> docker rm -f rbook
   -> docker run -d --restart unless-stopped -v /opt/rbook/rbook_nunjucks/book:/content:ro ...
 
 文章内容变化：
   -> SSH 到 bohai
-  -> VPS sparse checkout book/
+  -> VPS sparse checkout book/ docs/
   -> 复用当前容器镜像
   -> 先运行 npm run build:runtime 验证内容可编译
   -> docker rm -f rbook

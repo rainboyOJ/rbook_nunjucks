@@ -14,6 +14,19 @@ VPS_REPO_DIR="${VPS_REPO_DIR:?missing VPS_REPO_DIR}"
 VPS_REPO_BRANCH="${VPS_REPO_BRANCH:?missing VPS_REPO_BRANCH}"
 VPS_REPO_URL="${VPS_REPO_URL:?missing VPS_REPO_URL}"
 
+# 串行化所有部署（content 与 image 模式共用同一把锁），
+# 避免两个 workflow 并发操作同一个容器导致互相删除刚启动的实例。
+# 锁文件放在仓库目录的父目录：init_content_repo 会 rm -rf 仓库目录，锁不能放里面。
+LOCK_DIR="$(dirname "$VPS_REPO_DIR")"
+mkdir -p "$LOCK_DIR"
+LOCK_FILE="${LOCK_DIR}/.deploy.lock"
+exec 9>"$LOCK_FILE"
+if ! flock -x -w 1800 9; then
+  echo "Timed out waiting for deploy lock $LOCK_FILE" >&2
+  exit 1
+fi
+echo "Acquired deploy lock $LOCK_FILE"
+
 init_content_repo() {
   if [ ! -d "$VPS_REPO_DIR/.git" ]; then
     echo "Initializing sparse content repo in $VPS_REPO_DIR"
