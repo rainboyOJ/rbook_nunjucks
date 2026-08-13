@@ -1,12 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T>
 struct SegmentTreeRangeAssign {
+    struct Node {
+        long long value = 0;
+        long long lazy = 0;
+        bool has_lazy = false;
+
+        Node operator+(const Node &other) const {
+            return Node{value + other.value, 0, false};
+        }
+    };
+
+    static const int lson(int p) { return p << 1; }
+    static const int rson(int p) { return p << 1 | 1; }
+
     int n = 0;
-    vector<T> tree;
-    vector<T> lazy;
-    vector<bool> has_lazy;
+    vector<Node> tree;
 
     SegmentTreeRangeAssign(int n = 0) {
         init(n);
@@ -14,33 +24,31 @@ struct SegmentTreeRangeAssign {
 
     void init(int size) {
         n = size;
-        tree.assign(n * 4 + 5, 0);
-        lazy.assign(n * 4 + 5, 0);
-        has_lazy.assign(n * 4 + 5, false);
+        tree.assign(n * 4 + 5, Node{});
     }
 
     void pull(int p) {
         tree[p] = tree[p << 1] + tree[p << 1 | 1];
     }
 
-    void apply(int p, int l, int r, T value) {
-        tree[p] = value * (r - l + 1);
-        lazy[p] = value;
-        has_lazy[p] = true;
+    void apply(int p, int l, int r, long long value) {
+        tree[p].value = value * (r - l + 1);
+        tree[p].lazy = value;
+        tree[p].has_lazy = true;
     }
 
     void push(int p, int l, int r) {
-        if (!has_lazy[p] || l == r) return;
+        if (!tree[p].has_lazy || l == r) return;
 
         int mid = (l + r) >> 1;
-        apply(p << 1, l, mid, lazy[p]);
-        apply(p << 1 | 1, mid + 1, r, lazy[p]);
-        has_lazy[p] = false;
+        apply(p << 1, l, mid, tree[p].lazy);
+        apply(p << 1 | 1, mid + 1, r, tree[p].lazy);
+        tree[p].has_lazy = false;
     }
 
-    void build(const vector<T> &a, int l, int r, int p = 1) {
+    void build(const vector<long long> &a, int l, int r, int p = 1) {
         if (l == r) {
-            tree[p] = a[l];
+            tree[p].value = a[l];
             return;
         }
         int mid = (l + r) >> 1;
@@ -49,7 +57,7 @@ struct SegmentTreeRangeAssign {
         pull(p);
     }
 
-    void assign_range(int ql, int qr, T value, int l, int r, int p = 1) {
+    void assign_range(int ql, int qr, long long value, int l, int r, int p = 1) {
         if (ql <= l && r <= qr) {
             apply(p, l, r, value);
             return;
@@ -62,12 +70,12 @@ struct SegmentTreeRangeAssign {
         pull(p);
     }
 
-    T query(int ql, int qr, int l, int r, int p = 1) {
-        if (ql <= l && r <= qr) return tree[p];
+    long long query(int ql, int qr, int l, int r, int p = 1) {
+        if (ql <= l && r <= qr) return tree[p].value;
 
         push(p, l, r);
         int mid = (l + r) >> 1;
-        T answer = 0;
+        long long answer = 0;
         if (ql <= mid) answer += query(ql, qr, l, mid, p << 1);
         if (qr > mid) answer += query(ql, qr, mid + 1, r, p << 1 | 1);
         return answer;
@@ -86,7 +94,7 @@ int main() {
         cin >> a[i];
     }
 
-    SegmentTreeRangeAssign<long long> seg(n);
+    SegmentTreeRangeAssign seg(n);
     seg.build(a, 1, n);
 
     while (m--) {
