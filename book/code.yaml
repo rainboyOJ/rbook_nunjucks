@@ -91,7 +91,7 @@ codes:
 
   - id: enumerate-subset-binary
     path: base/enumerate/subset_binary.cpp
-    description: subset_binary | 二进制枚举子集
+    description: subset binary | 二进制枚举子集
     language: cpp
     tags: [基础算法, 枚举, 二分查找]
 
@@ -109,37 +109,37 @@ codes:
 
   - id: quicksort-3way-part
     path: base/quick_sort_3way_part.cpp
-    description: quick_sort_3way_part | 三路快排
+    description: quick sort 3-way | 三路快排
     language: cpp
     tags: [基础算法, 排序]
 
   - id: quicksort-tranditional
     path: base/quick_sort_tranditional.cpp
-    description: quick_sort_tranditional | 经典快排
+    description: quick sort traditional | 经典快排
     language: cpp
     tags: [基础算法, 排序]
 
   - id: st
     path: base/sparse_table.cpp
-    description: sparse_table | 稀疏表（ST 表）
+    description: sparse table | 稀疏表（ST 表）
     language: cpp
     tags: [基础算法]
 
   - id: swap-adjacent-ranges
     path: base/swap_adjacent_ranges.cpp
-    description: swap_adjacent_ranges | 相邻区间交换
+    description: swap adjacent ranges | 相邻区间交换
     language: cpp
     tags: [基础算法]
 
   - id: ternary-search
     path: base/ternary_search_double.cpp
-    description: ternary_search_double | 三分查找（浮点）
+    description: ternary search double | 三分查找（浮点）
     language: cpp
     tags: [基础算法]
 
   - id: two-machine-johnson
     path: base/two_machine_johnson.cpp
-    description: two_machine_johnson | 双机调度（Johnson 法则）
+    description: two machine johnson | 双机调度（Johnson 法则）
     language: cpp
     tags: [基础算法]
 
@@ -179,7 +179,7 @@ codes:
 
   - id: sqrt-range-add-sum
     path: data-struture/Block/range_add_range_sum_mod.cpp
-    description: range_add_range_sum_mod | 分块区间加区间和
+    description: range add range sum mod | 分块区间加区间和
     language: cpp
     tags: [数据结构]
 
@@ -203,19 +203,19 @@ codes:
 
   - id: bst-command2
     path: data-struture/bst_command2.cpp
-    description: bst_command2 | 二叉搜索树（内存池版）
+    description: bst command 2 | 二叉搜索树（内存池版）
     language: cpp
     tags: [数据结构]
 
   - id: bst-common
     path: data-struture/bst_common.cpp
-    description: bst_common | 二叉搜索树（通用版）
+    description: bst common | 二叉搜索树（通用版）
     language: cpp
     tags: [数据结构]
 
   - id: dlx-exact-cover
     path: data-struture/dlx/exact_cover.cpp
-    description: exact_cover | DLX 精确覆盖
+    description: exact cover | DLX 精确覆盖
     language: cpp
     tags: [数据结构]
 
@@ -227,7 +227,7 @@ codes:
 
   - id: dsu-bipartite
     path: data-struture/dsu_bipartite.cpp
-    description: dsu_bipartite | 并查集判二分图
+    description: dsu bipartite | 并查集判二分图
     language: cpp
     tags: [数据结构]
 
@@ -239,7 +239,7 @@ codes:
 
   - id: fhq-treap-demo
     path: data-struture/fhq-treap/fhq_demo_gemi.cpp
-    description: fhq_demo_gemi | FHQ-Treap 演示
+    description: fhq demo gemi | FHQ-Treap 演示
     language: cpp
     tags: [数据结构]
 
@@ -251,25 +251,25 @@ codes:
 
   - id: mono-queue-max-sub
     path: data-struture/monotonic_queue_max_subarray.cpp
-    description: monotonic_queue_max_subarray | 单调队列求最大子段和
+    description: monotonic queue max subarray | 单调队列求最大子段和
     language: cpp
     tags: [数据结构]
 
   - id: mono-queue-sliding-window
     path: data-struture/monotonic_queue_sliding_window.cpp
-    description: monotonic_queue_sliding_window | 单调队列滑动窗口
+    description: monotonic queue sliding window | 单调队列滑动窗口
     language: cpp
     tags: [数据结构]
 
   - id: mono-stack-max-rect
     path: data-struture/monotonic_stack_largest_rectangle.cpp
-    description: monotonic_stack_largest_rectangle | 单调栈求最大矩形面积
+    description: monotonic stack largest rectangle | 单调栈求最大矩形面积
     language: cpp
     tags: [数据结构]
 
   - id: mono-stack-next-greater
     path: data-struture/monotonic_stack_next_greater.cpp
-    description: monotonic_stack_next_greater | 单调栈下一个更大元素
+    description: monotonic stack next greater | 单调栈下一个更大元素
     language: cpp
     tags: [数据结构]
 
@@ -287,43 +287,43 @@ codes:
 
   - id: segtree-persistent-array
     path: data-struture/segment_tree/persistent_array.cpp
-    description: persistent_array | 可持久化数组
+    description: sgt persistent array | 可持久化数组
     language: cpp
     tags: [数据结构, 线段树]
 
   - id: segtree-point-add-range-sum
     path: data-struture/segment_tree/point_add_range_sum.cpp
-    description: point_add_range_sum | 线段树单点加区间和
+    description: sgt point add range sum | 线段树单点加区间和
     language: cpp
     tags: [数据结构, 线段树]
 
   - id: segtree-range-assign
     path: data-struture/segment_tree/range_assign_range_sum.cpp
-    description: range_assign_range_sum | 线段树区间赋值区间和
+    description: sgt range assign range sum | 线段树区间赋值区间和
     language: cpp
     tags: [数据结构, 线段树]
 
   - id: segtree-scanline-discrete
     path: data-struture/segment_tree/scanline_area_discrete.cpp
-    description: scanline_area_discrete | 扫描线面积（离散化）
+    description: sgt scanline area discrete | 扫描线面积（离散化）
     language: cpp
     tags: [数据结构, 线段树]
 
   - id: segtree-scanline
     path: data-struture/segment_tree/scanline_area_plain.cpp
-    description: scanline_area_plain | 扫描线面积（朴素版）
+    description: sgt scanline area plain | 扫描线面积（朴素版）
     language: cpp
     tags: [数据结构, 线段树]
 
   - id: segtree-first-less
     path: data-struture/segment_tree/value_first_less.cpp
-    description: value_first_less | 线段树查询区间第一个小于 x 的位置
+    description: sgt value first less | 线段树查询区间第一个小于 x 的位置
     language: cpp
     tags: [数据结构, 线段树]
 
   - id: segtree-weight
     path: data-struture/segment_tree/weight_segment_tree.cpp
-    description: weight_segment_tree | 权值线段树
+    description: sgt weight segment tree | 权值线段树
     language: cpp
     tags: [数据结构, 线段树]
 
@@ -353,13 +353,13 @@ codes:
 
   - id: bitmask-dp-tsp
     path: dynamic_programming/bitmask_dp_tsp.cpp
-    description: bitmask_dp_tsp | 状态压缩 DP（TSP）
+    description: bitmask dp tsp | 状态压缩 DP（TSP）
     language: cpp
     tags: [动态规划, 树状数组]
 
   - id: knapsack-complete-1d
     path: dynamic_programming/knapsack/complete_1d.cpp
-    description: complete_1d | 完全背包（一维优化）
+    description: complete 1d | 完全背包（一维优化）
     language: cpp
     tags: [动态规划]
 
@@ -371,31 +371,31 @@ codes:
 
   - id: knapsack-multiple-binary
     path: dynamic_programming/knapsack/multiple_binary.cpp
-    description: multiple_binary | 多重背包（二进制拆分）
+    description: multiple binary | 多重背包（二进制拆分）
     language: cpp
     tags: [动态规划, 二分查找]
 
   - id: knapsack-01-1d
     path: dynamic_programming/knapsack/zero_one_1d.cpp
-    description: zero_one_1d | 01 背包（一维优化）
+    description: zero one 1d | 01 背包（一维优化）
     language: cpp
     tags: [动态规划]
 
   - id: knapsack-01-1d-1
     path: dynamic_programming/knapsack/zero_one_1d.py
-    description: zero_one_1d | 01 背包（一维优化，Python）
+    description: zero one 1d | 01 背包（一维优化，Python）
     language: py
     tags: [动态规划]
 
   - id: knapsack-01-exact-fill
     path: dynamic_programming/knapsack/zero_one_exact_fill.cpp
-    description: zero_one_exact_fill | 01 背包（恰好装满）
+    description: zero one exact fill | 01 背包（恰好装满）
     language: cpp
     tags: [动态规划]
 
   - id: knuth-stone-merge
     path: dynamic_programming/knuth_stone_merge.cpp
-    description: knuth_stone_merge | 石子合并（Knuth 优化）
+    description: knuth stone merge | 石子合并（Knuth 优化）
     language: cpp
     tags: [动态规划]
 
@@ -407,61 +407,61 @@ codes:
 
   - id: lcs-restore
     path: dynamic_programming/lcs_restore.cpp
-    description: lcs_restore | 最长公共子序列（路径还原）
+    description: lcs restore | 最长公共子序列（路径还原）
     language: cpp
     tags: [动态规划]
 
   - id: lis-binary
     path: dynamic_programming/lis_binary.cpp
-    description: lis_binary | 最长上升子序列（二分优化）
+    description: lis binary | 最长上升子序列（二分优化）
     language: cpp
     tags: [动态规划, 二分查找]
 
   - id: sos-subset-sum
     path: dynamic_programming/sos/subset_sum.cpp
-    description: subset_sum | SOS DP 子集和
+    description: subset sum | SOS DP 子集和
     language: cpp
     tags: [动态规划]
 
   - id: sos-superset-sum
     path: dynamic_programming/sos/superset_sum.cpp
-    description: superset_sum | SOS DP 超集和
+    description: superset sum | SOS DP 超集和
     language: cpp
     tags: [动态规划]
 
   - id: bellman-ford
     path: graph/bellman_ford.cpp
-    description: bellman_ford | Bellman-Ford 单源最短路
+    description: bellman ford | Bellman-Ford 单源最短路
     language: cpp
     tags: [图论]
 
   - id: bw-color
     path: graph/bw_color.cpp
-    description: bw_color | 二分图染色判定
+    description: bw color | 二分图染色判定
     language: cpp
     tags: [图论]
 
   - id: connected-components
     path: graph/connected_components.cpp
-    description: connected_components | 连通分量
+    description: connected components | 连通分量
     language: cpp
     tags: [图论]
 
   - id: cut-edge
     path: graph/cut_edge.cpp
-    description: cut_edge | 割边（桥）
+    description: cut edge | 割边（桥）
     language: cpp
     tags: [图论]
 
   - id: cut-node
     path: graph/cut_node.cpp
-    description: cut_node | 割点
+    description: cut node | 割点
     language: cpp
     tags: [图论]
 
   - id: dfs-traversal
     path: graph/dfs_traversal.cpp
-    description: dfs_traversal | DFS 遍历
+    description: dfs traversal | DFS 遍历
     language: cpp
     tags: [图论]
 
@@ -485,13 +485,13 @@ codes:
 
   - id: euler-path-directed
     path: graph/euler_path_directed.cpp
-    description: euler_path_directed | 有向图欧拉路径
+    description: euler path directed | 有向图欧拉路径
     language: cpp
     tags: [图论, 数学与数论]
 
   - id: euler-path-undirected
     path: graph/euler_path_undirected.cpp
-    description: euler_path_undirected | 无向图欧拉路径
+    description: euler path undirected | 无向图欧拉路径
     language: cpp
     tags: [图论, 数学与数论]
 
@@ -509,7 +509,7 @@ codes:
 
   - id: lca-offline
     path: graph/lca_linklist.cpp
-    description: lca_linklist | 倍增 LCA（链式前向星版）
+    description: lca linklist | 倍增 LCA（链式前向星版）
     language: cpp
     tags: [图论]
 
@@ -521,13 +521,13 @@ codes:
 
   - id: linklist-mini-raw
     path: graph/linklist_mini_raw.cpp
-    description: linklist_mini_raw | 链式前向星（精简版）
+    description: linklist mini raw | 链式前向星（精简版）
     language: cpp
     tags: [图论]
 
   - id: linklist-mini-struct
     path: graph/linklist_mini_struct.cpp
-    description: linklist_mini_struct | 链式前向星（struct 版）
+    description: linklist mini struct | 链式前向星（struct 版）
     language: cpp
     tags: [图论]
 
@@ -539,13 +539,13 @@ codes:
 
   - id: mcmf-spfa
     path: graph/min_cost_max_flow_spfa.cpp
-    description: min_cost_max_flow_spfa | 最小费用最大流（SPFA）
+    description: min cost max flow spfa | 最小费用最大流（SPFA）
     language: cpp
     tags: [图论, 最短路, 网络流]
 
   - id: pseudotree-cycle
     path: graph/pseudotree_cycle_nodes.cpp
-    description: pseudotree_cycle_nodes | 基环树找环
+    description: pseudotree cycle nodes | 基环树找环
     language: cpp
     tags: [图论]
 
@@ -557,7 +557,7 @@ codes:
 
   - id: spfa-negative-cycle
     path: graph/spfa_negative_cycle.cpp
-    description: spfa_negative_cycle | SPFA 判负环
+    description: spfa negative cycle | SPFA 判负环
     language: cpp
     tags: [图论, 最短路]
 
@@ -575,13 +575,13 @@ codes:
 
   - id: second-mst
     path: graph/严格次小生成树_sec_mst.cpp
-    description: sec_mst | 严格次小生成树
+    description: sec mst | 严格次小生成树
     language: cpp
     tags: [图论, 树, 最小生成树]
 
   - id: mst-kruskal
     path: graph/最小生成树mst_kruskal.cpp
-    description: mst_kruskal | 最小生成树（Kruskal）
+    description: mst kruskal | 最小生成树（Kruskal）
     language: cpp
     tags: [图论, 树, 最小生成树]
 
@@ -599,19 +599,19 @@ codes:
 
   - id: bit-operations
     path: math/bit_operations.cpp
-    description: bit_operations | 位运算
+    description: bit operations | 位运算
     language: cpp
     tags: [数学, 树状数组, 数学与数论]
 
   - id: stirling2-count
     path: math/combinatorics/stirling_second_count.cpp
-    description: stirling_second_count | 第二类斯特林数（计数）
+    description: stirling second count | 第二类斯特林数（计数）
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: stirling2-enumerate
     path: math/combinatorics/stirling_second_enumerate.cpp
-    description: stirling_second_enumerate | 第二类斯特林数（枚举）
+    description: stirling second enumerate | 第二类斯特林数（枚举）
     language: cpp
     tags: [数学, 数学与数论]
 
@@ -623,37 +623,37 @@ codes:
 
   - id: gaussian-elimination
     path: math/gaussian_elimination.cpp
-    description: gaussian_elimination | 高斯消元
+    description: gaussian elimination | 高斯消元
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: inv-exgcd
     path: math/inv_exgcd.cpp
-    description: inv_exgcd | 扩展欧几里得求逆元
+    description: inv exgcd | 扩展欧几里得求逆元
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: line-inv
     path: math/line_inv.cpp
-    description: line_inv | 线性求逆元
+    description: line inv | 线性求逆元
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: myceil
     path: math/myceil.cpp
-    description: ceil_div | 向上取整除法
+    description: ceil div | 向上取整除法
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: euler-phi
     path: math/numberTheory/euler_phi.cpp
-    description: euler_phi | 欧拉函数
+    description: euler phi | 欧拉函数
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: fermat-little-theorem-demo
     path: math/numberTheory/fermat_little_theorem_demo.py
-    description: fermat_little_theorem_demo | 费马小定理演示
+    description: fermat little theorem demo | 费马小定理演示
     language: py
     tags: [数学, 数学与数论]
 
@@ -665,37 +665,37 @@ codes:
 
   - id: is-prime-trial-division
     path: math/numberTheory/is_prime_trial_division.cpp
-    description: is_prime_trial_division | 素数判定（试除法）
+    description: is prime trial division | 素数判定（试除法）
     language: cpp
     tags: [数学, 最小生成树, 数学与数论]
 
   - id: lcm-gcd-identity-demo
     path: math/numberTheory/lcm_gcd_identity_demo.py
-    description: lcm_gcd_identity_demo | lcm-gcd 恒等式演示
+    description: lcm gcd identity demo | lcm-gcd 恒等式演示
     language: py
     tags: [数学, 数学与数论]
 
   - id: linear-sieve
     path: math/numberTheory/linear_sieve.cpp
-    description: linear_sieve | 线性筛
+    description: linear sieve | 线性筛
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: normalize-mod
     path: math/numberTheory/normalize_mod.cpp
-    description: normalize_mod | 取模归一化
+    description: normalize mod | 取模归一化
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: upd-max
     path: math/upd_max.cpp
-    description: upd_max | chmax/chmin 辅助函数
+    description: upd max | chmax/chmin 辅助函数
     language: cpp
     tags: [数学, 数学与数论]
 
   - id: quick-pow
     path: math/快速幂_quick_pow.cpp
-    description: quick_pow | 快速幂
+    description: quick pow | 快速幂
     language: cpp
     tags: [数学, 数学与数论]
 
@@ -707,13 +707,13 @@ codes:
 
   - id: get-prime-factors
     path: math/质因数分解_get_prime_factors.cpp
-    description: get_prime_factors | 质因数分解
+    description: get prime factors | 质因数分解
     language: cpp
     tags: [数学, 最小生成树, 数学与数论]
 
   - id: brute-force-match
     path: string/brute_force_match.cpp
-    description: brute_force_match | 暴力字符串匹配
+    description: brute force match | 暴力字符串匹配
     language: cpp
     tags: [字符串]
 
@@ -767,7 +767,7 @@ codes:
 
   - id: template-dinic-template
     path: template/dinic_template.cpp
-    description: dinic_template | Dinic 最大流模板
+    description: dinic template | Dinic 最大流模板
     language: cpp
     tags: [竞赛模板, 网络流]
 
@@ -779,49 +779,49 @@ codes:
 
   - id: template-random-dag
     path: template/random_dag.cpp
-    description: random_dag | 随机 DAG 生成器
+    description: random dag | 随机 DAG 生成器
     language: cpp
     tags: [竞赛模板]
 
   - id: template-random-data
     path: template/random_data.cpp
-    description: random_data | 随机数据生成器
+    description: random data | 随机数据生成器
     language: cpp
     tags: [竞赛模板]
 
   - id: template-random-digraph
     path: template/random_digraph.cpp
-    description: random_digraph | 随机有向图生成器
+    description: random digraph | 随机有向图生成器
     language: cpp
     tags: [竞赛模板]
 
   - id: template-random-graph
     path: template/random_graph.cpp
-    description: random_graph | 随机无向图生成器
+    description: random graph | 随机无向图生成器
     language: cpp
     tags: [竞赛模板]
 
   - id: template-random-loop-tree
     path: template/random_one_loop_tree.cpp
-    description: random_one_loop_tree | 随机基环树生成器
+    description: random one loop tree | 随机基环树生成器
     language: cpp
     tags: [竞赛模板]
 
   - id: template-random-tree
     path: template/random_tree.cpp
-    description: random_tree | 随机树生成器
+    description: random tree | 随机树生成器
     language: cpp
     tags: [竞赛模板]
 
   - id: template-simple-template
     path: template/simple_template.cpp
-    description: simple_template | 简洁竞赛模板
+    description: simple template | 简洁竞赛模板
     language: cpp
     tags: [竞赛模板]
 
   - id: template-with-graph
     path: template/simple_template_with_linklist.cpp
-    description: simple_template_with_linklist | 带链式前向星的模板
+    description: simple template with linklist | 带链式前向星的模板
     language: cpp
     tags: [竞赛模板]
 
@@ -839,7 +839,7 @@ codes:
 
   - id: diameter-weighted
     path: tree/diameter_with_dijkstra.cpp
-    description: diameter_with_dijkstra | 带权树直径（Dijkstra 法）
+    description: diameter with dijkstra | 带权树直径（Dijkstra 法）
     language: cpp
     tags: [树形数据结构, 树, 最短路]
 
@@ -851,13 +851,13 @@ codes:
 
   - id: diameter-improved
     path: tree/diamter_of_tree_improved.cpp
-    description: diameter_improved | 树的直径（改进版）
+    description: diameter improved | 树的直径（改进版）
     language: cpp
     tags: [树形数据结构, 树]
 
   - id: dsu-on-tree-color-count
     path: tree/dsu_on_tree_color_count.cpp
-    description: dsu_on_tree_color_count | 树上启发式合并（颜色计数）
+    description: dsu on tree color count | 树上启发式合并（颜色计数）
     language: cpp
     tags: [树形数据结构, 树]
 
@@ -869,19 +869,19 @@ codes:
 
   - id: lca-binary-lifting
     path: tree/jump_lca.cpp
-    description: jump_lca | 倍增 LCA
+    description: jump lca | 倍增 LCA
     language: cpp
     tags: [树形数据结构, 树]
 
   - id: tree-diameter
     path: tree/tree_diameter.cpp
-    description: tree_diameter | 树的直径
+    description: tree diameter | 树的直径
     language: cpp
     tags: [树形数据结构, 树]
 
   - id: dynamic-static
     path: utils/dynamic_static.cpp
-    description: dynamic_static | 动态化静态（内存池）
+    description: dynamic static | 动态化静态（内存池）
     language: cpp
     tags: [实用工具]
 
@@ -911,7 +911,7 @@ codes:
 
   - id: quick-io
     path: utils/quick_io.cpp
-    description: quick_io | 快读快写
+    description: quick io | 快读快写
     language: cpp
     tags: [实用工具]
 
