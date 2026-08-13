@@ -1,22 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 区间赋值 + 区间求和线段树（懒标记）
 struct SegmentTreeRangeAssign {
+    // 线段树节点：value 为区间和，lazy 为待下传的赋值标记
     struct Node {
-        long long value = 0;
-        long long lazy = 0;
-        bool has_lazy = false;
+        long long value = 0;    // 当前区间的真实区间和
+        long long lazy = 0;     // 待下传的赋值值
+        bool has_lazy = false;  // 是否还有未下传的赋值标记
 
+        // 合并两个孩子：区间和相加，合并结果不携带懒标记
         Node operator+(const Node &other) const {
             return Node{value + other.value, 0, false};
         }
     };
 
-    static const int lson(int p) { return p << 1; }
-    static const int rson(int p) { return p << 1 | 1; }
+    // 左儿子 / 右儿子的节点编号
+    static int lson(int p) { return p << 1; }
+    static int rson(int p) { return p << 1 | 1; }
 
-    int n = 0;
-    vector<Node> tree;
+    int n = 0;              // 区间大小
+    vector<Node> tree;      // 线段树数组
 
     SegmentTreeRangeAssign(int n = 0) {
         init(n);
@@ -27,57 +31,63 @@ struct SegmentTreeRangeAssign {
         tree.assign(n * 4 + 5, Node{});
     }
 
-    void pull(int p) {
-        tree[p] = tree[p << 1] + tree[p << 1 | 1];
+    // 上推：用两个孩子合并出当前节点
+    void push_up(int p) {
+        tree[p] = tree[lson(p)] + tree[rson(p)];
     }
 
+    // 把节点 p 的整个区间 [l, r] 赋值为 value
     void apply(int p, int l, int r, long long value) {
         tree[p].value = value * (r - l + 1);
         tree[p].lazy = value;
         tree[p].has_lazy = true;
     }
 
-    void push(int p, int l, int r) {
+    // 下推：把节点 p 的懒标记传给两个孩子
+    void push_down(int p, int l, int r) {
         if (!tree[p].has_lazy || l == r) return;
 
         int mid = (l + r) >> 1;
-        apply(p << 1, l, mid, tree[p].lazy);
-        apply(p << 1 | 1, mid + 1, r, tree[p].lazy);
+        apply(lson(p), l, mid, tree[p].lazy);
+        apply(rson(p), mid + 1, r, tree[p].lazy);
         tree[p].has_lazy = false;
     }
 
+    // 用数组 a 建树
     void build(const vector<long long> &a, int l, int r, int p = 1) {
         if (l == r) {
             tree[p].value = a[l];
             return;
         }
         int mid = (l + r) >> 1;
-        build(a, l, mid, p << 1);
-        build(a, mid + 1, r, p << 1 | 1);
-        pull(p);
+        build(a, l, mid, lson(p));
+        build(a, mid + 1, r, rson(p));
+        push_up(p);
     }
 
+    // 区间赋值：把 [ql, qr] 全部赋值为 value
     void assign_range(int ql, int qr, long long value, int l, int r, int p = 1) {
         if (ql <= l && r <= qr) {
             apply(p, l, r, value);
             return;
         }
 
-        push(p, l, r);
+        push_down(p, l, r);
         int mid = (l + r) >> 1;
-        if (ql <= mid) assign_range(ql, qr, value, l, mid, p << 1);
-        if (qr > mid) assign_range(ql, qr, value, mid + 1, r, p << 1 | 1);
-        pull(p);
+        if (ql <= mid) assign_range(ql, qr, value, l, mid, lson(p));
+        if (qr > mid) assign_range(ql, qr, value, mid + 1, r, rson(p));
+        push_up(p);
     }
 
+    // 区间查询：[ql, qr] 的区间和
     long long query(int ql, int qr, int l, int r, int p = 1) {
         if (ql <= l && r <= qr) return tree[p].value;
 
-        push(p, l, r);
+        push_down(p, l, r);
         int mid = (l + r) >> 1;
         long long answer = 0;
-        if (ql <= mid) answer += query(ql, qr, l, mid, p << 1);
-        if (qr > mid) answer += query(ql, qr, mid + 1, r, p << 1 | 1);
+        if (ql <= mid) answer += query(ql, qr, l, mid, lson(p));
+        if (qr > mid) answer += query(ql, qr, mid + 1, r, rson(p));
         return answer;
     }
 };
