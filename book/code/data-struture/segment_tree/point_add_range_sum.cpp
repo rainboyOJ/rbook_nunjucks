@@ -1,10 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <typename T>
+// 单点加 + 区间求和线段树
 struct SegmentTreePointAdd {
-    int n = 0;
-    vector<T> tree;
+    // 线段树节点：value 为区间和
+    using T = long long;
+    struct Node {
+        T value = 0;    // 当前区间的区间和
+
+        // 合并两个孩子：区间和相加
+        Node operator+(const Node &other) const {
+            return Node{value + other.value};
+        }
+    };
+
+    // 左儿子 / 右儿子的节点编号
+    static int lson(int p) { return p << 1; }
+    static int rson(int p) { return p << 1 | 1; }
+
+    // 区间 [l, r] 的中点
+    static int mid(int l, int r) { return (l + r) >> 1; }
+
+    int n = 0;              // 区间大小
+    vector<Node> tree;      // 线段树数组
 
     SegmentTreePointAdd(int n = 0) {
         init(n);
@@ -12,42 +30,46 @@ struct SegmentTreePointAdd {
 
     void init(int size) {
         n = size;
-        tree.assign(n * 4 + 5, 0);
+        tree.assign(n * 4 + 5, Node{});
     }
 
-    void pull(int p) {
-        tree[p] = tree[p << 1] + tree[p << 1 | 1];
+    // 上推：用两个孩子合并出当前节点
+    void push_up(int p) {
+        tree[p] = tree[lson(p)] + tree[rson(p)];
     }
 
+    // 用数组 a 建树
     void build(const vector<T> &a, int l, int r, int p = 1) {
         if (l == r) {
-            tree[p] = a[l];
+            tree[p].value = a[l];
             return;
         }
-        int mid = (l + r) >> 1;
-        build(a, l, mid, p << 1);
-        build(a, mid + 1, r, p << 1 | 1);
-        pull(p);
+        int m = mid(l, r);
+        build(a, l, m, lson(p));
+        build(a, m + 1, r, rson(p));
+        push_up(p);
     }
 
+    // 单点加：给位置 pos 增加 value
     void add(int pos, T value, int l, int r, int p = 1) {
         if (l == r) {
-            tree[p] += value;
+            tree[p].value += value;
             return;
         }
-        int mid = (l + r) >> 1;
-        if (pos <= mid) add(pos, value, l, mid, p << 1);
-        else add(pos, value, mid + 1, r, p << 1 | 1);
-        pull(p);
+        int m = mid(l, r);
+        if (pos <= m) add(pos, value, l, m, lson(p));
+        else add(pos, value, m + 1, r, rson(p));
+        push_up(p);
     }
 
-    T query(int ql, int qr, int l, int r, int p = 1) const {
-        if (ql <= l && r <= qr) return tree[p];
+    // 区间查询：[ql, qr] 的区间和
+    T query(int ql, int qr, int l, int r, int p = 1) {
+        if (ql <= l && r <= qr) return tree[p].value;
 
-        int mid = (l + r) >> 1;
+        int m = mid(l, r);
         T answer = 0;
-        if (ql <= mid) answer += query(ql, qr, l, mid, p << 1);
-        if (qr > mid) answer += query(ql, qr, mid + 1, r, p << 1 | 1);
+        if (ql <= m) answer += query(ql, qr, l, m, lson(p));
+        if (qr > m) answer += query(ql, qr, m + 1, r, rson(p));
         return answer;
     }
 };
@@ -64,7 +86,7 @@ int main() {
         cin >> a[i];
     }
 
-    SegmentTreePointAdd<long long> seg(n);
+    SegmentTreePointAdd seg(n);
     seg.build(a, 1, n);
 
     while (m--) {

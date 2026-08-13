@@ -1,57 +1,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 可持久化数组：每次修改产生一个新版本，旧版本仍然可查询
 struct PersistentArray {
+    // 线段树节点：left/right 为左右孩子下标，value 为单点值
+    using T = long long;
     struct Node {
-        int left = 0;
-        int right = 0;
-        int value = 0;
+        int left = 0;   // 左孩子下标，0 表示空
+        int right = 0;  // 右孩子下标，0 表示空
+        T value = 0;    // 叶子节点存数组值
     };
 
-    vector<Node> tree;
+    vector<Node> tree;  // 动态节点池，节点下标即指针
 
     explicit PersistentArray(int max_nodes) {
         tree.reserve(max_nodes);
-        tree.push_back(Node{});
+        tree.push_back(Node{});  // 0 号节点为空节点
     }
 
+    // 区间 [l, r] 的中点
+    static int mid(int l, int r) { return (l + r) >> 1; }
+
+    // 复制节点 p 并返回新节点下标
     int clone(int p) {
         tree.push_back(tree[p]);
         return (int)tree.size() - 1;
     }
 
-    int build(int l, int r, const vector<int>& a) {
+    // 用数组 a 建树，返回根节点下标
+    int build(int l, int r, const vector<T> &a) {
         int p = clone(0);
         if (l == r) {
             tree[p].value = a[l];
             return p;
         }
-        int mid = (l + r) >> 1;
-        tree[p].left = build(l, mid, a);
-        tree[p].right = build(mid + 1, r, a);
+        int m = mid(l, r);
+        tree[p].left = build(l, m, a);
+        tree[p].right = build(m + 1, r, a);
         return p;
     }
 
-    int update(int p, int l, int r, int pos, int value) {
+    // 基于版本 p 修改位置 pos 为 value，产生新版本，返回新根下标
+    int update(int p, int l, int r, int pos, T value) {
         int q = clone(p);
         if (l == r) {
             tree[q].value = value;
             return q;
         }
-        int mid = (l + r) >> 1;
-        if (pos <= mid) {
-            tree[q].left = update(tree[p].left, l, mid, pos, value);
+        int m = mid(l, r);
+        if (pos <= m) {
+            tree[q].left = update(tree[p].left, l, m, pos, value);
         } else {
-            tree[q].right = update(tree[p].right, mid + 1, r, pos, value);
+            tree[q].right = update(tree[p].right, m + 1, r, pos, value);
         }
         return q;
     }
 
-    int query(int p, int l, int r, int pos) const {
+    // 查询版本 p 中位置 pos 的值
+    T query(int p, int l, int r, int pos) const {
         if (l == r) return tree[p].value;
-        int mid = (l + r) >> 1;
-        if (pos <= mid) return query(tree[p].left, l, mid, pos);
-        return query(tree[p].right, mid + 1, r, pos);
+        int m = mid(l, r);
+        if (pos <= m) return query(tree[p].left, l, m, pos);
+        return query(tree[p].right, m + 1, r, pos);
     }
 };
 
@@ -62,7 +72,7 @@ int main() {
     int n, m;
     cin >> n >> m;
 
-    vector<int> a(n + 1);
+    vector<long long> a(n + 1);
     for (int i = 1; i <= n; ++i) cin >> a[i];
 
     int max_nodes = n + m * 20 + 5;
@@ -75,7 +85,7 @@ int main() {
         int version, op, pos;
         cin >> version >> op >> pos;
         if (op == 1) {
-            int value;
+            long long value;
             cin >> value;
             root[i] = seg.update(root[version], 1, n, pos, value);
         } else {
