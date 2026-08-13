@@ -1,13 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Treap 旋转平衡树：支持插入 / 删除 / 排名 / kth / 前驱 / 后继
 struct Treap {
+    using T = int;
+
+    // 线段树节点：child[2] 为左右孩子
     struct Node {
         int child[2] = {0, 0};
-        int value = 0;
-        int priority = 0;
-        int count = 0;
-        int size = 0;
+        T value = 0;
+        int priority = 0;   // 随机优先级（小根堆）
+        int count = 0;      // 相同值的个数
+        int size = 0;       // 子树节点总数（含 count）
     };
 
     vector<Node> tree;
@@ -16,10 +20,11 @@ struct Treap {
 
     Treap(int max_nodes = 0) : rng(712367821) {
         tree.reserve(max_nodes + 1);
-        tree.push_back(Node()); // node 0 is the null sentinel.
+        tree.push_back(Node()); // 0 号节点为空哨兵
     }
 
-    int new_node(int value) {
+    // 新建节点
+    int new_node(T value) {
         tree.push_back(Node());
         int id = (int)tree.size() - 1;
         tree[id].value = value;
@@ -29,35 +34,36 @@ struct Treap {
         return id;
     }
 
+    // 节点 u 的子树大小，空节点为 0
     int node_size(int u) const {
         return u == 0 ? 0 : tree[u].size;
     }
 
-    void pushup(int u) {
+    // 上推：重算 u 的 size
+    void push_up(int u) {
         tree[u].size = node_size(tree[u].child[0]) +
                        node_size(tree[u].child[1]) +
                        tree[u].count;
     }
 
-    // direction=0: lift left child by right rotation.
-    // direction=1: lift right child by left rotation.
+    // 旋转：direction=0 右旋提升左孩子，direction=1 左旋提升右孩子
     void rotate(int &u, int direction) {
         int v = tree[u].child[direction];
         tree[u].child[direction] = tree[v].child[direction ^ 1];
         tree[v].child[direction ^ 1] = u;
-        pushup(u);
-        pushup(v);
+        push_up(u);
+        push_up(v);
         u = v;
     }
 
-    void insert(int &u, int value) {
+    void insert(int &u, T value) {
         if (u == 0) {
             u = new_node(value);
             return;
         }
         if (tree[u].value == value) {
             tree[u].count++;
-            pushup(u);
+            push_up(u);
             return;
         }
 
@@ -66,20 +72,20 @@ struct Treap {
         if (tree[tree[u].child[direction]].priority < tree[u].priority) {
             rotate(u, direction);
         }
-        pushup(u);
+        push_up(u);
     }
 
-    void insert(int value) {
+    void insert(T value) {
         insert(root, value);
     }
 
-    void erase(int &u, int value) {
+    void erase(int &u, T value) {
         if (u == 0) return;
 
         if (tree[u].value == value) {
             if (tree[u].count > 1) {
                 tree[u].count--;
-                pushup(u);
+                push_up(u);
                 return;
             }
 
@@ -93,21 +99,21 @@ struct Treap {
             int direction = tree[left].priority < tree[right].priority ? 0 : 1;
             rotate(u, direction);
             erase(tree[u].child[direction ^ 1], value);
-            pushup(u);
+            push_up(u);
             return;
         }
 
         int direction = value > tree[u].value;
         erase(tree[u].child[direction], value);
-        pushup(u);
+        push_up(u);
     }
 
-    void erase(int value) {
+    void erase(T value) {
         erase(root, value);
     }
 
-    // Rank is 1-based: the smallest value has rank 1.
-    int rank_of(int value) const {
+    // 排名（1-based）：最小的值排名 1
+    int rank_of(T value) const {
         int u = root;
         int rank = 1;
         while (u != 0) {
@@ -121,7 +127,8 @@ struct Treap {
         return rank;
     }
 
-    int kth(int k) const {
+    // 第 k 小
+    T kth(int k) const {
         int u = root;
         while (u != 0) {
             int left_size = node_size(tree[u].child[0]);
@@ -137,7 +144,8 @@ struct Treap {
         return -1;
     }
 
-    int predecessor(int value) const {
+    // 前驱：小于 value 的最大值
+    int predecessor(T value) const {
         int u = root;
         int answer = INT_MIN;
         while (u != 0) {
@@ -151,7 +159,8 @@ struct Treap {
         return answer;
     }
 
-    int successor(int value) const {
+    // 后继：大于 value 的最小值
+    int successor(T value) const {
         int u = root;
         int answer = INT_MAX;
         while (u != 0) {

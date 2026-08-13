@@ -59,7 +59,7 @@ struct FHQ {
         return id;
     }
 
-    void update(int u) {
+    void push_up(int u) {
         tr[u].size = tr[tr[u].l].size + tr[tr[u].r].size + 1;
     }
 
@@ -72,18 +72,18 @@ struct FHQ {
             y = u;
             split(tr[u].l, v, x, tr[u].l);
         }
-        update(u);
+        push_up(u);
     }
 
     int merge(int x, int y) {
         if (!x || !y) return x + y;
         if (tr[x].fix > tr[y].fix) {
             tr[x].r = merge(tr[x].r, y);
-            update(x);
+            push_up(x);
             return x;
         } else {
             tr[y].l = merge(x, tr[y].l);
-            update(y);
+            push_up(y);
             return y;
         }
     }

@@ -3,13 +3,17 @@
 #include <vector>
 using namespace std;
 
+// Splay 伸展树：支持插入 / 删除 / 排名 / kth / 前驱 / 后继
 struct Splay {
+    using T = int;
+
+    // 线段树节点：child[2] 为左右孩子，parent 为父节点
     struct Node {
         int child[2] = {0, 0};
         int parent = 0;
-        int value = 0;
-        int count = 0;
-        int size = 0;
+        T value = 0;
+        int count = 0;  // 相同值的个数
+        int size = 0;   // 子树节点总数（含 count）
     };
 
     vector<Node> tree;
@@ -17,21 +21,24 @@ struct Splay {
 
     Splay(int max_nodes = 0) {
         tree.reserve(max_nodes + 1);
-        tree.push_back(Node()); // node 0 is the null sentinel.
+        tree.push_back(Node()); // 0 号节点为空哨兵
     }
 
+    // 节点 u 的子树大小，空节点为 0
     int node_size(int u) const {
         return u == 0 ? 0 : tree[u].size;
     }
 
-    void pushup(int u) {
+    // 上推：重算 u 的 size
+    void push_up(int u) {
         if (u == 0) return;
         tree[u].size = node_size(tree[u].child[0]) +
                        node_size(tree[u].child[1]) +
                        tree[u].count;
     }
 
-    int new_node(int value, int parent) {
+    // 新建节点
+    int new_node(T value, int parent) {
         tree.push_back(Node());
         int id = (int)tree.size() - 1;
         tree[id].value = value;
@@ -41,16 +48,19 @@ struct Splay {
         return id;
     }
 
+    // u 是父节点的哪个孩子（0 左 1 右）
     int direction(int u) const {
         int p = tree[u].parent;
         return tree[p].child[1] == u;
     }
 
+    // 连接：child 作为 parent 的 dir 方向孩子
     void connect(int child, int parent, int dir) {
         if (parent != 0) tree[parent].child[dir] = child;
         if (child != 0) tree[child].parent = parent;
     }
 
+    // 旋转 x 上移一层
     void rotate(int x) {
         int y = tree[x].parent;
         int z = tree[y].parent;
@@ -62,11 +72,12 @@ struct Splay {
         connect(y, x, dx ^ 1);
         connect(x, z, dy);
 
-        pushup(y);
-        pushup(x);
+        push_up(y);
+        push_up(x);
         if (z == 0) root = x;
     }
 
+    // 把 x 伸展到 goal 的孩子（goal=0 表示伸展到根）
     void splay(int x, int goal = 0) {
         if (x == 0) return;
         while (tree[x].parent != goal) {
@@ -81,7 +92,8 @@ struct Splay {
         if (goal == 0) root = x;
     }
 
-    int find(int value) {
+    // 查找值 value，找到则伸展到根并返回下标，否则返回 0
+    int find(T value) {
         int u = root;
         int last = 0;
         while (u != 0) {
@@ -96,7 +108,8 @@ struct Splay {
         return 0;
     }
 
-    void insert(int value) {
+    // 插入值 value
+    void insert(T value) {
         if (root == 0) {
             root = new_node(value, 0);
             return;
@@ -108,7 +121,7 @@ struct Splay {
             parent = u;
             if (value == tree[u].value) {
                 tree[u].count++;
-                pushup(u);
+                push_up(u);
                 splay(u);
                 return;
             }
@@ -118,17 +131,18 @@ struct Splay {
         int dir = value > tree[parent].value;
         int id = new_node(value, parent);
         tree[parent].child[dir] = id;
-        pushup(parent);
+        push_up(parent);
         splay(id);
     }
 
-    void erase(int value) {
+    // 删除一个值 value
+    void erase(T value) {
         int target = find(value);
         if (target == 0 || tree[target].value != value) return;
 
         if (tree[target].count > 1) {
             tree[target].count--;
-            pushup(target);
+            push_up(target);
             return;
         }
 
@@ -156,11 +170,11 @@ struct Splay {
 
         tree[root].child[1] = right;
         tree[right].parent = root;
-        pushup(root);
+        push_up(root);
     }
 
-    // Rank is 1-based: the smallest value has rank 1.
-    int rank_of(int value) {
+    // 排名（1-based）：最小的值排名 1
+    int rank_of(T value) {
         int u = root;
         int last = 0;
         int rank = 1;
@@ -177,7 +191,8 @@ struct Splay {
         return rank;
     }
 
-    int kth(int k) {
+    // 第 k 小
+    T kth(int k) {
         int u = root;
         while (u != 0) {
             int left_size = node_size(tree[u].child[0]);
@@ -194,7 +209,8 @@ struct Splay {
         return -1;
     }
 
-    int predecessor(int value) {
+    // 前驱：小于 value 的最大值
+    int predecessor(T value) {
         int u = root;
         int best = 0;
         int answer = INT_MIN;
@@ -211,7 +227,8 @@ struct Splay {
         return answer;
     }
 
-    int successor(int value) {
+    // 后继：大于 value 的最小值
+    int successor(T value) {
         int u = root;
         int best = 0;
         int answer = INT_MAX;

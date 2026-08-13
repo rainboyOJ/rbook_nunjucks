@@ -1,8 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 并查集：合并两个集合，查询两个元素是否在同一集合
 struct DSU {
-    vector<int> fa, sz;
+    using T = int;
+
+    vector<T> fa;  // fa[x] 为 x 的父节点
+    vector<T> sz;  // sz[x] 为集合大小（仅根节点有效）
 
     DSU(int n = 0) {
         init(n);
@@ -14,15 +18,18 @@ struct DSU {
         iota(fa.begin(), fa.end(), 0);
     }
 
+    // 查询 x 所在集合的根（路径压缩）
     int find(int x) {
         if (fa[x] == x) return x;
         return fa[x] = find(fa[x]);
     }
 
+    // x 与 y 是否在同一集合
     bool same(int x, int y) {
         return find(x) == find(y);
     }
 
+    // 合并 x 与 y 所在集合（按大小合并），返回是否发生合并
     bool unite(int x, int y) {
         int fx = find(x);
         int fy = find(y);

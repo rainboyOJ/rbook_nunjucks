@@ -69,7 +69,7 @@ struct FHQ
         return id;
     }
 
-    void update(int u ) {
+    void push_up(int u) {
         int l = tr[u].l;
         int r = tr[u].r;
         tr[u].size = tr[l].size + tr[r].size + 1;
@@ -102,7 +102,7 @@ struct FHQ
             // 递归处理 u 的左子树
             split(tr[u].l,v,x,tr[u].l);
         }
-        update(u); // 更新 u 的 size , 因为 u 的左右子树可能发生了变化
+        push_up(u); // 更新 u 的 size，因为 u 的左右子树可能发生了变化
     }
 
     /**
@@ -118,11 +118,11 @@ struct FHQ
         // 谁的优先级高，谁就做父节点(取决于你是大根堆还是小根堆，这里用大根堆)
         if( tr[x].fix > tr[y].fix ) {
             tr[x].r = merge(tr[x].r,y);
-            update(x); // 更新 x 的 size , 因为 x 的右子树可能发生了变化
+            push_up(x); // 更新 x 的 size，因为 x 的右子树可能发生了变化
             return x;
         } else {
             tr[y].l = merge(x,tr[y].l);
-            update(y);
+            push_up(y);
             return y;
         }
     }
