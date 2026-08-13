@@ -121,3 +121,4 @@ codex_resume
 
 Rbook_ejs_old/
 todo/
+# 部署验证用注释：混合提交（book + 非 book）必须仍触发 content 部署

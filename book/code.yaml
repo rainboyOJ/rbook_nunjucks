@@ -121,7 +121,7 @@ codes:
 
   - id: st
     path: base/sparse_table.cpp
-    description: sparse table | 稀疏表（ST 表）
+    description: sparse table | 稀疏表（RMQ 区间最值）
     language: cpp
     tags: [基础算法]
 
