@@ -11,7 +11,7 @@ code_template: [fenwick]
 
 [[TOC]]
 
-!!! info "学习路线"
+!!! info 学习路线
 树状数组的求和主线是：**单点修改、区间查询（本篇）** → [区间修改、单点查询](./range-add-point-query/index.md) → [区间修改、区间查询](./range-add-range-query/index.md)。[前缀最值](./prefix-extremum/index.md) 是选学分支。
 !!!
 

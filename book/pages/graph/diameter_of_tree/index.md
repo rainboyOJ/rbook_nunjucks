@@ -23,7 +23,7 @@ code_template: [tree-diameter]
 - 树的直径：任意两点距离的最大值。
 - 目标：求直径长度，有时还需要求直径的两个端点。
 
-!!! definition "树的直径"
+!!! definition 树的直径
 树上最长简单路径叫做树的直径。
 !!!
 

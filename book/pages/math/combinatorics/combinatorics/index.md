@@ -43,11 +43,11 @@ description: 排列组合计数先问两件事：顺序算不算不同，元素�
 组合: {1, 2} 和 {2, 1} 是同一个结果
 ```
 
-!!! definition "排列"
+!!! definition 排列
 从 $n$ 个不同元素中有序选出 $r$ 个，称为 $r$ 排列，记作 $A_n^r$ 或 $P(n,r)$。
 !!!
 
-!!! definition "组合"
+!!! definition 组合
 从 $n$ 个不同元素中无序选出 $r$ 个，称为 $r$ 组合，记作 $C_n^r$ 或 $\binom nr$。
 !!!
 

@@ -12,7 +12,7 @@ prerequisites: [bit-range-add-point-query]
 
 [[TOC]]
 
-!!! info "学习路线"
+!!! info 学习路线
 [单点修改、区间查询](../index.md) → [区间修改、单点查询](../range-add-point-query/index.md) → **区间修改、区间查询（本篇）**。
 !!!
 

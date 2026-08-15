@@ -37,7 +37,7 @@ code_template: [bst]
 - 目标值大于当前节点：只可能在右子树。
 - 目标值等于当前节点：查找成功。
 
-!!! definition "BST 不变量"
+!!! definition BST 不变量
 对任意节点 `u`：
 
 1. 左子树所有节点的值都小于 `u.key`。

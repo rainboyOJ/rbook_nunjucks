@@ -20,7 +20,7 @@ prerequisites: [binary-jump, dfs-order]
 
 给定一棵有根树，需要多次查询两个点 `u` 和 `v` 的最近公共祖先。
 
-!!! definition "最近公共祖先"
+!!! definition 最近公共祖先
 在一棵有根树中，`u` 和 `v` 的公共祖先里，深度最大的那个节点叫做它们的最近公共祖先，记作 `lca(u, v)`。
 !!!
 

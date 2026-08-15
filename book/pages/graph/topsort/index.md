@@ -25,7 +25,7 @@ code_template: [topsort-dag]
 
 拓扑排序要输出一个点序列，使得每条边 $u\to v$ 都满足 $u$ 在 $v$ 前面。
 
-!!! definition "DAG"
+!!! definition DAG
 DAG 是有向无环图。只有 DAG 才存在拓扑序；如果有向图中存在环，环上的点互相等待，不可能排出合法顺序。
 !!!
 

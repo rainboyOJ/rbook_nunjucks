@@ -26,13 +26,13 @@ categories: ["图论"]
 
 ## 问题定义
 
-!!! definition "二分图 (Bipartite Graph)"
+!!! definition 二分图 (Bipartite Graph)
 一个图 $G=(V, E)$，如果其顶点集 $V$ 可以被划分为两个不相交的子集 $X$ 和 $Y$，使得每一条边 $(u, v) \in E$ 的两个端点都分别属于这两个子集（即 $u \in X, v \in Y$），则称该图为二分图。
 
-!!! definition "匹配 (Matching)"
+!!! definition 匹配 (Matching)
 在图 $G$ 中，一个**匹配**是指一个边的子集 $M \subseteq E$，其中任意两条边都没有公共的顶点。
 
-!!! definition "最大匹配 (Maximum Matching)"
+!!! definition 最大匹配 (Maximum Matching)
 一个图中，包含边数最多的匹配被称为**最大匹配**。
 
 我们的目标是，给定一个二分图，找到它的最大匹配。

@@ -251,7 +251,7 @@ $$
 
 ## 实践思考与扩展
 
-!!! success "扩展：模数不互质的情况"
+!!! success 扩展：模数不互质的情况
 当模数 $m_1, m_2, \dots, m_n$ 不满足两两互质时，标准的中国剩余定理不再适用。此时需要使用 **扩展中国剩余定理 (Extended Chinese Remainder Theorem, EXCRT)**。
 
 EXCRT 的核心思想是**两两合并**。
