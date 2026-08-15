@@ -294,6 +294,7 @@ node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readF
 - `## 复杂度分析` 必须包含时间复杂度和空间复杂度。
 - `## 测试用例` 至少包含一个普通用例；容易错的算法应补边界用例。
 - `## 经典例题` 不只是列链接，还要说明这道题为什么适合该算法。
+- 数学符号统一使用 `\leqslant` 和 `\geqslant` 表示小于等于、大于等于，不要使用 `\le`、`\leq`、`\ge`、`\geq`（视觉上更美观）。
 
 ## 题目链接
 
