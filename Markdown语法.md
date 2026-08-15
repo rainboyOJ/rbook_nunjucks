@@ -85,7 +85,7 @@ print("hello")
   - **类型:** `note`, `abstract`, `info`, `tip`, `success`, `question`, `warning`, `failure`, `danger`, `bug`, `example`, `quote`
   - **示例:**
     ```markdown
-    !!! note "Admonition Title"
+    !!! note Admonition Title
     Admonition content here
     !!!
     ```
@@ -94,7 +94,7 @@ print("hello")
   - **描述:** 快速创建特定类型的提示框。
   - **示例 (`rbook-info`):**
     ```markdown
-    !!! info "信息标题"
+    !!! info 信息标题
     信息内容 here
     !!!
     ```
@@ -104,7 +104,7 @@ print("hello")
   - **类型:** `definition`, `theorem`, `corollary`, `lemma`, `proof`, `exercise`, `problem`
   - **示例 (`rbook-definition`):**
     ```markdown
-    !!! definition "定义标题"
+    !!! definition 定义标题
     定义内容 here
     !!!
     ```

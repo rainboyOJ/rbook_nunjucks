@@ -90,10 +90,10 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 - 通用类型：`note`、`abstract`、`info`、`tip`、`success`、`question`、`warning`、`failure`、`danger`、`bug`、`example`、`quote`。
 - 数学类型：`definition`、`theorem`、`corollary`、`lemma`、`proof`、`exercise`、`problem`。
 
-统一使用以下格式：类型和标题写在起始行，正文从下一行开始，结束标记单独占一行。
+统一使用以下格式：类型和标题写在起始行（标题不要加双引号），正文从下一行开始，结束标记单独占一行。
 
 ```markdown
-!!! definition "树的定义"
+!!! definition 树的定义
 无环连通图。
 !!!
 ```
