@@ -619,6 +619,9 @@ chapters:
       - title: 树的中心
         english-title: Tree Center
         path: center_of_tree
+      - title: 树的重心
+        english-title: Tree Centroid
+        path: centroid_of_tree
       - title: 最小生成树（现有入口）
         english-title: Minimum Spanning Tree
         path: mst/最小生成树.md

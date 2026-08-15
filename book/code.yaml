@@ -879,6 +879,12 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: tree-centroid
+    path: tree/tree_centroid.cpp
+    description: tree centroid | 树的重心
+    language: cpp
+    tags: [树形数据结构, 树, 树的重心]
+
   - id: dynamic-static
     path: utils/dynamic_static.cpp
     description: dynamic static | 动态化静态（内存池）
