@@ -195,7 +195,7 @@ find_cycles_outdeg1 会收集这些环。
 
 ## 参考 (References)
 
-- 本书相关章节：book/graph/center_of_tree/index.md
+- 本书相关章节：book/tree-algo/center_of_tree/index.md
 - USACO 题解与讨论（出度=1 的环检测技巧）
 - 相关博客：知乎专栏与竞赛题解合集（草稿中提到的参考链接）
 

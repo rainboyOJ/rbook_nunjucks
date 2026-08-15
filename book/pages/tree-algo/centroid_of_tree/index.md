@@ -144,7 +144,7 @@ $$
 
 删除 `u` 后：
 
-![](/graph/centroid_of_tree/dot/centroid_move.svg)
+![](/tree-algo/centroid_of_tree/dot/centroid_move.svg)
 
 右侧超过 $n/2$，重心一定在右侧；向右移动继续判断。
 

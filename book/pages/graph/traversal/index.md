@@ -199,7 +199,7 @@ DFS 访问 `v_0` 后，会枚举它的邻点，因此会访问 `v_1`。同理，
 | 应用场景 | 经典题目 | 核心思路 |
 |---|---|---|
 | DFS 序 | 本书 `tree-algo/dfs-order` | 子树对应连续区间 |
-| 树的直径 | 本书 `graph/diameter_of_tree` | 两次 DFS 找最长链 |
+| 树的直径 | 本书 `tree-algo/diameter_of_tree` | 两次 DFS 找最长链 |
 
 ### 四、作为高级图论算法的骨架
 

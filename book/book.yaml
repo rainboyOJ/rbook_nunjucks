@@ -346,23 +346,6 @@ chapters:
       - title: 均分纸牌
         english-title: Card Balancing
         path: 均分纸牌/index.md
-  - title: 树相关算法树
-    english-title: Tree Algorithms
-    path: .
-    nolink: true
-    sections:
-      - title: dfs序
-        english-title: DFS Order
-        path: tree-algo/dfs-order
-      - title: 倍增求 LCA
-        english-title: Binary Lifting LCA
-        path: tree-algo/jump-lca
-      - title: 树链剖分
-        english-title: Heavy-Light Decomposition
-        path: tree-algo/hld
-      - title: 树上启发式合并
-        english-title: DSU on Tree
-        path: algorithm/dsu_on_tree/index.md
   - title: 第三章 动态规划
     english-title: Dynamic Programming
     path: dynamic_programming
@@ -613,15 +596,6 @@ chapters:
       - title: 强连通分量
         english-title: Strongly Connected Components
         path: scc/index.md
-      - title: 树的直径
-        english-title: Tree Diameter
-        path: diameter_of_tree
-      - title: 树的中心
-        english-title: Tree Center
-        path: center_of_tree
-      - title: 树的重心
-        english-title: Tree Centroid
-        path: centroid_of_tree
       - title: 最小生成树（现有入口）
         english-title: Minimum Spanning Tree
         path: mst/最小生成树.md
@@ -664,6 +638,32 @@ chapters:
       - title: 二分图
         english-title: Bipartite Graph
         path: 网络流/二分图/index.md
+  - title: 树相关算法树
+    english-title: Tree Algorithms
+    path: .
+    nolink: true
+    sections:
+      - title: 树的直径
+        english-title: Tree Diameter
+        path: tree-algo/diameter_of_tree
+      - title: 树的中心
+        english-title: Tree Center
+        path: tree-algo/center_of_tree
+      - title: 树的重心
+        english-title: Tree Centroid
+        path: tree-algo/centroid_of_tree
+      - title: dfs序
+        english-title: DFS Order
+        path: tree-algo/dfs-order
+      - title: 倍增求 LCA
+        english-title: Binary Lifting LCA
+        path: tree-algo/jump-lca
+      - title: 树链剖分
+        english-title: Heavy-Light Decomposition
+        path: tree-algo/hld
+      - title: 树上启发式合并
+        english-title: DSU on Tree
+        path: algorithm/dsu_on_tree/index.md
   - title: 字符串
     english-title: Strings
     path: string

@@ -150,4 +150,4 @@ SDOI2013 直径。除了求直径，还要分析哪些边一定在所有直径�
 
 ## 参考
 
-- 本书树的中心章节：`graph/center_of_tree/index.md`
+- 本书树的中心章节：`tree-algo/center_of_tree/index.md`
