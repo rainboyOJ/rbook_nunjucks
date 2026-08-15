@@ -4,7 +4,7 @@
   top: 86px;
   right: max(28px, calc((100vw - 720px) / 2 - 306px));
   width: 260px;
-  max-height: calc(100vh - 112px);
+  max-height: min(calc(100vh - 112px), var(--toc-footer-limit, 100vh));
   padding: 0 0 0 20px;
   border-left: 1px solid var(--border-color);
   border-radius: 0;

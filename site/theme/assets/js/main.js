@@ -340,6 +340,24 @@
 
     let restoreFocus = null;
     const isDrawer = () => window.matchMedia('(max-width: 1379px)').matches;
+    const siteFooter = document.querySelector('.site-footer');
+    let tocLayoutScheduled = false;
+    const updateTocFooterLimit = () => {
+      tocLayoutScheduled = false;
+      if (isDrawer() || !siteFooter) {
+        toc.style.removeProperty('--toc-footer-limit');
+        return;
+      }
+      const tocTop = toc.getBoundingClientRect().top;
+      const footerTop = siteFooter.getBoundingClientRect().top;
+      const availableHeight = Math.max(0, footerTop - tocTop - 16);
+      toc.style.setProperty('--toc-footer-limit', `${availableHeight}px`);
+    };
+    const scheduleTocLayout = () => {
+      if (tocLayoutScheduled) return;
+      tocLayoutScheduled = true;
+      requestAnimationFrame(updateTocFooterLimit);
+    };
     const setExpanded = (expanded) => {
       toggles.forEach((toggle) => toggle.setAttribute('aria-expanded', String(expanded)));
     };
@@ -384,12 +402,28 @@
       } else if (!document.body.classList.contains('toc-open')) {
         setExpanded(false);
       }
+      scheduleTocLayout();
     };
     window.addEventListener('resize', syncTocMode);
+    window.addEventListener('scroll', scheduleTocLayout, { passive: true });
+    window.addEventListener('load', scheduleTocLayout);
     syncTocMode();
 
     const headings = Array.from(document.querySelectorAll('.reading-page .markdown-body :is(h2, h3)[id]'));
     const links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+    const keepLinkVisible = (link) => {
+      if (isDrawer() && !document.body.classList.contains('toc-open')) return;
+      const tocRect = toc.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      const headerInset = isDrawer() ? header.getBoundingClientRect().height : 0;
+      const visibleTop = tocRect.top + headerInset + 8;
+      const visibleBottom = tocRect.bottom - 8;
+      if (linkRect.top < visibleTop) {
+        toc.scrollTop -= visibleTop - linkRect.top;
+      } else if (linkRect.bottom > visibleBottom) {
+        toc.scrollTop += linkRect.bottom - visibleBottom;
+      }
+    };
     let scheduled = false;
     const updateActive = () => {
       scheduled = false;
@@ -405,6 +439,8 @@
         if (current) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
       });
+      const activeLink = links.find((link) => link.getAttribute('aria-current') === 'location');
+      if (activeLink) keepLinkVisible(activeLink);
     };
     const scheduleUpdate = () => {
       if (scheduled) return;
