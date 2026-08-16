@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="520" viewBox="0 0 560 520" role="img" aria-labelledby="intersecting-title intersecting-desc">
+  <title id="intersecting-title">路径相交时替换直径端点</title>
+  <desc id="intersecting-desc">上半部分显示搜索路径 s 到 u 与直径 a 到 b 在 x 相交，由公共前缀得到 x 到 u 不短于 x 到 a。下半部分高亮 u 经过 x 到 b 的新路径，它不短于原直径。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .divider { stroke: #cbd5e1; stroke-width: 2; stroke-dasharray: 6 7; }
+    .path--search { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .path--diameter { fill: none; stroke: #d97706; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .path--candidate { fill: none; stroke: #059669; stroke-width: 3; stroke-dasharray: 10 7; stroke-linecap: round; stroke-linejoin: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--search { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--diameter { fill: #fff7ed; stroke: #d97706; stroke-width: 3; }
+    .node--candidate { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .stage, .formula, .node-label, .path-label, .result, .note {
+      font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+    }
+    .stage { fill: #1f2937; font-size: 18px; font-weight: 600; }
+    .formula { fill: #1f2937; font-size: 18px; font-weight: 600; text-anchor: middle; }
+    .node-label { fill: #1f2937; font-size: 18px; font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+    .path-label { font-size: 16px; font-weight: 600; text-anchor: middle; }
+    .path-label--shared { fill: #64748b; font-weight: 400; }
+    .path-label--candidate { fill: #047857; }
+    .result { fill: #047857; font-size: 16px; font-weight: 600; }
+    .note { fill: #64748b; font-size: 14px; font-weight: 400; text-anchor: end; }
+  </style>
+  <defs>
+    <marker id="blue-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" />
+    </marker>
+    <marker id="green-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#059669" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="560" height="520" />
+  <line class="divider" x1="24" y1="260" x2="536" y2="260" />
+
+  <g id="compare-stage">
+    <text class="stage" x="28" y="32">比较分支长度</text>
+    <text class="formula" x="280" y="70">dist(x,u) ≥ dist(x,a)</text>
+
+    <line class="path--search" x1="105" y1="136" x2="259" y2="173" />
+    <line class="path--search" x1="301" y1="173" x2="451" y2="136" marker-end="url(#blue-arrow)" />
+    <line class="path--diameter" x1="105" y1="224" x2="260" y2="185" />
+    <line class="path--diameter" x1="300" y1="185" x2="455" y2="224" />
+
+    <text class="path-label path-label--shared" x="166" y="166">公共段 s → x</text>
+
+    <circle class="node--search" cx="80" cy="130" r="26" />
+    <circle class="node" cx="280" cy="180" r="22" />
+    <circle class="node--search" cx="480" cy="130" r="26" />
+    <circle class="node--diameter" cx="80" cy="230" r="26" />
+    <circle class="node--diameter" cx="480" cy="230" r="26" />
+
+    <text class="node-label" x="80" y="130">s</text>
+    <text class="node-label" x="280" y="180">x</text>
+    <text class="node-label" x="480" y="130">u</text>
+    <text class="node-label" x="80" y="230">a</text>
+    <text class="node-label" x="480" y="230">b</text>
+  </g>
+
+  <g id="replace-stage">
+    <text class="stage" x="28" y="292">替换直径端点</text>
+    <text class="formula" x="280" y="328">dist(u,b) ≥ dist(a,b) = D</text>
+
+    <line class="path--diameter" x1="105" y1="456" x2="259" y2="416" />
+    <line class="path--diameter" x1="301" y1="416" x2="455" y2="456" />
+    <line class="path--candidate" x1="455" y1="376" x2="301" y2="404" />
+    <line class="path--candidate" x1="301" y1="416" x2="451" y2="455" marker-end="url(#green-arrow)" />
+
+    <text class="path-label path-label--candidate" x="392" y="405">新路径 u → b</text>
+
+    <circle class="node--candidate" cx="480" cy="370" r="26" />
+    <circle class="node" cx="280" cy="410" r="22" />
+    <circle class="node--diameter" cx="80" cy="462" r="26" />
+    <circle class="node--candidate" cx="480" cy="462" r="26" />
+
+    <text class="node-label" x="480" y="370">u</text>
+    <text class="node-label" x="280" y="410">x</text>
+    <text class="node-label" x="80" y="462">a</text>
+    <text class="node-label" x="480" y="462">b</text>
+
+    <text class="result" x="28" y="506">也是直径</text>
+    <text class="note" x="532" y="506">边长仅为示意</text>
+  </g>
+</svg>
