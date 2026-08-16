@@ -1,11 +1,12 @@
 #include <algorithm>
 #include <vector>
 
-using Graph = std::vector<std::vector<int>>;
-Graph tree;  // 全局邻接表：使用前先 resize(n+1) 并加边
+const int maxn = 1e6 + 5;
+using Graph = std::vector<int>;
+Graph tree[maxn];  // 全局邻接表数组：直接向 tree[u] 加边
 
 // 如何使用：
-// 1. tree.resize(n + 1)，读入边：tree[u].push_back(v); tree[v].push_back(u);
+// 1. 读入边：tree[u].push_back(v); tree[v].push_back(u);
 // 2. TreeCentroid2 tc(n);
 // 3. vector<int> cs = tc.find_centroids();  // 返回所有重心，编号升序
 
@@ -29,7 +30,6 @@ struct TreeCentroid2 {
 
     // 统计子树大小；若 B(u) = 删除 u 后最大的连通块大小 ≤ n/2，u 就是重心
     void dfs(int u, int parent) {
-        // 如果邻接表不叫 tree，把循环里的 tree 替换成你的变量名
         sz[u] = 1;
         int mx = 0;  // B(u)：先看各儿子子树
 

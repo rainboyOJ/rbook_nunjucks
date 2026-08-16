@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using Graph = vector<vector<int>>;
-Graph tree;  // 全局邻接表：使用前先 resize(n+1) 并加边
+const int maxn = 1e6 + 5;
+using Graph = vector<int>;
+Graph tree[maxn];  // 全局邻接表数组：直接向 tree[u] 加边
 
 // 求树的所有重心。
 // 重心：删除该点后，剩下的每个连通块大小都不超过 n/2。
@@ -55,7 +56,6 @@ int main() {
     int n;
     cin >> n;
 
-    tree.resize(n + 1);
     for (int i = 1; i < n; ++i) {
         int u, v;
         cin >> u >> v;

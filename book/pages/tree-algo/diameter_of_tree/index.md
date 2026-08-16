@@ -122,6 +122,12 @@ $$
 - 时间复杂度：$O(n)$。两次遍历整棵树。
 - 空间复杂度：$O(n)$。邻接表和距离数组。
 
+## 代码模板
+
+`farthest` 做一次最远点搜索；`solve` 连续调用两次后，直径长度存在 `ans`，端点是 `a`、`b`。
+
+@include-code(/code/tree/tree_diameter.cpp, cpp)
+
 ## 代码实现
 
 输入格式采用常见模板：
@@ -136,7 +142,7 @@ u(n-1) v(n-1) w(n-1)
 
 输出直径长度。
 
-@include-code(/code/tree/tree_diameter.cpp, cpp)
+@include-code(./code/tree_diameter.cpp, cpp)
 
 ## 测试用例
 
