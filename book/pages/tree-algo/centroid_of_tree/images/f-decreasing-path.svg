@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="360" viewBox="0 0 680 360" role="img" aria-labelledby="fpath-title fpath-desc">
+  <title id="fpath-title">含 v 的连通块沿路径逐层缩小</title>
+  <desc id="fpath-desc">路径从 u 等于 p_0 通向 v 等于 p_k。切断路径上的边后，含 v 的连通块依次嵌套：大小为 f_0 的外层包含大小为 f_1 的中层，中层继续包含大小为 f_{k−1} 的内层；每缩一层都会去掉至少一个路径点，因此大小严格递减。然而外层标为 f_0 不超过 n 的一半，内层却标为 f_{k−1} 超过 n 的一半，形成矛盾。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .region { stroke-width: 2; stroke-dasharray: 7 6; }
+    .region--outer { fill: #eff6ff; stroke: #2563eb; }
+    .region--middle { fill: #ffffff; stroke: #94a3b8; }
+    .region--inner { fill: #fef2f2; stroke: #dc2626; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--start { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--end { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 18px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--key { font-size: 20px; }
+    .label--outer { fill: #047857; }
+    .label--middle { fill: #64748b; }
+    .label--inner { fill: #dc2626; }
+    .ellipsis { fill: #64748b; font: 600 20px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+  </style>
+  <rect class="canvas" width="680" height="360" />
+  <g id="nested-components">
+    <rect class="region region--outer" x="106" y="26" width="550" height="308" rx="8" />
+    <rect class="region region--middle" x="226" y="64" width="424" height="232" rx="8" />
+    <rect class="region region--inner" x="506" y="102" width="132" height="176" rx="8" />
+    <text class="label label--key label--outer" x="168" y="50">f₀ ≤ n/2</text>
+    <text class="label label--middle" x="258" y="86">f₁</text>
+    <text class="ellipsis" x="390" y="86">···</text>
+    <text class="label label--key label--inner" x="572" y="124">fₖ₋₁ &gt; n/2</text>
+  </g>
+  <g id="tree-edges">
+    <line class="edge" x1="82" y1="190" x2="144" y2="190" />
+    <line class="edge" x1="188" y1="190" x2="264" y2="190" />
+    <line class="edge" x1="308" y1="190" x2="350" y2="190" />
+    <line class="edge" x1="400" y1="190" x2="434" y2="190" />
+    <line class="edge" x1="478" y1="190" x2="534" y2="190" />
+    <line class="edge" x1="166" y1="212" x2="166" y2="272" />
+    <line class="edge" x1="286" y1="168" x2="286" y2="138" />
+    <line class="edge" x1="456" y1="212" x2="456" y2="248" />
+    <line class="edge" x1="588" y1="176" x2="610" y2="154" />
+    <line class="edge" x1="588" y1="204" x2="610" y2="226" />
+    <text class="ellipsis" x="375" y="190">···</text>
+  </g>
+  <g id="tree-nodes">
+    <circle class="node--start" cx="56" cy="190" r="26" />
+    <circle class="node" cx="166" cy="190" r="22" />
+    <circle class="node" cx="286" cy="190" r="22" />
+    <circle class="node" cx="456" cy="190" r="22" />
+    <circle class="node--end" cx="560" cy="190" r="26" />
+    <circle class="node" cx="166" cy="294" r="22" />
+    <circle class="node" cx="286" cy="116" r="22" />
+    <circle class="node" cx="456" cy="270" r="22" />
+    <circle class="node" cx="610" cy="154" r="22" />
+    <circle class="node" cx="610" cy="226" r="22" />
+    <text class="label" x="56" y="190">u</text>
+    <text class="label" x="166" y="190">p₁</text>
+    <text class="label" x="286" y="190">p₂</text>
+    <text class="label" x="456" y="190">pₖ₋₁</text>
+    <text class="label" x="560" y="190">v</text>
+  </g>
+</svg>

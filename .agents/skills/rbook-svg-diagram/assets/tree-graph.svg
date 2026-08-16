@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320" role="img" aria-labelledby="tree-title tree-desc">
+  <title id="tree-title">树或图的局部拓扑模板</title>
+  <desc id="tree-desc">一棵六节点树，其中根到目标节点的路径用蓝色强调。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .edge--focus { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--target { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+  </style>
+  <rect class="canvas" width="640" height="320" />
+  <g id="tree-edges">
+    <line class="edge--focus" x1="320" y1="72" x2="210" y2="154" />
+    <line class="edge" x1="320" y1="72" x2="430" y2="154" />
+    <line class="edge" x1="210" y1="154" x2="140" y2="244" />
+    <line class="edge--focus" x1="210" y1="154" x2="280" y2="244" />
+    <line class="edge" x1="430" y1="154" x2="390" y2="244" />
+    <line class="edge" x1="430" y1="154" x2="500" y2="244" />
+  </g>
+  <g id="tree-nodes">
+    <circle class="node--focus" cx="320" cy="72" r="26" />
+    <circle class="node--focus" cx="210" cy="154" r="22" />
+    <circle class="node" cx="430" cy="154" r="22" />
+    <circle class="node" cx="140" cy="244" r="22" />
+    <circle class="node--target" cx="280" cy="244" r="26" />
+    <circle class="node" cx="390" cy="244" r="22" />
+    <circle class="node" cx="500" cy="244" r="22" />
+    <text class="label" x="320" y="72">r</text>
+    <text class="label" x="280" y="244">v</text>
+  </g>
+</svg>

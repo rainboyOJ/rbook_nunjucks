@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300" role="img" aria-labelledby="transition-title transition-desc">
+  <title id="transition-title">前后状态迁移模板</title>
+  <desc id="transition-desc">左侧旧状态经过中央箭头变为右侧新状态，变化元素用蓝色与绿色强调。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .state { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; }
+    .edge--focus { fill: none; stroke: #2563eb; stroke-width: 3; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--old { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--new { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--secondary { fill: #64748b; font: 400 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="transition-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="640" height="300" />
+  <g id="before-state">
+    <rect class="state" x="32" y="52" width="220" height="196" rx="8" />
+    <text class="label--secondary" x="142" y="82">之前</text>
+    <line class="edge" x1="92" y1="158" x2="192" y2="158" />
+    <circle class="node--old" cx="92" cy="158" r="26" />
+    <circle class="node" cx="192" cy="158" r="22" />
+    <text class="label" x="92" y="158">u</text>
+  </g>
+  <g id="after-state">
+    <rect class="state" x="388" y="52" width="220" height="196" rx="8" />
+    <text class="label--secondary" x="498" y="82">之后</text>
+    <line class="edge" x1="448" y1="158" x2="548" y2="158" />
+    <circle class="node" cx="448" cy="158" r="22" />
+    <circle class="node--new" cx="548" cy="158" r="26" />
+    <text class="label" x="548" y="158">v</text>
+  </g>
+  <g id="transition">
+    <line class="edge--focus" x1="276" y1="150" x2="364" y2="150" marker-end="url(#transition-arrow)" />
+  </g>
+</svg>

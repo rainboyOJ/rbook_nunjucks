@@ -24,6 +24,7 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 - 完善草稿、题解、已有解析时读取 `.github/prompts/题解完善.prompt.md`。
 - 写证明时读取 `.github/prompts/极简算式推导流.prompt.md` 和 `.github/prompts/符合人脑证明.md`。
 - 写“应用分类详解”时读取 `.github/prompts/应用分类详解/` 下的相关示例，例如二分查找、树状数组。
+- 创建、重画、迁移或优化手写 SVG 教学图时，必须同时使用 `rbook-svg-diagram`。纯粹优化 DOT 时保留 DOT；只有用户明确要求或确认转换方案后才迁移为 SVG。
 
 还要阅读项目内相近文章：
 
@@ -321,3 +322,4 @@ node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readF
 - `toc: true` 的文章包含 `[[TOC]]`。
 - “应用分类详解”按问题模型分类，而不是只堆题目。
 - 文章风格简洁、准确，和算法电子书一致。
+- 新建或修改的手写 SVG 已通过 `rbook-svg-diagram` 的结构校验、双尺寸预览和可访问性检查。

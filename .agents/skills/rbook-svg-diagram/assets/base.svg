@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="240" viewBox="0 0 560 240" role="img" aria-labelledby="base-title base-desc">
+  <title id="base-title">RBook SVG 基础模板</title>
+  <desc id="base-desc">两个重点节点由一条方向箭头连接，用于开始绘制简单教学图。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; }
+    .edge--focus { fill: none; stroke: #2563eb; stroke-width: 3; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--secondary { fill: #64748b; font: 400 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="base-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="560" height="240" />
+  <g id="relationship">
+    <line class="edge--focus" x1="176" y1="120" x2="374" y2="120" marker-end="url(#base-arrow)" />
+    <circle class="node--focus" cx="150" cy="120" r="26" />
+    <circle class="node" cx="410" cy="120" r="22" />
+    <text class="label" x="150" y="120">A</text>
+    <text class="label" x="410" y="120">B</text>
+    <text class="label--secondary" x="280" y="96">关系</text>
+  </g>
+</svg>

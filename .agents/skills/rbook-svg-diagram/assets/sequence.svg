@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="280" viewBox="0 0 720 280" role="img" aria-labelledby="sequence-title sequence-desc">
+  <title id="sequence-title">数组与区间模板</title>
+  <desc id="sequence-desc">八个数组单元中右半区被保留，中点位置由向下箭头标记。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .cell { fill: #ffffff; stroke: #94a3b8; stroke-width: 2; }
+    .cell--excluded { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 5 4; }
+    .cell--kept { fill: #ecfdf5; stroke: #059669; stroke-width: 2; }
+    .cell--mid { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .pointer { fill: none; stroke: #2563eb; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--secondary { fill: #64748b; font: 400 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; }
+    .label--kept { fill: #047857; }
+  </style>
+  <defs>
+    <marker id="sequence-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="720" height="280" />
+  <g id="array" transform="translate(72 118)">
+    <rect class="cell--excluded" x="0" y="0" width="72" height="56" />
+    <rect class="cell--excluded" x="72" y="0" width="72" height="56" />
+    <rect class="cell--excluded" x="144" y="0" width="72" height="56" />
+    <rect class="cell--mid" x="216" y="0" width="72" height="56" />
+    <rect class="cell--kept" x="288" y="0" width="72" height="56" />
+    <rect class="cell--kept" x="360" y="0" width="72" height="56" />
+    <rect class="cell--kept" x="432" y="0" width="72" height="56" />
+    <rect class="cell--kept" x="504" y="0" width="72" height="56" />
+    <text class="label" x="36" y="28">0</text>
+    <text class="label" x="108" y="28">1</text>
+    <text class="label" x="180" y="28">2</text>
+    <text class="label" x="252" y="28">3</text>
+    <text class="label" x="324" y="28">4</text>
+    <text class="label" x="396" y="28">5</text>
+    <text class="label" x="468" y="28">6</text>
+    <text class="label" x="540" y="28">7</text>
+  </g>
+  <g id="sequence-labels">
+    <line class="pointer" x1="324" y1="72" x2="324" y2="108" marker-end="url(#sequence-arrow)" />
+    <text class="label" x="324" y="48">mid</text>
+    <text class="label--secondary" x="180" y="210">排除</text>
+    <text class="label label--kept" x="504" y="210">保留</text>
+  </g>
+</svg>

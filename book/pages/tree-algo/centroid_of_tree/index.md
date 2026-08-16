@@ -81,7 +81,7 @@ $$
 
      但性质 3 给出 $f_0>f_{k-1}$，与性质 1、2 的 $f_0\leqslant n/2<f_{k-1}$ 矛盾。
 
-     ![](/tree-algo/centroid_of_tree/dot/equivalence_proof_2.svg)
+     ![沿 u 到 v 的路径，含 v 的连通块 f0、f1 直到 f(k-1) 逐层严格包含，但两端大小关系相互矛盾](/tree-algo/centroid_of_tree/images/f-decreasing-path.svg)
 
 
 
