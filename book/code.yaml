@@ -879,6 +879,12 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: tree-diameter-dp
+    path: tree/tree_diameter_dp.cpp
+    description: tree diameter (tree dp) | 树的直径（树上 DP）
+    language: cpp
+    tags: [树形数据结构, 树, 树形DP]
+
   - id: tree-centroid
     path: tree/tree_centroid.cpp
     description: tree centroid | 树的重心

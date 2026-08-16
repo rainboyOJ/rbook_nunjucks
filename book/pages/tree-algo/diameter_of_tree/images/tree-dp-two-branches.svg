@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" role="img" aria-labelledby="tree-dp-title tree-dp-desc">
+  <title id="tree-dp-title">逐个合并儿子链更新树的直径</title>
+  <desc id="tree-dp-desc">处理节点 u 的当前儿子 v 时，将已处理儿子中的最长链 f[u] 与当前链 f[v] 加边权 w 拼接，形成经过 u 的候选路径。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .edge--processed { fill: none; stroke: #059669; stroke-width: 3; stroke-linecap: round; }
+    .edge--current { fill: none; stroke: #d97706; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--processed { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .node--current { fill: #fff7ed; stroke: #d97706; stroke-width: 3; }
+    .label, .branch-label, .role-label, .formula {
+      font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+    }
+    .label { fill: #1f2937; font-size: 18px; font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+    .branch-label { font-size: 18px; font-weight: 600; text-anchor: middle; }
+    .branch-label--processed { fill: #047857; }
+    .branch-label--current { fill: #b45309; }
+    .role-label { fill: #64748b; font-size: 16px; font-weight: 400; text-anchor: middle; }
+    .formula { fill: #1f2937; font-size: 18px; font-weight: 600; text-anchor: middle; }
+  </style>
+  <rect class="canvas" width="560" height="360" />
+
+  <g id="branches">
+    <line class="edge--processed" x1="260" y1="88" x2="101" y2="214" />
+    <line class="edge" x1="269" y1="96" x2="219" y2="208" />
+    <line class="edge--current" x1="295" y1="93" x2="385" y2="209" />
+    <line class="edge" x1="302" y1="88" x2="479" y2="214" />
+
+    <text class="branch-label branch-label--processed" x="143" y="137">此前最长链</text>
+    <text class="branch-label branch-label--processed" x="143" y="163">f[u]</text>
+    <text class="branch-label branch-label--current" x="370" y="137">当前儿子链</text>
+    <text class="branch-label branch-label--current" x="370" y="163">f[v] + w</text>
+    <text class="role-label" x="225" y="184">其他</text>
+    <text class="role-label" x="473" y="184">其他</text>
+  </g>
+
+  <g id="nodes">
+    <text class="role-label" x="280" y="26">路径最高点</text>
+    <circle class="node--focus" cx="280" cy="72" r="26" />
+    <circle class="node--processed" cx="80" cy="230" r="26" />
+    <circle class="node" cx="210" cy="230" r="22" />
+    <circle class="node--current" cx="400" cy="230" r="26" />
+    <circle class="node" cx="500" cy="230" r="22" />
+
+    <text class="label" x="280" y="72">u</text>
+    <text class="label" x="80" y="230">p</text>
+    <text class="label" x="210" y="230">x</text>
+    <text class="label" x="400" y="230">v</text>
+    <text class="label" x="500" y="230">y</text>
+  </g>
+
+  <g id="result">
+    <text class="formula" x="280" y="304">候选路径 = f[u] + f[v] + w(u,v)</text>
+    <text class="role-label" x="280" y="334">两条链来自不同儿子方向</text>
+  </g>
+</svg>
