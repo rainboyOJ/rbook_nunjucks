@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="320" viewBox="0 0 680 320" role="img" aria-labelledby="min-title min-desc">
+  <title id="min-title">从最小点移入超过一半的大块</title>
+  <desc id="min-desc">删除 u 后，右侧连通块 C 有 m 个点且 m 大于 n 的一半。沿边移到 C 中相邻的 v 后，B(v) 小于 m。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .region { stroke-width: 2; stroke-dasharray: 7 6; }
+    .region--rest { fill: #eff6ff; stroke: #94a3b8; }
+    .region--heavy { fill: #fff7ed; stroke: #d97706; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .edge--move { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--current { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--next { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 18px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--secondary { fill: #64748b; font: 400 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--key { font-size: 20px; }
+    .label--heavy { fill: #b45309; }
+    .label--result { fill: #047857; }
+  </style>
+  <defs>
+    <marker id="min-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="680" height="320" />
+  <g id="regions">
+    <rect class="region region--rest" x="24" y="54" width="176" height="224" rx="8" />
+    <rect class="region region--heavy" x="394" y="30" width="262" height="268" rx="8" />
+    <text class="label--secondary" x="112" y="80">其余部分</text>
+    <text class="label label--key" x="112" y="104">n − m</text>
+    <text class="label label--key label--heavy" x="525" y="58">C　m &gt; n/2</text>
+  </g>
+  <g id="tree-edges">
+    <line class="edge" x1="200" y1="166" x2="264" y2="166" />
+    <line class="edge" x1="112" y1="148" x2="178" y2="166" />
+    <line class="edge" x1="112" y1="218" x2="178" y2="166" />
+    <line class="edge--move" x1="316" y1="166" x2="408" y2="166" marker-end="url(#min-arrow)" />
+    <line class="edge" x1="460" y1="166" x2="512" y2="104" />
+    <line class="edge" x1="460" y1="166" x2="516" y2="224" />
+    <line class="edge" x1="512" y1="104" x2="594" y2="82" />
+    <line class="edge" x1="512" y1="104" x2="594" y2="134" />
+    <line class="edge" x1="516" y1="224" x2="594" y2="202" />
+    <line class="edge" x1="516" y1="224" x2="594" y2="254" />
+  </g>
+  <g id="tree-nodes">
+    <circle class="node" cx="112" cy="148" r="22" />
+    <circle class="node" cx="112" cy="218" r="22" />
+    <circle class="node" cx="178" cy="166" r="22" />
+    <circle class="node--current" cx="290" cy="166" r="26" />
+    <circle class="node--next" cx="434" cy="166" r="26" />
+    <circle class="node" cx="512" cy="104" r="22" />
+    <circle class="node" cx="516" cy="224" r="22" />
+    <circle class="node" cx="594" cy="82" r="22" />
+    <circle class="node" cx="594" cy="134" r="22" />
+    <circle class="node" cx="594" cy="202" r="22" />
+    <circle class="node" cx="594" cy="254" r="22" />
+    <text class="label" x="290" y="166">u</text>
+    <text class="label" x="434" y="166">v</text>
+    <text class="label label--key label--result" x="434" y="274">B(v) &lt; m</text>
+  </g>
+</svg>

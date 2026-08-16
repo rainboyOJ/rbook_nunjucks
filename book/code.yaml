@@ -885,6 +885,12 @@ codes:
     language: cpp
     tags: [树形数据结构, 树, 树的重心]
 
+  - id: tree-centroid2
+    path: tree/tree_centroid2.cpp
+    description: tree centroid (B(u) ≤ n/2 判定) | 树的重心（直接判定法）
+    language: cpp
+    tags: [树形数据结构, 树, 树的重心]
+
   - id: dynamic-static
     path: utils/dynamic_static.cpp
     description: dynamic static | 动态化静态（内存池）
