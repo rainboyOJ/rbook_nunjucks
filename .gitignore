@@ -121,3 +121,6 @@ codex_resume
 
 Rbook_ejs_old/
 todo/
+
+# Local article reference research records
+book/pages/**/reference_record/

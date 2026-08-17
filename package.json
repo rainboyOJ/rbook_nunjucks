@@ -31,7 +31,7 @@
     "setup:hooks": "node scripts/setup-git-hooks.mjs",
     "test:api": "npm run build:packages && node --test scripts/include-code.test.mjs scripts/rbook-client.test.mjs scripts/home-navigation.test.mjs && node scripts/test-api-contract.mjs",
     "test:code-template": "npm run build:packages && node --test scripts/load-code-config.test.mjs scripts/code-template-build.test.mjs",
-    "test:validation": "npm run build:packages:compile && node --test scripts/id-contract.test.mjs scripts/pre-check.test.mjs scripts/dev-renderer-assets.test.mjs scripts/serve-fallback.test.mjs",
+    "test:validation": "npm run build:packages:compile && node --test scripts/id-contract.test.mjs scripts/pre-check.test.mjs scripts/reference-record-ignore.test.mjs scripts/dev-renderer-assets.test.mjs scripts/serve-fallback.test.mjs",
     "test:build-gates": "npm run build:packages:compile && node --test --test-concurrency=1 scripts/build-gates.test.mjs",
     "typecheck": "npm run build:packages"
   },

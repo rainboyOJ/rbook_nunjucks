@@ -1,6 +1,6 @@
 ---
 name: rbook-article-writer
-description: 在 rbook 算法电子书项目中编写、扩写或修改算法文章时必须使用这个 skill。用户要求写算法教程、完善草稿、整理题解、补充模板代码、修改 book/pages 下文章、生成 code_template 元数据时都应触发。这个 skill 强制规定：可复用代码模板放在 book/code/ 下，完整代码实现放在对应文章目录的 code/ 下，并在 Markdown 中用 @include-code 引用。
+description: 在 rbook 算法电子书项目中编写、扩写或修改算法文章时必须使用这个 skill。用户要求写算法教程、完善草稿、整理题解、补充模板代码、修改 book/pages 下文章、生成 code_template 元数据时都应触发。执行这些任务时必须同时使用 rbook-reference-research；可复用代码模板放在 book/code/ 下，完整代码实现放在对应文章目录的 code/ 下，并在 Markdown 中用 @include-code 引用。
 ---
 
 # RBook 算法文章写作 Skill
@@ -25,6 +25,7 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 - 写证明时读取 `.github/prompts/极简算式推导流.prompt.md` 和 `.github/prompts/符合人脑证明.md`。
 - 写“应用分类详解”时读取 `.github/prompts/应用分类详解/` 下的相关示例，例如二分查找、树状数组。
 - 创建、重画、迁移或优化手写 SVG 教学图时，必须同时使用 `rbook-svg-diagram`。纯粹优化 DOT 时保留 DOT；只有用户明确要求或确认转换方案后才迁移为 SVG。
+- 编写、扩写、重写或修改文章时，必须同时使用 `rbook-reference-research`。参考源检索、内容取舍、研究记录、来源隔离和最终披露全部遵循该 skill，不要在这里维护重复规则。
 
 还要阅读项目内相近文章：
 
@@ -42,6 +43,7 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
 2. 收集项目上下文。
    - 在 `book/pages/` 里搜索相关讲解。
    - 在 `book/code/` 里搜索已有代码，避免重复创建模板。
+   - 使用 `rbook-reference-research` 完成外部资料研究；这里继续收集 rbook 项目自身的文章、代码和导航上下文。
    - 检查 `book/book.yaml`，确认目标文章是否应该进入首页目录和导航。
    - 新增或重写正式算法教程时，默认必须同步 `book/book.yaml` 的 `chapters`，让文章出现在首页目录中。
    - 只有归档页、草稿页、练习页、题单页、内部参考页，才可以只放在 `glob` 或依赖 `all` 索引；这种情况要在最终说明中写明“不加入目录”的理由。
@@ -322,4 +324,5 @@ node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readF
 - `toc: true` 的文章包含 `[[TOC]]`。
 - “应用分类详解”按问题模型分类，而不是只堆题目。
 - 文章风格简洁、准确，和算法电子书一致。
+- 已完成 `rbook-reference-research` 的检索、研究记录、来源隔离和最终披露检查。
 - 新建或修改的手写 SVG 已通过 `rbook-svg-diagram` 的结构校验、双尺寸预览和可访问性检查。

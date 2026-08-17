@@ -9,6 +9,7 @@ const ignoredNamePatterns = [
   /(^|\/)\./,
   /(^|\/)node_modules\//,
   /(^|\/)草稿/,
+  /(^|\/)reference_record\//,
   /(^|\/)TODO\.md$/i,
   /\.bak$/i,
   /\.backup$/i,

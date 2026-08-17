@@ -1,0 +1,57 @@
+{
+  "skill_name": "rbook-reference-research",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "准备为 rbook 新写一篇 KMP 教程。请先完成本地参考资料研究，重点核对失配跳转、前缀函数和重叠匹配；生成参考记录并给出面向用户的分组说明，但不要把来源写入文章正文。",
+      "expected_output": "检索四个当前资料入口，采用 OI Wiki、cp-algorithms 和 OI Beats 的直接 KMP 资料，正确报告 Competitive Programmer's Handbook 无直接内容，并保持记录与文章来源隔离。",
+      "files": [],
+      "expectations": [
+        "执行记录显示四个当前资料入口都被检索，并读取前三个来源与 KMP 或前缀函数直接相关的文件",
+        "Competitive Programmer's Handbook 已检索 chapter*.tex，但没有把只讲 Trie、哈希或 Z 算法的章节冒充为 KMP 资料",
+        "OI Beats 的当前 docs 已有直接资料，因此没有继续使用 docsOld",
+        "reference_record 按规定结构记录四个来源的检索、采用或未采用内容和独立校验",
+        "最终回复按四个来源分组列出采用文件的绝对路径与用途或无匹配结论，且成品文章不含来源信息"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "准备更新 rbook 的 Link-Cut Tree 文章。请研究全部本地资料源，补充核心不变量、操作边界和实现验证；某个来源没有直接文章时不要采用弱相关内容。生成参考记录和最终分组说明。",
+      "expected_output": "采用 OI Wiki 与 OI Beats 的直接资料，正确报告 cp-algorithms 和 Competitive Programmer's Handbook 无直接 LCT 文章，生成 reference_record，并独立验证关键实现结论。",
+      "files": [],
+      "expectations": [
+        "执行记录显示四个当前资料入口都被检索",
+        "读取并采用 OI Wiki 的 lct.md 与 OI Beats 的动态树.md，不把 cp-algorithms 或 Handbook 中同名但问题模型不同的动态树内容冒充为 LCT 参考",
+        "reference_record 分别记录四个来源的命中、采用或未采用原因",
+        "最终回复按四个来源分组，并明确说明 cp-algorithms 与 Competitive Programmer's Handbook 已检索但无合适直接文章",
+        "关键不变量、边界或代码思路有独立推导、编译或测试证据"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "准备为 rbook 新写一篇 van Emde Boas tree 教程。请完整检索全部本地资料源；如果都没有直接资料，正常完成研究记录与最终说明，不要强行采用整数集合、MEX 或其他弱相关页面。",
+      "expected_output": "依次检索四个当前资料入口以及必要的 oi-beats/docsOld，拒绝弱相关材料，生成 reference_record，并明确报告四个来源都无直接资料。",
+      "files": [],
+      "expectations": [
+        "执行记录显示检索四个当前资料入口，包括 Handbook 的 chapter*.tex",
+        "OI Beats 的当前 docs 无直接资料后继续检索 docsOld",
+        "没有把整数集合、MEX、Trie 或其他弱相关文件列为实际采用资料",
+        "reference_record 记录四个来源均无直接资料及检索证据",
+        "最终回复按四个来源分组说明已检索但未采用，并列出研究记录路径"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "准备更新 rbook 的树状数组教程。请研究全部本地资料源，重点核对 lowbit 管辖区间、前缀和查询、单点更新和下标约定；生成参考记录与最终分组说明，正文中不要出现来源信息。",
+      "expected_output": "检索并采用四个来源的直接树状数组资料，包括 Competitive Programmer's Handbook 的 chapter09.tex，生成结构完整的 reference_record，并保持文章来源隔离。",
+      "files": [],
+      "expectations": [
+        "执行记录显示四个当前资料入口均被检索并读取直接相关正文",
+        "采用 OI Wiki 的 ds/fenwick.md、cp-algorithms 的 data_structures/fenwick.md、OI Beats 的 数据结构/树状数组.md 和 Handbook 的 chapter09.tex",
+        "Handbook 通过 LaTeX 章节标题和 chapter*.tex 正文定位 Binary indexed tree，没有把 book.pdf 当作首选解析对象",
+        "reference_record 按四个来源记录采用内容、差异、独立校验和文章隔离检查",
+        "最终回复按四个来源列出绝对路径与具体用途，成品文章或占位 Markdown 不包含来源信息"
+      ]
+    }
+  ]
+}
