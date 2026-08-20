@@ -879,6 +879,12 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: tree-diameter-dfs
+    path: tree/tree_diameter_dfs.cpp
+    description: tree diameter dfs | 树的直径（两次 DFS，记录路径）
+    language: cpp
+    tags: [树形数据结构, 树, DFS]
+
   - id: tree-diameter-dp
     path: tree/tree_diameter_dp.cpp
     description: tree diameter (tree dp) | 树的直径（树上 DP）

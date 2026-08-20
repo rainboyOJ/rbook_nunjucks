@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "树", "树的直径"]
 categories: ["图论"]
-code_template: [tree-diameter, tree-diameter-dp]
+code_template: [tree-diameter, tree-diameter-dfs, tree-diameter-dp]
 ---
 
 [[TOC]]
@@ -133,7 +133,15 @@ $$
 
 `farthest` 做一次最远点搜索；`solve` 连续调用两次后，直径长度存在 `ans`，端点是 `a`、`b`。
 
+#### 队列写法
+
 @include-code(/code/tree/tree_diameter.cpp, cpp)
+
+#### DFS 写法
+
+如果题目还需要输出直径上的节点，可以使用 DFS 版本。第二次 DFS 会记录 `parent`，从右端点一路跳父节点即可还原整条直径路径。
+
+@include-code(/code/tree/tree_diameter_dfs.cpp, cpp)
 
 ## 方法二：树形 DP
 
