@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "FHQ Treap"]
 categories: ["数据结构"]
-code_template: [fhq-treap]
+code_template: [fhq-treap, fhq-treap-py]
 prerequisites: [bst]
 ---
 
@@ -46,7 +46,7 @@ FHQ Treap 把所有平衡树操作拆成两件事：按条件切开 `split`，�
 
 只要能切开和拼回，其他操作就变成组合题：
 
-```text
+```cpp
 插入 v：split(root, v) -> A, B
        root = merge(merge(A, new(v)), B)
 
@@ -81,14 +81,14 @@ FHQ Treap 把所有平衡树操作拆成两件事：按条件切开 `split`，�
 
 插入：
 
-```text
+```cpp
 split(root, v, x, y)
 root = merge(merge(x, new_node(v)), y)
 ```
 
 删除一个 `v`：
 
-```text
+```cpp
 split(root, v, x, z)
 split(x, v - 1, x, y)
 y = merge(left(y), right(y))
@@ -134,9 +134,29 @@ root = merge(merge(x, y), z)
 - 插入、删除、排名、第 $k$ 小、前驱、后继的期望时间复杂度都是 $O(\log n)$。
 - 空间复杂度是 $O(n)$。
 
-## 代码实现
+## 代码模板
+
+竞赛中可直接复用的数据结构模板（不含 `main`）：
+
+### C++ 模板
 
 @include-code(/code/data-struture/fhq-treap/fhq.cpp, cpp)
+
+### Python 模板
+
+@include-code(/code/data-struture/fhq-treap/fhq.py, py)
+
+## 代码实现
+
+以 [[problem: luogu,P3369]] 【模板】普通平衡树 为例的完整可运行程序。
+
+### C++ 实现
+
+@include-code(./code/p3369.cpp, cpp)
+
+### Python 实现
+
+@include-code(./code/p3369.py, py)
 
 ## 测试用例
 

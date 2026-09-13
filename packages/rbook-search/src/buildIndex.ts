@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import {
   loadCodeConfig,
   requireCodeId,
@@ -144,7 +145,16 @@ export function buildSearchIndex(options: BuildSearchIndexOptions = {}): any {
   return buildIndexPayload(collected.site as Record<string, unknown>, documents, codeConfig.codes, errors, options);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+function isMain() {
+  if (!process.argv[1]) return false;
+  try {
+    return fs.realpathSync(fileURLToPath(import.meta.url)) === fs.realpathSync(path.resolve(process.argv[1]));
+  } catch {
+    return false;
+  }
+}
+
+if (isMain()) {
   const outputPath = process.argv[2] ? path.resolve(process.argv[2]) : searchIndexPath;
   const payload = buildSearchIndex({ outputPath });
   console.log(`Search index written: ${outputPath}`);

@@ -127,7 +127,7 @@ glob:
   - graph/bellman-ford/index.md
   - graph/dfs/index.md
   - graph/MST/index.md
-  - graph/mst/最小生成树.md
+  - graph/MST/最小生成树.md
   - graph/negative_circle/index.md
   - graph/preface.md
   - graph/save/index.md
@@ -598,7 +598,7 @@ chapters:
         path: scc/index.md
       - title: 最小生成树（现有入口）
         english-title: Minimum Spanning Tree
-        path: mst/最小生成树.md
+        path: MST/最小生成树.md
       - title: 严格次小生成树
         english-title: Second Minimum Spanning Tree
         path: MST/严格次小生成树/index.md

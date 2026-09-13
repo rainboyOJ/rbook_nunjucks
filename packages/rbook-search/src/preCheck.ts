@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import {
   loadCodeConfig,
   validateCodeDirectory,
@@ -174,7 +177,16 @@ export function validatePageDocument(
   ];
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+function isMain() {
+  if (!process.argv[1]) return false;
+  try {
+    return fs.realpathSync(fileURLToPath(import.meta.url)) === fs.realpathSync(path.resolve(process.argv[1]));
+  } catch {
+    return false;
+  }
+}
+
+if (isMain()) {
   const result = runPreCheck();
   reportPreCheck(result);
   if (!result.ok) process.exit(1);

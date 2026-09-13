@@ -243,6 +243,12 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: fhq-treap-py
+    path: data-struture/fhq-treap/fhq.py
+    description: fhq | FHQ-Treap（无旋平衡树，Python）
+    language: py
+    tags: [数据结构]
+
   - id: heap
     path: data-struture/heap堆.cpp
     description: heap | 堆
