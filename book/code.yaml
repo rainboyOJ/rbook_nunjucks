@@ -249,6 +249,12 @@ codes:
     language: py
     tags: [数据结构]
 
+  - id: fhq-treap-functional-py
+    path: data-struture/fhq-treap/fhq-functional.py
+    description: fhq functional | FHQ-Treap（函数式 / 可持久化，Python）
+    language: py
+    tags: [数据结构]
+
   - id: heap
     path: data-struture/heap堆.cpp
     description: heap | 堆

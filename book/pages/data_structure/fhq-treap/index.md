@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "FHQ Treap"]
 categories: ["数据结构"]
-code_template: [fhq-treap, fhq-treap-py]
+code_template: [fhq-treap, fhq-treap-py, fhq-treap-functional-py]
 prerequisites: [bst]
 ---
 
@@ -145,6 +145,10 @@ root = merge(merge(x, y), z)
 ### Python 模板
 
 @include-code(/code/data-struture/fhq-treap/fhq.py, py)
+
+### Python 函数式 / 可持久化模板
+
+@include-code(/code/data-struture/fhq-treap/fhq-functional.py, py)
 
 ## 代码实现
 
