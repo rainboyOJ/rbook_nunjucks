@@ -534,6 +534,60 @@
     }, { passive: true });
   }
 
+  async function copyToClipboard(value) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(value);
+        return true;
+      } catch {
+        // Some browsers expose Clipboard API but still reject a write.
+      }
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = value;
+    textarea.setAttribute('readonly', '');
+    textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+    document.body.append(textarea);
+    textarea.select();
+    let copied = false;
+    try {
+      copied = document.execCommand('copy');
+    } catch {
+      copied = false;
+    }
+    textarea.remove();
+    return copied;
+  }
+
+  function initArticleIdCopy() {
+    const controls = Array.from(document.querySelectorAll('.J_copyArticleId'));
+    controls.forEach((control) => {
+      const id = control.dataset.copyArticleId || '';
+      if (!id) return;
+      const initialLabel = control.getAttribute('aria-label') || '复制文章 ID';
+      const initialTitle = control.getAttribute('title') || '复制文章 ID';
+      const feedback = control.querySelector('.article-copy-feedback');
+      let resetTimer;
+      control.addEventListener('click', async () => {
+        window.clearTimeout(resetTimer);
+        const copied = await copyToClipboard(id);
+        const state = copied ? 'success' : 'failure';
+        control.classList.remove('is-copy-success', 'is-copy-failure');
+        control.classList.add(`is-copy-${state}`);
+        if (feedback) feedback.textContent = copied ? '已复制' : '复制失败，请手动复制 ID';
+        control.setAttribute('aria-label', copied ? '文章 ID 已复制' : '复制失败，请手动复制 ID');
+        control.title = copied ? '文章 ID 已复制' : '复制失败，请手动复制 ID';
+        resetTimer = window.setTimeout(() => {
+          control.classList.remove('is-copy-success', 'is-copy-failure');
+          if (feedback) feedback.textContent = '';
+          control.setAttribute('aria-label', initialLabel);
+          control.title = initialTitle;
+        }, 1500);
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initMoreMenu();
@@ -547,5 +601,6 @@
     initArticleNavigation();
     hydratePrerequisites();
     initMobileToolbar();
+    initArticleIdCopy();
   });
 })();

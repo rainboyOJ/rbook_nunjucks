@@ -17,7 +17,12 @@ mixin renderList(items, parentPath)
             i.fa.fa-folder-open-o
             a.menu-no-link(href="javascript:void(0);")= displayTitle
           else
-            i.fa.fa-file-text
+            if item.id
+              button.menu-copy-id.J_copyArticleId(type="button" data-copy-article-id=item.id aria-label=`复制文章 ID：${item.id}` title="复制文章 ID")
+                i.fa.fa-file-text(aria-hidden="true")
+                span.article-copy-feedback(aria-live="polite" aria-atomic="true")
+            else
+              i.fa.fa-file-text(aria-hidden="true")
             a(href=menuLink(currentPath))= displayTitle
           if item.sections
             +renderList(item.sections, currentPath + '/')

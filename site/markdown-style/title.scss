@@ -19,6 +19,59 @@
   text-align: start;
 }
 
+.article-id-copy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  margin: -3px 0 13px;
+  padding: 3px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-align: left;
+}
+
+.article-id-copy:hover {
+  border-color: var(--link-color);
+  color: var(--link-color);
+}
+
+.article-id-copy-label {
+  display: inline-flex;
+  gap: 0.45em;
+}
+
+.article-id-copy-prefix {
+  color: var(--text-tertiary);
+  font-family: var(--base-font);
+}
+
+.article-id-copy code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+
+.article-copy-feedback {
+  display: none;
+}
+
+.J_copyArticleId.is-copy-success .article-id-copy-label,
+.J_copyArticleId.is-copy-failure .article-id-copy-label,
+.J_copyArticleId.is-copy-success > .fa,
+.J_copyArticleId.is-copy-failure > .fa {
+  display: none;
+}
+
+.J_copyArticleId.is-copy-success .article-copy-feedback,
+.J_copyArticleId.is-copy-failure .article-copy-feedback {
+  display: inline;
+}
+
 .article-breadcrumb {
   display: flex;
   align-items: center;
@@ -104,6 +157,10 @@
     margin-top: 10px;
     font-size: 28px;
     line-height: 1.3;
+  }
+
+  .article-id-copy {
+    margin-bottom: 12px;
   }
 
   .article-description {

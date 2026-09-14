@@ -245,7 +245,38 @@ class rbook {
     }
 
     renderMenu() {
-        return renderTemplate(themeDir, 'partials/menu', this.config);
+        return renderTemplate(themeDir, 'partials/menu', {
+            ...this.config,
+            chapters: this.menuChaptersWithArticleIds(this.config.chapters)
+        });
+    }
+
+    // book.yaml 的菜单项只保存路径；在生成首页菜单时补上文章 front matter 中的公共 ID。
+    // 这样菜单按钮复制的是文章 ID，而非不稳定的文件路径。
+    menuChaptersWithArticleIds(chapters: BookChapter[] = [], basePath = ''): BookChapter[] {
+        return chapters.map((item) => {
+            const menuItem: BookChapter = { ...item };
+            if (!item.path) return menuItem;
+
+            if (Array.isArray(item.sections)) {
+                const childBasePath = basePath ? path.join(basePath, item.path) : item.path;
+                menuItem.sections = this.menuChaptersWithArticleIds(item.sections, childBasePath);
+                return menuItem;
+            }
+
+            if (item.type === 'info' || item.nolink) return menuItem;
+            const filePath = this.checkMarkdownFile(basePath, item.path);
+            if (!filePath) return menuItem;
+
+            const md = new markdown(path.join(bookDir, filePath), {
+                baseDir: contentDir,
+                codeDir: codeTemplateDir,
+                resolveCodeId: (id: string) => this.codeTemplatesById.get(id) || null
+            });
+            const id = (md.front_matter as Record<string, unknown>).id;
+            if (typeof id === 'string' && id.trim()) menuItem.id = id.trim();
+            return menuItem;
+        });
     }
 
     renderIndex() {

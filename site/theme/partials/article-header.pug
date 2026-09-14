@@ -2,6 +2,7 @@
 - const article_tags = Array.isArray(front_matter.tags) ? front_matter.tags.filter(Boolean) : []
 - const article_categories = Array.isArray(front_matter.categories) ? front_matter.categories.filter(Boolean) : []
 - const article_prerequisites = Array.isArray(front_matter.prerequisites) ? front_matter.prerequisites.filter(Boolean) : []
+- const article_id = typeof front_matter.id === 'string' ? front_matter.id.trim() : ''
 
 header.page-header.article-header
   nav.article-breadcrumb(aria-label="面包屑")
@@ -10,6 +11,12 @@ header.page-header.article-header
       i.fa.fa-angle-right(aria-hidden="true")
       span= article_categories[0]
   h1= front_matter.title
+  if article_id
+    button.article-id-copy.J_copyArticleId(type="button" data-copy-article-id=article_id aria-label=`复制文章 ID：${article_id}` title="复制文章 ID")
+      span.article-id-copy-label
+        span.article-id-copy-prefix ID:
+        code= article_id
+      span.article-copy-feedback(aria-live="polite" aria-atomic="true")
   if article_description
     p.article-description= article_description
   if article_tags.length

@@ -225,8 +225,33 @@
 }
 
 // 文件图标与菜单标题之间留出间距。
-.chapter-list li > i.fa + a {
+.chapter-list li > i.fa + a,
+.chapter-list li > .menu-copy-id + a {
     margin-left: 0.45rem;
+}
+
+.menu-copy-id {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3em;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+.menu-copy-id:hover {
+  color: var(--link-color);
+}
+
+.menu-copy-id .article-copy-feedback {
+  font-size: 0.78em;
+  font-weight: normal;
+  white-space: nowrap;
 }
 
 [data-darkmode="dark"] .chapter-list li.folder:before {
