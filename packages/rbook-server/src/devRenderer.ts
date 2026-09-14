@@ -15,6 +15,7 @@ import {
 } from '@rbook/search/preCheck';
 import { loadPageDocument } from '@rbook/search/markdownText';
 import { compileMarkdownCss } from './buildRuntime.js';
+import Pcs2Service, { type Pcs2Problem } from './services/pcs2Service.js';
 
 export interface DevResponse {
   statusCode: number;
@@ -146,14 +147,16 @@ export class DevRenderer {
   private readonly codes: PreCheckContext['codes'];
   private readonly pageValidationCache = new Map<string, PageValidationCacheEntry>();
   private readonly diagnostics = new Map<string, DiagnosticIssue>();
+  private readonly pcs2: Pcs2Service;
   private dotAvailable: boolean | null = null;
   private dotCache = new Map<string, DotCacheEntry>();
 
-  constructor(context?: PreCheckContext) {
+  constructor(context?: PreCheckContext, pcs2: Pcs2Service = new Pcs2Service()) {
     const preCheck = context || assertPreCheckContext();
     this.pages = preCheck.pages;
     this.pagesByPath = new Map(preCheck.pages.map((page) => [page.path, page]));
     this.codes = preCheck.codes;
+    this.pcs2 = pcs2;
     this.book = new rbook({
       config: preCheck.site,
       codeTemplates: preCheck.codes
@@ -262,7 +265,7 @@ export class DevRenderer {
     }
   }
 
-  private pageResponse(pathname: string): DevResponse | null {
+  private async pageResponse(pathname: string): Promise<DevResponse | null> {
     const page = pagePathForUrl(pathname);
     if (!page) return this.notFound(pathname);
 
@@ -285,7 +288,13 @@ export class DevRenderer {
 
     this.validatePage(indexedPage, sourcePath);
 
-    const html = book.renderMarkdownFile(page.relativePath, page.template);
+    const articleId = typeof indexedPage.frontMatter?.id === 'string'
+      ? indexedPage.frontMatter.id.trim()
+      : '';
+    const pcs2Problems: Pcs2Problem[] = articleId
+      ? await this.pcs2.getProblems(articleId)
+      : [];
+    const html = book.renderMarkdownFile(page.relativePath, page.template, { pcs2Problems });
     if (html === null) {
       return this.notFound(pathname, sourcePath);
     }
@@ -379,7 +388,7 @@ export class DevRenderer {
     };
   }
 
-  render(requestUrl: string): DevResponse | null {
+  async render(requestUrl: string): Promise<DevResponse | null> {
     const pathname = parsePath(requestUrl);
     if (!pathname) return this.notFound(requestUrl);
 

@@ -21,6 +21,73 @@
   hyphens: none;
 }
 
+.reading-page .pcs2-problem-list {
+  width: 100%;
+  max-width: 720px;
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+}
+
+.reading-page .pcs2-problem-list h2 {
+  margin: 0 0 16px;
+  color: var(--text-primary);
+  font-size: 1.45em;
+  line-height: 1.35;
+}
+
+.reading-page .pcs2-problem-list__items {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reading-page .pcs2-problem-list__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 4px 12px;
+  align-items: baseline;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--surface-subtle);
+}
+
+.reading-page .pcs2-problem-list__link {
+  min-width: 0;
+  color: var(--link-color);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.reading-page .pcs2-problem-list__id,
+.reading-page .pcs2-problem-list__difficulty,
+.reading-page .pcs2-problem-list__tags {
+  color: var(--text-secondary);
+  font-size: 0.82em;
+}
+
+.reading-page .pcs2-problem-list__tags {
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .reading-page .pcs2-problem-list__item {
+    grid-template-columns: 1fr auto;
+  }
+
+  .reading-page .pcs2-problem-list__link {
+    grid-column: 1 / -1;
+  }
+
+  .reading-page .pcs2-problem-list__tags {
+    grid-column: 1 / -1;
+  }
+}
+
 .reading-page .markdown-body > :first-child:not(.table-of-contents) {
   margin-top: 0;
 }

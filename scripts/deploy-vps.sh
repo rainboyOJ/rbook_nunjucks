@@ -10,6 +10,10 @@ CONTAINER_NAME="${CONTAINER_NAME:?missing CONTAINER_NAME}"
 HOST_PORT="${HOST_PORT:?missing HOST_PORT}"
 CONTAINER_PORT="${CONTAINER_PORT:?missing CONTAINER_PORT}"
 RBOOK_ADMIN_TOKEN="${RBOOK_ADMIN_TOKEN:-}"
+DOCKER_NETWORK="${DOCKER_NETWORK:-rbook-services}"
+PCS2_CONTAINER_NAME="${PCS2_CONTAINER_NAME:-problems-solution}"
+PCS2_API_BASE_URL="${PCS2_API_BASE_URL:-http://problems-solution:3000}"
+PCS2_PUBLIC_BASE_URL="${PCS2_PUBLIC_BASE_URL:-https://pcs2.roj.ac.cn}"
 VPS_REPO_DIR="${VPS_REPO_DIR:?missing VPS_REPO_DIR}"
 VPS_REPO_BRANCH="${VPS_REPO_BRANCH:?missing VPS_REPO_BRANCH}"
 VPS_REPO_URL="${VPS_REPO_URL:?missing VPS_REPO_URL}"
@@ -26,6 +30,31 @@ if ! flock -x -w 1800 9; then
   exit 1
 fi
 echo "Acquired deploy lock $LOCK_FILE"
+
+ensure_docker_network() {
+  if ! docker network inspect "$DOCKER_NETWORK" >/dev/null 2>&1; then
+    echo "Creating Docker network $DOCKER_NETWORK"
+    docker network create "$DOCKER_NETWORK" >/dev/null
+  fi
+
+  if ! docker inspect "$PCS2_CONTAINER_NAME" >/dev/null 2>&1; then
+    echo "PCS2 container $PCS2_CONTAINER_NAME is not present; continuing without network attachment" >&2
+    return 0
+  fi
+
+  local attached=false network_name
+  while IFS= read -r network_name; do
+    if [[ "$network_name" == "$DOCKER_NETWORK" ]]; then
+      attached=true
+      break
+    fi
+  done < <(docker inspect --format '{{range $name, $_ := .NetworkSettings.Networks}}{{$name}}{{"\n"}}{{end}}' "$PCS2_CONTAINER_NAME")
+
+  if [[ "$attached" != true ]]; then
+    echo "Connecting $PCS2_CONTAINER_NAME to $DOCKER_NETWORK"
+    docker network connect "$DOCKER_NETWORK" "$PCS2_CONTAINER_NAME"
+  fi
+}
 
 init_content_repo() {
   if [ ! -d "$VPS_REPO_DIR/.git" ]; then
@@ -74,6 +103,7 @@ verify_runtime_build() {
   docker rm -f "$test_name" >/dev/null 2>&1 || true
   docker run --rm \
     --name "$test_name" \
+    --network "$DOCKER_NETWORK" \
     -e NODE_ENV=production \
     -e RBOOK_CONTENT_DIR=/content \
     -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
@@ -87,11 +117,14 @@ restart_container() {
   docker run -d \
     --name "$CONTAINER_NAME" \
     --restart unless-stopped \
+    --network "$DOCKER_NETWORK" \
     -p "${HOST_PORT}:${CONTAINER_PORT}" \
     -e NODE_ENV=production \
     -e HOST=0.0.0.0 \
     -e PORT="$CONTAINER_PORT" \
     -e RBOOK_ADMIN_TOKEN="$RBOOK_ADMIN_TOKEN" \
+    -e PCS2_API_BASE_URL="$PCS2_API_BASE_URL" \
+    -e PCS2_PUBLIC_BASE_URL="$PCS2_PUBLIC_BASE_URL" \
     -e RBOOK_CONTENT_DIR=/content \
     -e RBOOK_RUNTIME_DIR=/tmp/rbook-runtime \
     -e RBOOK_DOCS_DIR=/docs \
@@ -150,6 +183,7 @@ wait_for_health() {
 }
 
 init_content_repo
+ensure_docker_network
 select_image
 verify_runtime_build
 restart_container

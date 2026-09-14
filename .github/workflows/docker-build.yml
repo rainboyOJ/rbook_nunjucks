@@ -17,6 +17,13 @@ on:
       - 'site/widgets/**'
       - 'build_all_dot_file.py'
       - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'docker-compose*.yml'
+      - 'scripts/deploy-vps.sh'
+      - 'deploy.sh'
+      - '.github/workflows/docker-build.yml'
+      - '.github/workflows/deploy-vps.yml'
+      - '.github/workflows/content-deploy.yml'
   workflow_dispatch:
 
 permissions:

@@ -207,7 +207,7 @@ async function main() {
     );
     assert.match(describedPage.markdown, /^---\nid: "jump-lca"/);
     assert.equal(describedPage.markdown.includes('@include-code('), false);
-    assert.match(describedPage.markdown, /```cpp\n#include <bits\/stdc\+\+\.h>/);
+    assert.match(describedPage.markdown, /```cpp\n#include <algorithm>/);
 
     const codeIdPageResponse = await app.inject('/api/pages?id=ek');
     assertApiResponse(codeIdPageResponse, 200);

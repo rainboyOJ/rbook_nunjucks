@@ -35,7 +35,7 @@ test('development renderer serves article image assets', async (t) => {
     '/data_structure/BIT/BITn7.png',
     '/data_structure/BIT/images/BITn9.png'
   ]) {
-    const response = renderer.render(imageUrl);
+    const response = await renderer.render(imageUrl);
 
     assert.equal(response?.statusCode, 200, imageUrl);
     assert.equal(response?.contentType, 'image/png', imageUrl);

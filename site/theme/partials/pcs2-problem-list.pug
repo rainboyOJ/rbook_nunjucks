@@ -1,0 +1,13 @@
+if Array.isArray(pcs2Problems) && pcs2Problems.length
+  section.pcs2-problem-list(aria-labelledby="pcs2-problem-list-title")
+    h2#pcs2-problem-list-title 相关练习题
+    ul.pcs2-problem-list__items
+      each problem in pcs2Problems
+        li.pcs2-problem-list__item
+          a.pcs2-problem-list__link(href=problem.url target="_blank" rel="noopener noreferrer")
+            span.pcs2-problem-list__title= problem.title || `${problem.oj} ${problem.problem_id}`
+          span.pcs2-problem-list__id= `${problem.oj} / ${problem.problem_id}`
+          if problem.difficulty
+            span.pcs2-problem-list__difficulty= problem.difficulty
+          if Array.isArray(problem.tags) && problem.tags.length
+            span.pcs2-problem-list__tags= problem.tags.join('、')

@@ -24,6 +24,10 @@ env:
   VPS_REPO_DIR: /opt/rbook/rbook_nunjucks
   VPS_REPO_BRANCH: main
   VPS_REPO_URL: https://gh-proxy.com/https://github.com/${{ github.repository }}.git
+  DOCKER_NETWORK: rbook-services
+  PCS2_CONTAINER_NAME: problems-solution
+  PCS2_API_BASE_URL: http://problems-solution:3000
+  PCS2_PUBLIC_BASE_URL: https://pcs2.roj.ac.cn
 
 jobs:
   deploy:
@@ -34,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.ref }}
 
       - name: Set image metadata
         id: meta
@@ -71,6 +77,10 @@ jobs:
           VPS_REPO_DIR: ${{ env.VPS_REPO_DIR }}
           VPS_REPO_BRANCH: ${{ env.VPS_REPO_BRANCH }}
           VPS_REPO_URL: ${{ env.VPS_REPO_URL }}
+          DOCKER_NETWORK: ${{ env.DOCKER_NETWORK }}
+          PCS2_CONTAINER_NAME: ${{ env.PCS2_CONTAINER_NAME }}
+          PCS2_API_BASE_URL: ${{ env.PCS2_API_BASE_URL }}
+          PCS2_PUBLIC_BASE_URL: ${{ env.PCS2_PUBLIC_BASE_URL }}
         run: |
           REMOTE_SCRIPT="/tmp/rbook-deploy-vps-${GITHUB_SHA}.sh"
           scp \
@@ -89,4 +99,4 @@ jobs:
             -o ServerAliveCountMax=10 \
             -o TCPKeepAlive=yes \
             "$VPS_USER@$VPS_HOST" \
-            "DEPLOY_MODE='image' IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' VPS_REPO_URL='$VPS_REPO_URL' bash '$REMOTE_SCRIPT'"
+            "DEPLOY_MODE='image' IMAGE='$IMAGE' CONTAINER_NAME='$CONTAINER_NAME' HOST_PORT='$HOST_PORT' CONTAINER_PORT='$CONTAINER_PORT' RBOOK_ADMIN_TOKEN='$RBOOK_ADMIN_TOKEN' VPS_REPO_DIR='$VPS_REPO_DIR' VPS_REPO_BRANCH='$VPS_REPO_BRANCH' VPS_REPO_URL='$VPS_REPO_URL' DOCKER_NETWORK='$DOCKER_NETWORK' PCS2_CONTAINER_NAME='$PCS2_CONTAINER_NAME' PCS2_API_BASE_URL='$PCS2_API_BASE_URL' PCS2_PUBLIC_BASE_URL='$PCS2_PUBLIC_BASE_URL' bash '$REMOTE_SCRIPT'"

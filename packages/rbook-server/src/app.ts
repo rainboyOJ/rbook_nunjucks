@@ -44,7 +44,7 @@ export async function createApp(options: CreateAppOptions = {}) {
       if (request.method !== 'GET' && request.method !== 'HEAD') return;
 
       try {
-        const result: DevResponse | null = options.devRenderer!.render(request.url);
+        const result: DevResponse | null = await options.devRenderer!.render(request.url);
         if (!result) return;
         reply
           .code(result.statusCode)

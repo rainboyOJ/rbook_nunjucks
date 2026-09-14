@@ -13,7 +13,7 @@ Markdown 源文件
   -> Fastify 同时服务静态站和 /api/*
   -> Docker 镜像推送到 GHCR
   -> GitHub Actions SSH 到 bohai
-  -> bohai 通过 gh-proxy.org/docker/ghcr.io 拉镜像并重启容器
+  -> bohai 通过 ghcr.nju.edu.cn/ghcr.io 拉镜像并重启容器
 ```
 
 这样浏览器仍然访问原电子书页面，agent 可以通过 HTTP API 查询知识库内容。
@@ -237,7 +237,7 @@ python3 scripts/rbook.py --baseurl http://127.0.0.1:3000 find "二分 答案" --
   -> push ghcr.io/<owner>/<repo>:latest
   -> SSH 到 bohai
   -> VPS sparse checkout book/ docs/
-  -> docker pull gh-proxy.org/docker/ghcr.io/<owner>/<repo>:<sha>
+  -> docker pull ghcr.nju.edu.cn/ghcr.io/<owner>/<repo>:<sha>
   -> docker rm -f rbook
   -> docker run -d --restart unless-stopped -v /opt/rbook/rbook_nunjucks/book:/content:ro ...
 
@@ -250,16 +250,16 @@ python3 scripts/rbook.py --baseurl http://127.0.0.1:3000 find "二分 答案" --
   -> docker run -d --restart unless-stopped -v /opt/rbook/rbook_nunjucks/book:/content:ro ...
 ```
 
-注意：镜像推送到官方 GHCR，bohai 拉取时使用 `gh-proxy.org/docker/` 前缀：
+注意：镜像推送到官方 GHCR，bohai 拉取时使用 `ghcr.nju.edu.cn/ghcr.io/` 镜像地址：
 
 ```text
-gh-proxy.org/docker/ghcr.io/<owner>/<repo>:<sha>
+ghcr.nju.edu.cn/ghcr.io/<owner>/<repo>:<sha>
 ```
 
 这和下面这种形式一致：
 
 ```bash
-docker pull gh-proxy.org/docker/ghcr.io/rainboyoj/rbook_nunjucks:latest
+docker pull ghcr.nju.edu.cn/ghcr.io/rainboyoj/rbook_nunjucks:latest
 ```
 
 ## GitHub Secrets
@@ -335,7 +335,7 @@ server {
 3. bohai 是否能执行：
 
    ```bash
-   docker pull gh-proxy.org/docker/ghcr.io/<owner>/<repo>:latest
+   docker pull ghcr.nju.edu.cn/ghcr.io/<owner>/<repo>:latest
    ```
 
 4. `RBOOK_HOST_PORT` 是否被占用。
@@ -352,7 +352,7 @@ docker images | grep rbook
 或在 GitHub Packages 页面找到上一个 SHA tag，然后在 bohai 执行：
 
 ```bash
-docker pull ghcr.nju.edu.cn/<owner>/<repo>:<old-sha>
+docker pull ghcr.nju.edu.cn/ghcr.io/<owner>/<repo>:<old-sha>
 docker rm -f rbook
 docker run -d \
   --name rbook \
@@ -361,7 +361,7 @@ docker run -d \
   -e NODE_ENV=production \
   -e HOST=0.0.0.0 \
   -e PORT=3000 \
-  ghcr.nju.edu.cn/<owner>/<repo>:<old-sha>
+  ghcr.nju.edu.cn/ghcr.io/<owner>/<repo>:<old-sha>
 ```
 
 ## 设计取舍
@@ -373,3 +373,21 @@ docker run -d \
 - 限制：`find` 只查文章 ID、标题、描述和标签，不查正文。
 
 后续如果重新需要语义检索，应作为独立功能设计其存储、索引和 API 契约，不在当前元数据索引中保留预设结构。
+
+# PCS2 内网题目列表
+
+rbook 的文章页会在服务端按文章 `id` 请求 PCS2 的 `showAtRbook` 题目列表。rbook 与 PCS2 使用独立 Compose 项目时，两个容器必须加入同一个用户自定义网络。`scripts/deploy-vps.sh` 会自动创建网络（若不存在）并尝试连接现有的 PCS2 容器：
+
+```bash
+docker network create rbook-services
+```
+
+rbook Compose 和 VPS 脚本默认使用 `rbook-services`、`http://problems-solution:3000` 以及 `PCS2_CONTAINER_NAME=problems-solution`。PCS2 Compose 中的服务名必须保持为 `problems-solution`。读者点击题目时使用 `PCS2_PUBLIC_BASE_URL`（默认 `https://pcs2.roj.ac.cn`），不要把容器内地址暴露到页面。
+
+如果部署环境不能使用共享 Docker network，可分别设置：
+
+```yaml
+environment:
+  PCS2_API_BASE_URL: https://pcs2.roj.ac.cn
+  PCS2_PUBLIC_BASE_URL: https://pcs2.roj.ac.cn
+```

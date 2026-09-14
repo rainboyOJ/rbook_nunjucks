@@ -9,5 +9,14 @@ services:
       NODE_ENV: production
       HOST: 0.0.0.0
       PORT: 3000
+      PCS2_API_BASE_URL: ${PCS2_API_BASE_URL:-http://problems-solution:3000}
+      PCS2_PUBLIC_BASE_URL: ${PCS2_PUBLIC_BASE_URL:-https://pcs2.roj.ac.cn}
       # Set this if /api/admin/reindex should require a token.
       # RBOOK_ADMIN_TOKEN: change-me
+    networks:
+      - rbook-services
+
+networks:
+  rbook-services:
+    external: true
+    name: ${RBOOK_SERVICES_NETWORK:-rbook-services}
