@@ -214,4 +214,4 @@ for workflow in "${expected_workflows[@]}"; do
 done
 
 echo "[deploy] 部署成功: $head_sha"
-announce "部署完成"
+announce "主人,R book 部署完成!"
