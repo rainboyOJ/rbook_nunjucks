@@ -131,7 +131,7 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
     };
   });
 
-  app.get('/api/catalog', async (request) => {
+  app.get('/api/catalog', async (request, reply) => {
     const index = getIndexPayload();
     const query = getQuery(request);
     const compact = query.compact === 'true';
@@ -149,11 +149,15 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
           source: page.source
         }));
 
-    return {
+    const result = {
       generatedAt: index.generatedAt,
       total: items.length,
       items
     };
+    if (process.env.NODE_ENV === 'production') {
+      reply.header('Cache-Control', 'public, max-age=60');
+    }
+    return result;
   });
 
   app.get('/api/pages', async (request, reply) => {

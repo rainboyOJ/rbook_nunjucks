@@ -21,9 +21,9 @@ function parseJson(response) {
   return JSON.parse(response.body);
 }
 
-function assertApiResponse(response, statusCode) {
+function assertApiResponse(response, statusCode, cacheControl = 'no-store') {
   assert.equal(response.statusCode, statusCode);
-  assert.equal(response.headers['cache-control'], 'no-store');
+  assert.equal(response.headers['cache-control'], cacheControl);
 }
 
 function assertRelativeUrl(url, label) {
@@ -157,6 +157,16 @@ async function main() {
     assertRelativeUrl(dsuCatalogPage.url, 'catalog page URL');
     assertPayloadUrls(catalog);
     assertNoLocalLeak(catalog, 'catalog response');
+
+    const originalNodeEnv = process.env.NODE_ENV;
+    try {
+      process.env.NODE_ENV = 'production';
+      const productionCatalogResponse = await app.inject('/api/catalog?compact=true');
+      assertApiResponse(productionCatalogResponse, 200, 'public, max-age=60');
+    } finally {
+      if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
+      else process.env.NODE_ENV = originalNodeEnv;
+    }
 
     const fullCatalogResponse = await app.inject('/api/catalog?includeHidden=true');
     assertApiResponse(fullCatalogResponse, 200);

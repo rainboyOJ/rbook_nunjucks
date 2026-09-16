@@ -12,6 +12,8 @@
 ## 1. GET /api/catalog
 返回文章目录与基本结构。默认只返回目录可见文章；`?includeHidden=true` 返回全部已索引文章。支持使用 `?compact=true` 返回极简数据，优化 Token 消耗。
 
+开发环境的目录响应使用 `Cache-Control: no-store`；生产环境的 `GET /api/catalog` 使用 `Cache-Control: public, max-age=60`。其他公共 API 保持 `no-store`。
+
 **请求示例**：
 ```bash
 curl "$BASE_URL/api/catalog?compact=true"
