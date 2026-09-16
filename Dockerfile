@@ -1,4 +1,4 @@
-FROM node:22-bookworm-slim AS deps
+FROM node:24-bookworm-slim AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -9,7 +9,7 @@ COPY packages/rbook-search/package.json ./packages/rbook-search/package.json
 COPY packages/rbook-server/package.json ./packages/rbook-server/package.json
 RUN npm ci --legacy-peer-deps
 
-FROM node:22-bookworm-slim AS runtime
+FROM node:24-bookworm-slim AS runtime
 WORKDIR /app
 
 ENV NODE_ENV=production
