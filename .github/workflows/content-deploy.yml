@@ -39,13 +39,45 @@ jobs:
       - name: Prepare SSH
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
           VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT || '22' }}
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
+          set -euo pipefail
           mkdir -p ~/.ssh
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "$VPS_SSH_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+          # ssh-keyscan 在端口不可达时既不报错也不输出，只是静默等满超时再退出 1。
+          # runner 到 VPS 偶发网络抖动时，一次失败不应该让整个部署失败。
+          max_attempts=5
+          for attempt in $(seq 1 "$max_attempts"); do
+            if ssh-keyscan -T 10 -p "$VPS_SSH_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts 2>/dev/null; then
+              echo "ssh-keyscan ok (attempt ${attempt}/${max_attempts})"
+              break
+            fi
+            if [ "$attempt" = "$max_attempts" ]; then
+              echo "::error::ssh-keyscan $VPS_HOST:$VPS_SSH_PORT failed after ${max_attempts} attempts" >&2
+              exit 1
+            fi
+            backoff=$(( attempt * 5 ))
+            echo "ssh-keyscan attempt ${attempt} failed; retry in ${backoff}s" >&2
+            sleep "$backoff"
+          done
+
+          # 提前确认真的能登录，避免部署走到一半才失败。
+          for attempt in 1 2 3; do
+            if ssh -p "$VPS_SSH_PORT" -i ~/.ssh/deploy_key -o BatchMode=yes -o ConnectTimeout=15 -o ConnectionAttempts=3 -o StrictHostKeyChecking=accept-new "$VPS_USER@$VPS_HOST" true; then
+              echo "ssh connectivity ok (attempt ${attempt}/3)"
+              break
+            fi
+            if [ "$attempt" = 3 ]; then
+              echo "::error::cannot ssh $VPS_USER@$VPS_HOST:$VPS_SSH_PORT" >&2
+              exit 1
+            fi
+            echo "ssh probe attempt ${attempt} failed; retry in 10s" >&2
+            sleep 10
+          done
 
       - name: Deploy content on VPS
         env:
@@ -69,6 +101,9 @@ jobs:
           scp \
             -P "$VPS_SSH_PORT" \
             -i ~/.ssh/deploy_key \
+            -o ConnectTimeout=15 \
+            -o ConnectionAttempts=3 \
+            -o StrictHostKeyChecking=accept-new \
             -o ServerAliveInterval=30 \
             -o ServerAliveCountMax=10 \
             -o TCPKeepAlive=yes \
@@ -78,6 +113,9 @@ jobs:
           ssh \
             -p "$VPS_SSH_PORT" \
             -i ~/.ssh/deploy_key \
+            -o ConnectTimeout=15 \
+            -o ConnectionAttempts=3 \
+            -o StrictHostKeyChecking=accept-new \
             -o ServerAliveInterval=30 \
             -o ServerAliveCountMax=10 \
             -o TCPKeepAlive=yes \
