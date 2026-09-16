@@ -326,6 +326,51 @@ server {
 }
 ```
 
+### 宝塔反向代理里的 Cache-Control 陷阱
+
+线上 rbook2.roj.ac.cn 的反向代理是宝塔面板生成的：
+`/www/server/panel/vhost/nginx/proxy/rbook2.roj.ac.cn/<hash>_rbook2.roj.ac.cn.conf`。
+面板里“缓存”开关关闭时，默认模板会在 `location ^~ /` 里追加：
+
+```nginx
+    if ( $static_filexxxxxxxx = 0 )
+    {
+        add_header Cache-Control no-cache;
+    }
+```
+
+应用自己已经给出缓存策略（`/api/catalog` 为 `public, max-age=60`，页面和其它 API 为 `no-store`），
+nginx 再追加一个 `no-cache` 就变成两个 `Cache-Control` 头，客户端合并后 `no-cache` 把 `max-age` 抵消掉，
+应用侧配的 60 秒缓存等于没配；而且 `if` 块里的 `add_header` 会覆盖同 location 的
+`add_header X-Cache $upstream_cache_status`，连缓存命中状态都看不到。
+
+去掉那个 `if` 块，保留静态资源的 `expires 1m`：
+
+```nginx
+    add_header X-Cache $upstream_cache_status;
+
+    if ( $uri ~* "\.(gif|png|jpg|css|js|woff|woff2)$" )
+    {
+        expires 1m;
+    }
+```
+
+改完 `/www/server/nginx/sbin/nginx -t && /www/server/nginx/sbin/nginx -s reload`，再验证：
+
+```bash
+curl -sI https://rbook2.roj.ac.cn/api/catalog | grep -i cache-control  # 只剩 public, max-age=60
+curl -sI https://rbook2.roj.ac.cn/            | grep -i cache-control  # no-store
+```
+
+三个注意点：
+
+- **在面板里重新保存这个反向代理会把模板生成回来**（缓存开关关着就重新插入 `no-cache`）。
+  改完不要再点保存；万一被生成回来，按上面的片段再删一次。
+- 面板里把“缓存”开关**打开**会插入 `proxy_ignore_headers Set-Cookie Cache-Control expires;`，
+  让 nginx 无视上游的 `no-store` 缓存 1 分钟，页面、`/api/health` 都会变脏，**不要开**。
+- 全局 `proxy_cache cache_one`（`/www/server/nginx/conf/proxy.conf`）本身是好事：
+  它尊重上游的 `Cache-Control`，`/api/catalog` 命中 `X-Cache: HIT`，`no-store` 的响应不会被缓存。
+
 ## 人工检查点
 
 第一次合并前建议人工检查：
