@@ -339,6 +339,13 @@ codes:
     language: cpp
     tags: [数据结构, 线段树]
 
+  - id: segtree-dynamic
+    path: data-struture/segment_tree/dynamic_segment_tree.cpp
+    description: dynamic segment tree | 动态开点线段树
+    language: cpp
+    tags: [数据结构, 线段树]
+    complexity: 单次操作 O(log V)，空间 O(m log V)
+
   - id: splay
     path: data-struture/splay.cpp
     description: splay | Splay 平衡树

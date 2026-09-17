@@ -525,6 +525,9 @@ chapters:
       - title: 查第一个小于阈值的位置
         english-title: First Position Below Threshold
         path: data_structure/segment_tree/sgt_first_lt/index.md
+      - title: 动态开点线段树
+        english-title: Dynamic Segment Tree
+        path: data_structure/segment_tree/sgt_dynamic/index.md
       - title: 单调队列
         english-title: Monotonic Queue
         path: data_structure/monotonic_queue/index.md
