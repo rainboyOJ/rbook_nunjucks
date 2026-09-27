@@ -239,7 +239,7 @@ prune_old_releases() {
   done < <(find "$DEPENDENCIES_DIR" -mindepth 1 -maxdepth 1 -type d ! -name '.new-*' -print)
 }
 
-for command_name in node curl zstd tar sha256sum systemctl runuser python3 flock; do
+for command_name in node curl zstd tar sha256sum systemctl runuser python3 flock getent groupadd useradd usermod; do
   command -v "$command_name" >/dev/null 2>&1 || {
     echo "missing command: $command_name" >&2
     exit 1
@@ -250,8 +250,16 @@ if health_ok "$PUBLIC_HEALTH_URL" 2; then
   PUBLIC_WAS_HEALTHY=true
 fi
 
+if ! getent group rbook >/dev/null 2>&1; then
+  groupadd --system rbook
+fi
 if ! id rbook >/dev/null 2>&1; then
-  useradd --system --home-dir "$BASE_DIR" --shell /usr/sbin/nologin rbook
+  useradd --system --gid rbook --home-dir "$BASE_DIR" --shell /usr/sbin/nologin rbook
+else
+  # An older Docker deployment may have left a login-capable account behind.
+  # Keep the service identity deliberately unprivileged and out of Docker's
+  # effectively-root supplementary group.
+  usermod --home "$BASE_DIR" --shell /usr/sbin/nologin --gid rbook --groups '' --lock rbook
 fi
 
 ensure_config
