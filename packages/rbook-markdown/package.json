@@ -8,5 +8,9 @@
     ".": "./src/markdown.js",
     "./include-code": "./src/include-code.js",
     "./markdown-it": "./src/markdown-it/index.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "uslug": "^1.0.4"
   }
 }

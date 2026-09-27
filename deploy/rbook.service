@@ -1,0 +1,29 @@
+[Unit]
+Description=RBook web service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=rbook
+Group=rbook
+WorkingDirectory=/opt/rbook/current
+EnvironmentFile=/opt/rbook/deploy.env
+Environment=NODE_ENV=production
+Environment=RBOOK_CONTENT_DIR=/opt/rbook/current/book
+Environment=RBOOK_CODE_DIR=/opt/rbook/current/book/code
+Environment=RBOOK_RUNTIME_DIR=/opt/rbook/current/runtime
+Environment=RBOOK_DOCS_DIR=/opt/rbook/current/docs
+ExecStart=/usr/bin/node /opt/rbook/current/packages/rbook-server/dist/serve.js
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/rbook/current/runtime/.search
+
+[Install]
+WantedBy=multi-user.target

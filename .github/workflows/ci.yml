@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build runtime and run API tests
+        env:
+          RBOOK_CONTENT_DIR: ${{ github.workspace }}/book
+          RBOOK_CODE_DIR: ${{ github.workspace }}/book/code
+          RBOOK_RUNTIME_DIR: /tmp/rbook-runtime-check
+          RBOOK_TEST_STATIC_DIR: /tmp/rbook-runtime-check/dist
+        run: |
+          npm run build:runtime
+          node --test \
+            scripts/include-code.test.mjs \
+            scripts/rbook-client.test.mjs \
+            scripts/home-navigation.test.mjs
+          node scripts/test-api-contract.mjs

@@ -3,11 +3,10 @@ set -euo pipefail
 
 ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 BRANCH="main"
-DISCOVERY_TIMEOUT="${DEPLOY_DISCOVERY_TIMEOUT:-120}"
-WAIT_TIMEOUT="${DEPLOY_WAIT_TIMEOUT:-1800}"
-WORKFLOW_IMAGE="Build Docker Image"
-WORKFLOW_IMAGE_DEPLOY="Deploy to VPS"
-WORKFLOW_CONTENT="Deploy Content to VPS"
+DEPLOY_HOST="${RBOOK_DEPLOY_HOST:-bohai}"
+BASE_DIR="${RBOOK_BASE_DIR:-/opt/rbook}"
+PUBLIC_HEALTH_URL="${RBOOK_PUBLIC_HEALTH_URL:-https://rbook2.roj.ac.cn/api/health}"
+DRY_RUN=false
 SAY_SCRIPT="${DEPLOY_SAY_SCRIPT:-$HOME/mybin/say.py}"
 
 die() {
@@ -17,18 +16,38 @@ die() {
 
 usage() {
   cat <<'EOF'
-Usage: ./deploy.sh
+Usage: ./deploy.sh [--dry-run]
 
-Require a clean main branch, run the local deployment checks, push the current
-commit, and wait for every GitHub Actions deployment workflow triggered by it.
+Build a native release locally, push the clean main commit, transfer the release
+to the VPS over SSH, and switch the systemd service after health checks.
+
+Options:
+  --dry-run  Show the detected mode and commit without building, pushing, or deploying.
 
 Environment variables:
-  DEPLOY_DISCOVERY_TIMEOUT  Seconds to wait for workflow runs to appear (120)
-  DEPLOY_WAIT_TIMEOUT       Seconds to wait for each workflow to finish (1800)
-  DEPLOY_SAY_IP             LAN IP to test before announcing (defaults to SAY_WEBHOOK's host)
-  DEPLOY_SAY_SCRIPT         Path to say.py ($HOME/mybin/say.py)
+  RBOOK_DEPLOY_HOST       SSH host or alias (default: bohai)
+  RBOOK_BASE_DIR          VPS release root (default: /opt/rbook)
+  RBOOK_PUBLIC_HEALTH_URL Public health endpoint
+  DEPLOY_SAY_IP           LAN IP checked before voice notification
+  DEPLOY_SAY_SCRIPT       Path to say.py
 EOF
 }
+
+while (( $# > 0 )); do
+  case "$1" in
+    --dry-run)
+      DRY_RUN=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      die "unknown argument: $1"
+      ;;
+  esac
+done
 
 say_webhook_host() {
   local webhook host
@@ -44,174 +63,131 @@ announce() {
   local say_ip
   say_ip="${DEPLOY_SAY_IP:-$(say_webhook_host)}"
 
-  if ! command -v ping >/dev/null 2>&1; then
-    echo "[deploy] 未找到 ping，跳过语音通知" >&2
-    return
-  fi
-  if ! ping -c 1 -W 1 "$say_ip" >/dev/null 2>&1; then
-    echo "[deploy] 局域网 IP ${say_ip} 在 1s 内不可达，跳过语音通知" >&2
-    return
-  fi
-  if ! command -v python3 >/dev/null 2>&1 || [[ ! -f "$SAY_SCRIPT" ]]; then
-    echo "[deploy] 无法使用 say.py（$SAY_SCRIPT），跳过语音通知" >&2
-    return
-  fi
-  if ! python3 "$SAY_SCRIPT" "$message"; then
-    echo "[deploy] 语音通知失败，但不影响部署结果" >&2
-  fi
+  command -v ping >/dev/null 2>&1 || return 0
+  ping -c 1 -W 1 "$say_ip" >/dev/null 2>&1 || return 0
+  command -v python3 >/dev/null 2>&1 || return 0
+  [[ -f "$SAY_SCRIPT" ]] || return 0
+  python3 "$SAY_SCRIPT" "$message" >/dev/null 2>&1 || true
 }
 
-if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  usage
-  exit 0
-fi
+for command_name in git npm node ssh rsync zstd sha256sum; do
+  command -v "$command_name" >/dev/null 2>&1 || die "missing command: $command_name"
+done
 
 cd "$ROOT_DIR"
+git rev-parse --show-toplevel >/dev/null 2>&1 || die "not a Git repository"
+[[ "$(git branch --show-current)" == "$BRANCH" ]] || die "current branch must be $BRANCH"
 
-for command_name in git gh npm timeout; do
-  command -v "$command_name" >/dev/null 2>&1 || die "缺少命令: $command_name"
-done
+status="$(git status --porcelain=v1 --untracked-files=all --ignore-submodules=none)"
+[[ -z "$status" ]] || { printf '%s\n' "$status" >&2; die "working tree is not clean"; }
 
-git rev-parse --show-toplevel >/dev/null 2>&1 || die "当前目录不是 Git 仓库"
-[[ "$(git branch --show-current)" == "$BRANCH" ]] \
-  || die "当前分支必须是 $BRANCH"
-
-assert_clean() {
-  local status
-  status="$(git status --porcelain=v1 --untracked-files=all --ignore-submodules=none)"
-  [[ -z "$status" ]] || { printf '%s\n' "$status" >&2; die "Git 工作树不是干净状态"; }
-}
-
-assert_clean
-gh auth status --hostname github.com >/dev/null 2>&1 \
-  || die "gh 未登录 github.com，先执行 gh auth login"
-gh repo view --json nameWithOwner --jq .nameWithOwner >/dev/null \
-  || die "gh 无法访问当前 GitHub 仓库"
-
-for workflow in "$WORKFLOW_IMAGE" "$WORKFLOW_IMAGE_DEPLOY" "$WORKFLOW_CONTENT"; do
-  gh workflow view "$workflow" >/dev/null \
-    || die "无法访问 workflow: $workflow"
-done
-
-git fetch --quiet origin "$BRANCH" || die "无法 fetch origin/$BRANCH"
-git rev-parse --verify "refs/remotes/origin/$BRANCH" >/dev/null 2>&1 \
-  || die "远端不存在 origin/$BRANCH"
+ssh -o BatchMode=yes -o ConnectTimeout=15 "$DEPLOY_HOST" true \
+  || die "cannot connect to $DEPLOY_HOST"
+git fetch --quiet origin "$BRANCH" || die "cannot fetch origin/$BRANCH"
 
 head_sha="$(git rev-parse HEAD)"
-if ! git merge-base --is-ancestor "refs/remotes/origin/$BRANCH" HEAD; then
-  die "origin/$BRANCH 已领先当前 HEAD；请先同步远端后重新部署"
-fi
-if [[ "$head_sha" == "$(git rev-parse "refs/remotes/origin/$BRANCH")" ]]; then
-  message="当前已是最新版本，无需部署"
-  echo "[deploy] $message"
-  announce "$message"
-  exit 0
+remote_sha="$(git rev-parse "refs/remotes/origin/$BRANCH")"
+if ! git merge-base --is-ancestor "$remote_sha" "$head_sha"; then
+  die "origin/$BRANCH is ahead of or diverged from local HEAD"
 fi
 
-mapfile -t changed_files < <(git diff --name-only "refs/remotes/origin/$BRANCH...HEAD")
-image_expected=false
-content_expected=false
+remote_release_sha="$(ssh "$DEPLOY_HOST" "readlink -f '$BASE_DIR/current' 2>/dev/null | sed 's#.*/##'" || true)"
+
+if [[ "$head_sha" == "$remote_sha" ]]; then
+  if [[ "$remote_release_sha" == "$head_sha" ]]; then
+    echo "[deploy] $head_sha is already deployed"
+    exit 0
+  fi
+  mapfile -t changed_files < <(git diff-tree --no-commit-id --name-only -r "$head_sha")
+  retrying_pushed_commit=true
+else
+  mapfile -t changed_files < <(git diff --name-only "$remote_sha...$head_sha")
+  retrying_pushed_commit=false
+fi
+
+content_changed=false
+application_changed=false
 for file in "${changed_files[@]}"; do
   case "$file" in
     book/*|docs/*)
-      content_expected=true
+      content_changed=true
       ;;
-  esac
-  case "$file" in
-    package.json|package-lock.json|tsconfig.base.json|Dockerfile|docker-compose.yml|docker-compose*.yml|build_all_dot_file.py|bin/*|src/online_judge/*|packages/*|site/theme/*|site/public/*|site/markdown-style/*|site/widgets/*|scripts/deploy-vps.sh|deploy.sh|.github/workflows/*)
-      image_expected=true
+    *)
+      application_changed=true
       ;;
   esac
 done
 
-if [[ "$image_expected" != true && "$content_expected" != true ]]; then
-  message="当前提交没有需要部署的内容，无需部署"
-  echo "[deploy] $message"
-  announce "$message"
+if [[ "$content_changed" != true && "$application_changed" != true ]]; then
+  echo "[deploy] no deployable changes"
   exit 0
 fi
 
-runtime_dir="$(mktemp -d "${TMPDIR:-/tmp}/rbook-deploy.XXXXXX")"
-trap 'rm -rf "$runtime_dir"' EXIT
-export RBOOK_CONTENT_DIR="$ROOT_DIR/book"
-export RBOOK_CODE_DIR="$ROOT_DIR/book/code"
-export RBOOK_RUNTIME_DIR="$runtime_dir"
-export RBOOK_TEST_STATIC_DIR="$runtime_dir/dist"
+if [[ "$application_changed" == true ]]; then
+  deploy_mode=application
+else
+  deploy_mode=content
+fi
 
-echo "[deploy] 本地验证 commit $head_sha"
-npm run typecheck
-npm run build:runtime
-npm run test:api
+echo "[deploy] commit=${head_sha:0:12} mode=$deploy_mode host=$DEPLOY_HOST"
+printf '[deploy] changed files: %s\n' "${#changed_files[@]}"
 
-assert_clean
-[[ "$(git rev-parse HEAD)" == "$head_sha" ]] || die "本地验证改变了 HEAD"
+if [[ "$DRY_RUN" == true ]]; then
+  printf '%s\n' "${changed_files[@]}"
+  echo "[deploy] dry run; no build, push, transfer, or restart was performed"
+  exit 0
+fi
 
-echo "[deploy] 推送 $head_sha 到 origin/$BRANCH"
-git push --no-verify origin "HEAD:$BRANCH"
+work_dir="$(mktemp -d "${TMPDIR:-/tmp}/rbook-native-deploy.XXXXXX")"
+trap 'rm -rf "$work_dir"' EXIT
 
-declare -A run_ids=()
-declare -A run_urls=()
-declare -A run_statuses=()
-declare -A run_conclusions=()
+"$ROOT_DIR/scripts/build-native-release.sh" \
+  --work-dir "$work_dir" \
+  --commit "$head_sha" \
+  --mode "$deploy_mode"
 
-expected_workflows=()
-[[ "$image_expected" == true ]] && expected_workflows+=("$WORKFLOW_IMAGE" "$WORKFLOW_IMAGE_DEPLOY")
-[[ "$content_expected" == true ]] && expected_workflows+=("$WORKFLOW_CONTENT")
+# shellcheck disable=SC1090
+source "$work_dir/artifacts.env"
 
-workflow_present() {
-  local wanted="$1" workflow
-  for workflow in "${expected_workflows[@]}"; do
-    [[ "$workflow" == "$wanted" ]] && return 0
-  done
-  return 1
-}
+[[ "$(git rev-parse HEAD)" == "$head_sha" ]] || die "HEAD changed during build"
+status="$(git status --porcelain=v1 --untracked-files=all --ignore-submodules=none)"
+[[ -z "$status" ]] || { printf '%s\n' "$status" >&2; die "build changed the working tree"; }
 
-refresh_runs() {
-  local record workflow id url status conclusion
-  while IFS=$'\t' read -r workflow id url status conclusion; do
-    [[ -n "$workflow" && -n "$id" ]] || continue
-    workflow_present "$workflow" || continue
-    run_ids["$workflow"]="$id"
-    run_urls["$workflow"]="$url"
-    run_statuses["$workflow"]="$status"
-    run_conclusions["$workflow"]="$conclusion"
-  done < <(gh run list --commit "$head_sha" --limit 100 \
-    --json workflowName,databaseId,url,status,conclusion \
-    --jq '.[] | [.workflowName, (.databaseId|tostring), .url, .status, (.conclusion // "")] | @tsv' 2>/dev/null || true)
-}
+if [[ "$retrying_pushed_commit" != true ]]; then
+  echo "[deploy] push ${head_sha:0:12} to origin/$BRANCH"
+  git push --no-verify origin "HEAD:$BRANCH"
+fi
 
-discovery_deadline=$((SECONDS + DISCOVERY_TIMEOUT))
-while (( SECONDS < discovery_deadline )); do
-  refresh_runs
-  missing=false
-  for workflow in "${expected_workflows[@]}"; do
-    [[ -n "${run_ids[$workflow]:-}" ]] || missing=true
-  done
-  [[ "$missing" == false ]] && break
-  sleep 3
-done
+incoming_dir="$BASE_DIR/incoming/$head_sha"
+ssh "$DEPLOY_HOST" "mkdir -p '$incoming_dir'"
 
-refresh_runs
-for workflow in "${expected_workflows[@]}"; do
-  [[ -n "${run_ids[$workflow]:-}" ]] \
-    || die "已推送 $head_sha，但在 ${DISCOVERY_TIMEOUT}s 内没有找到 workflow: $workflow"
-done
+dependency_needed=false
+if ! ssh "$DEPLOY_HOST" "test -d '$BASE_DIR/dependencies/$LOCK_HASH/node_modules'"; then
+  dependency_needed=true
+fi
 
-for workflow in "${expected_workflows[@]}"; do
-  echo "[deploy] 监控 $workflow: ${run_urls[$workflow]}"
-  set +e
-  timeout --foreground "$WAIT_TIMEOUT" gh run watch "${run_ids[$workflow]}" --exit-status
-  watch_status=$?
-  set -e
-  refresh_runs
-  if [[ "$watch_status" == 124 ]]; then
-    die "$workflow 等待超时（${WAIT_TIMEOUT}s）"
-  fi
-  if (( watch_status != 0 )); then
-    echo "[deploy] $workflow 失败: status=${run_statuses[$workflow]} conclusion=${run_conclusions[$workflow]}" >&2
-    exit "$watch_status"
-  fi
-done
+rsync_options=(-a --partial --info=progress2 -e ssh)
+rsync "${rsync_options[@]}" \
+  "$RELEASE_ARCHIVE" "$RELEASE_ARCHIVE.sha256" \
+  "$DEPLOY_HOST:$incoming_dir/"
 
-echo "[deploy] 部署成功: $head_sha"
+if [[ "$dependency_needed" == true ]]; then
+  rsync "${rsync_options[@]}" \
+    "$DEPENDENCY_ARCHIVE" "$DEPENDENCY_ARCHIVE.sha256" \
+    "$DEPLOY_HOST:$incoming_dir/"
+fi
+
+rsync "${rsync_options[@]}" \
+  "$ROOT_DIR/scripts/deploy-native.sh" \
+  "$ROOT_DIR/deploy/rbook.service" \
+  "$DEPLOY_HOST:$incoming_dir/"
+
+deploy_actor="$(id -un | tr -cd '[:alnum:]_.-')"
+deploy_source_host="$(hostname | tr -cd '[:alnum:]_.-')"
+
+echo "[deploy] activate ${head_sha:0:12} on $DEPLOY_HOST"
+ssh "$DEPLOY_HOST" \
+  "RELEASE_SHA='$head_sha' LOCK_HASH='$LOCK_HASH' DEPLOY_MODE='$deploy_mode' INCOMING_DIR='$incoming_dir' DEPLOY_ACTOR='$deploy_actor' DEPLOY_SOURCE_HOST='$deploy_source_host' PUBLIC_HEALTH_URL='$PUBLIC_HEALTH_URL' RBOOK_BASE_DIR='$BASE_DIR' bash '$incoming_dir/deploy-native.sh'"
+
+echo "[deploy] deployed $head_sha"
 announce "主人,电子书系统 部署完成!"
