@@ -93,6 +93,8 @@ ensure_config() {
       | sed -n 's/^RBOOK_ADMIN_TOKEN=//p' | head -1)"
   fi
 
+  local previous_umask
+  previous_umask="$(umask)"
   umask 077
   {
     printf 'HOST=0.0.0.0\n'
@@ -101,10 +103,12 @@ ensure_config() {
     printf 'PCS2_API_BASE_URL=http://127.0.0.1:3300\n'
     printf 'PCS2_PUBLIC_BASE_URL=https://pcs2.roj.ac.cn\n'
   } > "$CONFIG_FILE"
+  umask "$previous_umask"
 }
 
 assemble_release() {
   mkdir -p "$RELEASES_DIR" "$DEPENDENCIES_DIR" "$BIN_DIR"
+  chmod 755 "$BASE_DIR" "$RELEASES_DIR" "$DEPENDENCIES_DIR" "$BIN_DIR"
 
   if [[ ! -d "$DEPENDENCY_DIR/node_modules" ]]; then
     [[ -f "$DEPENDENCY_ARCHIVE" ]] || {
