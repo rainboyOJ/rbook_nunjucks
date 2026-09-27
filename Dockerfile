@@ -1,3 +1,5 @@
+# 已停用（2026-09）：生产环境不再构建或分发镜像，改为本地构建 + SSH 上传 + systemd 原生运行。
+# 保留此文件仅供紧急恢复；当前流程见 docs/deployment/native-ssh-deploy.md。
 FROM node:24-bookworm-slim AS deps
 WORKDIR /app
 

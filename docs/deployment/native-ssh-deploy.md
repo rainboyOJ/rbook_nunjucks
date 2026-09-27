@@ -83,8 +83,14 @@ https://rbook2.roj.ac.cn/api/health
 
 部署记录追加到 `/opt/rbook/deployments.log`，包含 commit、模式、来源、结果和是否回滚，不记录密钥。
 
-## GitHub Actions
+## GitHub Actions 与旧 Docker 部署
 
-`.github/workflows/ci.yml` 只执行构建和 API 测试，不连接 VPS，也不构建或推送 Docker 镜像。本地部署不等待 CI runner。
+`.github/workflows/ci.yml` 只执行构建和 API 测试，不连接 VPS，也不构建或推送 Docker 镜像。本地部署不等待 CI runner。主分支没有开启 GitHub 分支保护，CI 失败不会阻止部署，发布前的真实门槛是本地构建与健康检查。
 
-Dockerfile 和 Compose 文件暂时保留，供开发或首次迁移后的紧急恢复使用。
+旧流程的残留物已经清理：
+
+- `scripts/deploy-vps.sh` 已从仓库删除，历史在 Git 中可查；
+- `Dockerfile` 与 `docker-compose.yml` 保留在仓库根目录，并已标注废弃，仅供紧急恢复；
+- bohai 上旧的 `rbook_nunjucks` 镜像已全部删除，`/opt/rbook/legacy-rbook-container.json` 保留了原容器配置。因此用 Docker 恢复需要先重新构建镜像或从 GHCR 拉取，`deploy-native.sh` 中回滚到容器的分支只适用于容器仍然存在的情况。
+
+PCS2（`problems-solution`）仍然运行在 Docker 中，占用宿主机 `127.0.0.1:3300`，由原生 rbook 服务通过该地址访问。

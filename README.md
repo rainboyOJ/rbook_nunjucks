@@ -36,7 +36,7 @@ npm run check:push
 
 它会检查工作区空白错误，并运行完整的 `pre-check`。任意检查失败都会阻止 push；依赖缺失时也会失败，不会由 hook 自动安装依赖。检查针对当前工作区，因此未提交的 Markdown 错误也可能阻止 push。
 
-本地 hook 可以使用 `git push --no-verify` 绕过，但这不是远程安全边界。主分支的最终约束仍由 GitHub Actions 和分支保护负责。
+本地 hook 可以使用 `git push --no-verify` 绕过。当前仓库的 `main` 没有开启 GitHub 分支保护，本地 hook 和 CI 都只是提示性检查。真正的发布边界是 `./deploy.sh` 对「当前分支为干净的 main」的校验，以及部署前后的候选端口健康检查、本机与公网健康检查和自动回滚。
 
 ### 构建静态网站
 
@@ -193,11 +193,20 @@ function example() {
 
 ## 部署
 
-构建后的静态文件在 `site/dist/` 目录，可部署到任何静态托管服务：
+生产站点 `https://rbook2.roj.ac.cn` 使用本地构建、SSH 上传和 systemd 原生运行，不再通过 GitHub Actions 构建镜像或经 GHCR 分发。完整流程、目录布局和排障见 [docs/deployment/native-ssh-deploy.md](docs/deployment/native-ssh-deploy.md)。
+
+```bash
+./deploy.sh --dry-run   # 预览本次部署的 commit 与模式，不做任何改动
+./deploy.sh             # 本地构建与检查、上传、在 bohai 上切换并验证
+```
+
+`./deploy.sh` 要求当前分支为干净的 `main`：尚未 push 的 commit 会在本地构建和检查通过后推送。服务器上 `/opt/rbook/current` 指向当前 release，健康检查失败会自动回滚到上一个 release。
+
+构建后的静态文件在 `site/dist/` 目录，仍然可以单独构建并部署到任何静态托管服务：
 
 ```bash
 npm run build
-# 将 site/dist/ 目录部署到 GitHub Pages、Netlify、Vercel 等
+# 产物在 site/dist/
 ```
 
 ## 技术栈

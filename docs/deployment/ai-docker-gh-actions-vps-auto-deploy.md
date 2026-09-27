@@ -2,6 +2,8 @@
 
 生产环境已经迁移到本地构建、SSH 上传和 systemd 运行。当前流程见 [native-ssh-deploy.md](./native-ssh-deploy.md)。以下内容仅保留为旧部署方式的历史记录。
 
+文中的 `.github/workflows/*` 与 `scripts/deploy-vps.sh` 已随改造删除。
+
 rbook 使用 GitHub Actions 构建 Docker 镜像，并通过 SSH 在 bohai 上部署。文章内容和运行时代码分开发布：
 
 ```text

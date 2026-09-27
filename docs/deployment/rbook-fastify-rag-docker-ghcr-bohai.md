@@ -1,4 +1,7 @@
-# rbook Fastify API + Docker + GHCR + bohai 部署预读
+# rbook Fastify API + Docker + GHCR + bohai 部署预读（已停用）
+
+> 已停用：生产环境已迁移到本地构建、SSH 上传和 systemd 运行，当前流程见 [native-ssh-deploy.md](./native-ssh-deploy.md)。
+> 本文只保留 Fastify API 与索引设计的历史记录：文中的 `.github/workflows/*` 与 `scripts/deploy-vps.sh` 均已删除，GHCR 镜像分发和 Docker 部署不再使用。
 
 本文说明这次把 `rbook_nunjucks` 从单纯静态电子书扩展为“静态站点 + HTTP API 知识查询服务”的改造方案、修改点、部署流程和人工检查项。
 
