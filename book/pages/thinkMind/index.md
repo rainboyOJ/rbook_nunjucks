@@ -1,7 +1,7 @@
 ---
 id: thinkmind
-title: thinkMind
-description: thinkMind
+title: 思维方式总结
+description: 算法竞赛中常用的思维方式与技巧汇总，例如整体偏移、折半枚举、交换论证、正难则反等。
 tags:
   - LCA
   - 二分查找

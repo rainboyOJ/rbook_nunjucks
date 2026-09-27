@@ -1,9 +1,9 @@
 ---
 id: introducation
-title: introducation
-description: introducation
+title: 引言
+description: 学习算法的心态、方法与学习路线引言。
 tags:
-  - introducation
+  - 引言
 ---
 
 - 九尺之臺起於蔂土，百仞之高始於足下

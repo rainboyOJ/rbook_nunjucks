@@ -1,7 +1,7 @@
 ---
 id: mind-theory
-title: mind_theory
-description: mind_theory
+title: 思维方法
+description: 常用思维方法：缩小放大法、归纳法与反证法。
 tags:
   - mind theory
 ---
