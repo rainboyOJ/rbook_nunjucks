@@ -12,6 +12,7 @@ categories:
   - 贪心
 code_template:
   - two-machine-johnson
+  - two-machine-johnson-py
 description: 先把“第一台快、第二台慢”的作业放前面，再把“第一台慢、第二台快”的作业放后面，让第二台机器尽量少等待。
 ---
 
@@ -300,8 +301,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/two_machine_johnson.cpp, cpp)
+:::
 
+::: tab Python
+
+并列作业（比较器判等）的先后不是契约：`std::sort` 与 Timsort 的稳定性不同，输出顺序可能不同但都合法。
+@include-code(/code/base/two_machine_johnson.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

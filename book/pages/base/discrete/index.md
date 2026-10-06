@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["离散化", "排序", "二分"]
 categories: ["基础算法"]
-code_template: [discretize-stl]
+code_template: [discretize-stl, discretize-stl-py]
 ---
 
 [[TOC]]
@@ -93,8 +93,16 @@ code_template: [discretize-stl]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/discrete离散化_unique.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/base/discrete离散化_unique.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

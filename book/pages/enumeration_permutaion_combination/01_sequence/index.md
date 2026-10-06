@@ -11,6 +11,7 @@ categories:
   - 枚举
 code_template:
   - enumerate-dynamic-loop
+  - enumerate-dynamic-loop-py
 description: 01 序列枚举就是每个位置只在 `0` 和 `1` 中选一个，本质是对布尔格（Boolean Lattice）的深度优先遍历。
 ---
 
@@ -77,8 +78,17 @@ $$
 
 下面模板是通用多重循环枚举。输入 `n 2` 时，它输出的就是长度为 `n` 的 01 序列。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/dynamic_loop.cpp, cpp)
+:::
 
+::: tab Python
+
+`emit` 收到的 `path` 是内部列表的引用，要保留结果先 `copy()`。
+@include-code(/code/base/enumerate/dynamic_loop.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

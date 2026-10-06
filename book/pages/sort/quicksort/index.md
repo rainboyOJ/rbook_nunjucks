@@ -12,7 +12,9 @@ categories:
   - 排序
 code_template:
   - quicksort-3way-part
+  - quicksort-3way-part-py
   - quicksort-tranditional
+  - quicksort-tranditional-py
 description: 快速排序按基准值把区间划分成小于、等于和大于三段，再递归处理两侧；二路划分作为经典变体补充。
 ---
 
@@ -246,8 +248,17 @@ $$
 
 ### 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/quick_sort_3way_part.cpp, cpp)
+:::
 
+::: tab Python
+
+随机基准来自模块级 `random` 实例，与 C++ 的 `rand()` 对应；需要可复现结果时由调用方 `seed()`。
+@include-code(/code/base/quick_sort_3way_part.py, python)
+:::
+::::
 ## 二路版本
 
 二路快速排序把区间分成“不大于 `key`”和“不小于 `key`”两部分。等于 `key` 的元素可以出现在任意一边，因此左右两段都要继续递归。
@@ -307,8 +318,16 @@ $$
 
 ### 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/quick_sort_tranditional.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/base/quick_sort_tranditional.py, python)
+:::
+::::
 ## 划分思想的扩展
 
 如果只求第 $k$ 小，而不是把整个数组排好序，就不必递归两边。

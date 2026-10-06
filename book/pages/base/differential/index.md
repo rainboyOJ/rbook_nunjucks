@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["差分", "前缀和", "区间修改"]
 categories: ["基础算法"]
-code_template: [difference-1d, difference-2d]
+code_template: [difference-1d, difference-1d-py, difference-2d, difference-2d-py]
 ---
 
 [[TOC]]
@@ -148,12 +148,28 @@ $$
 
 ### 一维差分
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/differential.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/base/differential.py, python)
+:::
+::::
 ### 二维差分
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/differential_2d.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/base/differential_2d.py, python)
+:::
+::::
 ## 测试用例
 
 一维差分输入：

@@ -11,6 +11,7 @@ categories:
   - 枚举
 code_template:
   - permutation
+  - permutation-py
 description: 全排列就是每个位置选择一个还没用过的元素，直到所有位置都填满。
 ---
 
@@ -80,8 +81,17 @@ description: 全排列就是每个位置选择一个还没用过的元素，直�
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/permutation.cpp, cpp)
+:::
 
+::: tab Python
+
+与 C++ 版一样使用模块级全局状态，调用前按文件头注释布置 `n / a / path / used / res` 后再 `dfs(1)`。
+@include-code(/code/base/enumerate/permutation.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

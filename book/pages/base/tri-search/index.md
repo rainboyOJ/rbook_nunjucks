@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["基础算法", "三分", "函数极值"]
 categories: ["基础算法"]
-code_template: [ternary-search]
+code_template: [ternary-search, ternary-search-py]
 ---
 
 [[TOC]]
@@ -85,8 +85,17 @@ $$
 
 的最大值点。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/ternary_search_double.cpp, cpp)
+:::
 
+::: tab Python
+
+`f` 是示例单峰函数，换成自己的目标函数即可复用。
+@include-code(/code/base/ternary_search_double.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

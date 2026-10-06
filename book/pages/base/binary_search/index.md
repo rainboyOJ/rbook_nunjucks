@@ -6,7 +6,7 @@ date: 2026-06-16 20:30
 toc: true
 tags: ["二分查找", "单调性"]
 categories: ["基础算法"]
-code_template: [binary-search]
+code_template: [binary-search, binary-search-py]
 ---
 
 [[TOC]]
@@ -98,8 +98,16 @@ false false false true true true
 
 ### 二分模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/binary_search.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/base/binary_search.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

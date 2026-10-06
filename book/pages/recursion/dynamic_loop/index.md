@@ -11,6 +11,7 @@ categories:
   - 递归
 code_template:
   - enumerate-dynamic-loop
+  - enumerate-dynamic-loop-py
 description: 递归实现多重循环，就是把“第几层循环”变成 DFS 的参数。
 ---
 
@@ -75,8 +76,17 @@ for (int a = 0; a < m; ++a)
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/dynamic_loop.cpp, cpp)
+:::
 
+::: tab Python
+
+`emit` 收到的 `path` 是内部列表的引用，要保留结果先 `copy()`。
+@include-code(/code/base/enumerate/dynamic_loop.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

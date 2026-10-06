@@ -11,6 +11,7 @@ categories:
   - 递归
 code_template:
   - combination
+  - combination-py
 description: 组合枚举只关心选了哪些元素，不关心这些元素被选中的先后顺序。
 ---
 
@@ -82,8 +83,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/combination.cpp, cpp)
+:::
 
+::: tab Python
+
+`emit` 收到的 `path` 是内部列表的引用，要保留结果先 `copy()`。
+@include-code(/code/base/enumerate/combination.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

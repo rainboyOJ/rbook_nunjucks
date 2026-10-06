@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["倍增", "二进制", "基础算法"]
 categories: ["基础算法"]
-code_template: [binary-jump]
+code_template: [binary-jump, binary-jump-py]
 ---
 
 [[TOC]]
@@ -121,8 +121,16 @@ step=1                                     [p+4] ----^ [p+5]  jump
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/binary_jump.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/base/binary_jump.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

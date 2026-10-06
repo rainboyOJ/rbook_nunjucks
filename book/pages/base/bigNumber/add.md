@@ -6,7 +6,7 @@ date: 2026-06-16 19:35
 toc: true
 tags: ["高精度", "大整数", "模拟"]
 categories: ["基础算法"]
-code_template: [bignum-add]
+code_template: [bignum-add, bignum-add-py]
 ---
 
 [[TOC]]
@@ -59,8 +59,17 @@ code_template: [bignum-add]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/big_number/add_string.cpp, cpp)
+:::
 
+::: tab Python
+
+Python 的 `int` 本身任意精度，直接 `a + b` 即可；这份模板的价值在与 C++ 对照逐位进位过程。
+@include-code(/code/base/big_number/add_string.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -11,10 +11,22 @@ codes:
     language: cpp
     tags: [基础算法, 高精度]
 
+  - id: bignum-add-py
+    path: base/big_number/add_string.py
+    description: big number add python | 高精度加法（字符串模拟）（Python 版）
+    language: py
+    tags: [基础算法, 高精度]
+
   - id: binary-jump
     path: base/binary_jump.cpp
     description: binary jump | 倍增跳跃基础模板
     language: cpp
+    tags: [基础算法, 倍增]
+
+  - id: binary-jump-py
+    path: base/binary_jump.py
+    description: binary jump python | 倍增跳跃基础模板（Python 版）
+    language: py
     tags: [基础算法, 倍增]
 
   - id: binary-search
@@ -23,10 +35,22 @@ codes:
     language: cpp
     tags: [基础算法, 二分]
 
+  - id: binary-search-py
+    path: base/binary_search.py
+    description: binary search python | 二分查找标准模板（Python 版）
+    language: py
+    tags: [基础算法, 二分]
+
   - id: difference-1d
     path: base/differential.cpp
     description: difference 1d | 一维差分数组
     language: cpp
+    tags: [基础算法, 差分]
+
+  - id: difference-1d-py
+    path: base/differential.py
+    description: difference 1d python | 一维差分数组（Python 版）
+    language: py
     tags: [基础算法, 差分]
 
   - id: difference-2d
@@ -35,10 +59,22 @@ codes:
     language: cpp
     tags: [基础算法, 差分]
 
+  - id: difference-2d-py
+    path: base/differential_2d.py
+    description: difference 2d python | 二维差分矩阵（Python 版）
+    language: py
+    tags: [基础算法, 差分]
+
   - id: discretize-stl
     path: base/discrete离散化_unique.cpp
     description: discretize unique | 离散化（基于 unique 与二分）
     language: cpp
+    tags: [基础算法, 离散化]
+
+  - id: discretize-stl-py
+    path: base/discrete离散化_unique.py
+    description: discretize unique python | 离散化（基于 unique 与二分）（Python 版）
+    language: py
     tags: [基础算法, 离散化]
 
   - id: discretize-manual
@@ -47,10 +83,22 @@ codes:
     language: cpp
     tags: [基础算法, 离散化]
 
+  - id: discretize-manual-py
+    path: base/discrete离散化_手写.py
+    description: discretize manual python | 离散化（纯手写去重）（Python 版）
+    language: py
+    tags: [基础算法, 离散化]
+
   - id: combination
     path: base/enumerate/combination.cpp
     description: combination | 组合数生成与枚举
     language: cpp
+    tags: [基础算法, 枚举]
+
+  - id: combination-py
+    path: base/enumerate/combination.py
+    description: combination python | 组合数生成与枚举（Python 版）
+    language: py
     tags: [基础算法, 枚举]
 
   - id: enumerate-dynamic-loop
@@ -59,10 +107,22 @@ codes:
     language: cpp
     tags: [基础算法, 枚举, 递归与分治]
 
+  - id: enumerate-dynamic-loop-py
+    path: base/enumerate/dynamic_loop.py
+    description: dynamic loop python | 动态多重循环枚举（递归模拟）（Python 版）
+    language: py
+    tags: [基础算法, 枚举, 递归与分治]
+
   - id: multiset-permutation
     path: base/enumerate/multiset_permutation.cpp
     description: multiset permutation | 多重集全排列枚举
     language: cpp
+    tags: [基础算法, 枚举]
+
+  - id: multiset-permutation-py
+    path: base/enumerate/multiset_permutation.py
+    description: multiset permutation python | 多重集全排列枚举（Python 版）
+    language: py
     tags: [基础算法, 枚举]
 
   - id: next-permutation
@@ -71,10 +131,22 @@ codes:
     language: cpp
     tags: [基础算法, 枚举]
 
+  - id: next-permutation-py
+    path: base/enumerate/next_permutation_manual.py
+    description: next permutation python | 手写下一个排列（Python 版）
+    language: py
+    tags: [基础算法, 枚举]
+
   - id: permutation
     path: base/enumerate/permutation.cpp
     description: permutation | 全排列枚举
     language: cpp
+    tags: [基础算法, 枚举]
+
+  - id: permutation-py
+    path: base/enumerate/permutation.py
+    description: permutation python | 全排列枚举（Python 版）
+    language: py
     tags: [基础算法, 枚举]
 
   - id: submask
@@ -83,10 +155,22 @@ codes:
     language: cpp
     tags: [基础算法, 枚举]
 
+  - id: submask-py
+    path: base/enumerate/submask.py
+    description: submask python | 子集掩码枚举（Python 版）
+    language: py
+    tags: [基础算法, 枚举]
+
   - id: subset
     path: base/enumerate/subset.cpp
     description: subset | 子集枚举
     language: cpp
+    tags: [基础算法, 枚举]
+
+  - id: subset-py
+    path: base/enumerate/subset.py
+    description: subset python | 子集枚举（Python 版）
+    language: py
     tags: [基础算法, 枚举]
 
   - id: enumerate-subset-binary
@@ -95,10 +179,22 @@ codes:
     language: cpp
     tags: [基础算法, 枚举, 二分查找]
 
+  - id: enumerate-subset-binary-py
+    path: base/enumerate/subset_binary.py
+    description: subset binary python | 二进制枚举子集（Python 版）
+    language: py
+    tags: [基础算法, 枚举, 二分查找]
+
   - id: prefix-sum
     path: base/presum.cpp
     description: prefix sum | 一维前缀和
     language: cpp
+    tags: [基础算法, 前缀和]
+
+  - id: prefix-sum-py
+    path: base/presum.py
+    description: prefix sum python | 一维前缀和（Python 版）
+    language: py
     tags: [基础算法, 前缀和]
 
   - id: prefix-sum-2d
@@ -113,10 +209,22 @@ codes:
     language: cpp
     tags: [基础算法, 排序]
 
+  - id: quicksort-3way-part-py
+    path: base/quick_sort_3way_part.py
+    description: quick sort 3-way python | 三路快排（Python 版）
+    language: py
+    tags: [基础算法, 排序]
+
   - id: quicksort-tranditional
     path: base/quick_sort_tranditional.cpp
     description: quick sort traditional | 经典快排
     language: cpp
+    tags: [基础算法, 排序]
+
+  - id: quicksort-tranditional-py
+    path: base/quick_sort_tranditional.py
+    description: quick sort traditional python | 经典快排（Python 版）
+    language: py
     tags: [基础算法, 排序]
 
   - id: st
@@ -125,10 +233,22 @@ codes:
     language: cpp
     tags: [基础算法]
 
+  - id: st-py
+    path: base/sparse_table.py
+    description: sparse table python | 稀疏表（RMQ 区间最值）（Python 版）
+    language: py
+    tags: [基础算法]
+
   - id: swap-adjacent-ranges
     path: base/swap_adjacent_ranges.cpp
     description: swap adjacent ranges | 相邻区间交换
     language: cpp
+    tags: [基础算法]
+
+  - id: swap-adjacent-ranges-py
+    path: base/swap_adjacent_ranges.py
+    description: swap adjacent ranges python | 相邻区间交换（Python 版）
+    language: py
     tags: [基础算法]
 
   - id: ternary-search
@@ -137,10 +257,22 @@ codes:
     language: cpp
     tags: [基础算法]
 
+  - id: ternary-search-py
+    path: base/ternary_search_double.py
+    description: ternary search double python | 三分查找（浮点）（Python 版）
+    language: py
+    tags: [基础算法]
+
   - id: two-machine-johnson
     path: base/two_machine_johnson.cpp
     description: two machine johnson | 双机调度（Johnson 法则）
     language: cpp
+    tags: [基础算法]
+
+  - id: two-machine-johnson-py
+    path: base/two_machine_johnson.py
+    description: two machine johnson python | 双机调度（Johnson 法则）（Python 版）
+    language: py
     tags: [基础算法]
 
   - id: fenwick

@@ -11,6 +11,7 @@ categories:
   - 枚举
 code_template:
   - next-permutation
+  - next-permutation-py
 description: '`next_permutation` 就是把当前排列变成“刚好比它大一点”的下一个排列。'
 ---
 
@@ -102,8 +103,17 @@ a[i] < a[i + 1]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/next_permutation_manual.cpp, cpp)
+:::
 
+::: tab Python
+
+返回 `False` 时 `a` 保持不变，注意与 `itertools`/标准库版“就地反转成最小排列”的行为区别。
+@include-code(/code/base/enumerate/next_permutation_manual.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

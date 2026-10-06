@@ -13,8 +13,11 @@ categories:
   - 枚举
 code_template:
   - subset
+  - subset-py
   - enumerate-subset-binary
+  - enumerate-subset-binary-py
   - submask
+  - submask-py
 description: 普通子集枚举是对每个元素决定“选”还是“不选”；固定集合的子集枚举是从 `sub = mask` 开始，每次用 `(sub - 1) & mask` 跳到下一个子集。
 ---
 
@@ -220,16 +223,43 @@ for (int mask = 0; mask < (1 << n); ++mask) {
 
 ### DFS 子集枚举
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/subset.cpp, cpp)
+:::
 
+::: tab Python
+
+与 C++ 版一样使用模块级全局状态，调用前按文件头注释布置 `n / a / path / res` 后再 `dfs(1, 0)`。
+@include-code(/code/base/enumerate/subset.py, python)
+:::
+::::
 ### 二进制子集枚举
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/subset_binary.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑写在 `main` 里，Python 版抽成 `enumerate_subsets` 一次性返回全部子集，$n$ 大时内存 $O(2^n)$，只适合 $n \leqslant 20$ 左右。
+@include-code(/code/base/enumerate/subset_binary.py, python)
+:::
+::::
 ### 固定集合的子集枚举
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/submask.cpp, cpp)
+:::
 
+::: tab Python
+
+空集 `0` 不在返回值里，需要时在调用处单独处理。
+@include-code(/code/base/enumerate/submask.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

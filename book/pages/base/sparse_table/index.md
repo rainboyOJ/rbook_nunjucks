@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "ST 表", "RMQ", "倍增"]
 categories: ["基础算法"]
-code_template: [st]
+code_template: [st, st-py]
 ---
 
 [[TOC]]
@@ -195,8 +195,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/sparse_table.cpp, cpp)
+:::
 
+::: tab Python
+
+数组 `a` 从下标 $1$ 开始（`a[0]` 占位），与 C++ 版约定一致。
+@include-code(/code/base/sparse_table.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

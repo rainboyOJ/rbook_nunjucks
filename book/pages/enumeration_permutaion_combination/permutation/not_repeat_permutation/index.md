@@ -12,6 +12,7 @@ categories:
   - 枚举
 code_template:
   - multiset-permutation
+  - multiset-permutation-py
 description: 重复元素全排列就是“每种数只开一个桶”，每个位置从非空桶里取一个数。
 ---
 
@@ -114,8 +115,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/multiset_permutation.cpp, cpp)
+:::
 
+::: tab Python
+
+`emit` 收到的 `path` 是内部列表的引用，要保留结果先 `copy()`。
+@include-code(/code/base/enumerate/multiset_permutation.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

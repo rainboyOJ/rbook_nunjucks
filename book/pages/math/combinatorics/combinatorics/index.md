@@ -14,7 +14,9 @@ categories:
 code_template:
   - permutation
   - combination
+  - combination-py
   - multiset-permutation
+  - multiset-permutation-py
 description: 排列组合计数先问两件事：顺序算不算不同，元素能不能重复使用。
 ---
 
@@ -246,16 +248,43 @@ $$
 
 ### 排列枚举
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/permutation.cpp, cpp)
+:::
 
+::: tab Python
+
+与 C++ 版一样使用模块级全局状态，调用前按文件头注释布置 `n / a / path / used / res` 后再 `dfs(1)`。
+@include-code(/code/base/enumerate/permutation.py, python)
+:::
+::::
 ### 组合枚举
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/combination.cpp, cpp)
+:::
 
+::: tab Python
+
+`emit` 收到的 `path` 是内部列表的引用，要保留结果先 `copy()`。
+@include-code(/code/base/enumerate/combination.py, python)
+:::
+::::
 ### 多重集排列枚举
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/enumerate/multiset_permutation.cpp, cpp)
+:::
 
+::: tab Python
+
+`emit` 收到的 `path` 是内部列表的引用，要保留结果先 `copy()`。
+@include-code(/code/base/enumerate/multiset_permutation.py, python)
+:::
+::::
 ## 测试用例
 
 ### 排列

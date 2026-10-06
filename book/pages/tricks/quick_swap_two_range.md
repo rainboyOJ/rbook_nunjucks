@@ -11,6 +11,7 @@ categories:
   - 基础技巧
 code_template:
   - swap-adjacent-ranges
+  - swap-adjacent-ranges-py
 description: 要交换相邻两段区间，先分别翻转两段，再整体翻转一次。
 ---
 
@@ -119,8 +120,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/swap_adjacent_ranges.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 模板参数是迭代器，Python 版改用下标（`list` 无迭代器算术），语义等价。
+@include-code(/code/base/swap_adjacent_ranges.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

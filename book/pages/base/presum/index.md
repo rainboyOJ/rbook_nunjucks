@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["前缀和", "区间查询", "基础算法"]
 categories: ["基础算法"]
-code_template: [prefix-sum, prefix-sum-2d]
+code_template: [prefix-sum, prefix-sum-py, prefix-sum-2d]
 ---
 
 [[TOC]]
@@ -95,8 +95,17 @@ $$
 
 ### 一维前缀和
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/base/presum.cpp, cpp)
+:::
 
+::: tab Python
+
+查询下标必须满足 $1 \leqslant l \leqslant r \leqslant n$：`l = 0` 时 Python 负下标会环绕到末尾，静默给出错误答案。
+@include-code(/code/base/presum.py, python)
+:::
+::::
 ### 二维前缀和 Python
 
 二维前缀和的查询公式来自容斥：
