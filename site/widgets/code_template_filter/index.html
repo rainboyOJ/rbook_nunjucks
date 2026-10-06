@@ -92,6 +92,58 @@
 
       #search-input:focus { box-shadow: inset 0 0 0 2px var(--accent); }
 
+      .filter-bar {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        display: flex;
+        margin-bottom: 1rem;
+        max-width: 720px;
+      }
+
+      .filter-options {
+        align-items: center;
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+        gap: 0.35rem 1.15rem;
+        min-width: 0;
+        padding: 0.55rem 1rem;
+      }
+
+      .filter-chip {
+        align-items: center;
+        color: var(--text);
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 0.85rem;
+        gap: 0.4rem;
+        user-select: none;
+        white-space: nowrap;
+      }
+
+      .filter-chip:hover { color: var(--accent-strong); }
+
+      /* 当前关键词下该语言没有任何模板时淡出，但仍可勾选。 */
+      .filter-chip.zero { opacity: 0.45; }
+
+      .filter-chip input {
+        accent-color: var(--accent);
+        cursor: pointer;
+        height: 0.95rem;
+        margin: 0;
+        width: 0.95rem;
+      }
+
+      .filter-chip input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+      .filter-chip .lang-icon { height: 1.05rem; width: 1.05rem; }
+
+      .filter-chip .count {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-variant-numeric: tabular-nums;
+      }
+
       #status {
         color: var(--muted);
         min-height: 1.5rem;
@@ -129,10 +181,26 @@
         gap: 0.7rem;
       }
 
+      /* 语言图标独占原序号槽位：小、无文字，悬停 title 提示语言名。 */
+      .lang-icon {
+        align-items: center;
+        display: inline-flex;
+        flex: 0 0 auto;
+        height: 1.35rem;
+        width: 1.35rem;
+      }
+
+      .lang-icon svg { display: block; height: 100%; width: 100%; }
+
+      /* 序号缩到右下角：小号、暗色，margin-left:auto 推到操作行最右端。 */
       .card-number {
-        color: var(--accent);
+        align-self: center;
+        color: var(--muted);
+        font-size: 0.72rem;
         font-variant-numeric: tabular-nums;
-        min-width: 2rem;
+        margin-left: auto;
+        opacity: 0.75;
+        padding-left: 0.5rem;
       }
 
       .card-title {
@@ -309,7 +377,7 @@
         .page-shell { padding: 1.5rem 1rem 3rem; }
         .page-header { align-items: start; flex-direction: column; gap: 0.25rem; }
         #result { grid-template-columns: 1fr; }
-        .search-box { max-width: none; }
+        .search-box, .filter-bar { max-width: none; }
       }
     </style>
   </head>
@@ -326,6 +394,11 @@
         <span class="search-label">搜索</span>
         <input id="search-input" type="search" autocomplete="off" placeholder="输入多个关键词，用空格分隔">
       </label>
+
+      <div class="filter-bar" role="group" aria-label="按语言筛选">
+        <span class="search-label">语言</span>
+        <div class="filter-options" id="filter-options"></div>
+      </div>
 
       <div id="status" role="status" aria-live="polite">正在加载代码模板...</div>
       <ul id="result" aria-live="polite"></ul>
@@ -370,11 +443,14 @@
           templates: [],
           selected: null,
           selectedContent: '',
-          detailCache: new Map()
+          detailCache: new Map(),
+          langFilter: new Set(),   // 勾选的语言原始码集合；空集 = 不限语言
+          langChips: new Map()     // 语言原始码 -> { checkbox, count }，筛选条的 DOM 引用
         };
 
         const result = document.querySelector('#result');
         const searchInput = document.querySelector('#search-input');
+        const filterOptions = document.querySelector('#filter-options');
         const status = document.querySelector('#status');
         const modalBackdrop = document.querySelector('#modal-backdrop');
         const modalTitle = document.querySelector('#modal-title');
@@ -422,11 +498,79 @@
           }
 
           state.templates = templates;
+          buildFilterBar();
+          restoreLangFromUrl();
           render();
         }
 
         function normalize(value) {
           return String(value || '').toLocaleLowerCase();
+        }
+
+        // 语言原始码（code.yaml 的 language 字段）-> 品牌图标（Simple Icons，CC0）。
+        // 颜色是深色主题下调过的品牌色，保证在卡片底色上可辨认。
+        const LANGUAGE_ICONS = {
+          cpp: {
+            label: 'C++',
+            color: '#74a9e8',
+            path: 'M22.394 6c-.167-.29-.398-.543-.652-.69L12.926.22c-.509-.294-1.34-.294-1.848 0L2.26 5.31c-.508.293-.923 1.013-.923 1.6v10.18c0 .294.104.62.271.91s.398.543.652.69l8.816 5.09c.508.293 1.34.293 1.848 0l8.816-5.09c.254-.147.485-.4.652-.69s.27-.616.27-.91V6.91c.003-.294-.1-.62-.268-.91M12 19.11c-3.92 0-7.109-3.19-7.109-7.11s3.19-7.11 7.11-7.11a7.13 7.13 0 0 1 6.156 3.553l-3.076 1.78a3.57 3.57 0 0 0-3.08-1.78A3.56 3.56 0 0 0 8.444 12A3.56 3.56 0 0 0 12 15.555a3.57 3.57 0 0 0 3.08-1.778l3.078 1.78A7.14 7.14 0 0 1 12 19.11m7.11-6.715h-.79v.79h-.79v-.79h-.79v-.79h.79v-.79h.79v.79h.79zm2.962 0h-.79v.79h-.79v-.79h-.79v-.79h.79v-.79h.79v.79h.79z'
+          },
+          python: {
+            label: 'Python',
+            color: '#6cb2e0',
+            path: 'm14.25.18l.9.2l.73.26l.59.3l.45.32l.34.34l.25.34l.16.33l.1.3l.04.26l.02.2l-.01.13V8.5l-.05.63l-.13.55l-.21.46l-.26.38l-.3.31l-.33.25l-.35.19l-.35.14l-.33.1l-.3.07l-.26.04l-.21.02H8.77l-.69.05l-.59.14l-.5.22l-.41.27l-.33.32l-.27.35l-.2.36l-.15.37l-.1.35l-.07.32l-.04.27l-.02.21v3.06H3.17l-.21-.03l-.28-.07l-.32-.12l-.35-.18l-.36-.26l-.36-.36l-.35-.46l-.32-.59l-.28-.73l-.21-.88l-.14-1.05l-.05-1.23l.06-1.22l.16-1.04l.24-.87l.32-.71l.36-.57l.4-.44l.42-.33l.42-.24l.4-.16l.36-.1l.32-.05l.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75l-.02-.37l.05-.34l.11-.31l.17-.28l.25-.26l.31-.23l.38-.2l.44-.18l.51-.15l.58-.12l.64-.1l.71-.06l.77-.04l.84-.02l1.27.05zm-6.3 1.98l-.23.33l-.08.41l.08.41l.23.34l.33.22l.41.09l.41-.09l.33-.22l.23-.34l.08-.41l-.08-.41l-.23-.33l-.33-.22l-.41-.09l-.41.09zm13.09 3.95l.28.06l.32.12l.35.18l.36.27l.36.35l.35.47l.32.59l.28.73l.21.88l.14 1.04l.05 1.23l-.06 1.23l-.16 1.04l-.24.86l-.32.71l-.36.57l-.4.45l-.42.33l-.42.24l-.4.16l-.36.09l-.32.05l-.24.02l-.16-.01h-8.22v.82h5.84l.01 2.76l.02.36l-.05.34l-.11.31l-.17.29l-.25.25l-.31.24l-.38.2l-.44.17l-.51.15l-.58.13l-.64.09l-.71.07l-.77.04l-.84.01l-1.27-.04l-1.07-.14l-.9-.2l-.73-.25l-.59-.3l-.45-.33l-.34-.34l-.25-.34l-.16-.33l-.1-.3l-.04-.25l-.02-.2l.01-.13v-5.34l.05-.64l.13-.54l.21-.46l.26-.38l.3-.32l.33-.24l.35-.2l.35-.14l.33-.1l.3-.06l.26-.04l.21-.02l.13-.01h5.84l.69-.05l.59-.14l.5-.21l.41-.28l.33-.32l.27-.35l.2-.36l.15-.36l.1-.35l.07-.32l.04-.28l.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33l-.08.41l.08.41l.23.33l.33.23l.41.08l.41-.08l.33-.23l.23-.33l.08-.41l-.08-.41l-.23-.33l-.33-.23l-.41-.08l-.41.08z'
+          },
+          haskell: {
+            label: 'Haskell',
+            color: '#b295e0',
+            path: 'M0 3.535L5.647 12L0 20.465h4.235L9.883 12L4.235 3.535zm5.647 0L11.294 12l-5.647 8.465h4.235l3.53-5.29l3.53 5.29h4.234L9.883 3.535zm8.941 4.938l1.883 2.822H24V8.473zm2.824 4.232l1.882 2.822H24v-2.822z'
+          },
+          bash: {
+            label: 'Shell',
+            color: '#7cc87c',
+            path: 'M21.038 4.9L13.461.402a2.86 2.86 0 0 0-2.923.001L2.961 4.9A3.02 3.02 0 0 0 1.5 7.503v8.995c0 1.073.557 2.066 1.462 2.603l7.577 4.497a2.86 2.86 0 0 0 2.922 0l7.577-4.497a3.02 3.02 0 0 0 1.462-2.603V7.503A3.02 3.02 0 0 0 21.038 4.9M15.17 18.946l.013.646c.001.078-.05.167-.111.198l-.383.22c-.061.031-.111-.007-.112-.085l-.007-.635c-.328.136-.66.169-.872.084c-.04-.016-.057-.075-.041-.142l.139-.584a.24.24 0 0 1 .069-.121a.2.2 0 0 1 .036-.026q.033-.017.062-.006c.229.077.521.041.802-.101c.357-.181.596-.545.592-.907c-.003-.328-.181-.465-.613-.468c-.55.001-1.064-.107-1.072-.917c-.007-.667.34-1.361.889-1.8l-.007-.652c-.001-.08.048-.168.111-.2l.37-.236c.061-.031.111.007.112.087l.006.653c.273-.109.511-.138.726-.088c.047.012.067.076.048.151l-.144.578a.26.26 0 0 1-.065.116a.2.2 0 0 1-.038.028a.1.1 0 0 1-.057.009c-.098-.022-.332-.073-.699.113c-.385.195-.52.53-.517.778c.003.297.155.387.681.396c.7.012 1.003.318 1.01 1.023c.007.689-.362 1.433-.928 1.888m3.973-1.087c0 .06-.008.116-.058.145l-1.916 1.164c-.05.029-.09.004-.09-.056v-.494c0-.06.037-.093.087-.122l1.887-1.129c.05-.029.09-.004.09.056zm1.316-11.062l-7.168 4.427c-.894.523-1.553 1.109-1.553 2.187v8.833c0 .645.26 1.063.66 1.184a2.3 2.3 0 0 1-.398.039c-.42 0-.833-.114-1.197-.33L3.226 18.64a2.5 2.5 0 0 1-1.201-2.142V7.503c0-.881.46-1.702 1.201-2.142L10.803.863a2.34 2.34 0 0 1 2.394 0l7.577 4.498a2.48 2.48 0 0 1 1.164 1.732c-.252-.536-.818-.682-1.479-.296'
+          }
+        };
+
+        // 原始码的常见别名也归一到品牌图标；都不认识就回退通用 </> 图标。
+        const LANGUAGE_ALIASES = {
+          'c++': 'cpp', cc: 'cpp', cxx: 'cpp',
+          py: 'python', python3: 'python',
+          hs: 'haskell',
+          sh: 'bash', shell: 'bash', zsh: 'bash'
+        };
+
+        const GENERIC_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 7 3 12 8 17"/><polyline points="16 7 21 12 16 17"/><line x1="13.4" y1="5.5" x2="10.6" y2="18.5"/></svg>';
+
+        // 筛选/URL 用的语言键：language 字段的小写原始码；缺失时用 'unknown'。
+        function langKey(item) {
+          return normalize(item.language) || 'unknown';
+        }
+
+        function languageMeta(raw) {
+          const key = normalize(raw);
+          return LANGUAGE_ICONS[LANGUAGE_ALIASES[key] || key] || null;
+        }
+
+        function languageLabel(raw) {
+          const meta = languageMeta(raw);
+          return meta ? meta.label : (raw ? String(raw) : '未知语言');
+        }
+
+        // 卡片/筛选条共用的语言图标；未知语言回退通用 </> 图标。
+        function languageIcon(raw) {
+          const meta = languageMeta(raw);
+          const label = languageLabel(raw);
+          const icon = document.createElement('span');
+          icon.className = 'lang-icon';
+          icon.style.color = meta ? meta.color : 'var(--muted)';
+          icon.title = label;
+          icon.setAttribute('role', 'img');
+          icon.setAttribute('aria-label', label);
+          icon.innerHTML = meta
+            ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="${meta.path}"/></svg>`
+            : GENERIC_ICON;
+          return icon;
         }
 
         function searchableText(item) {
@@ -438,14 +582,98 @@
           ].map(normalize).join(' ');
         }
 
-        function filteredTemplates() {
-          const keywords = normalize(searchInput.value).split(/\s+/).filter(Boolean);
-          if (keywords.length === 0) return state.templates;
-          return state.templates.filter((item) => {
-            const text = searchableText(item);
-            return keywords.every((keyword) => text.includes(keyword));
-          });
+        function searchKeywords() {
+          return normalize(searchInput.value).split(/\s+/).filter(Boolean);
         }
+
+        function matchKeywords(item, keywords) {
+          const text = searchableText(item);
+          return keywords.every((keyword) => text.includes(keyword));
+        }
+
+        // 语言筛选与关键词搜索是 AND 叠加；语言多选取并集，空集 = 不限语言。
+        function filteredTemplates() {
+          const keywords = searchKeywords();
+          return state.templates.filter((item) =>
+            (state.langFilter.size === 0 || state.langFilter.has(langKey(item)))
+            && matchKeywords(item, keywords));
+        }
+
+        // 数量徽章：显示「当前关键词下该语言还有多少可选」，无搜索时即数据概览。
+        function updateChipCounts() {
+          const keywords = searchKeywords();
+          const counts = new Map();
+          for (const item of state.templates) {
+            if (!matchKeywords(item, keywords)) continue;
+            const key = langKey(item);
+            counts.set(key, (counts.get(key) || 0) + 1);
+          }
+          for (const [key, chip] of state.langChips) {
+            const amount = counts.get(key) || 0;
+            chip.count.textContent = `(${amount})`;
+            chip.checkbox.closest('.filter-chip').classList.toggle('zero', amount === 0);
+          }
+        }
+
+        // 筛选条从数据动态推导语言清单（按数量降序），不硬编码；只在数据加载后构建一次。
+        function buildFilterBar() {
+          const totals = new Map();
+          for (const item of state.templates) {
+            const key = langKey(item);
+            totals.set(key, (totals.get(key) || 0) + 1);
+          }
+          const keys = [...totals.keys()]
+            .sort((a, b) => totals.get(b) - totals.get(a) || a.localeCompare(b));
+
+          state.langChips.clear();
+          filterOptions.replaceChildren();
+          for (const key of keys) {
+            const chip = document.createElement('label');
+            chip.className = 'filter-chip';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = key;
+            checkbox.checked = state.langFilter.has(key);
+            checkbox.addEventListener('change', () => {
+              if (checkbox.checked) state.langFilter.add(key);
+              else state.langFilter.delete(key);
+              syncLangToUrl();
+              render();
+            });
+            chip.append(checkbox);
+            chip.append(languageIcon(key === 'unknown' ? '' : key));
+            appendText(chip, key === 'unknown' && !languageMeta(key) ? '未知' : languageLabel(key), 'chip-label');
+            const count = appendText(chip, `(${totals.get(key)})`, 'count');
+            filterOptions.append(chip);
+            state.langChips.set(key, { checkbox, count });
+          }
+        }
+
+        function syncLangToUrl() {
+          const url = new URL(window.location.href);
+          if (state.langFilter.size > 0) url.searchParams.set('lang', [...state.langFilter].join(','));
+          else url.searchParams.delete('lang');
+          // 逗号在 query 里是合法字符，保持 ?lang=py,hs 的可读形态。
+          window.history.replaceState(null, '', url.toString().replace(/%2C/g, ','));
+        }
+
+        // 从 ?lang=cpp,py 恢复勾选；不在数据里的语言键直接忽略。
+        function restoreLangFromUrl() {
+          const raw = new URLSearchParams(window.location.search).get('lang');
+          const wanted = (raw || '').split(',').map((part) => part.trim()).filter(Boolean);
+          state.langFilter = new Set(state.langChips.size > 0
+            ? wanted.filter((key) => state.langChips.has(key))
+            : wanted);
+          for (const [key, chip] of state.langChips) {
+            chip.checkbox.checked = state.langFilter.has(key);
+          }
+        }
+
+        window.addEventListener('popstate', () => {
+          restoreLangFromUrl();
+          render();
+        });
 
         function appendText(parent, text, className) {
           const element = document.createElement('span');
@@ -491,6 +719,7 @@
 
         function render() {
           const items = filteredTemplates();
+          updateChipCounts();
           result.replaceChildren();
           setStatus(`显示 ${items.length} / ${state.templates.length} 个模板`);
 
@@ -508,16 +737,18 @@
 
             const heading = document.createElement('div');
             heading.className = 'card-heading';
-            appendText(heading, String(index + 1).padStart(3, '0'), 'card-number');
+            heading.append(languageIcon(item.language));
             appendText(heading, item.description || item.id || '未命名模板', 'card-title');
             card.append(heading);
             appendText(card, item.id || '', 'card-id');
 
-            const details = document.createElement('div');
-            details.className = 'card-details';
-            if (item.language) appendText(details, item.language, 'badge');
-            for (const tag of Array.isArray(item.tags) ? item.tags : []) appendText(details, tag, 'badge');
-            card.append(details);
+            const tags = Array.isArray(item.tags) ? item.tags : [];
+            if (tags.length > 0) {
+              const details = document.createElement('div');
+              details.className = 'card-details';
+              for (const tag of tags) appendText(details, tag, 'badge');
+              card.append(details);
+            }
 
             renderArticles(card, item.articles);
 
@@ -527,6 +758,8 @@
             addButton(actions, '复制', 'copy', item.id);
             addButton(actions, '下载', 'download', item.id);
             if (item.sh) addButton(actions, '命令', 'shell', item.id);
+            // 序号缩小变暗放右下角：靠 margin-left:auto 推到操作行最右端。
+            appendText(actions, String(index + 1).padStart(3, '0'), 'card-number');
             card.append(actions);
             result.append(card);
           }
