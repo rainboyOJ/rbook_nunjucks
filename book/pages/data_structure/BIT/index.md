@@ -6,7 +6,7 @@ date: 2026-08-06 16:36
 toc: true
 tags: ["数据结构", "树状数组", "前缀和", "区间查询"]
 categories: ["数据结构"]
-code_template: [fenwick]
+code_template: [fenwick, fenwick-py]
 ---
 
 [[TOC]]
@@ -166,7 +166,17 @@ $$
 
 下面的模板只保留可复用的 `add`、`prefix_sum` 和 `range_sum` 接口：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/BIT/bit.cpp, cpp)
+:::
+
+::: tab Python
+Python 版把同一份接口封装成 `Fenwick` 类，`tree` 仍然是从下标 $1$ 开始的 `list`，位运算与循环边界和 C++ 版逐行对应：
+
+@include-code(/code/data-struture/BIT/bit.py, python)
+:::
+::::
 
 ## 完整代码
 
