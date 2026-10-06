@@ -11,6 +11,7 @@ categories:
   - 字符串
 code_template:
   - hash
+  - hash-py
 description: 把字符串看成一个 $P$ 进制大整数，预处理前缀哈希后，用“整段减去前缀”在 $O(1)$ 得到任意子串的哈希值。
 ---
 
@@ -122,8 +123,17 @@ l1 r1 l2 r2
 
 每个询问判断两个 1-based 子串是否相同，输出 `Yes` 或 `No`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/string/hash.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ `unsigned long long` 的自然溢出用显式 `& (2**64 - 1)` 复刻，哈希值可逐位对齐；非 ASCII 字符需先 `encode`。
+@include-code(/code/string/hash.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

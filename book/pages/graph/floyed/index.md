@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最短路", "Floyd"]
 categories: ["图论"]
-code_template: [floyed]
+code_template: [floyed, floyed-py]
 ---
 
 [[TOC]]
@@ -102,8 +102,17 @@ um vm wm
 
 输出任意两点最短路矩阵；不可达输出 `INF`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/floyed.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑在 `main` 里，Python 版抽成 `floyd` 函数。
+@include-code(/code/graph/floyed.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

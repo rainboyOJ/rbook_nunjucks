@@ -6,7 +6,7 @@ date: 2026-06-16 18:25
 toc: true
 tags: ["负环", "SPFA", "Bellman-Ford", "最短路"]
 categories: ["图论"]
-code_template: [spfa-negative-cycle]
+code_template: [spfa-negative-cycle, spfa-negative-cycle-py]
 ---
 
 [[TOC]]
@@ -57,8 +57,16 @@ SPFA 判负环的最坏复杂度仍可能达到 $O(nm)$，但实现简单，常�
 
 下面模板读入 `n m` 和 `m` 条有向边 `u v w`，输出是否存在负环。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/spfa_negative_cycle.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/spfa_negative_cycle.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

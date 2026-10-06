@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "区间 DP", "四边形不等式", "Knuth 优化"]
 categories: ["动态规划"]
-code_template: [knuth-stone-merge]
+code_template: [knuth-stone-merge, knuth-stone-merge-py]
 ---
 
 [[TOC]]
@@ -173,8 +173,17 @@ $$
 
 下面代码解决线性石子合并的最小代价问题。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/knuth_stone_merge.cpp, cpp)
+:::
 
+::: tab Python
+
+Knuth 优化依赖四边形不等式，只有**非负**石子保证取到朴素 $O(n^3)$ 最优解；出现负数时与朴素解不一致（C++/Python 行为一致）。
+@include-code(/code/dynamic_programming/knuth_stone_merge.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

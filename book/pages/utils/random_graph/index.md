@@ -11,8 +11,11 @@ categories:
   - 工具
 code_template:
   - template-random-graph
+  - template-random-graph-py
   - template-random-digraph
+  - template-random-digraph-py
   - template-random-dag
+  - template-random-dag-py
 description: 随机图生成工具
 ---
 
@@ -75,24 +78,51 @@ for (int u = 1; u <= n; ++u) {
 
 无向简单图的边没有方向，也不允许自环和重边。模板只枚举 `u < v`，所以输出的边天然满足这两个条件。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/template/random_graph.cpp, cpp)
+:::
 
+::: tab Python
+
+与 `random_dag` 的 C++ 源逐字节相同；Python 版保持一一对应的两份，未擅自去重。
+@include-code(/code/template/random_graph.py, python)
+:::
+::::
 ## 随机有向图
 
 有向图中 `(u, v)` 和 `(v, u)` 是两条不同的边。模板枚举所有 `u != v` 的有序点对，因此不会生成自环，但可能同时出现 `u -> v` 和 `v -> u`。
 
 这适合测试强连通分量、最短路、拓扑相关判定之外的一般有向图问题。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/template/random_digraph.cpp, cpp)
+:::
 
+::: tab Python
+
+随机生成器：性质校验 + 固定种子可复现。
+@include-code(/code/template/random_digraph.py, python)
+:::
+::::
 ## 随机 DAG
 
 DAG 是有向无环图。模板只生成 `u -> v` 且 `u < v` 的边。
 
 因为每条边都从小编号指向大编号，所以沿着边走时编号严格变大，不可能回到已经经过的点，也就不可能成环。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/template/random_dag.cpp, cpp)
+:::
 
+::: tab Python
+
+随机生成器无法与 C++ 逐字节对拍（随机引擎不同），改用性质校验 + 固定种子可复现。
+@include-code(/code/template/random_dag.py, python)
+:::
+::::
 ## 常见改法
 
 ### 生成连通无向图

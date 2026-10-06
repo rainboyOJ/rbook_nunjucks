@@ -6,7 +6,7 @@ date: 2026-06-16 17:45
 toc: true
 tags: ["可持久化线段树", "函数式线段树", "主席树"]
 categories: ["数据结构"]
-code_template: [segtree-persistent-array]
+code_template: [segtree-persistent-array, segtree-persistent-array-py]
 ---
 
 [[TOC]]
@@ -77,8 +77,17 @@ code_template: [segtree-persistent-array]
 
 下面模板对应 [[problem: luogu,P3919]] 的可持久化数组。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/persistent_array.cpp, cpp)
+:::
 
+::: tab Python
+
+`max_nodes` 参数仅为接口对齐保留（Python 列表动态增长）；`update` 返回新版本根，旧版本仍可查询。
+@include-code(/code/data-struture/segment_tree/persistent_array.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

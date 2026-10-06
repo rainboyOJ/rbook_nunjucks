@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["栈", "数据结构"]
 categories: ["数据结构"]
-code_template: [stack]
+code_template: [stack, stack-py]
 ---
 
 [[TOC]]
@@ -65,8 +65,17 @@ code_template: [stack]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/stack.cpp, cpp)
+:::
 
+::: tab Python
+
+`top()` 返回值的副本（Python 无引用返回值）；`siz` 容量参数在 Python 版中省略。
+@include-code(/code/data-struture/stack.py, python)
+:::
+::::
 ## 测试用例
 
 输入一组操作：

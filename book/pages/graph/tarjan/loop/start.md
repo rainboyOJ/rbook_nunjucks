@@ -6,7 +6,7 @@ date: 2026-06-16 19:10
 toc: true
 tags: ["找环", "基环树", "DFS", "图论"]
 categories: ["图论"]
-code_template: [pseudotree-cycle]
+code_template: [pseudotree-cycle, pseudotree-cycle-py]
 ---
 
 [[TOC]]
@@ -57,8 +57,16 @@ code_template: [pseudotree-cycle]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/pseudotree_cycle_nodes.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/pseudotree_cycle_nodes.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

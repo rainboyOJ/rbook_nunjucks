@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "邻接表"]
 categories: ["图论"]
-code_template: [linklist]
+code_template: [linklist, linklist-py]
 ---
 
 [[TOC]]
@@ -72,8 +72,17 @@ cnt++
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/linklist.cpp, cpp)
+:::
 
+::: tab Python
+
+类名 `linkList` 按 Python 惯例写作 `LinkList`，方法名不变。
+@include-code(/code/graph/linklist.py, python)
+:::
+::::
 ## 测试用例
 
 输入边：

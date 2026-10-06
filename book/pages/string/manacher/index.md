@@ -11,6 +11,7 @@ categories:
   - 字符串
 code_template:
   - manacher
+  - manacher-py
 description: Manacher 把奇偶回文统一成一种形式，并用“镜像半径”跳过已经证明相等的部分，只在右边界外继续扩展。
 ---
 
@@ -110,8 +111,17 @@ p[i] = min(p[mirror], right - i)
 
 模板输入一个不含空格的字符串，输出最长回文子串长度和这个子串。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/string/manacher.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 的 `len`、`l`、`r` 引用出参改为返回元组；定长数组改为按串长动态分配。
+@include-code(/code/string/manacher.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

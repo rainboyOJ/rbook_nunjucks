@@ -8,6 +8,7 @@ tags: ["数据结构", "线段树"]
 categories: ["数据结构"]
 code_template:
   - segtree-dynamic
+  - segtree-dynamic-py
 prerequisites:
   - sgt-update-one
 ---
@@ -47,8 +48,17 @@ prerequisites:
 
 ## 代码模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/dynamic_segment_tree.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 用 `int&` 引用出参回写根，Python 版 `update` 返回新根，调用方须写 `seg.root = seg.update(seg.root, ...)`。
+@include-code(/code/data-struture/segment_tree/dynamic_segment_tree.py, python)
+:::
+::::
 !!! warning 数组大小怎么开
 通常在考试中，如果总操作次数为 $m$，值域大小上限是 $V$，那么最坏情况下会开辟 $m \lceil \log_2 V \rceil$ 个节点。为了安全起见，通常还会加上常数项，例如开 $m \log_2 V + 100$ 大小。只要不超过内存限制，数组可以尽量开大一些。
 !!!

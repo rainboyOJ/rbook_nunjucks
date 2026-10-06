@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "多重背包"]
 categories: ["动态规划"]
-code_template: [knapsack-multiple-binary]
+code_template: [knapsack-multiple-binary, knapsack-multiple-binary-py]
 ---
 
 [[TOC]]
@@ -124,8 +124,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/knapsack/multiple_binary.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 用 `int` 存件数与价值，乘积超 $2^{31}-1$ 会溢出成 UB；Python `int` 任意精度。
+@include-code(/code/dynamic_programming/knapsack/multiple_binary.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

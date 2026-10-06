@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "状态压缩", "SOS DP"]
 categories: ["动态规划"]
-code_template: [sos-subset-sum, sos-superset-sum]
+code_template: [sos-subset-sum, sos-subset-sum-py, sos-superset-sum, sos-superset-sum-py]
 ---
 
 [[TOC]]
@@ -166,12 +166,30 @@ $$
 
 ### 子集和模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/sos/subset_sum.cpp, cpp)
+:::
 
+::: tab Python
+
+原地修改传入数组 `f`（C++ 传引用，Python 传列表同一对象），返回 `None`。
+@include-code(/code/dynamic_programming/sos/subset_sum.py, python)
+:::
+::::
 ### 超集和模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/sos/superset_sum.cpp, cpp)
+:::
 
+::: tab Python
+
+原地修改传入数组 `f`，返回 `None`。
+@include-code(/code/dynamic_programming/sos/superset_sum.py, python)
+:::
+::::
 ## 测试用例
 
 输入数组按 mask 从 `0` 到 `2^n-1` 给出。

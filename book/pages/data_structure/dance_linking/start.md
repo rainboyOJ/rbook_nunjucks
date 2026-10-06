@@ -6,7 +6,7 @@ date: 2026-06-16 17:20
 toc: true
 tags: ["DLX", "舞蹈链", "精确覆盖", "搜索"]
 categories: ["数据结构"]
-code_template: [dlx-exact-cover]
+code_template: [dlx-exact-cover, dlx-exact-cover-py]
 ---
 
 [[TOC]]
@@ -98,8 +98,16 @@ dfs():
 
 下面模板读入一个 `n * m` 的 `0/1` 矩阵，输出一组可行行号；如果不存在答案，输出 `No Solution!`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/dlx/exact_cover.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/dlx/exact_cover.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

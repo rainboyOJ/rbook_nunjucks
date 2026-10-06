@@ -11,6 +11,7 @@ categories:
   - 树上算法
 code_template:
   - hld
+  - hld-py
 description: 树链剖分先让重儿子连续编号，把树上路径拆成 $O(\log n)$ 段数组区间，再交给线段树处理。
 ---
 
@@ -123,8 +124,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/hld.cpp, cpp)
+:::
 
+::: tab Python
+
+负数取模语义不同：C++ 结果可为负，Python 恒非负；模板约定传入非负增量。
+@include-code(/code/tree/hld.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

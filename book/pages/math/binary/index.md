@@ -11,6 +11,7 @@ categories:
   - 数学
 code_template:
   - bit-operations
+  - bit-operations-py
 description: 位运算就是把整数看成一排 `0/1` 开关，用很少的操作直接检查、打开、关闭或枚举这些开关。
 ---
 
@@ -295,8 +296,16 @@ x & (x - 1) = A 0 00...0
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/bit_operations.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/bit_operations.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

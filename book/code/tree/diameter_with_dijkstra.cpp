@@ -70,7 +70,9 @@ struct TreeDiameterAdvanced {
         
         reset();
         ed = dfs(st, 0);              // 第二遍从st找ed
-        diameter_len = dis[ed];
+        // dis[u] 是以 u 为根的子树高度：根 st 的高度就是 st 到最远点 ed 的距离（即直径）。
+        // 不能取 dis[ed]：ed 是叶子，叶子的子树高度恒为 0。
+        diameter_len = dis[st];
         
         return diameter_len;
     }

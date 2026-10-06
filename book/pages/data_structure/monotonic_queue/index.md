@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "单调队列", "滑动窗口"]
 categories: ["数据结构"]
-code_template: [mono-queue-sliding-window, mono-queue-max-sub]
+code_template: [mono-queue-sliding-window, mono-queue-sliding-window-py, mono-queue-max-sub, mono-queue-max-sub-py]
 ---
 
 [[TOC]]
@@ -118,12 +118,30 @@ a[队尾] <= a[i]
 
 滑动窗口最小值和最大值：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/monotonic_queue_sliding_window.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑写在 `main` 里，Python 版抽成自由函数；`a` 为 1 下标（`a[0]` 占位），见文件头调用示例。
+@include-code(/code/data-struture/monotonic_queue_sliding_window.py, python)
+:::
+::::
 长度不超过 $m$ 的最大子段和：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/monotonic_queue_max_subarray.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑写在 `main` 里，Python 版抽成自由函数；`a` 为 1 下标（`a[0]` 占位），见文件头调用示例。
+@include-code(/code/data-struture/monotonic_queue_max_subarray.py, python)
+:::
+::::
 ## 测试用例
 
 滑动窗口输入：

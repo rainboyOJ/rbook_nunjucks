@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "最大流"]
 categories: ["图论"]
-code_template: [dinic]
+code_template: [dinic, dinic-py]
 ---
 
 [[TOC]]
@@ -114,8 +114,16 @@ um vm cm
 
 输出最大流。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/dinic.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/dinic.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

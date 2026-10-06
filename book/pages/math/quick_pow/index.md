@@ -11,6 +11,7 @@ categories:
   - 数学
 code_template:
   - quick-pow
+  - quick-pow-py
 description: 快速幂把指数拆成二进制：当前位是 `1` 就乘进答案，底数每轮自乘一次。
 ---
 
@@ -122,8 +123,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/快速幂_quick_pow.cpp, cpp)
+:::
 
+::: tab Python
+
+约定 `base >= 0`：负底数下 C++ 的截断取模会给出负答案，Python 向下取模会归一化，两者不同。
+@include-code(/code/math/快速幂_quick_pow.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -11,6 +11,7 @@ categories:
   - 数学
 code_template:
   - gaussian-elimination
+  - gaussian-elimination-py
 description: 高斯消元就是用一行方程消掉其它行的同一列未知数，把方程组化成容易读答案的阶梯形。
 ---
 
@@ -90,8 +91,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/gaussian_elimination.cpp, cpp)
+:::
 
+::: tab Python
+
+`a` 在函数内复制（保持 C++ 按值语义），`ans` 就地改写传入列表。
+@include-code(/code/math/gaussian_elimination.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

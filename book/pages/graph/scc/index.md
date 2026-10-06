@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "强连通分量"]
 categories: ["图论"]
-code_template: [scc]
+code_template: [scc, scc-py]
 ---
 
 [[TOC]]
@@ -72,8 +72,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/scc.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/scc.py, python)
+:::
+::::
 ## 测试用例
 
 输入图：

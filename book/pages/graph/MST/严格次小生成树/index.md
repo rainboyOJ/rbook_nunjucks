@@ -6,7 +6,7 @@ date: 2026-01-06 15:40
 toc: true
 tags: ["图论", "最小生成树", "倍增"]
 categories: ["图论"]
-code_template: [second-mst]
+code_template: [second-mst, second-mst-py]
 ---
 
 [[TOC]]
@@ -93,8 +93,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/严格次小生成树_sec_mst.cpp, cpp)
+:::
 
+::: tab Python
+
+哨兵 `NEG = -(1 << 60)` 沿用 C++，因此边权须大于它；`DSU.find` 与 `dfs` 因链式最坏深度改为迭代实现，签名不变。
+@include-code(/code/graph/严格次小生成树_sec_mst.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

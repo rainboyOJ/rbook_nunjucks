@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["LCA", "倍增", "树上算法"]
 categories: ["树上算法"]
-code_template: [lca-binary-lifting]
+code_template: [lca-binary-lifting, lca-binary-lifting-py]
 prerequisites: [binary-jump, dfs-order]
 ---
 
@@ -183,8 +183,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/jump_lca.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/jump_lca.py, python)
+:::
+::::
 ## 测试用例
 
 树结构：

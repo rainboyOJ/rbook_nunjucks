@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["队列", "数据结构"]
 categories: ["数据结构"]
-code_template: [queue]
+code_template: [queue, queue-py]
 ---
 
 [[TOC]]
@@ -70,8 +70,16 @@ code_template: [queue]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/queue.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/queue.py, python)
+:::
+::::
 ## 测试用例
 
 输入一组操作：

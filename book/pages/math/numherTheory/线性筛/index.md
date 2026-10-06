@@ -12,6 +12,7 @@ categories:
   - 数论
 code_template:
   - linear-sieve
+  - linear-sieve-py
 description: 线性筛用“最小质因子”筛合数，保证每个合数只被标记一次。
 ---
 
@@ -75,8 +76,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/numberTheory/linear_sieve.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/numberTheory/linear_sieve.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

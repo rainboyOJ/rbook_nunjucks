@@ -15,7 +15,10 @@ public:
         primes.clear();
         
         // 预分配空间提高性能（素数定理：π(n) ≈ n/ln(n)）
-        primes.reserve(static_cast<int>(n / std::log(n)) + 10);
+        // π(n) ≈ n / ln n：n < 2 时 ln n = 0 会除零（static_cast<int>(inf) 触发 length_error），
+        // 此时一个素数都没有，给个安全最小容量即可。
+        int capacity = (n < 2) ? 16 : static_cast<int>(n / std::log(n)) + 10;
+        primes.reserve(capacity);
         
         for (long long i = 2; i <= n; i++) {
             if (!is_composite[i]) {

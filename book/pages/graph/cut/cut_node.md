@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "割点"]
 categories: ["图论"]
-code_template: [cut-node]
+code_template: [cut-node, cut-node-py]
 ---
 
 [[TOC]]
@@ -73,8 +73,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/cut_node.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/cut_node.py, python)
+:::
+::::
 ## 测试用例
 
 输入图：

@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "分组背包"]
 categories: ["动态规划"]
-code_template: [knapsack-grouped]
+code_template: [knapsack-grouped, knapsack-grouped-py]
 ---
 
 [[TOC]]
@@ -154,8 +154,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/knapsack/grouped.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/dynamic_programming/knapsack/grouped.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

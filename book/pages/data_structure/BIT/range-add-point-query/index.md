@@ -6,7 +6,7 @@ date: 2026-08-06 16:36
 toc: true
 tags: ["数据结构", "树状数组", "差分", "区间修改"]
 categories: ["数据结构"]
-code_template: [fenwick-range-add-point-query]
+code_template: [fenwick-range-add-point-query, fenwick-range-add-point-query-py]
 prerequisites: [bit, differential]
 ---
 
@@ -148,8 +148,16 @@ $$
 
 模板中的 `add` 操作修改一个差分位置，日常使用的接口是 `range_add` 和 `point_query`：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/BIT/bit_区间修改_单点查询.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/BIT/bit_区间修改_单点查询.py, python)
+:::
+::::
 ## 完整代码
 
 输入格式与 Luogu P3368 一致：

@@ -6,7 +6,7 @@ date: 2025-12-18 10:01
 toc: true
 tags: ["图论", "拓扑排序", "DAG"]
 categories: ["图论"]
-code_template: [topsort-dag]
+code_template: [topsort-dag, topsort-dag-py]
 ---
 
 [[TOC]]
@@ -95,8 +95,16 @@ Kahn 算法的流程：
 
 下面模板读入 `n m` 和 `m` 条有向边 `u v`，输出一个拓扑序；如果存在环，输出 `Cycle`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/topsort-dag.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/topsort-dag.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

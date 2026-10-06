@@ -11,6 +11,7 @@ categories:
   - 字符串
 code_template:
   - trie
+  - trie-py
 description: Trie 把字符串的公共前缀压到同一条树路径上，让查找和前缀统计只和字符串长度有关。
 ---
 
@@ -103,8 +104,17 @@ root --a--> node --p--> node --p--> node
 
 竞赛中可直接复用的 Trie 结构体，支持插入、完整查询、前缀计数：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/string/trie.cpp, cpp)
+:::
 
+::: tab Python
+
+成员 `pass` 更名为 `pass_count`（`pass` 是 Python 关键字），接口语义不变。
+@include-code(/code/string/trie.py, python)
+:::
+::::
 ## 代码实现
 
 完整可运行程序。模板输入格式：

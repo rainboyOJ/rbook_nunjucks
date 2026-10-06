@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "并查集", "DSU"]
 categories: ["数据结构"]
-code_template: [dsu, dsu-bipartite]
+code_template: [dsu, dsu-py, dsu-bipartite, dsu-bipartite-py]
 ---
 
 [[TOC]]
@@ -109,12 +109,29 @@ $$
 
 普通并查集：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/dsu.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/dsu.py, python)
+:::
+::::
 种类并查集：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/dsu_bipartite.cpp, cpp)
+:::
 
+::: tab Python
+
+`is_bipartite` 对应 C++ `main` 的判定逻辑；`DSU` 与并查集模板一致，单文件即可复制使用。
+@include-code(/code/data-struture/dsu_bipartite.py, python)
+:::
+::::
 ## 测试用例
 
 普通并查集输入：

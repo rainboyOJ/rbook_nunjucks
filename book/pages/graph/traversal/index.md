@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "DFS", "BFS", "连通块"]
 categories: ["图论"]
-code_template: [dfs-traversal, connected-components]
+code_template: [dfs-traversal, dfs-traversal-py, connected-components, connected-components-py]
 ---
 
 [[TOC]]
@@ -110,12 +110,28 @@ DFS 访问 `v_0` 后，会枚举它的邻点，因此会访问 `v_1`。同理，
 
 ### DFS 遍历图
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/dfs_traversal.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/dfs_traversal.py, python)
+:::
+::::
 ### 无向图连通块
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/connected_components.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/connected_components.py, python)
+:::
+::::
 ## 测试用例
 
 ### DFS 遍历

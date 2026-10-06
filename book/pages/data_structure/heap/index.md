@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "堆", "优先队列"]
 categories: ["数据结构"]
-code_template: [heap]
+code_template: [heap, heap-py]
 ---
 
 [[TOC]]
@@ -127,8 +127,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/heap堆.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/heap堆.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

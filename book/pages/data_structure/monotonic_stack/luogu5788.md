@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["单调栈"]
 categories: ["数据结构"]
-code_template: [mono-stack-next-greater]
+code_template: [mono-stack-next-greater, mono-stack-next-greater-py]
 ---
 
 [[TOC]]
@@ -57,8 +57,17 @@ code_template: [mono-stack-next-greater]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/monotonic_stack_next_greater.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑写在 `main` 里，Python 版抽成自由函数；`a` 为 1 下标（`a[0]` 占位）。
+@include-code(/code/data-struture/monotonic_stack_next_greater.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

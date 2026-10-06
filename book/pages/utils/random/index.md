@@ -10,6 +10,7 @@ categories:
   - 工具
 code_template:
   - random
+  - random-py
 description: 随机数生成工具
 ---
 
@@ -74,8 +75,17 @@ for (int i = 1; i <= n; ++i) {
 
 模板文件位置：`/code/utils/random.cpp`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/utils/random.cpp, cpp)
+:::
 
+::: tab Python
+
+随机数无法逐位对拍：两侧做同一组确定性性质检查（区间、可复现性、卡方），`rnd(l, r)` 对应 C++ 的区间随机函数。
+@include-code(/code/utils/random.py, python)
+:::
+::::
 ## 常见改法
 
 ### 固定随机种子

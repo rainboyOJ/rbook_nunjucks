@@ -6,7 +6,7 @@ date: 2026-06-16 18:05
 toc: true
 tags: ["分块", "根号分治", "区间信息"]
 categories: ["数据结构"]
-code_template: [sqrt-range-add-sum]
+code_template: [sqrt-range-add-sum, sqrt-range-add-sum-py]
 ---
 
 [[TOC]]
@@ -100,8 +100,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/Block/range_add_range_sum_mod.cpp, cpp)
+:::
 
+::: tab Python
+
+取模是数学模（结果落在 $[0, mod)$）：原 C++ 用 `%` 对负数返回负余数，已修复为 `((ans + x) % mod + mod) % mod`。
+@include-code(/code/data-struture/Block/range_add_range_sum_mod.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "单调栈"]
 categories: ["数据结构"]
-code_template: [mono-stack-next-greater, mono-stack-max-rect]
+code_template: [mono-stack-next-greater, mono-stack-next-greater-py, mono-stack-max-rect, mono-stack-max-rect-py]
 ---
 
 [[TOC]]
@@ -122,12 +122,30 @@ st.push(i);
 
 下一个更大元素：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/monotonic_stack_next_greater.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑写在 `main` 里，Python 版抽成自由函数；`a` 为 1 下标（`a[0]` 占位）。
+@include-code(/code/data-struture/monotonic_stack_next_greater.py, python)
+:::
+::::
 直方图最大矩形：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/monotonic_stack_largest_rectangle.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑写在 `main` 里，Python 版抽成自由函数；`h` 为 1 下标（`h[0]` 占位）。
+@include-code(/code/data-struture/monotonic_stack_largest_rectangle.py, python)
+:::
+::::
 ## 测试用例
 
 下一个更大元素输入：

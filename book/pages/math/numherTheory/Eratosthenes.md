@@ -11,6 +11,7 @@ categories:
   - 数学
 code_template:
   - eprime
+  - eprime-py
 description: 埃氏筛不逐个判断素数，而是从小素数开始，把它的倍数全部标成合数。
 ---
 
@@ -93,8 +94,16 @@ if (i > n / i) continue;
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/eprime.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/eprime.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

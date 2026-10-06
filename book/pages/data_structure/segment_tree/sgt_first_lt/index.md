@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["线段树", "值域线段树", "区间最小值"]
 categories: ["数据结构", "线段树"]
-code_template: [segtree-first-less]
+code_template: [segtree-first-less, segtree-first-less-py]
 ---
 
 [[TOC]]
@@ -129,8 +129,17 @@ xq
 
 每个询问输出第一个满足 `a[i] < x` 的位置；不存在时输出 `n+1`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/value_first_less.cpp, cpp)
+:::
 
+::: tab Python
+
+$\mathrm{INF} = 10^9$ 既是叶子初值也是无解哨兵；`update_min` 只让值变小。
+@include-code(/code/data-struture/segment_tree/value_first_less.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

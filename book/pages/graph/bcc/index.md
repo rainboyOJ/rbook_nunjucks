@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "双连通分量"]
 categories: ["图论"]
-code_template: [v-bcc, e-bcc]
+code_template: [v-bcc, v-bcc-py, e-bcc, e-bcc-py]
 ---
 
 [[TOC]]
@@ -106,12 +106,28 @@ $$
 
 点双连通分量：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/v-bcc.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/v-bcc.py, python)
+:::
+::::
 边双连通分量：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/e-bcc.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/e-bcc.py, python)
+:::
+::::
 ## 测试用例
 
 考虑无向图：

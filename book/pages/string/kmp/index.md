@@ -11,6 +11,7 @@ categories:
   - 字符串
 code_template:
   - kmp
+  - kmp-py
 description: KMP 用模式串的 border 保存可复用的匹配长度，让文本指针始终向前，并把构造 pi 与搜索文本统一成同一个状态转移。
 ---
 
@@ -232,8 +233,17 @@ P:    a b a b a c a
 
 下面是可复用的 KMP 模板。`build_prefix_function` 返回大小为 `m+1` 的 `pi`，`kmp_match` 返回所有 1 下标匹配位置。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/string/kmp.cpp, cpp)
+:::
 
+::: tab Python
+
+`build_prefix_function` 与 `kmp_match` 返回 1 起始下标（与 C++ 一致）。
+@include-code(/code/string/kmp.py, python)
+:::
+::::
 ## 代码实现
 
 完整程序读入 `text pattern`，输出所有 1 下标匹配位置；没有匹配时输出 `-1`。

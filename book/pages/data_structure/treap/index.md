@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "Treap"]
 categories: ["数据结构"]
-code_template: [treap]
+code_template: [treap, treap-py]
 ---
 
 [[TOC]]
@@ -149,8 +149,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/treap.cpp, cpp)
+:::
 
+::: tab Python
+
+随机优先级源与 C++ 不同，树形可能不同，但有序集合语义一致；递归重载 `insert`/`erase` 用 `_` 前缀。
+@include-code(/code/data-struture/treap.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

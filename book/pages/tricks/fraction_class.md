@@ -11,6 +11,7 @@ categories:
   - 技巧
 code_template:
   - fraction
+  - fraction-py
 description: 分数类用“分子/分母”保存有理数，比较时交叉相乘，避免 `double` 精度误差。
 ---
 
@@ -73,8 +74,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/utils/fraction.cpp, cpp)
+:::
 
+::: tab Python
+
+`operator<<` 对应 `__str__`；未定义 `__hash__`（与 C++ 接口一致），需要入 `set`/`dict` 时自行补。
+@include-code(/code/utils/fraction.py, python)
+:::
+::::
 ## 测试用例
 
 模板中的演示输出：

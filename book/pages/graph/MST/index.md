@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最小生成树", "Kruskal"]
 categories: ["图论"]
-code_template: [mst-kruskal]
+code_template: [mst-kruskal, mst-kruskal-py]
 ---
 
 [[TOC]]
@@ -94,8 +94,17 @@ Kruskal 的主要开销是排序。
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/最小生成树mst_kruskal.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑在 `main` 里，Python 版抽成 `kruskal(n, edges)`；不连通时返回 `None`（对应 C++ 的 `orz` 分支）。
+@include-code(/code/graph/最小生成树mst_kruskal.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -296,10 +296,24 @@ codes:
     tags: [数据结构, 树状数组]
     complexity: 单次修改或查询 O(log n)，空间 O(n)
 
+  - id: fenwick-range-add-point-query-py
+    path: data-struture/BIT/bit_区间修改_单点查询.py
+    description: fenwick range add point query python | 差分树状数组区间加与单点查询（Python 版）
+    language: py
+    tags: [数据结构, 树状数组]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
+
   - id: fenwick-range-add-sum
     path: data-struture/BIT/bit_区间修改_区间查询.cpp
     description: fenwick range add sum | 双树状数组区间加与区间和
     language: cpp
+    tags: [数据结构, 树状数组]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
+
+  - id: fenwick-range-add-sum-py
+    path: data-struture/BIT/bit_区间修改_区间查询.py
+    description: fenwick range add sum python | 双树状数组区间加与区间和（Python 版）
+    language: py
     tags: [数据结构, 树状数组]
     complexity: 单次修改或查询 O(log n)，空间 O(n)
 
@@ -310,10 +324,23 @@ codes:
     tags: [数据结构, 树状数组, 区间最值]
     complexity: 单次修改或查询 O(log n)，空间 O(n)
 
+  - id: fenwick-prefix-max-py
+    path: data-struture/BIT/bit_prefix_max.py
+    description: fenwick prefix max python | 树状数组单点 chmax 与前缀最大值（Python 版）
+    language: py
+    tags: [数据结构, 树状数组, 区间最值]
+    complexity: 单次修改或查询 O(log n)，空间 O(n)
+
   - id: sqrt-decomp
     path: data-struture/Block/block.cpp
     description: block | 分块
     language: cpp
+    tags: [数据结构]
+
+  - id: sqrt-decomp-py
+    path: data-struture/Block/block.py
+    description: block python | 分块（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: sqrt-range-add-sum
@@ -322,16 +349,34 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: sqrt-range-add-sum-py
+    path: data-struture/Block/range_add_range_sum_mod.py
+    description: range add range sum mod python | 分块区间加区间和（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: rbtree
     path: data-struture/RBTree/rbtree.cpp
     description: rbtree | 红黑树
     language: cpp
     tags: [数据结构, 平衡树]
 
+  - id: rbtree-py
+    path: data-struture/RBTree/rbtree.py
+    description: rbtree python | 红黑树（Python 版）
+    language: py
+    tags: [数据结构, 平衡树]
+
   - id: bst
     path: data-struture/bst.cpp
     description: bst | 二叉搜索树
     language: cpp
+    tags: [数据结构]
+
+  - id: bst-py
+    path: data-struture/bst.py
+    description: bst python | 二叉搜索树（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: bst-alt
@@ -346,10 +391,22 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: bst-command2-py
+    path: data-struture/bst_command2.py
+    description: bst command 2 python | 二叉搜索树（内存池版）（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: bst-common
     path: data-struture/bst_common.cpp
     description: bst common | 二叉搜索树（通用版）
     language: cpp
+    tags: [数据结构]
+
+  - id: bst-common-py
+    path: data-struture/bst_common.py
+    description: bst common python | 二叉搜索树（通用版）（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: dlx-exact-cover
@@ -358,16 +415,34 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: dlx-exact-cover-py
+    path: data-struture/dlx/exact_cover.py
+    description: exact cover python | DLX 精确覆盖（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: dsu
     path: data-struture/dsu.cpp
     description: dsu | 并查集
     language: cpp
     tags: [数据结构]
 
+  - id: dsu-py
+    path: data-struture/dsu.py
+    description: dsu python | 并查集（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: dsu-bipartite
     path: data-struture/dsu_bipartite.cpp
     description: dsu bipartite | 并查集判二分图
     language: cpp
+    tags: [数据结构]
+
+  - id: dsu-bipartite-py
+    path: data-struture/dsu_bipartite.py
+    description: dsu bipartite python | 并查集判二分图（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: fhq-treap
@@ -380,6 +455,12 @@ codes:
     path: data-struture/fhq-treap/fhq_demo_gemi.cpp
     description: fhq demo gemi | FHQ-Treap 演示
     language: cpp
+    tags: [数据结构]
+
+  - id: fhq-treap-demo-py
+    path: data-struture/fhq-treap/fhq_demo_gemi.py
+    description: fhq demo gemi python | FHQ-Treap 演示（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: fhq-treap-py
@@ -400,10 +481,22 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: heap-py
+    path: data-struture/heap堆.py
+    description: heap python | 堆（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: mono-queue-max-sub
     path: data-struture/monotonic_queue_max_subarray.cpp
     description: monotonic queue max subarray | 单调队列求最大子段和
     language: cpp
+    tags: [数据结构]
+
+  - id: mono-queue-max-sub-py
+    path: data-struture/monotonic_queue_max_subarray.py
+    description: monotonic queue max subarray python | 单调队列求最大子段和（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: mono-queue-sliding-window
@@ -412,10 +505,22 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: mono-queue-sliding-window-py
+    path: data-struture/monotonic_queue_sliding_window.py
+    description: monotonic queue sliding window python | 单调队列滑动窗口（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: mono-stack-max-rect
     path: data-struture/monotonic_stack_largest_rectangle.cpp
     description: monotonic stack largest rectangle | 单调栈求最大矩形面积
     language: cpp
+    tags: [数据结构]
+
+  - id: mono-stack-max-rect-py
+    path: data-struture/monotonic_stack_largest_rectangle.py
+    description: monotonic stack largest rectangle python | 单调栈求最大矩形面积（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: mono-stack-next-greater
@@ -424,10 +529,22 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: mono-stack-next-greater-py
+    path: data-struture/monotonic_stack_next_greater.py
+    description: monotonic stack next greater python | 单调栈下一个更大元素（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: queue
     path: data-struture/queue.cpp
     description: queue | 队列
     language: cpp
+    tags: [数据结构]
+
+  - id: queue-py
+    path: data-struture/queue.py
+    description: queue python | 队列（Python 版）
+    language: py
     tags: [数据结构]
 
   - id: rbtree-hs
@@ -442,10 +559,22 @@ codes:
     language: cpp
     tags: [数据结构, 线段树]
 
+  - id: segtree-persistent-array-py
+    path: data-struture/segment_tree/persistent_array.py
+    description: sgt persistent array python | 可持久化数组（Python 版）
+    language: py
+    tags: [数据结构, 线段树]
+
   - id: segtree-point-add-range-sum
     path: data-struture/segment_tree/point_add_range_sum.cpp
     description: sgt point add range sum | 线段树单点加区间和
     language: cpp
+    tags: [数据结构, 线段树]
+
+  - id: segtree-point-add-range-sum-py
+    path: data-struture/segment_tree/point_add_range_sum.py
+    description: sgt point add range sum python | 线段树单点加区间和（Python 版）
+    language: py
     tags: [数据结构, 线段树]
 
   - id: segtree-range-assign
@@ -454,10 +583,22 @@ codes:
     language: cpp
     tags: [数据结构, 线段树]
 
+  - id: segtree-range-assign-py
+    path: data-struture/segment_tree/range_assign_range_sum.py
+    description: sgt range assign range sum python | 线段树区间赋值区间和（Python 版）
+    language: py
+    tags: [数据结构, 线段树]
+
   - id: segtree-scanline-discrete
     path: data-struture/segment_tree/scanline_area_discrete.cpp
     description: sgt scanline area discrete | 扫描线面积（离散化）
     language: cpp
+    tags: [数据结构, 线段树]
+
+  - id: segtree-scanline-discrete-py
+    path: data-struture/segment_tree/scanline_area_discrete.py
+    description: sgt scanline area discrete python | 扫描线面积（离散化）（Python 版）
+    language: py
     tags: [数据结构, 线段树]
 
   - id: segtree-scanline
@@ -466,16 +607,34 @@ codes:
     language: cpp
     tags: [数据结构, 线段树]
 
+  - id: segtree-scanline-py
+    path: data-struture/segment_tree/scanline_area_plain.py
+    description: sgt scanline area plain python | 扫描线面积（朴素版）（Python 版）
+    language: py
+    tags: [数据结构, 线段树]
+
   - id: segtree-first-less
     path: data-struture/segment_tree/value_first_less.cpp
     description: sgt value first less | 线段树查询区间第一个小于 x 的位置
     language: cpp
     tags: [数据结构, 线段树]
 
+  - id: segtree-first-less-py
+    path: data-struture/segment_tree/value_first_less.py
+    description: sgt value first less python | 线段树查询区间第一个小于 x 的位置（Python 版）
+    language: py
+    tags: [数据结构, 线段树]
+
   - id: segtree-weight
     path: data-struture/segment_tree/weight_segment_tree.cpp
     description: sgt weight segment tree | 权值线段树
     language: cpp
+    tags: [数据结构, 线段树]
+
+  - id: segtree-weight-py
+    path: data-struture/segment_tree/weight_segment_tree.py
+    description: sgt weight segment tree python | 权值线段树（Python 版）
+    language: py
     tags: [数据结构, 线段树]
 
   - id: segtree-dynamic
@@ -485,10 +644,23 @@ codes:
     tags: [数据结构, 线段树]
     complexity: 单次操作 O(log V)，空间 O(m log V)
 
+  - id: segtree-dynamic-py
+    path: data-struture/segment_tree/dynamic_segment_tree.py
+    description: dynamic segment tree python | 动态开点线段树（Python 版）
+    language: py
+    tags: [数据结构, 线段树]
+    complexity: 单次操作 O(log V)，空间 O(m log V)
+
   - id: splay
     path: data-struture/splay.cpp
     description: splay | Splay 平衡树
     language: cpp
+    tags: [数据结构, 平衡树]
+
+  - id: splay-py
+    path: data-struture/splay.py
+    description: splay python | Splay 平衡树（Python 版）
+    language: py
     tags: [数据结构, 平衡树]
 
   - id: stack
@@ -497,10 +669,22 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: stack-py
+    path: data-struture/stack.py
+    description: stack python | 栈（Python 版）
+    language: py
+    tags: [数据结构]
+
   - id: treap
     path: data-struture/treap.cpp
     description: treap | Treap 平衡树
     language: cpp
+    tags: [数据结构, 平衡树]
+
+  - id: treap-py
+    path: data-struture/treap.py
+    description: treap python | Treap 平衡树（Python 版）
+    language: py
     tags: [数据结构, 平衡树]
 
   - id: search
@@ -509,10 +693,22 @@ codes:
     language: cpp
     tags: [搜索, DFS, 树]
 
+  - id: search-py
+    path: dfs/树上两点距离_暴力.py
+    description: tree distance brute python | 树上两点距离（暴力 DFS）（Python 版）
+    language: py
+    tags: [搜索, DFS, 树]
+
   - id: bitmask-dp-tsp
     path: dynamic_programming/bitmask_dp_tsp.cpp
     description: bitmask dp tsp | 状态压缩 DP（TSP）
     language: cpp
+    tags: [动态规划, 树状数组]
+
+  - id: bitmask-dp-tsp-py
+    path: dynamic_programming/bitmask_dp_tsp.py
+    description: bitmask dp tsp python | 状态压缩 DP（TSP）（Python 版）
+    language: py
     tags: [动态规划, 树状数组]
 
   - id: knapsack-complete-1d
@@ -521,16 +717,34 @@ codes:
     language: cpp
     tags: [动态规划]
 
+  - id: knapsack-complete-1d-py
+    path: dynamic_programming/knapsack/complete_1d.py
+    description: complete 1d python | 完全背包（一维优化）（Python 版）
+    language: py
+    tags: [动态规划]
+
   - id: knapsack-grouped
     path: dynamic_programming/knapsack/grouped.cpp
     description: grouped | 分组背包
     language: cpp
     tags: [动态规划]
 
+  - id: knapsack-grouped-py
+    path: dynamic_programming/knapsack/grouped.py
+    description: grouped python | 分组背包（Python 版）
+    language: py
+    tags: [动态规划]
+
   - id: knapsack-multiple-binary
     path: dynamic_programming/knapsack/multiple_binary.cpp
     description: multiple binary | 多重背包（二进制拆分）
     language: cpp
+    tags: [动态规划, 二分查找]
+
+  - id: knapsack-multiple-binary-py
+    path: dynamic_programming/knapsack/multiple_binary.py
+    description: multiple binary python | 多重背包（二进制拆分）（Python 版）
+    language: py
     tags: [动态规划, 二分查找]
 
   - id: knapsack-01-1d
@@ -551,10 +765,22 @@ codes:
     language: cpp
     tags: [动态规划]
 
+  - id: knapsack-01-exact-fill-py
+    path: dynamic_programming/knapsack/zero_one_exact_fill.py
+    description: zero one exact fill python | 01 背包（恰好装满）（Python 版）
+    language: py
+    tags: [动态规划]
+
   - id: knuth-stone-merge
     path: dynamic_programming/knuth_stone_merge.cpp
     description: knuth stone merge | 石子合并（Knuth 优化）
     language: cpp
+    tags: [动态规划]
+
+  - id: knuth-stone-merge-py
+    path: dynamic_programming/knuth_stone_merge.py
+    description: knuth stone merge python | 石子合并（Knuth 优化）（Python 版）
+    language: py
     tags: [动态规划]
 
   - id: lcs
@@ -563,10 +789,22 @@ codes:
     language: cpp
     tags: [动态规划]
 
+  - id: lcs-py
+    path: dynamic_programming/lcs.py
+    description: lcs python | 最长公共子序列（Python 版）
+    language: py
+    tags: [动态规划]
+
   - id: lcs-restore
     path: dynamic_programming/lcs_restore.cpp
     description: lcs restore | 最长公共子序列（路径还原）
     language: cpp
+    tags: [动态规划]
+
+  - id: lcs-restore-py
+    path: dynamic_programming/lcs_restore.py
+    description: lcs restore python | 最长公共子序列（路径还原）（Python 版）
+    language: py
     tags: [动态规划]
 
   - id: lis-binary
@@ -575,10 +813,22 @@ codes:
     language: cpp
     tags: [动态规划, 二分查找]
 
+  - id: lis-binary-py
+    path: dynamic_programming/lis_binary.py
+    description: lis binary python | 最长上升子序列（二分优化）（Python 版）
+    language: py
+    tags: [动态规划, 二分查找]
+
   - id: sos-subset-sum
     path: dynamic_programming/sos/subset_sum.cpp
     description: subset sum | SOS DP 子集和
     language: cpp
+    tags: [动态规划]
+
+  - id: sos-subset-sum-py
+    path: dynamic_programming/sos/subset_sum.py
+    description: subset sum python | SOS DP 子集和（Python 版）
+    language: py
     tags: [动态规划]
 
   - id: sos-superset-sum
@@ -587,10 +837,22 @@ codes:
     language: cpp
     tags: [动态规划]
 
+  - id: sos-superset-sum-py
+    path: dynamic_programming/sos/superset_sum.py
+    description: superset sum python | SOS DP 超集和（Python 版）
+    language: py
+    tags: [动态规划]
+
   - id: bellman-ford
     path: graph/bellman_ford.cpp
     description: bellman ford | Bellman-Ford 单源最短路
     language: cpp
+    tags: [图论]
+
+  - id: bellman-ford-py
+    path: graph/bellman_ford.py
+    description: bellman ford python | Bellman-Ford 单源最短路（Python 版）
+    language: py
     tags: [图论]
 
   - id: bw-color
@@ -599,10 +861,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: bw-color-py
+    path: graph/bw_color.py
+    description: bw color python | 二分图染色判定（Python 版）
+    language: py
+    tags: [图论]
+
   - id: connected-components
     path: graph/connected_components.cpp
     description: connected components | 连通分量
     language: cpp
+    tags: [图论]
+
+  - id: connected-components-py
+    path: graph/connected_components.py
+    description: connected components python | 连通分量（Python 版）
+    language: py
     tags: [图论]
 
   - id: cut-edge
@@ -611,10 +885,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: cut-edge-py
+    path: graph/cut_edge.py
+    description: cut edge python | 割边（桥）（Python 版）
+    language: py
+    tags: [图论]
+
   - id: cut-node
     path: graph/cut_node.cpp
     description: cut node | 割点
     language: cpp
+    tags: [图论]
+
+  - id: cut-node-py
+    path: graph/cut_node.py
+    description: cut node python | 割点（Python 版）
+    language: py
     tags: [图论]
 
   - id: dfs-traversal
@@ -623,10 +909,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: dfs-traversal-py
+    path: graph/dfs_traversal.py
+    description: dfs traversal python | DFS 遍历（Python 版）
+    language: py
+    tags: [图论]
+
   - id: dinic
     path: graph/dinic.cpp
     description: dinic | 最大流（Dinic）
     language: cpp
+    tags: [图论, 网络流]
+
+  - id: dinic-py
+    path: graph/dinic.py
+    description: dinic python | 最大流（Dinic）（Python 版）
+    language: py
     tags: [图论, 网络流]
 
   - id: e-bcc-two-pass
@@ -635,10 +933,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: e-bcc-two-pass-py
+    path: graph/e-bcc-two-pass.py
+    description: e-bcc-two-pass python | 边双连通分量（两遍法）（Python 版）
+    language: py
+    tags: [图论]
+
   - id: e-bcc
     path: graph/e-bcc.cpp
     description: e-bcc | 边双连通分量
     language: cpp
+    tags: [图论]
+
+  - id: e-bcc-py
+    path: graph/e-bcc.py
+    description: e-bcc python | 边双连通分量（Python 版）
+    language: py
     tags: [图论]
 
   - id: euler-path-directed
@@ -647,10 +957,22 @@ codes:
     language: cpp
     tags: [图论, 数学与数论]
 
+  - id: euler-path-directed-py
+    path: graph/euler_path_directed.py
+    description: euler path directed python | 有向图欧拉路径（Python 版）
+    language: py
+    tags: [图论, 数学与数论]
+
   - id: euler-path-undirected
     path: graph/euler_path_undirected.cpp
     description: euler path undirected | 无向图欧拉路径
     language: cpp
+    tags: [图论, 数学与数论]
+
+  - id: euler-path-undirected-py
+    path: graph/euler_path_undirected.py
+    description: euler path undirected python | 无向图欧拉路径（Python 版）
+    language: py
     tags: [图论, 数学与数论]
 
   - id: floyed
@@ -659,10 +981,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: floyed-py
+    path: graph/floyed.py
+    description: floyed python | 全源最短路（Floyd）（Python 版）
+    language: py
+    tags: [图论]
+
   - id: hungarian
     path: graph/hungarian.cpp
     description: hungarian | 匈牙利算法（二分图最大匹配）
     language: cpp
+    tags: [图论]
+
+  - id: hungarian-py
+    path: graph/hungarian.py
+    description: hungarian python | 匈牙利算法（二分图最大匹配）（Python 版）
+    language: py
     tags: [图论]
 
   - id: lca-offline
@@ -671,10 +1005,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: lca-offline-py
+    path: graph/lca_linklist.py
+    description: lca linklist python | 倍增 LCA（链式前向星版）（Python 版）
+    language: py
+    tags: [图论]
+
   - id: linklist
     path: graph/linklist.cpp
     description: linklist | 链式前向星
     language: cpp
+    tags: [图论]
+
+  - id: linklist-py
+    path: graph/linklist.py
+    description: linklist python | 链式前向星（Python 版）
+    language: py
     tags: [图论]
 
   - id: linklist-mini-raw
@@ -683,10 +1029,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: linklist-mini-raw-py
+    path: graph/linklist_mini_raw.py
+    description: linklist mini raw python | 链式前向星（精简版）（Python 版）
+    language: py
+    tags: [图论]
+
   - id: linklist-mini-struct
     path: graph/linklist_mini_struct.cpp
     description: linklist mini struct | 链式前向星（struct 版）
     language: cpp
+    tags: [图论]
+
+  - id: linklist-mini-struct-py
+    path: graph/linklist_mini_struct.py
+    description: linklist mini struct python | 链式前向星（struct 版）（Python 版）
+    language: py
     tags: [图论]
 
   - id: maxflow-ek
@@ -695,10 +1053,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: maxflow-ek-py
+    path: graph/luogu-p3376-ek.py
+    description: maxflow-ek python | 最大流（EK 算法）（Python 版）
+    language: py
+    tags: [图论]
+
   - id: mcmf-spfa
     path: graph/min_cost_max_flow_spfa.cpp
     description: min cost max flow spfa | 最小费用最大流（SPFA）
     language: cpp
+    tags: [图论, 最短路, 网络流]
+
+  - id: mcmf-spfa-py
+    path: graph/min_cost_max_flow_spfa.py
+    description: min cost max flow spfa python | 最小费用最大流（SPFA）（Python 版）
+    language: py
     tags: [图论, 最短路, 网络流]
 
   - id: pseudotree-cycle
@@ -707,10 +1077,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: pseudotree-cycle-py
+    path: graph/pseudotree_cycle_nodes.py
+    description: pseudotree cycle nodes python | 基环树找环（Python 版）
+    language: py
+    tags: [图论]
+
   - id: scc
     path: graph/scc.cpp
     description: scc | 强连通分量
     language: cpp
+    tags: [图论]
+
+  - id: scc-py
+    path: graph/scc.py
+    description: scc python | 强连通分量（Python 版）
+    language: py
     tags: [图论]
 
   - id: spfa-negative-cycle
@@ -719,10 +1101,22 @@ codes:
     language: cpp
     tags: [图论, 最短路]
 
+  - id: spfa-negative-cycle-py
+    path: graph/spfa_negative_cycle.py
+    description: spfa negative cycle python | SPFA 判负环（Python 版）
+    language: py
+    tags: [图论, 最短路]
+
   - id: topsort-dag
     path: graph/topsort-dag.cpp
     description: topsort-dag | 拓扑排序（DAG）
     language: cpp
+    tags: [图论, 排序]
+
+  - id: topsort-dag-py
+    path: graph/topsort-dag.py
+    description: topsort-dag python | 拓扑排序（DAG）（Python 版）
+    language: py
     tags: [图论, 排序]
 
   - id: v-bcc
@@ -731,10 +1125,22 @@ codes:
     language: cpp
     tags: [图论]
 
+  - id: v-bcc-py
+    path: graph/v-bcc.py
+    description: v-bcc python | 点双连通分量（Python 版）
+    language: py
+    tags: [图论]
+
   - id: second-mst
     path: graph/严格次小生成树_sec_mst.cpp
     description: sec mst | 严格次小生成树
     language: cpp
+    tags: [图论, 树, 最小生成树]
+
+  - id: second-mst-py
+    path: graph/严格次小生成树_sec_mst.py
+    description: sec mst python | 严格次小生成树（Python 版）
+    language: py
     tags: [图论, 树, 最小生成树]
 
   - id: mst-kruskal
@@ -743,10 +1149,22 @@ codes:
     language: cpp
     tags: [图论, 树, 最小生成树]
 
+  - id: mst-kruskal-py
+    path: graph/最小生成树mst_kruskal.py
+    description: mst kruskal python | 最小生成树（Kruskal）（Python 版）
+    language: py
+    tags: [图论, 树, 最小生成树]
+
   - id: base-conversion-bin2dec
     path: math/base_conversion/bin2dec.cpp
     description: bin2dec | 二进制转十进制
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: base-conversion-bin2dec-py
+    path: math/base_conversion/bin2dec.py
+    description: bin2dec python | 二进制转十进制（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: base-conversion-dec2bin
@@ -755,10 +1173,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: base-conversion-dec2bin-py
+    path: math/base_conversion/dec2bin.py
+    description: dec2bin python | 十进制转二进制（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: bit-operations
     path: math/bit_operations.cpp
     description: bit operations | 位运算
     language: cpp
+    tags: [数学, 树状数组, 数学与数论]
+
+  - id: bit-operations-py
+    path: math/bit_operations.py
+    description: bit operations python | 位运算（Python 版）
+    language: py
     tags: [数学, 树状数组, 数学与数论]
 
   - id: stirling2-count
@@ -767,10 +1197,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: stirling2-count-py
+    path: math/combinatorics/stirling_second_count.py
+    description: stirling second count python | 第二类斯特林数（计数）（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: stirling2-enumerate
     path: math/combinatorics/stirling_second_enumerate.cpp
     description: stirling second enumerate | 第二类斯特林数（枚举）
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: stirling2-enumerate-py
+    path: math/combinatorics/stirling_second_enumerate.py
+    description: stirling second enumerate python | 第二类斯特林数（枚举）（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: eprime
@@ -779,10 +1221,22 @@ codes:
     language: cpp
     tags: [数学, 最小生成树, 数学与数论]
 
+  - id: eprime-py
+    path: math/eprime.py
+    description: eprime python | 埃氏筛求素数（Python 版）
+    language: py
+    tags: [数学, 最小生成树, 数学与数论]
+
   - id: gaussian-elimination
     path: math/gaussian_elimination.cpp
     description: gaussian elimination | 高斯消元
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: gaussian-elimination-py
+    path: math/gaussian_elimination.py
+    description: gaussian elimination python | 高斯消元（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: inv-exgcd
@@ -791,10 +1245,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: inv-exgcd-py
+    path: math/inv_exgcd.py
+    description: inv exgcd python | 扩展欧几里得求逆元（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: line-inv
     path: math/line_inv.cpp
     description: line inv | 线性求逆元
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: line-inv-py
+    path: math/line_inv.py
+    description: line inv python | 线性求逆元（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: myceil
@@ -803,10 +1269,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: myceil-py
+    path: math/myceil.py
+    description: ceil div python | 向上取整除法（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: euler-phi
     path: math/numberTheory/euler_phi.cpp
     description: euler phi | 欧拉函数
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: euler-phi-py
+    path: math/numberTheory/euler_phi.py
+    description: euler phi python | 欧拉函数（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: fermat-little-theorem-demo
@@ -821,10 +1299,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: gcd-py
+    path: math/numberTheory/gcd.py
+    description: gcd python | 最大公约数（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: is-prime-trial-division
     path: math/numberTheory/is_prime_trial_division.cpp
     description: is prime trial division | 素数判定（试除法）
     language: cpp
+    tags: [数学, 最小生成树, 数学与数论]
+
+  - id: is-prime-trial-division-py
+    path: math/numberTheory/is_prime_trial_division.py
+    description: is prime trial division python | 素数判定（试除法）（Python 版）
+    language: py
     tags: [数学, 最小生成树, 数学与数论]
 
   - id: lcm-gcd-identity-demo
@@ -839,10 +1329,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: linear-sieve-py
+    path: math/numberTheory/linear_sieve.py
+    description: linear sieve python | 线性筛（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: normalize-mod
     path: math/numberTheory/normalize_mod.cpp
     description: normalize mod | 取模归一化
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: normalize-mod-py
+    path: math/numberTheory/normalize_mod.py
+    description: normalize mod python | 取模归一化（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: upd-max
@@ -851,10 +1353,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: upd-max-py
+    path: math/upd_max.py
+    description: upd max python | chmax/chmin 辅助函数（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: quick-pow
     path: math/快速幂_quick_pow.cpp
     description: quick pow | 快速幂
     language: cpp
+    tags: [数学, 数学与数论]
+
+  - id: quick-pow-py
+    path: math/快速幂_quick_pow.py
+    description: quick pow python | 快速幂（Python 版）
+    language: py
     tags: [数学, 数学与数论]
 
   - id: math
@@ -863,10 +1377,22 @@ codes:
     language: cpp
     tags: [数学, 数学与数论]
 
+  - id: math-py
+    path: math/线性欧拉筛.py
+    description: linear euler sieve python | 线性欧拉筛（Python 版）
+    language: py
+    tags: [数学, 数学与数论]
+
   - id: get-prime-factors
     path: math/质因数分解_get_prime_factors.cpp
     description: get prime factors | 质因数分解
     language: cpp
+    tags: [数学, 最小生成树, 数学与数论]
+
+  - id: get-prime-factors-py
+    path: math/质因数分解_get_prime_factors.py
+    description: get prime factors python | 质因数分解（Python 版）
+    language: py
     tags: [数学, 最小生成树, 数学与数论]
 
   - id: brute-force-match
@@ -875,10 +1401,22 @@ codes:
     language: cpp
     tags: [字符串]
 
+  - id: brute-force-match-py
+    path: string/brute_force_match.py
+    description: brute force match python | 暴力字符串匹配（Python 版）
+    language: py
+    tags: [字符串]
+
   - id: hash
     path: string/hash.cpp
     description: hash | 字符串哈希
     language: cpp
+    tags: [字符串]
+
+  - id: hash-py
+    path: string/hash.py
+    description: hash python | 字符串哈希（Python 版）
+    language: py
     tags: [字符串]
 
   - id: kmp
@@ -887,10 +1425,22 @@ codes:
     language: cpp
     tags: [字符串]
 
+  - id: kmp-py
+    path: string/kmp.py
+    description: kmp python | KMP 字符串匹配（1 下标虚拟视图）（Python 版）
+    language: py
+    tags: [字符串]
+
   - id: manacher
     path: string/manacher.cpp
     description: manacher | 最长回文子串（Manacher）
     language: cpp
+    tags: [字符串]
+
+  - id: manacher-py
+    path: string/manacher.py
+    description: manacher python | 最长回文子串（Manacher）（Python 版）
+    language: py
     tags: [字符串]
 
   - id: minimal-string
@@ -899,10 +1449,22 @@ codes:
     language: cpp
     tags: [字符串]
 
+  - id: minimal-string-py
+    path: string/minimal-string.py
+    description: minimal-string python | 最小表示法（Python 版）
+    language: py
+    tags: [字符串]
+
   - id: trie
     path: string/trie.cpp
     description: trie | 字典树
     language: cpp
+    tags: [字符串]
+
+  - id: trie-py
+    path: string/trie.py
+    description: trie python | 字典树（Python 版）
+    language: py
     tags: [字符串]
 
   - id: euler-sieve
@@ -911,10 +1473,22 @@ codes:
     language: cpp
     tags: [竞赛模板, 数学与数论]
 
+  - id: euler-sieve-py
+    path: template/EulerSieve_欧拉线性筛素数.py
+    description: euler sieve python | 欧拉线性筛素数（Python 版）
+    language: py
+    tags: [竞赛模板, 数学与数论]
+
   - id: mcmf
     path: template/MCMF_最小费用最大流_template.cpp
     description: mcmf | 最小费用最大流
     language: cpp
+    tags: [竞赛模板]
+
+  - id: mcmf-py
+    path: template/MCMF_最小费用最大流_template.py
+    description: mcmf python | 最小费用最大流（Python 版）
+    language: py
     tags: [竞赛模板]
 
   - id: template-brute-template
@@ -929,6 +1503,12 @@ codes:
     language: cpp
     tags: [竞赛模板, 网络流]
 
+  - id: template-dinic-template-py
+    path: template/dinic_template.py
+    description: dinic template python | Dinic 最大流模板（Python 版）
+    language: py
+    tags: [竞赛模板, 网络流]
+
   - id: template-duipai
     path: template/duipai.sh
     description: duipai | 对拍脚本
@@ -941,10 +1521,22 @@ codes:
     language: cpp
     tags: [竞赛模板]
 
+  - id: template-random-dag-py
+    path: template/random_dag.py
+    description: random dag python | 随机 DAG 生成器（Python 版）
+    language: py
+    tags: [竞赛模板]
+
   - id: template-random-data
     path: template/random_data.cpp
     description: random data | 随机数据生成器
     language: cpp
+    tags: [竞赛模板]
+
+  - id: template-random-data-py
+    path: template/random_data.py
+    description: random data python | 随机数据生成器（Python 版）
+    language: py
     tags: [竞赛模板]
 
   - id: template-random-digraph
@@ -953,10 +1545,22 @@ codes:
     language: cpp
     tags: [竞赛模板]
 
+  - id: template-random-digraph-py
+    path: template/random_digraph.py
+    description: random digraph python | 随机有向图生成器（Python 版）
+    language: py
+    tags: [竞赛模板]
+
   - id: template-random-graph
     path: template/random_graph.cpp
     description: random graph | 随机无向图生成器
     language: cpp
+    tags: [竞赛模板]
+
+  - id: template-random-graph-py
+    path: template/random_graph.py
+    description: random graph python | 随机无向图生成器（Python 版）
+    language: py
     tags: [竞赛模板]
 
   - id: template-random-loop-tree
@@ -965,10 +1569,22 @@ codes:
     language: cpp
     tags: [竞赛模板]
 
+  - id: template-random-loop-tree-py
+    path: template/random_one_loop_tree.py
+    description: random one loop tree python | 随机基环树生成器（Python 版）
+    language: py
+    tags: [竞赛模板]
+
   - id: template-random-tree
     path: template/random_tree.cpp
     description: random tree | 随机树生成器
     language: cpp
+    tags: [竞赛模板]
+
+  - id: template-random-tree-py
+    path: template/random_tree.py
+    description: random tree python | 随机树生成器（Python 版）
+    language: py
     tags: [竞赛模板]
 
   - id: template-simple-template
@@ -995,10 +1611,22 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: dfs-order-py
+    path: tree/dfs-order.py
+    description: dfs-order python | DFS 序（Python 版）
+    language: py
+    tags: [树形数据结构, 树]
+
   - id: diameter-weighted
     path: tree/diameter_with_dijkstra.cpp
     description: diameter with dijkstra | 带权树直径（Dijkstra 法）
     language: cpp
+    tags: [树形数据结构, 树, 最短路]
+
+  - id: diameter-weighted-py
+    path: tree/diameter_with_dijkstra.py
+    description: diameter with dijkstra python | 带权树直径（Dijkstra 法）（Python 版）
+    language: py
     tags: [树形数据结构, 树, 最短路]
 
   - id: diameter
@@ -1007,10 +1635,22 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: diameter-py
+    path: tree/diamter_of_tree.py
+    description: diameter python | 树的直径（Python 版）
+    language: py
+    tags: [树形数据结构, 树]
+
   - id: diameter-improved
     path: tree/diamter_of_tree_improved.cpp
     description: diameter improved | 树的直径（改进版）
     language: cpp
+    tags: [树形数据结构, 树]
+
+  - id: diameter-improved-py
+    path: tree/diamter_of_tree_improved.py
+    description: diameter improved python | 树的直径（改进版）（Python 版）
+    language: py
     tags: [树形数据结构, 树]
 
   - id: dsu-on-tree-color-count
@@ -1019,10 +1659,22 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: dsu-on-tree-color-count-py
+    path: tree/dsu_on_tree_color_count.py
+    description: dsu on tree color count python | 树上启发式合并（颜色计数）（Python 版）
+    language: py
+    tags: [树形数据结构, 树]
+
   - id: hld
     path: tree/hld.cpp
     description: hld | 树链剖分
     language: cpp
+    tags: [树形数据结构, 树]
+
+  - id: hld-py
+    path: tree/hld.py
+    description: hld python | 树链剖分（Python 版）
+    language: py
     tags: [树形数据结构, 树]
 
   - id: lca-binary-lifting
@@ -1031,10 +1683,22 @@ codes:
     language: cpp
     tags: [树形数据结构, 树]
 
+  - id: lca-binary-lifting-py
+    path: tree/jump_lca.py
+    description: jump lca python | 倍增 LCA（Python 版）
+    language: py
+    tags: [树形数据结构, 树]
+
   - id: tree-diameter
     path: tree/tree_diameter.cpp
     description: tree diameter | 树的直径
     language: cpp
+    tags: [树形数据结构, 树]
+
+  - id: tree-diameter-py
+    path: tree/tree_diameter.py
+    description: tree diameter python | 树的直径（Python 版）
+    language: py
     tags: [树形数据结构, 树]
 
   - id: tree-diameter-dfs
@@ -1043,10 +1707,22 @@ codes:
     language: cpp
     tags: [树形数据结构, 树, DFS]
 
+  - id: tree-diameter-dfs-py
+    path: tree/tree_diameter_dfs.py
+    description: tree diameter dfs python | 树的直径（两次 DFS，记录路径）（Python 版）
+    language: py
+    tags: [树形数据结构, 树, DFS]
+
   - id: tree-diameter-dp
     path: tree/tree_diameter_dp.cpp
     description: tree diameter (tree dp) | 树的直径（树上 DP）
     language: cpp
+    tags: [树形数据结构, 树, 树形DP]
+
+  - id: tree-diameter-dp-py
+    path: tree/tree_diameter_dp.py
+    description: tree diameter (tree dp) python | 树的直径（树上 DP）（Python 版）
+    language: py
     tags: [树形数据结构, 树, 树形DP]
 
   - id: tree-centroid
@@ -1055,10 +1731,22 @@ codes:
     language: cpp
     tags: [树形数据结构, 树, 树的重心]
 
+  - id: tree-centroid-py
+    path: tree/tree_centroid.py
+    description: tree centroid python | 树的重心（Python 版）
+    language: py
+    tags: [树形数据结构, 树, 树的重心]
+
   - id: tree-centroid2
     path: tree/tree_centroid2.cpp
     description: tree centroid (B(u) ≤ n/2 判定) | 树的重心（直接判定法）
     language: cpp
+    tags: [树形数据结构, 树, 树的重心]
+
+  - id: tree-centroid2-py
+    path: tree/tree_centroid2.py
+    description: tree centroid (B(u) ≤ n/2 判定) python | 树的重心（直接判定法）（Python 版）
+    language: py
     tags: [树形数据结构, 树, 树的重心]
 
   - id: dynamic-static
@@ -1067,10 +1755,22 @@ codes:
     language: cpp
     tags: [实用工具]
 
+  - id: dynamic-static-py
+    path: utils/dynamic_static.py
+    description: dynamic static python | 动态化静态（内存池）（Python 版）
+    language: py
+    tags: [实用工具]
+
   - id: fraction
     path: utils/fraction.cpp
     description: fraction | 分数类
     language: cpp
+    tags: [实用工具]
+
+  - id: fraction-py
+    path: utils/fraction.py
+    description: fraction python | 分数类（Python 版）
+    language: py
     tags: [实用工具]
 
   - id: log
@@ -1102,3 +1802,9 @@ codes:
     description: random | 随机数工具
     language: cpp
     tags: [实用工具]
+  - id: random-py
+    path: utils/random.py
+    description: random python | 随机数工具（Python 版）
+    language: py
+    tags: [实用工具]
+

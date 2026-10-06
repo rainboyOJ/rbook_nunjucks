@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "Tarjan", "割边"]
 categories: ["图论"]
-code_template: [cut-edge]
+code_template: [cut-edge, cut-edge-py]
 ---
 
 [[TOC]]
@@ -72,8 +72,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/cut_edge.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/cut_edge.py, python)
+:::
+::::
 ## 测试用例
 
 输入图：

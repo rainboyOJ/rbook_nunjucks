@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "完全背包"]
 categories: ["动态规划"]
-code_template: [knapsack-complete-1d]
+code_template: [knapsack-complete-1d, knapsack-complete-1d-py]
 ---
 
 [[TOC]]
@@ -159,8 +159,16 @@ for (int c = weight; c <= capacity; c++)
 
 正序枚举会让 `dp[c-weight]` 可能已经在本轮被当前物品更新过，因此当前物品可以被重复选择。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/knapsack/complete_1d.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/dynamic_programming/knapsack/complete_1d.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

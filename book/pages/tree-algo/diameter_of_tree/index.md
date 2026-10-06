@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "树", "树的直径"]
 categories: ["图论"]
-code_template: [tree-diameter, tree-diameter-dfs, tree-diameter-dp]
+code_template: [tree-diameter, tree-diameter-py, tree-diameter-dfs, tree-diameter-dfs-py, tree-diameter-dp, tree-diameter-dp-py]
 ---
 
 [[TOC]]
@@ -135,14 +135,30 @@ $$
 
 #### 队列写法
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/tree_diameter.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/tree_diameter.py, python)
+:::
+::::
 #### DFS 写法
 
 如果题目还需要输出直径上的节点，可以使用 DFS 版本。第二次 DFS 会记录 `parent`，从右端点一路跳父节点即可还原整条直径路径。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/tree_diameter_dfs.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/tree_diameter_dfs.py, python)
+:::
+::::
 ## 方法二：树形 DP
 
 ### 核心直觉
@@ -265,8 +281,16 @@ if (len > best1) {
 
 `solve` 从节点 `1` 开始后序遍历，直径长度保存在 `ans` 中。这个模板只统计长度，不记录直径端点。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/tree_diameter_dp.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/tree_diameter_dp.py, python)
+:::
+::::
 !!! warning 递归深度
 当树退化成长链时，递归深度会达到 $O(n)$。数据规模较大时，应改成迭代后序遍历，或者使用方法一的队列实现。
 !!!

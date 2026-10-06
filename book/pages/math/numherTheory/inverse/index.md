@@ -11,7 +11,9 @@ categories:
   - 数学
 code_template:
   - inv-exgcd
+  - inv-exgcd-py
   - line-inv
+  - line-inv-py
 description: 模逆元就是模意义下的“倒数”，除以一个数可以改成乘它的逆元。
 ---
 
@@ -166,12 +168,29 @@ $$
 
 ### 扩展欧几里得求逆元
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/inv_exgcd.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 用 `x, y` 引用出参，Python 版 `exgcd` 返回 `(d, x, y)`；调用方保证 $a, b \geqslant 0$（取模语义差异见文件头）。
+@include-code(/code/math/inv_exgcd.py, python)
+:::
+::::
 ### 线性求逆元
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/line_inv.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/line_inv.py, python)
+:::
+::::
 ## 测试用例
 
 扩展欧几里得求逆元：

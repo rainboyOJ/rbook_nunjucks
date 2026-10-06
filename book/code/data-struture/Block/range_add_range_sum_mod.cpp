@@ -66,7 +66,9 @@ struct SqrtDecomposition {
         i64 ans = 0;
 
         auto add_mod = [&](i64 x) {
-            ans = (ans + x) % mod;
+            // C++ 的 % 在负被除数时返回负余数，而「取模」的数学含义要求结果落在 [0, mod)；
+            // 原写法在数组含负数时会输出负值（例如 mod = 5 时给出 -3 而不是 2）。
+            ans = ((ans + x) % mod + mod) % mod;
         };
 
         if (lb == rb) {

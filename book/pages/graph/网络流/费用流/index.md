@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "网络流", "费用流", "最小费用最大流"]
 categories: ["图论", "网络流"]
-code_template: [mcmf-spfa]
+code_template: [mcmf-spfa, mcmf-spfa-py]
 ---
 
 [[TOC]]
@@ -133,8 +133,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/min_cost_max_flow_spfa.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/min_cost_max_flow_spfa.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

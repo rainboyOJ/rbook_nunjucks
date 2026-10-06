@@ -10,7 +10,9 @@ categories:
   - 数学
 code_template:
   - base-conversion-bin2dec
+  - base-conversion-bin2dec-py
   - base-conversion-dec2bin
+  - base-conversion-dec2bin-py
 description: 进制转换就是反复回答两个问题：每一位的权值是多少，以及当前最低位是多少。
 ---
 
@@ -181,12 +183,29 @@ $$
 
 ### 二进制转十进制
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/base_conversion/bin2dec.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 用 `long long` 接收、超过 63 位会溢出；Python `int` 任意精度，无此上限。
+@include-code(/code/math/base_conversion/bin2dec.py, python)
+:::
+::::
 ### 十进制转二进制
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/base_conversion/dec2bin.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/base_conversion/dec2bin.py, python)
+:::
+::::
 ## 测试用例
 
 二进制转十进制：

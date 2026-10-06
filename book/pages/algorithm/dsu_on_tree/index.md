@@ -11,6 +11,7 @@ categories:
   - 树上算法
 code_template:
   - dsu-on-tree-color-count
+  - dsu-on-tree-color-count-py
 description: 树上启发式合并保留重儿子的统计结果，只把轻儿子的贡献重新加入，从而避免反复清空大块信息。
 ---
 
@@ -101,8 +102,16 @@ n-1 条边
 
 输出每个节点子树中出现次数最多的颜色编号之和。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/dsu_on_tree_color_count.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/dsu_on_tree_color_count.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

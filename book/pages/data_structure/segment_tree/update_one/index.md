@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "区间查询"]
 categories: ["数据结构"]
-code_template: [segtree-point-add-range-sum]
+code_template: [segtree-point-add-range-sum, segtree-point-add-range-sum-py]
 ---
 
 [[TOC]]
@@ -118,8 +118,16 @@ op ...
 - `op = 1 x k` 表示 `a[x] += k`；
 - `op = 2 l r` 表示查询 `[l,r]` 的区间和。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/point_add_range_sum.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/segment_tree/point_add_range_sum.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

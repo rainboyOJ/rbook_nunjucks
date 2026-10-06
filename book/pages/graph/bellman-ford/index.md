@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "最短路", "Bellman-Ford"]
 categories: ["图论"]
-code_template: [bellman-ford]
+code_template: [bellman-ford, bellman-ford-py]
 ---
 
 [[TOC]]
@@ -89,8 +89,17 @@ um vm wm
 
 输出从源点到每个点的最短距离；若存在可达负环，输出 `Negative cycle`。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/bellman_ford.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版算法在 `main` 里，Python 版抽成 `bellman_ford` 函数。
+@include-code(/code/graph/bellman_ford.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "状态压缩", "位运算"]
 categories: ["动态规划"]
-code_template: [bitmask-dp-tsp]
+code_template: [bitmask-dp-tsp, bitmask-dp-tsp-py]
 ---
 
 [[TOC]]
@@ -126,8 +126,17 @@ min(dp[(1 << n) - 1][last])
 
 模板输入一个 `n*n` 的代价矩阵，输出从点 `0` 出发访问所有点一次的最小代价。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/bitmask_dp_tsp.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑在 `main` 里，Python 版抽成 `bitmask_dp_tsp(cost)` 函数。
+@include-code(/code/dynamic_programming/bitmask_dp_tsp.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

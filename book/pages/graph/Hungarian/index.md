@@ -6,7 +6,7 @@ date: 2026-01-14 11:21
 toc: true
 tags: ["图论", "二分图", "匹配"]
 categories: ["图论"]
-code_template: [hungarian]
+code_template: [hungarian, hungarian-py]
 ---
 
 [[TOC]]
@@ -99,8 +99,16 @@ DFS 版匈牙利算法代码短、容易写，适合 $n,m$ 在几千级别的普
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/hungarian.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/hungarian.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

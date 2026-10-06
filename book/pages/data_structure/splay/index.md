@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "平衡树", "Splay"]
 categories: ["数据结构"]
-code_template: [splay]
+code_template: [splay, splay-py]
 ---
 
 [[TOC]]
@@ -168,8 +168,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/splay.cpp, cpp)
+:::
 
+::: tab Python
+
+`kth` 越界返回 `-1`、前驱/后继无解返回 `INT_MIN`/`INT_MAX`，与 C++ 原模板行为一致。
+@include-code(/code/data-struture/splay.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

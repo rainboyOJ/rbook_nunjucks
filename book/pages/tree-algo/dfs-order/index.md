@@ -11,6 +11,7 @@ categories:
   - 树上算法
 code_template:
   - dfs-order
+  - dfs-order-py
 description: DFS 序记录每个点进入 DFS 的时间，使一棵子树变成数组上的一个连续区间。
 ---
 
@@ -85,8 +86,16 @@ u 是 v 的祖先 <=> in[u] <= in[v] 且 out[v] <= out[u]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/dfs-order.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/dfs-order.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -12,7 +12,9 @@ categories:
   - 组合数学
 code_template:
   - stirling2-count
+  - stirling2-count-py
   - stirling2-enumerate
+  - stirling2-enumerate-py
 description: '第二类 Stirling 数 $S(n,m)$ 数的是：把 `n` 个不同元素分成 `m` 个非空无标号集合的方案数。'
 ---
 
@@ -95,12 +97,30 @@ $$
 
 计数模板：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/combinatorics/stirling_second_count.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版算法写在 `main` 里，Python 版抽成同参数同返回值的 `stirling_second_count(n, m)`。
+@include-code(/code/math/combinatorics/stirling_second_count.py, python)
+:::
+::::
 方案枚举模板：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/combinatorics/stirling_second_enumerate.cpp, cpp)
+:::
 
+::: tab Python
+
+`print_answer` 保留原名但不再打印：方案快照收集进 `res`（模板规范要求无 I/O）。
+@include-code(/code/math/combinatorics/stirling_second_enumerate.py, python)
+:::
+::::
 ## 测试用例
 
 计数输入：

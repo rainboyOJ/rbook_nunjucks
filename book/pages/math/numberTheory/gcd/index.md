@@ -12,6 +12,7 @@ categories:
   - 数论
 code_template:
   - gcd
+  - gcd-py
 description: 辗转相除法不断把“大问题”换成“除数和余数”的小问题，直到余数为 $0$，最后的非零数就是最大公约数。
 ---
 
@@ -150,8 +151,16 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/numberTheory/gcd.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/numberTheory/gcd.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

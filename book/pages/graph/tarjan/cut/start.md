@@ -6,7 +6,7 @@ date: 2026-06-16 19:05
 toc: true
 tags: ["Tarjan", "割点", "无向图连通性"]
 categories: ["图论"]
-code_template: [cut-node]
+code_template: [cut-node, cut-node-py]
 ---
 
 [[TOC]]
@@ -73,8 +73,16 @@ $$
 
 - `dfn` 是 `Depth First Number` 的缩写，意为深度优先搜索序列编号。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/cut_node.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/cut_node.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

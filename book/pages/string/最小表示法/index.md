@@ -11,6 +11,7 @@ categories:
   - 字符串
 code_template:
   - minimal-string
+  - minimal-string-py
 description: 最小表示法让两个起点互相比赛，一旦第 $k$ 位分出胜负，就一次淘汰输家起点后面连续 $k+1$ 个不可能答案。
 ---
 
@@ -111,8 +112,16 @@ $$
 
 模板输入一个字符串，输出它的最小表示。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/string/minimal-string.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/string/minimal-string.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["二叉搜索树", "BST", "数据结构"]
 categories: ["数据结构"]
-code_template: [bst]
+code_template: [bst, bst-py]
 ---
 
 [[TOC]]
@@ -141,8 +141,16 @@ code_template: [bst]
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/bst.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/bst.py, python)
+:::
+::::
 ## 测试用例
 
 依次插入：

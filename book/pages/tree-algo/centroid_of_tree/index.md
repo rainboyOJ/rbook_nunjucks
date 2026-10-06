@@ -6,7 +6,7 @@ date: 2026-08-15 00:00
 toc: true
 tags: ["图论", "树", "树的重心", "树形 DP"]
 categories: ["图论"]
-code_template: [tree-centroid]
+code_template: [tree-centroid, tree-centroid-py]
 prerequisites: [graph-traversal]
 ---
 
@@ -95,12 +95,28 @@ $$
 
 模板返回全部重心，并按编号升序排列。`best` 是删除重心后最大连通块的大小。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/tree_centroid.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/tree_centroid.py, python)
+:::
+::::
 另一种写法：不维护全局最小值，直接用等价判定 `B(u) ≤ n/2` 收集重心，代码更短。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/tree/tree_centroid2.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/tree/tree_centroid2.py, python)
+:::
+::::
 ## 代码实现
 
 输入一棵无权树，第一行输出重心个数，第二行按编号升序输出所有重心。

@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "背包", "01背包"]
 categories: ["动态规划"]
-code_template: [knapsack-01-1d, knapsack-01-1d-1, knapsack-01-exact-fill]
+code_template: [knapsack-01-1d, knapsack-01-1d-1, knapsack-01-exact-fill, knapsack-01-exact-fill-py]
 ---
 
 [[TOC]]
@@ -192,8 +192,16 @@ for w, v in items:
 - `dp[0] = 0`：容量为 $0$ 可以什么都不选；
 - 其他 `dp[c] = -INF`：一开始这些容量都不可达。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/knapsack/zero_one_exact_fill.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/dynamic_programming/knapsack/zero_one_exact_fill.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

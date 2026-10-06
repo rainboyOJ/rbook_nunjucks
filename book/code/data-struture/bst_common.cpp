@@ -11,10 +11,12 @@ public:
     // 口诀:  1. 查空  2. 过继 3. 调整父子关系 4. 更新根
     static void rotateLeft(NodePtr &x)
     {
-        // 1. 定义新根 y (x的右孩子)
+        // 1. 先判空，再取右孩子：x 为空时不能先解引用 x->right（原顺序把取孩子放在判空之前）
+        if (x->isEmpty())
+            return; // 节点为空，无法左旋
         NodePtr y = x->right;
-        if (x->isEmpty() || y->isEmpty())
-            return; // 节点或右孩子为空，无法左旋
+        if (y->isEmpty())
+            return; // 右孩子为空，无法左旋
 
         // 2. "过继" y 的左子树
         x->right = y->left;     //y 上位后, y 原来的左子树 yl, 挂到 x 的右边
@@ -33,10 +35,12 @@ public:
     // 口诀:  1. 查空  2. 过继 3. 调整父子关系 4. 更新根
     static void rotateRight(NodePtr &y)
     {
-        // 1. 定义新根 y (x的左孩子)
+        // 1. 先判空，再取左孩子：y 为空时不能先解引用 y->left
+        if (y->isEmpty())
+            return; // 节点为空，无法右旋
         NodePtr x = y->left;
-        if (x->isEmpty() || y->isEmpty())
-            return; // 节点或左孩子为空，无法右旋
+        if (x->isEmpty())
+            return; // 左孩子为空，无法右旋
 
         // 2. "过继" x 的右子树
         y->left = x->right;     //x 上位后, x 原来的右子树 xr, 挂到 y 的左边

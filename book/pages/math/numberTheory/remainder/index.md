@@ -12,6 +12,7 @@ categories:
   - 数论
 code_template:
   - normalize-mod
+  - normalize-mod-py
 description: 取模就是把整数放到长度为 $m$ 的圆环上，只关心它最后停在哪个位置。
 ---
 
@@ -222,8 +223,17 @@ Python: 10 = (-2) * (-7) - 4,  所以取模结果为 -4
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/numberTheory/normalize_mod.cpp, cpp)
+:::
 
+::: tab Python
+
+$m \neq 0$ 时结果与 C++ 完全一致；$m = 0$ 是 C++ 未定义行为，头注声明为非法输入。
+@include-code(/code/math/numberTheory/normalize_mod.py, python)
+:::
+::::
 ## 测试用例
 
 ### 规范化负数取模

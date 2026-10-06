@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "懒标记"]
 categories: ["数据结构"]
-code_template: [segtree-range-assign]
+code_template: [segtree-range-assign, segtree-range-assign-py]
 ---
 
 [[TOC]]
@@ -109,8 +109,16 @@ op ...
 - `op = 1 l r x` 表示把 `[l,r]` 全部赋值为 `x`；
 - `op = 2 l r` 表示查询 `[l,r]` 的区间和。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/range_assign_range_sum.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/segment_tree/range_assign_range_sum.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

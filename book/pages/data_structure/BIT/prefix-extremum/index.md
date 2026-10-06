@@ -6,7 +6,7 @@ date: 2026-08-06 16:36
 toc: true
 tags: ["数据结构", "树状数组", "前缀最值", "单调修改"]
 categories: ["数据结构"]
-code_template: [fenwick-prefix-max]
+code_template: [fenwick-prefix-max, fenwick-prefix-max-py]
 prerequisites: [bit]
 ---
 
@@ -150,8 +150,17 @@ prefix_max(5) = 6
 
 ## 代码模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/BIT/bit_prefix_max.cpp, cpp)
+:::
 
+::: tab Python
+
+只支持单点变大（chmax）与前缀最值：修改值变小会让已记录的最值失效。
+@include-code(/code/data-struture/BIT/bit_prefix_max.py, python)
+:::
+::::
 如果维护前缀最小值，把负无穷换成正无穷，并把所有 `max` 换成 `min`；对应修改必须是 `chmin`。
 
 ## 完整代码

@@ -6,7 +6,7 @@ date: 2026-08-06 16:36
 toc: true
 tags: ["数据结构", "树状数组", "差分", "区间修改", "区间查询"]
 categories: ["数据结构"]
-code_template: [fenwick-range-add-sum]
+code_template: [fenwick-range-add-sum, fenwick-range-add-sum-py]
 prerequisites: [bit-range-add-point-query]
 ---
 
@@ -211,8 +211,16 @@ $$
 
 ## 代码模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/BIT/bit_区间修改_区间查询.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/data-struture/BIT/bit_区间修改_区间查询.py, python)
+:::
+::::
 ## 完整代码
 
 输入格式与 Luogu P3372 一致：

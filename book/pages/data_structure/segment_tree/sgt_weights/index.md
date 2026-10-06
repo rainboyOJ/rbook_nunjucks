@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["线段树", "权值线段树", "平衡树", "数据结构"]
 categories: ["数据结构", "线段树"]
-code_template: [segtree-weight]
+code_template: [segtree-weight, segtree-weight-py]
 ---
 
 [[TOC]]
@@ -156,8 +156,17 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/weight_segment_tree.cpp, cpp)
+:::
 
+::: tab Python
+
+递归重载方法用 `_` 前缀（`_add`/`_query`/`_kth`），公开接口与 C++ 同名；`kth`/前驱/后继无解时返回哨兵值，与 C++ 行为一致。
+@include-code(/code/data-struture/segment_tree/weight_segment_tree.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

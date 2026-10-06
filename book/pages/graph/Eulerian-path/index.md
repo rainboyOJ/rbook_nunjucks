@@ -6,7 +6,7 @@ date: 2025-12-18 12:01
 toc: true
 tags: ["欧拉路", "图论", "Hierholzer"]
 categories: ["graph"]
-code_template: [euler-path-undirected, euler-path-directed]
+code_template: [euler-path-undirected, euler-path-undirected-py, euler-path-directed, euler-path-directed-py]
 ---
 
 [[TOC]]
@@ -124,12 +124,30 @@ Hierholzer 始终维护一个不变量：已经标记使用的边不会再被使
 
 ### 无向图模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/euler_path_undirected.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑在 `main` 里，Python 版抽成自由函数。
+@include-code(/code/graph/euler_path_undirected.py, python)
+:::
+::::
 ### 有向图模板
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/euler_path_directed.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 版逻辑在 `main` 里，Python 版抽成自由函数。
+@include-code(/code/graph/euler_path_directed.py, python)
+:::
+::::
 ## 测试用例
 
 无向图欧拉路：

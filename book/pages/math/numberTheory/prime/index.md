@@ -12,8 +12,11 @@ categories:
   - 数论
 code_template:
   - is-prime-trial-division
+  - is-prime-trial-division-py
   - eprime
+  - eprime-py
   - linear-sieve
+  - linear-sieve-py
 description: 单个数用“不超过平方根的因子”判断，大范围素数用“把合数批量划掉”的筛法预处理。
 ---
 
@@ -157,16 +160,40 @@ $$
 
 ### 试除法判定素数
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/numberTheory/is_prime_trial_division.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/numberTheory/is_prime_trial_division.py, python)
+:::
+::::
 ### 埃氏筛
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/eprime.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/eprime.py, python)
+:::
+::::
 ### 线性筛
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/math/numberTheory/linear_sieve.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/math/numberTheory/linear_sieve.py, python)
+:::
+::::
 ## 测试用例
 
 ### 单个素数判断

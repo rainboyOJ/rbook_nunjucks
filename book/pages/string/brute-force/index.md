@@ -11,6 +11,7 @@ categories:
   - 字符串
 code_template:
   - brute-force-match
+  - brute-force-match-py
 description: 朴素匹配就是枚举主串中的每个起点，然后从左到右尝试把模式串完整贴上去。
 ---
 
@@ -109,8 +110,17 @@ pattern = aaaab
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/string/brute_force_match.cpp, cpp)
+:::
 
+::: tab Python
+
+返回 0 起始下标（与 C++ 一致）；注意与 `kmp_match` 的 1 起始下标区别。
+@include-code(/code/string/brute_force_match.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

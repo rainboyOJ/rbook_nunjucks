@@ -6,7 +6,7 @@ date: 2026-06-16 18:45
 toc: true
 tags: ["基环树", "找环", "图论"]
 categories: ["图论"]
-code_template: [pseudotree-cycle]
+code_template: [pseudotree-cycle, pseudotree-cycle-py]
 ---
 
 [[TOC]]
@@ -75,8 +75,16 @@ code_template: [pseudotree-cycle]
 
 下面模板读入一个无向图，输出所有环上点。对于基环树森林，它会输出所有连通块中的环上点。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/graph/pseudotree_cycle_nodes.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/graph/pseudotree_cycle_nodes.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

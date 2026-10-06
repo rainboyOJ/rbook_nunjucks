@@ -6,7 +6,7 @@ date: 2026-06-16 17:35
 toc: true
 tags: ["扫描线", "线段树", "矩形面积并"]
 categories: ["数据结构"]
-code_template: [segtree-scanline-discrete, segtree-scanline]
+code_template: [segtree-scanline-discrete, segtree-scanline-discrete-py, segtree-scanline, segtree-scanline-py]
 ---
 
 [[TOC]]
@@ -97,12 +97,30 @@ $$
 
 下面是正式竞赛模板，适用于坐标较大的矩形面积并。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/scanline_area_discrete.cpp, cpp)
+:::
 
+::: tab Python
+
+坐标需先离散化为 $1..n$ 的下标再建树，与 C++ 版约定一致。
+@include-code(/code/data-struture/segment_tree/scanline_area_discrete.py, python)
+:::
+::::
 无离散化版本只适合坐标范围很小的入门理解，用来观察 `cover` 如何决定当前覆盖长度。
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/data-struture/segment_tree/scanline_area_plain.cpp, cpp)
+:::
 
+::: tab Python
+
+要求 $x \in [1, \max\_x]$ 且 $x_1 \leqslant x_2$：越界坐标会让区间 $l > r$ 递归失控（C++ 同样如此，模板不防御）。
+@include-code(/code/data-struture/segment_tree/scanline_area_plain.py, python)
+:::
+::::
 ## 测试用例
 
 输入：

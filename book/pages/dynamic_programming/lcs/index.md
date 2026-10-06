@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["动态规划", "LCS", "线性 DP"]
 categories: ["动态规划"]
-code_template: [lcs, lcs-restore]
+code_template: [lcs, lcs-py, lcs-restore, lcs-restore-py]
 ---
 
 [[TOC]]
@@ -181,12 +181,29 @@ $$
 
 求 LCS 长度：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/lcs.cpp, cpp)
+:::
 
+::: tab Python
+
+@include-code(/code/dynamic_programming/lcs.py, python)
+:::
+::::
 还原任意一个 LCS：
 
+:::: code-tabs
+::: tab C++
 @include-code(/code/dynamic_programming/lcs_restore.cpp, cpp)
+:::
 
+::: tab Python
+
+C++ 用引用/输出串返回方案，Python 版返回 `(长度, 方案串)` 元组。
+@include-code(/code/dynamic_programming/lcs_restore.py, python)
+:::
+::::
 ## 测试用例
 
 输入：
