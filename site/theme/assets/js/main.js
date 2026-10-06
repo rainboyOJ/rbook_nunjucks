@@ -217,6 +217,11 @@
   }
 
   function initCodeTabs() {
+    const canonicalLanguage = (label) => {
+      const name = label.trim().toLowerCase();
+      const aliases = { cpp: 'c++', clike: 'c++', py: 'python', js: 'javascript', hs: 'haskell', ts: 'typescript' };
+      return aliases[name] || name;
+    };
     document.querySelectorAll('[data-code-tabs]').forEach((group) => {
       const list = group.querySelector(':scope > .code-tab-list');
       const tabs = Array.from(list?.children || []);
@@ -246,6 +251,13 @@
         panels[index].setAttribute('role', 'tabpanel');
         panels[index].setAttribute('aria-labelledby', tab.id);
         panels[index].tabIndex = 0;
+        panels[index].querySelectorAll('.code-info-header').forEach((header) => {
+          if (header.closest('.code-tab-panel') !== panels[index]) return;
+          const label = header.querySelector(':scope > span');
+          if (label && canonicalLanguage(label.textContent) === canonicalLanguage(tab.textContent)) {
+            header.classList.add('is-redundant-language');
+          }
+        });
         tab.addEventListener('click', () => select(index));
         tab.addEventListener('keydown', (event) => {
           let next;

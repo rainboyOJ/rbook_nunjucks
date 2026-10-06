@@ -49,18 +49,14 @@
 .markdown-body .code-tab-group {
     min-width: 0;
     margin: 24px 0 28px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: var(--surface-background);
-    overflow: hidden;
 }
 
 .code-tab-group > .code-tab-list {
     display: flex;
-    gap: 4px;
-    padding: 0 8px;
+    gap: 12px;
+    padding: 0;
     border-bottom: 1px solid var(--border-color);
-    background: var(--surface-subtle);
+    background: transparent;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scrollbar-width: thin;
@@ -70,9 +66,9 @@
     > button {
         flex: 0 0 auto;
         min-height: 44px;
-        padding: 10px 16px;
+        padding: 10px 12px;
         border: 0;
-        border-bottom: 3px solid transparent;
+        border-bottom: 2px solid transparent;
         border-radius: 0;
         color: var(--text-secondary);
         background: transparent;
@@ -88,7 +84,6 @@
         &[aria-selected="true"] {
             color: var(--link-color);
             border-bottom-color: currentColor;
-            background: var(--selection-background);
         }
 
         &:focus-visible { outline-offset: -4px; }
@@ -97,12 +92,13 @@
 
 .markdown-body .code-tab-group > .code-tab-panel {
     min-width: 0;
-    padding: 16px;
+    padding: 16px 0 0;
 
     &[hidden] { display: none; }
     &:focus-visible { outline-offset: -4px; }
     > :last-child { margin-bottom: 0; }
-    > :is(.line-numbers-mode, .code-block) { margin-top: 16px; }
+    > p { margin-bottom: 12px; }
+    > :is(.line-numbers-mode, .code-block) { margin-top: 12px; }
     > .code-tab-title + :is(.line-numbers-mode, .code-block) { margin-top: 0; }
 }
 
@@ -116,6 +112,20 @@
     display: none;
 }
 
-@media (max-width: 640px) {
-    .markdown-body .code-tab-group > .code-tab-panel { padding: 12px; }
+.reading-page .code-tab-panel :is(.line-numbers-mode, .code-block) {
+    margin-inline: 0;
+    border: 0;
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+.reading-page .code-tab-panel .code-info-header {
+    border: 0;
+    background: var(--code-background);
+
+    &.is-redundant-language {
+        justify-content: flex-end;
+
+        > span { display: none; }
+    }
 }

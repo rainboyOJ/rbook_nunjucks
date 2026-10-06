@@ -29,7 +29,7 @@ Second group explanation.
 second = 2
 ~~~
 :::
-::: tab JavaScript
+::: tab 浏览器示例
 ~~~javascript
 const third = 3;
 ~~~
@@ -113,6 +113,10 @@ test('browser: independent tabs, keyboard, copying, mobile, themes, print and no
   assert.equal(await panels.nth(0).isVisible(), false);
   assert.equal(await panels.nth(1).isVisible(), true);
   assert.equal(await second.getByRole('tab', { selected: true }).textContent(), 'C++');
+  assert.equal(await panels.nth(1).locator('.code-info-header > span').isVisible(), false);
+  await second.getByRole('tab', { name: '浏览器示例', exact: true }).click();
+  assert.equal(await second.getByRole('tabpanel').locator('.code-info-header > span').isVisible(), true);
+  await second.getByRole('tab', { name: 'C++', exact: true }).click();
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {
     configurable: true, value: { writeText: async (text) => { window.copiedCode = text; } }
   }));
@@ -136,13 +140,14 @@ test('browser: independent tabs, keyboard, copying, mobile, themes, print and no
   await second.getByRole('tab', { name: 'Haskell', exact: true }).click();
   assert.equal(await second.getByRole('tabpanel').locator('pre code').textContent(), 'fourth = 4');
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= 320));
-  const light = await strip.evaluate((node) => getComputedStyle(node).backgroundColor);
+  const selectedTab = second.getByRole('tab', { selected: true });
+  const light = await selectedTab.evaluate((node) => getComputedStyle(node).color);
   await page.evaluate(() => { document.documentElement.dataset.darkmode = 'dark'; });
-  const dark = await strip.evaluate((node) => getComputedStyle(node).backgroundColor);
+  const dark = await selectedTab.evaluate((node) => getComputedStyle(node).color);
   assert.notEqual(light, dark);
   await page.evaluate(() => { document.documentElement.dataset.darkmode = 'auto'; });
   await page.emulateMedia({ colorScheme: 'dark' });
-  assert.equal(await strip.evaluate((node) => getComputedStyle(node).backgroundColor), dark);
+  assert.equal(await selectedTab.evaluate((node) => getComputedStyle(node).color), dark);
   await page.emulateMedia({ media: 'print' });
   for (const panel of await groups.locator(':scope > .code-tab-panel').all()) {
     assert.equal(await panel.isVisible(), true);
@@ -151,6 +156,7 @@ test('browser: independent tabs, keyboard, copying, mobile, themes, print and no
     assert.equal(await panel.locator('pre').evaluate((node) => getComputedStyle(node).whiteSpace), 'pre-wrap');
   }
   assert.equal(await strip.isVisible(), false);
+  assert.equal(await panels.nth(1).locator('.code-info-header').isVisible(), false);
   assert.equal(await page.locator('.skip-link').isVisible(), false);
   assert.equal(await first.getByText('复制', { exact: true }).first().isVisible(), false);
   await page.emulateMedia({ media: 'screen' });

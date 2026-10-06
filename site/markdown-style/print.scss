@@ -230,6 +230,10 @@
     display: none !important;
   }
 
+  body.printable-article .code-tab-panel .code-info-header.is-redundant-language {
+    display: none !important;
+  }
+
   body.printable-article .code-tab-group > .code-tab-panel,
   body.printable-article .code-tab-group > .code-tab-panel[hidden] {
     display: block !important;

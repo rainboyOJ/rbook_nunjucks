@@ -73,6 +73,7 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
    - 已有文章也有 `@include-code(code/<domain>/<file>.cpp, cpp)`，可以兼容。
    - 不要在 Markdown 中粘贴整份可复用 C++ 模板。
    - 短伪代码、几行辅助代码、推导片段可以直接写在正文中。
+   - 同一模板或解法有多个语言版本时，按下方“多代码标签页”规范组织，避免将完整实现逐份平铺。
 
 6. 验证。
    - 检查每个 `@include-code` 路径是否真实存在。
@@ -85,6 +86,43 @@ description: 在 rbook 算法电子书项目中编写、扩写或修改算法文
        RBOOK_RUNTIME_DIR=/tmp/rbook-runtime-check \
        npm run build:runtime
      ```
+
+## 多代码标签页
+
+### 什么时候使用
+
+- 同一算法模板或同一道题的同一解法已有两种及以上语言实现时，优先放进同一组标签，例如 C++、Python，后续可追加 JavaScript、Haskell。
+- 同一用途的可替换实现也可以分标签，例如“递归版 / 迭代版”；前提是读者只需选读其中一个，且公共说明已经讲清它们的适用条件。
+- 只有一份代码时直接使用 `@include-code`，不要包单标签，也不要为了凑标签生成用户未要求的语言版本。
+- 需要按顺序阅读的推导步骤、相互依赖的多个文件、输入与输出，以及需要同时观察差异的代码，保持平铺。不同算法、不同题目的代码不要仅因语言不同就合并。
+- 可复用模板和含 `main` 的完整程序分属不同教学层次，分别放在“代码模板”和“完整代码”等对应小节；每个小节可各自建立多语言标签组。
+
+### 写入格式
+
+使用项目支持的 `:::: code-tabs` 外层容器和 `::: tab 标签名` 内层容器。每个标签用独立的 `:::` 结束，整组用独立的 `::::` 结束：
+
+```markdown
+下面的模板提供相同的单点修改与区间求和接口。
+
+:::: code-tabs
+::: tab C++
+@include-code(/code/data-struture/BIT/bit.cpp, cpp)
+:::
+
+::: tab Python
+Python 版将接口封装成 `Fenwick` 类。
+
+@include-code(/code/data-struture/BIT/bit.py, python)
+:::
+::::
+```
+
+- 标签名使用简短纯文本，如 `C++`、`Python`、`JavaScript`、`Haskell`；`@include-code` 的语言参数仍填写高亮标识，如 `cpp`、`python`、`javascript`、`haskell`。
+- 公共说明写在整组外面；某个语言或实现专属的说明写在对应 `tab` 内，通常放在代码之前。标签内支持普通 Markdown、列表和多个代码块。
+- 代码文件的位置与引用规则不变：可复用模板仍从 `/code/...` 引入，完整实现仍从 `./code/...` 引入；短教学片段可以使用普通围栏代码块。标签分组不替代 `code_template` 元数据注册。
+- 各组独立切换，默认显示作者写在第一位的标签；把当前讲解采用的主要版本放在最前面。
+- 打印时所有标签按书写顺序展开为“标签标题、说明、代码”。公共说明只写一次，各标签内容应能连续阅读，不依赖“点击上面的按钮”之类的操作指令。
+- 新增标签组使用上述容器语法，不使用旧的围栏代码 `[group:tab]` 写法，也不手写 HTML、切换脚本或局部样式。更多语法见仓库根目录 [Markdown语法.md](../../../Markdown语法.md)。
 
 ## Admonition 规范
 
@@ -319,6 +357,7 @@ node -e "const fs=require('fs');const yaml=require('js-yaml');yaml.load(fs.readF
 - 可复用代码模板已经放到 `book/code/`，且不含 main。
 - 完整代码实现已经放到文章目录 `book/pages/<topic>/code/`。
 - `@include-code` 引用路径存在（`/code/...` 指 `book/code/`，`./code/...` 指文章本地）。
+- 多代码标签组用于可选读的同用途实现，容器成对闭合，公共说明与专属说明位置正确；预览时能切换，打印时所有标签内容完整展开。
 - `code_template` 中的 ID 已在 `book/code.yaml` 注册。
 - `prerequisites` 只包含真实存在的直接前置文章 ID，且没有自引用或依赖环。
 - `toc: true` 的文章包含 `[[TOC]]`。
