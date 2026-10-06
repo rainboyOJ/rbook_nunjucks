@@ -1,4 +1,26 @@
-## tab fence
+## 多代码标签页
+
+使用四个冒号包住整个标签组，三个冒号包住每个标签。标签名是纯文本，可以使用 `C++`、`Python`、`JavaScript`、`Haskell` 或自定义名称。
+
+```md
+:::: code-tabs
+::: tab C++
+@include-code(/code/data-struture/BIT/bit.cpp, cpp)
+:::
+
+::: tab Python
+Python 版将接口封装成 `Fenwick` 类。
+
+@include-code(/code/data-struture/BIT/bit.py, python)
+:::
+::::
+```
+
+每个标签内可以写说明、列表、普通围栏代码块或 `@include-code`，公共说明放在标签组外。
+各组独立切换，默认选中第一个标签；内容不限高度。标签获得焦点后，左右方向键切换，Home/End 跳到首尾。
+手机端标签栏可横向滚动。打印时隐藏按钮，按书写顺序展开所有语言标题、说明和代码；未加载 JavaScript 时也显示完整内容。
+
+## tab fence（旧语法）
 
 来自 [markdown-it-codetabs](https://github.com/cncws/markdown-it-codetabs/blob/main/README.md)
 

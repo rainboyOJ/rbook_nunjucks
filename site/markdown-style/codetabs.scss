@@ -44,3 +44,78 @@
         transform: translate(-50%, -50%);
     }
 }
+
+// Rich Markdown tabs. Kept separate from the legacy fenced-code tab styles.
+.markdown-body .code-tab-group {
+    min-width: 0;
+    margin: 24px 0 28px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--surface-background);
+    overflow: hidden;
+}
+
+.code-tab-group > .code-tab-list {
+    display: flex;
+    gap: 4px;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--surface-subtle);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+
+    &[hidden] { display: none; }
+
+    > button {
+        flex: 0 0 auto;
+        min-height: 44px;
+        padding: 10px 16px;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        color: var(--text-secondary);
+        background: transparent;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &:hover { color: var(--link-color); }
+
+        &[aria-selected="true"] {
+            color: var(--link-color);
+            border-bottom-color: currentColor;
+            background: var(--selection-background);
+        }
+
+        &:focus-visible { outline-offset: -4px; }
+    }
+}
+
+.markdown-body .code-tab-group > .code-tab-panel {
+    min-width: 0;
+    padding: 16px;
+
+    &[hidden] { display: none; }
+    &:focus-visible { outline-offset: -4px; }
+    > :last-child { margin-bottom: 0; }
+    > :is(.line-numbers-mode, .code-block) { margin-top: 16px; }
+    > .code-tab-title + :is(.line-numbers-mode, .code-block) { margin-top: 0; }
+}
+
+.code-tab-group > .code-tab-panel > .code-tab-title {
+    margin-bottom: 12px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.code-tab-group.is-enhanced > .code-tab-panel > .code-tab-title {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .markdown-body .code-tab-group > .code-tab-panel { padding: 12px; }
+}

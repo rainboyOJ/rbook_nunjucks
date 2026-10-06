@@ -216,6 +216,54 @@
     }
   }
 
+  function initCodeTabs() {
+    document.querySelectorAll('[data-code-tabs]').forEach((group) => {
+      const list = group.querySelector(':scope > .code-tab-list');
+      const tabs = Array.from(list?.children || []);
+      const panels = Array.from(group.children).filter((child) => child.matches('.code-tab-panel'));
+      if (!tabs.length || tabs.length !== panels.length) return;
+
+      const select = (index, moveFocus = false) => {
+        tabs.forEach((tab, position) => {
+          const selected = position === index;
+          tab.setAttribute('aria-selected', String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+          panels[position].hidden = !selected;
+        });
+        if (moveFocus) {
+          tabs[index].focus({ preventScroll: true });
+          // Scroll only the horizontal label strip, without moving the page.
+          const tab = tabs[index].getBoundingClientRect();
+          const strip = list.getBoundingClientRect();
+          if (tab.left < strip.left) list.scrollLeft += tab.left - strip.left;
+          else if (tab.right > strip.right) list.scrollLeft += tab.right - strip.right;
+        }
+      };
+
+      list.setAttribute('role', 'tablist');
+      tabs.forEach((tab, index) => {
+        tab.setAttribute('role', 'tab');
+        panels[index].setAttribute('role', 'tabpanel');
+        panels[index].setAttribute('aria-labelledby', tab.id);
+        panels[index].tabIndex = 0;
+        tab.addEventListener('click', () => select(index));
+        tab.addEventListener('keydown', (event) => {
+          let next;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+          else if (event.key === 'Home') next = 0;
+          else if (event.key === 'End') next = tabs.length - 1;
+          else return;
+          event.preventDefault();
+          select(next, true);
+        });
+      });
+      select(0);
+      group.classList.add('is-enhanced');
+      list.hidden = false;
+    });
+  }
+
   function initCodeBlocks() {
     document.querySelectorAll('.reading-page .markdown-body pre').forEach((pre) => {
       if (pre.matches('.mermaid, .dot, .graphviz') || pre.closest('.graphviz, .viz-contain')) return;
@@ -594,6 +642,7 @@
     initBookMenu();
     initPrint();
     initCodeBlocks();
+    initCodeTabs();
     initTables();
     initHeadingAnchors();
     initImageLightbox();

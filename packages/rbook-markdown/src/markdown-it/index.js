@@ -43,6 +43,7 @@ import anchor from 'markdown-it-anchor';
 import tocDoneRight from 'markdown-it-toc-done-right';
 import tocAnchorExtent from './lib/tocAnchorExtent.js';
 import codetabs from 'markdown-it-codetabs';
+import codeTabs from './lib/code-tabs.js';
 import fs from 'fs';
 
 import MDItPseudo from './lib/markdown-it-pseudocodejs/index.js';
@@ -229,6 +230,7 @@ md.use(tocAnchorExtent);
 
 // Code tabs support
 md.use(codetabs);
+md.use(codeTabs);
 
 // Custom emoji renderer
 md.renderer.rules.emoji = function(token, idx) {
