@@ -1,6 +1,6 @@
 # 动态化静态（内存池）：一次性申请 n 个槽位，get() 顺序发放下标，
 # 使用方式仍和静态数组一样按下标写 head[i]，但空间来自堆。
-# 边界：最多发放 n 个下标；超出后 C++ 是越界 UB，这里显式抛 IndexError。
+# 边界：最多发放 n 个下标；超出后抛 IndexError，与 C++ 版的 std::out_of_range 对应。
 # Python 有 GC，C++ 析构里的 delete[] head 无需手动释放。
 
 
