@@ -65,7 +65,15 @@ C++ 用 `int&` 引用出参回写根，Python 版 `update` 返回新根，调用
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/example.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/example.py, python)
+:::
+::::
 
 ## 测试用例
 

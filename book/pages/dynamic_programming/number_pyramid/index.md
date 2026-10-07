@@ -139,7 +139,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/number_pyramid.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/number_pyramid.py, python)
+:::
+::::
 
 ## 测试用例
 

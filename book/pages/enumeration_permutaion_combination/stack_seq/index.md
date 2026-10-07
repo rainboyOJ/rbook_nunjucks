@@ -103,7 +103,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/stack_output_count.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/stack_output_count.py, python)
+:::
+::::
 
 ## 测试用例
 

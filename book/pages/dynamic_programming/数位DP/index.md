@@ -179,7 +179,15 @@ for (int cur = 0; cur <= up; ++cur) {
 
 ### 记忆化 DFS 模板
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/windy_dfs.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/windy_dfs.py, python)
+:::
+::::
 
 这份写法是最通用的数位 DP 写法。以后遇到类似题目，通常只需要改两处：
 
@@ -223,7 +231,15 @@ $$
 
 这个思路本质上仍然在走数位搜索树，只是把“不贴上界的子树大小”提前算好了。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/windy_iter.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/windy_iter.py, python)
+:::
+::::
 
 两种写法的选择：
 

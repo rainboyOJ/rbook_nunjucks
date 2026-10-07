@@ -204,7 +204,15 @@ for (int x = 1; x <= n; ++x)
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/integer_partition.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/integer_partition.py, python)
+:::
+::::
 
 ## 测试用例
 

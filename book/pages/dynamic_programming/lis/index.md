@@ -223,7 +223,15 @@ $$
 
 $O(n^2)$ DP：
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/lis_n2.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/lis_n2.py, python)
+:::
+::::
 
 $O(n \log n)$ 二分优化：
 

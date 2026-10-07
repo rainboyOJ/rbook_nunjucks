@@ -132,7 +132,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/rearrangement_prefix_sum_min.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/rearrangement_prefix_sum_min.py, python)
+:::
+::::
 
 ## 测试用例
 

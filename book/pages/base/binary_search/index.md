@@ -94,7 +94,15 @@ false false false true true true
 
 ### 暴力对照
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/binary_search_linear.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/binary_search_linear.py, python)
+:::
+::::
 
 ### 二分模板
 

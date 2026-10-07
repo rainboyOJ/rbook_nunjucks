@@ -176,7 +176,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/slope_toy_packing.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/slope_toy_packing.py, python)
+:::
+::::
 
 ## 测试用例
 

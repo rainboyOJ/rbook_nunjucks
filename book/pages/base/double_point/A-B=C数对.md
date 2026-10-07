@@ -93,11 +93,27 @@ $$
 
 ### 暴力对照
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/diff-pair-count/diff_pair_count_force.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/diff-pair-count/diff_pair_count_force.py, python)
+:::
+::::
 
 ### 双指针优化
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/diff-pair-count/diff_pair_count_range.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/diff-pair-count/diff_pair_count_range.py, python)
+:::
+::::
 
 ## 测试用例
 

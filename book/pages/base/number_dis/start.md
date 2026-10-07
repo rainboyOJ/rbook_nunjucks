@@ -80,7 +80,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/number_distance.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/number_distance.py, python)
+:::
+::::
 
 ## 测试用例
 

@@ -100,23 +100,63 @@ $$
 
 ### 二值属性不同配对
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/different_binary_pairs.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/different_binary_pairs.py, python)
+:::
+::::
 
 ### Two Sum 配对计数
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/two_sum_pairs.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/two_sum_pairs.py, python)
+:::
+::::
 
 ### 同余配对计数
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/mod_sum_pairs.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/mod_sum_pairs.py, python)
+:::
+::::
 
 ### 距离限制相等配对
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/distance_limited_equal_pairs.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/distance_limited_equal_pairs.py, python)
+:::
+::::
 
 ### 距离限制最大配对和
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/window_max_pair_sum.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/window_max_pair_sum.py, python)
+:::
+::::
 
 ## 测试用例
 

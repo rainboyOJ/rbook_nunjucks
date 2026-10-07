@@ -185,7 +185,15 @@ Python 版把同一份接口封装成 `Fenwick` 类，`tree` 仍然是从下标 
 - `1 x k`：执行 `a[x] += k`；
 - `2 l r`：查询 $[l,r]$ 的区间和。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/p3374.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/p3374.py, python)
+:::
+::::
 
 ## 测试用例
 

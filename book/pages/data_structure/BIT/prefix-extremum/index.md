@@ -170,7 +170,15 @@ prefix_max(5) = 6
 - `1 x v`：执行 `a[x] = max(a[x], v)`；
 - `2 r`：查询 $[1,r]$ 的最大值。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/prefix_max.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/prefix_max.py, python)
+:::
+::::
 
 ## 测试用例
 

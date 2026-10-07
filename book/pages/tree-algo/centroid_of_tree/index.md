@@ -121,7 +121,15 @@ $$
 
 输入一棵无权树，第一行输出重心个数，第二行按编号升序输出所有重心。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/tree_centroid.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/tree_centroid.py, python)
+:::
+::::
 
 ## 测试用例
 

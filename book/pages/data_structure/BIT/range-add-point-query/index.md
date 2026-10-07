@@ -165,7 +165,15 @@ $$
 - `1 l r k`：给区间 $[l,r]$ 增加 $k$；
 - `2 x`：查询当前的 $a_x$。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/p3368.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/p3368.py, python)
+:::
+::::
 
 ## 测试用例
 

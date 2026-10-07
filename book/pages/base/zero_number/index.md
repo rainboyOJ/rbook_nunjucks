@@ -65,7 +65,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/min_ops_balance_sum.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/min_ops_balance_sum.py, python)
+:::
+::::
 
 ## 测试用例
 

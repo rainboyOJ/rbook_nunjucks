@@ -64,7 +64,15 @@ description: 递归先一层一层向下调用，遇到边界后再一层一层�
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/print_to_n.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/print_to_n.py, python)
+:::
+::::
 
 ## 测试用例
 

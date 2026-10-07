@@ -248,7 +248,15 @@ P:    a b a b a c a
 
 完整程序读入 `text pattern`，输出所有 1 下标匹配位置；没有匹配时输出 `-1`。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/kmp_solution.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/kmp_solution.py, python)
+:::
+::::
 
 ## 复杂度分析
 

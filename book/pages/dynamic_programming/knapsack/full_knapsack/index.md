@@ -147,7 +147,15 @@ $$
 
 ### 二维写法
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/complete_2d.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/complete_2d.py, python)
+:::
+::::
 
 ### 一维写法
 

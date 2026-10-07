@@ -99,11 +99,27 @@ $$
 
 ### 普通递归
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/sum_to_n.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/sum_to_n.py, python)
+:::
+::::
 
 ### 尾递归
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/sum_to_n_tail.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/sum_to_n_tail.py, python)
+:::
+::::
 
 ## 测试用例
 

@@ -85,7 +85,15 @@ $$
 
 ## 代码实现
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/hanoi.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/hanoi.py, python)
+:::
+::::
 
 ## 测试用例
 

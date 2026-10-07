@@ -130,7 +130,15 @@ q 个询问
 - `1 s`：判断完整字符串 `s` 是否出现；
 - `2 s`：统计前缀 `s` 出现次数。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/trie_solution.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/trie_solution.py, python)
+:::
+::::
 
 ## 测试用例
 

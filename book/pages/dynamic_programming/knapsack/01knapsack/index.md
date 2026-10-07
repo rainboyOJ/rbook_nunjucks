@@ -153,7 +153,15 @@ $$
 
 二维写法最容易理解，也方便之后恢复选了哪些物品。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/zero_one_2d.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/zero_one_2d.py, python)
+:::
+::::
 
 ### 一维写法
 

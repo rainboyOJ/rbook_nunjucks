@@ -326,11 +326,27 @@ u(n-1) v(n-1) w(n-1)
 
 ### 两次最远点搜索
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/tree_diameter.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/tree_diameter.py, python)
+:::
+::::
 
 ### 树形 DP
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/tree_diameter_dp.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/tree_diameter_dp.py, python)
+:::
+::::
 
 ## 测试用例
 

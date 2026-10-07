@@ -228,7 +228,15 @@ $$
 - `1 l r k`：给区间 $[l,r]$ 增加 $k$；
 - `2 l r`：查询区间 $[l,r]$ 的和。
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/p3372_fenwick.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/p3372_fenwick.py, python)
+:::
+::::
 
 ## 测试用例
 

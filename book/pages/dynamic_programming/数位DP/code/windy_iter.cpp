@@ -43,6 +43,11 @@ int calc(int n) {
         res += f[len][first];
     }
 
+    // 一位数时下面的逐位收紧循环不会执行（pos 从 len-1 = 0 开始就终止），
+    // 而 n >= 1 的一位数字本身必是 windy 数，必须单独计入；
+    // 否则 len == 1 会漏计 n 自身（例如 calc(9) 错返回 8）。
+    if (len == 1) return res + 1;
+
     for (int pos = len - 1; pos >= 1; --pos) {
         for (int cur = 0; cur < digit[pos]; ++cur) {
             if (abs(cur - digit[pos + 1]) >= 2) {

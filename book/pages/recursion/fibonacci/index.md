@@ -91,11 +91,27 @@ F(n)
 
 ### 普通递归
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/fibonacci_recursive.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/fibonacci_recursive.py, python)
+:::
+::::
 
 ### 记忆化递归
 
+:::: code-tabs
+::: tab C++
 @include-code(./code/fibonacci_memo.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(./code/fibonacci_memo.py, python)
+:::
+::::
 
 ## 测试用例
 
