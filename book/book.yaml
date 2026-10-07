@@ -126,7 +126,6 @@ glob:
   - dynamic_programming/sparse_table/problem.md
   - graph/bellman-ford/index.md
   - graph/dfs/index.md
-  - graph/MST/index.md
   - graph/MST/bottleneck-path-prove.md
   - graph/MST/最小生成树.md
   - graph/negative_circle/index.md
@@ -255,9 +254,6 @@ chapters:
       - title: 点对问题（新入口）
         english-title: Point Pair Problems
         path: classical_problem/point2point_problem/index.md
-      - title: 最小生成树（新入口）
-        english-title: Minimum Spanning Tree
-        path: graph/MST/index.md
       - title: Tarjan 求割点（新入口）
         english-title: Tarjan Articulation Point
         path: graph/tarjan/cut/start.md
@@ -600,9 +596,9 @@ chapters:
       - title: 强连通分量
         english-title: Strongly Connected Components
         path: scc/index.md
-      - title: 最小生成树（现有入口）
+      - title: 最小生成树
         english-title: Minimum Spanning Tree
-        path: MST/最小生成树.md
+        path: MST/index.md
       - title: 严格次小生成树
         english-title: Second Minimum Spanning Tree
         path: MST/严格次小生成树/index.md

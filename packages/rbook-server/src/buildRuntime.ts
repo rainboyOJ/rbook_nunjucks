@@ -10,7 +10,7 @@ import {
   runtimeDir
 } from '@rbook/core/paths';
 import { buildSearchIndex } from '@rbook/search/buildIndex';
-import { assertPreCheck } from '@rbook/search/preCheck';
+import { assertPreCheckContext } from '@rbook/search/preCheck';
 import { hasCommand, runCommand } from './runtimeBuild/commands.js';
 import { copyIfExists, walkFiles } from './runtimeBuild/files.js';
 
@@ -142,14 +142,18 @@ export function buildCodeTemplateApp() {
 }
 
 export function buildRuntime() {
-  assertPreCheck();
+  const context = assertPreCheckContext();
 
   console.log(`[runtime] appDir=${appDir}`);
   console.log(`[runtime] bookDir=${bookDir}`);
   console.log(`[runtime] distDir=${distDir}`);
 
   resetRuntimeDir();
-  const book = new rbook();
+  const book = new rbook({
+    config: context.site,
+    codeTemplates: context.codes,
+    articlePages: context.pages
+  });
   book.build();
   book.build_glob();
 

@@ -16,6 +16,7 @@ import {
     rootDir,
     themeDir
 } from './paths.js';
+import { getArticleRelations, type ArticleRelationPage } from './articleRelations.js';
 
 interface BookChapter {
     path?: string;
@@ -37,6 +38,7 @@ type RenderData = Record<string, unknown>;
 export interface RbookOptions {
     config?: BookConfig;
     codeTemplates?: CodeTemplateItem[];
+    articlePages?: ArticleRelationPage[];
 }
 
 // 这些旧导出被部分历史代码使用，暂时保留。新代码应优先从 paths.ts 读取路径。
@@ -80,10 +82,12 @@ class rbook {
     name: string;
     config: BookConfig;
     codeTemplatesById: Map<string, Record<string, unknown>>;
+    articlePages: ArticleRelationPage[];
 
     constructor(options: RbookOptions = {}) {
         this.name = 'rbook';
         this.config = options.config ? { ...options.config } : this.load_config();
+        this.articlePages = options.articlePages || [];
         const codeTemplates = options.codeTemplates === undefined
             ? loadCodeConfig().codes
             : options.codeTemplates;
@@ -150,6 +154,7 @@ class rbook {
         const htmlContent = renderTemplate(themeDir, templateType, {
             ...md.toJSON(),
             site: this.config,
+            articleRelations: getArticleRelations(this.articlePages, md.front_matter),
             ...data
         });
         return htmlContent;

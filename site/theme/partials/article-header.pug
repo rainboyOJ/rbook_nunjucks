@@ -30,6 +30,7 @@ header.page-header.article-header
         each prerequisite in article_prerequisites
           li
             a.J_prerequisiteLink(href=`/relations?id=${encodeURIComponent(prerequisite)}` data-prerequisite-id=prerequisite)= prerequisite
+  include article-relations.pug
   button.article-mobile-toc.J_tocToggle(type="button" aria-controls="article-toc" aria-expanded="false")
     i.fa.fa-list-ul(aria-hidden="true")
     span 本页目录

@@ -1,0 +1,33 @@
+mixin relationGroup(nodes, direction, label)
+  section.article-relation-group(class=`article-relation-group--${direction}` aria-label=label)
+    h3.article-relation-label
+      span= label
+      span.article-relation-count= nodes.length
+    ul.article-relation-links
+      each node in nodes.slice(0, 3)
+        li
+          a.article-relation-card(href=node.url data-relation-id=node.id)= node.title
+    if nodes.length > 3
+      details.article-relation-more
+        summary
+          span.article-relation-show-all 查看全部 #{nodes.length} 篇
+          span.article-relation-collapse 收起
+        ul.article-relation-links
+          each node in nodes.slice(3)
+            li
+              a.article-relation-card(href=node.url data-relation-id=node.id)= node.title
+
+- const reading_relations = typeof articleRelations !== 'undefined' ? articleRelations : null
+if reading_relations
+  nav.article-reading-guide(aria-label="阅读导览" data-reading-guide)
+    .article-reading-guide-heading
+      h2 阅读导览
+      span 补充阅读，按需进入
+    .article-relations-graph(class=[reading_relations.incoming.length ? 'has-incoming' : '', reading_relations.outgoing.length ? 'has-outgoing' : ''])
+      if reading_relations.incoming.length
+        +relationGroup(reading_relations.incoming, 'incoming', '引用本文的正文')
+      .article-relation-current.article-relation-card(aria-current="page" data-relation-id=reading_relations.current.id)
+        span.article-relation-current-label 正在阅读
+        strong= reading_relations.current.title
+      if reading_relations.outgoing.length
+        +relationGroup(reading_relations.outgoing, 'outgoing', '本文的补充文章')

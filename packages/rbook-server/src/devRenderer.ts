@@ -159,7 +159,8 @@ export class DevRenderer {
     this.pcs2 = pcs2;
     this.book = new rbook({
       config: preCheck.site,
-      codeTemplates: preCheck.codes
+      codeTemplates: preCheck.codes,
+      articlePages: preCheck.pages
     });
 
     for (const warning of preCheck.result.warnings) {
@@ -263,6 +264,8 @@ export class DevRenderer {
     if (errors.length > 0) {
       throw new Error(`page pre-check failed for ${page.path}:\n${errors.join('\n')}`);
     }
+    // Keep relation titles and outgoing declarations current after an article edit.
+    Object.assign(page, document);
   }
 
   private async pageResponse(pathname: string): Promise<DevResponse | null> {

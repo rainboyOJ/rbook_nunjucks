@@ -1,0 +1,185 @@
+.article-reading-guide {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--surface-subtle);
+}
+
+.article-reading-guide-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 650;
+  }
+
+  > span {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+}
+
+.article-relations-graph {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.article-relation-group,
+.article-relation-current {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.article-relation-label {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 0 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.article-relation-count {
+  color: var(--text-tertiary);
+  font-size: 11px;
+}
+
+.article-relation-links {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    min-width: 0;
+  }
+}
+
+.article-relation-card {
+  display: block;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 11px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  color: var(--text-primary);
+  background: var(--surface-background);
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+a.article-relation-card:hover {
+  border-color: var(--link-color);
+  color: var(--link-color);
+}
+
+.article-relation-current {
+  border-color: var(--link-color);
+  background: color-mix(in srgb, var(--link-color) 8%, var(--surface-background));
+
+  strong {
+    display: block;
+    font-weight: 650;
+  }
+}
+
+.article-relation-current-label {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--link-color);
+  font-size: 11px;
+}
+
+// Connect each article card to a shared stem, then to the current article.
+.article-relation-group::after {
+  position: absolute;
+  top: 50%;
+  width: 26px;
+  border-top: 1px solid var(--border-color);
+  content: '';
+}
+
+.article-relation-group--incoming {
+  &::after { right: -26px; }
+  .article-relation-links { padding-right: 12px; border-right: 1px solid var(--border-color); }
+  li::after { right: -13px; }
+}
+
+.article-relation-group--outgoing {
+  &::after { left: -26px; }
+  .article-relation-links { padding-left: 12px; border-left: 1px solid var(--border-color); }
+  li::after { left: -13px; }
+}
+
+.article-relation-links li::after {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  border-top: 1px solid var(--border-color);
+  content: '';
+}
+
+.article-relation-more {
+  margin-top: 8px;
+
+  summary {
+    min-height: 32px;
+    padding-block: 6px;
+    color: var(--link-color);
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  .article-relation-links { margin-top: 8px; }
+  .article-relation-collapse { display: none; }
+  &[open] .article-relation-show-all { display: none; }
+  &[open] .article-relation-collapse { display: inline; }
+}
+
+@media (max-width: 767px) {
+  .article-reading-guide { padding: 16px; }
+  .article-relations-graph { flex-direction: column; gap: 22px; }
+  .article-relation-group,
+  .article-relation-current { width: 100%; flex: auto; }
+  .article-relation-group::after {
+    left: 50%;
+    right: auto;
+    width: 0;
+    height: 22px;
+    border-top: 0;
+    border-left: 1px solid var(--border-color);
+  }
+  .article-relation-group--incoming::after { top: 100%; }
+  .article-relation-group--outgoing::after { top: -22px; }
+  .article-relation-group .article-relation-links {
+    padding-inline: 0;
+    border-inline: 0;
+  }
+  .article-relation-links li::after { display: none; }
+}
+
+@media print {
+  .article-reading-guide {
+    margin-block: 4mm;
+    padding: 3mm;
+    break-inside: avoid;
+    background: transparent;
+  }
+  .article-relation-more > summary { display: none; }
+  .article-relation-more::details-content { content-visibility: visible; }
+  .article-relation-more:not([open]) > .article-relation-links { display: grid; }
+}

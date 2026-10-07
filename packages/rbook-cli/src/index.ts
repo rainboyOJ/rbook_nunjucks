@@ -1,14 +1,21 @@
 import rbook from '@rbook/core';
+import { assertPreCheckContext } from '@rbook/search/preCheck';
 
 export function run(argv = process.argv.slice(2)) {
   const command = argv[0];
-  const app = new rbook();
 
   switch (command) {
-    case 'build':
+    case 'build': {
+      const context = assertPreCheckContext();
+      const app = new rbook({
+        config: context.site,
+        codeTemplates: context.codes,
+        articlePages: context.pages
+      });
       app.build();
       app.build_glob();
       break;
+    }
 
     default:
       console.log('用法:');
