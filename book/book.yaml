@@ -127,6 +127,7 @@ glob:
   - graph/bellman-ford/index.md
   - graph/dfs/index.md
   - graph/MST/index.md
+  - graph/MST/bottleneck-path-prove.md
   - graph/MST/最小生成树.md
   - graph/negative_circle/index.md
   - graph/preface.md
