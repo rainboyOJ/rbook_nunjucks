@@ -643,6 +643,9 @@ chapters:
     path: .
     nolink: true
     sections:
+      - title: 树的存储
+        english-title: Tree Representation
+        path: tree-algo/save
       - title: 树的直径
         english-title: Tree Diameter
         path: tree-algo/diameter_of_tree

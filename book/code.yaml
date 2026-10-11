@@ -1755,6 +1755,30 @@ codes:
     language: py
     tags: [树形数据结构, 树, 树的重心]
 
+  - id: tree-save-parent
+    path: tree/tree_save_parent.cpp
+    description: tree save parent | 树的存储：父亲表示法
+    language: cpp
+    tags: [树形数据结构, 树, 树的存储]
+
+  - id: tree-save-parent-py
+    path: tree/tree_save_parent.py
+    description: tree save parent python | 树的存储：父亲表示法（Python 版）
+    language: py
+    tags: [树形数据结构, 树, 树的存储]
+
+  - id: tree-save-child
+    path: tree/tree_save_child.cpp
+    description: tree save child | 树的存储：孩子表示法
+    language: cpp
+    tags: [树形数据结构, 树, 树的存储]
+
+  - id: tree-save-child-py
+    path: tree/tree_save_child.py
+    description: tree save child python | 树的存储：孩子表示法（Python 版）
+    language: py
+    tags: [树形数据结构, 树, 树的存储]
+
   - id: dynamic-static
     path: utils/dynamic_static.cpp
     description: dynamic static | 动态化静态（内存池）
