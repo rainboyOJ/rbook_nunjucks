@@ -92,6 +92,30 @@
 
       #search-input:focus { box-shadow: inset 0 0 0 2px var(--accent); }
 
+      /* ?id=id1,id2 带来的 ID 过滤：可逐项移除，移除后同步改 URL */
+      .id-chip {
+        align-items: center;
+        background: var(--panel-raised);
+        border: 1px solid var(--border);
+        color: var(--accent-strong);
+        display: inline-flex;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        gap: 0.35rem;
+        padding: 0.15rem 0.35rem 0.15rem 0.6rem;
+      }
+
+      .id-chip-remove {
+        background: transparent;
+        border: 0;
+        color: var(--muted);
+        cursor: pointer;
+        line-height: 1;
+        padding: 0.15rem 0.35rem;
+      }
+
+      .id-chip-remove:hover { color: var(--danger); }
+
       .filter-bar {
         background: var(--panel);
         border: 1px solid var(--border);
@@ -99,6 +123,9 @@
         margin-bottom: 1rem;
         max-width: 720px;
       }
+
+      /* display:flex 会盖掉 [hidden] 的默认样式，显式隐藏无 ID 过滤时的标签条 */
+      #id-filter-bar[hidden] { display: none; }
 
       .filter-options {
         align-items: center;
@@ -413,6 +440,11 @@
         <div class="filter-options" id="filter-options"></div>
       </div>
 
+      <div class="filter-bar" id="id-filter-bar" role="group" aria-label="按 ID 过滤" hidden>
+        <span class="search-label">ID</span>
+        <div class="filter-options" id="id-filter-options"></div>
+      </div>
+
       <div id="status" role="status" aria-live="polite">正在加载代码模板...</div>
       <ul id="result" aria-live="polite"></ul>
     </main>
@@ -458,12 +490,15 @@
           selectedContent: '',
           detailCache: new Map(),
           langFilter: new Set(),   // 勾选的语言原始码集合；空集 = 不限语言
-          langChips: new Map()     // 语言原始码 -> { checkbox, count }，筛选条的 DOM 引用
+          langChips: new Map(),    // 语言原始码 -> { checkbox, count }，筛选条的 DOM 引用
+          idFilter: new Set()      // ?id= 带来的模板 ID 过滤集合；空集 = 不限 ID
         };
 
         const result = document.querySelector('#result');
         const searchInput = document.querySelector('#search-input');
         const filterOptions = document.querySelector('#filter-options');
+        const idFilterBar = document.querySelector('#id-filter-bar');
+        const idFilterOptions = document.querySelector('#id-filter-options');
         const status = document.querySelector('#status');
         const modalBackdrop = document.querySelector('#modal-backdrop');
         const modalTitle = document.querySelector('#modal-title');
@@ -513,6 +548,7 @@
           state.templates = templates;
           buildFilterBar();
           restoreLangFromUrl();
+          restoreIdFromUrl();
           render();
         }
 
@@ -621,11 +657,12 @@
           return keywords.every((keyword) => text.includes(keyword));
         }
 
-        // 语言筛选与关键词搜索是 AND 叠加；语言多选取并集，空集 = 不限语言。
+        // 语言筛选、ID 过滤与关键词搜索是 AND 叠加；语言/ID 多选取并集，空集 = 不限。
         function filteredTemplates() {
           const keywords = searchKeywords();
           return state.templates.filter((item) =>
-            (state.langFilter.size === 0 || state.langFilter.has(langKey(item)))
+            (state.idFilter.size === 0 || state.idFilter.has(item.id))
+            && (state.langFilter.size === 0 || state.langFilter.has(langKey(item)))
             && matchKeywords(item, keywords));
         }
 
@@ -700,8 +737,56 @@
           }
         }
 
+        function syncIdToUrl() {
+          const url = new URL(window.location.href);
+          if (state.idFilter.size > 0) url.searchParams.set('id', [...state.idFilter].join(','));
+          else url.searchParams.delete('id');
+          // 逗号在 query 里是合法字符，保持 ?id=dsu,bignum-add 的可读形态。
+          window.history.replaceState(null, '', url.toString().replace(/%2C/g, ','));
+        }
+
+        // 从 ?id=id1,id2 恢复 ID 过滤：去重、大小写不敏感归一，未知 ID 静默忽略。
+        function restoreIdFromUrl() {
+          const raw = new URLSearchParams(window.location.search).get('id');
+          const wanted = (raw || '').split(',').map((part) => part.trim()).filter(Boolean);
+          const known = new Map(state.templates.map((item) => [normalize(item.id), item.id]));
+          const next = new Set();
+          for (const value of wanted) {
+            const canonical = known.get(normalize(value));
+            if (canonical) next.add(canonical);
+          }
+          state.idFilter = next;
+          renderIdChips();
+        }
+
+        // ID 过滤标签：点 × 移除单个 ID，同时同步 URL 并重新渲染。
+        function renderIdChips() {
+          idFilterBar.hidden = state.idFilter.size === 0;
+          idFilterOptions.replaceChildren();
+          for (const id of state.idFilter) {
+            const chip = document.createElement('span');
+            chip.className = 'id-chip';
+            chip.append(id);
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'id-chip-remove';
+            remove.textContent = '×';
+            remove.title = `移除 ID 过滤：${id}`;
+            remove.setAttribute('aria-label', `移除 ID 过滤：${id}`);
+            remove.addEventListener('click', () => {
+              state.idFilter.delete(id);
+              syncIdToUrl();
+              renderIdChips();
+              render();
+            });
+            chip.append(remove);
+            idFilterOptions.append(chip);
+          }
+        }
+
         window.addEventListener('popstate', () => {
           restoreLangFromUrl();
+          restoreIdFromUrl();
           render();
         });
 
