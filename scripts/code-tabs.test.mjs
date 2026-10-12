@@ -44,14 +44,28 @@ fourth = 4
 
 test('BIT includes retain highlighted code and language-specific prose inside panels', () => {
   const $ = load(article);
-  const group = $('[data-code-tabs]');
-  assert.equal(group.length, 1);
-  assert.deepEqual(group.find('.code-tab-list button').map((_, node) => $(node).text()).get(), ['C++', 'Python']);
-  const panels = group.children('.code-tab-panel');
-  assert.equal(panels.length, 2);
-  assert.match(panels.eq(1).text(), /Python 版把同一份接口封装成/);
-  assert.match(panels.eq(1).find('pre code').text(), /class Fenwick/);
-  assert.ok(panels.eq(0).find('.token').length);
+  const groups = $('[data-code-tabs]');
+  // “代码模板”和“完整代码”两节各有一组 code-tabs。
+  assert.equal(groups.length, 2);
+
+  // 代码模板组：模板 include 进面板，Python 面板保留解释文字。
+  const templateGroup = groups.eq(0);
+  assert.deepEqual(templateGroup.find('.code-tab-list button').map((_, node) => $(node).text()).get(), ['C++', 'Python']);
+  const templatePanels = templateGroup.children('.code-tab-panel');
+  assert.equal(templatePanels.length, 2);
+  assert.match(templatePanels.eq(1).text(), /Python 版把同一份接口封装成/);
+  assert.match(templatePanels.eq(1).find('pre code').text(), /class Fenwick/);
+  assert.ok(templatePanels.eq(0).find('.token').length);
+
+  // 完整代码组：文章自己的一次性代码（./code/）同样进面板且保留高亮。
+  const solutionGroup = groups.eq(1);
+  assert.deepEqual(solutionGroup.find('.code-tab-list button').map((_, node) => $(node).text()).get(), ['C++', 'Python']);
+  const solutionPanels = solutionGroup.children('.code-tab-panel');
+  assert.equal(solutionPanels.length, 2);
+  assert.match(solutionPanels.eq(0).find('pre code').text(), /int main/);
+  assert.ok(solutionPanels.eq(0).find('.token').length);
+  assert.match(solutionPanels.eq(1).find('pre code').text(), /class Fenwick/);
+
   assert.ok($('pre code').filter((_, node) => $(node).text().includes('int main')).length);
 });
 
@@ -105,7 +119,8 @@ test('browser: independent tabs, keyboard, copying, mobile, themes, print and no
   await page.setContent(document);
   const groups = page.locator('[data-code-tabs]');
   const first = groups.nth(0);
-  const second = groups.nth(1);
+  // 文档 = BIT 正文 + extraGroup，extraGroup 是最后一组（BIT 自身有两组 code-tabs）。
+  const second = groups.last();
   const panels = first.locator(':scope > .code-tab-panel');
   assert.equal(await first.getByRole('tab', { selected: true }).textContent(), 'C++');
   assert.equal(await panels.nth(1).isVisible(), false);

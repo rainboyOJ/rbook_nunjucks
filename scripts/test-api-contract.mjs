@@ -191,7 +191,10 @@ async function main() {
     assert.equal(page.description, dsuDescription);
     assert.equal(page.frontMatter.id, 'dsu-on-tree');
     assert.equal(page.frontMatter.description, dsuDescription);
-    assert.deepEqual(page.frontMatter.code_template, ['dsu-on-tree-color-count']);
+    assert.deepEqual(page.frontMatter.code_template, [
+      'dsu-on-tree-color-count',
+      'dsu-on-tree-color-count-py'
+    ]);
     assert.deepEqual(Object.keys(page).sort(), [
       'categories',
       'description',
