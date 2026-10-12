@@ -5,9 +5,9 @@
 // 输出：
 //   第一行 depth[1..n]，第二行 size[1..n]
 //
-// 两种表示法配合使用：
-//   孩子表示法 ch[]：自顶向下求深度
-//   父亲表示法 fa[]：按 DFS 逆序自底向上累加子树大小
+// 建的是父亲孩子表示法：fa[] 记父亲，ch[] 记孩子列表。
+//   自顶向下沿 ch[] 求深度
+//   自底向上沿 fa[] 累加子树大小
 #include <cstdio>
 #include <vector>
 using namespace std;
@@ -16,8 +16,8 @@ const int maxn = 1e5 + 5;
 
 int n, root;
 vector<int> g[maxn];   // 第一步：树是特殊的图，先用邻接表存 n-1 条无向边
-vector<int> ch[maxn];  // 孩子表示法
-int fa[maxn];          // 父亲表示法
+vector<int> ch[maxn];  // 孩子列表 ch[]
+int fa[maxn];          // 父亲 fa[]，两者合起来是父亲孩子表示法
 int depth[maxn];       // 深度：到根的路径上的边数
 int sz[maxn];          // 子树大小：以 u 为根的子树里的点数
 
@@ -40,7 +40,7 @@ void build() {
         }
     }
 
-    // 自底向上（父亲表示法）：逆序遍历，把子树大小累加到父亲上
+    // 自底向上（沿 fa[]）：逆序遍历，把子树大小累加到父亲上
     for (int i = 1; i <= n; i++) sz[i] = 1;  // 先算上自己
     for (int i = n - 1; i >= 0; i--) {
         int u = order[i];

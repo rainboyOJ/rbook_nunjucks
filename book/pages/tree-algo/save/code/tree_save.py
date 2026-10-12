@@ -5,9 +5,9 @@
 # 输出：
 #   第一行 depth[1..n]，第二行 size[1..n]
 #
-# 两种表示法配合使用：
-#   孩子表示法 ch[]：自顶向下求深度
-#   父亲表示法 fa[]：按 DFS 逆序自底向上累加子树大小
+# 建的是父亲孩子表示法：fa[] 记父亲，ch[] 记孩子列表。
+#   自顶向下沿 ch[] 求深度
+#   自底向上沿 fa[] 累加子树大小
 
 import sys
 
@@ -24,8 +24,8 @@ def main() -> None:
         g[u].append(v)
         g[v].append(u)
 
-    ch: list[list[int]] = [[] for _ in range(n + 1)]  # 孩子表示法
-    fa: list[int] = [0] * (n + 1)                     # 父亲表示法
+    ch: list[list[int]] = [[] for _ in range(n + 1)]  # 孩子列表 ch[]
+    fa: list[int] = [0] * (n + 1)                     # 父亲 fa[]，合起来是父亲孩子表示法
     depth: list[int] = [0] * (n + 1)                  # 深度：到根的路径上的边数
     sz: list[int] = [1] * (n + 1)                     # 子树大小，先算上自己
 
@@ -44,7 +44,7 @@ def main() -> None:
             depth[v] = depth[u] + 1
             stk.append(v)
 
-    # 自底向上（父亲表示法）：逆序遍历，把子树大小累加到父亲上
+    # 自底向上（沿 fa[]）：逆序遍历，把子树大小累加到父亲上
     for u in reversed(order):
         if u != root:
             sz[fa[u]] += sz[u]

@@ -1755,15 +1755,15 @@ codes:
     language: py
     tags: [树形数据结构, 树, 树的重心]
 
-  - id: tree-save-parent
-    path: tree/tree_save_parent.cpp
-    description: tree save parent | 树的存储：父亲表示法
+  - id: tree-save-parent-child
+    path: tree/tree_save_parent_child.cpp
+    description: tree save parent child | 树的存储：父亲孩子表示法
     language: cpp
     tags: [树形数据结构, 树, 树的存储]
 
-  - id: tree-save-parent-py
-    path: tree/tree_save_parent.py
-    description: tree save parent python | 树的存储：父亲表示法（Python 版）
+  - id: tree-save-parent-child-py
+    path: tree/tree_save_parent_child.py
+    description: tree save parent child python | 树的存储：父亲孩子表示法（Python 版）
     language: py
     tags: [树形数据结构, 树, 树的存储]
 
