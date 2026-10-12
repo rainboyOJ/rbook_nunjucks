@@ -60,6 +60,30 @@
   display: none;
 }
 
+/* 关联代码模板跳转按钮：紧跟在 ID 按钮右侧 */
+.article-template-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 27px;
+  margin: -3px 0 13px 8px;
+  padding: 3px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  background: transparent;
+  font-family: var(--base-font);
+  font-size: 12px;
+  line-height: 1.45;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.article-template-link:hover {
+  border-color: var(--link-color);
+  color: var(--link-color);
+}
+
 .J_copyArticleId.is-copy-success .article-id-copy-label,
 .J_copyArticleId.is-copy-failure .article-id-copy-label,
 .J_copyArticleId.is-copy-success > .fa,
@@ -161,6 +185,10 @@
 
   .article-id-copy {
     margin-bottom: 12px;
+  }
+
+  .article-template-link {
+    margin: 0 0 12px;
   }
 
   .article-description {

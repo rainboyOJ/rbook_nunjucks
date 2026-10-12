@@ -3,6 +3,7 @@
 - const article_categories = Array.isArray(front_matter.categories) ? front_matter.categories.filter(Boolean) : []
 - const article_prerequisites = Array.isArray(front_matter.prerequisites) ? front_matter.prerequisites.filter(Boolean) : []
 - const article_id = typeof front_matter.id === 'string' ? front_matter.id.trim() : ''
+- const article_code_templates = Array.isArray(front_matter.code_template) ? front_matter.code_template.filter((item) => typeof item === 'string' && item.trim()) : []
 
 header.page-header.article-header
   nav.article-breadcrumb(aria-label="面包屑")
@@ -17,6 +18,10 @@ header.page-header.article-header
         span.article-id-copy-prefix ID:
         code= article_id
       span.article-copy-feedback(aria-live="polite" aria-atomic="true")
+  if article_code_templates.length
+    a.article-template-link(href=`/code_template?id=${article_code_templates.join(',')}` target="_blank" rel="noopener" title=`查看关联代码模板：${article_code_templates.join('、')}` aria-label=`查看关联代码模板：${article_code_templates.join('、')}`)
+      i.fa.fa-code(aria-hidden="true")
+      span.article-template-link-label 代码模板
   if article_description
     p.article-description= article_description
   if article_tags.length
