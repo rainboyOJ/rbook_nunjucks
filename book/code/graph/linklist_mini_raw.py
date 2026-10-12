@@ -1,34 +1,27 @@
-# 链式前向星（数组版）：head[u] == 0 表示无出边，0 号边是哨兵、add_edge 从 1 号开始编号。
-# C++ 的 head 是全局零初始化定长数组；这里用 defaultdict(int) 模拟“任意下标默认 0”。
-# add_edge 一次加两条反向边，权值默认 1；Python int 任意精度，权值不会溢出。
+# 链式前向星（raw 数组版）：head[u] 指向 u 最近加入的一条出边，0 表示没有出边。
+# e 是边表，下标就是边编号；e[i] = (to, nxt, w) 对应 C++ 的 e[i].to / e[i].next / e[i].w。
+# 0 号是哨兵，add_edge 加有向边、add_edge2 加无向边，边从 1 号开始编号。
+# 遍历 u 的出边：i = head[u]，while i 时取 e[i] 的 to / w，再 i = nxt，走完 0 结束。
 
 from collections import defaultdict
 
-maxn = 10**6 + 5  # C++ 的规模上限，Python 只是保留这个名字，不预分配
+# (to, nxt, w)：终点、同起点的下一条边编号、权值
+type Edge = tuple[int, int, int]
 
-
-class Edge:
-    """数组版边：to 终点、next 同起点的下一条边、w 权值。"""
-
-    __slots__ = ("to", "next", "w")
-
-    def __init__(self, to: int, next: int, w: int) -> None:
-        self.to = to
-        self.next = next
-        self.w = w
-
-
-e: list[Edge] = [Edge(0, 0, 0)]  # 0 号哨兵，保证 head[u]==0 能安全当“无出边”
+# 等价于 memset(head, 0)：读没出现过的点得到 0
 head: defaultdict[int, int] = defaultdict(int)
-cnt = 0
+
+# 0 号哨兵，让 head[u] == 0 能安全表示「无出边」
+e: list[Edge] = [(0, 0, 0)]
 
 
-def add_edge(u: int, v: int, w: int = 1) -> None:
-    """加无向边 u-v；两条边编号相邻，但本模板不依赖 i^1 找反向边。"""
-    global cnt
-    cnt += 1
-    e.append(Edge(v, head[u], w))
-    head[u] = cnt
-    cnt += 1
-    e.append(Edge(u, head[v], w))  # 若 u==v，这里读到的 head[v] 是刚更新的 head[u]
-    head[v] = cnt
+def add_edge(u: int, v: int, weight: int = 1) -> None:
+    """加有向边 u -> v：新边头插到 u 的链上，u == v 时也不会出错。"""
+    e.append((v, head[u], weight))
+    head[u] = len(e) - 1
+
+
+def add_edge2(u: int, v: int, weight: int = 1) -> None:
+    """加无向边 u - v：两个方向各插一条（对应 C++ 的 add2）。"""
+    add_edge(u, v, weight)
+    add_edge(v, u, weight)
