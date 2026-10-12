@@ -178,6 +178,23 @@
     return button;
   }
 
+  // include 的模板代码块在构建期带上了 data-code-template-id，
+  // 在复制按钮左侧生成“模板”跳转按钮，指向只显示该模板的模板页。
+  function createCodeTemplateLink(node) {
+    const holder = node.closest('[data-code-template-id]');
+    const codeId = holder?.getAttribute('data-code-template-id') || '';
+    if (!codeId) return null;
+    const link = document.createElement('a');
+    link.className = 'code-template-link';
+    link.href = `/code_template?id=${encodeURIComponent(codeId)}`;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.title = `查看代码模板 ${codeId}`;
+    link.setAttribute('aria-label', `查看代码模板 ${codeId}`);
+    link.innerHTML = '<i class="fa fa-code" aria-hidden="true"></i><span>模板</span>';
+    return link;
+  }
+
   function bindCopyButton(button, pre) {
     if (button.dataset.copyReady === 'true') return;
     button.dataset.copyReady = 'true';
@@ -283,7 +300,11 @@
       const numbered = pre.closest('.line-numbers-mode');
       if (numbered) {
         const existingButton = numbered.querySelector('.zeroclipboard-container');
-        if (existingButton) bindCopyButton(existingButton, pre);
+        if (existingButton) {
+          const templateLink = createCodeTemplateLink(numbered);
+          if (templateLink) existingButton.before(templateLink);
+          bindCopyButton(existingButton, pre);
+        }
         return;
       }
 
@@ -301,7 +322,10 @@
       const label = document.createElement('span');
       label.textContent = languageName(pre);
       const button = createCopyButton();
-      header.append(label, button);
+      const templateLink = createCodeTemplateLink(pre);
+      header.append(label);
+      if (templateLink) header.append(templateLink);
+      header.append(button);
       wrapper.prepend(header);
       bindCopyButton(button, pre);
     });

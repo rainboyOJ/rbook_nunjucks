@@ -1,4 +1,4 @@
-import { parseIncludeCodeDirective, readIncludedCode } from '../../include-code.js';
+import { parseIncludeCodeDirective, readIncludedCode, CODE_TEMPLATE_MARK } from '../../include-code.js';
 
 /**
  * A markdown-it plugin to include code from files.
@@ -28,7 +28,8 @@ function includeCodePlugin(md,options = {}) {
       baseDir: options.baseDir,
       currentFilePath: state.env.filePath,
       language: directive.language,
-      resolveCodeId: state.env.resolveCodeId || options.resolveCodeId
+      resolveCodeId: state.env.resolveCodeId || options.resolveCodeId,
+      findCodeId: state.env.findCodeId || options.findCodeId
     });
 
     if (included.error) {
@@ -43,7 +44,10 @@ function includeCodePlugin(md,options = {}) {
     // Create a 'fence' token to be rendered as a code block.
     // This reuses markdown-it's existing code block rendering.
     const token = new state.Token('fence', 'code', 0);
-    token.info = included.language; // The language for syntax highlighting
+    // 围栏 info 里附带 code.yaml 模板 ID 标记，渲染端会拆出来写到 data 属性上。
+    token.info = included.codeId
+      ? `${included.language} ${CODE_TEMPLATE_MARK}${included.codeId}`
+      : included.language; // The language for syntax highlighting
     token.content = included.content.endsWith('\n') ? included.content : included.content + '\n';
     token.markup = '```'; // The fence character
     token.map = [startLine, startLine + 1];

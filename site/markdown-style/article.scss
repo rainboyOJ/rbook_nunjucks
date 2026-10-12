@@ -184,7 +184,8 @@
 .reading-page .code-info-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* 语言标签靠左，右侧操作区（模板跳转 + 复制）相邻靠右 */
+  justify-content: flex-end;
   min-height: 40px;
   padding: 0 8px 0 14px;
   border: 0;
@@ -198,7 +199,12 @@
   text-transform: lowercase;
 }
 
+.reading-page .code-info-header > span:first-child {
+  margin-right: auto;
+}
+
 .reading-page .code-copy-button,
+.reading-page .code-template-link,
 .reading-page .zeroclipboard-container {
   display: inline-flex;
   align-items: center;
@@ -216,7 +222,12 @@
   cursor: pointer;
 }
 
+.reading-page .code-template-link {
+  text-decoration: none;
+}
+
 .reading-page .code-copy-button:hover,
+.reading-page .code-template-link:hover,
 .reading-page .zeroclipboard-container:hover {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.09);
@@ -239,7 +250,8 @@
   display: inline-block;
 }
 
-.reading-page .code-copy-button .fa {
+.reading-page .code-copy-button .fa,
+.reading-page .code-template-link .fa {
   margin-right: 6px;
 }
 

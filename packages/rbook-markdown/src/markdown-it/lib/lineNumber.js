@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import Prism from 'prismjs';
 import loadLanguages from 'prismjs/components/index.js';
+import { splitCodeTemplateMark } from '../../include-code.js';
 loadLanguages() //加载所有的语言模块
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -42,6 +43,11 @@ const lineNumber =  md => {
         const [tokens, idx] = args
         const token = tokens[idx]
         const content = token.content
+        // include-code 展开时附带的模板 ID 标记：从 info 里拆掉，
+        // 语言识别不受影响，稍后写到代码块容器的 data 属性上。
+        const splitInfo = splitCodeTemplateMark(token.info)
+        const codeTemplateId = splitInfo.codeTemplateId
+        token.info = splitInfo.info
         //mermaid
         let info = token.info.trim()
         if( token.info.trim() === 'mermaid')
@@ -76,10 +82,21 @@ const lineNumber =  md => {
         // console.log('lang--->',lang)
         if( support_lang.indexOf(lang) != -1) {
             // console.log('support_lang')
-            return lineNumbers(content,lang,info)
+            return withCodeTemplateId(lineNumbers(content,lang,info), codeTemplateId)
         }
-        return fence(...args)
+        return withCodeTemplateId(fence(...args), codeTemplateId)
     }
+}
+
+// 把模板 ID 写到代码块最外层标签（.line-numbers-mode 的 div 或 pre）上，
+// 前端据此在复制按钮左侧渲染“查看模板”跳转按钮。
+function withCodeTemplateId(html, codeTemplateId) {
+    if (!codeTemplateId) return html
+    const safe = String(codeTemplateId)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+    return html.replace(/<(pre|div)\b/, `<$1 data-code-template-id="${safe}"`)
 }
 
 export default lineNumber

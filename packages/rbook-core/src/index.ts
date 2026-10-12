@@ -82,6 +82,7 @@ class rbook {
     name: string;
     config: BookConfig;
     codeTemplatesById: Map<string, Record<string, unknown>>;
+    codeIdByPath: Map<string, string>;
     articlePages: ArticleRelationPage[];
 
     constructor(options: RbookOptions = {}) {
@@ -93,6 +94,12 @@ class rbook {
             : options.codeTemplates;
         this.codeTemplatesById = new Map(
             codeTemplates.map((code) => [code.id, code])
+        );
+        // include 展开后的代码块要能跳回模板页：按绝对路径反查 code.yaml 的模板 ID。
+        this.codeIdByPath = new Map(
+            codeTemplates
+                .filter((code) => typeof code.path === 'string' && code.path)
+                .map((code) => [path.resolve(codeTemplateDir, code.path as string), code.id])
         );
         this.config.currentYear = new Date().getFullYear();
         this.config.last_build_time = new Date().toLocaleString('zh-CN', {
@@ -148,7 +155,8 @@ class rbook {
         const md = new markdown(fullPath, {
             baseDir: contentDir,
             codeDir: codeTemplateDir,
-            resolveCodeId: (id: string) => this.codeTemplatesById.get(id) || null
+            resolveCodeId: (id: string) => this.codeTemplatesById.get(id) || null,
+            findCodeId: (filePath: string) => this.codeIdByPath.get(path.resolve(filePath)) || null
         });
         const templateType = md.front_matter.layout || defaultTemplateType || 'page';
         const htmlContent = renderTemplate(themeDir, templateType, {

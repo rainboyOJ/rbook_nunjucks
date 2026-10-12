@@ -57,6 +57,8 @@ export function createPagePayload(page: any, codes: any[] = []) {
   const document = loadPageDocument(page);
   const codesById = new Map(codes.map((code) => [code.id, code]));
   const resolveCodeId = (id: string) => codesById.get(id) || null;
+  // API 返回的 markdown 保持干净围栏（不带模板 ID 标记）；
+  // 模板 ID 只写进渲染后的 HTML（rbook-core 渲染链路的 findCodeId）。
   const markdown = new Markdown(fullPath, {
     baseDir: contentDir,
     codeDir: codeTemplateDir,

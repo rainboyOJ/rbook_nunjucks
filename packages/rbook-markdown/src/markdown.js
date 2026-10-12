@@ -99,12 +99,14 @@ class Markdown {
                 baseDir: this.options.baseDir,
                 codeDir: this.options.codeDir,
                 currentFilePath: this.md_path,
-                resolveCodeId: this.options.resolveCodeId
+                resolveCodeId: this.options.resolveCodeId,
+                findCodeId: this.options.findCodeId
             })
             : md_content;
         return markdownit.render(content, {
             filePath: this.md_path,
-            resolveCodeId: this.options.resolveCodeId
+            resolveCodeId: this.options.resolveCodeId,
+            findCodeId: this.options.findCodeId
         });
     }
 
