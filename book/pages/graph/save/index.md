@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "邻接表", "链式前向星"]
 categories: ["图论"]
-code_template: [graph-adj, graph-adj-py, linklist, linklist-py]
+code_template: [graph-adj, graph-adj-py, linklist, linklist-py, linklist-mini-raw, linklist-mini-raw-py, linklist-mini-struct, linklist-mini-struct-py]
 ---
 
 [[TOC]]
@@ -143,6 +143,38 @@ cnt++
 
 ::: tab Python
 @include-code(/code/graph/linklist.py, python)
+:::
+::::
+
+日常写题不需要 `reset` 和迭代器，只要“加边 + 遍历”，把模板压到十几行更好抄。下面两种精简写法与完整版的头插法和哨兵语义完全一致，只是封装程度不同：数组版不封装，struct 版保留 `e.add(u, v)` 的调用形式。三个版本的遍历顺序都是加边的倒序。
+
+### 链式前向星（数组精简版）
+
+边表用平行数组（Python 用一个 `(to, nxt, w)` 的 tuple 列表），链尾用 $0$ 做哨兵，所以 $0$ 号边留空、边从 $1$ 号开始编号。两语言都拆成 `add_edge`（有向边）与 `add_edge2`（无向边，两个方向各插一条）；Python 的 `head` 用 `defaultdict(int)` 顶 `memset(head, 0)`。
+
+:::: code-tabs
+::: tab C++
+@include-code(/code/graph/linklist_mini_raw.cpp, cpp)
+:::
+
+::: tab Python
+@include-code(/code/graph/linklist_mini_raw.py, python)
+:::
+::::
+
+### 链式前向星（struct 精简版）
+
+把边表和 $head$ 包成结构体：C++ 是 `struct linkList` 加全局实例 `e`，Python 是 `LinkList` 类加全局实例 `e`。边里多存一个起点 $u$，链尾用 $-1$（Python 用 `defaultdict(-1)` 顶 `memset(h, -1)`），所以不需要 $0$ 号哨兵。遍历从 `e.h[u]` 开始，顺着 `next` 跳到 $-1$ 为止。
+
+:::: code-tabs
+::: tab C++
+@include-code(/code/graph/linklist_mini_struct.cpp, cpp)
+:::
+
+::: tab Python
+`for u_, v, w, nxt in e.out_edges(u)` 枚举点 $u$ 的每条出边。
+
+@include-code(/code/graph/linklist_mini_struct.py, python)
 :::
 ::::
 
