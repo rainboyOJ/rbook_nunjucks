@@ -987,6 +987,12 @@ codes:
     language: py
     tags: [图论]
 
+  - id: graph-adj
+    path: graph/graph_adj.cpp
+    description: graph adj | 邻接表存图
+    language: cpp
+    tags: [图论]
+
   - id: graph-adj-py
     path: graph/graph_adj.py
     description: graph adj python | 邻接表存图（Python 版）

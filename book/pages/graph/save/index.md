@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["图论", "邻接表", "链式前向星"]
 categories: ["图论"]
-code_template: [graph-adj-py, linklist, linklist-py]
+code_template: [graph-adj, graph-adj-py, linklist, linklist-py]
 ---
 
 [[TOC]]
@@ -119,20 +119,18 @@ cnt++
 
 ### 邻接表
 
-C++ 的邻接表写法很短，直接写在正文里：
+两个模板都按 $0 \ldots n-1$ 编号写。C++ 版给出最短的数组版：`add_edge` 加有向边，无向边再推一次，遍历直接 `for`；Python 版多列出编号稀疏形态、查边与末尾的 `assert` 自检。
 
-```cpp
-// 顶点 0..n-1 的邻接表，带权存 (v, w)；无权用 vector<int> g[maxn] 即可
-vector<pair<int, int>> g[maxn];
+:::: code-tabs
+::: tab C++
+@include-code(/code/graph/graph_adj.cpp, cpp)
+:::
 
-void add(int u, int v, int w) {
-    g[u].push_back({v, w});  // 无向边就再加一行 g[v].push_back({u, w});
-}
-```
-
-Python 版模板给出两种形态与遍历、查边写法：
-
+::: tab Python
 @include-code(/code/graph/graph_adj.py, python)
+:::
+
+::::
 
 ### 链式前向星
 
@@ -158,7 +156,7 @@ Python 版模板给出两种形态与遍历、查边写法：
 2 4 9
 ```
 
-**邻接表**：`g[1].append((2, 5))`、`g[1].append((3, 7))`、`g[2].append((4, 9))` 后，遍历点 $1$ 的出边得到 $1 \to 2$ 和 $1 \to 3$，顺序与加边顺序相同。
+**邻接表**：C++ 用 `add_edge(1, 2, 5)`、`add_edge(1, 3, 7)`、`add_edge(2, 4, 9)`，Python 用 `g[1].append((2, 5))`、`g[1].append((3, 7))`、`g[2].append((4, 9))`；建图后遍历点 $1$ 的出边都得到 $1 \to 2$ 和 $1 \to 3$，顺序与加边顺序相同。
 
 **链式前向星**：如果用 `add(1,2,5)`、`add(1,3,7)`、`add(2,4,9)` 建图，遍历点 $1$ 的出边得到 $1 \to 3$ 和 $1 \to 2$。由于使用头插法，遍历顺序与加边顺序相反。
 
