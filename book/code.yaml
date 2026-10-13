@@ -1,3 +1,5 @@
+# 可选字段 recall_prompt: | 用于抽卡默写的多行任务说明（纯文本）。
+# 未填写时仍可加入卡组，卡片正面只显示模板名称。
 codes:
   - id: all-substrings-hs
     path: Haskell/所有子串.hs
@@ -433,6 +435,12 @@ codes:
     language: py
     tags: [数据结构]
 
+  - id: dsu-short
+    path: data-struture/dsu_short.cpp
+    description: dsu short | 并查集（竞赛精简版）
+    language: cpp
+    tags: [数据结构]
+
   - id: dsu-bipartite
     path: data-struture/dsu_bipartite.cpp
     description: dsu bipartite | 并查集判二分图
@@ -443,6 +451,12 @@ codes:
     path: data-struture/dsu_bipartite.py
     description: dsu bipartite python | 并查集判二分图（Python 版）
     language: py
+    tags: [数据结构]
+
+  - id: dsu-bipartite-short
+    path: data-struture/dsu_bipartite_short.cpp
+    description: dsu bipartite short | 并查集判二分图（竞赛精简版）
+    language: cpp
     tags: [数据结构]
 
   - id: fhq-treap
@@ -997,6 +1011,12 @@ codes:
     path: graph/floyed.py
     description: floyed python | 全源最短路（Floyd）（Python 版）
     language: py
+    tags: [图论]
+
+  - id: floyed-short
+    path: graph/floyed_short.cpp
+    description: floyed short | 全源最短路（Floyd 竞赛精简版）
+    language: cpp
     tags: [图论]
 
   - id: graph-adj

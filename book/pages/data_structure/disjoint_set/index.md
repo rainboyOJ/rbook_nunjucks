@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "并查集", "DSU"]
 categories: ["数据结构"]
-code_template: [dsu, dsu-py, dsu-bipartite, dsu-bipartite-py]
+code_template: [dsu, dsu-short, dsu-py, dsu-bipartite, dsu-bipartite-short, dsu-bipartite-py]
 ---
 
 [[TOC]]
@@ -114,6 +114,12 @@ $$
 @include-code(/code/data-struture/dsu.cpp, cpp)
 :::
 
+::: tab C++ 竞赛版
+
+不用 `struct` 的精简写法：全局数组加三个函数，适合比赛现场手写。
+@include-code(/code/data-struture/dsu_short.cpp, cpp)
+:::
+
 ::: tab Python
 
 @include-code(/code/data-struture/dsu.py, python)
@@ -126,12 +132,19 @@ $$
 @include-code(/code/data-struture/dsu_bipartite.cpp, cpp)
 :::
 
+::: tab C++ 竞赛版
+
+不用 `struct` 的精简写法：拆点后 `x + n` 就是 `x` 的对立面，适合比赛现场手写。
+@include-code(/code/data-struture/dsu_bipartite_short.cpp, cpp)
+:::
+
 ::: tab Python
 
-`is_bipartite` 对应 C++ `main` 的判定逻辑；`DSU` 与并查集模板一致，单文件即可复制使用。
+Python 版是模块级函数：`init` / `find` / `unite`，单文件即可复制使用。
 @include-code(/code/data-struture/dsu_bipartite.py, python)
 :::
 ::::
+
 ## 测试用例
 
 普通并查集输入：
