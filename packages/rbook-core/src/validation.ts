@@ -8,6 +8,7 @@ export interface CodeTemplateItem {
   id: string;
   path: string;
   description: string;
+  recall_prompt?: string;
   language?: string;
   tags?: string[];
   complexity?: string;
@@ -178,6 +179,14 @@ export function validateCodes(codes: CodeTemplateItem[]): ValidationError[] {
           message: `code file '${record.path}' for id '${record.id}' does not exist on disk`
         });
       }
+    }
+
+    if (record.recall_prompt !== undefined && typeof record.recall_prompt !== 'string') {
+      errors.push({
+        level: 'ERROR',
+        filePath: 'book/code.yaml',
+        message: `code entry '${record.id}' field 'recall_prompt' must be a string`
+      });
     }
 
     if (!record.description) {

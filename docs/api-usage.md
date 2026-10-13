@@ -224,7 +224,7 @@ curl -G \
 curl -G --data-urlencode "id=dsu-on-tree-color-count" "$BASE_URL/api/codes"
 ```
 
-响应字段包括 `id`、`path`、`url`、`description`、`language`、`tags`、`complexity`、`author`、`aliases` 和 `articles`。`articles` 中每项包含文章的 `id`、`title`、`path` 和根相对 `url`。
+响应字段包括 `id`、`path`、`url`、`description`、`recall_prompt`、`language`、`tags`、`complexity`、`author`、`aliases` 和 `articles`。`recall_prompt` 是 `book/code.yaml` 中的可选多行默写任务说明，未填写时返回空字符串；列表与详情接口均返回该字段。`articles` 中每项包含文章的 `id`、`title`、`path` 和根相对 `url`。
 
 传入 `includeContent=true` 可同时读取模板源码：
 

@@ -419,6 +419,55 @@
         #result { grid-template-columns: 1fr; }
         .search-box, .filter-bar { max-width: none; }
       }
+
+      [hidden] { display: none !important; }
+      .view-nav, .recall-actions { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; }
+      .view-nav { margin-bottom: 1.5rem; }
+      .view-nav button, #study-panel button { min-height: 44px; }
+      .view-nav [aria-pressed="true"], .primary-button { background: var(--accent); color: #17120a; }
+      button:disabled { opacity: .5; cursor: not-allowed; }
+      button:focus-visible, summary:focus-visible, textarea:focus-visible, input:focus-visible {
+        outline: 2px solid var(--accent); outline-offset: 3px;
+      }
+      .study-summary, .study-settings, .recall-card, .deck-panel, .recall-idle {
+        background: var(--panel); border: 1px solid var(--border); padding: 1.25rem; margin-bottom: 1rem;
+      }
+      .study-summary { display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem; }
+      .study-summary strong { display: block; font-size: 1.8rem; color: var(--accent-strong); }
+      .study-summary span, .study-hint { color: var(--muted); font-size: .9rem; }
+      .study-settings summary, .deck-panel summary { cursor: pointer; padding: .25rem 0; }
+      .study-settings .recall-actions { margin-top: 1rem; }
+      #new-limit { width: 5rem; padding: .5rem; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+      #study-error { color: var(--danger); white-space: pre-wrap; }
+      #recall-title { margin: .6rem 0 1rem; overflow-wrap: anywhere; }
+      #recall-prompt { white-space: pre-wrap; line-height: 1.7; overflow-wrap: anywhere; }
+      .recall-columns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1.25rem 0; }
+      .recall-columns.is-revealed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .recall-column { min-width: 0; }
+      .recall-column label, .recall-column h3 { display: block; margin: 0 0 .65rem; font-size: 1rem; }
+      #recall-editor, #recall-reference { width: 100%; height: 420px; margin: 0; padding: 1rem; overflow: auto;
+        background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 0;
+        font: 14px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; tab-size: 4; text-align: left; }
+      #recall-editor { resize: vertical; white-space: pre; }
+      #recall-reference code { font: inherit; white-space: pre; }
+      #recall-ratings { border-top: 1px solid var(--border); padding-top: 1rem; }
+      #recall-ratings [data-rating="again"] { border-color: var(--danger); color: var(--danger); }
+      #recall-ratings [data-rating="again"]:hover { color: var(--bg); background: var(--danger); }
+      #deck-list { list-style: none; padding: 0; margin-bottom: 0; }
+      .deck-row { display: flex; gap: 1rem; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding: .8rem 0; }
+      .deck-row > div { min-width: 0; overflow-wrap: anywhere; }
+      .deck-row .study-hint { display: block; margin-top: .25rem; }
+      .deck-row button { flex-shrink: 0; }
+      .recall-idle h2 { margin-top: 0; }
+      @media (max-width: 760px) {
+        .recall-columns.is-revealed { grid-template-columns: minmax(0, 1fr); }
+        #recall-editor, #recall-reference { height: 320px; }
+        .study-summary { gap: 1rem 1.5rem; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .recall-card { animation: card-appear .2s ease-out; }
+        @keyframes card-appear { from { opacity: .3; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+      }
     </style>
   </head>
   <body>
@@ -430,6 +479,11 @@
         </div>
       </header>
 
+      <nav class="view-nav" aria-label="模板与练习">
+        <button id="library-tab" class="action-button" type="button" aria-pressed="true" aria-controls="library-panel">模板库</button>
+        <button id="study-tab" class="action-button" type="button" aria-pressed="false" aria-controls="study-panel">我的卡组 · 0</button>
+      </nav>
+      <section id="library-panel" aria-label="模板库">
       <label class="search-box" for="search-input">
         <span class="search-label">搜索</span>
         <input id="search-input" type="search" autocomplete="off" placeholder="输入多个关键词，用空格分隔">
@@ -447,6 +501,69 @@
 
       <div id="status" role="status" aria-live="polite">正在加载代码模板...</div>
       <ul id="result" aria-live="polite"></ul>
+      </section>
+
+      <section id="study-panel" aria-label="我的卡组" hidden>
+        <p id="study-error" role="alert" hidden></p>
+        <div class="study-summary" aria-label="今日学习概况">
+          <div><strong id="deck-count">0</strong><span>卡组模板</span></div>
+          <div><strong id="due-count">0</strong><span>待复习（含重练）</span></div>
+          <div><strong id="new-count">0</strong><span>今日可学新卡</span></div>
+          <div><strong id="started-count">0 / 5</strong><span>今日已开始新卡</span></div>
+        </div>
+        <details class="study-settings">
+          <summary>学习设置与备份</summary>
+          <div class="recall-actions">
+            <label for="new-limit">每日新卡上限</label>
+            <input id="new-limit" type="number" min="0" max="100" step="1" value="5">
+            <button id="export-study" class="action-button" type="button">导出备份</button>
+            <button id="import-study" class="action-button" type="button">导入备份</button>
+            <input id="import-file" type="file" accept="application/json,.json" hidden>
+          </div>
+          <p class="study-hint">进度保存在当前浏览器。设置为 0 可暂停新卡；导入备份会替换当前卡组和进度。</p>
+          <p class="study-hint">熟练：1 → 3 → 7 → 14 → 30 天；勉强：明天再练；没写出来：间隔至少 1 分钟后重练，并重置复习间隔。</p>
+        </details>
+        <div id="recall-idle" class="recall-idle">
+          <h2 id="idle-title">从想记住的模板开始</h2>
+          <p id="idle-message" class="study-hint" role="status">先到模板库，把想练的模板加入卡组。</p>
+          <div class="recall-actions">
+            <button id="draw-card" class="action-button primary-button" type="button" disabled>抽一张卡</button>
+            <button id="choose-templates" class="action-button" type="button">去选模板</button>
+          </div>
+        </div>
+        <article id="recall-card" class="recall-card" hidden>
+          <div id="recall-meta" class="study-hint"></div>
+          <h2 id="recall-title" tabindex="-1"></h2>
+          <p id="recall-prompt" hidden></p>
+          <div id="recall-columns" class="recall-columns">
+            <div class="recall-column">
+              <label for="recall-editor">我的默写</label>
+              <textarea id="recall-editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-describedby="editor-hint"></textarea>
+              <p id="editor-hint" class="study-hint">从空白开始独立写出模板。草稿自动保存；查看答案后锁定本次默写，便于对照。</p>
+            </div>
+            <div id="reference-column" class="recall-column" hidden>
+              <h3>参考代码</h3>
+              <pre id="recall-reference"><code id="reference-code"></code></pre>
+            </div>
+          </div>
+          <div class="recall-actions">
+            <button id="reveal-answer" class="action-button primary-button" type="button">查看答案</button>
+            <button id="pause-study" class="action-button" type="button">暂时结束</button>
+          </div>
+          <div id="recall-ratings" hidden>
+            <p>对照后，这次你能独立写出来吗？</p>
+            <div class="recall-actions">
+              <button class="action-button" type="button" data-rating="again">没写出来 · 稍后重练</button>
+              <button class="action-button" type="button" data-rating="hard">勉强写出 · 明天再练</button>
+              <button id="rate-good" class="action-button" type="button" data-rating="good">熟练写出</button>
+            </div>
+          </div>
+        </article>
+        <details class="deck-panel">
+          <summary>管理我的卡组</summary>
+          <ul id="deck-list"></ul>
+        </details>
+      </section>
     </main>
 
     <div id="modal-backdrop" class="modal-backdrop" hidden>
@@ -482,6 +599,107 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script id="recall-model">
+      // Pure scheduling / backup model, shared by the page and the regression tests.
+      const Recall = (() => {
+        const key = 'rbook.code-recall.v1';
+        const intervals = [1, 3, 7, 14, 30];
+        function day(now = new Date()) {
+          return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        }
+        function after(days, now = new Date()) {
+          const date = new Date(now);
+          date.setDate(date.getDate() + days);
+          return day(date);
+        }
+        function empty(now = new Date()) {
+          return { format: 'rbook-code-recall', version: 1, newLimit: 5,
+            daily: { date: day(now), count: 0 }, cards: [], active: null };
+        }
+        function newCard(id) {
+          return { id, stage: 0, due: null, retryAt: null, draft: '' };
+        }
+        function resetDay(data, now) {
+          if (data.daily.date !== day(now)) data.daily = { date: day(now), count: 0 };
+        }
+        function queue(data, available, now = new Date()) {
+          const cards = data.cards.filter((card) => available.has(card.id));
+          const due = cards.filter((card) => card.due !== null && card.due <= day(now));
+          const ready = due.filter((card) => card.retryAt === null || card.retryAt <= now.getTime());
+          const used = data.daily.date === day(now) ? data.daily.count : 0;
+          const fresh = cards.filter((card) => card.due === null);
+          const newCount = Math.min(fresh.length, Math.max(0, data.newLimit - used));
+          return { due, ready, fresh, used, newCount,
+            candidates: due.length ? ready : newCount ? fresh : [],
+            waitUntil: due.length && !ready.length ? Math.min(...due.map((card) => card.retryAt)) : null };
+        }
+        function start(data, id, now = new Date()) {
+          if (data.active) throw new Error('请先完成当前卡片');
+          const card = data.cards.find((item) => item.id === id);
+          if (!card) throw new Error('卡片不存在');
+          resetDay(data, now);
+          if (card.due === null) {
+            if (data.daily.count >= data.newLimit) throw new Error('今日新卡已达上限');
+            data.daily.count++;
+            card.due = day(now);
+          }
+          card.draft = '';
+          data.active = { id, revealed: false };
+        }
+        function rate(data, rating, now = new Date()) {
+          if (!data.active?.revealed) throw new Error('请先查看答案并对照');
+          if (!['again', 'hard', 'good'].includes(rating)) throw new Error('无效评价');
+          const card = data.cards.find((item) => item.id === data.active.id);
+          if (!card) throw new Error('卡片不存在');
+          resetDay(data, now);
+          if (rating === 'again') {
+            card.stage = 0;
+            card.due = day(now);
+            card.retryAt = now.getTime() + 60_000;
+          } else {
+            card.due = after(rating === 'hard' ? 1 : intervals[card.stage], now);
+            if (rating === 'good') card.stage = Math.min(4, card.stage + 1);
+            card.retryAt = null;
+          }
+          card.draft = '';
+          data.active = null;
+          return card;
+        }
+        function validate(input) {
+          const fail = () => { throw new Error('备份格式或学习数据无效，当前进度未更改'); };
+          const object = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+          const integer = (value, min, max) => Number.isInteger(value) && value >= min && value <= max;
+          const validDay = (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
+            && Number.isFinite(Date.parse(`${value}T12:00:00Z`))
+            && new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) === value;
+          if (!object(input) || input.format !== 'rbook-code-recall' || input.version !== 1
+            || !integer(input.newLimit, 0, 100) || !object(input.daily)
+            || !validDay(input.daily.date) || !integer(input.daily.count, 0, 100_000)
+            || !Array.isArray(input.cards) || input.cards.length > 10_000) fail();
+          const ids = new Set();
+          const cards = input.cards.map((card) => {
+            if (!object(card) || typeof card.id !== 'string' || !/^[a-z0-9-]+$/.test(card.id)
+              || card.id.length > 200 || ids.has(card.id) || !integer(card.stage, 0, 4)
+              || !(card.due === null || validDay(card.due))
+              || !(card.retryAt === null || integer(card.retryAt, 0, 8_640_000_000_000_000))
+              || (card.retryAt !== null && (card.due === null || card.stage !== 0))
+              || (card.due === null && card.stage !== 0)
+              || typeof card.draft !== 'string' || card.draft.length > 1_000_000) fail();
+            ids.add(card.id);
+            return { id: card.id, stage: card.stage, due: card.due, retryAt: card.retryAt, draft: card.draft };
+          });
+          let active = null;
+          if (input.active !== null) {
+            if (!object(input.active) || !ids.has(input.active.id) || typeof input.active.revealed !== 'boolean'
+              || cards.find((card) => card.id === input.active.id).due === null) fail();
+            active = { id: input.active.id, revealed: input.active.revealed };
+          }
+          return { format: input.format, version: 1, newLimit: input.newLimit,
+            daily: { date: input.daily.date, count: input.daily.count }, cards, active };
+        }
+        return { key, intervals, day, after, empty, newCard, queue, start, rate, validate };
+      })();
+    </script>
     <script>
       (() => {
         const state = {
@@ -550,6 +768,8 @@
           restoreLangFromUrl();
           restoreIdFromUrl();
           render();
+          renderStudy();
+          if (study.active) setStudyView(true);
         }
 
         function normalize(value) {
@@ -873,6 +1093,7 @@
             addButton(actions, '复制', 'copy', item.id);
             addButton(actions, '下载', 'download', item.id);
             if (item.sh) addButton(actions, '命令', 'shell', item.id);
+            addButton(actions, study.cards.some((card) => card.id === item.id) ? '已加入卡组' : '加入卡组', 'deck', item.id);
             // 序号缩小变暗放右下角：靠 margin-left:auto 推到操作行最右端。
             appendText(actions, String(index + 1).padStart(3, '0'), 'card-number');
             card.append(actions);
@@ -971,6 +1192,16 @@
         async function handleAction(action, id) {
           const item = state.templates.find((template) => template.id === id);
           if (!item) return;
+          if (action === 'deck') {
+            if (study.cards.some((card) => card.id === id)) {
+              setStudyView(true);
+            } else if (saveStudy((next) => next.cards.push(Recall.newCard(id)))) {
+              render();
+              renderStudy();
+              showToast('已加入个人卡组');
+            }
+            return;
+          }
           try {
             const detail = await loadCode(item);
             const filename = fileNameFromPath(detail.path, detail.id);
@@ -982,6 +1213,280 @@
             showToast(`获取代码失败: ${error instanceof Error ? error.message : String(error)}`);
           }
         }
+
+        const $ = (selector) => document.querySelector(selector);
+        let study = Recall.empty();
+        let storedStudy = null;
+        let storageBroken = false;
+        let answerRequest = 0;
+        let shownCard = null;
+        let visibleAnswer = null;
+        let studyFeedback = '';
+        const editor = $('#recall-editor');
+
+        function studyError(message) {
+          $('#study-error').textContent = message;
+          $('#study-error').hidden = !message;
+        }
+
+        function readStudy() {
+          try {
+            storedStudy = localStorage.getItem(Recall.key);
+            study = storedStudy === null ? Recall.empty() : Recall.validate(JSON.parse(storedStudy));
+            storageBroken = false;
+            studyError('');
+          } catch (error) {
+            storageBroken = true;
+            studyError(`无法读取学习记录：${error.message}。可以导出原始备份，或导入有效备份恢复。`);
+          }
+        }
+
+        // Commit before updating the UI: a quota error must never silently lose a rating.
+        function saveStudy(change, { replace = false } = {}) {
+          try {
+            if (storageBroken && !replace) throw new Error('请先导出原始备份，再导入有效备份恢复学习记录');
+            if (localStorage.getItem(Recall.key) !== storedStudy) {
+              readStudy();
+              render();
+              renderStudy();
+              throw new Error('其他页面已更新进度，请重新操作');
+            }
+            const next = structuredClone(study);
+            change(next);
+            const clean = Recall.validate(next);
+            const serialized = JSON.stringify(clean);
+            localStorage.setItem(Recall.key, serialized);
+            study = clean;
+            storedStudy = serialized;
+            storageBroken = false;
+            studyError('');
+            return true;
+          } catch (error) {
+            studyError(`保存未完成：${error.message}`);
+            showToast('学习记录未保存，请查看卡组中的提示');
+            return false;
+          }
+        }
+
+        function setStudyView(open) {
+          $('#library-panel').hidden = open;
+          $('#study-panel').hidden = !open;
+          $('#library-tab').setAttribute('aria-pressed', String(!open));
+          $('#study-tab').setAttribute('aria-pressed', String(open));
+          if (open) renderStudy();
+        }
+
+        function studyQueue() {
+          return Recall.queue(study, new Set(state.templates.map((item) => item.id)));
+        }
+
+        function renderStudy() {
+          const queue = studyQueue();
+          $('#study-tab').textContent = `我的卡组 · ${study.cards.length}`;
+          $('#deck-count').textContent = study.cards.length;
+          $('#due-count').textContent = queue.due.length;
+          $('#new-count').textContent = queue.newCount;
+          $('#started-count').textContent = `${queue.used} / ${study.newLimit}`;
+          $('#new-limit').value = study.newLimit;
+          const active = study.cards.find((card) => card.id === study.active?.id);
+          const template = state.templates.find((item) => item.id === active?.id);
+          const activeVisible = Boolean(active && template);
+          $('#recall-card').hidden = !activeVisible;
+          $('#recall-idle').hidden = activeVisible;
+          if (activeVisible) {
+            $('#recall-title').textContent = template.description || template.id;
+            $('#recall-meta').textContent = `${languageLabel(template.language)} · ${template.id}${active.retryAt ? ' · 再次默写' : ''}`;
+            $('#recall-prompt').textContent = template.recall_prompt || '';
+            $('#recall-prompt').hidden = !template.recall_prompt;
+            if (shownCard !== active.id || editor.value !== active.draft) editor.value = active.draft;
+            shownCard = active.id;
+            editor.readOnly = study.active.revealed;
+            const answered = study.active.revealed && visibleAnswer === active.id;
+            $('#recall-columns').classList.toggle('is-revealed', answered);
+            $('#reference-column').hidden = !answered;
+            $('#recall-ratings').hidden = !answered;
+            $('#reveal-answer').hidden = answered;
+            $('#rate-good').textContent = `熟练写出 · ${Recall.intervals[active.stage]} 天后`;
+            if (study.active.revealed && !answered) revealAnswer();
+          } else {
+            shownCard = null;
+            visibleAnswer = null;
+            answerRequest++;
+            $('#draw-card').disabled = storageBroken || !queue.candidates.length || Boolean(study.active);
+            if (study.active && !template) {
+              $('#idle-title').textContent = '当前模板暂不可用';
+              $('#idle-message').textContent = '可以在下方卡组中移除这张卡，或稍后刷新页面重试。';
+            } else if (!study.cards.length) {
+              $('#idle-title').textContent = '从想记住的模板开始';
+              $('#idle-message').textContent = '先到模板库，把想练的模板加入卡组。';
+            } else if (queue.waitUntil !== null) {
+              $('#idle-title').textContent = '稍作停顿，再独立写一次';
+              $('#idle-message').textContent = `重练卡将在 ${Math.max(1, Math.ceil((queue.waitUntil - Date.now()) / 1000))} 秒后可抽取。你也可以暂时离开，进度已保存。`;
+            } else if (queue.candidates.length) {
+              $('#idle-title').textContent = studyFeedback || '准备好，抽一张卡';
+              $('#idle-message').textContent = queue.due.length
+                ? `还有 ${queue.due.length} 张卡待复习，完成后再学新卡。`
+                : `到期复习已完成，今天还可以学习 ${queue.newCount} 张新卡。`;
+            } else {
+              const nextDue = study.cards.filter((card) => card.due && card.due > Recall.day())
+                .map((card) => card.due).sort()[0];
+              $('#idle-title').textContent = '今天的练习已完成';
+              $('#idle-message').textContent = nextDue ? `下次复习：${nextDue}。进度已保存，可以安心结束。`
+                : '今天没有可抽取的卡片。可以调整新卡上限，或到模板库继续添加模板。';
+            }
+          }
+          const deckList = $('#deck-list');
+          deckList.replaceChildren();
+          if (!study.cards.length) {
+            const empty = document.createElement('li');
+            empty.className = 'study-hint';
+            empty.textContent = '卡组还是空的，先选几份想记住的模板吧。';
+            deckList.append(empty);
+          }
+          const templates = new Map(state.templates.map((item) => [item.id, item]));
+          for (const card of study.cards) {
+            const item = templates.get(card.id);
+            const row = document.createElement('li');
+            row.className = 'deck-row';
+            const text = document.createElement('div');
+            appendText(text, item?.description || card.id);
+            const dueLabel = card.due === null ? '尚未学习' : card.retryAt !== null ? '等待重练'
+              : card.due <= Recall.day() ? '已到期' : `下次复习 ${card.due}`;
+            appendText(text, `${card.id} · ${item ? dueLabel : '模板暂不可用，记录已保留'}`, 'study-hint');
+            row.append(text);
+            addButton(row, '移除', 'remove-card', card.id);
+            deckList.append(row);
+          }
+        }
+
+        function drawCard() {
+          const candidates = studyQueue().candidates;
+          if (study.active || !candidates.length) return;
+          const card = candidates[Math.floor(Math.random() * candidates.length)];
+          if (!saveStudy((next) => Recall.start(next, card.id))) return;
+          visibleAnswer = null;
+          studyFeedback = '';
+          renderStudy();
+          editor.focus();
+        }
+
+        async function revealAnswer() {
+          const id = study.active?.id;
+          const item = state.templates.find((template) => template.id === id);
+          if (!item || $('#reveal-answer').disabled) return;
+          const request = ++answerRequest;
+          const button = $('#reveal-answer');
+          button.disabled = true;
+          button.textContent = '正在加载参考代码…';
+          try {
+            const detail = await loadCode(item);
+            if (request !== answerRequest || study.active?.id !== id) return;
+            if (!study.active.revealed && !saveStudy((next) => {
+              next.cards.find((card) => card.id === id).draft = editor.value;
+              next.active.revealed = true;
+            })) return;
+            $('#reference-code').className = `language-${prismLanguage(detail.language)}`;
+            $('#reference-code').textContent = detail.content;
+            if (window.Prism) window.Prism.highlightElement($('#reference-code'));
+            visibleAnswer = id;
+            renderStudy();
+          } catch (error) {
+            studyError(`参考代码加载失败：${error.message}。你的默写已保留，可以重试。`);
+          } finally {
+            button.disabled = false;
+            button.textContent = '查看答案';
+          }
+        }
+
+        $('#library-tab').addEventListener('click', () => setStudyView(false));
+        $('#study-tab').addEventListener('click', () => setStudyView(true));
+        $('#choose-templates').addEventListener('click', () => { setStudyView(false); searchInput.focus(); });
+        $('#draw-card').addEventListener('click', drawCard);
+        $('#reveal-answer').addEventListener('click', revealAnswer);
+        $('#pause-study').addEventListener('click', () => {
+          if (!saveStudy((next) => { next.cards.find((card) => card.id === next.active.id).draft = editor.value; })) return;
+          setStudyView(false);
+          $('#study-tab').focus();
+        });
+        editor.addEventListener('input', () => {
+          if (study.active && !study.active.revealed) saveStudy((next) => {
+            next.cards.find((card) => card.id === next.active.id).draft = editor.value;
+          });
+        });
+        $('#recall-ratings').addEventListener('click', (event) => {
+          const button = event.target.closest('[data-rating]');
+          if (!button || visibleAnswer !== study.active?.id) return;
+          if (!saveStudy((next) => Recall.rate(next, button.dataset.rating))) return;
+          studyFeedback = '已记录，继续下一张';
+          renderStudy();
+          $('#draw-card').focus();
+        });
+        $('#new-limit').addEventListener('change', (event) => {
+          const value = event.target.valueAsNumber;
+          if (!Number.isInteger(value) || value < 0 || value > 100) {
+            event.target.value = study.newLimit;
+            showToast('请输入 0 到 100 之间的整数');
+            return;
+          }
+          saveStudy((next) => { next.newLimit = value; });
+          renderStudy();
+        });
+        $('#deck-list').addEventListener('click', (event) => {
+          const button = event.target.closest('[data-action="remove-card"]');
+          if (!button) return;
+          const id = button.dataset.id;
+          if (!window.confirm('移除这张卡及其复习进度？重新加入后将作为新卡学习。')) return;
+          if (saveStudy((next) => {
+            next.cards = next.cards.filter((card) => card.id !== id);
+            if (next.active?.id === id) next.active = null;
+          })) { render(); renderStudy(); }
+        });
+        $('#export-study').addEventListener('click', () => {
+          downloadText(storageBroken && storedStudy !== null ? storedStudy : JSON.stringify(study, null, 2),
+            `rbook-recall-${Recall.day()}.json`);
+        });
+        $('#import-study').addEventListener('click', () => $('#import-file').click());
+        $('#import-file').addEventListener('change', async (event) => {
+          const file = event.target.files[0];
+          event.target.value = '';
+          if (!file) return;
+          try {
+            if (file.size > 10 * 1024 * 1024) throw new Error('备份文件不能超过 10 MB');
+            const imported = Recall.validate(JSON.parse(await file.text()));
+            if (!window.confirm(`将导入 ${imported.cards.length} 张卡，替换当前卡组、草稿和复习进度。是否继续？`)) return;
+            if (saveStudy((next) => Object.assign(next, imported), { replace: true })) {
+              visibleAnswer = null;
+              answerRequest++;
+              render();
+              renderStudy();
+              showToast('备份已恢复');
+            }
+          } catch (error) { studyError(`导入失败：${error.message}`); }
+        });
+        window.addEventListener('storage', (event) => {
+          if (event.key !== Recall.key && event.key !== null) return;
+          readStudy();
+          visibleAnswer = null;
+          answerRequest++;
+          render();
+          renderStudy();
+        });
+        // Also refresh at midnight and when a delayed retry becomes ready.
+        let clockDay = Recall.day();
+        window.setInterval(() => {
+          const today = Recall.day();
+          if (!$('#study-panel').hidden && !study.active) {
+            const queue = studyQueue();
+            if (today !== clockDay || ($('#draw-card').disabled && queue.candidates.length && !storageBroken)) {
+              renderStudy();
+            } else if (queue.waitUntil !== null) {
+              $('#idle-message').textContent = `重练卡将在 ${Math.max(1, Math.ceil((queue.waitUntil - Date.now()) / 1000))} 秒后可抽取。你也可以暂时离开，进度已保存。`;
+            }
+          }
+          clockDay = today;
+        }, 1000);
+        readStudy();
+        renderStudy();
 
         searchInput.addEventListener('input', render);
         result.addEventListener('click', (event) => {

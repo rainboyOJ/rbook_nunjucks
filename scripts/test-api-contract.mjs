@@ -68,7 +68,7 @@ async function main() {
 
   const builtIndex = buildSearchIndex();
   assert.equal(builtIndex.stats.errors, 0, 'isolated search index should build cleanly');
-  assert.equal(builtIndex.version, 3);
+  assert.equal(builtIndex.version, 4);
   assert.equal(Object.hasOwn(builtIndex.stats, 'chunks'), false);
   assert.equal(Object.hasOwn(builtIndex, 'chunks'), false);
   assert.equal(Object.hasOwn(builtIndex, 'fuseIndex'), false);
@@ -85,7 +85,7 @@ async function main() {
 
   const app = await createApp({ logger: false, staticDir });
   const currentIndex = getIndexPayload();
-  assert.equal(currentIndex.version, 3, 'version 2 index should be rebuilt');
+  assert.equal(currentIndex.version, 4, 'version 2 index should be rebuilt');
   assert.equal(Object.hasOwn(currentIndex.stats, 'chunks'), false);
   assert.equal(Object.hasOwn(currentIndex, 'chunks'), false);
   assert.equal(Object.hasOwn(currentIndex, 'fuseIndex'), false);

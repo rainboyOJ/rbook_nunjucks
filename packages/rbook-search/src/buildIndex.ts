@@ -16,7 +16,7 @@ import { searchDir, searchIndexPath } from './paths.js';
 import type { BuildSearchIndexOptions, PageDocument } from './types.js';
 import type { CodeTemplateItem } from '@rbook/core';
 
-export const SEARCH_INDEX_VERSION = 3;
+export const SEARCH_INDEX_VERSION = 4;
 
 function asStringArray(value: unknown) {
   return Array.isArray(value)
@@ -36,6 +36,7 @@ function buildIndexPayload(
     path: item.path,
     url: `/code/${String(item.path || '').replace(/^\/?code\//, '')}`,
     description: item.description || '',
+    recall_prompt: item.recall_prompt || '',
     language: item.language || path.extname(item.path || '').replace(/^\./, '') || 'text',
     tags: asStringArray(item.tags),
     complexity: item.complexity || '',
