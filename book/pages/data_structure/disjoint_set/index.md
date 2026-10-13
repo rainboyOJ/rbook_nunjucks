@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "并查集", "DSU"]
 categories: ["数据结构"]
-code_template: [dsu, dsu-short, dsu-py, dsu-bipartite, dsu-bipartite-short, dsu-bipartite-py]
+code_template: [dsu, dsu-short, dsu-py, dsu-set-py, dsu-bipartite, dsu-bipartite-short, dsu-bipartite-py]
 ---
 
 [[TOC]]
@@ -123,6 +123,12 @@ $$
 ::: tab Python
 
 @include-code(/code/data-struture/dsu.py, python)
+:::
+
+::: tab Python set 版
+
+不用并查集的替代写法：`set` 小并大（启发式合并），判同 $O(1)$、合并总计 $O(n \log n)$，还能直接枚举集合成员。只适合"合并 + 判同"；维护元素间关系（带权/种类并查集）或要撤销时不行。
+@include-code(/code/data-struture/dsu_set.py, python)
 :::
 ::::
 种类并查集：

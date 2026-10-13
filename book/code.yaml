@@ -441,6 +441,12 @@ codes:
     language: cpp
     tags: [数据结构]
 
+  - id: dsu-set-py
+    path: data-struture/dsu_set.py
+    description: dsu set python | 并查集（Python set 小并大替代版）
+    language: py
+    tags: [数据结构]
+
   - id: dsu-bipartite
     path: data-struture/dsu_bipartite.cpp
     description: dsu bipartite | 并查集判二分图
