@@ -131,7 +131,7 @@ Hierholzer 始终维护一个不变量：已经标记使用的边不会再被使
 
 ::: tab Python
 
-C++ 版逻辑在 `main` 里，Python 版抽成自由函数。
+C++ 版抽成 `EulerPathUndirected` 结构体（建图 / 判定 / 构造 / 入口分层），Python 版抽成自由函数。
 @include-code(/code/graph/euler_path_undirected.py, python)
 :::
 ::::
@@ -144,7 +144,7 @@ C++ 版逻辑在 `main` 里，Python 版抽成自由函数。
 
 ::: tab Python
 
-C++ 版逻辑在 `main` 里，Python 版抽成自由函数。
+C++ 版抽成 `EulerPathDirected` 结构体（建图 / 判定 / 构造 / 入口分层），Python 版抽成自由函数。
 @include-code(/code/graph/euler_path_directed.py, python)
 :::
 ::::

@@ -1,16 +1,185 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Directed Eulerian path/circuit by Hierholzer's algorithm.
-// Input:
+// 有向图欧拉路 / 欧拉回路（Hierholzer 算法）
+// 输入：
 //   n m
-//   m lines: u v, meaning u -> v
-// Output:
-//   one Eulerian vertex sequence, or NO if it does not exist.
+//   m 行 u v，表示 u -> v
+// 输出：
+//   一条欧拉路（或欧拉回路）的顶点序列，不存在时输出 NO
+//
+// 代码分层：
+//   1. 建图层：init / add_edge
+//   2. 判定层：connected（底图连通性）+ check_degree（出入度条件）
+//   3. 构造层：hierholzer（算法本体，只管在有解时走出路径）
+//   4. 入口层：solve（把判定和串起来）+ main（输入输出）
+//
+// 存在性条件（两个都要满足）：
+//   1. 底图（忽略方向后）所有非孤立点连通；
+//   2. 欧拉回路：每个点出度 == 入度；
+//      欧拉路：恰好一个点出度 = 入度 + 1（起点），
+//              恰好一个点入度 = 出度 + 1（终点），其余点出入度相等。
+// 时间复杂度 O(n + m)。
 
-struct Edge {
-    int to;
-    int id;
+struct EulerPathDirected {
+    struct Edge {
+        int to;
+        int id; // 边的编号，用来标记这条边是否已经走过（重边靠编号区分）
+    };
+
+    int n = 0;
+    int edge_cnt = 0; // 已加入的边数
+    vector<vector<Edge>> g;
+    vector<int> indeg, outdeg;
+
+    void init(int _n) {
+        n = _n;
+        edge_cnt = 0;
+        g.assign(n + 1, vector<Edge>());
+        indeg.assign(n + 1, 0);
+        outdeg.assign(n + 1, 0);
+    }
+
+    // 加一条有向边 u -> v
+    void add_edge(int u, int v) {
+        ++edge_cnt;
+        g[u].push_back({v, edge_cnt});
+        ++outdeg[u];
+        ++indeg[v];
+    }
+
+    // ---- 判定层 ----
+
+    // 条件 1：底图（忽略方向）中所有非孤立点是否连通。
+    // 孤立点不参与判断：它们既不影响欧拉路的存在性，也不会出现在路径里。
+    bool connected() {
+        // 找任意一个「有边相连」的点作为 DFS 起点
+        int first = -1;
+        for (int i = 1; i <= n; ++i) {
+            if (indeg[i] + outdeg[i] > 0) {
+                first = i;
+                break;
+            }
+        }
+        // 边界：图中没有任何边，视为连通（此时欧拉路是空序列）
+        if (first == -1) return true;
+
+        // 底图邻接表，只用来判连通，不参与路径构造
+        vector<vector<int>> weak(n + 1);
+        for (int u = 1; u <= n; ++u) {
+            for (const auto &e : g[u]) {
+                weak[u].push_back(e.to);
+                weak[e.to].push_back(u);
+            }
+        }
+
+        // 迭代 DFS 检查连通性（递归写法在链状图上可能爆栈）
+        vector<char> vis(n + 1, 0);
+        stack<int> st;
+        st.push(first);
+        vis[first] = 1;
+        while (!st.empty()) {
+            int u = st.top();
+            st.pop();
+            for (int v : weak[u]) {
+                if (!vis[v]) {
+                    vis[v] = 1;
+                    st.push(v);
+                }
+            }
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            if (indeg[i] + outdeg[i] > 0 && !vis[i]) return false;
+        }
+        return true;
+    }
+
+    // 条件 2：统计度数特殊的点，通过判定时 start 是合法起点。
+    // 出度 = 入度 + 1 的点只可能是起点，入度 = 出度 + 1 的点只可能是终点，
+    // 其余点必须出入度相等，否则无解。
+    bool check_degree(int &start) {
+        start = -1;
+        for (int i = 1; i <= n; ++i) {
+            if (indeg[i] + outdeg[i] > 0) {
+                start = i; // 回路情形的默认起点
+                break;
+            }
+        }
+
+        int start_count = 0, end_count = 0;
+        for (int i = 1; i <= n; ++i) {
+            if (outdeg[i] == indeg[i] + 1) {
+                ++start_count;
+                start = i; // 唯一的起点候选
+            } else if (indeg[i] == outdeg[i] + 1) {
+                ++end_count;
+            } else if (indeg[i] != outdeg[i]) {
+                return false;
+            }
+        }
+
+        // 合法情况只有两种：欧拉路（1 个起点 + 1 个终点）或欧拉回路（全部平衡）
+        bool has_path = (start_count == 1 && end_count == 1);
+        bool has_circuit = (start_count == 0 && end_count == 0);
+        return has_path || has_circuit;
+    }
+
+    // ---- 构造层 ----
+
+    // Hierholzer 算法本体：从 start 出发走出一条用完所有边的路径。
+    // 前提：connected() 与 check_degree() 都已通过。
+    // 返回顶点序列，正常时长度为边数 + 1。
+    vector<int> hierholzer(int start) {
+        vector<char> used(edge_cnt + 1, 0); // used[id]：第 id 条边是否已走
+        // iter[u]：u 的「当前弧」，指向第一条还没走过的出边。
+        // 走过的边不再扫描，保证每条边只被处理一次，总复杂度 O(n + m)。
+        // 易错点：不要每次从 g[u][0] 重新扫，否则退化到 O(m^2)。
+        vector<int> iter(n + 1, 0), stack_path, path;
+        stack_path.push_back(start);
+
+        while (!stack_path.empty()) {
+            int u = stack_path.back();
+            // 跳过已经走过的出边（重边可能出现连续多条已用边）
+            while (iter[u] < (int)g[u].size() && used[g[u][iter[u]].id]) {
+                ++iter[u];
+            }
+
+            if (iter[u] == (int)g[u].size()) {
+                // u 的出边走完了：u 是当前这条「死胡同」的端点，
+                // 此时才把 u 记入 path（后序收集，最终 reverse 后才是正序）。
+                path.push_back(u);
+                stack_path.pop_back();
+            } else {
+                Edge e = g[u][iter[u]++]; // 取走这条出边
+                used[e.id] = 1;
+                stack_path.push_back(e.to);
+            }
+        }
+
+        // path 是「回溯顺序」收集的，reverse 后才是从起点到终点的欧拉路。
+        reverse(path.begin(), path.end());
+        return path;
+    }
+
+    // ---- 入口层 ----
+
+    // 总入口：存在欧拉路/回路时把顶点序列写进 path 并返回 true。
+    // 图中没有边时 path 是空序列，也视为有解。
+    bool solve(vector<int> &path) {
+        path.clear();
+        int start = -1;
+        if (!connected() || !check_degree(start)) return false;
+        if (edge_cnt == 0) return true; // 边界：没有任何边，欧拉路是空序列
+
+        path = hierholzer(start);
+        // 理论上前面的判定已经保证有解，这里再兜底一次防御非法输入。
+        if ((int)path.size() != edge_cnt + 1) {
+            path.clear();
+            return false;
+        }
+        return true;
+    }
 };
 
 int main() {
@@ -20,107 +189,23 @@ int main() {
     int n, m;
     if (!(cin >> n >> m)) return 0;
 
-    vector<vector<Edge>> g(n + 1);
-    vector<vector<int>> weak(n + 1);
-    vector<int> indeg(n + 1, 0), outdeg(n + 1, 0);
-
-    for (int id = 1; id <= m; ++id) {
+    EulerPathDirected solver;
+    solver.init(n);
+    for (int i = 0; i < m; ++i) {
         int u, v;
         cin >> u >> v;
-        g[u].push_back({v, id});
-        weak[u].push_back(v);
-        weak[v].push_back(u);
-        ++outdeg[u];
-        ++indeg[v];
+        solver.add_edge(u, v);
     }
 
-    int first = -1;
-    for (int i = 1; i <= n; ++i) {
-        if (indeg[i] + outdeg[i] > 0) {
-            first = i;
-            break;
-        }
-    }
-
-    if (first == -1) {
-        cout << '\n';
-        return 0;
-    }
-
-    vector<char> vis(n + 1, 0);
-    stack<int> st;
-    st.push(first);
-    vis[first] = 1;
-    while (!st.empty()) {
-        int u = st.top();
-        st.pop();
-        for (int v : weak[u]) {
-            if (!vis[v]) {
-                vis[v] = 1;
-                st.push(v);
-            }
-        }
-    }
-
-    for (int i = 1; i <= n; ++i) {
-        if (indeg[i] + outdeg[i] > 0 && !vis[i]) {
-            cout << "NO\n";
-            return 0;
-        }
-    }
-
-    int start_count = 0, end_count = 0;
-    int start = first;
-    for (int i = 1; i <= n; ++i) {
-        if (outdeg[i] == indeg[i] + 1) {
-            ++start_count;
-            start = i;
-        } else if (indeg[i] == outdeg[i] + 1) {
-            ++end_count;
-        } else if (indeg[i] != outdeg[i]) {
-            cout << "NO\n";
-            return 0;
-        }
-    }
-
-    bool has_path = (start_count == 1 && end_count == 1);
-    bool has_circuit = (start_count == 0 && end_count == 0);
-    if (!has_path && !has_circuit) {
+    vector<int> path;
+    if (!solver.solve(path)) {
         cout << "NO\n";
         return 0;
     }
-
-    vector<char> used(m + 1, 0);
-    vector<int> iter(n + 1, 0), stack_path, path;
-    stack_path.push_back(start);
-
-    while (!stack_path.empty()) {
-        int u = stack_path.back();
-        while (iter[u] < (int)g[u].size() && used[g[u][iter[u]].id]) {
-            ++iter[u];
-        }
-
-        if (iter[u] == (int)g[u].size()) {
-            path.push_back(u);
-            stack_path.pop_back();
-        } else {
-            Edge e = g[u][iter[u]++];
-            used[e.id] = 1;
-            stack_path.push_back(e.to);
-        }
-    }
-
-    if ((int)path.size() != m + 1) {
-        cout << "NO\n";
-        return 0;
-    }
-
-    reverse(path.begin(), path.end());
     for (int i = 0; i < (int)path.size(); ++i) {
         if (i) cout << ' ';
         cout << path[i];
     }
     cout << '\n';
-
     return 0;
 }
