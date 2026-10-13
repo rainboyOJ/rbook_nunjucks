@@ -137,6 +137,12 @@ Hierholzer 始终维护一个不变量：已经标记使用的边不会再被使
 @include-code(/code/graph/euler_path_undirected.cpp, cpp)
 :::
 
+::: tab C++ 竞赛版
+
+不用 `struct` 的精简写法：省去显式连通性检查，靠 `path` 长度兜底判定，适合比赛现场手写。
+@include-code(/code/graph/euler_path_undirected_short.cpp, cpp)
+:::
+
 ::: tab Python
 
 C++ 版抽成 `EulerPathUndirected` 结构体（建图 / 判定 / 构造 / 入口分层），Python 版抽成自由函数。
@@ -148,6 +154,12 @@ C++ 版抽成 `EulerPathUndirected` 结构体（建图 / 判定 / 构造 / 入�
 :::: code-tabs
 ::: tab C++
 @include-code(/code/graph/euler_path_directed.cpp, cpp)
+:::
+
+::: tab C++ 竞赛版
+
+不用 `struct` 的精简写法：省去显式弱连通检查，靠 `path` 长度兜底判定，适合比赛现场手写。
+@include-code(/code/graph/euler_path_directed_short.cpp, cpp)
 :::
 
 ::: tab Python

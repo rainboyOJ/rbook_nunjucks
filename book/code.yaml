@@ -963,6 +963,12 @@ codes:
     language: py
     tags: [图论, 数学与数论]
 
+  - id: euler-path-directed-short
+    path: graph/euler_path_directed_short.cpp
+    description: euler path directed short | 有向图欧拉路径（竞赛精简版）
+    language: cpp
+    tags: [图论, 数学与数论]
+
   - id: euler-path-undirected
     path: graph/euler_path_undirected.cpp
     description: euler path undirected | 无向图欧拉路径
@@ -973,6 +979,12 @@ codes:
     path: graph/euler_path_undirected.py
     description: euler path undirected python | 无向图欧拉路径（Python 版）
     language: py
+    tags: [图论, 数学与数论]
+
+  - id: euler-path-undirected-short
+    path: graph/euler_path_undirected_short.cpp
+    description: euler path undirected short | 无向图欧拉路径（竞赛精简版）
+    language: cpp
     tags: [图论, 数学与数论]
 
   - id: floyed
