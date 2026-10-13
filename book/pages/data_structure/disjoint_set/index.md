@@ -146,7 +146,7 @@ $$
 
 ::: tab Python
 
-Python 版是模块级函数：`init` / `find` / `unite`，单文件即可复制使用。
+Python 版抽成 `DSU` 类（`init` 即构造），单文件即可复制使用。
 @include-code(/code/data-struture/dsu_bipartite.py, python)
 :::
 ::::
