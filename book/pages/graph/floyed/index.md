@@ -107,6 +107,12 @@ um vm wm
 @include-code(/code/graph/floyed.cpp, cpp)
 :::
 
+::: tab C++ 竞赛版
+
+全局数组的精简写法：中转点 `k` 在最外层，不可达就 `continue` 防溢出，适合比赛现场手写。
+@include-code(/code/graph/floyed_short.cpp, cpp)
+:::
+
 ::: tab Python
 
 C++ 版逻辑在 `main` 里，Python 版抽成 `floyd` 函数。
