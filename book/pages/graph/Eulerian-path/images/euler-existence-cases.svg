@@ -1,0 +1,64 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="720"
+  height="300"
+  viewBox="0 0 720 300"
+  role="img"
+  aria-labelledby="existence-title existence-desc"
+>
+  <title id="existence-title">无向图欧拉路的奇度点判定</title>
+  <desc id="existence-desc">三个小图分别对应奇度点 0 个、2 个、4 个：0 个时存在欧拉回路，2 个时存在欧拉路，4 个时无解；奇度顶点用橙色描边并标注奇字。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .state { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--odd { fill: #fff7ed; stroke: #d97706; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--odd { fill: #d97706; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--yes { fill: #059669; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--no { fill: #dc2626; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+  </style>
+  <rect class="canvas" width="720" height="300" />
+  <g id="case-even">
+    <rect class="state" x="36" y="40" width="200" height="220" rx="8" />
+    <text class="label" x="136" y="76">奇度点 0 个</text>
+    <g id="case-even-graph">
+      <line class="edge" x1="136" y1="120" x2="96" y2="186" />
+      <line class="edge" x1="96" y1="186" x2="176" y2="186" />
+      <line class="edge" x1="176" y1="186" x2="136" y2="120" />
+      <circle class="node" cx="136" cy="120" r="22" />
+      <circle class="node" cx="96" cy="186" r="22" />
+      <circle class="node" cx="176" cy="186" r="22" />
+    </g>
+    <text class="label--yes" x="136" y="228">欧拉回路</text>
+  </g>
+  <g id="case-two-odd">
+    <rect class="state" x="260" y="40" width="200" height="220" rx="8" />
+    <text class="label" x="360" y="76">奇度点 2 个</text>
+    <g id="case-two-odd-graph">
+      <line class="edge" x1="298" y1="152" x2="360" y2="152" />
+      <line class="edge" x1="360" y1="152" x2="422" y2="152" />
+      <circle class="node--odd" cx="298" cy="152" r="22" />
+      <circle class="node" cx="360" cy="152" r="22" />
+      <circle class="node--odd" cx="422" cy="152" r="22" />
+      <text class="label--odd" x="298" y="116">奇</text>
+      <text class="label--odd" x="422" y="116">奇</text>
+    </g>
+    <text class="label--yes" x="360" y="228">欧拉路</text>
+  </g>
+  <g id="case-four-odd">
+    <rect class="state" x="484" y="40" width="200" height="220" rx="8" />
+    <text class="label" x="584" y="76">奇度点 4 个</text>
+    <g id="case-four-odd-graph">
+      <line class="edge" x1="584" y1="152" x2="536" y2="112" />
+      <line class="edge" x1="584" y1="152" x2="632" y2="112" />
+      <line class="edge" x1="584" y1="152" x2="584" y2="208" />
+      <circle class="node--odd" cx="584" cy="152" r="22" />
+      <circle class="node--odd" cx="536" cy="112" r="22" />
+      <circle class="node--odd" cx="632" cy="112" r="22" />
+      <circle class="node--odd" cx="584" cy="208" r="22" />
+    </g>
+    <text class="label--no" x="584" y="228">无解</text>
+  </g>
+</svg>

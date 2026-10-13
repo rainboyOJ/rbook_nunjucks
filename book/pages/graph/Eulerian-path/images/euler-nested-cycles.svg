@@ -1,0 +1,109 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="640"
+  height="400"
+  viewBox="0 0 640 400"
+  role="img"
+  aria-labelledby="nested-title nested-desc"
+>
+  <title id="nested-title">Hierholzer 的小环与后序收集</title>
+  <desc id="nested-desc">从顶点 1 走到 2 后先进入小环 2-3-4-2 走完，再沿 2-5 离开；回溯收集顺序为 5 2 4 3 2 1，反转后得到欧拉路 1 2 3 4 2 5。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge--main { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .edge--loop { fill: none; stroke: #d97706; stroke-width: 3; stroke-linecap: round; }
+    .edge--plain { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .badge { fill: #ffffff; stroke-width: 2; }
+    .badge--main { stroke: #2563eb; }
+    .badge--loop { stroke: #d97706; }
+    .badge--plain { stroke: #94a3b8; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--secondary { fill: #64748b; font: 400 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--main { fill: #2563eb; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--loop { fill: #d97706; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .num { font: 600 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .num--main { fill: #2563eb; }
+    .num--loop { fill: #d97706; }
+    .num--plain { fill: #64748b; }
+  </style>
+  <defs>
+    <marker id="arrow-main" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-loop" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#d97706" />
+    </marker>
+    <marker id="arrow-plain" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#94a3b8" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="640" height="400" />
+  <g id="graph">
+    <g id="walk-edges">
+      <line class="edge--main" x1="136" y1="190" x2="238" y2="190" marker-end="url(#arrow-main)" />
+      <line class="edge--loop" x1="287" y1="167" x2="332" y2="104" marker-end="url(#arrow-loop)" />
+      <line class="edge--loop" x1="324" y1="80" x2="218" y2="80" marker-end="url(#arrow-loop)" />
+      <line class="edge--loop" x1="207" y1="102" x2="251" y2="165" marker-end="url(#arrow-loop)" />
+      <line class="edge--main" x1="302" y1="190" x2="422" y2="190" marker-end="url(#arrow-main)" />
+    </g>
+    <g id="walk-steps">
+      <circle class="badge badge--main" cx="186" cy="190" r="13" />
+      <text class="num num--main" x="186" y="190">1</text>
+      <circle class="badge badge--loop" cx="318" cy="132" r="13" />
+      <text class="num num--loop" x="318" y="132">2</text>
+      <circle class="badge badge--loop" cx="270" cy="80" r="13" />
+      <text class="num num--loop" x="270" y="80">3</text>
+      <circle class="badge badge--loop" cx="229" cy="133" r="13" />
+      <text class="num num--loop" x="229" y="133">4</text>
+      <circle class="badge badge--main" cx="359" cy="190" r="13" />
+      <text class="num num--main" x="359" y="190">5</text>
+    </g>
+    <g id="graph-nodes">
+      <circle class="node" cx="110" cy="190" r="22" />
+      <circle class="node--focus" cx="270" cy="190" r="26" />
+      <circle class="node" cx="350" cy="80" r="22" />
+      <circle class="node" cx="190" cy="80" r="22" />
+      <circle class="node" cx="450" cy="190" r="22" />
+      <text class="label" x="110" y="190">1</text>
+      <text class="label" x="270" y="190">2</text>
+      <text class="label" x="350" y="80">3</text>
+      <text class="label" x="190" y="80">4</text>
+      <text class="label" x="450" y="190">5</text>
+    </g>
+    <g id="graph-notes">
+      <text class="label--loop" x="270" y="42">小环先走完</text>
+      <text class="label--main" x="359" y="232">主路径</text>
+    </g>
+  </g>
+  <g id="answer-strip">
+    <text class="label--secondary" x="62" y="345">收集顺序</text>
+    <circle class="badge badge--plain" cx="118" cy="345" r="17" />
+    <text class="num num--plain" x="118" y="345">5</text>
+    <circle class="badge badge--plain" cx="154" cy="345" r="17" />
+    <text class="num num--plain" x="154" y="345">2</text>
+    <circle class="badge badge--plain" cx="190" cy="345" r="17" />
+    <text class="num num--plain" x="190" y="345">4</text>
+    <circle class="badge badge--plain" cx="226" cy="345" r="17" />
+    <text class="num num--plain" x="226" y="345">3</text>
+    <circle class="badge badge--plain" cx="262" cy="345" r="17" />
+    <text class="num num--plain" x="262" y="345">2</text>
+    <circle class="badge badge--plain" cx="298" cy="345" r="17" />
+    <text class="num num--plain" x="298" y="345">1</text>
+    <line class="edge--plain" x1="322" y1="345" x2="358" y2="345" marker-end="url(#arrow-plain)" />
+    <text class="label--secondary" x="340" y="316">反转</text>
+    <circle class="badge badge--main" cx="386" cy="345" r="17" />
+    <text class="num num--main" x="386" y="345">1</text>
+    <circle class="badge badge--main" cx="422" cy="345" r="17" />
+    <text class="num num--main" x="422" y="345">2</text>
+    <circle class="badge badge--main" cx="458" cy="345" r="17" />
+    <text class="num num--main" x="458" y="345">3</text>
+    <circle class="badge badge--main" cx="494" cy="345" r="17" />
+    <text class="num num--main" x="494" y="345">4</text>
+    <circle class="badge badge--main" cx="530" cy="345" r="17" />
+    <text class="num num--main" x="530" y="345">2</text>
+    <circle class="badge badge--main" cx="566" cy="345" r="17" />
+    <text class="num num--main" x="566" y="345">5</text>
+  </g>
+</svg>

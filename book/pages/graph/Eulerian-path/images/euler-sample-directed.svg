@@ -1,0 +1,77 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="640"
+  height="380"
+  viewBox="0 0 640 380"
+  role="img"
+  aria-labelledby="sample-directed-title sample-directed-desc"
+>
+  <title id="sample-directed-title">有向图测试用例的欧拉回路走法</title>
+  <desc id="sample-directed-desc">测试用例的五顶点六边有向图，按编号 1 到 6 的箭头从顶点 1 出发回到顶点 1：1-2-3 为主路径，3-4-5-3 为先走完的小环。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge--main { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .edge--loop { fill: none; stroke: #d97706; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .badge { fill: #ffffff; stroke-width: 2; }
+    .badge--main { stroke: #2563eb; }
+    .badge--loop { stroke: #d97706; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--main { fill: #2563eb; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--loop { fill: #d97706; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .num { font: 600 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .num--main { fill: #2563eb; }
+    .num--loop { fill: #d97706; }
+  </style>
+  <defs>
+    <marker id="arrow-main" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-loop" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#d97706" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="640" height="380" />
+  <g id="graph">
+    <g id="walk-edges">
+      <line class="edge--main" x1="120" y1="138" x2="155" y2="272" marker-end="url(#arrow-main)" />
+      <line class="edge--main" x1="194" y1="285" x2="293" y2="222" marker-end="url(#arrow-main)" />
+      <line class="edge--loop" x1="347" y1="222" x2="446" y2="285" marker-end="url(#arrow-loop)" />
+      <line class="edge--loop" x1="481" y1="272" x2="521" y2="137" marker-end="url(#arrow-loop)" />
+      <line class="edge--loop" x1="505" y1="121" x2="350" y2="191" marker-end="url(#arrow-loop)" />
+      <line class="edge--main" x1="290" y1="191" x2="136" y2="105" marker-end="url(#arrow-main)" />
+    </g>
+    <g id="walk-steps">
+      <circle class="badge badge--main" cx="140" cy="205" r="13" />
+      <text class="num num--main" x="140" y="205">1</text>
+      <circle class="badge badge--main" cx="243" cy="254" r="13" />
+      <text class="num num--main" x="243" y="254">2</text>
+      <circle class="badge badge--loop" cx="397" cy="254" r="13" />
+      <text class="num num--loop" x="397" y="254">3</text>
+      <circle class="badge badge--loop" cx="500" cy="205" r="13" />
+      <text class="num num--loop" x="500" y="205">4</text>
+      <circle class="badge badge--loop" cx="427" cy="157" r="13" />
+      <text class="num num--loop" x="427" y="157">5</text>
+      <circle class="badge badge--main" cx="213" cy="147" r="13" />
+      <text class="num num--main" x="213" y="147">6</text>
+    </g>
+    <g id="graph-nodes">
+      <circle class="node--focus" cx="110" cy="110" r="22" />
+      <circle class="node" cx="170" cy="300" r="22" />
+      <circle class="node--focus" cx="320" cy="205" r="26" />
+      <circle class="node" cx="470" cy="300" r="22" />
+      <circle class="node" cx="530" cy="110" r="22" />
+      <text class="label" x="110" y="110">1</text>
+      <text class="label" x="170" y="300">2</text>
+      <text class="label" x="320" y="205">3</text>
+      <text class="label" x="470" y="300">4</text>
+      <text class="label" x="530" y="110">5</text>
+    </g>
+    <g id="graph-notes">
+      <text class="label--main" x="110" y="60">起点=终点</text>
+      <text class="label--main" x="215" y="205">主路径</text>
+      <text class="label--loop" x="440" y="205">小环先走完</text>
+    </g>
+  </g>
+</svg>
