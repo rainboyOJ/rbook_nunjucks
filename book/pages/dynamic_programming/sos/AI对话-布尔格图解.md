@@ -1,6 +1,6 @@
 ---
 id: dynamic-programming-sos-3
-title: 草稿3
+title: 'AI 对话：布尔格图解'
 description: '你从新来教会我SOS DP, 使用 mermaid 穿插'
 tags:
   - 动态规划

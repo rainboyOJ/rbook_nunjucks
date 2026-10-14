@@ -7,6 +7,12 @@ toc: true
 tags: ["动态规划", "状态压缩", "SOS DP"]
 categories: ["动态规划"]
 code_template: [sos-subset-sum, sos-subset-sum-py, sos-superset-sum, sos-superset-sum-py]
+supplements:
+  - sos-dp-cf449d
+  - dynamic-programming-sos-1
+  - dynamic-programming-sos-3
+  - dynamic-programming-sos-gemini
+  - sos-dp-gemini-chat
 ---
 
 [[TOC]]
@@ -283,7 +289,7 @@ SOS DP 的本质是在所有二进制集合上批量统计“子集贡献”或�
 
 ### 2. Codeforces 449D
 
-统计若干数中按位与为 `0` 的子集数量。核心是用 SOS DP 统计每个 mask 的超集出现次数。
+统计若干数中按位与为 `0` 的子集数量。核心是用 SOS DP 统计每个 mask 的超集出现次数。从"恰好为 0"到容斥、再到超集求和的完整建模推导见：[CF449D 容斥推导](./CF449D容斥推导.md)。
 
 ### 3. Codeforces 383E
 
@@ -291,5 +297,5 @@ SOS DP 的本质是在所有二进制集合上批量统计“子集贡献”或�
 
 ## 参考
 
-- 本目录旧草稿：`草稿1.md`、`草稿3.md`、`草稿gemini.md`
+- 本目录 AI 对话整理：[子集求和入门](./AI对话-子集求和入门.md)、[布尔格图解](./AI对话-布尔格图解.md)、[超立方体视角](./AI对话-超立方体视角.md)、[gemini整体对话](./gemini整体对话.md)
 - 前置章节：`dynamic_programming/binary_state/index.md`

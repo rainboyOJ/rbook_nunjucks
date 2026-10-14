@@ -1,6 +1,6 @@
 ---
 id: dynamic-programming-sos-gemini
-title: 草稿gemini
+title: 'AI 对话：超立方体视角'
 description: 既然你懂离散数学，我们可以把 N 个比特看作 N 维空间（Hypercube，超立方体）。
 tags:
   - 动态规划

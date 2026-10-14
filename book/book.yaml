@@ -122,6 +122,11 @@ glob:
   - dynamic_programming/number_pyramid/index.md
   - dynamic_programming/number_pyramid/problem.md
   - dynamic_programming/slope/index.md
+  - dynamic_programming/sos/AI对话-子集求和入门.md
+  - dynamic_programming/sos/AI对话-布尔格图解.md
+  - dynamic_programming/sos/AI对话-超立方体视角.md
+  - dynamic_programming/sos/CF449D容斥推导.md
+  - dynamic_programming/sos/gemini整体对话.md
   - dynamic_programming/sparse_table/index.md
   - dynamic_programming/sparse_table/problem.md
   - graph/bellman-ford/index.md

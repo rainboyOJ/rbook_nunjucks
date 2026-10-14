@@ -1,6 +1,6 @@
 ---
 id: dynamic-programming-sos-1
-title: 草稿1
+title: 'AI 对话：子集求和入门'
 description: '- 给定一个集合的权重，查询任意子集的所有子集的总权重（如 CF 165E）。'
 tags:
   - 动态规划
