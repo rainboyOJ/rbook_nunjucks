@@ -11,6 +11,8 @@ prerequisites: [bw-two-color]
 supplements:
   - graph-hungarian-vis
   - graph-hungarian-dfs
+  - graph-hungarian-loop-invariant
+  - graph-hungarian-qa
 ---
 
 [[TOC]]
