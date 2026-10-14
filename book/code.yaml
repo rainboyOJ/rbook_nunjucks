@@ -887,6 +887,12 @@ codes:
     language: py
     tags: [图论]
 
+  - id: bw-color-short-py
+    path: graph/bw_color_short.py
+    description: bw color short python | 二分图染色判定（Python 竞赛精简版）
+    language: py
+    tags: [图论]
+
   - id: connected-components
     path: graph/connected_components.cpp
     description: connected components | 连通分量
