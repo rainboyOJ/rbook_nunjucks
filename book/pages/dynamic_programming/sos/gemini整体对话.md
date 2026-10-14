@@ -312,7 +312,7 @@ $$
 
 ```mermaid
 graph TD
-    subgraph 冗余计算示例 (N=3)
+    subgraph example["冗余计算示例 (N=3)"]
     111 --> 110
     111 --> 101
     111 --> 011
@@ -1410,9 +1410,9 @@ $$
 
 ```mermaid
 graph LR
-    A["子集和 (Subset)"] --> B["mask & (1<<i) 为真"]
+    A["子集和 (Subset)"] --> B["mask & 2^i 为真"]
     B --> C["从 mask ^ 2^i 转移到 mask"]
-    D["超集和 (Superset)"] --> E["mask & (1<<i) 为假"]
+    D["超集和 (Superset)"] --> E["mask & 2^i 为假"]
     E --> F["从 mask ^ 2^i 转移到 mask"]
     
     style F fill:#f96,stroke:#333,stroke-width:2px
