@@ -274,6 +274,11 @@
 }
 
 .reading-page .markdown-body > pre.mermaid {
+  /* mermaid 主题（neutral）是深色文字配浅色节点，固定浅色底保证明暗模式下都可读；
+     SVG 自身背景透明，这里由容器提供底色。 */
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: #ffffff;
   text-align: center;
 }
 
