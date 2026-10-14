@@ -7,6 +7,10 @@ toc: true
 tags: ["图论", "二分图", "匹配"]
 categories: ["图论"]
 code_template: [hungarian, hungarian-py]
+prerequisites: [bw-two-color]
+supplements:
+  - graph-hungarian-vis
+  - graph-hungarian-dfs
 ---
 
 [[TOC]]
@@ -41,7 +45,7 @@ code_template: [hungarian, hungarian-py]
 
 这条“重新安排以后多坐下一个人”的链，就是增广路。
 
-`vis[v]` 的含义也要按这个直觉理解：在一次 `dfs(u)` 的协商过程中，右部点 $v$ 只需要问一次。问过一次仍然无法让这轮协商成功，再问只会重复同一段递归。
+`vis[v]` 的含义也要按这个直觉理解：在一次 `dfs(u)` 的协商过程中，右部点 $v$ 只需要问一次。问过一次仍然无法让这轮协商成功，再问只会重复同一段递归。没有 `vis` 时会发生什么，图解演示见：[没有 vis 会怎样](./vis的作用.md)。
 
 ## 算法步骤
 
@@ -60,6 +64,8 @@ code_template: [hungarian, hungarian-py]
 !!! note 为什么每轮都要清空 vis
 `vis` 不是全局的“这个右部点以后都不能碰”，而是当前左部点搜索增广路时的防重复标记。下一名左部点开始搜索时，之前问不动的右部点可能因为匹配状态已经变化而重新有用，所以必须清空。
 !!!
+
+想拿着具体数据逐步走一遍 `dfs` 的递归与回溯，见：[通过数据理解 dfs 过程](./通过数据理解dfs过程.md)。
 
 ## 算法证明
 
