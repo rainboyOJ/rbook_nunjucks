@@ -326,7 +326,7 @@ for (int i = (int)order.size() - 1; i >= 1; i--) {
 $$
 zc\text{ 是 }xc\text{ 的真后缀}
 \Rightarrow |z|<|x|
-\Rightarrow z\text{ 是 }x\text{ 的真后缀}。
+\Rightarrow z\text{ 是 }x\text{ 的真后缀}\text{。}
 $$
 
 又因为 $zc$ 是模式串前缀，去掉末尾字符后的 $z$ 也在 Trie 中。于是所有候选，恰好来自 `fail[u]` 及其 fail 链上那些能够接上 $c$ 的状态。
@@ -518,7 +518,7 @@ AC 自动机把“文本末尾还保留哪些匹配可能”压缩成一个状�
 **核心建模：** 设 $f[i]$ 表示前 $i$ 个字符能否完整切分，$f[0]=\text{true}$。若当前位置 $i$ 命中一个长度为 $\ell$ 的词，就有：
 
 $$
-f[i]\leftarrow f[i]\lor f[i-\ell]。
+f[i]\leftarrow f[i]\lor f[i-\ell]\text{。}
 $$
 
 自动机负责找出“哪些词在这里结束”，DP 负责检查这些词之前的部分能否切分。不能仅凭当前位置命中了某个词，就认定整个前缀可识别；也不能只检查最长词尾。
@@ -532,7 +532,7 @@ $$
 **核心建模：** 把禁用串建成自动机，在 BFS 时传播：
 
 $$
-bad[u]=(end[u]>0)\lor bad[fail[u]]。
+bad[u]=(end[u]>0)\lor bad[fail[u]]\text{。}
 $$
 
 设 $dp[i][u]$ 表示构造了 $i$ 个字符、停在状态 $u$ 且始终合法的方案数。从 `dp[0][0] = 1` 开始，枚举下一个字符，只有新状态不是 `bad` 时才允许转移。
