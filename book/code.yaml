@@ -1451,6 +1451,18 @@ codes:
     language: py
     tags: [数学, 最小生成树, 数学与数论]
 
+  - id: ac-automaton
+    path: string/ac_automaton.cpp
+    description: ac automaton | AC 自动机多模式串匹配（字典图 + fail 树计数）
+    language: cpp
+    tags: [字符串]
+
+  - id: ac-automaton-py
+    path: string/ac_automaton.py
+    description: ac automaton python | AC 自动机多模式串匹配（Python 版）
+    language: py
+    tags: [字符串]
+
   - id: brute-force-match
     path: string/brute_force_match.cpp
     description: brute force match | 暴力字符串匹配

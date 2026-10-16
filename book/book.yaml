@@ -221,6 +221,7 @@ glob:
   - sort/quicksort/index.md
   - sort/quicksort/old.md
   - string/Boyer-Moore/index.md
+  - string/ac-automaton/index.md
   - string/brute-force/index.md
   - string/index.md
   - string/kmp/index.md
@@ -683,12 +684,15 @@ chapters:
       - title: 朴素字符串匹配
         english-title: Brute-Force String Matching
         path: brute-force/index.md
-      - title: KMP
+      - title: KMP字符串匹配
         english-title: KMP String Matching
         path: kmp/index.md
-      - title: Trie
+      - title: 字典树
         english-title: Trie Dictionary Tree
         path: trie/index.md
+      - title: AC 自动机
+        english-title: Aho-Corasick Automaton
+        path: ac-automaton/index.md
       - title: 进制hash
         english-title: Polynomial Hash
         path: 进制hash/index.md
