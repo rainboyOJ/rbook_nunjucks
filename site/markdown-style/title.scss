@@ -32,6 +32,10 @@
   cursor: pointer;
   font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   text-align: left;
+  /* 与 .article-template-link 取同一个对齐基准，两个按钮才能落在同一水平线上。
+     用 middle 而不是 baseline：baseline 取自首个 flex item 的字体基线，
+     复制成功后 label 被 feedback 替换会改变基线，按钮会上下跳动。 */
+  vertical-align: middle;
 }
 
 .article-id-copy:hover {
@@ -76,6 +80,7 @@
   font-size: 12px;
   line-height: 1.45;
   text-decoration: none;
+  /* 与 .article-id-copy 保持一致，勿单独改成 baseline。 */
   vertical-align: middle;
 }
 
@@ -187,8 +192,9 @@
     margin-bottom: 12px;
   }
 
+  /* 上边距必须与 .article-id-copy 同步，否则两个按钮在窄屏上错开 1.5px。 */
   .article-template-link {
-    margin: 0 0 12px;
+    margin: -3px 0 12px;
   }
 
   .article-description {

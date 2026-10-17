@@ -622,6 +622,9 @@ chapters:
         path: kruskal
       - title: Bellman-Ford
         path: bellman-ford/index.md
+      - title: SPFA
+        english-title: Shortest Path Faster Algorithm
+        path: spfa/index.md
       - title: floyed算法
         english-title: Floyd-Warshall
         path: floyed

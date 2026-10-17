@@ -1151,6 +1151,12 @@ codes:
     language: py
     tags: [图论]
 
+  - id: spfa
+    path: graph/spfa.cpp
+    description: spfa | SPFA 单源最短路与可达负环判定
+    language: cpp
+    tags: [图论, 最短路, SPFA, 负环]
+
   - id: spfa-negative-cycle
     path: graph/spfa_negative_cycle.cpp
     description: spfa negative cycle | SPFA 判负环
