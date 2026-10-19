@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300" role="img" aria-labelledby="tightest-title tightest-desc">
+  <title id="tightest-title">两条路径给出两个上界</title>
+  <desc id="tightest-desc">c 到 a 有一条权 9 的直接边，也有一条经 b 的折线路径，权为 3 加 2。折线路径更短，因此是更紧的上界。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 7 6; stroke-linecap: round; }
+    .edge--focus { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 17px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .weight { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: #ffffff; stroke-width: 6; }
+    .weight--muted { fill: #64748b; }
+  </style>
+  <defs>
+    <marker id="tightest-arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 11 5.5 L 0 11 Z" fill="#2563eb" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="640" height="300" />
+  <g id="tightest-edges">
+    <path class="edge" d="M 110 156 Q 325 274 545 158" />
+    <line class="edge--focus" x1="127" y1="130" x2="299" y2="130" marker-end="url(#tightest-arrow)" />
+    <line class="edge--focus" x1="353" y1="130" x2="525" y2="130" marker-end="url(#tightest-arrow)" />
+  </g>
+  <g id="tightest-nodes">
+    <circle class="node--focus" cx="100" cy="130" r="26" />
+    <circle class="node--focus" cx="330" cy="130" r="22" />
+    <circle class="node--focus" cx="560" cy="130" r="26" />
+    <text class="label" x="100" y="130">c</text>
+    <text class="label" x="330" y="130">b</text>
+    <text class="label" x="560" y="130">a</text>
+  </g>
+  <g id="tightest-weights">
+    <text class="weight weight--muted" x="330" y="242">9</text>
+    <text class="weight" x="213" y="106">3</text>
+    <text class="weight" x="439" y="106">2</text>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="380" viewBox="0 0 680 380" role="img" aria-labelledby="three-bounds-title three-bounds-desc">
+  <title id="three-bounds-title">同一个差值有三条路径</title>
+  <desc id="three-bounds-desc">四个点按 x1、x2、x3、x4 排成一行，相邻三边权为 2、3、2。另有从 x1 直达 x3 的权 7 边和从 x1 直达 x4 的权 8 边。所以 x1 到 x4 共有三条路径，权和分别是 7、8、9。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .edge--focus { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .node--target { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 17px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .weight { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: #ffffff; stroke-width: 6; }
+    .weight--muted { fill: #64748b; }
+  </style>
+  <defs>
+    <marker id="three-arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 11 5.5 L 0 11 Z" fill="#2563eb" />
+    </marker>
+    <marker id="three-arrow-muted" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 11 5.5 L 0 11 Z" fill="#94a3b8" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="680" height="380" />
+  <g id="three-edges">
+    <path class="edge" d="M 121 184 Q 248 104 363 183" marker-end="url(#three-arrow-muted)" />
+    <path class="edge" d="M 118 230 Q 312 332 502 231" marker-end="url(#three-arrow-muted)" />
+    <line class="edge--focus" x1="127" y1="206" x2="219" y2="206" marker-end="url(#three-arrow)" />
+    <line class="edge--focus" x1="264" y1="206" x2="356" y2="206" marker-end="url(#three-arrow)" />
+    <line class="edge--focus" x1="401" y1="206" x2="493" y2="206" marker-end="url(#three-arrow)" />
+  </g>
+  <g id="three-nodes">
+    <circle class="node--focus" cx="100" cy="206" r="26" />
+    <circle class="node--focus" cx="241" cy="206" r="22" />
+    <circle class="node--focus" cx="378" cy="206" r="22" />
+    <circle class="node--target" cx="516" cy="206" r="26" />
+    <text class="label" x="100" y="206">x₁</text>
+    <text class="label" x="241" y="206">x₂</text>
+    <text class="label" x="378" y="206">x₃</text>
+    <text class="label" x="516" y="206">x₄</text>
+  </g>
+  <g id="three-weights">
+    <text class="weight weight--muted" x="228" y="124">7</text>
+    <text class="weight weight--muted" x="292" y="314">8</text>
+    <text class="weight" x="173" y="182">2</text>
+    <text class="weight" x="310" y="182">3</text>
+    <text class="weight" x="447" y="182">2</text>
+  </g>
+</svg>

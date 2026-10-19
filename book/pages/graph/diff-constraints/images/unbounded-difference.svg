@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320" role="img" aria-labelledby="unbounded-title unbounded-desc">
+  <title id="unbounded-title">没有路径就没有上界</title>
+  <desc id="unbounded-desc">约束给出一条从 x1 指向 x2 的边，权为 5。x3 是要求差值的起点，但它走不到 x1，所以 x3 减 x1 没有任何上界。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .gap { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 6 7; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--source { fill: #ecfdf5; stroke: #059669; stroke-width: 3; }
+    .node--target { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 17px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .weight { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; paint-order: stroke; stroke: #ffffff; stroke-width: 6; }
+    .note { fill: #64748b; font: 400 15px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; }
+    .note--strong { fill: #059669; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="unbounded-arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 11 5.5 L 0 11 Z" fill="#94a3b8" />
+    </marker>
+  </defs>
+  <rect class="canvas" width="640" height="320" />
+  <g id="unbounded-edges">
+    <line class="edge" x1="160" y1="150" x2="262" y2="150" marker-end="url(#unbounded-arrow)" />
+    <line class="gap" x1="330" y1="150" x2="470" y2="150" />
+  </g>
+  <g id="unbounded-nodes">
+    <circle class="node--target" cx="132" cy="150" r="28" />
+    <circle class="node" cx="292" cy="150" r="26" />
+    <circle class="node--source" cx="510" cy="150" r="28" />
+    <text class="label" x="132" y="150">x₁</text>
+    <text class="label" x="292" y="150">x₂</text>
+    <text class="label" x="510" y="150">x₃</text>
+  </g>
+  <g id="unbounded-weights">
+    <text class="weight" x="211" y="122">5</text>
+  </g>
+  <g id="unbounded-notes">
+    <text class="note" x="400" y="122">走不到</text>
+    <text class="note note--strong" x="510" y="212">要求差值的起点</text>
+  </g>
+</svg>

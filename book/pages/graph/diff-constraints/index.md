@@ -59,12 +59,7 @@ $$
 
 任取一条 $t\to s$ 的路径，把路径上的约束逐个相加，就得到 $x_s-x_t$ 的一个上界。约束必须全部成立，所以上界要取所有路径里**最紧**的那个，而最紧的那个正是最短路。
 
-```mermaid
-flowchart LR
-    c((c)) -->|3| b((b))
-    b -->|2| a((a))
-    c -->|9| a
-```
+![c 到 a 有两条路径：经 b 的折线路径权为 3+2，比直接的权 9 更短](/graph/diff-constraints/images/tightest-bound.svg)
 
 所以第一句话可以拆成两个动作：
 
@@ -114,9 +109,9 @@ SPFA 最坏时间复杂度为 $O(nm)$，空间复杂度为 $O(n+m)$。两步（�
 
 | 情形 | 可以选择 | 时间复杂度 |
 | --- | --- | --- |
-| 一般差分约束，含负权边 | SPFA | 最坏 `O(nm)` |
-| 只有权值不小于 0 的约束 | Dijkstra | `O(m log m)` |
-| 约束全形如“不小于”且无环 | 拓扑序 DP | `O(n+m)` |
+| 一般差分约束，含负权边 | SPFA | 最坏 $O(nm)$ |
+| 只有权值不小于 $0$ 的约束 | Dijkstra | $O(m\log m)$ |
+| 约束全形如 $x_v\geqslant x_u+w$ 且无环 | 拓扑序 DP | $O(n+m)$ |
 
 第三种就是“缩点后是 DAG”的常见优化，[P3275](#4-p3275-scoi2011-糖果) 会用到它。
 
@@ -126,13 +121,13 @@ SPFA 最坏时间复杂度为 $O(nm)$，空间复杂度为 $O(n+m)$。两步（�
 
 | 题面写法 | 归一到“不超过”（跑最短路） | 归一到“不小于”（跑最长路） |
 | --- | --- | --- |
-| `x_u - x_v <= c` | 不变，边 `v -> u` 权 `c` | `x_v - x_u >= -c`，边 `u -> v` 权 `-c` |
-| `x_u - x_v >= c` | `x_v - x_u <= -c`，边 `u -> v` 权 `-c` | 不变，边 `v -> u` 权 `c` |
-| `x_u == x_v` | 两个方向各一条 `0` 权边 | 同左 |
-| `x_u < x_v`（整数） | `x_u - x_v <= -1`，边 `v -> u` 权 `-1` | `x_v - x_u >= 1`，边 `u -> v` 权 `1` |
-| `x_u / x_v <= c`（变量均为正） | 取对数后归入第一行 | 取对数后归入第二行 |
+| $x_u-x_v\leqslant c$ | 不变，边 $v\to u$ 权 $c$ | $x_v-x_u\geqslant -c$，边 $u\to v$ 权 $-c$ |
+| $x_u-x_v\geqslant c$ | $x_v-x_u\leqslant -c$，边 $u\to v$ 权 $-c$ | 不变，边 $v\to u$ 权 $c$ |
+| $x_u=x_v$ | 两个方向各一条 $0$ 权边 | 同左 |
+| $x_u<x_v$（整数） | $x_u-x_v\leqslant -1$，边 $v\to u$ 权 $-1$ | $x_v-x_u\geqslant 1$，边 $u\to v$ 权 $1$ |
+| $\dfrac{x_u}{x_v}\leqslant c$（变量均为正） | 取对数后归入第一行 | 取对数后归入第二行 |
 
-对照方法：**最短路**一侧的边 `p -> q` 权 `w` 代表 $x_q-x_p\leqslant w$；**最长路**一侧的边 `p -> q` 权 `w` 代表 $x_q-x_p\geqslant w$。
+对照方法：**最短路**一侧的边 $p\to q$ 权 $w$ 代表 $x_q-x_p\leqslant w$；**最长路**一侧的边 $p\to q$ 权 $w$ 代表 $x_q-x_p\geqslant w$。
 
 最后一行提醒：**遇到乘法或除法先想取对数**，把 $\log x$ 当成新变量，问题就回到标准形式；区间计数则先想前缀和。
 
@@ -181,6 +176,8 @@ x_2-x_1\leqslant2,\quad x_3-x_1\leqslant7,\quad x_4-x_1\leqslant8,\quad
 x_3-x_2\leqslant3,\quad x_4-x_3\leqslant2.
 $$
 
+![x1 到 x4 的三条路径：经 x2、x3 的权和 7，直接边权 8，经 x3 的权和 9](/graph/diff-constraints/images/three-bounds.svg)
+
 ```text
 4 5 4 1
 2 1 2
@@ -223,6 +220,8 @@ $$
 
 矛盾的约束：
 
+![x1 到 x2 权 1、x2 到 x1 权 -3，两条边构成权和 -2 的负环](/graph/diff-constraints/images/negative-cycle.svg)
+
 ```text
 2 2 2 1
 1 2 1
@@ -240,6 +239,8 @@ $x_1-x_2\leqslant1$ 与 $x_2-x_1\leqslant-3$ 相加得到 $0\leqslant-2$，无�
 输出 `0`。
 
 从 $s$ 反向到不了 $t$ 时，差值没有任何上界：
+
+![约束只有 x1 到 x2 的权 5 边，x3 走不到 x1，因此 x3 减 x1 没有上界](/graph/diff-constraints/images/unbounded-difference.svg)
 
 ```text
 3 1 3 1
@@ -307,9 +308,9 @@ $x_1-x_2\leqslant1$ 与 $x_2-x_1\leqslant-3$ 相加得到 $0\leqslant-2$，无�
 
 | 题意 | 转化 | 建边 |
 | --- | --- | --- |
-| `x_a - x_b >= c` | `x_b - x_a <= -c` | `a -> b` 权 `-c` |
-| `x_a - x_b <= c` | 不变 | `b -> a` 权 `c` |
-| `x_a == x_b` | 两个方向的差都不超过 `0` | `a -> b`、`b -> a` 各一条 `0` 权边 |
+| $x_a-x_b\geqslant c$ | $x_b-x_a\leqslant -c$ | $a\to b$ 权 $-c$ |
+| $x_a-x_b\leqslant c$ | 不变 | $b\to a$ 权 $c$ |
+| $x_a=x_b$ | 两个方向的差都不超过 $0$ | $a\to b$、$b\to a$ 各一条 $0$ 权边 |
 
 只输出 `Yes`/`No`，所以只跑可行性检查。这道题适合练习“先把题面三种说法翻译成同一种不等号”：模板的 `add_geq(a, b, c)`、`add_leq(b, a, c)`、`add_eq(a, b)` 正好对应上表三行。
 
@@ -333,11 +334,11 @@ $x_1-x_2\leqslant1$ 与 $x_2-x_1\leqslant-3$ 相加得到 $0\leqslant-2$，无�
 
 | 输入 | 含义 | 建边 |
 | --- | --- | --- |
-| `X=1` | 两人一样多 | 两个方向各一条 `0` 权边 |
-| `X=2` | `x_A < x_B` | `A -> B` 权 `1`（整数下“小于”就是“至少差 1”） |
-| `X=3` | `x_A >= x_B` | `B -> A` 权 `0` |
-| `X=4` | `x_A > x_B` | `B -> A` 权 `1` |
-| `X=5` | `x_A <= x_B` | `A -> B` 权 `0` |
+| $X=1$ | $x_A=x_B$ | 两个方向各一条 $0$ 权边 |
+| $X=2$ | $x_A<x_B$ | $A\to B$ 权 $1$（整数下“小于”就是“至少差 1”） |
+| $X=3$ | $x_A\geqslant x_B$ | $B\to A$ 权 $0$ |
+| $X=4$ | $x_A>x_B$ | $B\to A$ 权 $1$ |
+| $X=5$ | $x_A\leqslant x_B$ | $A\to B$ 权 $0$ |
 
 $X=2,4$ 是本题最容易错的地方：变量是整数，所以“少于”必须写成“至少差 $1$”的正环检测形式 $x_B\geqslant x_A+1$，不能直接当成 $\leqslant$ 处理。注意方向：$X=2$ 是 $A\to B$，$X=4$ 是 $B\to A$，两者恰好相反（**“谁更大”决定边的箭头**）。此外 $X=2$ 与 $X=4$ 同时给出时就是典型的正环无解。
 

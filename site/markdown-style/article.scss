@@ -316,6 +316,9 @@
 
 /* Tables */
 .table-scroll {
+  /* KaTeX 的 MathML 副本用绝对定位，需要这里成为它的包含块，
+     否则它会逃出下方的 overflow-x 裁剪，把整页撑出横向滚动条。 */
+  position: relative;
   width: 100%;
   margin: 24px 0 30px;
   border: 1px solid var(--border-color);
