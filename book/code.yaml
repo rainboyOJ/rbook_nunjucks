@@ -1181,6 +1181,18 @@ codes:
     language: py
     tags: [图论, 最短路]
 
+  - id: diff-constraints
+    path: graph/diff_constraints.cpp
+    description: diff constraints | 差分约束的建边、全局可行性与单源最短路
+    language: cpp
+    tags: [图论, 最短路, 差分约束]
+
+  - id: diff-constraints-py
+    path: graph/diff_constraints.py
+    description: diff constraints python | 差分约束的建边、全局可行性与单源最短路（Python 版）
+    language: py
+    tags: [图论, 最短路, 差分约束]
+
   - id: topsort-dag
     path: graph/topsort-dag.cpp
     description: topsort-dag | 拓扑排序（DAG）

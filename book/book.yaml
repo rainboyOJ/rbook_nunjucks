@@ -634,6 +634,9 @@ chapters:
       - title: 负环判定
         english-title: Negative Cycle Detection
         path: negative_circle/index.md
+      - title: 差分约束
+        english-title: Difference Constraints
+        path: diff-constraints/index.md
       - title: 网络流
         english-title: Network Flow
         type: info
