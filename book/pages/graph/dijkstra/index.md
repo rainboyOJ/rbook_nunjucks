@@ -6,7 +6,7 @@ date: 2026-10-19 00:00
 toc: true
 tags: ["图论", "最短路", "Dijkstra", "优先队列"]
 categories: ["图论"]
-code_template: [dijkstra]
+code_template: [dijkstra, dijkstra-py]
 prerequisites: [graph-save, heap]
 ---
 
@@ -167,15 +167,29 @@ if (du != dis[u]) continue;
 
 ## 代码模板
 
-模板使用 C++17，按 $1\sim n$ 编号。`add_edge` 添加一条有向边；无向边调用两次。`run(s)` 会重置距离与前驱，可以在同一张图上更换源点重复运行。
+两个版本都按 $1\sim n$ 编号，都用 `INF` 表示不可达、用 `pre` 记录前驱，接口一一对应：C++ 版把图和状态收进 `Dijkstra` 结构体，Python 版换成两个纯函数 `build_graph` 与 `dijkstra`。
 
-`dis[v] == INF` 表示不可达。距离和边权使用 `long long`；要求所有需要表示的有限最短距离严格小于 `INF = 2^62`。代码在相加前跳过结果不小于 `INF` 的候选，避免大边权导致整数溢出。该判断依赖边权非负，不负责检测负权输入。
+:::: code-tabs
+::: tab C++
+C++17 版里 `add_edge` 添加一条有向边，无向边调用两次；`run(s)` 会重置距离与前驱，可以在同一张图上更换源点重复运行。
+
+距离和边权使用 `long long`；要求所有需要表示的有限最短距离严格小于 `INF = 2^62`。代码在相加前跳过结果不小于 `INF` 的候选，避免大边权导致整数溢出。该判断依赖边权非负，不负责检测负权输入。
 
 @include-code(/code/graph/dijkstra.cpp, cpp)
+:::
+
+::: tab Python
+Python 版用 `heapq` 代替 `priority_queue`。存放的是 `(距离, 点编号)` 元组，元组按字典序比较，距离在前才能按距离出堆；这正对应 C++ 里 `pair<long long, int>` 加 `greater` 的写法。
+
+`int` 是任意精度，不必担心溢出，`INF = 1 << 62` 只是与 C++ 版对齐的哨兵。`build_graph(n, edges, directed=False)` 一次把无向图的双向边展开，省去手写两次 `add_edge`。
+
+@include-code(/code/graph/dijkstra.py, python)
+:::
+::::
 
 ### 还原一条最短路径
 
-成功松弛 $u\to v$ 时记录 `pre[v] = u`。运行结束后调用 `path_to(t)`，从终点顺着前驱回走，再翻转即可。
+成功松弛 $u\to v$ 时记录 `pre[v] = u`。运行结束后调用 `path_to(t)`，从终点顺着前驱回走，再翻转即可（Python 版用 `path[::-1]` 完成翻转）。
 
 不可达时返回空数组；源点的路径只有源点自身。若存在多条最短路径，模板返回其中一条，不保证字典序最小。零权边下仍只在严格改善时修改前驱，前驱指向更早确定的点，因此不会形成前驱环。
 

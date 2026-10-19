@@ -869,6 +869,12 @@ codes:
     language: cpp
     tags: [图论, 最短路, Dijkstra]
 
+  - id: dijkstra-py
+    path: graph/dijkstra.py
+    description: dijkstra python | Dijkstra 非负权单源最短路（堆优化与路径还原，Python 版）
+    language: py
+    tags: [图论, 最短路, Dijkstra]
+
   - id: bellman-ford
     path: graph/bellman_ford.cpp
     description: bellman ford | Bellman-Ford 单源最短路
