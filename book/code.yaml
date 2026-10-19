@@ -863,6 +863,12 @@ codes:
     language: py
     tags: [动态规划]
 
+  - id: dijkstra
+    path: graph/dijkstra.cpp
+    description: dijkstra | Dijkstra 非负权单源最短路（堆优化与路径还原）
+    language: cpp
+    tags: [图论, 最短路, Dijkstra]
+
   - id: bellman-ford
     path: graph/bellman_ford.cpp
     description: bellman ford | Bellman-Ford 单源最短路
