@@ -59,6 +59,7 @@ declare -A RBOOK_WIDGETS=(
   [tags]=tags
   [relations]=relations
   [practice]=practice
+  [flashcards]=flashcards
   [diagnostics]=diagnostics
 )
 for source in "${!RBOOK_WIDGETS[@]}"; do

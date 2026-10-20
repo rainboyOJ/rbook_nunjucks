@@ -33,6 +33,7 @@ export const staticWidgetApps = [
   { source: 'tags', target: 'tags' },
   { source: 'relations', target: 'relations' },
   { source: 'practice', target: 'practice' },
+  { source: 'flashcards', target: 'flashcards' },
   { source: 'diagnostics', target: 'diagnostics' }
 ] as const;
 

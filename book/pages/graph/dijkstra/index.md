@@ -2,7 +2,15 @@
 id: graph-dijkstra
 title: "Dijkstra：每次确定最近的点"
 description: 从非负边权理解 Dijkstra 的贪心选择，掌握堆优化、过期记录、路径还原与常见建模。
+intuition: >-
+  把非负边权想成水管长度，水从起点出发，以单位速度沿各条管道同时传播。
+  水第一次到达某个点的时刻，就是起点到它的最短距离；
+  在尚未确定的点中，当前 dis 最小的点一定可以最先到达，
+  绕经其他尚未确定的点也不会更早，因此可以确定它的最短距离。
 date: 2026-10-19 00:00
+flashcard:
+  title: Dijkstra 算法
+  hint: 想想水沿不同长度的管道同时传播的过程。
 toc: true
 tags: ["图论", "最短路", "Dijkstra", "优先队列"]
 categories: ["图论"]

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>算法抽卡 · rbook</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #101418;
+        --panel: #191f25;
+        --raised: #222b33;
+        --border: #35414b;
+        --text: #e7edf2;
+        --muted: #a5b1bb;
+        --accent: #ffc857;
+        --warm: #ffe08a;
+      }
+      * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: radial-gradient(ellipse at 50% 45%, #24251c 0, var(--bg) 65%);
+        color: var(--text);
+        font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      button, select { font: inherit; }
+      button, a, select { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+      button, select { min-height: 44px; }
+      button { cursor: pointer; }
+      button:disabled { cursor: default; opacity: .38; }
+      a { color: var(--warm); text-underline-offset: 4px; }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+      .shell { width: min(1040px, 100%); margin: auto; padding: 24px 28px 40px; }
+      .topbar { display: flex; flex-wrap: wrap; gap: 4px 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+      .topbar a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 13px; text-decoration: none; }
+      .topbar a:hover, .topbar a[aria-current] { color: var(--warm); }
+      .topbar a[aria-current] { box-shadow: 0 2px var(--accent); }
+      header { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin: 34px 0 28px; }
+      .eyebrow { color: var(--accent); font: 11px/1.5 ui-monospace, monospace; letter-spacing: .18em; margin: 0 0 8px; }
+      h1 { font-size: clamp(26px, 4vw, 34px); letter-spacing: -.04em; font-weight: 650; line-height: 1.3; margin: 0; }
+      .lead { color: var(--muted); font-size: 14px; margin: 9px 0 0; }
+      .deck-size { color: var(--muted); font-size: 13px; white-space: nowrap; }
+      .deck-size strong { color: var(--warm); font: 32px/1 ui-monospace, monospace; margin-right: 6px; }
+      .workspace { max-width: 780px; margin: auto; }
+      .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+      .filter { display: flex; align-items: center; gap: 12px; min-width: 0; }
+      .filter label { color: var(--muted); font-size: 13px; flex-shrink: 0; }
+      select { color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 8px 34px 8px 12px; max-width: 240px; min-width: 0; }
+      .round { color: var(--muted); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+      .progress { height: 2px; background: var(--border); margin-bottom: 20px; border-radius: 2px; overflow: hidden; }
+      .progress span { display: block; height: 100%; background: var(--accent); width: 0; }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 430px;
+        min-height: 410px;
+        border: 1px solid #695838;
+        border-radius: 18px;
+        background: linear-gradient(145deg, #242a2e, var(--panel) 60%);
+        box-shadow: 0 16px 48px #0004, 0 1px 0 #ffffff08 inset;
+        padding: 28px 36px;
+        cursor: pointer;
+        touch-action: pan-y;
+        overflow-wrap: anywhere;
+      }
+      .card[data-side="back"] { border-color: #80704b; background: linear-gradient(145deg, #2a2b25, var(--panel) 75%); }
+      .card-top, .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+      .card-top { flex-shrink: 0; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
+      .side-label { color: var(--warm); display: inline-flex; gap: 8px; align-items: center; }
+      .side-label::before { content: ""; width: 6px; height: 6px; background: currentColor; border-radius: 50%; }
+      #position { font-family: ui-monospace, monospace; letter-spacing: .1em; }
+      .face { flex: 1; min-height: 0; overflow-y: auto; touch-action: pan-y; padding: 32px 0 24px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+      #front { display: flex; flex-direction: column; align-items: center; justify-content: safe center; text-align: center; }
+      #front-title { flex-shrink: 0; font-size: clamp(28px, 5vw, 44px); font-weight: 600; line-height: 1.3; letter-spacing: -.03em; margin: 0 0 18px; }
+      .prompt { flex-shrink: 0; margin: 0; color: var(--muted); font-size: 15px; }
+      #back-title { font-size: 20px; font-weight: 600; color: var(--warm); margin: 0 0 18px; }
+      #intuition { margin: 0; font-size: clamp(17px, 2.5vw, 20px); line-height: 1.95; white-space: pre-wrap; }
+      .card-bottom { flex-shrink: 0; margin-top: auto; min-height: 44px; padding-top: 8px; }
+      .card-bottom span { font-size: 12px; color: var(--muted); }
+      .text-button { color: var(--warm); background: none; border: 0; padding: 8px 0; font-size: 13px; }
+      #hint { flex-shrink: 0; max-height: 100px; overflow-y: auto; touch-action: pan-y; color: var(--warm); border-top: 1px solid var(--border); padding: 16px 0 0; margin: 0 0 10px; font-size: 14px; white-space: pre-wrap; }
+      #article-link { font-size: 13px; padding: 10px 0; }
+      .actions { display: grid; grid-template-columns: 1fr 1.35fr 1fr 1fr; gap: 10px; margin: 24px 0 14px; }
+      .action { display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--border); border-radius: 9px; color: var(--text); background: var(--panel); padding: 12px 10px; font-size: 14px; }
+      .action:hover:not(:disabled) { background: var(--raised); border-color: #7b8892; }
+      .action.primary { background: var(--accent); color: #221b0c; border-color: var(--accent); font-weight: 650; }
+      .action.primary:hover:not(:disabled) { background: var(--warm); border-color: var(--warm); }
+      .action svg { width: 17px; height: 17px; flex-shrink: 0; }
+      .help { text-align: center; color: var(--muted); font-size: 12px; margin: 12px 0; }
+      kbd { font: 11px ui-monospace, monospace; color: #c4cdd5; padding: 2px 5px; border: 1px solid var(--border); border-radius: 4px; }
+      .footnote { text-align: center; color: var(--muted); font-size: 12px; border-top: 1px solid #ffffff0b; padding-top: 20px; margin-top: 28px; }
+      .notice { border: 1px dashed var(--border); border-radius: 18px; padding: 70px 24px; text-align: center; color: var(--muted); }
+      #retry { margin: 18px auto 0; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+      @media (prefers-reduced-motion: no-preference) {
+        .card.changed { animation: appear .2s ease-out; }
+        @keyframes appear { from { opacity: .6; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .progress span { transition: width .2s; }
+      }
+      @media (max-width: 600px) {
+        .shell { padding: 12px 16px 28px; }
+        .topbar { gap: 0 16px; padding-bottom: 10px; }
+        header { margin: 24px 0; gap: 12px; }
+        .lead { font-size: 13px; }
+        .deck-size strong { font-size: 25px; }
+        .toolbar { align-items: start; flex-direction: column; gap: 10px; }
+        .filter, select { width: 100%; }
+        select { max-width: none; }
+        .round { align-self: end; }
+        .card { padding: 22px; height: 400px; min-height: 370px; border-radius: 14px; }
+        .face { padding: 36px 0 26px; }
+        .actions { grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 20px; }
+        #random { grid-column: 1/-1; }
+        .action { padding: 12px 5px; }
+        .desktop-help { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="topbar" aria-label="rbook 工具导航">
+        <a href="/">首页</a><a href="/explore">文章探索</a><a href="/code_template">代码模板</a><a href="/tags">标签</a><a href="/relations">关系</a><a href="/practice">学习队列</a><a href="/flashcards" aria-current="page">算法抽卡</a>
+      </nav>
+      <header>
+        <div>
+          <p class="eyebrow">RBOOK / RECALL</p>
+          <h1>算法抽卡</h1>
+          <p class="lead">看名字，想思路。把算法的核心直觉记在心里。</p>
+        </div>
+        <div class="deck-size"><strong id="total">—</strong> 张卡片</div>
+      </header>
+      <div class="workspace">
+        <div class="toolbar">
+          <div class="filter"><label for="tag">抽卡范围</label><select id="tag" disabled><option value="">全部算法</option></select></div>
+          <div id="round" class="round" aria-live="polite"></div>
+        </div>
+        <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+        <div id="notice" class="notice" role="status">
+          <span id="notice-text">正在准备卡片…</span>
+          <button id="retry" class="action" type="button" hidden>重新加载</button>
+        </div>
+        <article id="card" class="card" data-side="front" tabindex="0" aria-label="算法记忆卡，按空格或回车翻面" aria-keyshortcuts="Space Enter ArrowLeft ArrowRight" hidden>
+          <div class="card-top"><span id="side-label" class="side-label">正面 · 回忆</span><span id="position"></span></div>
+          <div id="front" class="face">
+            <h2 id="front-title"></h2>
+            <p class="prompt">它的核心思想是什么？</p>
+          </div>
+          <div id="back" class="face" tabindex="0" aria-label="核心直觉，可上下滚动" hidden>
+            <h2 id="back-title"></h2>
+            <p id="intuition"></p>
+          </div>
+          <p id="hint" hidden></p>
+          <div class="card-bottom">
+            <button id="hint-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="hint" hidden>查看提示</button>
+            <a id="article-link" target="_blank" rel="noopener noreferrer" hidden>阅读原文 ↗</a>
+            <span id="flip-cue">点击卡片，查看思路</span>
+          </div>
+        </article>
+        <div class="actions" role="group" aria-label="抽卡操作">
+          <button id="previous" class="action" type="button" disabled><span aria-hidden="true">←</span>上一张</button>
+          <button id="flip" class="action primary" type="button" aria-controls="front back" disabled>翻面看思路</button>
+          <button id="next" class="action" type="button" disabled>下一张<span aria-hidden="true">→</span></button>
+          <button id="random" class="action" type="button" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h3c5 0 7 12 12 12h3m-4-4 4 4-4 4M3 18h3c2 0 3-2 4-4m4-4c1-2 2-4 4-4h3m-4-4 4 4-4 4"/></svg>
+            随机抽卡
+          </button>
+        </div>
+        <p id="single" class="help" hidden>当前范围只有一张卡，可以翻面回忆，或切换到其他标签。</p>
+        <p class="help"><span class="desktop-help"><kbd>←</kbd> <kbd>→</kbd> 切换 · <kbd>空格</kbd> 翻面 · </span>左右滑动换卡，点击翻面</p>
+        <p class="footnote">随机抽卡本轮不重复 · 刷新页面后重新开始</p>
+        <p id="announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+        <noscript><p class="notice">请启用 JavaScript 来使用算法抽卡。</p></noscript>
+      </div>
+    </main>
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+        const state = { cards: [], pool: [], seen: new Set(), round: 1, index: 0, back: false, hint: false };
+        const card = $('card');
+        const interactive = 'button, a, input, select, textarea, [contenteditable]:not([contenteditable="false"])';
+
+        function current() { return state.pool[state.index]; }
+        function animate() {
+          card.classList.remove('changed');
+          void card.offsetWidth;
+          card.classList.add('changed');
+        }
+        function render() {
+          const item = current();
+          const count = state.pool.length;
+          card.hidden = !item;
+          $('notice').hidden = Boolean(item);
+          $('flip').disabled = !item;
+          ['previous', 'next', 'random'].forEach((id) => { $(id).disabled = count < 2; });
+          $('single').hidden = count !== 1;
+          $('total').textContent = String(count);
+          $('round').textContent = count ? `第 ${state.round} 轮 · 已看 ${state.seen.size} / ${count}` : '';
+          $('progress').style.width = count ? `${state.seen.size / count * 100}%` : '0%';
+          if (!item) {
+            $('notice-text').textContent = '当前范围还没有卡片，试试其他标签。';
+            return;
+          }
+          card.dataset.id = item.id;
+          card.dataset.side = state.back ? 'back' : 'front';
+          $('position').textContent = `${String(state.index + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+          $('side-label').textContent = state.back ? '背面 · 核心直觉' : '正面 · 回忆';
+          $('front-title').textContent = item.title;
+          $('back-title').textContent = item.title;
+          $('intuition').textContent = item.intuition;
+          $('front').hidden = state.back;
+          $('back').hidden = !state.back;
+          $('hint-toggle').hidden = state.back || !item.hint;
+          $('hint-toggle').textContent = state.hint ? '收起提示' : '查看提示';
+          $('hint-toggle').setAttribute('aria-expanded', String(state.hint));
+          $('hint').textContent = item.hint;
+          $('hint').hidden = state.back || !state.hint || !item.hint;
+          $('article-link').hidden = !state.back || !item.url;
+          if (item.url) $('article-link').href = item.url;
+          else $('article-link').removeAttribute('href');
+          $('flip-cue').textContent = state.back ? '点击卡片，返回正面' : '点击卡片，查看思路';
+          const face = state.back ? $('back') : $('front');
+          if (face.scrollHeight > face.clientHeight + 2) $('flip-cue').textContent = '上下滚动，阅读全文';
+          $('flip').textContent = state.back ? '返回正面' : '翻面看思路';
+          $('announcement').textContent = state.back ? `${item.title}。${item.intuition}` : `${item.title}，正面。${state.index + 1} / ${count}`;
+        }
+        function visit(index) {
+          if (!state.pool.length) return;
+          if (state.seen.size === state.pool.length) {
+            state.seen.clear();
+            state.round++;
+          }
+          state.index = index;
+          state.back = false;
+          state.hint = false;
+          state.seen.add(current().id);
+          render();
+          $('front').scrollTop = 0;
+          $('back').scrollTop = 0;
+          $('hint').scrollTop = 0;
+          animate();
+        }
+        function filter() {
+          state.pool = state.cards.filter((item) => !$('tag').value || item.tags.includes($('tag').value));
+          state.seen.clear();
+          state.round = 1;
+          state.index = 0;
+          state.back = false;
+          state.hint = false;
+          if (state.pool.length) visit(0);
+          else render();
+        }
+        function move(direction) {
+          if (state.pool.length > 1) visit((state.index + direction + state.pool.length) % state.pool.length);
+        }
+        function random() {
+          if (state.pool.length < 2) return;
+          let candidates = state.pool.map((_, index) => index).filter((index) => !state.seen.has(state.pool[index].id));
+          // A completed round starts afresh, but never repeats the current card immediately.
+          if (!candidates.length) candidates = state.pool.map((_, index) => index).filter((index) => index !== state.index);
+          visit(candidates[Math.floor(Math.random() * candidates.length)]);
+        }
+        function flip() {
+          if (!current()) return;
+          state.back = !state.back;
+          render();
+          animate();
+        }
+        async function load() {
+          $('retry').hidden = true;
+          $('notice-text').textContent = '正在准备卡片…';
+          try {
+            const response = await fetch('/api/flashcards', { headers: { Accept: 'application/json' }, cache: 'no-store' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const payload = await response.json();
+            if (!Array.isArray(payload.items)) throw new Error('Invalid cards');
+            const ids = new Set();
+            state.cards = payload.items.filter((item) => {
+              if (!item || typeof item.id !== 'string' || !item.id.trim() || ids.has(item.id)
+                || typeof item.intuition !== 'string' || !item.intuition.trim()) return false;
+              ids.add(item.id);
+              return true;
+            }).map((item) => ({
+              id: item.id,
+              title: typeof item.title === 'string' && item.title.trim() ? item.title : item.id,
+              hint: typeof item.hint === 'string' ? item.hint.trim() : '',
+              intuition: item.intuition.trim(),
+              tags: Array.isArray(item.tags) ? item.tags.filter((tag) => typeof tag === 'string' && tag.trim()) : [],
+              url: typeof item.url === 'string' && /^\/(?!\/)/.test(item.url) && !/[\\\s]/.test(item.url) ? item.url : ''
+            }));
+            const tags = [...new Set(state.cards.flatMap((item) => item.tags))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+            $('tag').replaceChildren(new Option('全部算法', ''), ...tags.map((tag) => new Option(tag, tag)));
+            $('tag').disabled = !state.cards.length;
+            filter();
+            if (!state.cards.length) $('notice-text').textContent = '还没有可用的算法卡片，稍后再来看看吧。';
+          } catch {
+            $('notice').hidden = false;
+            $('notice-text').textContent = '卡片加载失败，请检查连接后重试。';
+            $('retry').hidden = false;
+          }
+        }
+
+        $('tag').addEventListener('change', filter);
+        $('previous').addEventListener('click', () => move(-1));
+        $('next').addEventListener('click', () => move(1));
+        $('random').addEventListener('click', random);
+        $('flip').addEventListener('click', flip);
+        $('retry').addEventListener('click', load);
+        $('hint-toggle').addEventListener('click', () => {
+          state.hint = !state.hint;
+          render();
+          $('announcement').textContent = state.hint ? current().hint : '提示已收起';
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey
+            || event.target.closest('input, select, textarea, [contenteditable]:not([contenteditable="false"])')) return;
+          if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+          if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
+          if (event.code === 'Space' || (event.key === 'Enter' && event.target === card)) {
+            if (event.target.closest('button, a')) return;
+            event.preventDefault();
+            if (!event.repeat) flip();
+          }
+        });
+
+        // Keep vertical scrolling and text selection native. Only a deliberate horizontal drag changes cards.
+        let gesture = null;
+        let suppressClickUntil = 0;
+        card.addEventListener('pointerdown', (event) => {
+          if (!event.isPrimary || event.button !== 0 || event.target.closest(interactive)) return;
+          suppressClickUntil = 0;
+          if (event.pointerType === 'mouse' && !event.target.closest('#intuition, #back-title, #hint')) {
+            event.preventDefault();
+            card.focus({ preventScroll: true });
+          }
+          gesture = { id: event.pointerId, x: event.clientX, y: event.clientY };
+        });
+        card.addEventListener('touchmove', (event) => {
+          if (!gesture || event.touches.length !== 1) return;
+          const dx = event.touches[0].clientX - gesture.x;
+          const dy = event.touches[0].clientY - gesture.y;
+          // We own horizontal swipes; leave vertical movement to the scrollable text.
+          if (event.cancelable && Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) * 1.5) event.preventDefault();
+        }, { passive: false });
+        document.addEventListener('pointerup', (event) => {
+          if (!gesture || event.pointerId !== gesture.id) return;
+          const dx = event.clientX - gesture.x;
+          const dy = event.clientY - gesture.y;
+          gesture = null;
+          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
+          suppressClickUntil = performance.now() + 400;
+          if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && !window.getSelection()?.toString()) {
+            move(dx < 0 ? 1 : -1);
+          }
+        });
+        document.addEventListener('pointercancel', () => { gesture = null; });
+        card.addEventListener('click', (event) => {
+          if (performance.now() < suppressClickUntil || event.target.closest(interactive) || window.getSelection()?.toString()) return;
+          flip();
+        });
+        load();
+      })();
+    </script>
+  </body>
+</html>

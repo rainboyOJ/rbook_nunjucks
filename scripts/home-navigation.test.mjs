@@ -15,7 +15,8 @@ test('homepage navigation exposes the reader widgets in the shared order', () =>
     ['/code_template', '代码模板'],
     ['/tags', '标签'],
     ['/relations', '关系'],
-    ['/practice', '学习队列']
+    ['/practice', '学习队列'],
+    ['/flashcards', '算法抽卡']
   ];
 
   let previousPosition = -1;

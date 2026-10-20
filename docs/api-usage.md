@@ -72,6 +72,7 @@ curl -G --data-urlencode "tag=树上算法,图论" "$BASE_URL/api/pages"
 | `GET` | `/api/health` | 服务状态和索引统计 |
 | `GET` | `/api/site` | 站点元信息 |
 | `GET` | `/api/catalog` | 文章目录；默认仅返回可见文章 |
+| `GET` | `/api/flashcards` | 全部算法直觉卡片 |
 | `GET` | `/api/pages` | 文章详情、筛选和分页 |
 | `GET` | `/api/codes` | 代码模板详情、筛选和分页 |
 | `GET` | `/api/tags` | 文章与代码标签统计 |
@@ -186,6 +187,39 @@ curl "$BASE_URL/api/catalog?compact=true"
     }
   ]
 }
+```
+
+### `GET /api/flashcards`
+
+返回所有已索引且 `intuition` 为非空字符串的文章，每篇文章对应一张卡片，包括未列入首页目录的文章。顺序沿用文章索引；页面 `/flashcards` 在浏览器中完成标签筛选和抽卡，不保存学习进度。
+
+```bash
+curl "$BASE_URL/api/flashcards"
+```
+
+```json
+{
+  "generatedAt": "2026-10-20T06:00:00.000Z",
+  "total": 1,
+  "items": [{
+    "id": "graph-dijkstra",
+    "title": "Dijkstra 算法",
+    "hint": "想想水沿不同长度的管道同时传播的过程。",
+    "intuition": "把非负边权想成水管长度……",
+    "tags": ["图论", "最短路", "Dijkstra", "优先队列"],
+    "url": "/graph/dijkstra/index.html"
+  }]
+}
+```
+
+内容来自文章 frontmatter：`intuition` 是卡片背面的纯文本；可选 `flashcard.title` 指定正面的算法名，缺省时使用文章标题；可选 `flashcard.hint` 是点击后才显示的纯文本提示，缺省时返回空字符串。文章 ID 是卡片 ID，`url` 为原文地址。本接口一次返回全部卡片，不接受分页参数。
+
+```yaml
+intuition: >-
+  一句话或一个短段落，讲清算法的核心直觉。
+flashcard:
+  title: 算法名称
+  hint: 一个帮助回忆的线索，不直接给出完整答案。
 ```
 
 ## 文章

@@ -17,6 +17,7 @@ const widgetApps = [
   ['tags', 'tags'],
   ['relations', 'relations'],
   ['practice', 'practice'],
+  ['flashcards', 'flashcards'],
   ['diagnostics', 'diagnostics']
 ];
 

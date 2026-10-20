@@ -160,6 +160,25 @@ export async function registerPublicApiRoutes(app: FastifyInstance) {
     return result;
   });
 
+  app.get('/api/flashcards', async () => {
+    const index = getIndexPayload();
+    const text = (value: unknown) => typeof value === 'string' ? value.trim() : '';
+    const items = (index.pages || []).flatMap((page: any) => {
+      const intuition = text(page.frontMatter?.intuition);
+      if (!intuition) return [];
+      const card = page.frontMatter?.flashcard;
+      return [{
+        id: page.id,
+        title: text(card?.title) || page.title,
+        hint: text(card?.hint),
+        intuition,
+        tags: asStringArray(page.frontMatter?.tags),
+        url: page.url
+      }];
+    });
+    return { generatedAt: index.generatedAt, total: items.length, items };
+  });
+
   app.get('/api/pages', async (request, reply) => {
     const index = getIndexPayload();
     const query = getQuery(request);
