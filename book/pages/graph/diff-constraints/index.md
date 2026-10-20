@@ -137,13 +137,13 @@ SPFA 最坏时间复杂度为 $O(nm)$，空间复杂度为 $O(n+m)$。两步（�
 
 :::: code-tabs
 ::: tab C++
-`feasible()` 与 `shortest(s)` 分开，是因为很多题只要求某个点在自己连通块里无矛盾，分开写才能自由选择检查范围。两者都用 `cnt` 记录当前距离对应的路径边数，达到 $n$ 就判定为环。
+`feasible()` 与 `shortest(s)` 分开，是因为很多题只要求某个点在自己连通块里无矛盾，分开写才能自由选择检查范围。两者都用 `path_len` 记录当前距离对应的路径边数，达到 $n$ 就判定为环。
 
 @include-code(/code/graph/diff_constraints.cpp, cpp)
 :::
 
 ::: tab Python
-Python 版把两个函数返回成 `bool`，`dis` 与 `cnt` 挂在对象上；`shortest` 里不需要像 C++ 那样先判断相加是否溢出，`int` 是任意精度。
+Python 版不包装成对象，三个 `add_*` 直接往传入的邻接表上添边，不需要先建一个模板实例；`feasible()` 与 `shortest(s)` 都返回解，无解时返回 `None`，省掉了“先判 `bool` 再读成员”的两步写法。负环仍然靠路径边数判定，`shortest` 里不需要像 C++ 那样先判断相加是否溢出，`int` 是任意精度。
 
 @include-code(/code/graph/diff_constraints.py, python)
 :::
