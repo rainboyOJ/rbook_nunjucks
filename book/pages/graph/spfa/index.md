@@ -6,7 +6,7 @@ date: 2026-10-17 14:40
 toc: true
 tags: ["SPFA", "最短路", "负环", "图论"]
 categories: ["图论"]
-code_template: [spfa]
+code_template: [spfa, spfa-py]
 prerequisites: [bellman-ford]
 ---
 
@@ -190,15 +190,27 @@ $$
 
 ## 代码模板
 
-使用 `std::vector<edge> g[maxn]` 存图：`g[u]` 是点 `u` 的全部出边，`edge` 只保存终点和边权。
+两个版本接口一一对应：`add_edge(u, v, w)` 添加一条有向边，`spfa` 求单源最短路。存图用 `g[u]` 保存点 `u` 的全部出边，边只记终点和边权。
+
+:::: code-tabs
+::: tab C++
+用 `std::vector<edge> g[maxn]` 存图，`dis` / `cnt` / `in_queue` 是全局数组，所以换一张图前要先调 `init_graph(n)`。
 
 @include-code(/code/graph/spfa.cpp, cpp)
+:::
 
-调用顺序为 `init_graph(n)`、逐条 `add_edge(u, v, w)`、`spfa(n, s)`。函数返回 `true` 时读取 `dis`，其中 `INF` 表示不可达；返回 `false` 时不要把当前距离当作最终答案。
+::: tab Python
+Python 版把 `dis`、`path_len`、`in_queue` 全部收进函数内部，所以不需要对应的“初始化”步骤，换源点、换图直接传新的邻接表即可。`spfa` 返回解，有可达负环时返回 `None`，省掉 `bool` 加全局变量两步读取。
 
-同一张图可以换源点重复调用 `spfa`。多组不同的图则每组先调用 `init_graph(n)`，清空当前编号范围内的旧边。
+@include-code(/code/graph/spfa.py, python)
+:::
+::::
 
-距离和边权都使用 `long long`。`INF` 必须大于合法的有限距离，且每次 `dis[u] + w` 都不能溢出；本文完整程序约定 $1\leqslant n\leqslant10^5$、$|w|\leqslant10^9$。判负环前保存的路径少于 $n$ 条边，这个范围下 `long long` 足够。数组容量只决定能存多少点，不代表所有这个规模的图都能在时限内跑完。
+C++ 调用顺序为 `init_graph(n)`、逐条 `add_edge(u, v, w)`、`spfa(n, s)`；Python 是先建 `graph = [[] for _ in range(n + 1)]`、逐条 `add_edge(graph, u, v, w)`、再 `spfa(graph, s)`。两个版本返回成功时读 `dis`（`INF` 表示不可达）或直接读返回值，失败时都不要把当前距离当作最终答案。
+
+同一张图可以换源点重复调用。C++ 因为状态在全局，多组不同的图要先 `init_graph(n)` 清空旧边；Python 的局部状态天然没这个问题。
+
+C++ 距离和边权都使用 `long long`。`INF` 必须大于合法的有限距离，且每次 `dis[u] + w` 都不能溢出；本文完整程序约定 $1\leqslant n\leqslant10^5$、$|w|\leqslant10^9$。判负环前保存的路径少于 $n$ 条边，这个范围下 `long long` 足够。Python 的 `int` 是任意精度，不用防溢出。数组容量只决定能存多少点，不代表所有这个规模的图都能在时限内跑完。
 
 ## 代码实现
 
