@@ -5,6 +5,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import test from 'node:test';
+import { decideBuildGates } from './build-gate-scope.mjs';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const buildRuntimeUrl = pathToFileURL(
@@ -18,6 +19,48 @@ const entryScripts = [
   'build:runtime',
   'dev'
 ];
+
+// 这组用例每次都会真的跑 6 个构建入口（含嵌套的 build:packages），整套约 2 分钟。
+// 只有改动真正影响构建流程的文件时才有意义，所以先做一次范围判断（见 build-gate-scope.mjs）：
+// 命中不了就整体 skip，避免改一篇文章也要等两分钟。
+function gitLines(args) {
+  const result = spawnSync('git', args, { cwd: rootDir, encoding: 'utf8' });
+  return result.status === 0 ? result.stdout.split('\n').filter(Boolean) : null;
+}
+
+// 用来比较的基线：CI 里显式给 RBOOK_BUILD_GATES_BASE，本地优先对齐远端 main。
+function resolveBase() {
+  if (process.env.RBOOK_BUILD_GATES_BASE) return process.env.RBOOK_BUILD_GATES_BASE;
+  for (const candidate of ['origin/main', 'main']) {
+    const base = gitLines(['merge-base', 'HEAD', candidate]);
+    if (base) return base[0];
+  }
+  return null;
+}
+
+function collectChangedFiles() {
+  const base = resolveBase();
+  if (base === null) return null; // 判断不了就按“需要运行”处理，宁可慢也不漏
+  const committed = gitLines(['diff', '--name-only', base, 'HEAD']);
+  if (committed === null) return null;
+
+  const changed = new Set(committed);
+  const status = gitLines(['status', '--porcelain']);
+  if (status === null) return null;
+  for (const line of status) {
+    const body = line.slice(3);
+    const arrow = body.indexOf(' -> ');
+    const target = arrow === -1 ? body : body.slice(arrow + 4);
+    changed.add(target.replace(/^"|"$/g, ''));
+  }
+  return changed;
+}
+
+const skipReason = decideBuildGates({ changedFiles: collectChangedFiles(), env: process.env });
+if (skipReason) {
+  console.log(`[build-gates] ${skipReason}`);
+}
+const skipOption = skipReason ? { skip: skipReason } : {};
 
 function markdown(id, codeTemplate = null, includeWarnings = false) {
   const reference = codeTemplate ? `code_template: [${codeTemplate}]\n` : '';
@@ -100,7 +143,7 @@ for (const scenario of [
   { name: 'duplicate', pattern: /duplicate id 'duplicate-id'/ },
   { name: 'unknown-reference', pattern: /'missing-code' is not registered/ }
 ]) {
-  test(`all public build entries reject ${scenario.name}`, (t) => {
+  test(`all public build entries reject ${scenario.name}`, skipOption, (t) => {
     const fixture = createFixture(t, scenario.name);
 
     for (const script of entryScripts) {
@@ -114,7 +157,7 @@ for (const scenario of [
   });
 }
 
-test('warnings keep the pre-check CLI successful', (t) => {
+test('warnings keep the pre-check CLI successful', skipOption, (t) => {
   const fixture = createFixture(t, 'warning');
   const runtimeDir = path.join(fixture.fixtureDir, 'runtime-warning');
   const result = runNpmScript('pre-check:compiled', environment(fixture, runtimeDir));
@@ -123,7 +166,7 @@ test('warnings keep the pre-check CLI successful', (t) => {
   assert.match(result.output, /errors=0/);
 });
 
-test('direct buildRuntime and dev startup validate before clearing runtime output', (t) => {
+test('direct buildRuntime and dev startup validate before clearing runtime output', skipOption, (t) => {
   const fixture = createFixture(t, 'duplicate');
 
   for (const entry of [
