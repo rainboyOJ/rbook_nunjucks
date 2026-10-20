@@ -52,12 +52,19 @@
       .round { color: var(--muted); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
       .progress { height: 2px; background: var(--border); margin-bottom: 20px; border-radius: 2px; overflow: hidden; }
       .progress span { display: block; height: 100%; background: var(--accent); width: 0; }
+      .deck { position: relative; }
+      .deck-layer { position: absolute; inset: 0; border: 1px solid var(--border); border-radius: 18px; background: var(--panel); pointer-events: none; }
+      .deck-layer.one { transform: translateY(9px) scale(.976); opacity: .62; }
+      .deck-layer.two { transform: translateY(18px) scale(.952); opacity: .3; }
+      .deck[data-stack="off"] .deck-layer { display: none; }
       .card {
         position: relative;
+        z-index: 1;
         display: flex;
         flex-direction: column;
         height: 430px;
         min-height: 410px;
+        overflow: hidden;
         border: 1px solid #695838;
         border-radius: 18px;
         background: linear-gradient(145deg, #242a2e, var(--panel) 60%);
@@ -73,6 +80,11 @@
       .side-label { color: var(--warm); display: inline-flex; gap: 8px; align-items: center; }
       .side-label::before { content: ""; width: 6px; height: 6px; background: currentColor; border-radius: 50%; }
       #position { font-family: ui-monospace, monospace; letter-spacing: .1em; }
+      .slide { position: relative; flex: 1; min-height: 0; perspective: 1000px; }
+      .stage { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(0deg); transition: transform 420ms cubic-bezier(.2, .75, .3, 1); }
+      .card[data-side="back"] .stage { transform: rotateY(180deg); }
+      .flip-face { position: absolute; inset: 0; display: flex; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+      .flip-face.back { transform: rotateY(180deg); }
       .face { flex: 1; min-height: 0; overflow-y: auto; touch-action: pan-y; padding: 32px 0 24px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
       #front { display: flex; flex-direction: column; align-items: center; justify-content: safe center; text-align: center; }
       #front-title { flex-shrink: 0; font-size: clamp(28px, 5vw, 44px); font-weight: 600; line-height: 1.3; letter-spacing: -.03em; margin: 0 0 18px; }
@@ -97,9 +109,10 @@
       #retry { margin: 18px auto 0; }
       .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
       @media (prefers-reduced-motion: no-preference) {
-        .card.changed { animation: appear .2s ease-out; }
-        @keyframes appear { from { opacity: .6; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .progress span { transition: width .2s; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .stage { transition: none; }
       }
       @media (max-width: 600px) {
         .shell { padding: 12px 16px 28px; }
@@ -112,6 +125,7 @@
         select { max-width: none; }
         .round { align-self: end; }
         .card { padding: 22px; height: 400px; min-height: 370px; border-radius: 14px; }
+        .deck-layer { border-radius: 14px; }
         .face { padding: 36px 0 26px; }
         .actions { grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 20px; }
         #random { grid-column: 1/-1; }
@@ -143,23 +157,35 @@
           <span id="notice-text">正在准备卡片…</span>
           <button id="retry" class="action" type="button" hidden>重新加载</button>
         </div>
-        <article id="card" class="card" data-side="front" tabindex="0" aria-label="算法记忆卡，按空格或回车翻面" aria-keyshortcuts="Space Enter ArrowLeft ArrowRight" hidden>
-          <div class="card-top"><span id="side-label" class="side-label">正面 · 回忆</span><span id="position"></span></div>
-          <div id="front" class="face">
-            <h2 id="front-title"></h2>
-            <p class="prompt">它的核心思想是什么？</p>
-          </div>
-          <div id="back" class="face" tabindex="0" aria-label="核心直觉，可上下滚动" hidden>
-            <h2 id="back-title"></h2>
-            <p id="intuition"></p>
-          </div>
-          <p id="hint" hidden></p>
-          <div class="card-bottom">
-            <button id="hint-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="hint" hidden>查看提示</button>
-            <a id="article-link" target="_blank" rel="noopener noreferrer" hidden>阅读原文 ↗</a>
-            <span id="flip-cue">点击卡片，查看思路</span>
-          </div>
-        </article>
+        <div id="deck" class="deck" data-stack="off">
+          <div class="deck-layer two" aria-hidden="true"></div>
+          <div class="deck-layer one" aria-hidden="true"></div>
+          <article id="card" class="card" data-side="front" tabindex="0" aria-label="算法记忆卡，按空格或回车翻面" aria-keyshortcuts="Space Enter ArrowLeft ArrowRight" hidden>
+            <div class="card-top"><span id="side-label" class="side-label">正面 · 回忆</span><span id="position"></span></div>
+            <div id="slide" class="slide">
+              <div id="stage" class="stage">
+                <div id="front-face" class="flip-face">
+                  <div id="front" class="face">
+                    <h2 id="front-title"></h2>
+                    <p class="prompt">它的核心思想是什么？</p>
+                  </div>
+                </div>
+                <div id="back-face" class="flip-face back" hidden>
+                  <div id="back" class="face" tabindex="0" aria-label="核心直觉，可上下滚动">
+                    <h2 id="back-title"></h2>
+                    <p id="intuition"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p id="hint" hidden></p>
+            <div class="card-bottom">
+              <button id="hint-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="hint" hidden>查看提示</button>
+              <a id="article-link" target="_blank" rel="noopener noreferrer" hidden>阅读原文 ↗</a>
+              <span id="flip-cue">点击卡片，查看思路</span>
+            </div>
+          </article>
+        </div>
         <div class="actions" role="group" aria-label="抽卡操作">
           <button id="previous" class="action" type="button" disabled><span aria-hidden="true">←</span>上一张</button>
           <button id="flip" class="action primary" type="button" aria-controls="front back" disabled>翻面看思路</button>
@@ -179,15 +205,65 @@
     <script>
       (() => {
         const $ = (id) => document.getElementById(id);
+        const FLIP_MS = 420;
+        const SLIDE_MS = 260;
         const state = { cards: [], pool: [], seen: new Set(), round: 1, index: 0, back: false, hint: false };
         const card = $('card');
+        const slide = $('slide');
+        const frontFace = $('front-face');
+        const backFace = $('back-face');
         const interactive = 'button, a, input, select, textarea, [contenteditable]:not([contenteditable="false"])';
+        const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        const running = new Set();
+        let flipTimer = 0;
+        let generation = 0;
 
         function current() { return state.pool[state.index]; }
-        function animate() {
-          card.classList.remove('changed');
-          void card.offsetWidth;
-          card.classList.add('changed');
+
+        // Reduced motion skips every animation, so these helpers simply do nothing there.
+        function play(element, frames, options) {
+          if (reduced() || typeof element.animate !== 'function') return null;
+          const animation = element.animate(frames, { easing: 'ease-out', ...options });
+          running.add(animation);
+          animation.finished.catch(() => {}).then(() => running.delete(animation));
+          return animation;
+        }
+        function stopMotion() {
+          clearTimeout(flipTimer);
+          running.forEach((animation) => { try { animation.cancel(); } catch { /* already gone */ } });
+          running.clear();
+          document.querySelectorAll('.ghost').forEach((ghost) => ghost.remove());
+        }
+        function resetSlide() {
+          slide.style.transform = '';
+          slide.style.opacity = '';
+        }
+        // Both faces stay in the 3D stage while turning; once settled only the active one is rendered.
+        function settleFaces() {
+          const back = state.back;
+          frontFace.hidden = back;
+          backFace.hidden = !back;
+          frontFace.inert = back;
+          backFace.inert = !back;
+          frontFace.setAttribute('aria-hidden', String(back));
+          backFace.setAttribute('aria-hidden', String(!back));
+        }
+        function flip(target) {
+          if (!current()) return;
+          // Calls from event listeners pass the event, so only a real boolean picks the side.
+          const next = typeof target === 'boolean' ? target : !state.back;
+          if (next === state.back) return;
+          state.back = next;
+          clearTimeout(flipTimer);
+          if (reduced()) { settleFaces(); render(); return; }
+          frontFace.hidden = false;
+          backFace.hidden = false;
+          frontFace.inert = true;
+          backFace.inert = true;
+          render();
+          // A second tap only changes the target angle, so the turn continues from where it was.
+          flipTimer = setTimeout(() => { if (state.back === next) settleFaces(); }, FLIP_MS + 40);
         }
         function render() {
           const item = current();
@@ -197,6 +273,7 @@
           $('flip').disabled = !item;
           ['previous', 'next', 'random'].forEach((id) => { $(id).disabled = count < 2; });
           $('single').hidden = count !== 1;
+          $('deck').dataset.stack = count > 1 && item ? 'on' : 'off';
           $('total').textContent = String(count);
           $('round').textContent = count ? `第 ${state.round} 轮 · 已看 ${state.seen.size} / ${count}` : '';
           $('progress').style.width = count ? `${state.seen.size / count * 100}%` : '0%';
@@ -211,8 +288,6 @@
           $('front-title').textContent = item.title;
           $('back-title').textContent = item.title;
           $('intuition').textContent = item.intuition;
-          $('front').hidden = state.back;
-          $('back').hidden = !state.back;
           $('hint-toggle').hidden = state.back || !item.hint;
           $('hint-toggle').textContent = state.hint ? '收起提示' : '查看提示';
           $('hint-toggle').setAttribute('aria-expanded', String(state.hint));
@@ -237,13 +312,16 @@
           state.back = false;
           state.hint = false;
           state.seen.add(current().id);
+          settleFaces();
           render();
           $('front').scrollTop = 0;
           $('back').scrollTop = 0;
           $('hint').scrollTop = 0;
-          animate();
         }
         function filter() {
+          generation++;
+          stopMotion();
+          resetSlide();
           state.pool = state.cards.filter((item) => !$('tag').value || item.tags.includes($('tag').value));
           state.seen.clear();
           state.round = 1;
@@ -251,23 +329,67 @@
           state.back = false;
           state.hint = false;
           if (state.pool.length) visit(0);
-          else render();
+          else { settleFaces(); render(); }
+        }
+        // The outgoing card is cloned so it can keep travelling while the real card already shows the next one.
+        function makeGhost() {
+          const rect = card.getBoundingClientRect();
+          const ghost = card.cloneNode(true);
+          ghost.removeAttribute('id');
+          ghost.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+          ghost.querySelectorAll('[tabindex]').forEach((node) => node.removeAttribute('tabindex'));
+          ghost.removeAttribute('hidden');
+          ghost.setAttribute('aria-hidden', 'true');
+          ghost.classList.add('ghost');
+          ghost.inert = true;
+          ghost.style.position = 'fixed';
+          ghost.style.top = `${rect.top}px`;
+          ghost.style.left = `${rect.left}px`;
+          ghost.style.width = `${rect.width}px`;
+          ghost.style.height = `${rect.height}px`;
+          ghost.style.margin = '0';
+          ghost.style.zIndex = '30';
+          ghost.style.pointerEvents = 'none';
+          document.body.append(ghost);
+          return ghost;
+        }
+        // `outward` is the side the leaving card travels toward: -1 left, 1 right.
+        async function advance(index, outward) {
+          if (!state.pool.length || !current() || index === state.index) return;
+          const mark = ++generation;
+          stopMotion();
+          if (state.back) {
+            // Buttons, keys and random always flip the answer face down before the card leaves.
+            flip(false);
+            if (!reduced()) await wait(FLIP_MS - 60);
+            if (mark !== generation) return;
+          }
+          settleFaces();
+          const ghost = reduced() ? null : makeGhost();
+          resetSlide();
+          visit(index);
+          if (!ghost) return;
+          const exit = play(ghost, [
+            { transform: 'translateX(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateX(${outward * 100}%) rotate(${outward * 5}deg)`, opacity: 0 }
+          ], { duration: SLIDE_MS, easing: 'cubic-bezier(.25, .8, .25, 1)', fill: 'forwards' });
+          exit?.finished.then(() => ghost.remove(), () => ghost.remove());
+          play(slide, [
+            { transform: `translateX(${-outward * 60}%)`, opacity: .3 },
+            { transform: 'translateX(0)', opacity: 1 }
+          ], { duration: SLIDE_MS });
         }
         function move(direction) {
-          if (state.pool.length > 1) visit((state.index + direction + state.pool.length) % state.pool.length);
+          if (state.pool.length < 2) return;
+          const total = state.pool.length;
+          advance((state.index + direction + total) % total, direction > 0 ? -1 : 1);
         }
         function random() {
           if (state.pool.length < 2) return;
           let candidates = state.pool.map((_, index) => index).filter((index) => !state.seen.has(state.pool[index].id));
           // A completed round starts afresh, but never repeats the current card immediately.
           if (!candidates.length) candidates = state.pool.map((_, index) => index).filter((index) => index !== state.index);
-          visit(candidates[Math.floor(Math.random() * candidates.length)]);
-        }
-        function flip() {
-          if (!current()) return;
-          state.back = !state.back;
-          render();
-          animate();
+          advance(candidates[Math.floor(Math.random() * candidates.length)], -1);
         }
         async function load() {
           $('retry').hidden = true;
@@ -307,7 +429,7 @@
         $('previous').addEventListener('click', () => move(-1));
         $('next').addEventListener('click', () => move(1));
         $('random').addEventListener('click', random);
-        $('flip').addEventListener('click', flip);
+        $('flip').addEventListener('click', () => flip());
         $('retry').addEventListener('click', load);
         $('hint-toggle').addEventListener('click', () => {
           state.hint = !state.hint;
@@ -329,6 +451,20 @@
         // Keep vertical scrolling and text selection native. Only a deliberate horizontal drag changes cards.
         let gesture = null;
         let suppressClickUntil = 0;
+        function followPointer(dx) {
+          if (reduced()) {
+            slide.style.transform = `translateX(${dx}px)`;
+            return;
+          }
+          const ratio = Math.min(Math.abs(dx) / (card.clientWidth || 1), 1.2);
+          slide.style.transform = `translateX(${dx}px) rotate(${dx / 45}deg)`;
+          slide.style.opacity = String(Math.max(1 - ratio / 2, .45));
+        }
+        function springBack() {
+          const from = slide.style.transform;
+          resetSlide();
+          if (from) play(slide, [{ transform: from, opacity: 1 }, { transform: 'translateX(0)', opacity: 1 }], { duration: 200, easing: 'cubic-bezier(.2, .8, .3, 1)' });
+        }
         card.addEventListener('pointerdown', (event) => {
           if (!event.isPrimary || event.button !== 0 || event.target.closest(interactive)) return;
           suppressClickUntil = 0;
@@ -336,7 +472,22 @@
             event.preventDefault();
             card.focus({ preventScroll: true });
           }
-          gesture = { id: event.pointerId, x: event.clientX, y: event.clientY };
+          gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, dx: 0, dy: 0, vx: 0, lastX: event.clientX, lastT: event.timeStamp, horizontal: false };
+        });
+        document.addEventListener('pointermove', (event) => {
+          if (!gesture || event.pointerId !== gesture.id) return;
+          gesture.dx = event.clientX - gesture.x;
+          gesture.dy = event.clientY - gesture.y;
+          const elapsed = Math.max(event.timeStamp - gesture.lastT, 1);
+          gesture.vx = (event.clientX - gesture.lastX) / elapsed;
+          gesture.lastX = event.clientX;
+          gesture.lastT = event.timeStamp;
+          if (!gesture.horizontal && Math.abs(gesture.dx) > 12 && Math.abs(gesture.dx) > Math.abs(gesture.dy) * 1.5) {
+            gesture.horizontal = true;
+            // Dragging always handles a face-up card, so a revealed answer turns back over first.
+            if (state.back) flip(false);
+          }
+          if (gesture.horizontal) followPointer(gesture.dx);
         });
         card.addEventListener('touchmove', (event) => {
           if (!gesture || event.touches.length !== 1) return;
@@ -345,18 +496,30 @@
           // We own horizontal swipes; leave vertical movement to the scrollable text.
           if (event.cancelable && Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) * 1.5) event.preventDefault();
         }, { passive: false });
+        function endGesture() {
+          const finished = gesture;
+          gesture = null;
+          if (!finished) return;
+          const { dx, dy, vx, horizontal } = finished;
+          if (!horizontal) {
+            resetSlide();
+            if (Math.abs(dx) >= 12 || Math.abs(dy) >= 12) suppressClickUntil = performance.now() + 400;
+            return;
+          }
+          suppressClickUntil = performance.now() + 400;
+          const width = card.clientWidth || 1;
+          const outward = dx < 0 ? -1 : 1;
+          // A quarter of the card, or a fast flick, is enough to commit the swipe.
+          const committed = Math.abs(dx) > width * 0.25 || (Math.abs(vx) > 0.5 && Math.abs(dx) > 24);
+          if (!committed || state.pool.length < 2 || window.getSelection()?.toString()) { springBack(); return; }
+          const total = state.pool.length;
+          advance((state.index + (outward < 0 ? 1 : -1) + total) % total, outward);
+        }
         document.addEventListener('pointerup', (event) => {
           if (!gesture || event.pointerId !== gesture.id) return;
-          const dx = event.clientX - gesture.x;
-          const dy = event.clientY - gesture.y;
-          gesture = null;
-          if (Math.abs(dx) < 12 && Math.abs(dy) < 12) return;
-          suppressClickUntil = performance.now() + 400;
-          if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && !window.getSelection()?.toString()) {
-            move(dx < 0 ? 1 : -1);
-          }
+          endGesture();
         });
-        document.addEventListener('pointercancel', () => { gesture = null; });
+        document.addEventListener('pointercancel', () => { if (gesture) endGesture(); });
         card.addEventListener('click', (event) => {
           if (performance.now() < suppressClickUntil || event.target.closest(interactive) || window.getSelection()?.toString()) return;
           flip();

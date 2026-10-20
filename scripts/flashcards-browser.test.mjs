@@ -44,6 +44,10 @@ async function setup(t, options = {}, payload) {
 }
 async function id(page) { return page.locator('#card').getAttribute('data-id'); }
 async function side(page) { return page.locator('#card').getAttribute('data-side'); }
+// Navigation that starts on the back face turns the card over first, so settle before asserting.
+async function waitId(page, expected) {
+  await page.waitForFunction((value) => document.querySelector('#card')?.dataset.id === value, expected);
+}
 
 test('front, optional hint, back and source link; buttons and keyboard reset each card to its front', async (t) => {
   const { page } = await setup(t);
@@ -68,19 +72,21 @@ test('front, optional hint, back and source link; buttons and keyboard reset eac
   assert.equal(await side(page), 'back', 'opening the article never flips');
   await popup.close();
   await page.locator('#next').click();
-  assert.equal(await id(page), 'b');
+  await waitId(page, 'b');
   assert.equal(await side(page), 'front');
+  assert.equal(await page.locator('#back').isVisible(), false, 'only the settled face stays rendered');
+  assert.equal(await page.locator('#front').isVisible(), true);
   assert.equal(await page.locator('#hint-toggle').isVisible(), false);
   // Direction shortcuts also work after a navigation button has focus.
   await page.keyboard.press('ArrowRight');
-  assert.equal(await id(page), 'c');
+  await waitId(page, 'c');
   await page.locator('#card').focus();
   await page.keyboard.press('Space');
   assert.equal(await side(page), 'back');
   await page.keyboard.press('Enter');
   assert.equal(await side(page), 'front');
   await page.keyboard.press('ArrowLeft');
-  assert.equal(await id(page), 'b');
+  await waitId(page, 'b');
   await page.locator('#flip').focus();
   await page.keyboard.press('Space');
   assert.equal(await side(page), 'back', 'native button space flips exactly once');
@@ -143,16 +149,29 @@ test('desktop drags switch cards, vertical drags do not, and selected answer tex
   const { page } = await setup(t);
   await page.locator('#card').waitFor();
   const box = await page.locator('#card').boundingBox();
-  async function drag(dx, dy) {
+  async function drag(dx, dy, steps = 12) {
     await page.mouse.move(box.x + box.width * .7, box.y + 15);
     await page.mouse.down();
-    await page.mouse.move(box.x + box.width * .7 + dx, box.y + 15 + dy, { steps: 12 });
+    await page.mouse.move(box.x + box.width * .7 + dx, box.y + 15 + dy, { steps });
     await page.mouse.up();
   }
-  await drag(-160, 0);
+  // Under the distance threshold and slow enough not to count as a flick: the card springs back.
+  await page.mouse.move(box.x + box.width * .7, box.y + 15);
+  await page.mouse.down();
+  for (let step = 1; step <= 12; step++) {
+    await page.mouse.move(box.x + box.width * .7 - step * 8, box.y + 15);
+    await page.waitForTimeout(16);
+  }
+  assert.match(await page.locator('#slide').evaluate((el) => el.style.transform), /translateX\(-9[0-6]px\)/, 'the card follows the drag');
+  await page.mouse.up();
+  await page.waitForTimeout(240);
+  assert.equal(await id(page), 'a');
+  assert.equal(await page.locator('#slide').evaluate((el) => el.style.transform), '');
+  assert.equal(await page.locator('#slide').evaluate((el) => el.style.opacity), '');
+  await drag(-box.width * .4, 0);
   assert.equal(await id(page), 'b');
   assert.equal(await side(page), 'front', 'the click following a swipe must not flip the new card');
-  await drag(160, 0);
+  await drag(box.width * .4, 0);
   assert.equal(await id(page), 'a');
   await drag(0, 120);
   assert.equal(await id(page), 'a');
@@ -231,4 +250,97 @@ test('failed API requests show retry and can recover without reloading the page'
   await page.locator('#card').waitFor();
   assert.equal(await id(page), 'a');
   assert.equal(await page.locator('#retry').isVisible(), false);
+});
+
+test('the card turns over in 3D and only the settled face stays rendered', async (t) => {
+  const { page } = await setup(t);
+  await page.locator('#card').waitFor();
+  const stage = page.locator('#stage');
+  assert.equal(await stage.evaluate((el) => getComputedStyle(el).transitionProperty), 'transform');
+  assert.equal(await stage.evaluate((el) => getComputedStyle(el).transitionDuration), '0.42s');
+  assert.equal(await stage.evaluate((el) => getComputedStyle(el).transformStyle), 'preserve-3d');
+  await page.locator('#flip').click();
+  assert.equal(await side(page), 'back');
+  // Both faces are on stage while turning, so the answer is not popped in by a display switch.
+  assert.equal(await page.locator('#back-face').isVisible(), true);
+  assert.equal(await page.locator('#front-face').isVisible(), true);
+  await page.waitForFunction(() => document.querySelector('#front-face').hidden === true);
+  assert.match(await stage.evaluate((el) => getComputedStyle(el).transform), /^matrix/, 'the stage rests at half a turn');
+  assert.equal(await page.locator('#front-face').evaluate((el) => el.inert), true);
+  assert.equal(await page.locator('#back-face').evaluate((el) => el.inert), false);
+  assert.equal(await page.locator('#front-face').getAttribute('aria-hidden'), 'true');
+  assert.equal(await page.locator('#back-face').getAttribute('aria-hidden'), 'false');
+  await page.locator('#flip').click();
+  await page.waitForFunction(() => document.querySelector('#back-face').hidden === true);
+  assert.equal(await page.locator('#front-face').evaluate((el) => el.inert), false);
+});
+
+test('each navigation pushes a cloned card out and removes it afterwards', async (t) => {
+  const { page } = await setup(t);
+  await page.locator('#card').waitFor();
+  await page.locator('#next').click();
+  assert.equal(await page.evaluate(() => document.querySelectorAll('.ghost').length), 1);
+  assert.equal(await page.locator('#card').count(), 1, 'the clone drops ids so #card stays unique');
+  assert.deepEqual(
+    await page.evaluate(() => document.querySelector('.ghost').getAnimations().map((animation) => animation.effect.getKeyframes().at(-1).transform)),
+    ['translateX(-100%) rotate(-5deg)']
+  );
+  assert.equal(await page.locator('#slide').evaluate((el) => el.getAnimations().length), 1, 'the next card slides in');
+  await waitId(page, 'b');
+  await page.waitForFunction(() => document.querySelectorAll('.ghost').length === 0);
+  await page.locator('#previous').click();
+  assert.deepEqual(
+    await page.evaluate(() => document.querySelector('.ghost').getAnimations().map((animation) => animation.effect.getKeyframes().at(-1).transform)),
+    ['translateX(100%) rotate(5deg)']
+  );
+  await waitId(page, 'a');
+});
+
+test('a quick second click interrupts the same motion instead of queueing it', async (t) => {
+  const { page } = await setup(t);
+  await page.locator('#card').waitFor();
+  await page.locator('#next').click();
+  await page.locator('#next').click();
+  await waitId(page, 'c');
+  assert.equal(await page.evaluate(() => document.querySelectorAll('.ghost').length <= 1), true, 'only the latest clone survives');
+  await page.waitForFunction(() => document.querySelectorAll('.ghost').length === 0);
+});
+
+test('dragging a revealed answer turns it back over before the swipe commits', async (t) => {
+  const { page } = await setup(t);
+  await page.locator('#card').waitFor();
+  const box = await page.locator('#card').boundingBox();
+  await page.locator('#flip').click();
+  assert.equal(await side(page), 'back');
+  await page.mouse.move(box.x + box.width * .7, box.y + 15);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width * .7 - box.width * .5, box.y + 15, { steps: 12 });
+  assert.equal(await side(page), 'front', 'the answer leaves face up');
+  await page.mouse.up();
+  await waitId(page, 'b');
+});
+
+test('the deck edge decoration follows the size of the current range', async (t) => {
+  const { page } = await setup(t);
+  await page.locator('#card').waitFor();
+  assert.equal(await page.locator('.deck-layer').count(), 2);
+  assert.equal(await page.locator('#deck').getAttribute('data-stack'), 'on');
+  assert.equal(await page.locator('.deck-layer').first().evaluate((el) => getComputedStyle(el).pointerEvents), 'none');
+  await page.locator('#tag').selectOption('基础');
+  assert.equal(await page.locator('#deck').getAttribute('data-stack'), 'off');
+  assert.equal(await page.locator('.deck-layer').first().isVisible(), false);
+});
+
+test('reduced motion swaps faces and cards instantly, without any animation work', async (t) => {
+  const { page } = await setup(t, { reducedMotion: 'reduce' });
+  await page.locator('#card').waitFor();
+  await page.locator('#flip').click();
+  assert.equal(await side(page), 'back');
+  assert.equal(await page.locator('#back-face').isVisible(), true);
+  assert.equal(await page.locator('#front-face').isVisible(), false, 'nothing to wait for');
+  assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
+  await page.locator('#next').click();
+  assert.equal(await id(page), 'b', 'navigation lands in the same click');
+  assert.equal(await page.evaluate(() => document.querySelectorAll('.ghost').length), 0);
+  assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
 });
