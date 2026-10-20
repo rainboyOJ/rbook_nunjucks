@@ -60,31 +60,37 @@
       .card {
         position: relative;
         z-index: 1;
-        display: flex;
-        flex-direction: column;
         height: 430px;
         min-height: 410px;
+        cursor: pointer;
+        touch-action: pan-y;
+      }
+      /* The drag and the navigation move the whole card, frame included. */
+      .slide { position: absolute; inset: 0; perspective: 1000px; }
+      .stage { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(0deg); transition: transform 420ms cubic-bezier(.2, .75, .3, 1); }
+      .card[data-side="back"] .stage { transform: rotateY(180deg); }
+      /* Each side is a complete card, so the turn and the throw carry the frame with the text. */
+      .card-face {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 28px 36px;
         overflow: hidden;
         border: 1px solid #695838;
         border-radius: 18px;
         background: linear-gradient(145deg, #242a2e, var(--panel) 60%);
         box-shadow: 0 16px 48px #0004, 0 1px 0 #ffffff08 inset;
-        padding: 28px 36px;
-        cursor: pointer;
-        touch-action: pan-y;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
         overflow-wrap: anywhere;
       }
-      .card[data-side="back"] { border-color: #80704b; background: linear-gradient(145deg, #2a2b25, var(--panel) 75%); }
+      .card-face.back { transform: rotateY(180deg); border-color: #80704b; background: linear-gradient(145deg, #2a2b25, var(--panel) 75%); }
       .card-top, .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
       .card-top { flex-shrink: 0; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
-      .side-label { color: var(--warm); display: inline-flex; gap: 8px; align-items: center; }
-      .side-label::before { content: ""; width: 6px; height: 6px; background: currentColor; border-radius: 50%; }
-      #position { font-family: ui-monospace, monospace; letter-spacing: .1em; }
-      .slide { position: relative; flex: 1; min-height: 0; perspective: 1000px; }
-      .stage { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(0deg); transition: transform 420ms cubic-bezier(.2, .75, .3, 1); }
-      .card[data-side="back"] .stage { transform: rotateY(180deg); }
-      .flip-face { position: absolute; inset: 0; display: flex; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-      .flip-face.back { transform: rotateY(180deg); }
+      .card-label { color: var(--warm); display: inline-flex; gap: 8px; align-items: center; }
+      .card-label::before { content: ""; width: 6px; height: 6px; background: currentColor; border-radius: 50%; }
+      .card-position { font-family: ui-monospace, monospace; letter-spacing: .1em; }
       .face { flex: 1; min-height: 0; overflow-y: auto; touch-action: pan-y; padding: 32px 0 24px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
       #front { display: flex; flex-direction: column; align-items: center; justify-content: safe center; text-align: center; }
       #front-title { flex-shrink: 0; font-size: clamp(28px, 5vw, 44px); font-weight: 600; line-height: 1.3; letter-spacing: -.03em; margin: 0 0 18px; }
@@ -124,7 +130,8 @@
         .filter, select { width: 100%; }
         select { max-width: none; }
         .round { align-self: end; }
-        .card { padding: 22px; height: 400px; min-height: 370px; border-radius: 14px; }
+        .card { height: 400px; min-height: 370px; }
+        .card-face { padding: 22px; border-radius: 14px; }
         .deck-layer { border-radius: 14px; }
         .face { padding: 36px 0 26px; }
         .actions { grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 20px; }
@@ -161,28 +168,32 @@
           <div class="deck-layer two" aria-hidden="true"></div>
           <div class="deck-layer one" aria-hidden="true"></div>
           <article id="card" class="card" data-side="front" tabindex="0" aria-label="算法记忆卡，按空格或回车翻面" aria-keyshortcuts="Space Enter ArrowLeft ArrowRight" hidden>
-            <div class="card-top"><span id="side-label" class="side-label">正面 · 回忆</span><span id="position"></span></div>
             <div id="slide" class="slide">
               <div id="stage" class="stage">
-                <div id="front-face" class="flip-face">
+                <div id="front-face" class="card-face">
+                  <div class="card-top"><span class="card-label">正面 · 回忆</span><span class="card-position"></span></div>
                   <div id="front" class="face">
                     <h2 id="front-title"></h2>
                     <p class="prompt">它的核心思想是什么？</p>
                   </div>
+                  <p id="hint" hidden></p>
+                  <div class="card-bottom">
+                    <button id="hint-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="hint" hidden>查看提示</button>
+                    <span class="card-cue">点击卡片，查看思路</span>
+                  </div>
                 </div>
-                <div id="back-face" class="flip-face back" hidden>
+                <div id="back-face" class="card-face back" hidden>
+                  <div class="card-top"><span class="card-label">背面 · 核心直觉</span><span class="card-position"></span></div>
                   <div id="back" class="face" tabindex="0" aria-label="核心直觉，可上下滚动">
                     <h2 id="back-title"></h2>
                     <p id="intuition"></p>
                   </div>
+                  <div class="card-bottom">
+                    <a id="article-link" target="_blank" rel="noopener noreferrer" hidden>阅读原文 ↗</a>
+                    <span class="card-cue">点击卡片，返回正面</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <p id="hint" hidden></p>
-            <div class="card-bottom">
-              <button id="hint-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="hint" hidden>查看提示</button>
-              <a id="article-link" target="_blank" rel="noopener noreferrer" hidden>阅读原文 ↗</a>
-              <span id="flip-cue">点击卡片，查看思路</span>
             </div>
           </article>
         </div>
@@ -283,8 +294,10 @@
           }
           card.dataset.id = item.id;
           card.dataset.side = state.back ? 'back' : 'front';
-          $('position').textContent = `${String(state.index + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
-          $('side-label').textContent = state.back ? '背面 · 核心直觉' : '正面 · 回忆';
+          // Scoped to the real card: a fresh clone in flight must keep the text it was cloned with.
+          for (const node of card.querySelectorAll('.card-position')) {
+            node.textContent = `${String(state.index + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+          }
           $('front-title').textContent = item.title;
           $('back-title').textContent = item.title;
           $('intuition').textContent = item.intuition;
@@ -296,9 +309,14 @@
           $('article-link').hidden = !state.back || !item.url;
           if (item.url) $('article-link').href = item.url;
           else $('article-link').removeAttribute('href');
-          $('flip-cue').textContent = state.back ? '点击卡片，返回正面' : '点击卡片，查看思路';
-          const face = state.back ? $('back') : $('front');
-          if (face.scrollHeight > face.clientHeight + 2) $('flip-cue').textContent = '上下滚动，阅读全文';
+          // Both sides own their caption, so only the scroll measurement has to be refreshed here.
+          for (const [surface, face, cue] of [
+            [$('front-face'), $('front'), '点击卡片，查看思路'],
+            [$('back-face'), $('back'), '点击卡片，返回正面']
+          ]) {
+            const label = surface.querySelector('.card-cue');
+            if (label) label.textContent = face.scrollHeight > face.clientHeight + 2 ? '上下滚动，阅读全文' : cue;
+          }
           $('flip').textContent = state.back ? '返回正面' : '翻面看思路';
           $('announcement').textContent = state.back ? `${item.title}。${item.intuition}` : `${item.title}，正面。${state.index + 1} / ${count}`;
         }

@@ -163,6 +163,10 @@ test('desktop drags switch cards, vertical drags do not, and selected answer tex
     await page.waitForTimeout(16);
   }
   assert.match(await page.locator('#slide').evaluate((el) => el.style.transform), /translateX\(-9[0-6]px\)/, 'the card follows the drag');
+  const dragged = await page.locator('#front-face').boundingBox();
+  assert.ok(dragged.x < box.x - 60, 'the whole card travels with the drag');
+  assert.ok(Math.abs(await page.locator('#front-face').evaluate((el) => el.offsetWidth) - box.width) < 2, 'the card keeps its size while being dragged');
+  assert.equal((await page.locator('#card').boundingBox()).x, box.x, 'the slot stays put so the card can be thrown');
   await page.mouse.up();
   await page.waitForTimeout(240);
   assert.equal(await id(page), 'a');
@@ -259,6 +263,10 @@ test('the card turns over in 3D and only the settled face stays rendered', async
   assert.equal(await stage.evaluate((el) => getComputedStyle(el).transitionProperty), 'transform');
   assert.equal(await stage.evaluate((el) => getComputedStyle(el).transitionDuration), '0.42s');
   assert.equal(await stage.evaluate((el) => getComputedStyle(el).transformStyle), 'preserve-3d');
+  // The frame and the caption live on the turning surface, so the card itself turns over.
+  assert.equal(await page.locator('#card').evaluate((el) => getComputedStyle(el).borderTopWidth), '0px');
+  assert.equal(await page.locator('#front-face').evaluate((el) => getComputedStyle(el).borderTopWidth), '1px');
+  assert.equal(await page.locator('#front-face').evaluate((el) => getComputedStyle(el).borderRadius), '18px');
   await page.locator('#flip').click();
   assert.equal(await side(page), 'back');
   // Both faces are on stage while turning, so the answer is not popped in by a display switch.
@@ -286,6 +294,9 @@ test('each navigation pushes a cloned card out and removes it afterwards', async
     ['translateX(-100%) rotate(-5deg)']
   );
   assert.equal(await page.locator('#slide').evaluate((el) => el.getAnimations().length), 1, 'the next card slides in');
+  // Re-rendering the live card must not rewrite the card that is already flying away.
+  assert.equal(await page.evaluate(() => document.querySelector('.ghost .card-position').textContent.trim()), '01 / 03');
+  assert.equal(await page.evaluate(() => document.querySelector('.ghost h2').textContent), cards[0].title);
   await waitId(page, 'b');
   await page.waitForFunction(() => document.querySelectorAll('.ghost').length === 0);
   await page.locator('#previous').click();
