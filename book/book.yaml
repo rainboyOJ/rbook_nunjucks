@@ -618,8 +618,6 @@ chapters:
       - title: 匈牙利算法
         english-title: Hungarian Algorithm
         path: Hungarian/index.md
-      - title: Kruskal
-        path: kruskal
       - title: Bellman-Ford
         path: bellman-ford/index.md
       - title: Dijkstra
