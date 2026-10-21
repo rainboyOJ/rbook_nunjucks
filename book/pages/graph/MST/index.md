@@ -216,7 +216,7 @@ Kruskal 适合边列表形式的稀疏图。如果图非常稠密，也可以考
 
 ## 代码模板
 
-点编号为 `1..n`。C++ 版 `kruskal(n, edges, answer)` 用返回值表示图是否连通：返回 `true` 时 `answer` 是 MST 总权值，返回 `false` 表示没有生成树；Python 版 `kruskal(n, edges)` 不连通时返回 `None`。两份模板都按值接收边表，保留调用者原来的边表顺序。
+点编号为 `1..n`。C++ 版 `kruskal(n, edges, answer)` 用返回值表示图是否连通：返回 `true` 时 `answer` 是 MST 总权值，返回 `false` 表示没有生成树；Python 版 `kruskal(n, edges)` 不连通时返回 `None`。两份模板都不会打乱调用者原来的边表顺序：C++ 按值接收边表，Python 用 `sorted` 生成新列表。
 
 :::: code-tabs
 ::: tab C++
@@ -231,7 +231,7 @@ Kruskal 适合边列表形式的稀疏图。如果图非常稠密，也可以考
 
 ## 代码实现
 
-下面是可直接运行的完整程序。C++ 使用 C++17，边权和用 `long long` 保存；Python 使用 Python 3.10 或更新版本。
+下面是可直接运行的完整程序。C++ 使用 C++17，边权和用 `long long` 保存；Python 使用 Python 3.12 或更新版本（模板里的 `type Edge = ...` 是 3.12 起才有的类型别名语句）。
 
 :::: code-tabs
 ::: tab C++

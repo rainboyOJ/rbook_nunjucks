@@ -1,51 +1,36 @@
-from typing import NamedTuple
+# Kruskal 最小生成树：点编号 1..n（单点图也成立），边表是 (u, v, w) 三元组。
+# kruskal 返回 MST 总权值；图不连通时返回 None。
+# 并查集用路径压缩 + 按大小合并，复杂度 O(m log m + m α(n))。
+
+type Edge = tuple[int, int, int]  # (起点 u, 终点 v, 边权 w)
 
 
-class Edge(NamedTuple):
-    u: int
-    v: int
-    w: int
-
-
-class DSU:
-    def __init__(self, n: int = 0) -> None:
-        self.init(n)
-
-    def init(self, n: int) -> None:
-        self.parent = list(range(n + 1))
-        self.size = [1] * (n + 1)
-
-    def find(self, x: int) -> int:
-        # 迭代路径压缩，不依赖 Python 的递归深度。
-        root = x
-        while self.parent[root] != root:
-            root = self.parent[root]
-        while self.parent[x] != root:
-            self.parent[x], x = root, self.parent[x]
-        return root
-
-    def merge(self, a: int, b: int) -> bool:
-        a, b = self.find(a), self.find(b)
-        if a == b:
-            return False
-        if self.size[a] < self.size[b]:
-            a, b = b, a
-        self.parent[b] = a
-        self.size[a] += self.size[b]
-        return True
+def find(parent: list[int], x: int) -> int:
+    """找 x 所在集合的根，顺路把路径上的点挂到根上（迭代压缩，不受递归深度限制）。"""
+    root = x
+    while parent[root] != root:
+        root = parent[root]
+    while parent[x] != root:
+        parent[x], x = root, parent[x]
+    return root
 
 
 def kruskal(n: int, edges: list[Edge]) -> int | None:
-    """点编号 1..n，n >= 1；返回 MST 权值，不连通时返回 None。"""
-    order = sorted(edges, key=lambda edge: edge.w)
-    dsu = DSU(n)
-    answer = selected = 0
-    for edge in order:
-        # merge 返回 True，才说明这条边连接了两个不同的块。
-        if not dsu.merge(edge.u, edge.v):
+    """返回 MST 总权值，图不连通时返回 None；sorted 生成新列表，不打乱调用者的边表。"""
+    parent = list(range(n + 1))  # parent[x]：x 的父节点，x 是根时等于 x
+    size = [1] * (n + 1)         # size[x]：x 是根时该集合的点数
+
+    total = selected = 0
+    for u, v, w in sorted(edges, key=lambda edge: edge[2]):  # 边权小的先试
+        root_u, root_v = find(parent, u), find(parent, v)
+        if root_u == root_v:  # 两端已经连通，选它就会成环
             continue
-        answer += edge.w
+        if size[root_u] < size[root_v]:  # 小集合接到大集合下面
+            root_u, root_v = root_v, root_u
+        parent[root_v] = root_u
+        size[root_u] += size[root_v]
+        total += w
         selected += 1
-        if selected == n - 1:
+        if selected == n - 1:  # 生成树正好 n - 1 条边，选满就停
             break
-    return answer if selected == n - 1 else None
+    return total if selected == n - 1 else None
