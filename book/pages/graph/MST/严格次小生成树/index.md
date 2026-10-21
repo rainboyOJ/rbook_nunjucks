@@ -100,7 +100,7 @@ $$
 
 ::: tab Python
 
-哨兵 `NEG = -(1 << 60)` 沿用 C++，因此边权须大于它；`DSU.find` 与 `dfs` 因链式最坏深度改为迭代实现，签名不变。
+哨兵 `NEG = -(1 << 60)` 沿用 C++，因此边权须大于它。接口是 `strict_second_mst(n, edges)`，无生成树或无严格次小生成树时返回 `-1`；`find` 与建树遍历都写成迭代，因为长链的深度会爆 Python 递归限制（C++ 版直接递归）。
 @include-code(/code/graph/严格次小生成树_sec_mst.py, python)
 :::
 ::::
