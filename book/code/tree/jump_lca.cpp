@@ -1,79 +1,91 @@
-#include <algorithm>
-#include <vector>
-#include <cstring>
+#include <bits/stdc++.h>
+using namespace std;
 
 const int maxn = 1e6 + 5;
-using Graph = std::vector<int>;
-Graph tree[maxn];  // 全局邻接表数组：直接向 tree[u] 加无权边
+const int max_log = 21;  // 2^20 > 1e6，够把整棵树跳到根
 
-// 如何使用：
-// 1. 读入边：tree[u].push_back(v); tree[v].push_back(u);
-// 2. BinaryLCA lca(n);
-// 3. lca.build(root);               // 构建/预处理 DFS 深度和倍增表（默认 root = 1）
-// 4. int p = lca.query(a, b);       // 查询 a 和 b 的 LCA（或使用 lca.lca(a, b)）
-// 5. int d = lca.dist(a, b);        // 查询 a 和 b 在树上的距离
+// 不用 struct 的倍增 LCA：全部是全局数组 + 自由函数，查的时候直接写 lca(a, b)。
+// 用法：
+//   1. 读入无向边：tree[u].push_back(v); tree[v].push_back(u);
+//   2. init_lca(n);        // 单测可省；多测必须调用，用来清空上一组的残留
+//   3. build_lca(1);       // 以 1 为根预处理，题目指定根就传题目给的根
+//   4. lca(a, b)           // 最近公共祖先
+//      dist(a, b)          // 树上距离（边数）
+//      kth_ancestor(a, k)  // a 的第 k 级祖先
+//      is_ancestor(u, v)   // u 是不是 v 的祖先
+//
+// 内存：up 占 maxn * max_log * 4B ≈ 84MB。n 小时把 maxn / max_log 改小即可。
 
-// 倍增算法求最近公共祖先（LCA）与树上距离
-struct BinaryLCA {
-    constexpr static int maxn = 1e6 + 5;
-    constexpr static int max_log = 20;  // 支持最多 2^20 = 1,048,576 个节点
-    int n;
-    int depth[maxn];
-    int up[maxn][max_log]; // up[u][j] 表示节点 u 的 2^j 级祖先
+using Graph = vector<int>;
+Graph tree[maxn];
 
-    explicit BinaryLCA(int n = 0) : n(n) {
-        memset(up, 0, sizeof(up));
-        for (int i = 0; i <= n; ++i) depth[i] = 0;
+int n, lg;              // lg = 实际需要的二进制位数，按 n 收紧，不做无用功
+int depth[maxn];        // depth[0] = 0，根 depth = 1；0 号点当哨兵
+int up[maxn][max_log];  // up[u][j] = u 的 2^j 级祖先，越界一律落到 0
+int stk[maxn];          // 手写栈：1e6 深的链递归会爆栈，这里改成迭代
+
+void init_lca(int n_) {
+    n = n_;
+    lg = 0;
+    while ((1 << lg) <= n) ++lg;  // 最长上跳 n-1 层，只用到前 lg 位
+    for (int u = 0; u <= n; ++u) {
+        depth[u] = 0;
+        for (int j = 0; j < lg; ++j) up[u][j] = 0;
     }
+}
 
-    // DFS 预处理每个节点的深度 depth 以及 2^j 级祖先表 up
-    void dfs(int u, int fa) {
-        up[u][0] = fa;
-        depth[u] = depth[fa] + 1;
-        for (int j = 1; j < max_log; ++j) {
-            up[u][j] = up[up[u][j - 1]][j - 1];
+// 迭代 DFS：出栈时填 up[u][1..lg-1]，因为 u 的父亲和更高祖先早就填好了。
+void build_lca(int root = 1) {
+    int top = 0;
+    depth[0] = 0;  // 哨兵，保证根的父亲深度为 0
+    depth[root] = 1;
+    up[root][0] = 0;
+    stk[top++] = root;
+    while (top) {
+        int u = stk[--top];
+        for (int j = 1; j < lg; ++j) {
+            up[u][j] = up[up[u][j - 1]][j - 1];  // 先跳 2^(j-1)，再跳 2^(j-1)
         }
         for (int v : tree[u]) {
-            if (v == fa) continue;
-            dfs(v, u);
+            if (v == up[u][0]) continue;  // 只跳过父亲
+            up[v][0] = u;
+            depth[v] = depth[u] + 1;
+            stk[top++] = v;
         }
     }
+}
 
-    // 构建/预处理 LCA 倍增表，默认以 root 为根节点
-    void build(int root = 1) {
-        depth[0] = 0;
-        dfs(root, 0);
+// u 的第 k 级祖先：k 的二进制里每个 1 位跳一次
+int kth_ancestor(int u, int k) {
+    for (int j = 0; j < lg; ++j) {
+        if ((k >> j) & 1) u = up[u][j];
     }
+    return u;
+}
 
-    // 查询节点 u 的第 k 级祖先（向上跳 k 步）
-    int kth_ancestor(int u, int k) {
-        for (int j = 0; j < max_log; ++j) {
-            if (k & (1 << j)) u = up[u][j];
+int lca(int a, int b) {
+    if (depth[a] < depth[b]) swap(a, b);      // 让 a 是较深的点
+    a = kth_ancestor(a, depth[a] - depth[b]);  // 先跳到同一层
+    if (a == b) return a;                      // 已经重合，b 就是答案
+
+    // 从大步到小步：跳到 LCA 的正下方，父节点就是答案
+    for (int j = lg - 1; j >= 0; --j) {
+        if (up[a][j] != up[b][j]) {
+            a = up[a][j];
+            b = up[b][j];
         }
-        return u;
     }
+    return up[a][0];
+}
 
-    // 查询节点 a 和节点 b 的最近公共祖先（LCA）
-    int lca(int a, int b) {
-        //保证 a  是较深节点
-        if (depth[a] < depth[b]) std::swap(a, b);
+// 树上两点距离（边数）
+int dist(int a, int b) {
+    int c = lca(a, b);
+    return depth[a] + depth[b] - 2 * depth[c];
+}
 
-        a = kth_ancestor(a, depth[a] - depth[b]);
-        if (a == b) return a;
-
-        for (int j = max_log - 1; j >= 0; --j) {
-            if (up[a][j] != up[b][j]) {
-                a = up[a][j];
-                b = up[b][j];
-            }
-        }
-        return up[a][0];
-    }
-
-
-    // 计算节点 a 和节点 b 在树上的距离
-    int dist(int a, int b) {
-        int c = lca(a, b);
-        return depth[a] + depth[b] - 2 * depth[c];
-    }
-};
+// u 是 v 的祖先 <=> v 向上爬 depth[v]-depth[u] 层正好落在 u
+bool is_ancestor(int u, int v) {
+    if (depth[u] > depth[v]) return false;
+    return kth_ancestor(v, depth[v] - depth[u]) == u;
+}
