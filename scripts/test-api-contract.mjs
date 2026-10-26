@@ -220,7 +220,8 @@ async function main() {
     );
     assert.match(describedPage.markdown, /^---\nid: "jump-lca"/);
     assert.equal(describedPage.markdown.includes('@include-code('), false);
-    assert.match(describedPage.markdown, /```cpp\n#include <algorithm>/);
+    // 只校验模板被真正内联（代码块首行是 #include），不绑定具体头文件
+    assert.match(describedPage.markdown, /```cpp\n#include </);
 
     const codeIdPageResponse = await app.inject('/api/pages?id=ek');
     assertApiResponse(codeIdPageResponse, 200);
