@@ -1,83 +1,86 @@
 #include <algorithm>
 #include <functional>
+#include <iostream>
 #include <queue>
 #include <utility>
 #include <vector>
+using namespace std;
 
-struct Dijkstra {
-    using ll = long long;
-    static constexpr ll INF = (1LL << 62);
+typedef long long ll;
+typedef pair<ll, int> State;  // (dis, u)：距离在前，小根堆才能先弹最小距离
 
-    struct Edge {
-        int to;
-        ll w;
-    };
+const int maxn = 100000 + 5;  // 点数上限，按题面规模调整
+const ll INF = (1LL << 62);   // 约 4.6e18：比任何合法最短距离都大
 
-    std::vector<std::vector<Edge>> g;
-    std::vector<ll> dis;
-    std::vector<int> pre;
-
-    // 点编号 1..n；所有边权非负，有限最短距离必须小于 INF。
-    explicit Dijkstra(int n) : g(n + 1), dis(n + 1, INF), pre(n + 1, -1) {}
-
-    void add_edge(int u, int v, ll w) {
-        g[u].push_back({v, w}); // 无向边需要再添加 v -> u
-    }
-
-    void run(int s) {
-        std::fill(dis.begin(), dis.end(), INF);
-        std::fill(pre.begin(), pre.end(), -1);
-        using State = std::pair<ll, int>; // 距离在前，点编号在后
-        std::priority_queue<State, std::vector<State>, std::greater<State>> q;
-        dis[s] = 0;
-        q.push({0, s});
-
-        while (!q.empty()) {
-            auto [du, u] = q.top();
-            q.pop();
-            if (du != dis[u]) continue; // 旧记录不再扫描出边
-
-            for (const auto& e : g[u]) {
-                // du < INF，且 w >= 0；先判断再相加，避免溢出。
-                if (e.w >= INF - du) continue;
-                ll nd = du + e.w;
-                if (nd >= dis[e.to]) continue; // 只接受严格改善
-                dis[e.to] = nd;
-                pre[e.to] = u;
-                q.push({nd, e.to});
-            }
-        }
-    }
-
-    // run 后使用；不可达返回空数组，否则返回一条最短路径。
-    std::vector<int> path_to(int t) const {
-        if (dis[t] == INF) return {};
-        std::vector<int> path;
-        for (int u = t; u != -1; u = pre[u]) path.push_back(u);
-        std::reverse(path.begin(), path.end());
-        return path;
-    }
+struct Edge {
+    int to;  // 终点
+    ll w;    // 边权，必须非负
 };
 
-#include <iostream>
+vector<Edge> g[maxn];  // g[u]：从 u 出发的全部边
+ll dis[maxn];          // dis[i]：s 到 i 的当前最短距离
+int n;                 // 点数
+int m;                 // 边数
+int s;                 // 源点
+
+// 加一条有向边 u -> v，权 w；无向边调用两次。
+void add_edge(int u, int v, ll w) {
+    g[u].push_back({v, w});
+}
+
+void read_input() {
+    cin >> n >> m >> s;
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        ll w;
+        cin >> u >> v >> w;
+        add_edge(u, v, w);
+    }
+}
+
+// 求 s 到 1..n 的单源最短路，结果写在全局 dis 里。
+void dijkstra(int s) {
+    fill(dis + 1, dis + n + 1, INF);
+
+    // priority_queue 默认是大根堆，用 greater 反转成小根堆
+    priority_queue<State, vector<State>, greater<State>> q;
+    dis[s] = 0;
+    q.push({0, s});
+
+    while (!q.empty()) {
+        ll du = q.top().first;   // 当前最小的候选距离
+        int u = q.top().second;  // 候选距离对应的点
+        q.pop();
+
+        if (du != dis[u]) continue;  // 过期记录：u 已有更短距离，不再扫它的出边
+
+        for (const Edge &e : g[u]) {
+            // du < INF 且 w >= 0，仍先判结果再相加，避免大边权相加溢出
+            if (e.w >= INF - du) continue;
+            ll nd = du + e.w;
+            if (nd >= dis[e.to]) continue;  // 只接受严格改善
+            dis[e.to] = nd;
+            q.push({nd, e.to});
+        }
+    }
+}
+
+void solve() {
+    dijkstra(s);
+    for (int v = 1; v <= n; v++) {
+        if (v > 1) cout << ' ';
+        // 不可达标记按题面调整，这里统一输出 -1
+        if (dis[v] == INF) cout << -1;
+        else cout << dis[v];
+    }
+    cout << '\n';
+}
 
 int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    int n, m, s;
-    if (!(std::cin >> n >> m >> s)) return 0;
-    Dijkstra solver(n);
-    for (int i = 0; i < m; ++i) {
-        int u, v;
-        long long w;
-        std::cin >> u >> v >> w;
-        solver.add_edge(u, v, w);
-    }
-    solver.run(s);
-    for (int v = 1; v <= n; ++v) {
-        if (v > 1) std::cout << ' ';
-        std::cout << (solver.dis[v] == Dijkstra::INF ? -1 : solver.dis[v]);
-    }
-    std::cout << '\n';
+    read_input();
+    solve();
+    return 0;
 }
