@@ -27,6 +27,7 @@
     "serve:dev": "npm run dev",
     "dev": "npm run build:packages:compile && node packages/rbook-server/dist/dev.js",
     "check:nav": "node scripts/check-book-nav.mjs",
+    "check:cpp-templates": "bash scripts/check-cpp-templates.sh",
     "check:push": "git diff --check && npm run pre-check",
     "setup:hooks": "node scripts/setup-git-hooks.mjs",
     "test:api": "npm run build:packages && node --test scripts/include-code.test.mjs scripts/rbook-client.test.mjs scripts/home-navigation.test.mjs && node scripts/test-api-contract.mjs",

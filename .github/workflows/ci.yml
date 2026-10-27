@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Syntax-check self-contained C++ templates
+        run: bash scripts/check-cpp-templates.sh
+
       - name: Build runtime and run API tests
         env:
           RBOOK_CONTENT_DIR: ${{ github.workspace }}/book
