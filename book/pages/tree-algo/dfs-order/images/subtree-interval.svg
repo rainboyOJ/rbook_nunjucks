@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img" aria-labelledby="subtree-interval-title subtree-interval-desc">
+  <title id="subtree-interval-title">子树在 DFS 序中对应连续区间</title>
+  <desc id="subtree-interval-desc">上方树里子树 2 的四个节点被蓝色标出，下方 dfs 序中同样的四个节点落在第 2 到第 5 个位置，括号标出这段区间正是 [in(2), out(2)]。</desc>
+  <style>
+    .canvas { fill: #ffffff; }
+    .edge { fill: none; stroke: #94a3b8; stroke-width: 2; stroke-linecap: round; }
+    .edge--focus { fill: none; stroke: #2563eb; stroke-width: 3; stroke-linecap: round; }
+    .node { fill: #ffffff; stroke: #64748b; stroke-width: 2; }
+    .node--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .label { fill: #1f2937; font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--secondary { fill: #64748b; font: 400 14px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .label--start { text-anchor: start; }
+    .label--end { text-anchor: end; }
+    .label--focus { fill: #2563eb; font: 600 15px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; text-anchor: middle; dominant-baseline: central; }
+    .cell { fill: #ffffff; stroke: #94a3b8; stroke-width: 2; }
+    .cell--focus { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+    .bracket { fill: none; stroke: #2563eb; stroke-width: 2; }
+  </style>
+  <rect class="canvas" width="720" height="520" />
+
+  <text class="label--secondary label--start" x="32" y="30">圈内是点编号，下方一行是 dfs 序 order[1..n]</text>
+
+  <g id="tree-edges">
+    <line class="edge" x1="250" y1="102" x2="170" y2="148" />
+    <line class="edge" x1="250" y1="102" x2="350" y2="148" />
+    <line class="edge--focus" x1="170" y1="192" x2="100" y2="236" />
+    <line class="edge--focus" x1="170" y1="192" x2="210" y2="236" />
+    <line class="edge--focus" x1="210" y1="280" x2="210" y2="318" />
+    <line class="edge" x1="350" y1="192" x2="350" y2="236" />
+  </g>
+
+  <g id="tree-nodes">
+    <circle class="node" cx="250" cy="80" r="22" />
+    <circle class="node--focus" cx="170" cy="170" r="22" />
+    <circle class="node" cx="350" cy="170" r="22" />
+    <circle class="node--focus" cx="100" cy="258" r="22" />
+    <circle class="node--focus" cx="210" cy="258" r="22" />
+    <circle class="node" cx="350" cy="258" r="22" />
+    <circle class="node--focus" cx="210" cy="340" r="22" />
+    <text class="label" x="250" y="80">1</text>
+    <text class="label" x="170" y="170">2</text>
+    <text class="label" x="350" y="170">3</text>
+    <text class="label" x="100" y="258">4</text>
+    <text class="label" x="210" y="258">5</text>
+    <text class="label" x="350" y="258">6</text>
+    <text class="label" x="210" y="340">7</text>
+  </g>
+
+  <g id="sequence">
+    <text class="label--secondary label--end" x="96" y="428">dfs 序</text>
+    <rect class="cell" x="112" y="400" width="64" height="56" />
+    <rect class="cell--focus" x="176" y="400" width="64" height="56" />
+    <rect class="cell--focus" x="240" y="400" width="64" height="56" />
+    <rect class="cell--focus" x="304" y="400" width="64" height="56" />
+    <rect class="cell--focus" x="368" y="400" width="64" height="56" />
+    <rect class="cell" x="432" y="400" width="64" height="56" />
+    <rect class="cell" x="496" y="400" width="64" height="56" />
+    <text class="label" x="144" y="428">1</text>
+    <text class="label" x="208" y="428">2</text>
+    <text class="label" x="272" y="428">4</text>
+    <text class="label" x="336" y="428">5</text>
+    <text class="label" x="400" y="428">7</text>
+    <text class="label" x="464" y="428">3</text>
+    <text class="label" x="528" y="428">6</text>
+    <text class="label--secondary" x="144" y="384">1</text>
+    <text class="label--secondary" x="208" y="384">2</text>
+    <text class="label--secondary" x="272" y="384">3</text>
+    <text class="label--secondary" x="336" y="384">4</text>
+    <text class="label--secondary" x="400" y="384">5</text>
+    <text class="label--secondary" x="464" y="384">6</text>
+    <text class="label--secondary" x="528" y="384">7</text>
+  </g>
+
+  <g id="subtree-bracket">
+    <path class="bracket" d="M 176 466 L 176 476 L 432 476 L 432 466" />
+    <text class="label--focus" x="304" y="500">子树 2 = [in(2), out(2)] = [2, 5]</text>
+  </g>
+</svg>
