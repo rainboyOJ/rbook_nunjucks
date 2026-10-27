@@ -292,6 +292,9 @@ chapters:
       - title: 快速排序（旧入口）
         english-title: Quick Sort
         path: quicksort/index.md
+      - title: 快速输入输出（快读快写）
+        english-title: Fast I/O
+        path: fastio/index.md
       - title: 高精度加法
         english-title: Big Integer Addition
         path: bigNumber/add.md

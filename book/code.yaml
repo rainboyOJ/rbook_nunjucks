@@ -1925,6 +1925,18 @@ codes:
     language: cpp
     tags: [实用工具]
 
+  - id: fastio
+    path: base/fastio.cpp
+    description: fastio | 竞赛极简快速输入输出
+    language: cpp
+    tags: [基础技巧, 实用工具]
+
+  - id: fastio-py
+    path: base/fastio.py
+    description: fastio python | 快速输入输出（Python 版）
+    language: py
+    tags: [基础技巧, 实用工具]
+
   - id: random
     path: utils/random.cpp
     description: random | 随机数工具
