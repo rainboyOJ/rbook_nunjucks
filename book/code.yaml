@@ -1771,13 +1771,13 @@ codes:
 
   - id: hld
     path: tree/hld.cpp
-    description: hld | 树链剖分
+    description: hld | 树链剖分（全局数组与函数）
     language: cpp
     tags: [树形数据结构, 树]
 
   - id: hld-py
     path: tree/hld.py
-    description: hld python | 树链剖分（Python 版）
+    description: hld python | 树链剖分（全局列表与函数）
     language: py
     tags: [树形数据结构, 树]
 
