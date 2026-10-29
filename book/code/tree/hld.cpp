@@ -11,14 +11,16 @@ vector<ll> a, base, tr, lazy;
 
 ll norm(ll x) { return (x % mod + mod) % mod; }
 
+// 多组数据只需要清邻接表：旧边必须走。
+// 其余数组只要求有空间，值由 build()/seg_build() 逐点重新写入，
+// 所以用 resize 而不是 assign，不必手工一个个清零。
 void init(int count, int modulus) {
     n = count; mod = modulus;
-    g.assign(n + 1, {});
-    fa.assign(n + 1, 0); dep.assign(n + 1, 0);
-    sz.assign(n + 1, 0); son.assign(n + 1, 0);
-    top.assign(n + 1, 0); dfn.assign(n + 1, 0); rev.assign(n + 1, 0);
-    a.assign(n + 1, 0); base.assign(n + 1, 0);
-    tr.assign(4 * n + 5, 0); lazy.assign(4 * n + 5, 0);
+    const int N = n + 1, M = 4 * n + 5;
+    g.assign(N, {});
+    fa.resize(N); dep.resize(N); sz.resize(N); son.resize(N);
+    top.resize(N); dfn.resize(N); rev.resize(N); a.resize(N); base.resize(N);
+    tr.resize(M); lazy.resize(M);
 }
 
 void add_edge(int u, int v) {
@@ -40,6 +42,7 @@ void pushdown(int u, int l, int r) {
 }
 
 void seg_build(int u, int l, int r, const vector<long long> &base) {
+    lazy[u] = 0;  // 建树时顺手清懒标记，init 就不必整体清零
     if (l == r) {
         tr[u] = norm(base[l]);
         return;
@@ -76,7 +79,7 @@ long long range_sum(int ql, int qr, int u, int l, int r) {
 // 第二遍：显式栈模拟重儿子优先 DFS，避免链形树的 O(n) 递归栈。
 void build(int root) {
     vector<int> order{root};
-    dep[root] = 1;
+    fa[root] = 0; dep[root] = 1;  // 显式写根父亲，不依赖 fa 的预清零
     for (int i = 0; i < n; ++i) {
         int u = order[i];
         for (int v : g[u]) {
@@ -87,12 +90,14 @@ void build(int root) {
     }
     for (int i = n - 1; i >= 0; --i) {
         int u = order[i];
-        sz[u] = 1;
+        sz[u] = 1; son[u] = 0;
+        int best = 0, best_size = 0;  // 局部变量比较，不依赖 son[] 的旧值
         for (int v : g[u]) {
             if (v == fa[u]) continue;
             sz[u] += sz[v];
-            if (sz[v] > sz[son[u]]) son[u] = v;
+            if (sz[v] > best_size) { best_size = sz[v]; best = v; }
         }
+        son[u] = best;
     }
     int timer = 0;
     vector<int> st{root};

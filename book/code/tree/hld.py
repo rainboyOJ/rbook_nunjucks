@@ -6,17 +6,11 @@ def init(count, modulus):
     global n, mod, g, fa, dep, sz, son, top, dfn, rev, a, base, tr, lazy
     n, mod = count, modulus
     g = [[] for _ in range(n + 1)]
-    fa = [0] * (n + 1)
-    dep = [0] * (n + 1)
-    sz = [0] * (n + 1)
-    son = [0] * (n + 1)
-    top = [0] * (n + 1)
-    dfn = [0] * (n + 1)
-    rev = [0] * (n + 1)
-    a = [0] * (n + 1)
-    base = [0] * (n + 1)
-    tr = [0] * (4 * n + 5)
-    lazy = [0] * (4 * n + 5)
+    N = n + 1
+    # 同长度的数组一行建完；生成器里每次都是新列表，不会互相共享。
+    # 不要写成 [[0] * N] * 9 —— 那样 9 个名字会指向同一个列表。
+    fa, dep, sz, son, top, dfn, rev, a, base = ([0] * N for _ in range(9))
+    tr, lazy = [0] * (4 * n + 5), [0] * (4 * n + 5)
 
 
 def add_edge(u, v):
