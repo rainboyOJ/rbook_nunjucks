@@ -675,6 +675,9 @@ chapters:
       - title: 树的重心
         english-title: Tree Centroid
         path: tree-algo/centroid_of_tree
+      - title: 换根 DP
+        english-title: Rerooting DP
+        path: tree-algo/reroot-dp
       - title: dfs序
         english-title: DFS Order
         path: tree-algo/dfs-order

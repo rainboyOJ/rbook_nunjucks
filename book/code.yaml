@@ -609,6 +609,18 @@ codes:
     language: py
     tags: [数据结构, 线段树]
 
+  - id: segtree-range-add
+    path: data-struture/segment_tree/range_add_range_sum.cpp
+    description: sgt range add range sum | 线段树区间加区间和（取模）
+    language: cpp
+    tags: [数据结构, 线段树, 懒标记]
+
+  - id: segtree-range-add-py
+    path: data-struture/segment_tree/range_add_range_sum.py
+    description: sgt range add range sum python | 线段树区间加区间和（取模，Python 版）
+    language: py
+    tags: [数据结构, 线段树, 懒标记]
+
   - id: segtree-scanline-discrete
     path: data-struture/segment_tree/scanline_area_discrete.cpp
     description: sgt scanline area discrete | 扫描线面积（离散化）
@@ -1828,6 +1840,30 @@ codes:
     description: tree diameter (tree dp) python | 树的直径（树上 DP）（Python 版）
     language: py
     tags: [树形数据结构, 树, 树形DP]
+
+  - id: tree-reroot-max
+    path: tree/tree_reroot_max.cpp
+    description: rerooting DP (max) | 换根 DP（最值型）：每个点的偏心距
+    language: cpp
+    tags: [树形数据结构, 树, 换根DP]
+
+  - id: tree-reroot-max-py
+    path: tree/tree_reroot_max.py
+    description: rerooting DP (max) python | 换根 DP（最值型）：每个点的偏心距（Python 版）
+    language: py
+    tags: [树形数据结构, 树, 换根DP]
+
+  - id: tree-reroot-sum
+    path: tree/tree_reroot_sum.cpp
+    description: rerooting DP (sum) | 换根 DP（求和型）：每个点作为根的加权距离和
+    language: cpp
+    tags: [树形数据结构, 树, 换根DP]
+
+  - id: tree-reroot-sum-py
+    path: tree/tree_reroot_sum.py
+    description: rerooting DP (sum) python | 换根 DP（求和型）：每个点作为根的加权距离和（Python 版）
+    language: py
+    tags: [树形数据结构, 树, 换根DP]
 
   - id: tree-centroid
     path: tree/tree_centroid.cpp
