@@ -682,7 +682,7 @@ chapters:
         english-title: Binary Lifting LCA
         path: tree-algo/jump-lca
       - title: 树链剖分
-        english-title: Heavy-Light Decomposition
+        english-title: hld
         path: tree-algo/hld
       - title: 树上启发式合并
         english-title: DSU on Tree
