@@ -55,7 +55,7 @@ prerequisites:
 
 ::: tab Python
 
-C++ 用 `int&` 引用出参回写根，Python 版 `update` 返回新根，调用方须写 `seg.root = seg.update(seg.root, ...)`。
+C++ 用 `int&` 引用出参回写根，Python 版 `update` 返回新根，调用方须写 `root = update(root, ...)`。两个版本都是全局数组加自由函数，`init()` 负责清空节点池。
 @include-code(/code/data-struture/segment_tree/dynamic_segment_tree.py, python)
 :::
 ::::

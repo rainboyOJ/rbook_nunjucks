@@ -1,105 +1,85 @@
-# 区间赋值 + 区间求和线段树（懒标记，1 下标区间 [1, n]）。
-# 懒标记不变量：若 tree[p].has_lazy 为真，则 p 的整个区间被统一赋为 tree[p].lazy，
-# 但两个孩子的 value 尚未更新；push_down 后才把标记下传并清空。
-# 递归深度为线段树高度 O(log n)，不会触及默认递归上限。
-# C++ 用 long long 存区间和与赋值防溢出；Python int 任意精度，该坑不存在。
+# 区间赋值 + 区间求和线段树（懒标记），节点与区间均为 1 下标。
+# 与 C++ 版一一对应：全局列表 base / tr / lazy / tag，配 init(n) 与独立函数。
+# 懒标记不变量：tag[p] 为真时，p 的整个区间被统一赋为 lazy[p]，但两个孩子的 tr
+# 还没跟上；pushdown 把标记下放到孩子并清空。段内关系 tr[p] = lazy[p] * 区间长度。
+# 递归深度是线段树高度 O(log n)，不会触及默认递归上限。
+
+base: list[int] = []      # 原始数组，建树时用 base[1..n]
+tr: list[int] = []        # tr[p]：节点 p 管辖区间的和
+lazy: list[int] = []      # lazy[p]：待下传的赋值值
+tag: list[bool] = []      # tag[p]：p 是否挂着未下传的赋值标记
+n: int = 0                # 数组长度
 
 
-class Node:
-    """线段树节点：value 为真实区间和，lazy 为待下传赋值，has_lazy 标记是否有未下传赋值。"""
-
-    __slots__ = ("value", "lazy", "has_lazy")
-
-    def __init__(self, value: int = 0, lazy: int = 0, has_lazy: bool = False) -> None:
-        self.value = value
-        self.lazy = lazy
-        self.has_lazy = has_lazy
-
-    def __add__(self, other: "Node") -> "Node":
-        """合并两个孩子：区间和相加，合并结果不携带懒标记（对应 C++ 的 operator+）。"""
-        return Node(self.value + other.value, 0, False)
+def init(size: int) -> None:
+    """重置为区间 [1, size]；换一组数据前必须先调用。"""
+    global n, base, tr, lazy, tag
+    n = size
+    base = [0] * (n + 1)
+    tr = [0] * (n * 4 + 5)
+    lazy = [0] * (n * 4 + 5)
+    tag = [False] * (n * 4 + 5)
 
 
-class SegmentTreeRangeAssign:
-    """tree[p] 为节点 p 的信息；build/assign_range/query 的 l、r、p 与 C++ 同参。"""
+def ls(p: int) -> int:
+    return p << 1  # 左儿子 2p
 
-    def __init__(self, n: int = 0) -> None:
-        self.n = 0
-        self.tree: list[Node] = []
-        self.init(n)
 
-    def init(self, size: int) -> None:
-        """重置为区间 [1, size]，方便同一个对象换一组数据复用。"""
-        self.n = size
-        # 必须每个位置新建独立 Node，不能 [Node()] * k 共享同一对象。
-        self.tree = [Node() for _ in range(size * 4 + 5)]
+def rs(p: int) -> int:
+    return p << 1 | 1  # 右儿子 2p+1
 
-    @staticmethod
-    def lson(p: int) -> int:
-        return p << 1  # 左孩子编号 2p
 
-    @staticmethod
-    def rson(p: int) -> int:
-        return p << 1 | 1  # 右孩子编号 2p+1
+def apply(p: int, l: int, r: int, value: int) -> None:
+    """把节点 p 的整个区间 [l, r] 赋值为 value。"""
+    tr[p] = value * (r - l + 1)
+    lazy[p] = value
+    tag[p] = True
 
-    @staticmethod
-    def mid(l: int, r: int) -> int:
-        return (l + r) >> 1  # 区间中点，等价 (l+r)//2 且不会溢出
 
-    def push_up(self, p: int) -> None:
-        """上推：父节点 = 两个孩子合并。"""
-        self.tree[p] = self.tree[self.lson(p)] + self.tree[self.rson(p)]
+def pushdown(p: int, l: int, r: int) -> None:
+    """下推赋值标记；叶子没有孩子可下放，必须提前返回。"""
+    if not tag[p] or l == r:
+        return
+    mid = (l + r) >> 1
+    apply(ls(p), l, mid, lazy[p])
+    apply(rs(p), mid + 1, r, lazy[p])
+    tag[p] = False  # 标记已经下放，清掉
 
-    def apply(self, p: int, l: int, r: int, value: int) -> None:
-        """把节点 p 的整个区间 [l, r] 赋值为 value（区间和 = value * 长度）。"""
-        self.tree[p].value = value * (r - l + 1)
-        self.tree[p].lazy = value
-        self.tree[p].has_lazy = True
 
-    def push_down(self, p: int, l: int, r: int) -> None:
-        """下推懒标记到两个孩子；叶子没有孩子，直接返回。"""
-        if not self.tree[p].has_lazy or l == r:
-            return
+def seg_build(p: int, l: int, r: int) -> None:
+    """用 base[1..n] 建树。"""
+    tag[p] = False  # 建树时顺手清标记，换数据不必整体清零
+    if l == r:
+        tr[p] = base[l]
+        return
+    mid = (l + r) >> 1
+    seg_build(ls(p), l, mid)
+    seg_build(rs(p), mid + 1, r)
+    tr[p] = tr[ls(p)] + tr[rs(p)]
 
-        m = self.mid(l, r)
-        self.apply(self.lson(p), l, m, self.tree[p].lazy)
-        self.apply(self.rson(p), m + 1, r, self.tree[p].lazy)
-        self.tree[p].has_lazy = False
 
-    def build(self, a: list[int], l: int, r: int, p: int = 1) -> None:
-        """用 1 下标数组 a 的 [l, r] 建树。"""
-        if l == r:
-            self.tree[p].value = a[l]
-            return
-        m = self.mid(l, r)
-        self.build(a, l, m, self.lson(p))
-        self.build(a, m + 1, r, self.rson(p))
-        self.push_up(p)
+def assign_range(ql: int, qr: int, value: int, p: int, l: int, r: int) -> None:
+    """把 [ql, qr] 全部赋值为 value。"""
+    if qr < l or r < ql:
+        return
+    if ql <= l and r <= qr:
+        apply(p, l, r, value)
+        return
+    pushdown(p, l, r)  # 要进入孩子，先把标记下放
+    mid = (l + r) >> 1
+    assign_range(ql, qr, value, ls(p), l, mid)
+    assign_range(ql, qr, value, rs(p), mid + 1, r)
+    tr[p] = tr[ls(p)] + tr[rs(p)]
 
-    def assign_range(self, ql: int, qr: int, value: int, l: int, r: int, p: int = 1) -> None:
-        """把 [ql, qr] 全部赋值为 value。"""
-        if ql <= l and r <= qr:
-            self.apply(p, l, r, value)
-            return
 
-        self.push_down(p, l, r)
-        m = self.mid(l, r)
-        if ql <= m:
-            self.assign_range(ql, qr, value, l, m, self.lson(p))
-        if qr > m:
-            self.assign_range(ql, qr, value, m + 1, r, self.rson(p))
-        self.push_up(p)
-
-    def query(self, ql: int, qr: int, l: int, r: int, p: int = 1) -> int:
-        """返回 [ql, qr] 的区间和。"""
-        if ql <= l and r <= qr:
-            return self.tree[p].value
-
-        self.push_down(p, l, r)
-        m = self.mid(l, r)
-        answer = 0
-        if ql <= m:
-            answer += self.query(ql, qr, l, m, self.lson(p))
-        if qr > m:
-            answer += self.query(ql, qr, m + 1, r, self.rson(p))
-        return answer
+def range_sum(ql: int, qr: int, p: int, l: int, r: int) -> int:
+    """返回 [ql, qr] 的区间和。"""
+    if qr < l or r < ql:
+        return 0
+    if ql <= l and r <= qr:
+        return tr[p]
+    pushdown(p, l, r)  # 孩子的值可能还没跟上父节点的标记
+    mid = (l + r) >> 1
+    answer = range_sum(ql, qr, ls(p), l, mid)
+    answer += range_sum(ql, qr, rs(p), mid + 1, r)
+    return answer

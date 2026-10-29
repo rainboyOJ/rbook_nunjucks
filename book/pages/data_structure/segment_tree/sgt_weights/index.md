@@ -163,7 +163,7 @@ $$
 
 ::: tab Python
 
-递归重载方法用 `_` 前缀（`_add`/`_query`/`_kth`），公开接口与 C++ 同名；`kth`/前驱/后继无解时返回哨兵值，与 C++ 行为一致。
+递归重载方法不再需要：`add` / `remove` / `rank_of` / `kth_smallest` / `predecessor` / `successor` 都是模块级函数，内部直接读全局的 `root`（与 C++ 版一致）。`kth` / 前驱 / 后继无解时行为与 C++ 相同；换一组数据前先调 `init()` 清空节点池。
 @include-code(/code/data-struture/segment_tree/weight_segment_tree.py, python)
 :::
 ::::

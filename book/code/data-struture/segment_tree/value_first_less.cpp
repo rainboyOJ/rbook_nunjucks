@@ -1,64 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 区间最小值线段树（单点取 min 更新）
-struct MinSegmentTree {
-    // 线段树节点：value 为区间最小值
-    using T = int;
-    static const T INF = 1e9;
+// 区间最小值线段树（单点取 min 更新），节点与区间均为 1 下标。
+const int maxn = 100000 + 5;  // 按题目规模调整，n 不能超过 maxn
+const int INF = 1e9;          // 叶子初值，也是查询无解时的哨兵
 
-    struct Node {
-        T value = INF;  // 当前区间的最小值
-    };
+int tr[maxn << 2];  // tr[p]：节点 p 管辖区间的最小值
 
-    // 左儿子 / 右儿子的节点编号
-    static int lson(int p) { return p << 1; }
-    static int rson(int p) { return p << 1 | 1; }
+int ls(int p) { return p << 1; }     // p 的左儿子 2p
+int rs(int p) { return p << 1 | 1; } // p 的右儿子 2p+1
 
-    // 区间 [l, r] 的中点
-    static int mid(int l, int r) { return (l + r) >> 1; }
+// 上推：父区间的最小值 = 两个儿子的较小值
+void pushup(int p) { tr[p] = min(tr[ls(p)], tr[rs(p)]); }
 
-    int n = 0;              // 区间大小
-    vector<Node> tree;      // 线段树数组
+// 建树：所有叶子先置成 INF，表示这些位置还没有任何值
+void seg_build(int p, int l, int r) {
+    tr[p] = INF;
+    if (l == r) return;
+    int mid = (l + r) >> 1;
+    seg_build(ls(p), l, mid);
+    seg_build(rs(p), mid + 1, r);
+}
 
-    MinSegmentTree(int n = 0) {
-        init(n);
+// 单点取 min：把位置 pos 的值更新为 min(原值, value)
+void update_min(int pos, int value, int p, int l, int r) {
+    if (l == r) {
+        tr[p] = min(tr[p], value);
+        return;
     }
+    int mid = (l + r) >> 1;
+    if (pos <= mid) update_min(pos, value, ls(p), l, mid);
+    else update_min(pos, value, rs(p), mid + 1, r);
+    pushup(p);
+}
 
-    void init(int size) {
-        n = size;
-        tree.assign(n * 4 + 5, Node{});
-    }
-
-    // 上推：用两个孩子的最小值合并出当前节点
-    void push_up(int p) {
-        tree[p].value = min(tree[lson(p)].value, tree[rson(p)].value);
-    }
-
-    // 单点取 min：把位置 pos 的值更新为 min(原值, value)
-    void update_min(int pos, T value, int l, int r, int p = 1) {
-        if (l == r) {
-            tree[p].value = min(tree[p].value, value);
-            return;
-        }
-        int m = mid(l, r);
-        if (pos <= m) update_min(pos, value, l, m, lson(p));
-        else update_min(pos, value, m + 1, r, rson(p));
-        push_up(p);
-    }
-
-    // 区间查询：[ql, qr] 的最小值
-    T query_min(int ql, int qr, int l, int r, int p = 1) {
-        if (ql > qr) return INF;
-        if (ql <= l && r <= qr) return tree[p].value;
-
-        int m = mid(l, r);
-        T answer = INF;
-        if (ql <= m) answer = min(answer, query_min(ql, qr, l, m, lson(p)));
-        if (qr > m) answer = min(answer, query_min(ql, qr, m + 1, r, rson(p)));
-        return answer;
-    }
-};
+// 区间最小值：空区间返回 INF
+int query_min(int ql, int qr, int p, int l, int r) {
+    if (ql > qr || qr < l || r < ql) return INF;
+    if (ql <= l && r <= qr) return tr[p];
+    int mid = (l + r) >> 1;
+    int answer = query_min(ql, qr, ls(p), l, mid);
+    answer = min(answer, query_min(ql, qr, rs(p), mid + 1, r));
+    return answer;
+}
 
 int main() {
     ios::sync_with_stdio(false);
@@ -70,31 +54,29 @@ int main() {
     vector<int> a(n + 1);
     vector<int> values;
     values.reserve(n);
-
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
         values.push_back(a[i]);
     }
 
+    // 值域离散化：线段树建在数值上，叶子存该值第一次出现的位置
     sort(values.begin(), values.end());
     values.erase(unique(values.begin(), values.end()), values.end());
-
-    MinSegmentTree seg((int)values.size());
+    int vn = (int)values.size();
+    seg_build(1, 1, vn);
 
     for (int i = 1; i <= n; i++) {
         int rank = lower_bound(values.begin(), values.end(), a[i]) - values.begin() + 1;
-        seg.update_min(rank, i, 1, seg.n);
+        update_min(rank, i, 1, 1, vn);  // 从左往右扫描，叶子只会越来越小
     }
 
     while (q--) {
         int x;
         cin >> x;
-
-        // 所有小于 x 的值，正好落在压缩值域的 [1, last_less]。
+        // 所有小于 x 的值，正好落在压缩值域的 [1, last_less]
         int last_less = lower_bound(values.begin(), values.end(), x) - values.begin();
-        int pos = seg.query_min(1, last_less, 1, seg.n);
-
-        if (pos == MinSegmentTree::INF) cout << n + 1 << '\n';
+        int pos = query_min(1, last_less, 1, 1, vn);
+        if (pos == INF) cout << n + 1 << '\n';  // 不存在 a[i] < x
         else cout << pos << '\n';
     }
 

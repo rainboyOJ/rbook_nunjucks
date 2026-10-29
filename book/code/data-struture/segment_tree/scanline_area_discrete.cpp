@@ -1,73 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
-using i64 = long long;
+// 扫描线线段树（离散化版）：坐标很大时先把 x 坐标压成 1..n 的段号。
+// 与朴素版一样，cover 只挂在整段被覆盖的节点上，不需要懒标记下传。
+const int maxn = 100000 + 5;  // 坐标段数上限，按题目规模调整
 
-// 扫描线事件：一条竖直边，delta=1 为入边，-1 为出边
-struct Event {
-    int x1, x2, y, delta;
-    bool operator<(const Event &other) const {
-        return y < other.y;
+int cover[maxn << 2];  // cover[p]：节点 p 管辖区间被完整覆盖的次数
+ll len[maxn << 2];     // len[p]：节点 p 管辖区间内被覆盖的实际长度
+
+int xs[maxn];  // xs[1..n+1]：离散化后的 x 坐标，第 i 段是 [xs[i], xs[i+1])
+
+int ls(int p) { return p << 1; }     // p 的左儿子 2p
+int rs(int p) { return p << 1 | 1; } // p 的右儿子 2p+1
+
+// 上推：自己的 cover > 0 说明整段被覆盖，长度按坐标差算；
+// 否则由两个孩子拼起来。叶子且 cover == 0 时长度是 0。
+void pushup(int p, int l, int r) {
+    if (cover[p] > 0) len[p] = xs[r + 1] - xs[l];
+    else if (l == r) len[p] = 0;
+    else len[p] = len[ls(p)] + len[rs(p)];
+}
+
+// 区间加覆盖次数：给第 [ql, qr] 段增加 v（v = +1 表示入边，-1 表示出边）
+void add(int ql, int qr, int v, int p, int l, int r) {
+    if (qr < l || r < ql) return;
+    if (ql <= l && r <= qr) {
+        cover[p] += v;
+        pushup(p, l, r);
+        return;
     }
-};
-
-// 扫描线线段树（离散化版）：维护区间被覆盖的次数与覆盖长度
-struct ScanlineSegmentTree {
-    struct Node {
-        int cover = 0;       // 区间被完整覆盖的次数（不做下传，只统计根）
-        i64 covered_len = 0; // 区间内被覆盖的长度（按离散化坐标计算）
-    };
-
-    int n = 0;                  // 离散化后的段数
-    vector<Node> tree;          // 线段树数组
-    const vector<int> *xs;      // 离散化坐标，xs[i] 为第 i 段的左端点
-
-    ScanlineSegmentTree(int n = 0, const vector<int> &coord = {})
-        : xs(&coord) {
-        init(n);
-    }
-
-    void init(int size) {
-        n = size;
-        tree.assign(n * 4 + 5, Node{});
-    }
-
-    // 左儿子 / 右儿子的节点编号
-    static int lson(int p) { return p << 1; }
-    static int rson(int p) { return p << 1 | 1; }
-
-    // 区间 [l, r] 的中点
-    static int mid(int l, int r) { return (l + r) >> 1; }
-
-    // 上推：根据完整覆盖次数与孩子信息更新覆盖长度
-    void push_up(int p, int l, int r) {
-        if (tree[p].cover > 0) {
-            tree[p].covered_len = 1LL * (*xs)[r] - (*xs)[l - 1];
-        } else if (l == r) {
-            tree[p].covered_len = 0;
-        } else {
-            tree[p].covered_len = tree[lson(p)].covered_len + tree[rson(p)].covered_len;
-        }
-    }
-
-    // 区间加覆盖次数：给 [ql, qr] 增加 v（v = 1 或 -1）
-    void add(int ql, int qr, int v, int l, int r, int p = 1) {
-        if (ql <= l && r <= qr) {
-            tree[p].cover += v;
-            push_up(p, l, r);
-            return;
-        }
-        int m = mid(l, r);
-        if (ql <= m) add(ql, qr, v, l, m, lson(p));
-        if (m < qr) add(ql, qr, v, m + 1, r, rson(p));
-        push_up(p, l, r);
-    }
-
-    // 整棵树的覆盖长度
-    i64 query_all() const {
-        return tree[1].covered_len;
-    }
-};
+    int mid = (l + r) >> 1;
+    add(ql, qr, v, ls(p), l, mid);
+    add(ql, qr, v, rs(p), mid + 1, r);
+    pushup(p, l, r);
+}
 
 int main() {
     ios::sync_with_stdio(false);
@@ -76,40 +43,49 @@ int main() {
     int n;
     cin >> n;
 
+    struct Event {
+        int x1, x2, y, delta;
+    };
     vector<Event> events;
-    vector<int> xs;
-    for (int i = 0; i < n; ++i) {
+    events.reserve(2 * n);
+    vector<int> xv;
+    xv.reserve(2 * n);
+
+    for (int i = 0; i < n; i++) {
         int x1, y1, x2, y2;
         cin >> x1 >> y1 >> x2 >> y2;
         events.push_back({x1, x2, y1, 1});
         events.push_back({x1, x2, y2, -1});
-        xs.push_back(x1);
-        xs.push_back(x2);
+        xv.push_back(x1);
+        xv.push_back(x2);
     }
 
-    sort(events.begin(), events.end());
-    sort(xs.begin(), xs.end());
-    xs.erase(unique(xs.begin(), xs.end()), xs.end());
+    sort(events.begin(), events.end(),
+         [](const Event &a, const Event &b) { return a.y < b.y; });
 
-    int segment_count = max(0, (int)xs.size() - 1);
-    if (segment_count == 0) {
+    // 离散化：把 x 坐标压成连续的段号
+    sort(xv.begin(), xv.end());
+    xv.erase(unique(xv.begin(), xv.end()), xv.end());
+    int cnt = (int)xv.size();
+    for (int i = 0; i < cnt; i++) xs[i + 1] = xv[i];
+
+    int segn = cnt - 1;  // 一共 segn 段：[xs[i], xs[i+1])
+    if (segn <= 0) {
         cout << 0 << '\n';
         return 0;
     }
 
-    ScanlineSegmentTree seg(segment_count, xs);
-    i64 ans = 0;
-    int last_y = events.empty() ? 0 : events[0].y;
-    i64 last_len = 0;
+    ll ans = 0;
+    int last_y = events[0].y;
+    ll last_len = 0;
 
-    for (const auto &e : events) {
+    for (const Event &e : events) {
         ans += last_len * (e.y - last_y);
-
-        int l = lower_bound(xs.begin(), xs.end(), e.x1) - xs.begin() + 1;
-        int r = lower_bound(xs.begin(), xs.end(), e.x2) - xs.begin();
-        if (l <= r) seg.add(l, r, e.delta, 1, segment_count);
-
-        last_len = seg.query_all();
+        // 左闭右开：覆盖 [x1, x2) 就是第 [rank(x1), rank(x2)-1] 段
+        int l = lower_bound(xv.begin(), xv.end(), e.x1) - xv.begin() + 1;
+        int r = lower_bound(xv.begin(), xv.end(), e.x2) - xv.begin();
+        if (l <= r) add(l, r, e.delta, 1, 1, segn);
+        last_len = len[1];
         last_y = e.y;
     }
 

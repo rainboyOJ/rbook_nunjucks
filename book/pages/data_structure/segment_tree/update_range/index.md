@@ -6,7 +6,7 @@ date: 2026-06-16 00:00
 toc: true
 tags: ["数据结构", "线段树", "懒标记"]
 categories: ["数据结构"]
-code_template: [segtree-range-assign, segtree-range-assign-py]
+code_template: [segtree-range-assign, segtree-range-assign-py, segtree-range-add, segtree-range-add-py]
 ---
 
 [[TOC]]
@@ -42,18 +42,18 @@ code_template: [segtree-range-assign, segtree-range-assign-py]
 
 对区间赋值来说，懒标记需要记录两件事：
 
-- `tree[p].has_lazy`：当前节点是否有尚未下传的赋值标记；
-- `tree[p].lazy`：如果有标记，这个区间要被赋成什么值。
+- `tag[p]`：当前节点是否有尚未下传的赋值标记；
+- `lazy[p]`：如果有标记，这个区间要被赋成什么值。
 
 当节点 `[l,r]` 被整体赋值为 `x` 时：
 
 ```cpp
-tree[p].value = x * (r - l + 1);
-tree[p].lazy = x;
-tree[p].has_lazy = true;
+tr[p] = x * (r - l + 1);  // 区间和直接按长度算出来
+lazy[p] = x;
+tag[p] = true;
 ```
 
-注意：区间赋值不是区间加法。新的赋值会覆盖旧的赋值标记。
+注意：区间赋值不是区间加法。新的赋值会覆盖旧的赋值标记；加法标记则是会累加的（见后面的区间加模板）。
 
 ## 算法步骤
 
@@ -61,27 +61,27 @@ tree[p].has_lazy = true;
 
 1. 当前节点区间为 `[l,r]`。
 2. 如果 `[l,r]` 完全包含在 `[L,R]` 中：
-   - 更新 `tree[p].value`；
-   - 记录懒标记；
+   - 更新 `tr[p]`；
+   - 记录懒标记 `lazy[p]` 并置 `tag[p] = true`；
    - 返回。
-3. 否则先 `push_down(p)`，把旧标记下传给孩子。
+3. 否则先 `pushdown(p)`，把旧标记下传给孩子。
 4. 递归修改与 `[L,R]` 相交的孩子。
 5. 回溯时重新合并当前节点。
 
 ### 区间查询
 
-1. 如果当前节点区间完全在查询区间内，直接返回 `tree[p].value`。
-2. 否则先 `push_down(p)`，保证孩子信息正确。
+1. 如果当前节点区间完全在查询区间内，直接返回 `tr[p]`。
+2. 否则先 `pushdown(p)`，保证孩子信息正确。
 3. 递归查询相交的孩子。
 4. 合并答案。
 
 ## 算法证明
 
-**核心不变量**：`tree[p].value` 始终表示节点 `p` 对应区间的真实区间和；若 `tree[p].has_lazy` 为真，则它的孩子可能还没更新，但整个节点区间已经被统一赋值。
+**核心不变量**：`tr[p]` 始终表示节点 `p` 对应区间的真实区间和；若 `tag[p]` 为真，则它的孩子可能还没更新，但整个节点区间已经被统一赋值为 `lazy[p]`。
 
-当一个节点被完整覆盖时，直接设置 `tree[p].value`，当前节点答案正确；记录懒标记表示孩子以后需要同步。
+当一个节点被完整覆盖时，直接设置 `tr[p] = value * (r - l + 1)`，当前节点答案正确；记录懒标记表示孩子以后需要同步。
 
-当后续操作必须访问孩子时，`push_down` 会把赋值标记应用到两个孩子，使孩子的 `tree[p].value` 与 `tree[p].lazy` 都正确。然后继续递归，回溯时 `push_up` 重新合并父节点。
+当后续操作必须访问孩子时，`pushdown` 会把赋值标记应用到两个孩子，使孩子的 `tr[p]` 与 `lazy[p]` 都正确。然后继续递归，回溯时重新合并父节点。
 
 因此每次操作结束后，不变量仍成立，查询得到的区间和正确。
 
@@ -96,7 +96,19 @@ tree[p].has_lazy = true;
 
 ## 代码实现
 
-模板输入格式：
+两份模板都用全局数组 + 自由函数，不使用 `struct` 或 `class`，节点与区间均为 1 下标。
+
+| 接口 | 区间赋值模板 | 区间加模板 |
+|---|---|---|
+| 建树 | `seg_build(1, 1, n)` | `seg_build(1, 1, n)` |
+| 区间修改 | `assign_range(l, r, x, 1, 1, n)` | `range_add(l, r, x, 1, 1, n)` |
+| 区间查询 | `range_sum(l, r, 1, 1, n)` | `range_sum(l, r, 1, 1, n)` |
+| 懒标记 | `lazy[p]` + `tag[p]`（赋值会覆盖旧标记） | `lazy[p]`（加法会累加） |
+| 取模 | 不取模，用 `long long` | `mod` 与 `norm()`，和与增量均取模 |
+
+区间赋值模板更贴近“覆盖”语义（染色、赋值），区间加模板与树链剖分里的 sgt 段完全一致，可以直接整段搬到 HLD。
+
+先看区间赋值版。模板输入格式：
 
 ```text
 n m
@@ -119,6 +131,21 @@ op ...
 @include-code(/code/data-struture/segment_tree/range_assign_range_sum.py, python)
 :::
 ::::
+
+### 换成加法标记
+
+区间加模板的输入输出与上面一致，只把 `op = 1 l r x` 的含义改成“把 `[l,r]` 每个数都加上 `x`”。改动集中在三处：
+
+- `apply`：`tr[p] = (tr[p] + value * len) % mod`，`lazy[p] = (lazy[p] + value) % mod`（赋值是覆盖，加法是累加）；
+- `pushdown`：判据从 `tag[p]` 换成 `lazy[p] != 0`，下推后 `lazy[p] = 0`；
+- 建树与上推：每个加法都套一层 `% mod`，建树时叶子要 `norm(base[l])` 把负初值归一。
+
+@include-code(/code/data-struture/segment_tree/range_add_range_sum.cpp, cpp)
+
+Python 版 `init(n, mod)` 多一个模数参数，`apply` / `seg_build` / `range_sum` 里的取模与 C++ 一一对应。
+
+@include-code(/code/data-struture/segment_tree/range_add_range_sum.py, python)
+
 ## 测试用例
 
 输入：
@@ -140,6 +167,28 @@ op ...
 36
 13
 ```
+
+这组数据没有负数，也不会触碰取模，所以区间赋值与区间加两个模板得到相同的 3 个数。区间加模板自己的取模与负增量行为需要单独验，直接拿模板文件（默认 `mod` 取 `1000000007`）跑下面这组：
+
+```text
+3 5
+-5 0 7
+2 1 3
+1 1 2 -3
+2 1 2
+2 1 3
+1 2 2 100
+```
+
+输出为：
+
+```text
+2
+999999996
+1000000003
+```
+
+初始和是 `-5 + 0 + 7 = 2`；`1 1 2 -3` 让前两个位置各减 `3`，此时区间 `[1,2]` 的真实和是 `-11`，取模后输出 `999999996`；整段和变成 `-4`，取模后输出 `1000000003`。最后一条命令只做修改、不输出，用来验证取模后后续操作仍然正确。
 
 ## 应用分类详解
 
@@ -173,7 +222,7 @@ op ...
 
 ### 1. 区间修改区间查询模板题
 
-练习懒标记的 `apply`、`push_down`、`push_up` 三个核心函数。
+练习懒标记的 `apply`、`pushdown`、`seg_build` 三个核心函数。
 
 ### 2. 区间染色问题
 
@@ -181,7 +230,7 @@ op ...
 
 ### 3. 区间加法求和题
 
-把赋值标记改成加法标记，可得到更常见的区间加区间和模板。
+直接用前一节的区间加模板，它把赋值标记换成了累加的加法标记，是更常见的区间加区间和写法。
 
 ## 参考
 

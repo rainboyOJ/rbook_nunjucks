@@ -136,7 +136,7 @@ xq
 
 ::: tab Python
 
-$\mathrm{INF} = 10^9$ 既是叶子初值也是无解哨兵；`update_min` 只让值变小。
+$\mathrm{INF} = 10^9$ 既是叶子初值也是无解哨兵；`update_min` 只让值变小。两个版本都是全局数组加自由函数，建树时把所有叶子置成 `INF` 表示“这些位置还没有值”。
 @include-code(/code/data-struture/segment_tree/value_first_less.py, python)
 :::
 ::::

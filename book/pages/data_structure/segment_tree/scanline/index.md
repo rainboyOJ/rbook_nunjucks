@@ -104,7 +104,7 @@ $$
 
 ::: tab Python
 
-坐标需先离散化为 $1..n$ 的下标再建树，与 C++ 版约定一致。
+Python 版与 C++ 一一对应：`init(segn, coords)` 传入段数与 1 下标的坐标表（长度至少 `segn + 2`），`add(ql, qr, v, 1, 1, segn)` 加覆盖次数，`covered_len()` 读根节点的覆盖长度。递归写法与 C++ 完全同构。
 @include-code(/code/data-struture/segment_tree/scanline_area_discrete.py, python)
 :::
 ::::
@@ -117,7 +117,7 @@ $$
 
 ::: tab Python
 
-要求 $x \in [1, \max\_x]$ 且 $x_1 \leqslant x_2$：越界坐标会让区间 $l > r$ 递归失控（C++ 同样如此，模板不防御）。
+`add(ql, qr, v, 1, 1, n)` 与 `covered_len()` 与 C++ 同名同参。要求 $x \in [1, \max\_x]$ 且 $x_1 \leqslant x_2$：越界坐标会让区间 $l > r$ 递归失控（C++ 同样如此，模板不防御）。
 @include-code(/code/data-struture/segment_tree/scanline_area_plain.py, python)
 :::
 ::::

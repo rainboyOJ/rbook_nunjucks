@@ -1,94 +1,56 @@
-# 扫描线求矩形面积并（离散化版）：线段树叶子代表相邻两个压缩横坐标之间的“段”。
-# 线段树只维护覆盖次数 cover 与覆盖长度 covered_len，cover 不做下传，push_up 时
-# 若 cover > 0 直接取该段真实长度；这是扫描线面积并的关键不变量。
-# 约定：xs 必须升序去重且 len(xs) >= 2；线段树区间 [l, r] 是 1 下标的段编号，
-# 第 i 段为 [xs[i-1], xs[i]]。C++ 的 covered_len 用 long long 防溢出，Python int 任意精度。
+# 扫描线线段树：维护区间被完整覆盖的次数与覆盖长度。
+# 这个结构不需要懒标记下传：cover 只挂在整段被覆盖的节点上，
+# 每个节点的覆盖长度由自己的 cover 和孩子信息当场算出。
+# 与 C++ 版一一对应：全局列表 cover / len + init(n) + 独立函数。
+# 第 i 段是 [xs[i], xs[i+1])，段号 1..n，所以 xs 要开到 n+2。
 
-type Coords = list[int]  # 升序去重后的横坐标表，第 i 段为 [xs[i-1], xs[i]]
-
-
-class Event:
-    """扫描线事件：一条竖直边，delta = 1 为入边，-1 为出边。"""
-
-    x1: int
-    x2: int
-    y: int
-    delta: int
-
-    def __init__(self, x1: int, x2: int, y: int, delta: int) -> None:
-        self.x1 = x1
-        self.x2 = x2
-        self.y = y
-        self.delta = delta
-
-    def __lt__(self, other: "Event") -> bool:
-        # C++ operator< 只按 y 比较；同 y 事件的先后不影响面积累加（组内 dy 恒为 0）。
-        return self.y < other.y
+cover: list[int] = []  # cover[p]：节点 p 管辖区间被完整覆盖的次数
+len_: list[int] = []   # len_[p]：节点 p 管辖区间内被覆盖的实际长度
+xs: list[int] = []     # xs[1..n+1]：离散化后的坐标
+n: int = 0             # 坐标段数
 
 
-class Node:
-    """线段树节点：cover 为区间被完整覆盖的次数，covered_len 为区间被覆盖的长度。"""
-
-    cover: int
-    covered_len: int
-
-    def __init__(self) -> None:
-        self.cover = 0
-        self.covered_len = 0
+def init(size: int, coords: list[int]) -> None:
+    """重置为 size 段、坐标表 coords（1 下标，长度至少 size + 2）。"""
+    global n, cover, len_, xs
+    n = size
+    cover = [0] * (n * 4 + 5)
+    len_ = [0] * (n * 4 + 5)
+    xs = coords
 
 
-class ScanlineSegmentTree:
-    """离散化扫描线线段树，xs 与外部坐标表共享同一个 list。"""
+def ls(p: int) -> int:
+    return p << 1  # 左儿子 2p
 
-    n: int  # 离散化后的段数
-    tree: list[Node]  # 线段树数组
-    xs: Coords  # 离散化坐标，xs[i] 为第 i 段的左端点
 
-    def __init__(self, n: int = 0, coord: Coords | None = None) -> None:
-        # C++ 存 const vector<int>* 指向外部坐标；Python 直接持有 list 引用。
-        self.xs = coord if coord is not None else []
-        self.init(n)
+def rs(p: int) -> int:
+    return p << 1 | 1  # 右儿子 2p+1
 
-    def init(self, size: int) -> None:
-        self.n = size
-        self.tree = [Node() for _ in range(size * 4 + 5)]
 
-    @staticmethod
-    def lson(p: int) -> int:
-        return p << 1  # 左儿子 = 2p
+def pushup(p: int, l: int, r: int) -> None:
+    """上推：cover > 0 说明整段被覆盖，长度按坐标差算；否则由两个孩子拼起来。"""
+    if cover[p] > 0:
+        len_[p] = xs[r + 1] - xs[l]
+    elif l == r:
+        len_[p] = 0  # 叶子且没被完整覆盖，长度为 0
+    else:
+        len_[p] = len_[ls(p)] + len_[rs(p)]
 
-    @staticmethod
-    def rson(p: int) -> int:
-        return p << 1 | 1  # 右儿子 = 2p+1（<< 优先级高于 |，等价于 (p<<1)|1）
 
-    @staticmethod
-    def mid(l: int, r: int) -> int:
-        return (l + r) >> 1  # 中点 = floor((l+r)/2)
+def add(ql: int, qr: int, v: int, p: int, l: int, r: int) -> None:
+    """给第 [ql, qr] 段增加覆盖次数 v（+1 入边，-1 出边）。"""
+    if qr < l or r < ql:
+        return
+    if ql <= l and r <= qr:
+        cover[p] += v
+        pushup(p, l, r)
+        return
+    mid = (l + r) >> 1
+    add(ql, qr, v, ls(p), l, mid)
+    add(ql, qr, v, rs(p), mid + 1, r)
+    pushup(p, l, r)
 
-    def push_up(self, p: int, l: int, r: int) -> None:
-        if self.tree[p].cover > 0:
-            # 整段被覆盖，直接用真实坐标长度，无需看孩子。
-            self.tree[p].covered_len = self.xs[r] - self.xs[l - 1]
-        elif l == r:
-            self.tree[p].covered_len = 0
-        else:
-            self.tree[p].covered_len = (
-                self.tree[self.lson(p)].covered_len + self.tree[self.rson(p)].covered_len
-            )
 
-    def add(self, ql: int, qr: int, v: int, l: int, r: int, p: int = 1) -> None:
-        """区间加覆盖次数：给 [ql, qr] 增加 v（v = 1 或 -1）。"""
-        if ql <= l and r <= qr:
-            self.tree[p].cover += v
-            self.push_up(p, l, r)
-            return
-        m = self.mid(l, r)
-        if ql <= m:
-            self.add(ql, qr, v, l, m, self.lson(p))
-        if m < qr:
-            self.add(ql, qr, v, m + 1, r, self.rson(p))
-        self.push_up(p, l, r)
-
-    def query_all(self) -> int:
-        """整棵树的覆盖长度。"""
-        return self.tree[1].covered_len
+def covered_len() -> int:
+    """整棵树（根节点）的覆盖长度，即当前这一层被覆盖的总长度。"""
+    return len_[1]

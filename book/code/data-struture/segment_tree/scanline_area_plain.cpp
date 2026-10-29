@@ -1,71 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
-using i64 = long long;
+// 扫描线线段树：维护区间被完整覆盖的次数与覆盖长度。
+// 这个结构不需要懒标记下传：cover 只挂在整段被覆盖的节点上，
+// 每个节点的覆盖长度由自己的 cover 和孩子信息当场算出。
+const int maxn = 100000 + 5;  // 坐标段数上限，按题目规模调整
 
-// 扫描线事件：一条竖直边，delta=1 为入边，-1 为出边
-struct Event {
-    int x1, x2, y, delta;
-    bool operator<(const Event &other) const {
-        return y < other.y;
+int cover[maxn << 2];  // cover[p]：节点 p 管辖区间被完整覆盖的次数
+int len[maxn << 2];    // len[p]：节点 p 管辖区间内被覆盖的长度
+
+int ls(int p) { return p << 1; }     // p 的左儿子 2p
+int rs(int p) { return p << 1 | 1; } // p 的右儿子 2p+1
+
+// 上推：自己的 cover > 0 说明整段被覆盖；否则由两个孩子拼起来
+// 叶子且 cover == 0 时长度是 0，必须单独处理，否则会去读不存在孩子
+void pushup(int p, int l, int r) {
+    if (cover[p] > 0) len[p] = r - l + 1;
+    else if (l == r) len[p] = 0;
+    else len[p] = len[ls(p)] + len[rs(p)];
+}
+
+// 区间加覆盖次数：给 [ql, qr] 增加 v（v = +1 表示入边，-1 表示出边）
+void add(int ql, int qr, int v, int p, int l, int r) {
+    if (qr < l || r < ql) return;
+    if (ql <= l && r <= qr) {
+        cover[p] += v;
+        pushup(p, l, r);
+        return;
     }
-};
-
-// 扫描线线段树：维护区间被覆盖的次数与覆盖长度
-struct ScanlineSegmentTree {
-    struct Node {
-        int cover = 0;      // 区间被完整覆盖的次数（不做下传，只统计根）
-        int covered_len = 0; // 区间内被覆盖的长度
-    };
-
-    int n = 0;              // 坐标范围
-    vector<Node> tree;      // 线段树数组
-
-    explicit ScanlineSegmentTree(int n = 0) {
-        init(n);
-    }
-
-    void init(int size) {
-        n = size;
-        tree.assign(n * 4 + 5, Node{});
-    }
-
-    // 左儿子 / 右儿子的节点编号
-    static int lson(int p) { return p << 1; }
-    static int rson(int p) { return p << 1 | 1; }
-
-    // 区间 [l, r] 的中点
-    static int mid(int l, int r) { return (l + r) >> 1; }
-
-    // 上推：根据完整覆盖次数与孩子信息更新覆盖长度
-    void push_up(int p, int l, int r) {
-        if (tree[p].cover > 0) {
-            tree[p].covered_len = r - l + 1;
-        } else if (l == r) {
-            tree[p].covered_len = 0;
-        } else {
-            tree[p].covered_len = tree[lson(p)].covered_len + tree[rson(p)].covered_len;
-        }
-    }
-
-    // 区间加覆盖次数：给 [ql, qr] 增加 v（v = 1 或 -1）
-    void add(int ql, int qr, int v, int l, int r, int p = 1) {
-        if (ql <= l && r <= qr) {
-            tree[p].cover += v;
-            push_up(p, l, r);
-            return;
-        }
-        int m = mid(l, r);
-        if (ql <= m) add(ql, qr, v, l, m, lson(p));
-        if (m < qr) add(ql, qr, v, m + 1, r, rson(p));
-        push_up(p, l, r);
-    }
-
-    // 整棵树的覆盖长度
-    int query_all() const {
-        return tree[1].covered_len;
-    }
-};
+    int mid = (l + r) >> 1;
+    add(ql, qr, v, ls(p), l, mid);
+    add(ql, qr, v, rs(p), mid + 1, r);
+    pushup(p, l, r);
+}
 
 int main() {
     ios::sync_with_stdio(false);
@@ -74,9 +42,15 @@ int main() {
     int n;
     cin >> n;
 
+    // 每个矩形拆成入边和出边两个事件，按 y 排序后从上往下扫
+    struct Event {
+        int x1, x2, y, delta;
+    };
     vector<Event> events;
+    events.reserve(2 * n);
+
     int max_x = 0;
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; i++) {
         int x1, y1, x2, y2;
         cin >> x1 >> y1 >> x2 >> y2;
         events.push_back({x1, x2 - 1, y1, 1});
@@ -84,17 +58,18 @@ int main() {
         max_x = max(max_x, x2 - 1);
     }
 
-    sort(events.begin(), events.end());
-    ScanlineSegmentTree seg(max_x + 2);
+    sort(events.begin(), events.end(),
+         [](const Event &a, const Event &b) { return a.y < b.y; });
 
-    i64 ans = 0;
+    int xn = max_x + 2;
+    ll ans = 0;
     int last_y = events.empty() ? 0 : events[0].y;
     int last_len = 0;
 
-    for (const auto &e : events) {
-        ans += 1LL * last_len * (e.y - last_y);
-        if (e.x1 <= e.x2) seg.add(e.x1, e.x2, e.delta, 1, max_x);
-        last_len = seg.query_all();
+    for (const Event &e : events) {
+        ans += 1LL * last_len * (e.y - last_y);  // 上一层的高度先结账
+        if (e.x1 <= e.x2) add(e.x1, e.x2, e.delta, 1, 1, xn);
+        last_len = len[1];  // 根节点的覆盖长度就是当前这一层的高度
         last_y = e.y;
     }
 

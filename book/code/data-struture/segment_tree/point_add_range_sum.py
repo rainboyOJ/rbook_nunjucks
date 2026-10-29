@@ -1,69 +1,66 @@
-# 单点加 + 区间求和线段树（1 下标区间 [1, n]）。
-# C++ 的 Node 只含一个 value，Python 直接用 int 存 tree，外部接口与语义不变。
-# 递归深度为线段树高度 O(log n)，不会触及默认递归上限。
+# 单点加 + 区间求和线段树，节点与区间均为 1 下标。
+# 与 C++ 版一一对应：全局列表 base / tr，配 init(n) 与独立函数。
+# 调用顺序：init(n) -> 填 base[1..n] -> seg_build(1, 1, n) -> point_add / range_sum。
+# 递归深度是线段树高度 O(log n)，不会触及默认递归上限。
 # C++ 用 long long 存区间和防溢出；Python int 任意精度，该坑不存在。
 
+base: list[int] = []  # 原始数组，建树时用 base[1..n]
+tr: list[int] = []    # tr[p]：节点 p 管辖区间的和
+n: int = 0            # 数组长度
 
-class SegmentTreePointAdd:
-    """tree[p] 为节点 p 管辖区间的和；build/add/query 的 l、r、p 与 C++ 同参。"""
 
-    def __init__(self, n: int = 0) -> None:
-        self.n = 0
-        self.tree: list[int] = []
-        self.init(n)
+def init(size: int) -> None:
+    """重置为区间 [1, size]；换一组数据前必须先调用。"""
+    global n, base, tr
+    n = size
+    base = [0] * (n + 1)
+    tr = [0] * (n * 4 + 5)
 
-    def init(self, size: int) -> None:
-        """重置为区间 [1, size]，方便同一个对象换一组数据复用。"""
-        self.n = size
-        self.tree = [0] * (size * 4 + 5)
 
-    @staticmethod
-    def lson(p: int) -> int:
-        return p << 1  # 左孩子编号 2p
+def ls(p: int) -> int:
+    return p << 1  # 左儿子 2p
 
-    @staticmethod
-    def rson(p: int) -> int:
-        return p << 1 | 1  # 右孩子编号 2p+1
 
-    @staticmethod
-    def mid(l: int, r: int) -> int:
-        return (l + r) >> 1  # 区间中点，等价 (l+r)//2 且不会溢出
+def rs(p: int) -> int:
+    return p << 1 | 1  # 右儿子 2p+1
 
-    def push_up(self, p: int) -> None:
-        """上推：父节点区间和 = 两个孩子之和。"""
-        self.tree[p] = self.tree[self.lson(p)] + self.tree[self.rson(p)]
 
-    def build(self, a: list[int], l: int, r: int, p: int = 1) -> None:
-        """用 1 下标数组 a 的 [l, r] 建树。"""
-        if l == r:
-            self.tree[p] = a[l]
-            return
-        m = self.mid(l, r)
-        self.build(a, l, m, self.lson(p))
-        self.build(a, m + 1, r, self.rson(p))
-        self.push_up(p)
+def pushup(p: int) -> None:
+    """上推：父区间的和 = 两个儿子的和。"""
+    tr[p] = tr[ls(p)] + tr[rs(p)]
 
-    def add(self, pos: int, value: int, l: int, r: int, p: int = 1) -> None:
-        """单点加：a[pos] += value。"""
-        if l == r:
-            self.tree[p] += value
-            return
-        m = self.mid(l, r)
-        if pos <= m:
-            self.add(pos, value, l, m, self.lson(p))
-        else:
-            self.add(pos, value, m + 1, r, self.rson(p))
-        self.push_up(p)
 
-    def query(self, ql: int, qr: int, l: int, r: int, p: int = 1) -> int:
-        """返回 [ql, qr] 的区间和。"""
-        if ql <= l and r <= qr:
-            return self.tree[p]
+def seg_build(p: int, l: int, r: int) -> None:
+    """用 base[1..n] 建树。"""
+    if l == r:
+        tr[p] = base[l]
+        return
+    mid = (l + r) >> 1
+    seg_build(ls(p), l, mid)
+    seg_build(rs(p), mid + 1, r)
+    pushup(p)
 
-        m = self.mid(l, r)
-        answer = 0
-        if ql <= m:
-            answer += self.query(ql, qr, l, m, self.lson(p))
-        if qr > m:
-            answer += self.query(ql, qr, m + 1, r, self.rson(p))
-        return answer
+
+def point_add(pos: int, value: int, p: int, l: int, r: int) -> None:
+    """单点加：把位置 pos 的值加上 value。"""
+    if l == r:
+        tr[p] += value
+        return
+    mid = (l + r) >> 1
+    if pos <= mid:
+        point_add(pos, value, ls(p), l, mid)
+    else:
+        point_add(pos, value, rs(p), mid + 1, r)
+    pushup(p)
+
+
+def range_sum(ql: int, qr: int, p: int, l: int, r: int) -> int:
+    """返回 [ql, qr] 的区间和。"""
+    if qr < l or r < ql:
+        return 0  # 完全不相交
+    if ql <= l and r <= qr:
+        return tr[p]  # 完全被覆盖
+    mid = (l + r) >> 1
+    answer = range_sum(ql, qr, ls(p), l, mid)
+    answer += range_sum(ql, qr, rs(p), mid + 1, r)
+    return answer

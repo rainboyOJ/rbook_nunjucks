@@ -1,100 +1,72 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
-// 区间赋值 + 区间求和线段树（懒标记）
-struct SegmentTreeRangeAssign {
-    // 线段树节点：value 为区间和，lazy 为待下传的赋值标记
-    using T = long long;
-    struct Node {
-        T value = 0;    // 当前区间的真实区间和
-        T lazy = 0;     // 待下传的赋值值
-        bool has_lazy = false;  // 是否还有未下传的赋值标记
+// 区间赋值 + 区间求和线段树（懒标记），节点与区间均为 1 下标。
+const int maxn = 100000 + 5;  // 按题目规模调整，n 不能超过 maxn
 
-        // 合并两个孩子：区间和相加，合并结果不携带懒标记
-        Node operator+(const Node &other) const {
-            return Node{value + other.value, 0, false};
-        }
-    };
+ll base[maxn];       // 原始数组，建树时用 base[1..n]
+ll tr[maxn << 2];    // tr[p]：节点 p 管辖区间的和
+ll lazy[maxn << 2];  // lazy[p]：待下传的赋值值
+bool tag[maxn << 2]; // tag[p]：p 是否挂着未下传的赋值标记
 
-    // 左儿子 / 右儿子的节点编号
-    static int lson(int p) { return p << 1; }
-    static int rson(int p) { return p << 1 | 1; }
+int ls(int p) { return p << 1; }     // p 的左儿子 2p
+int rs(int p) { return p << 1 | 1; } // p 的右儿子 2p+1
 
-    // 区间 [l, r] 的中点
-    static int mid(int l, int r) { return (l + r) >> 1; }
+// 把节点 p 的整个区间 [l, r] 赋值为 value：区间和 = value * 长度
+void apply(int p, int l, int r, ll value) {
+    tr[p] = value * (r - l + 1);
+    lazy[p] = value;
+    tag[p] = true;
+}
 
-    int n = 0;              // 区间大小
-    vector<Node> tree;      // 线段树数组
+// 下推：把 p 的赋值标记传给两个孩子
+void pushdown(int p, int l, int r) {
+    // 没有标记无事可做；叶子没有儿子可下放，必须提前返回
+    if (!tag[p] || l == r) return;
+    int mid = (l + r) >> 1;
+    apply(ls(p), l, mid, lazy[p]);
+    apply(rs(p), mid + 1, r, lazy[p]);
+    tag[p] = false;  // 标记已经下放，清掉
+}
 
-    SegmentTreeRangeAssign(int n = 0) {
-        init(n);
+// 用 base[1..n] 建树
+void seg_build(int p, int l, int r) {
+    tag[p] = false;  // 建树时顺手清标记，换数据不必整体清零
+    if (l == r) {
+        tr[p] = base[l];
+        return;
     }
+    int mid = (l + r) >> 1;
+    seg_build(ls(p), l, mid);
+    seg_build(rs(p), mid + 1, r);
+    tr[p] = tr[ls(p)] + tr[rs(p)];
+}
 
-    void init(int size) {
-        n = size;
-        tree.assign(n * 4 + 5, Node{});
+// 区间赋值：把 [ql, qr] 全部赋值为 value
+void assign_range(int ql, int qr, ll value, int p, int l, int r) {
+    if (qr < l || r < ql) return;
+    if (ql <= l && r <= qr) {
+        apply(p, l, r, value);
+        return;
     }
+    pushdown(p, l, r);  // 要进入孩子，先把标记下放
+    int mid = (l + r) >> 1;
+    assign_range(ql, qr, value, ls(p), l, mid);
+    assign_range(ql, qr, value, rs(p), mid + 1, r);
+    tr[p] = tr[ls(p)] + tr[rs(p)];
+}
 
-    // 上推：用两个孩子合并出当前节点
-    void push_up(int p) {
-        tree[p] = tree[lson(p)] + tree[rson(p)];
-    }
-
-    // 把节点 p 的整个区间 [l, r] 赋值为 value
-    void apply(int p, int l, int r, T value) {
-        tree[p].value = value * (r - l + 1);
-        tree[p].lazy = value;
-        tree[p].has_lazy = true;
-    }
-
-    // 下推：把节点 p 的懒标记传给两个孩子
-    void push_down(int p, int l, int r) {
-        if (!tree[p].has_lazy || l == r) return;
-
-        int m = mid(l, r);
-        apply(lson(p), l, m, tree[p].lazy);
-        apply(rson(p), m + 1, r, tree[p].lazy);
-        tree[p].has_lazy = false;
-    }
-
-    // 用数组 a 建树
-    void build(const vector<T> &a, int l, int r, int p = 1) {
-        if (l == r) {
-            tree[p].value = a[l];
-            return;
-        }
-        int m = mid(l, r);
-        build(a, l, m, lson(p));
-        build(a, m + 1, r, rson(p));
-        push_up(p);
-    }
-
-    // 区间赋值：把 [ql, qr] 全部赋值为 value
-    void assign_range(int ql, int qr, T value, int l, int r, int p = 1) {
-        if (ql <= l && r <= qr) {
-            apply(p, l, r, value);
-            return;
-        }
-
-        push_down(p, l, r);
-        int m = mid(l, r);
-        if (ql <= m) assign_range(ql, qr, value, l, m, lson(p));
-        if (qr > m) assign_range(ql, qr, value, m + 1, r, rson(p));
-        push_up(p);
-    }
-
-    // 区间查询：[ql, qr] 的区间和
-    T query(int ql, int qr, int l, int r, int p = 1) {
-        if (ql <= l && r <= qr) return tree[p].value;
-
-        push_down(p, l, r);
-        int m = mid(l, r);
-        T answer = 0;
-        if (ql <= m) answer += query(ql, qr, l, m, lson(p));
-        if (qr > m) answer += query(ql, qr, m + 1, r, rson(p));
-        return answer;
-    }
-};
+// 区间和：把 [ql, qr] 拆成不交的若干节点，逐个累加
+ll range_sum(int ql, int qr, int p, int l, int r) {
+    if (qr < l || r < ql) return 0;
+    if (ql <= l && r <= qr) return tr[p];
+    pushdown(p, l, r);  // 孩子的值可能还没跟上父节点的标记
+    int mid = (l + r) >> 1;
+    ll answer = range_sum(ql, qr, ls(p), l, mid);
+    answer += range_sum(ql, qr, rs(p), mid + 1, r);
+    return answer;
+}
 
 int main() {
     ios::sync_with_stdio(false);
@@ -102,27 +74,21 @@ int main() {
 
     int n, m;
     cin >> n >> m;
-
-    vector<long long> a(n + 1);
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-
-    SegmentTreeRangeAssign seg(n);
-    seg.build(a, 1, n);
+    for (int i = 1; i <= n; i++) cin >> base[i];
+    seg_build(1, 1, n);
 
     while (m--) {
         int op;
         cin >> op;
         if (op == 1) {
             int l, r;
-            long long x;
+            ll x;
             cin >> l >> r >> x;
-            seg.assign_range(l, r, x, 1, n);
+            assign_range(l, r, x, 1, 1, n);
         } else {
             int l, r;
             cin >> l >> r;
-            cout << seg.query(l, r, 1, n) << '\n';
+            cout << range_sum(l, r, 1, 1, n) << '\n';
         }
     }
 

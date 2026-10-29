@@ -84,7 +84,7 @@ code_template: [segtree-persistent-array, segtree-persistent-array-py]
 
 ::: tab Python
 
-`max_nodes` 参数仅为接口对齐保留（Python 列表动态增长）；`update` 返回新版本根，旧版本仍可查询。
+Python 版与 C++ 一一对应：全局列表 `lc` / `rc` / `val` 配 `init(n, version_count)`。`update` 返回新版本根（旧版本仍可查询），节点池用 `append` 动态增长，不需要 `max_nodes` 这类预分配参数。
 @include-code(/code/data-struture/segment_tree/persistent_array.py, python)
 :::
 ::::
